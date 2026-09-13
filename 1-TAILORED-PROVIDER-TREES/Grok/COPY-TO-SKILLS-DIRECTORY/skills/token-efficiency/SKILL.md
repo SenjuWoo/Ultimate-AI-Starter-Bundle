@@ -1,137 +1,67 @@
 ---
 name: token-efficiency
-description: Use when an agent is about to wait on something slow (CI, a build, a download, a deploy), when a session is burning tokens on polling or re-reading, when choosing how many MCP servers or skills to load, or when the user asks about cost, caching, or context bloat. Corrects the common belief that prompt caching makes watching things cheap.
+description: Use when waiting for CI/builds, reducing repetitive reads, measuring token cost or caching, or choosing MCP/skill scope. Save round trips and irrelevant output without dropping evidence.
 ---
 
 # Token efficiency
 
-Most agent waste is not verbosity. It is **re-reading**: the same context sent
-again and again because the agent kept asking "is it done yet?"
+Reduce repetition, not verification. Context size, cached input, output and
+reasoning usage are different measurements; fewer bytes are not proof of a
+lower bill or unchanged answer quality.
 
-Every request resends the entire conversation. A 150k-token session that polls
-CI forty times sends 6M input tokens, plus forty replies saying "still running."
-The work was one command and one answer.
+## Wait once, report meaningful changes
 
-## The pricing that decides everything
+Use the host's background/notification mechanism for long builds and CI.
+Polling the model repeatedly costs inference even when nothing changes.
+Time spent waiting in a process does not itself generate model tokens, though
+tool notifications, hosted execution and later model calls may have costs.
 
-| | cost |
-|---|---|
-| cache **read** | **0.1x** base input |
-| cache **write** | **1.25x** (5-min TTL), **2x** (1-hour TTL) |
-| **output** | full price. Caching does nothing for output. |
+For GitHub releases, record the exact pushed SHA, discover its required runs,
+and use the existing CI watcher or `gh run watch <run-id> --exit-status`.
+Verify every required check succeeded on that SHA before publishing.
+No runs, failed/cancelled runs, or a different SHA are not success.
+Respect the host's wait limits and keep the user informed without busy polling.
 
-Three consequences people get wrong:
+## Cache evidence, not assumptions
 
-1. **A cache write costs more than an uncached read.** Caching is not free
-   insurance. Break-even is 2 requests on the 5-minute TTL, 3 on the 1-hour.
-   Caching a prefix used once is a pure loss.
-2. **Caching never reduces output cost.** A chatty agent is expensive no matter
-   how well its prefix caches.
-3. **Cheap is not free.** 0.1x of a huge context, forty times, still dwarfs the
-   thing you were trying to save.
+Cache rules and prices depend on the provider, model and billing plan. Do not
+apply one API's rates to another API or a subscription quota. For example,
+Anthropic's standard API cache writes are 1.25x base input for five minutes
+or 2x for one hour, and reads 0.1x; verify current applicable pricing first.
+Output is not made free by caching an input prefix.
 
-So "keep the model watching so it stays cached" is backwards. The model watching
-*is* the cost.
+Keep durable instructions/tool definitions stable and put changing task state
+later where the host permits. Prefix changes can reduce cache reuse, but the
+exact matching, minimum lengths and invalidation rules are host-dependent.
+Use actual usage fields (for example Anthropic `cache_read_input_tokens`) or
+provider telemetry before claiming a cache hit or saving. Never schedule
+requests just to keep an otherwise unused cache warm.
 
-## The rule: the harness waits, the model sleeps
+## Load relevant capabilities
 
-Blocking in a shell costs **zero** model tokens. Blocking in the model costs a
-full context read per check.
+- Keep skill names/descriptions compact; load bodies only when relevant.
+- Prefer a sufficient native tool or CLI already available. A dormant CLI adds
+  no MCP schema; its instructions, commands and output still consume context.
+- Scope optional MCP servers. Claude Code supports deferred Tool Search;
+  Codex and Hermes support native tool filters. Respect user-owned servers.
+- Advertised schema bytes/4 is only a rough size estimate, not loaded, cached
+  or billed tokens. Measure the current provider rather than quoting old totals.
+- Do not change models, auxiliary routing or providers merely to save tokens
+  without the user's requested quality and configuration constraints.
 
-Wait for a condition with a loop in the shell, backgrounded, and let it wake the
-agent once when the condition is met:
+## Batch and bound output
 
-```bash
-until [ -z "$(gh run list --commit "$SHA" --json status \
-    --jq '.[]|select(.status!="completed")')" ]; do sleep 30; done
-gh api "repos/$REPO/commits/$SHA/check-runs" --jq '.check_runs[]|"\(.conclusion)  \(.name)"'
-```
+Batch independent reads, reuse evidence already in context, and request only
+the fields/lines needed. Check exit codes and truncation. Do not rerun a passing
+gate unless its inputs or environment changed. Prefer targeted searches to
+dumping entire trees, histories or configuration files.
 
-Twelve minutes of CI, one wake-up, one result. The polling version is the same
-twelve minutes and forty full-context requests.
+RTK is lossy and command/version dependent, not a universal 97% saving.
+This pack's narrow safe hook covers standalone human-facing status/tests;
+exact diffs, search, reads, structured output and pipelines stay raw.
+Read [the measured policy](references/shell-output-compression.md) before
+changing rewrites. Preserve failures, exit status and access to full output.
 
-The same applies to builds, downloads, installs, test suites, deploys and any
-`sleep`-and-check loop. If the harness offers a background/notify mechanism, that
-is the mechanism. Reach for in-model polling only when the thing being watched
-cannot be expressed as a shell condition.
-
-**Do not** schedule wake-ups to "keep the cache warm." A cache write is 1.25x-2x;
-warming a prefix nothing is waiting on is spending money to save none.
-
-## Keep the cacheable prefix stable
-
-Cache matching is a **prefix** match, rendered `tools` -> `system` -> `messages`.
-One changed byte anywhere invalidates everything after it.
-
-- Stable first: frozen system prompt, deterministic tool list, project context.
-- Volatile last: timestamps, per-request ids, the actual question.
-- A clock reading or an unsorted JSON dump near the top of a prompt silently
-  destroys every cache hit after it, and nothing errors.
-- Verify with `usage.cache_read_input_tokens`. Zero across repeated requests
-  means something is invalidating; do not assume caching is working because you
-  configured it.
-
-Changing the tool list mid-session can invalidate the affected cached prefix.
-Use provider cache-hit evidence before claiming a cost or a saving.
-
-## Load capability, not catalogues
-
-Keep the compact name-and-description index separate from skill bodies.
-Measure the current provider's index; old corpus totals are not current usage.
-
-- Skills load **by description**, and the body loads only on invocation. Never
-  paste skill bodies into context speculatively.
-- MCP loading is host-dependent: Claude Code supports deferred Tool Search;
-  Codex and Hermes support tool filters. Advertised schema bytes divided by four
-  estimate schema tokens, not loaded/cached/billed usage. Scope unused servers.
-- Scope servers that support it. The official GitHub MCP server groups its tools
-  into 20 toolsets; this pack enables five. `--toolsets=all` would multiply the
-  schema cost for tools nobody calls.
-- Where a provider offers deferred tool loading or tool search, prefer it: the
-  agent sees a few meta-tools and fetches schemas on demand.
-- Grok wedges at eight running MCP servers, so the budget is enforced there
-  whether or not you think about it. See `GROK-MCP-TROUBLESHOOTING.md`.
-
-## Cheap models for cheap decisions
-
-Selection, routing, approval and summarisation do not need the expensive model.
-Hermes routes `skills_hub`, `mcp` and `approval` through separate aux models
-precisely so the main model is not spent deciding *which* skill to read. If a
-provider exposes aux-model routing, use it.
-
-## Batch the round trips
-
-- Independent tool calls go in **one** message, not one per turn. Each extra turn
-  is another full context read.
-- Read the file once. Re-reading a file you already have in context to "check" is
-  a full re-send for information you were already holding.
-- Do not re-run a passing gate to feel sure. If nothing changed, nothing changed.
-
-## Cut the output at the source
-
-Batching stops re-sends. It does nothing about one command that dumps a
-megabyte. `git diff` over a few commits on a large repo really is ~2 MB --
-about half a million tokens for a single tool call.
-
-A CLI filter in front of noisy commands (rtk) cuts that 97% and costs zero
-standing tokens, unlike an MCP server. Coverage and the traps are in
-`references/shell-output-compression.md` -- read it before installing a
-transparent rewrite hook, because a lossy layer between a tool and the agent
-turns wrong answers into smaller ones.
-
-## What this is not
-
-Not an argument for terse thinking or skipped verification. Reasoning tokens are
-cheap relative to a wrong answer that costs a full debugging session. Cut
-**repetition**, never comprehension: the expensive failure mode is an agent that
-polls forty times and still gets it wrong.
-
-## Checklist
-
-- [ ] Waiting on something slow? Shell loop in the background, not model polling.
-- [ ] Volatile content (clocks, ids) after the stable prefix, never before.
-- [ ] Only the MCP servers this task needs are connected.
-- [ ] Scoped toolsets where the server supports scoping.
-- [ ] Independent tool calls batched into one message.
-- [ ] No wake-ups scheduled purely to warm a cache.
-- [ ] Megabyte-scale command output filtered at the source, not after the fact.
+Sources checked 2026-09-13:
+[Anthropic cache rules](https://platform.claude.com/docs/en/build-with-claude/prompt-caching),
+[Claude Code caching](https://code.claude.com/docs/en/prompt-caching).

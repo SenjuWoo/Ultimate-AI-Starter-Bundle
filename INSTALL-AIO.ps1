@@ -73,7 +73,7 @@ param(
   [switch]$AllProviders,
   [ValidateSet('BundledFirst','OnlineLatest','BundledOnly')]
   [string]$Mode = 'OnlineLatest',
-  [string[]]$Components = @('housecarl','spooky','codebase-memory','headroom','superpowers','ponytail','codeburn','impeccable','github-mcp-server','rtk'),
+  [string[]]$Components = @('housecarl','spooky','codebase-memory','headroom','superpowers','ponytail','codeburn','impeccable','playwright-cli','github-mcp-server','rtk'),
   [string]$WorkspaceRoot = '',
   # The directory Skyrim Forge is installed INTO, not the folder that
   # contains it: -ForgeRoot 'S:\Apps\Skyrim Tools\Skyrim-Forge' keeps Forge

@@ -5,8 +5,7 @@
 [CmdletBinding()]
 param(
   [string[]]$Components = @('housecarl','spooky','codebase-memory','headroom','superpowers','ponytail'),
-  [ValidateSet('Claude','Codex','Grok','Kimi','Hermes')]
-  [string[]]$Providers = @('Claude','Codex','Grok','Kimi','Hermes'),
+  [string[]]$Providers = @(),
   [switch]$ComponentsOnly,
   [switch]$InstallAfter,
   [switch]$UpdateCatalogOffline
@@ -16,12 +15,18 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'UABS-Common.ps1')
 $root = Get-UabsPackRoot
 $catalog = Get-UabsCatalog
+$Providers = @($Providers | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+foreach ($provider in $Providers) {
+  if ($provider -notin @('Claude','Codex','Grok','Kimi','Hermes')) { throw "Unknown provider: $provider" }
+}
 
 if (-not $ComponentsOnly) {
   $remote = Join-Path $root 'INSTALL-REMOTE.ps1'
   if (-not (Test-Path -LiteralPath $remote -PathType Leaf)) { throw 'INSTALL-REMOTE.ps1 missing from pack.' }
   Write-UabsStep 'Updating stable bundle installation, plugins, skills, MCPs, and tools'
-  & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $remote -Providers ($Providers -join ',')
+  $remoteArgs = @('-NoProfile','-ExecutionPolicy','Bypass','-File',$remote)
+  if ($Providers.Count) { $remoteArgs += @('-Providers', ($Providers -join ',')) }
+  & (Get-Command powershell.exe -ErrorAction Stop).Source @remoteArgs
   if ($LASTEXITCODE -ne 0) { throw "bundle update failed with exit code $LASTEXITCODE" }
   return
 }
@@ -75,5 +80,5 @@ Write-Host ""
 $results | Format-Table -AutoSize
 if ($InstallAfter) {
   Write-UabsStep "Running INSTALL-AIO.ps1 -Mode OnlineLatest"
-  & (Join-Path $root 'INSTALL-AIO.ps1') -Mode OnlineLatest
+  & (Join-Path $root 'INSTALL-AIO.ps1') -Mode OnlineLatest -Providers $Providers
 }

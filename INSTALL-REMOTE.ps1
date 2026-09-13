@@ -8,7 +8,7 @@
   %LOCALAPPDATA%\Programs\Ultimate-AI-Starter-Bundle, and runs the real installer
   (INSTALL-AIO.ps1) from the pack root.
 
-  One-liner (defaults = all five providers, latest release):
+  One-liner (auto-detect installed providers; all five on an empty machine):
 
     powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/ShugokiFable/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
 
@@ -23,7 +23,7 @@
   Release tag to fetch, e.g. 'v8.0.0'. Empty (default) = latest release.
 
 .PARAMETER Providers
-  Providers to install for (default: installer default = all five).
+  Providers to install for (default: auto-detect; all five if none are installed).
 
 .PARAMETER DestRoot
   Where the bundle lives. Default:

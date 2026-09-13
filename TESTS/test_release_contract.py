@@ -1998,6 +1998,40 @@ def test_hermes_openrouter_picker_uses_the_live_tool_catalog() -> None:
     assert "uabs_hermes_openrouter_catalog.pth" in starter
     assert "Install-UabsHermesOpenRouterCatalogShim -Dest $dest" in starter
 
+    # Exercise both module layouts. Current Hermes imports the picker from the
+    # new module; patching only its deprecated alias leaves that caller capped.
+    import types
+    from unittest.mock import patch
+
+    for modern in (True, False):
+        package = types.ModuleType("hermes_cli")
+        package.__path__ = []
+        models = types.ModuleType("hermes_cli.models")
+        models.fetch_openrouter_models = lambda **kwargs: []
+        picker = types.ModuleType("picker")
+
+        def original_picker(*, max_models=None):
+            rows = ["a", "b", "c"]
+            return [{"slug": slug, "models": rows[:max_models]}
+                    for slug in ("openrouter", "other")]
+
+        picker.list_picker_providers = original_picker
+        modern_name = "hermes_cli.model_switch_providers"
+        legacy_name = "hermes_cli.model_switch"
+        modules = {"hermes_cli": package, "hermes_cli.models": models,
+                   modern_name: picker if modern else None,
+                   legacy_name: types.ModuleType(legacy_name) if modern else picker}
+        with patch.dict(sys.modules, modules):
+            module.install()
+            installed_picker = picker.list_picker_providers
+            assert installed_picker is not original_picker
+            assert installed_picker(max_models=1) == [
+                {"slug": "openrouter", "models": ["a", "b", "c"]},
+                {"slug": "other", "models": ["a"]},
+            ]
+            module.install()
+            assert picker.list_picker_providers is installed_picker
+
 
 def test_hermes_receives_the_combined_soul_and_aio_contract() -> None:
     installer = ps_code(ROOT / "INSTALL-AIO.ps1")
@@ -5046,9 +5080,15 @@ def test_versioned_online_tools_pin_the_same_version_offline() -> None:
         "CodeBurn's catalog version does not constrain the npm install"
     )
     assert codeburn["npm_integrity"] == (
-        "sha512-0/u52Lg8hjGy18vDEZrQgPT91EyOsVa8LkLCLOkYiM+YbuWITgon2Qsrt2i9A4JEuw2gyz0YLD6w8NwNdPBaJA=="
+        "sha512-jK5T46Mh1TSEns6mABZFdYh96oZH6QukZ+ueYYzUk8YuMF8dzLNDeHnIAlE3AlaI0QiSq0E9Dl8IPW2H+EkU2Q=="
     )
     assert codeburn["npm_args"] == ["--ignore-scripts"]
+    browser = components["playwright-cli"]
+    assert browser["npm_spec"] == "@playwright/cli@" + browser["version"]
+    assert browser["npm_args"] == ["--ignore-scripts"] and not browser.get("mcp")
+    assert len(browser["npm_integrity"]) > 80
+    assert "'playwright-cli'" in installer
+    assert components["housecarl"]["release_tag"] == "v" + components["housecarl"]["version"]
 
 
 def test_github_auth_guidance_matches_the_official_oauth_binary() -> None:

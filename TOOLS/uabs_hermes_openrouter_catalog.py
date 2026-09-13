@@ -92,7 +92,12 @@ def install() -> None:
     models.fetch_openrouter_models = fetch_openrouter_models
     models._uabs_live_openrouter_catalog = True
 
-    import hermes_cli.model_switch as model_switch
+    try:
+        import hermes_cli.model_switch_providers as model_switch
+    except ModuleNotFoundError as exc:
+        if exc.name != "hermes_cli.model_switch_providers":
+            raise
+        import hermes_cli.model_switch as model_switch
 
     original_picker = model_switch.list_picker_providers
     if getattr(original_picker, "_uabs_openrouter_uncapped", False):
@@ -112,4 +117,3 @@ def install() -> None:
 
     list_picker_providers._uabs_openrouter_uncapped = True  # type: ignore[attr-defined]
     model_switch.list_picker_providers = list_picker_providers
-

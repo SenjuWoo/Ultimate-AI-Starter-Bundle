@@ -95,7 +95,10 @@
           }
         },
         "restore": "hermes -p skyrim mcp configure housecarl  (interactive checklist, rewrites tools.include). Re-running the migrator will not undo a hand-edited filter."
-      }
+      },
+      "version": "1.9.0",
+      "release_tag": "v1.9.0",
+      "compatibility_hold": "2026-09-13: v2.0.0 removes the 1.x tool API. Keep v1.9.0 until skills, profiles and live read-only validation are migrated together. OnlineLatest must not silently replace it."
     },
     {
       "github": {
@@ -122,7 +125,9 @@
         "spookys-automod-toolkit-*.zip"
       ],
       "install": "zip-extract",
-      "env": "SPOOKY_AUTOMOD_ROOT"
+      "env": "SPOOKY_AUTOMOD_ROOT",
+      "version": "1.11.2",
+      "release_tag": "v1.11.2"
     },
     {
       "github": {
@@ -148,7 +153,9 @@
       "install": "zip-extract",
       "exe_rel": "codebase-memory-mcp.exe",
       "scope_note": "Installed globally but absent from global/default MCP sets. Claude, Grok and trusted Codex projects get it through code-intel; Hermes through its native code profile. Kimi needs explicit global opt-in. NEVER enable --ui / install.ps1 --ui (Windows Codebase Discovery Open-With). auto_index=false auto_watch=false default. Recorded 0.10.8: 15 tools, 23,974 schema bytes, ~5,994 schema tokens (bytes/4), not a per-turn bill.",
-      "server_id": "codebase-memory-mcp"
+      "server_id": "codebase-memory-mcp",
+      "version": "0.10.8",
+      "release_tag": "v0.10.8"
     },
     {
       "install": "pip-or-wheel",
@@ -190,7 +197,9 @@
       "required_for": [
         "process-discipline"
       ],
-      "bundled_skills": true
+      "bundled_skills": true,
+      "version": "6.3.0",
+      "release_tag": "v6.3.0"
     },
     {
       "install": "skills-copy",
@@ -207,7 +216,9 @@
       "required_for": [
         "minimal-diff"
       ],
-      "bundled_skills": true
+      "bundled_skills": true,
+      "version": "4.9.0",
+      "release_tag": "v4.9.0"
     },
     {
       "install": "npx-or-npm",
@@ -222,14 +233,14 @@
         "owner": "getagentseal"
       },
       "name": "CodeBurn",
-      "version": "0.9.23",
+      "version": "0.9.24",
       "offline_asset": null,
       "license": "see-upstream",
       "required_for": [
         "ai-cost"
       ],
-      "npm_spec": "codeburn@0.9.23",
-      "npm_integrity": "sha512-0/u52Lg8hjGy18vDEZrQgPT91EyOsVa8LkLCLOkYiM+YbuWITgon2Qsrt2i9A4JEuw2gyz0YLD6w8NwNdPBaJA==",
+      "npm_spec": "codeburn@0.9.24",
+      "npm_integrity": "sha512-jK5T46Mh1TSEns6mABZFdYh96oZH6QukZ+ueYYzUk8YuMF8dzLNDeHnIAlE3AlaI0QiSq0E9Dl8IPW2H+EkU2Q==",
       "npm_args": [
         "--ignore-scripts"
       ]
@@ -262,7 +273,8 @@
         "--omit=optional",
         "--ignore-scripts"
       ],
-      "scope_note": "The cross-provider skill is vendored from the official skill-v4.1.3 universal.zip and bound to its published SHA-256. The executable detector is the actually published npm 3.6.1 package, pinned by npm integrity. Optional Puppeteer is omitted: Playwright/browser profiles already own live rendering, and downloading a second browser would be duplication. Lifecycle scripts are disabled. UABS removes upstream self-update/pin paths and generated hook cache so provider skill trees keep one writer. Zero MCP schemas, daemon, account or key."
+      "scope_note": "The cross-provider skill is vendored from the official skill-v4.1.3 universal.zip and bound to its published SHA-256. The executable detector is the actually published npm 3.6.1 package, pinned by npm integrity. Optional Puppeteer is omitted: Playwright/browser profiles already own live rendering, and downloading a second browser would be duplication. Lifecycle scripts are disabled. UABS removes upstream self-update/pin paths and generated hook cache so provider skill trees keep one writer. Zero MCP schemas, daemon, account or key.",
+      "compatibility_hold": "2026-09-13: upstream CLI 4.1.0 / skill 4.3.1 moves to a platform engine and first-use downloads. Retain audited CLI 3.6.1 / skill 4.1.3 until the engine, our security patches and single-writer installation are validated together."
     },
     {
       "install": "bundle-source",
@@ -490,7 +502,7 @@
       "kind": "mcp-npx",
       "mcp": true,
       "license": "MIT",
-      "version": "4.0.4",
+      "version": "4.1.0",
       "github": {
         "owner": "upstash",
         "repo": "context7"
@@ -499,7 +511,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "@upstash/context7-mcp@4.0.4"
+        "@upstash/context7-mcp@4.1.0"
       ],
       "auto_register": true,
       "api_key_env": "CONTEXT7_API_KEY",
@@ -509,7 +521,7 @@
         "resolve-library-id",
         "query-docs"
       ],
-      "keyless_note": "Measured 2026-08-29 against the pinned 4.0.4 with the credential environment scrubbed: BOTH advertised tools answer keyless, nothing is rate-limited, key-gated or deprecated. `--api-key` / CONTEXT7_API_KEY is documented by the server's own --help and raises rate limits; it unlocks no additional tool. Regenerate with TOOLS/measure_mcp_capability.py rather than editing by hand.",
+      "keyless_note": "Measured 2026-09-13 against pinned 4.1.0 with the credential environment scrubbed: BOTH advertised tools answered keyless, neither was rate-limited, key-gated or deprecated in this sweep. The optional key raises rate limits; no additional tool was observed. Regenerate with TOOLS/measure_mcp_capability.py.",
       "capability_record": "BUNDLED-TOOLS/capability-records/context7.json",
       "providers": [
         "Claude",
@@ -522,7 +534,7 @@
         "library-documentation",
         "framework-api-lookup"
       ],
-      "scope_note": "Current documentation for third-party libraries, frameworks, SDKs and CLIs, fetched per query instead of recalled from training data. Registered on every provider because it is the cheapest MCP server this pack ships: 2 tools, 4,870 bytes of schema, ~1,220 tokens per turn. Firecrawl by contrast costs 36,321 bytes for the same two usable keyless tools and is deliberately NOT registered without a key. Does not overlap codebase-memory: that indexes THIS repository's own symbols and call graph, context7 answers about code you did not write. No tool names collide."
+      "scope_note": "Current third-party library documentation, distinct from codebase-memory's local repository graph. Small always-on core; advertised schema bytes are not per-turn bills. The capability record names its measured version; remeasure after changing the package."
     },
     {
       "id": "github-mcp-server",
@@ -530,13 +542,13 @@
       "kind": "mcp-binary",
       "mcp": true,
       "license": "MIT",
-      "version": "1.11.0",
+      "version": "1.12.1",
       "github": {
         "owner": "github",
         "repo": "github-mcp-server"
       },
       "install": "zip-extract",
-      "offline_asset": "github-mcp-server-1.11.0-windows-x86_64.zip",
+      "offline_asset": "github-mcp-server-1.12.1-windows-x86_64.zip",
       "asset_match": [
         "github-mcp-server-*-windows-x86_64.zip",
         "*github-mcp-server*Windows_x86_64.zip"
@@ -553,7 +565,8 @@
       "auth_mode": "built-in-oauth-or-optional-pat",
       "toolsets": "context,repos,pull_requests,actions,issues",
       "scope_note": "GitHub's official server, replacing @modelcontextprotocol/server-github, which npm marks 'Package no longer supported'. Official release binaries since 1.5.0 carry GitHub's OAuth application: no PAT is required on github.com; the first authenticated tool call opens GitHub's browser authorization and keeps that token in the server process only. A GITHUB_PERSONAL_ACCESS_TOKEN is optional and takes precedence when the user deliberately configures one. initialize + tools/list proves the binary and protocol, not completion of that later browser authorization. Registered with a scoped --toolsets list, not 'all': the server exposes 20 toolset groups and enabled groups enlarge the advertised schema; actual prompt and billed usage depend on provider discovery and caching. Widen it per project, never globally.",
-      "server_id": "github"
+      "server_id": "github",
+      "release_tag": "v1.12.1"
     },
     {
       "id": "serena",
@@ -584,7 +597,7 @@
       "kind": "mcp-npx",
       "mcp": true,
       "license": "Apache-2.0",
-      "version": "1.8.0",
+      "version": "1.9.0",
       "github": {
         "owner": "ChromeDevTools",
         "repo": "chrome-devtools-mcp"
@@ -593,7 +606,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "chrome-devtools-mcp@1.8.0",
+        "chrome-devtools-mcp@1.9.0",
         "--no-usage-statistics"
       ],
       "profile": "web",
@@ -612,7 +625,7 @@
       "kind": "mcp-npx",
       "mcp": true,
       "license": "MIT",
-      "version": "4.20.1",
+      "version": "4.21.0",
       "github": {
         "owner": "shadcn-ui",
         "repo": "ui"
@@ -621,7 +634,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "shadcn@4.20.1",
+        "shadcn@4.21.0",
         "mcp"
       ],
       "profile": "web",
@@ -824,6 +837,31 @@
         "node22"
       ],
       "scope_note": "A proxy MCP. It registers ONE server carrying 11 meta-tools and puts every other server behind on-demand discovery: search_tools by intent, get_tool_details for one schema, use_tool to call it. Measured 2026-08-27: 11 tools, 11,386 bytes, ~2,846 meta-tool schema tokens (bytes/4), excluding discovered schemas, results and provider billing. The comparison that matters: houseCARL wired directly is 45 tools, 167,072 bytes, ~41,768 full-schema tokens by the same heuristic. Correction 2026-09-08: Codex has native enabled_tools/disabled_tools filters; Claude Code supports deferred Tool Search. The earlier universal all-tools-every-turn comparison was wrong; no billed saving was measured. Proven end to end against this pack's own houseCARL on 2026-08-27: search_tools('list the plugins in the active load order') -> get_tool_details (3,652 chars, ~913 tokens for that ONE schema) -> use_tool returned live data from the shim (2,999 mods, 2,995 plugins). Startup 1.2s, search 400ms, detail 200ms. NOT wired into a profile, and the reason is specific rather than cautious: the router reads its own config at %USERPROFILE%\\.super-mcp\\config.json, so enabling it means this pack writing and preserving a THIRD-PARTY tool's config file -- a second config writer with its own merge obligations, on a 24-star dependency. The measurement is what ships here; the wiring is its own release. One caveat to carry into that decision: BM25 ranking returned housecarl_merge_plugins FIRST for that read-only query, with the correct housecarl_load_order_status third. Discovery works, but the top hit is not automatically the safe one."
+    },
+    {
+      "id": "playwright-cli",
+      "name": "Playwright CLI",
+      "kind": "cli-optional",
+      "install": "npx-or-npm",
+      "version": "0.1.19",
+      "github": {
+        "owner": "microsoft",
+        "repo": "playwright-cli"
+      },
+      "license": "Apache-2.0",
+      "runtimes": [
+        "node22"
+      ],
+      "npm_spec": "@playwright/cli@0.1.19",
+      "npm_integrity": "sha512-eGXIsYa5D+dC6wHGf+9uEislhPGip1djK+yiNAD7BVsXN3WzzR1J4ClFAhYhyu7wSEFqhcPrqXAYeBJF1dKJ7A==",
+      "npm_args": [
+        "--ignore-scripts"
+      ],
+      "offline_asset": null,
+      "required_for": [
+        "browser-cli"
+      ],
+      "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.19 package pins Playwright 1.63.0-alpha-2026-08-31; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving."
     }
   ],
   "pack_version": "8.7.18",

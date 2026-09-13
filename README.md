@@ -1,6 +1,6 @@
 # Ultimate AI Starter Bundle v8.7.18
 
-**v8.7.18:** Fixes the failed RTK install: every download path uses the tested catalog version, stale fallback archives are rejected, and RTK is validated before atomic replacement with a recoverable backup. The v8.7.17 Codex profile and packaging fixes remain included.
+**v8.7.18:** Fixes RTK's failed install and Hermes' relocated model-picker API, preserves selected providers during updates, refreshes compatible dependencies, and adds Playwright CLI without another always-on MCP. Token guidance now distinguishes schema size, cache reuse and actual billing. The v8.7.17 Codex profile and packaging fixes remain included. [Maintenance decisions](docs/TOOL-EVALUATIONS.md#2026-09-13-maintenance-and-browser-cli).
 
 ### Creating a complete GitHub project
 

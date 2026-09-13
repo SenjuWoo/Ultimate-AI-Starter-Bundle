@@ -7,6 +7,10 @@ metadata:
 
 # Tool discovery (portable)
 
+For browser work, use native tools first; the optional shell fallback is
+[Playwright CLI](references/browser-cli.md), installed without an MCP schema
+or a second skill-directory writer.
+
 Never hardcode `C:\Users\<name>`, `S:\Apps`, or `Z:\Backup` as authority. Those may appear only as **example** paths on the pack author's machine.
 
 ## Resolution order (every tool)

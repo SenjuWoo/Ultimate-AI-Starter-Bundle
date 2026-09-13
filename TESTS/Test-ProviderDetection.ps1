@@ -140,6 +140,48 @@ try {
     } else {
         Bad 'no fallback when nothing is detected: a fresh machine would get an empty install'
     }
+    # Run the actual updater against no-op fixture installers. No network,
+    # credentials or real provider homes: check defaults and both forwarding paths.
+    $updateRoot = Join-Path $sandboxRoot 'update'
+    New-Item -ItemType Directory -Force -Path (Join-Path $updateRoot 'TOOLS') | Out-Null
+    Copy-Item -LiteralPath (Join-Path $PackRoot 'TOOLS\Update-From-GitHub.ps1') -Destination (Join-Path $updateRoot 'TOOLS\Update-From-GitHub.ps1')
+    $commonStub = @'
+function Get-UabsPackRoot { Split-Path -Parent $PSScriptRoot }
+function Get-UabsCatalog { @{components=@()} }
+function Write-UabsStep($m) {}
+'@
+    [IO.File]::WriteAllText((Join-Path $updateRoot 'TOOLS\UABS-Common.ps1'), $commonStub)
+    $installerStub = @'
+param([string[]]$Providers=@(), [string]$Mode)
+$value = ($Providers -join ',')
+if ($value -ne [string]$env:UABS_TEST_PROVIDERS) { throw "Wrong providers: $value" }
+Write-Output 'FORWARDING_OK'
+'@
+    foreach ($name in @('INSTALL-REMOTE.ps1','INSTALL-AIO.ps1')) {
+        [IO.File]::WriteAllText((Join-Path $updateRoot $name), $installerStub)
+    }
+    $savedLocal = $env:LOCALAPPDATA
+    $savedExpected = $env:UABS_TEST_PROVIDERS
+    try {
+        $env:LOCALAPPDATA = $updateRoot
+        $updater = Join-Path $updateRoot 'TOOLS\Update-From-GitHub.ps1'
+        foreach ($wanted in @('', 'Claude,Hermes')) {
+            $env:UABS_TEST_PROVIDERS = $wanted
+            foreach ($componentMode in @($false, $true)) {
+                $updateArgs = @{Providers=@($wanted)}
+                if ($componentMode) { $updateArgs.ComponentsOnly=$true; $updateArgs.InstallAfter=$true; $updateArgs.Components=@() }
+                $out = & $updater @updateArgs | Out-String
+                if ($out -notmatch 'FORWARDING_OK') { throw 'Updater did not reach the selected installer' }
+            }
+        }
+        # Also exercise the parameter's implicit default, not just explicit [].
+        $env:UABS_TEST_PROVIDERS = ''
+        if ((& $updater | Out-String) -notmatch 'FORWARDING_OK') { throw 'Updater default failed' }
+        Good 'updater preserves auto-detection and comma-separated provider choices on both paths'
+    } finally {
+        $env:LOCALAPPDATA = $savedLocal
+        $env:UABS_TEST_PROVIDERS = $savedExpected
+    }
 } finally {
     if (Test-Path -LiteralPath $sandboxRoot) {
         Remove-Item -LiteralPath $sandboxRoot -Recurse -Force -ErrorAction SilentlyContinue

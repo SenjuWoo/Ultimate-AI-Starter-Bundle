@@ -1,5 +1,58 @@
 # Tool evaluations
 
+## 2026-09-13 maintenance and browser CLI
+
+**Taken:** Microsoft's [Playwright CLI](https://github.com/microsoft/playwright-cli)
+0.1.19, pinned to npm integrity. Three packages installed in an isolated prefix
+with lifecycle scripts disabled; npm audit reported zero dependency advisories.
+On Windows, a named non-persistent headless session opened example.com,
+returned `Example Domain` through a targeted evaluation, and closed successfully.
+No user browser profile was attached. The package pins an alpha Playwright
+build; this is limited smoke evidence, not all-site compatibility proof.
+The CLI returns snapshot files instead of forcing their full content into the
+conversation. It adds no MCP registration; guidance lives in the existing
+tool-discovery skill. Keep native browser tools first and Playwright MCP for
+hosts/workflows that benefit from its tool interface.
+
+The same transport probe measured Playwright MCP 0.0.80 at 24 tools / 18,502
+compact JSON schema bytes. The CLI has no MCP schema, but command, instruction,
+result and screenshot costs remain. **No billed-token or task-quality saving
+was measured.**
+
+Compatible update checks (initialize followed by tools/list; no mutations):
+
+| Candidate | Advertised tools | Compact schema bytes |
+|---|---:|---:|
+| Context7 4.1.0 | 2 | 4,864 |
+| GitHub MCP 1.12.1, five configured toolsets | 45 | 124,099 |
+| Chrome DevTools MCP 1.9.0, telemetry disabled | 29 | 26,018 |
+| shadcn 4.21.0 | 7 | 4,495 |
+
+Context7 also answered both documentation tools without credentials. Its
+capability sweep uses a different JSON serialization (4,870 bytes); do not
+compare that with compact transport bytes as a performance change.
+CodeBurn 0.9.24's version probe passed and its isolated production dependency
+audit reported zero advisories. These checks are not malware certification.
+[GitHub 1.12.1 fixes advertised OAuth scopes](https://github.com/github/github-mcp-server/releases/tag/v1.12.1);
+its Windows archive matched the upstream SHA-256 before adoption.
+
+**Held:** [houseCARL 2.0](https://github.com/Avick3110/houseCARL/releases/tag/v2.0.0)
+deletes the 1.x tool and parameter API. Keep 1.9.0 pinned until its skills,
+profiles and live read-only checks migrate together. RTK stays 0.47.0 with
+the narrow tested rewrite policy; 0.49.0 is not benchmarked. Impeccable CLI
+4.1.0 / skill 4.3.1 introduces a native engine and first-use downloads; keep
+the audited 3.6.1 / 4.1.3 pair until the new engine preserves our security
+patches and single-writer deployment. These are explicit compatibility holds,
+not claims to be at upstream latest.
+
+**Rechecked, not bundled:** [AgentSeal](https://github.com/getagentseal/agentseal)
+now clearly declares FSL-1.1-Apache-2.0, a source-available license with delayed
+Apache conversion, not current Apache-2.0 licensing for all code. Its local
+guard concept remains useful, but it is not adopted as a security guarantee
+or an unattended quarantine service. Native provider filtering/deferred
+discovery already covers much of Super-MCP Router's purpose; no new global
+proxy, memory daemon or overlapping skill collection was added.
+
 Why a candidate was taken or left. A rejection with no recorded reason gets
 re-proposed every few months, and a tool that was right to reject in August may
 be right to take in December — but only if the reason is written down and can

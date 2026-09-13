@@ -222,15 +222,19 @@ function Invoke-UabsGitHubLatest {
 
 function Get-UabsComponentGitHubRelease {
   param($Comp)
-  if ($Comp.id -ne 'rtk') {
+  $tag = [string]$Comp.release_tag
+  if ($Comp.id -eq 'rtk') {
+    # RTK's hook and benchmarks require the catalog version, not upstream latest.
+    if ([string]$Comp.version -notmatch '^\d+\.\d+\.\d+$') { throw 'RTK catalog version is invalid.' }
+    $tag = 'v' + $Comp.version
+  }
+  if (-not $tag) {
     return Invoke-UabsGitHubLatest -Owner $Comp.github.owner -Repo $Comp.github.repo
   }
-  # RTK's hook and benchmarks require the catalog version, not upstream latest.
-  if ([string]$Comp.version -notmatch '^\d+\.\d+\.\d+$') { throw 'RTK catalog version is invalid.' }
-  $tag = 'v' + $Comp.version
+  if ($tag -notmatch '^[A-Za-z0-9][A-Za-z0-9._-]*$') { throw 'Catalog release_tag is invalid.' }
   $uri = "https://api.github.com/repos/$($Comp.github.owner)/$($Comp.github.repo)/releases/tags/$tag"
   $release = Invoke-RestMethod -Uri $uri -Headers $script:UabsHeaders -TimeoutSec 60
-  if ($release.tag_name -ne $tag) { throw "RTK release tag mismatch: expected $tag" }
+  if ($release.tag_name -ne $tag) { throw "$($Comp.id) release tag mismatch: expected $tag" }
   return $release
 }
 

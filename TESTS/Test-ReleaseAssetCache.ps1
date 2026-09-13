@@ -115,6 +115,14 @@ try {
   if (-not $rejected) { throw 'wrong release tag was accepted' }
   $comp.id = 'another-tool'
   if ((Get-UabsComponentGitHubRelease -Comp $comp).tag_name -ne 'v0.48.0') { throw 'non-RTK latest behavior changed' }
+  $pinned = [pscustomobject]@{id='housecarl';release_tag='v1.9.0';github=@{owner='Avick3110';repo='houseCARL'}}
+  $script:testTag = 'v1.9.0'
+  [void](Get-UabsComponentGitHubRelease -Comp $pinned)
+  if ($script:testUris[-1] -notlike '*/tags/v1.9.0') { throw 'explicit compatibility pin ignored' }
+  $pinned.release_tag = '../latest'
+  $rejected = $false
+  try { [void](Get-UabsComponentGitHubRelease -Comp $pinned) } catch { $rejected = $true }
+  if (-not $rejected) { throw 'malformed compatibility pin accepted' }
   $comp.id = 'rtk'; $script:testTag = 'v0.47.0'
   $Mode = 'BundledOnly'; $script:testUris = @()
   if (Get-ComponentAssetPath -Comp $comp) { throw 'Core trusted an unrecorded cached RTK' }
