@@ -1,3 +1,4 @@
+<!-- Ultimate AI Starter Bundle v8.7.18 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
