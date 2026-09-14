@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.18",
-  "generated": "2026-09-09",
-  "release_tag": "v8.7.18",
+  "version": "8.7.19",
+  "generated": "2026-09-14",
+  "release_tag": "v8.7.19",
   "canonical_skills": 167,
   "provider_trees": 5,
   "registry_entries": 167,
@@ -21,6 +21,6 @@
     "TESTS/Test-McpProfiles.ps1",
     "TOOLS/mcp_handshake.py --selftest"
   ],
-  "runtime_status": "v8.7.18: Windows PowerShell regression executes the bundled RTK 0.47.0 binary and tests catalog-tag selection despite a newer upstream release, Core without an offline asset, poisoned cache rejection, verified offline fallback, candidate validation before replacement, fresh installation, locked-file preservation, backup and post-check rollback. RTK 0.48.0 is not adopted or benchmarked. Prior native MCP scope and protocol tests remain included; loaded/cached/billed token savings are not claimed. Full local installation and public release proof are separate from these regression results.",
+  "runtime_status": "v8.7.19: Windows PowerShell regressions cover the exact legacy Grok Impeccable hook migration, both event commands, byte-preserving backup, repeated repair, custom settings, no-op without a project launcher, and launcher invocation in spaces/Unicode/! paths. Whole-tree local skill overrides survive sync; changed or missing copies fail closed, and removing an override rejoins managed sync. Previous RTK transaction and MCP protocol/scope regressions remain included. Impeccable native-engine behavior and billing savings are not certified. Full local installation and public release proof are separate from fixture results.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

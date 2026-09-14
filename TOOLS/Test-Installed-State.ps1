@@ -171,11 +171,14 @@ if(-not $SkipSkills){
     })
     if($expectedSkills.Count -eq 0){Err "$provider bundled skill source contains zero skills.";continue}
 
+    $preserved=@(Get-UabsPreservedSkillNames -Provider $provider -SkillsDir $destSkills)
+    $localOwned=0
     $verified=0
     $nativeOwned=0
     $builtinOwned=0
     foreach($skillDir in $expectedSkills){
       $skill=$skillDir.Name
+      if($preserved -contains $skill){$localOwned++;continue}
       $src=Join-Path $skillDir.FullName 'SKILL.md'
       $dst=Join-Path $destSkills ("$skill\SKILL.md")
       if(Test-Path -LiteralPath $dst -PathType Leaf){
@@ -197,6 +200,7 @@ if(-not $SkipSkills){
     }
     $ownedNote=''
     if($builtinOwned){ $ownedNote=", $builtinOwned owned by Codex itself" }
+    if($localOwned){ $ownedNote+=", $localOwned verified local override(s)" }
     Write-UabsOk ("$provider bundled skills accounted: $verified exact file(s), $nativeOwned native-plugin-owned$ownedNote, $($expectedSkills.Count) expected.")
 
     # Codex renders its skills index into a FIXED block of roughly 22.3 KB and

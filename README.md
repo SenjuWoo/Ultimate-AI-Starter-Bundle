@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.18 -->
+<!-- Ultimate AI Starter Bundle v8.7.19 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.18
+# Ultimate AI Starter Bundle v8.7.19
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -13,10 +13,10 @@ Skills, MCP servers, plugins, and offline tools for Claude Code, Codex, Grok,
 Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 
 <p>
-  <a href="https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
-  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.18-7c9cff?labelColor=0d1117" alt="v8.7.18"></a>
-  <a href="https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/releases/tag/v8.7.18"><img src="https://img.shields.io/badge/latest%20release-v8.7.18-9db0e8?labelColor=0d1117" alt="latest release v8.7.18"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.19-7c9cff?labelColor=0d1117" alt="v8.7.19"></a>
+  <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.7.19"><img src="https://img.shields.io/badge/latest%20release-v8.7.19-9db0e8?labelColor=0d1117" alt="latest release v8.7.19"></a>
 </p>
 
 <p>
@@ -35,13 +35,17 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
   <img src="assets/hero.svg" alt="Installed is not enabled: five providers, parked optional MCPs" width="100%">
 </p>
 
-**v8.7.18:** Fixes RTK's failed install and Hermes' relocated model-picker API, preserves selected providers during updates, refreshes compatible dependencies, and adds Playwright CLI without another always-on MCP. Skill routing is portable across Grok and the other providers: unprefixed skill names, pasted tool roots as hints, and release archives rebuilt from current source. Token guidance now distinguishes schema size, cache reuse and actual billing. The v8.7.17 Codex profile and packaging fixes remain included. [Maintenance decisions](docs/TOOL-EVALUATIONS.md#2026-09-13-maintenance-and-browser-cli).
+**v8.7.19:** Repairs Grok's legacy Impeccable Bash hooks for PowerShell, detects invalid third-party hooks, and preserves explicitly reviewed local skill overrides through updates. Bootstrap and repository links follow the move to `SenjuWoo`. Includes v8.7.18's portable skill routing, RTK/Hermes fixes, compatible dependency updates and Playwright CLI. [Release notes](docs/history/V8.7.19-CHANGELOG.md).
 
 ### Creating a complete GitHub project
 
 "Make a repo" now routes the existing `coding-discipline` and `one-shot-completion` skills to the [repository completion contract](_CANONICAL-SKILLS/github-fleet-maintenance/references/repository-completion.md). It covers real CI, applicable CodeQL/code scanning, Dependabot alerts/security updates/version updates, secret scanning/push protection, vulnerability reporting, a useful README, and usable release assets. The AI must verify server-side settings separately from files and verify published downloads against its build. Public release approval is reused when already given; otherwise the release is prepared before asking. Explicit empty-repo requests stay empty. This adds no MCP server or skill-index entry.
 
-If Grok shows two working and two failed Stop hooks, run `TOOLS\Install-Completeness-Gate.ps1 -Providers Grok` and restart Grok. Its hook-only repair preserves your MCP choices and other settings; the doctor detects effective duplicate registrations.
+If Grok reports failed Stop hooks or `global/impeccable` PowerShell errors, run `TOOLS\Install-Completeness-Gate.ps1 -Providers Grok` and restart Grok. It repairs the exact known legacy Impeccable command and Claude-hook inheritance, preserving MCP choices and custom commands. Impeccable remains project-gated: the repair does not start its engine globally or download it.
+
+### Keeping a reviewed local skill update
+
+The installer normally refreshes bundled skill names. To retain an independently maintained copy, record it in the **local-only** `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\skill-overrides.json`: `schema: 1`, then `providers`, provider name, skill name, with `digest` and a nonempty `reason`. Calculate the digest using `Get-UabsTreeDigest -Ordinal` from `TOOLS\UABS-Common.ps1`, after reviewing and backing up the entire skill directory. Do not use an ordinary single-file SHA in its place. The installer and doctor verify that whole-tree digest and report it separately as a local override, never as a bundle match. Changed or missing overrides require review; removing an entry rejoins normal bundle-managed sync. Fresh installs have no overrides. Do not publish this registry or private `/learn` reports.
 
 **Ultimate multi-provider AI starter kit** - not a Skyrim-only pack.
 
@@ -155,7 +159,7 @@ and backup-first; `-SkipPreamble` opts out. Full map:
 **Fresh machine, nothing installed - one command:**
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/ShugokiFable/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/SenjuWoo/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
 ```
 
 Downloads the latest release, extracts to `%LOCALAPPDATA%\Programs\Ultimate-AI-Starter-Bundle`,
@@ -163,7 +167,7 @@ and runs the full installer (skills, tools, MCP servers, gates, SOUL + AIO
 preamble). With parameters:
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/ShugokiFable/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1))) -Providers Claude,Grok"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/SenjuWoo/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1))) -Providers Claude,Grok"
 ```
 
 Or double-click `INSTALL-REMOTE.bat`. Re-running is a no-op.
@@ -205,7 +209,7 @@ archives must match the shipped SHA-256 manifest; a rejected replacement
 leaves the previous executable intact. Successful replacements retain a
 `rtk.exe.bak-uabs-*` backup beside the executable. If v8.7.17 stopped with
 `rtk installed version 0.48.0, expected 0.47.0`, rerun `START-HERE.bat` from
-v8.7.18 to repair it and finish the interrupted install.
+v8.7.19 to repair it and finish the interrupted install.
 
 ### There are exactly two .bat files, and they do different things
 
@@ -753,7 +757,7 @@ registry.
 
 ## Version
 
-**v8.7.18** - 2026-09-14. RTK version-selection and transactional-install hotfix, with executable regression coverage, plus Grok-portable skill routing. **167 canonical skills**, no new dependency or always-on server. See [release notes](docs/history/V8.7.18-CHANGELOG.md).
+**v8.7.19** - 2026-09-14. Grok Impeccable hook repair, verified local skill preservation and repository-rename synchronization. **167 canonical skills**, no new dependency or always-on server. See [release notes](docs/history/V8.7.19-CHANGELOG.md).
 
 **v8.7.17** - 2026-09-09. Trusted-project Codex MCP routing, preserved custom filters and provider ownership, native integration tests, and corrected schema measurement. **167 canonical skills**, no new MCP or dependency. See [release notes](docs/history/V8.7.17-CHANGELOG.md). Older dated entries retain historical conclusions; v8.7.17 corrects their universal per-turn billing and Codex scope claims.
 

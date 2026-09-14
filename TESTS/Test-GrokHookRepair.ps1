@@ -48,8 +48,8 @@ try {
   $inspection = [pscustomobject]@{
     externalCompat = [pscustomobject]@{ cells = @([pscustomobject]@{vendor='claude';surface='hooks';enabled=$true}) }
     hooks = @(
-      [pscustomobject]@{event='stop'; target='& "python.exe" "completeness_gate.py" --stop';source=[pscustomobject]@{path='C:\fixture\.grok\hooks'}},
-      [pscustomobject]@{event='stop'; target='"python.exe" "completeness_gate.py" --stop';source=[pscustomobject]@{path='C:\fixture\.claude'}}
+      [pscustomobject]@{event='stop'; target='& "python.exe" "completeness_gate.py" --stop';source=[pscustomobject]@{type='user';path=(Join-Path (Get-UabsProviderHome -Provider Grok -Catalog (Get-UabsCatalog)) 'hooks')}},
+      [pscustomobject]@{event='stop'; target='"python.exe" "completeness_gate.py" --stop';source=[pscustomobject]@{type='user';path='C:\fixture\.claude'}}
     )
   }
   Assert (@(Get-UabsGrokHookIssues -Inspection $inspection).Count -eq 1) 'Inherited duplicate was not detected.'
@@ -57,6 +57,45 @@ try {
   Assert (@(Get-UabsGrokHookIssues -Inspection $inspection).Count -eq 0) 'Disabled discovery was misreported as active.'
   $inspection.hooks[0].target = '"python.exe" "completeness_gate.py" --stop'
   Assert (@(Get-UabsGrokHookIssues -Inspection $inspection).Count -eq 1) 'Broken native PowerShell command was not detected.'
+  $bash = '[ ! -f ".grok/skills/impeccable/scripts/impeccable" ] || ".grok/skills/impeccable/scripts/impeccable" hook'
+  $inspection.hooks[0].target = $bash
+  Assert (@(Get-UabsGrokHookIssues -Inspection $inspection).Count -eq 1) 'Unmanaged Impeccable Bash syntax was missed.'
+  $inspection.hooks[0].source = [pscustomobject]@{type='user';path='C:\fixture\custom Grok home\hooks'}
+  Assert (@(Get-UabsGrokHookIssues -Inspection $inspection -HooksDir 'C:\fixture\custom Grok home\hooks').Count -eq 1) 'Custom Grok home escaped hook syntax checking.'
+  $inspection.hooks[0].source.path = Join-Path (Get-UabsProviderHome -Provider Grok -Catalog (Get-UabsCatalog)) 'hooks'
+  $hookPath = Join-Path $fixtureRoot 'impeccable.json'
+  $hookDoc = @{hooks=@{PostToolUse=@(@{matcher='Edit|Write|MultiEdit';hooks=@(@{command=$bash;timeout=5})});Stop=@(@{hooks=@(@{command=$bash;timeout=30})})};personal='keep'}
+  $original = $hookDoc | ConvertTo-Json -Depth 10
+  [IO.File]::WriteAllText($hookPath, $original, $utf8)
+  Repair-UabsGrokImpeccableHook -Path $hookPath
+  $repaired = [IO.File]::ReadAllText($hookPath)
+  $parsed = $repaired | ConvertFrom-Json
+  Assert ($parsed.personal -eq 'keep' -and $parsed.hooks.Stop[0].hooks[0].timeout -eq 30) 'Hook repair changed unrelated settings.'
+  $fixed = $parsed.hooks.PostToolUse[0].hooks[0].command
+  Assert ($fixed -eq $parsed.hooks.Stop[0].hooks[0].command -and $fixed -ne $bash) 'Both legacy commands were not repaired.'
+  $inspection.hooks[0].target = $fixed
+  Assert (@(Get-UabsGrokHookIssues -Inspection $inspection).Count -eq 0) 'Repaired Impeccable is not valid PowerShell.'
+  Repair-UabsGrokImpeccableHook -Path $hookPath
+  Assert ([IO.File]::ReadAllText($hookPath) -ceq $repaired) 'Hook repair is not idempotent.'
+  $backups = @(Get-ChildItem -LiteralPath $fixtureRoot -Filter 'impeccable.json.before-powershell-*.bak')
+  Assert ($backups.Count -eq 1 -and [IO.File]::ReadAllText($backups[0].FullName) -ceq $original) 'Hook backup missing, duplicated or altered.'
+  $custom = $original.Replace($bash.Replace('"','\"'), 'Write-Output custom')
+  [IO.File]::WriteAllText($hookPath, $custom, $utf8)
+  Repair-UabsGrokImpeccableHook -Path $hookPath
+  Assert ([IO.File]::ReadAllText($hookPath) -ceq $custom) 'Unknown custom hook was overwritten.'
+  $project = Join-Path $fixtureRoot ('project ! ' + [char]0x00E9)
+  New-Item -ItemType Directory -Path $project | Out-Null
+  Push-Location -LiteralPath $project
+  try {
+    $global:LASTEXITCODE = 0
+    & ([scriptblock]::Create($fixed))
+    Assert ($LASTEXITCODE -eq 0) 'Absent project launcher was not a silent no-op.'
+    $scripts = Join-Path $project '.grok\skills\impeccable\scripts'
+    New-Item -ItemType Directory -Force -Path $scripts | Out-Null
+    [IO.File]::WriteAllText((Join-Path $scripts 'impeccable.cmd'), "@echo off`r`nif not `"%1`"==`"hook`" exit /b 8`r`necho called>proof.txt`r`nexit /b 0`r`n", $utf8)
+    & ([scriptblock]::Create($fixed))
+    Assert ($LASTEXITCODE -eq 0 -and (Test-Path -LiteralPath (Join-Path $project 'proof.txt'))) 'Project launcher did not receive hook in a spaces/Unicode/! path.'
+  } finally { Pop-Location }
   $inspection.externalCompat.cells = @()
   $refused = $false
   try { Get-UabsGrokHookIssues -Inspection $inspection | Out-Null } catch { $refused = $true }

@@ -576,14 +576,40 @@ function Copy-UabsRobo([string]$From, [string]$To) {
   }
 }
 
-function Get-UabsTreeDigest([string]$Path) {
+function Get-UabsTreeDigest([string]$Path, [switch]$Ordinal) {
   $root = (Resolve-Path -LiteralPath $Path).Path.TrimEnd('\') + '\'
   $rows = @(Get-ChildItem -LiteralPath $Path -Recurse -File -Force -ErrorAction Stop |
-    ForEach-Object { $_.FullName.Substring($root.Length).Replace('\','/') + '=' + (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash } |
-    Sort-Object)
+    ForEach-Object { $_.FullName.Substring($root.Length).Replace('\','/') + '=' + (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash })
+  # New portable fingerprints use ordinal sorting; keep old ledger semantics.
+  if ($Ordinal) { [string[]]$rows = $rows; [Array]::Sort($rows, [StringComparer]::Ordinal) }
+  else { $rows = @($rows | Sort-Object) }
   $bytes = [Text.Encoding]::UTF8.GetBytes(($rows -join "`n"))
   $sha = [Security.Cryptography.SHA256]::Create()
   try { return ([BitConverter]::ToString($sha.ComputeHash($bytes))).Replace('-','') } finally { $sha.Dispose() }
+}
+
+function Get-UabsPreservedSkillNames([string]$Provider, [string]$SkillsDir) {
+  # Local, explicit ownership exceptions. A changed digest requires review;
+  # never silently accept arbitrary drift or overwrite an approved local copy.
+  $path = Join-Path (Get-UabsStateRoot) 'skill-overrides.json'
+  if (-not $Provider -or -not (Test-Path -LiteralPath $path -PathType Leaf)) { return }
+  $doc = [IO.File]::ReadAllText($path) | ConvertFrom-Json
+  if ($doc.schema -ne 1 -or -not $doc.providers) { throw ('Invalid skill override registry: ' + $path) }
+  $entry = $doc.providers.PSObject.Properties[$Provider]
+  if (-not $entry) { return }
+  foreach ($skill in $entry.Value.PSObject.Properties) {
+    if ($skill.Name -notmatch '^[a-z0-9][a-z0-9-]*$' -or
+        [string]$skill.Value.digest -notmatch '^[a-fA-F0-9]{64}$' -or
+        [string]::IsNullOrWhiteSpace([string]$skill.Value.reason)) {
+      throw ('Invalid local skill override for ' + $Provider + ': ' + $skill.Name)
+    }
+    $dir = Join-Path $SkillsDir $skill.Name
+    if (-not (Test-Path -LiteralPath (Join-Path $dir 'SKILL.md') -PathType Leaf) -or
+        (Get-UabsTreeDigest $dir -Ordinal) -ne $skill.Value.digest) {
+      throw ('Local skill override changed or missing: ' + $Provider + '/' + $skill.Name + '. Review before syncing; registry: ' + $path)
+    }
+    $skill.Name
+  }
 }
 
 function Sync-UabsProviderSkills(
@@ -605,6 +631,9 @@ function Sync-UabsProviderSkills(
   if (-not (Test-Path -LiteralPath $From -PathType Container)) {
     throw ('provider skill source missing: ' + $From)
   }
+  $preserved = @(Get-UabsPreservedSkillNames -Provider $Provider -SkillsDir $To)
+  $ExcludeNames = @($ExcludeNames) + $preserved
+  foreach ($name in $preserved) { Write-UabsOk ($Provider + ': verified local skill override preserved: ' + $name) }
   New-Item -ItemType Directory -Force -Path $To | Out-Null
 
   # Clean interrupted V8 staging only. The exact prefix is bundle-owned.
@@ -625,6 +654,7 @@ function Sync-UabsProviderSkills(
       try {
         $previous = [IO.File]::ReadAllText($ledgerPath) | ConvertFrom-Json
         foreach ($entry in @($previous.skills)) {
+          if ($preserved -contains [string]$entry.name) { continue }
           if ($currentNames -contains [string]$entry.name) { continue }
           $retired = Join-Path $To ([string]$entry.name)
           if (-not (Test-Path -LiteralPath $retired -PathType Container)) { continue }
@@ -792,7 +822,7 @@ function Set-UabsGrokCompatCells {
     [switch]$HooksOnly
   )
   if (-not $ConfigPath) {
-    $grokDir = Join-Path $env:USERPROFILE '.grok'
+    $grokDir = Get-UabsProviderHome -Provider Grok -Catalog (Get-UabsCatalog)
     $ConfigPath = Join-Path $grokDir 'config.toml'
   } else {
     $grokDir = Split-Path $ConfigPath -Parent
@@ -846,22 +876,51 @@ function Set-UabsGrokCompatCells {
   }
 }
 
+function Repair-UabsGrokImpeccableHook([string]$Path) {
+  if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { return }
+  if ((Get-Item -LiteralPath $Path).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Refusing a redirected Grok hook file.' }
+  $before = [IO.File]::ReadAllText($Path)
+  $null = $before | ConvertFrom-Json
+  $old = '[ ! -f ".grok/skills/impeccable/scripts/impeccable" ] || ".grok/skills/impeccable/scripts/impeccable" hook'
+  # Preserve the original project-relative guard: no new global engine startup.
+  $new = 'if (Test-Path -LiteralPath ".grok/skills/impeccable/scripts/impeccable.cmd" -PathType Leaf) { & ".grok/skills/impeccable/scripts/impeccable.cmd" hook }'
+  $pattern = '("command"\s*:\s*)' + [regex]::Escape(($old | ConvertTo-Json -Compress))
+  $encoded = $new | ConvertTo-Json -Compress
+  $after = [regex]::Replace($before, $pattern, [System.Text.RegularExpressions.MatchEvaluator]{ param($m) $m.Groups[1].Value + $encoded })
+  if ($after -ceq $before) { return }
+  $null = $after | ConvertFrom-Json
+  $bytes = [IO.File]::ReadAllBytes($Path)
+  $bom = $bytes.Length -ge 3 -and $bytes[0] -eq 239 -and $bytes[1] -eq 187 -and $bytes[2] -eq 191
+  $backup = $Path + '.before-powershell-' + [Guid]::NewGuid().ToString('N') + '.bak'
+  $temp = $Path + '.tmp-' + [Guid]::NewGuid().ToString('N')
+  try {
+    [IO.File]::WriteAllText($temp, $after, (New-Object Text.UTF8Encoding $bom))
+    [IO.File]::Replace($temp, $Path, $backup)
+    if ([IO.File]::ReadAllText($Path) -cne $after) {
+      Copy-Item -LiteralPath $backup -Destination $Path -Force
+      throw 'Grok hook verification failed; original restored.'
+    }
+    Write-UabsOk 'Grok: repaired legacy Impeccable Bash hooks for PowerShell; original backed up'
+  } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
+}
+
 function Get-UabsGrokHookIssues {
-  param([Parameter(Mandatory=$true)]$Inspection)
+  param([Parameter(Mandatory=$true)]$Inspection, [string]$HooksDir)
   # inspect lists discovered hooks even when disabled. Consult the effective
   # compatibility cell before treating a discovered Claude hook as active.
   $cell = @($Inspection.externalCompat.cells | Where-Object { $_.vendor -eq 'claude' -and $_.surface -eq 'hooks' })
   if ($cell.Count -ne 1) { throw 'Grok inspect did not report its effective Claude hooks compatibility cell.' }
   $managed = 'completeness_gate\.py|assumption_gate\.py|rtk_safe_hook\.py'
-  $native = @($Inspection.hooks | Where-Object { $_.target -match $managed -and $_.source.path -match '[\\/]\.grok[\\/]hooks$' })
+  if (-not $HooksDir) { $HooksDir = Join-Path (Get-UabsProviderHome -Provider Grok -Catalog (Get-UabsCatalog)) 'hooks' }
+  $native = @($Inspection.hooks | Where-Object { ([string]$_.source.path).TrimEnd('\','/').Replace('/','\') -ieq $HooksDir.TrimEnd('\','/').Replace('/','\') })
   $inherited = @($Inspection.hooks | Where-Object { $_.target -match $managed -and $_.source.path -match '[\\/]\.claude(?:[\\/]|$)' })
-  if ($native.Count -and $inherited.Count -and $cell[0].enabled -eq $true) {
+  if (@($native | Where-Object { $_.target -match $managed }).Count -and $inherited.Count -and $cell[0].enabled -eq $true) {
     'Grok is inheriting duplicate Claude bundle hooks. Run TOOLS\Install-Completeness-Gate.ps1 -Providers Grok, then restart Grok.'
   }
   foreach ($hook in $native) {
     $parseErrors = $null; $tokens = $null
     [void][System.Management.Automation.Language.Parser]::ParseInput($hook.target, [ref]$tokens, [ref]$parseErrors)
-    if ($parseErrors.Count) { 'Grok native ' + $hook.event + ' bundle hook is not valid PowerShell. Re-run the hook installer.' }
+    if ($parseErrors.Count) { 'Grok native ' + $hook.event + ' hook is not valid PowerShell. Run TOOLS\Install-Completeness-Gate.ps1 -Providers Grok; review custom hooks if it persists.' }
   }
 }
 
@@ -1281,9 +1340,14 @@ function Remove-UabsPluginOwnedSkillCopies {
   )
   $result = [ordered]@{ removed = @(); skipped_modified = @(); skipped = @() }
   if (-not (Test-Path -LiteralPath $SkillsDir -PathType Container)) { return $result }
+  $preserved = @(Get-UabsPreservedSkillNames -Provider $Provider -SkillsDir $SkillsDir)
   $ts = Get-Date -Format 'yyyyMMdd-HHmmss'
   $bkDir = Join-Path $BackupRoot ('dedupe-' + $Provider + '-' + $ts)
   foreach ($name in $Names) {
+    if ($preserved -contains $name) {
+      $result.skipped += ($name + ' (verified local override - kept)')
+      continue
+    }
     $target = Join-Path $SkillsDir $name
     if (-not (Test-Path -LiteralPath $target -PathType Container)) { continue }
     $copyMd = Join-Path $target 'SKILL.md'

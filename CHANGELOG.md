@@ -1,3 +1,13 @@
+## 8.7.19
+
+- Repair the exact legacy Impeccable Bash command in Grok's native hooks with a PowerShell command and Windows launcher. Preserve its project-relative guard, timeouts and unrelated custom settings; back up before atomic replacement.
+- Check all native user Grok hook commands for PowerShell syntax, not only bundle-named gates. Disabled inherited hooks and plugin descriptors are not misclassified as executable commands.
+- Preserve explicitly reviewed local skill overrides through whole-tree digest verification. The installer refuses unreviewed drift; the doctor distinguishes local ownership from exact bundle copies. Fresh installs remain fully managed.
+- Refresh bootstrap URLs, current README links and the bundle's plugin repository pointers for the verified move to SenjuWoo. Preserve historical changelogs.
+- Correct five remaining catalog/profile notes that called schema estimates per-turn bills. Reviewed overrides also survive native-plugin dedupe and retired-skill cleanup; fingerprints use portable ordinal sorting without changing old ownership ledgers.
+- Promote the useful local FOMOD checks: explicit XML encoding, installer-native negative controls and payload parity. Correct the over-broad advice to stop hashing archives: published downloads still require the final build's archive SHA-256.
+- Extend existing Windows PowerShell regressions with hook idempotence, custom-config preservation, project paths containing spaces/Unicode/!, missing-launcher no-op, local override retention, drift rejection and rejoining managed sync. No new dependency, MCP or skill-index entry.
+
 ## 8.7.18
 
 - Make skill routing portable across providers: drop `superpowers:` skill-name prefixes that fail on Grok, treat pasted Steam/tool roots as conversation hints, re-resolve skill load paths after a user patch, accept `!` paths on any drive, write player-facing plain-text Nexus changelogs, and rebuild release artifacts from current source instead of leftover dist zips.

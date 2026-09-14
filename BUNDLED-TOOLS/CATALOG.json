@@ -435,7 +435,7 @@
       "api_key_env": "FIRECRAWL_API_KEY",
       "api_key_optional": true,
       "keyless_registration": "skip",
-      "keyless_skip_reason": "Keyless this server is 2 usable tools out of 25 (scrape, search) for 36,321 bytes of schema, ~9,080 tokens on EVERY turn - and those two duplicate the native web tools the providers already have. Not registered without a key; npx resolves this package on first launch, so nothing is cached either way and nothing is lost by waiting until the other 23 unlock. Override with -RegisterKeylessExtras.",
+      "keyless_skip_reason": "Recorded keyless evaluation: 2 usable tools out of 25 (scrape, search), with 36,321 schema bytes (~9,080 tokens at bytes/4), overlapping native web tools. These historical schema estimates are not a per-turn bill; loading, filtering and caching depend on the host. Not registered without a key by default. Override with -RegisterKeylessExtras.",
       "keyless_note": "Measured against the pinned 3.24.0 with FIRECRAWL_* scrubbed, all 25 tools called: exactly TWO work keyless - firecrawl_scrape and firecrawl_search. 21 answer 'Unauthorized: API key is required', including interact, which this note previously listed as keyless. firecrawl_extract is DEPRECATED ('deprecated and unavailable through MCP'), not key-gated. firecrawl_parse needs FIRECRAWL_API_URL pointing at a self-hosted instance, so Firecrawl's own docs saying 'Search, Scrape and Parse' are free do not hold for this server. Regenerate with TOOLS/measure_mcp_capability.py rather than editing by hand.",
       "keyless_tools": [
         "firecrawl_scrape",
@@ -864,7 +864,7 @@
       "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.19 package pins Playwright 1.63.0-alpha-2026-08-31; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving."
     }
   ],
-  "pack_version": "8.7.18",
+  "pack_version": "8.7.19",
   "updated_utc": "2026-09-08",
   "providers": {
     "Grok": {
@@ -943,7 +943,7 @@
   "provider_config_schemas": {
     "Hermes": 39
   },
-  "catalog_version": "8.7.18",
+  "catalog_version": "8.7.19",
   "updated": "2026-09-03",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

@@ -778,6 +778,9 @@ def test_cleanup_is_dry_run_by_default_and_scoped_to_pack_files() -> None:
 
     # Deletion targets must be pack-owned names, never a bare directory sweep.
     assert "RETIRED-SKILLS.json" in body, "the cleanup no longer reads the declared retired list"
+    assert "Get-UabsPreservedSkillNames" in body and "$preserved -contains $name" in body, (
+        "retired-skill cleanup does not honor verified local ownership"
+    )
     assert "$canonical.ContainsKey($name)" in body, (
         "the cleanup no longer refuses to delete a name that is in the canonical "
         "tree; a stale retired list could then remove a live skill"
@@ -3322,6 +3325,9 @@ def test_codex_scope_and_schema_claims_match_native_support() -> None:
     assert "mcp list --json" in probe and "no config-file fallback" in probe
     for path in ("TOOLS/Measure-McpSchemaCost.ps1", "TOOLS/Test-Installed-State.ps1", "TOOLS/Set-McpProfile.ps1"):
         assert "tokens on every turn" not in ps_code(ROOT / path), path
+    for path in ("BUNDLED-TOOLS/CATALOG.json", "BUNDLED-TOOLS/PROFILES.json"):
+        text = read(ROOT / path).lower()
+        assert "tokens on every turn" not in text and "tokens per turn while enabled" not in text, path
 
 
 def test_no_shipped_text_file_carries_a_stray_control_character() -> None:

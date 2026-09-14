@@ -151,8 +151,13 @@ if (-not $SkipSkills -and $retired.Count) {
   foreach ($provider in $providerSkillDirs.Keys) {
     $dir = $providerSkillDirs[$provider]
     if (-not (Test-Path -LiteralPath $dir -PathType Container)) { continue }
+    $preserved = @(Get-UabsPreservedSkillNames -Provider $provider -SkillsDir $dir)
     foreach ($entry in $retired) {
       $name = [string]$entry.name
+      if ($preserved -contains $name) {
+        [void]$script:Reported.Add("$provider/$name has a verified local override - left alone")
+        continue
+      }
       # Never delete a name the pack currently ships. A retired list that has
       # drifted must not be able to remove a live skill.
       if ($canonical.ContainsKey($name)) {

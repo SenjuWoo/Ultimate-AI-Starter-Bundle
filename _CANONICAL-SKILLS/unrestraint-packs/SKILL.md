@@ -22,7 +22,7 @@ metadata:
 The operator's no-holds prompt library (Ultimate-AI-Starter-Bundle v8.0.0).
 
 - **Local (authoritative):** `Z:\Backup\Ai documentation\Ultimate-AI-Starter-Bundle\0-UNRESTRAINT-PACKS\` — start at its README.md
-- **Remote:** `github.com/ShugokiFable/Ultimate-AI-Starter-Bundle` → `0-UNRESTRAINT-PACKS/`
+- **Remote:** `github.com/SenjuWoo/Ultimate-AI-Starter-Bundle` → `0-UNRESTRAINT-PACKS/`
 
 ## Subpacks
 

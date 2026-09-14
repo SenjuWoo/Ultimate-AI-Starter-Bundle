@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "catalog_version": "8.7.18",
-  "pack_version": "8.7.18",
+  "catalog_version": "8.7.19",
+  "pack_version": "8.7.19",
   "updated_utc": "2026-09-13",
   "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
   "reads": "TOOLS/Set-McpProfile.ps1",
@@ -183,7 +183,7 @@
             "--executable-path",
             "{value}"
           ],
-          "note": "drive a browser for testing and automation (~4,626 tokens per turn while enabled)",
+          "note": "drive a browser for testing and automation (~4,626 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
           "key": null,
           "requires": {
             "command": "npx"
@@ -229,7 +229,7 @@
             "shadcn@4.21.0",
             "mcp"
           ],
-          "note": "search, inspect and add components from configured shadcn registries (~1,124 tokens per turn while enabled)",
+          "note": "search, inspect and add components from configured shadcn registries (~1,124 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
           "key": null,
           "requires": {
             "command": "npx",
@@ -514,7 +514,7 @@
             "-y",
             "@modelcontextprotocol/server-sequential-thinking@2026.7.4"
           ],
-          "note": "explicit step-by-step decomposition (~1,146 tokens per turn while enabled)",
+          "note": "explicit step-by-step decomposition (~1,146 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
           "key": null,
           "requires": {
             "command": "npx"
@@ -548,7 +548,7 @@
             "windows-mcp@0.8.5",
             "serve"
           ],
-          "note": "desktop control: click, type, shortcuts, PowerShell, registry, filesystem, windows, processes (~5,522 tokens per turn while enabled)",
+          "note": "desktop control: click, type, shortcuts, PowerShell, registry, filesystem, windows, processes (~5,522 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
           "key": null,
           "requires": {
             "command": "uvx"

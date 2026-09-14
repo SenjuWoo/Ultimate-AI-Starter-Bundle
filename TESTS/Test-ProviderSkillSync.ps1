@@ -82,6 +82,41 @@ try {
         throw 'unrelated user skill was modified by bundle sync'
     }
 
+    # Explicit local ownership survives sync; drift is not silently accepted.
+    $ordinalDir = Join-Path $tempRoot 'ordinal'
+    New-Item -ItemType Directory -Path $ordinalDir | Out-Null
+    $orderedNames = @('A.txt','Z.txt','a-.txt','a_.txt')
+    $orderedRows = @(foreach($name in $orderedNames) {
+        $file = Join-Path $ordinalDir $name
+        [IO.File]::WriteAllText($file, 'x', $utf8)
+        $name + '=' + (Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash
+    })
+    $sha = [Security.Cryptography.SHA256]::Create()
+    try { $expectedDigest = [BitConverter]::ToString($sha.ComputeHash([Text.Encoding]::UTF8.GetBytes(($orderedRows -join "`n")))).Replace('-','') }
+    finally { $sha.Dispose() }
+    if ((Get-UabsTreeDigest $ordinalDir -Ordinal) -cne $expectedDigest) { throw 'override digest depends on culture/PowerShell edition' }
+    $overrides = Join-Path (Get-UabsStateRoot) 'skill-overrides.json'
+    $overrideDoc = @{schema=1;providers=@{Test=@{'release-checklist'=@{digest=(Get-UabsTreeDigest $dstSkill -Ordinal);reason='Reviewed independent update'}}}}
+    [IO.File]::WriteAllText($overrides, ($overrideDoc | ConvertTo-Json -Depth 5), $utf8)
+    $dedupe = Remove-UabsPluginOwnedSkillCopies -Provider Test -SkillsDir $dstRoot -Names 'release-checklist' -ExpectedRoot $srcRoot -BackupRoot (Join-Path $tempRoot 'backups') -BackupModified
+    if ($dedupe.removed.Count -or -not (Test-Path -LiteralPath $dstFile)) { throw 'plugin/builtin dedupe removed an override' }
+    [IO.File]::WriteAllText($srcFile, 'next-bundled-version', $utf8)
+    Sync-UabsProviderSkills -From $srcRoot -To $dstRoot -Provider Test
+    Sync-UabsProviderSkills -From $srcRoot -To $dstRoot -Provider Test
+    if ([IO.File]::ReadAllText($dstFile) -cne $new) { throw 'approved local override was overwritten or retired' }
+    if (@(Get-UabsPreservedSkillNames -Provider Test -SkillsDir $dstRoot) -notcontains 'release-checklist') { throw 'doctor cannot verify approved override' }
+    [IO.File]::WriteAllText($dstFile, 'unreviewed-drift', $utf8)
+    $refused = $false
+    try { Sync-UabsProviderSkills -From $srcRoot -To $dstRoot -Provider Test } catch { $refused = $true }
+    if (-not $refused -or [IO.File]::ReadAllText($dstFile) -cne 'unreviewed-drift') { throw 'override drift was accepted or overwritten' }
+    Remove-Item -LiteralPath $dstFile
+    $refused = $false
+    try { Get-UabsPreservedSkillNames -Provider Test -SkillsDir $dstRoot | Out-Null } catch { $refused = $true }
+    if (-not $refused) { throw 'missing override was accepted' }
+    Remove-Item -LiteralPath $overrides
+    Sync-UabsProviderSkills -From $srcRoot -To $dstRoot -Provider Test
+    if ([IO.File]::ReadAllText($dstFile) -cne 'next-bundled-version') { throw 'removing override did not rejoin managed sync' }
+
     # The ownership ledger removes a retired, unchanged bundle skill but keeps
     # one the user changed after installation.
     Remove-Item -LiteralPath $srcSkill -Recurse -Force

@@ -252,13 +252,14 @@ foreach ($p in $Providers) {
     }
 
     'Grok' {
-      $dir = Join-Path $env:USERPROFILE '.grok\hooks'
+      $dir = Join-Path (Get-UabsProviderHome -Provider Grok -Catalog (Get-UabsCatalog)) 'hooks'
       if (-not (Test-Path -LiteralPath (Split-Path -Parent $dir))) { Write-Host 'Grok    not installed'; break }
       if ($CheckOnly) { Write-Host "Grok    would write $dir\ultimate-bundle.json"; break }
       New-Item -ItemType Directory -Force -Path $dir | Out-Null
       # A config reset can resurrect the two incompatible Claude Stop hooks.
       # The standalone repair must fix inheritance too, without changing MCPs.
       Set-UabsGrokCompatCells -HooksOnly
+      Repair-UabsGrokImpeccableHook -Path (Join-Path $dir 'impeccable.json')
       $grokBlock = New-HookBlock -Py $python -Root $installRoot -CallOperator
       $hookFile = Join-Path $dir 'ultimate-bundle.json'
       $hookText = ([ordered]@{ hooks = $grokBlock }) | ConvertTo-Json -Depth 20

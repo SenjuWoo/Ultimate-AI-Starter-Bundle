@@ -1,4 +1,4 @@
-Ultimate AI Starter Bundle V8.7.18 - ALL-IN-ONE STARTER
+Ultimate AI Starter Bundle V8.7.19 - ALL-IN-ONE STARTER
 ======================================================
 
 Not just Skyrim. A full multi-provider AI starter bundle: skills, MCP tools,
@@ -13,7 +13,7 @@ NEW USERS - ONE COMMAND
 Fresh machine, nothing installed - one command (downloads the latest release
 from GitHub, extracts it, runs the full installer):
 
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/ShugokiFable/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/SenjuWoo/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
 
 Or double-click INSTALL-REMOTE.bat. Re-running is a no-op.
 

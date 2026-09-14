@@ -11,7 +11,7 @@ echo  SOUL + AIO preamble for every agent).
 echo.
 echo  Press Ctrl+C to cancel.
 echo.
-powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/ShugokiFable/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/SenjuWoo/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
 echo.
 echo Exit code: %ERRORLEVEL%
 pause

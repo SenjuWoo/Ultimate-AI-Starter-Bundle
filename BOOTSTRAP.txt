@@ -13,10 +13,10 @@ do not ask me to run anything you can run yourself.
    - If none exists, download the latest release to a temp folder:
 
        $zip = Join-Path $env:TEMP 'uabs.zip'
-       $rel = Invoke-RestMethod 'https://api.github.com/repos/ShugokiFable/Ultimate-AI-Starter-Bundle/releases/latest'
+       $rel = Invoke-RestMethod 'https://api.github.com/repos/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest'
        $asset = @($rel.assets | Where-Object { $_.name -like '*.zip' }) | Select-Object -First 1
        if ($asset) { Invoke-WebRequest $asset.browser_download_url -OutFile $zip }
-       else { Invoke-WebRequest "https://codeload.github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/zip/refs/tags/$($rel.tag_name)" -OutFile $zip }
+       else { Invoke-WebRequest "https://codeload.github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/zip/refs/tags/$($rel.tag_name)" -OutFile $zip }
        $stage = Join-Path $env:TEMP "uabs-$($rel.tag_name)"
        Expand-Archive $zip $stage -Force
        $bundle = Get-ChildItem $stage -Directory | Select-Object -First 1

@@ -34,6 +34,9 @@ effort: high
 - Avoid duplicate installation of the same destination from multiple selected options unless intentional and ordered.
 - Keep one canonical core copy; patches should contain only their deltas.
 - XML element order and schema behavior must match a known-good installed FOMOD or the current spec used by Vortex/MO2.
+- Emit UTF-8 XML with the explicit double-quoted declaration `<?xml version="1.0" encoding="utf-8"?>`. Recheck the bytes after programmatic writes. Generic XML validity is not proof that a specific installer version accepts the file; reproduce encoding/quoting failures through that version's own parse path before attributing the cause.
+- Record the final archive's SHA-256 for build-to-download verification AND verify its member set and payload-file hashes. ZIP timestamps can change a non-reproducible rebuild's archive bytes without changing payloads; this is not a reason to discard archive integrity checks or reuse hashes from older builds.
+- Keep the installer test harness, required schema and safe known-bad regression fixture with the project. Resolve the schema relative to the harness, not an ephemeral absolute temp path. Assert exact success/exit status: searching for `VALID` also matches `INVALID`.
 
 ## Workflow
 

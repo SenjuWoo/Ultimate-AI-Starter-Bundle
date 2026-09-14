@@ -10,11 +10,11 @@
 
   One-liner (auto-detect installed providers; all five on an empty machine):
 
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/ShugokiFable/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/SenjuWoo/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
 
   With parameters:
 
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/ShugokiFable/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1))) -Providers Claude,Grok"
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/SenjuWoo/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1))) -Providers Claude,Grok"
 
   Re-running updates the stable install when the release tag changes. Use
   -Force to refresh the same tag.
@@ -53,7 +53,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$Owner = 'ShugokiFable'
+$Owner = 'SenjuWoo'
 $Repo = 'Ultimate-AI-Starter-Bundle'
 $Api = "https://api.github.com/repos/$Owner/$Repo"
 $H = @{ 'User-Agent' = 'Ultimate-AI-Starter-Bundle/remote-installer' }
