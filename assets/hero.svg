@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" role="img" aria-label="Installed is not enabled: five providers, parked optional MCPs">
+  <defs>
+    <linearGradient id="uabg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#151b28"/>
+      <stop offset="1" stop-color="#0d1117"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="420" rx="28" fill="url(#uabg)"/>
+  <text x="72" y="78" fill="#9db0e8" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15" letter-spacing="2.4">ULTIMATE AI STARTER BUNDLE</text>
+  <text x="72" y="126" fill="#eef2ff" font-family="ui-sans-serif, system-ui, sans-serif" font-size="34" font-weight="700">Installed is not enabled.</text>
+  <text x="72" y="168" fill="#a9b6d4" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">Five providers. Skills load on demand. Optional MCPs stay parked until a job needs them.</text>
+  <g font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="600">
+    <rect x="72" y="214" width="196" height="52" rx="26" fill="#7c9cff"/>
+    <text x="170" y="246" text-anchor="middle" fill="#0d1117">Claude Code</text>
+    <rect x="284" y="214" width="196" height="52" rx="26" fill="#1c2434" stroke="#7c9cff" stroke-opacity=".45"/>
+    <text x="382" y="246" text-anchor="middle" fill="#c5d2f5">Codex</text>
+    <rect x="496" y="214" width="196" height="52" rx="26" fill="#1c2434" stroke="#7c9cff" stroke-opacity=".45"/>
+    <text x="594" y="246" text-anchor="middle" fill="#c5d2f5">Grok</text>
+    <rect x="708" y="214" width="196" height="52" rx="26" fill="#1c2434" stroke="#7c9cff" stroke-opacity=".45"/>
+    <text x="806" y="246" text-anchor="middle" fill="#c5d2f5">Kimi</text>
+    <rect x="920" y="214" width="196" height="52" rx="26" fill="#1c2434" stroke="#7c9cff" stroke-opacity=".45"/>
+    <text x="1018" y="246" text-anchor="middle" fill="#c5d2f5">Hermes</text>
+  </g>
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <rect x="72" y="292" width="360" height="72" rx="16" fill="#1c2434"/>
+    <text x="96" y="322" fill="#7c9cff" font-size="12" font-weight="700" letter-spacing="1.6">INSTALLED</text>
+    <text x="96" y="346" fill="#d5def4" font-size="16">On disk. Zero chat cost.</text>
+    <rect x="456" y="292" width="360" height="72" rx="16" fill="#7c9cff"/>
+    <text x="480" y="322" fill="#0d1117" font-size="12" font-weight="700" letter-spacing="1.6">ENABLED</text>
+    <text x="480" y="346" fill="#0d1117" font-size="16">Registered. You flip the switch.</text>
+    <rect x="840" y="292" width="368" height="72" rx="16" fill="#1c2434" stroke="#7c9cff" stroke-opacity=".35"/>
+    <text x="864" y="322" fill="#9db0e8" font-size="12" font-weight="700" letter-spacing="1.6">DEFAULT CORE</text>
+    <text x="864" y="346" fill="#d5def4" font-size="16">context7 · github · headroom</text>
+  </g>
+</svg>

@@ -1,6 +1,40 @@
+<p align="center">
+  <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
+</p>
+
+<div align="center">
+
 # Ultimate AI Starter Bundle v8.7.18
 
-**v8.7.18:** Fixes RTK's failed install and Hermes' relocated model-picker API, preserves selected providers during updates, refreshes compatible dependencies, and adds Playwright CLI without another always-on MCP. Token guidance now distinguishes schema size, cache reuse and actual billing. The v8.7.17 Codex profile and packaging fixes remain included. [Maintenance decisions](docs/TOOL-EVALUATIONS.md#2026-09-13-maintenance-and-browser-cli).
+**Multi-provider AI starter kit. Not a Skyrim-only pack.**
+
+Skills, MCP servers, plugins, and offline tools for Claude Code, Codex, Grok,
+Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
+
+<p>
+  <a href="https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.18-7c9cff?labelColor=0d1117" alt="v8.7.18"></a>
+  <a href="https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/releases/tag/v8.7.17"><img src="https://img.shields.io/badge/latest%20release-v8.7.17-9db0e8?labelColor=0d1117" alt="latest release v8.7.17"></a>
+</p>
+
+<p>
+  <a href="#quick-start">Quick start</a>
+  ·
+  <a href="#-new-to-ai-cli-tools-read-this-first-installed--enabled">installed ≠ enabled</a>
+  ·
+  <a href="#what-gets-installed">What gets installed</a>
+  ·
+  <a href="CHANGELOG.md">Changelog</a>
+</p>
+
+</div>
+
+<p align="center">
+  <img src="assets/hero.svg" alt="Installed is not enabled: five providers, parked optional MCPs" width="100%">
+</p>
+
+**v8.7.18:** Fixes RTK's failed install and Hermes' relocated model-picker API, preserves selected providers during updates, refreshes compatible dependencies, and adds Playwright CLI without another always-on MCP. Token guidance now distinguishes schema size, cache reuse and actual billing. The v8.7.17 Codex profile and packaging fixes remain included. [Maintenance decisions](docs/TOOL-EVALUATIONS.md#2026-09-13-maintenance-and-browser-cli). `VERSION.txt` is **v8.7.18**; the newest GitHub Release asset is still [v8.7.17](https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/releases/tag/v8.7.17).
 
 ### Creating a complete GitHub project
 

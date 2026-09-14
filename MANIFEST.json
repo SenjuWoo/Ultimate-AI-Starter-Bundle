@@ -35006,8 +35006,8 @@
  },
  {
   "path": "README.md",
-  "size": 67666,
-  "sha256": "c638675f1fca233ca91e1f9aefa9c7daaa581dee8c24f5dcc521b7bfe4641fe4"
+  "size": 69261,
+  "sha256": "d979e07b55ca5ea93c1a56052db681c65eca80c5fc5ec1528717f49dfe4f72b8"
  },
  {
   "path": "SECURITY.md",
@@ -41558,6 +41558,16 @@
   "path": "_CANONICAL-SKILLS/writing-skills/testing-skills-with-subagents.md",
   "size": 12558,
   "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade"
+ },
+ {
+  "path": "assets/hero.svg",
+  "size": 2868,
+  "sha256": "96dfdd562481ba2bc356a2c268a16963a146131249e81e9b44fb45b7785658a7"
+ },
+ {
+  "path": "assets/mark.svg",
+  "size": 550,
+  "sha256": "01bf2e4f9e4389a4a4ff1c18e0297688091cc7d056fad64b5318609536aaf912"
  },
  {
   "path": "docs/TOOL-EVALUATIONS.md",
