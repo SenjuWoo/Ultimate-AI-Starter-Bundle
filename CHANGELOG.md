@@ -1,5 +1,6 @@
 ## 8.7.18
 
+- Make skill routing portable across providers: drop `superpowers:` skill-name prefixes that fail on Grok, treat pasted Steam/tool roots as conversation hints, re-resolve skill load paths after a user patch, accept `!` paths on any drive, write player-facing plain-text Nexus changelogs, and rebuild release artifacts from current source instead of leftover dist zips.
 - September 13 completion: repair Hermes' relocated picker API on both old and new module layouts; keep auto-detected/explicit provider selections through both updater paths.
 - Add Playwright CLI 0.1.19 with no new MCP registration or skill index entry. Update CodeBurn 0.9.24, Context7 4.1.0, GitHub MCP 1.12.1, Chrome DevTools MCP 1.9.0 and shadcn 4.21.0 after isolated checks.
 - Pin release assets where skill/API compatibility matters, including houseCARL 1.9.0: upstream 2.0 deletes the API this pack currently supports. Retain audited Impeccable pending its new engine migration.

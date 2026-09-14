@@ -13,6 +13,8 @@ or a second skill-directory writer.
 
 Never hardcode `C:\Users\<name>`, `S:\Apps`, or `Z:\Backup` as authority. Those may appear only as **example** paths on the pack author's machine.
 
+Treat pasted roots as hints. When the user says a path is "just suggestions" and pastes a Steam `Skyrim Special Edition` folder or a tools root (houseCARL, Skyrim Forge, Spooky's AutoMod Toolkit), those are step-5 conversation candidates, not install authority. Resolve via env, `PATH`, and the conversation path. Do not hardcode them as the game or tool root.
+
 ## Resolution order (every tool)
 
 1. Environment variable listed for that tool (if set and path exists).

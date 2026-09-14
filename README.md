@@ -16,7 +16,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
   <a href="https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
   <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.18-7c9cff?labelColor=0d1117" alt="v8.7.18"></a>
-  <a href="https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/releases/tag/v8.7.17"><img src="https://img.shields.io/badge/latest%20release-v8.7.17-9db0e8?labelColor=0d1117" alt="latest release v8.7.17"></a>
+  <a href="https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/releases/tag/v8.7.18"><img src="https://img.shields.io/badge/latest%20release-v8.7.18-9db0e8?labelColor=0d1117" alt="latest release v8.7.18"></a>
 </p>
 
 <p>
@@ -35,7 +35,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
   <img src="assets/hero.svg" alt="Installed is not enabled: five providers, parked optional MCPs" width="100%">
 </p>
 
-**v8.7.18:** Fixes RTK's failed install and Hermes' relocated model-picker API, preserves selected providers during updates, refreshes compatible dependencies, and adds Playwright CLI without another always-on MCP. Token guidance now distinguishes schema size, cache reuse and actual billing. The v8.7.17 Codex profile and packaging fixes remain included. [Maintenance decisions](docs/TOOL-EVALUATIONS.md#2026-09-13-maintenance-and-browser-cli). `VERSION.txt` is **v8.7.18**; the newest GitHub Release asset is still [v8.7.17](https://github.com/ShugokiFable/Ultimate-AI-Starter-Bundle/releases/tag/v8.7.17).
+**v8.7.18:** Fixes RTK's failed install and Hermes' relocated model-picker API, preserves selected providers during updates, refreshes compatible dependencies, and adds Playwright CLI without another always-on MCP. Skill routing is portable across Grok and the other providers: unprefixed skill names, pasted tool roots as hints, and release archives rebuilt from current source. Token guidance now distinguishes schema size, cache reuse and actual billing. The v8.7.17 Codex profile and packaging fixes remain included. [Maintenance decisions](docs/TOOL-EVALUATIONS.md#2026-09-13-maintenance-and-browser-cli).
 
 ### Creating a complete GitHub project
 
@@ -753,7 +753,7 @@ registry.
 
 ## Version
 
-**v8.7.18** - 2026-09-09. RTK version-selection and transactional-install hotfix, with executable regression coverage. **167 canonical skills**, no new dependency or always-on server. See [release notes](docs/history/V8.7.18-CHANGELOG.md).
+**v8.7.18** - 2026-09-14. RTK version-selection and transactional-install hotfix, with executable regression coverage, plus Grok-portable skill routing. **167 canonical skills**, no new dependency or always-on server. See [release notes](docs/history/V8.7.18-CHANGELOG.md).
 
 **v8.7.17** - 2026-09-09. Trusted-project Codex MCP routing, preserved custom filters and provider ownership, native integration tests, and corrected schema measurement. **167 canonical skills**, no new MCP or dependency. See [release notes](docs/history/V8.7.17-CHANGELOG.md). Older dated entries retain historical conclusions; v8.7.17 corrects their universal per-turn billing and Codex scope claims.
 

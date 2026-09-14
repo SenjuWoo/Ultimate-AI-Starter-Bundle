@@ -74,7 +74,7 @@ Use this order unless the mod genuinely needs something different:
 5. Compatibility, configuration, known limitations, and unperformed tests.
 6. Troubleshooting and support evidence to provide.
 7. Authors, asset-by-asset credits, licences/permissions, source links, and AI disclosure.
-8. Concise version-matched changelog.
+8. Concise version-matched changelog. When the user asks for a small easy-to-read Nexus changelog, write player-facing plain-text bullet lines for the Nexus page, not a BBCode wall and not the internal AI/model CHANGELOG header.
 
 Lead with the experience; keep implementation detail below the player-facing explanation. Use headings and short paragraphs, not a
 single wall of text. Do not copy another author's branding, images, page text, or visual assets.

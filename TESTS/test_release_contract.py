@@ -2564,6 +2564,7 @@ def main() -> int:
         test_release_assets_are_digest_checked_before_cache_reuse,
         test_installed_state_doctor_keeps_provider_probes_local,
         test_public_skyrim_workflow_requires_product_and_presentation_quality,
+        test_portable_skill_routing_does_not_require_superpowers_prefix,
     ]
     failed = []
     for fn in tests:
@@ -5336,6 +5337,31 @@ def test_public_skyrim_workflow_requires_product_and_presentation_quality() -> N
     assert "Never present concept art or generated imagery as an in-game result" in publishing
     assert "## 0. Prove the public surface" in release
     assert "actual image pixels" in release
+
+
+def test_portable_skill_routing_does_not_require_superpowers_prefix() -> None:
+    """Grok and other un-namespaced runtimes fail `superpowers:skill-name` lookups."""
+    using = read(CANON / "using-superpowers" / "SKILL.md")
+    debug = read(CANON / "systematic-debugging" / "SKILL.md")
+    discovery = read(CANON / "tool-discovery" / "SKILL.md")
+    writing = read(CANON / "writing-skills" / "SKILL.md")
+    windows = read(CANON / "windows-workspace-ops" / "SKILL.md")
+    nexus = read(CANON / "skyrim-nexus-publishing" / "SKILL.md")
+    fleet = read(CANON / "github-fleet-maintenance" / "SKILL.md")
+
+    assert "superpowers:brainstorming" not in using
+    assert "superpowers:systematic-debugging" not in using
+    assert "→ brainstorming first" in using
+    assert "→ systematic-debugging first" in using
+    assert "superpowers:test-driven-development" not in debug
+    assert "superpowers:verification-before-completion" not in debug
+    assert "`test-driven-development`" in debug
+    assert "`verification-before-completion`" in debug
+    assert "conversation candidates, not install authority" in discovery
+    assert "re-resolve load paths" in writing
+    assert "Never treat one drive root" in windows
+    assert "player-facing plain-text" in nexus
+    assert "leftover dist zip from an older SHA" in fleet
 
 if __name__ == "__main__":
     raise SystemExit(main())

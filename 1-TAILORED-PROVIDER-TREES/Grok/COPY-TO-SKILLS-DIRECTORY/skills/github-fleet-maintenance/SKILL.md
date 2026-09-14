@@ -5,7 +5,7 @@ description: Create, finish, or maintain GitHub repos with CI, Dependabot, code 
 
 # GitHub Fleet Maintenance
 
-For one new repository, read [the repository completion contract](references/repository-completion.md) first. "Make a repo" includes a usable project, tested CI, applicable security coverage, documentation, and a concrete release handoff. Do not stop at `gh repo create` or a push. Respect an explicitly requested empty repository or prototype.
+For one new repository, read [the repository completion contract](references/repository-completion.md) first. "Make a repo" includes a usable project, tested CI, applicable security coverage, documentation, and a concrete release handoff. Do not stop at `gh repo create` or a push. When the user says push/code/release/readme, finish that contract from current source: rebuild the real binary or release archive; do not ship a stale exe or leftover dist zip from an older SHA. Respect an explicitly requested empty repository or prototype.
 
 Use the fleet loop only when multiple repositories are in scope. Reuse authenticated `gh` or the GitHub MCP; determine permissions from actual responses, never request or print credentials.
 
