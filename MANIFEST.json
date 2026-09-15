@@ -35071,8 +35071,8 @@
  },
  {
   "path": "TESTS/Test-McpProfiles.ps1",
-  "size": 58415,
-  "sha256": "eb91ade437e31fc1aa516474f24b9a3f354fc1277a62ceedf78881fdba38c17f"
+  "size": 58409,
+  "sha256": "ab9f97fb63d641c1e781f4a49781a1aa2c6049518ca9fa95d627edd2f78553a2"
  },
  {
   "path": "TESTS/Test-Pack.ps1",

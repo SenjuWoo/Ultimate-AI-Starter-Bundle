@@ -850,7 +850,7 @@ else { Bad '-Disable left the machine-wide reasoning server behind' }
 
 # Exercise the actual pin-repair block, not a second implementation of it.
 Section 'Hermes catalog pin wins without discarding custom options'
-$migrationText = Get-Content -LiteralPath (Join-Path $PackRoot 'TOOLS/Migrate-HermesProfiles.ps1') -Raw
+$migrationText = [IO.File]::ReadAllText((Join-Path $PackRoot 'TOOLS/Migrate-HermesProfiles.ps1'))
 $pinStart = $migrationText.IndexOf('  $catalogPin =')
 $pinEnd = $migrationText.IndexOf('  $github = Get-UabsCoreSpec', $pinStart)
 if ($pinStart -lt 0 -or $pinEnd -lt $pinStart) { throw 'Hermes pin-repair block missing' }
