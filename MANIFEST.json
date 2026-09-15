@@ -35031,8 +35031,8 @@
  },
  {
   "path": "README.md",
-  "size": 70164,
-  "sha256": "595575e817c2156198174369f7caebb17b60bc78f399162297de1c24349ff37a"
+  "size": 70188,
+  "sha256": "308d7e0d27404001474a1de95911ee8469639b479a15654111dae89c6cadf116"
  },
  {
   "path": "SECURITY.md",
@@ -42156,8 +42156,8 @@
  },
  {
   "path": "docs/history/V8.7.20-CHANGELOG.md",
-  "size": 1625,
-  "sha256": "b0d0f5b6d189e314e30ed24f0a20d6c77df3432d61e81f5bfe5fb5eecd14f549"
+  "size": 1628,
+  "sha256": "a88a1a8a225071fbd59dfe3db513a69931a71891b6540596f751515329661ea5"
  },
  {
   "path": "docs/history/V8.7.3-CHANGELOG.md",
