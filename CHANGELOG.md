@@ -1,3 +1,10 @@
+## 8.7.20
+
+- Incorporate portable Hermes tuning: DeepSeek V4.1 Flash/high, 20% compression target, free Inkling Small/high summarizer, 600-second timeout, bounded delegation and response caching off. Preserve the prompt cache and failure safeguards; no quality/billing benchmark claimed.
+- Align missing-only repair defaults with the starter. Preserve existing values, models, profile memory limits, hooks and tool filters.
+- Refresh core MCPs in existing external RimWorldForge profiles. Replace stale Context7 package pins from the catalog without discarding custom launcher/options.
+- Replace private duplicated profile dumps with portable descriptions and a shared-config policy; retain exact original exports locally. Omit machine paths, trust bypasses and generated inventories; enable update backups for fresh users.
+
 ## 8.7.19
 
 - Repair the exact legacy Impeccable Bash command in Grok's native hooks with a PowerShell command and Windows launcher. Preserve its project-relative guard, timeouts and unrelated custom settings; back up before atomic replacement.

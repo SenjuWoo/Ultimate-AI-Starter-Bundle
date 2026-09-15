@@ -6,11 +6,12 @@ below is checked against the actual file by TESTS/test_release_contract.py
 said "Empty mcp_servers" while the starter shipped five live servers, and
 nothing was watching.
 
-- DeepSeek V4 Flash, reasoning_effort=max, max_turns=null (unlimited)
+- DeepSeek V4.1 Flash, reasoning_effort=high, max_turns=null (unlimited)
 - Compression at 160000 tokens, lean tail (proactive tool-result prune from 80000)
-- Profiles: default (context7/github/headroom), roblox (+ Studio MCP),
-  skyrim (+ houseCARL, Lean tool set: 42 of 45 tools, ~31,369 tok/turn
-  instead of ~41,768). Cheaper still: Migrate-HermesProfiles.ps1
+- Profiles: default (context7/github/headroom), code (+ codebase-memory),
+  roblox (+ Studio MCP), existing rimworld (+ external RimWorldForge),
+  skyrim (+ houseCARL, Lean tool set: 42 of 45 tools, ~31,369 schema tokens
+  instead of ~41,768; bytes/4 estimate, not a bill). Smaller: Migrate-HermesProfiles.ps1
   -SkyrimToolset ReadOnly -Apply (27 tools, ~17,604, -58%)
 - mcp_servers: {} -- empty, and it stays empty
 - No username, no drive letter, no completeness-gate command line
@@ -18,7 +19,7 @@ nothing was watching.
 WHY IT IS EMPTY
 
 MCP registration is owned by INSTALL-AIO.ps1 (the always-on core),
-TOOLS\Migrate-HermesProfiles.ps1 (native default/code/roblox/skyrim profiles), and
+TOOLS\Migrate-HermesProfiles.ps1 (native profiles, including existing rimworld), and
 TOOLS\Set-McpProfile.ps1 (the remaining capability router). Those read what is
 actually installed and pick the scope each server belongs in. A template
 cannot know any of that, and the copy is whole-file: anything left here becomes
@@ -30,7 +31,8 @@ JSON. The rule is enforced, not documented.
 
 WEB CAPABILITY IS NATIVE, NOT AN MCP
 
-Hermes v0.20.4 resolves web_search / web_extract through a keyless vendor ring
+Historical measurement (Hermes v0.20.4, not a current service guarantee):
+web_search / web_extract resolved through a keyless vendor ring
 (exa, parallel, tavily, firecrawl, keenable) that round-robins and fails over
 on rate limits. Re-verified for 7.9.9 from an isolated HERMES_HOME with every
 provider credential removed, because the first measurement was taken on a
@@ -67,10 +69,10 @@ Three honest limits on the word "keyless":
   gives the wrong impression.
 
 The alternative measured: firecrawl-mcp is 25 tool schemas, 36,321 bytes,
-~9,080 tokens on every turn, and keyless exactly TWO of the 25 work -- scrape
+~9,080 schema tokens (bytes/4, not per-turn billing), and keyless exactly TWO of the 25 worked -- scrape
 and search. 21 answer "Unauthorized: API key is required", extract is
 deprecated, and parse wants a self-hosted FIRECRAWL_API_URL. Eight times the
-per-turn cost of the server 7.9.7 removed as too expensive, for a duplicate of
+schema size of the server 7.9.7 removed as too expensive, for a duplicate of
 a native capability. So the bundle does not register it for Hermes.
 
 Set a Firecrawl key and re-run the full installer if you want

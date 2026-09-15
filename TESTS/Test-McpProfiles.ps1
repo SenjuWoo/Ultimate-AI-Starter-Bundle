@@ -848,6 +848,24 @@ $rClaude = Get-UabsBoxClaude $rbox
 if ($rClaude.mcpServers.PSObject.Properties.Name -notcontains 'sequential-thinking') { Good '-Disable reasoning gives the context back' }
 else { Bad '-Disable left the machine-wide reasoning server behind' }
 
+# Exercise the actual pin-repair block, not a second implementation of it.
+Section 'Hermes catalog pin wins without discarding custom options'
+$migrationText = Get-Content -LiteralPath (Join-Path $PackRoot 'TOOLS/Migrate-HermesProfiles.ps1') -Raw
+$pinStart = $migrationText.IndexOf('  $catalogPin =')
+$pinEnd = $migrationText.IndexOf('  $github = Get-UabsCoreSpec', $pinStart)
+if ($pinStart -lt 0 -or $pinEnd -lt $pinStart) { throw 'Hermes pin-repair block missing' }
+$pinRepair = [scriptblock]::Create($migrationText.Substring($pinStart, $pinEnd - $pinStart))
+$context7Args = @('-y', '@upstash/context7-mcp@99.0.1')
+$context7 = @{ command = 'custom-npx'; args = @('-y', '@upstash/context7-mcp@4.0.4', '--transport', 'stdio') }
+. $pinRepair
+Is $context7.command 'custom-npx' 'custom Context7 launcher preserved'
+Is ($context7.args -join '|') '-y|@upstash/context7-mcp@99.0.1|--transport|stdio' 'only stale package pin replaced from catalog'
+. $pinRepair
+Is ($context7.args -join '|') '-y|@upstash/context7-mcp@99.0.1|--transport|stdio' 'pin repair is idempotent'
+$context7 = @{ command = 'wrapper'; args = @('user-owned.js') }
+. $pinRepair
+Is ($context7.args -join '|') 'user-owned.js' 'unrecognized wrapper arguments remain untouched'
+
 # ------------------------------------------------------- vision canary ----
 Section 'the vision canary is falsifiable'
 

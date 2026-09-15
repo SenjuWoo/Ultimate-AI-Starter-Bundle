@@ -347,7 +347,7 @@ def test_hermes_cost_contract() -> None:
         # so keep Hermes' whole-request retry layer bounded.
         for token in (
             "max_turns: null",
-            "reasoning_effort: max",
+            "reasoning_effort: high",
             "api_max_retries: 2",
             "tool_use_enforcement: true",
             "execution_guidance: true",
@@ -368,7 +368,7 @@ def test_hermes_cost_contract() -> None:
         # true user turns. Avoid tiny rewrites that destroy a warm provider
         # cache prefix; prune only when the reclaim is material.
         assert re.search(r"(?m)^\s*threshold_tokens:\s*160000\s*$", cfg), path
-        assert re.search(r"(?m)^\s*target_ratio:\s*0\.25\s*$", cfg), path
+        assert re.search(r"(?m)^\s*target_ratio:\s*0\.20\s*$", cfg), path
         assert re.search(r"(?m)^\s*protect_last_n:\s*20\s*$", cfg), path
         assert re.search(r"(?m)^\s*min_tail_user_messages:\s*3\s*$", cfg), path
         assert re.search(r"(?m)^\s*max_attempts:\s*4\s*$", cfg), path
@@ -388,25 +388,24 @@ def test_hermes_cost_contract() -> None:
         assert re.search(r"(?m)^\s*transient_retries:\s*1\s*$", cfg), path
         assert re.search(r"(?m)^\s*cost_threshold_usd:\s*0\.01\s*$", cfg), path
         assert re.search(r"(?ms)^  background_review:\s*\n\s+enabled:\s*false\s*$", cfg), path
-        # Context compression is important enough to use the strong paid main
-        # model, but summarization itself is mechanical: disable reasoning tokens.
+        # Reviewed user choice: free 1M-context summarizer, using a supported
+        # effort. Compatibility is not proof of summary quality.
         aux_start = cfg.index("auxiliary:")
         aux_end = cfg.index("\ndisplay:", aux_start)
         aux = cfg[aux_start:aux_end]
         m = re.search(r"(?ms)^  compression:\n(.*?)(?=^  [a-z_]+:|\Z)", aux)
         assert m, f"{path}: Hermes auxiliary.compression block missing"
         compression = m.group(0)
-        assert "model: deepseek/deepseek-v4-flash-0731" in compression, path
-        assert "reasoning_effort: none" in compression, path
+        assert "model: thinkingmachines/inkling-small:free" in compression, path
+        assert "reasoning_effort: high" in compression, path
+        assert "timeout: 600" in compression, path
 
         assert re.search(r"(?m)^\s*cache_ttl:\s*1h\s*$", cfg), path
-        assert "response_cache: true" in cfg, path
+        assert "response_cache: false" in cfg, path
         assert "response_cache_ttl: 300" in cfg, path
         # Never globally auto-trust future third-party hooks.
         assert not re.search(r"(?m)^hooks_auto_accept:\s*true\s*$", cfg), path
-    # At the current V4 Flash 0731 pricing, an extra 10K reasoning tokens are
-    # cheaper than replaying a 120K uncached input once. Prefer maximum supported
-    # reasoning to reduce repair turns, while keeping the summarizer non-thinking.
+    # Keep both distributable surfaces identical, not a raw local export.
     assert parent.read_bytes() == installed.read_bytes(), "Hermes reference config and actual installer source drifted"
 
 
@@ -1168,6 +1167,27 @@ def test_hermes_starter_carries_no_machine_state() -> None:
         assert all(ord(c) < 128 for c in text), (
             "%s is a DEPLOYED artifact and must stay pure ASCII -- Hermes re-saves "
             "it with its own YAML writer" % rel)
+        for forbidden in ("command_allowlist:", "custom_providers:", "hooks:",
+                          "known_builtin_toolsets:", "known_plugin_toolsets:",
+                          "web_extract:"):
+            assert forbidden not in text, (rel, forbidden)
+        assert "pre_update_backup: true" in text
+
+    # Profile exports contain descriptions, not duplicate machine configs.
+    profiles = ROOT / "1-TAILORED-PROVIDER-TREES/Hermes/profiles"
+    for name in ("code", "roblox", "skyrim", "rimworld"):
+        meta = read(profiles / name / "profile.yaml")
+        assert "description:" in meta and "description_auto: false" in meta
+        assert not (profiles / name / "config.yaml").exists()
+        assert not re.search(r"[A-Za-z]:[\\/]|\bkarlo\b|api_key:", meta, re.I)
+    migration = read(ROOT / "TOOLS/Migrate-HermesProfiles.ps1")
+    assert "rimworld/config.yaml" in migration and "$maps['rimworld'] = $rimworldMap" in migration
+    assert "$context7.args = @($context7.args" in migration
+    repair = read(ROOT / "TOOLS/Install-Provider-Starter-Settings.ps1")
+    for key, value in (("compression.threshold_tokens", "160000"),
+                       ("compression.target_ratio", "0.20"),
+                       ("openrouter.response_cache", "false")):
+        assert re.search(r"'%s'\s*=\s*'%s'" % (re.escape(key), re.escape(value)), repair)
 
 
 def test_hermes_profile_prefs_converge_without_clobbering_user_choice() -> None:
@@ -1218,7 +1238,7 @@ def test_readme_model_guidance_matches_the_shipped_config() -> None:
 
     # Every alias the pack ships must be explained, and every alias the README
     # advertises must actually be shipped -- either direction is a lie.
-    shipped = set(re.findall(r"^    ([a-z0-9-]+): openrouter/", starter, re.M))
+    shipped = set(re.findall(r"^    ([a-z0-9.-]+): openrouter/", starter, re.M))
     assert shipped, "the starter no longer ships model aliases"
     for alias in shipped:
         assert ("hermes model %s" % alias) in readme or alias in readme, (
@@ -1229,7 +1249,7 @@ def test_readme_model_guidance_matches_the_shipped_config() -> None:
     # machine_state forbids, so the README documents it as something the
     # reader configures rather than something the pack hands them.
     MACHINE_LOCAL_ALIASES = {"local"}
-    for alias in re.findall(r"hermes model ([a-z0-9-]+)", readme):
+    for alias in re.findall(r"hermes model ([a-z0-9.-]+)", readme):
         if alias in MACHINE_LOCAL_ALIASES:
             assert alias not in shipped, (
                 "the starter now ships the %r alias; that puts a localhost endpoint "
@@ -3031,7 +3051,7 @@ def test_hermes_readme_matches_the_shipped_starter() -> None:
 
     # Each claim in the README that names a config value must match the file.
     for key, claim in (
-        ("reasoning_effort", "reasoning_effort: max"),
+        ("reasoning_effort", "reasoning_effort: high"),
         ("max_turns", "max_turns: null"),
         ("threshold_tokens", "threshold_tokens: 160000"),
     ):

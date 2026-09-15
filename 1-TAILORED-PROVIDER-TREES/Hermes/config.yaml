@@ -1,12 +1,13 @@
 # Portable Hermes starter config. Ships provider/model preferences only;
 # MCP servers and hooks are wired per-machine by INSTALL-AIO.ps1.
 model:
-  default: stealth/ox-alpha
+  default: deepseek/deepseek-v4.1-flash
   provider: openrouter
   base_url: https://openrouter.ai/api/v1
   aliases:
     # Escalation ladder. Every id verified against openrouter.ai/api/v1/models;
     # none is written from memory. Switch with `hermes model <alias>`.
+    v4.1-flash: openrouter/deepseek/deepseek-v4.1-flash
     flash: openrouter/deepseek/deepseek-v4-flash-0731
     flash-vision: openrouter/deepseek/deepseek-v4-flash-vision-exp
     muse: openrouter/meta/muse-spark-1.2-contributor
@@ -56,7 +57,7 @@ agent:
   max_verify_nudges: 3
   verify_on_stop: true
   verbose: false
-  reasoning_effort: max
+  reasoning_effort: high
   personalities: {}
 terminal:
   backend: local
@@ -95,7 +96,7 @@ compression:
   progress_notices: true
   threshold: 0.50
   threshold_tokens: 160000
-  target_ratio: 0.25
+  target_ratio: 0.20
   tail_mode: lean
   protect_last_n: 20
   min_tail_user_messages: 3
@@ -115,7 +116,7 @@ compression:
 prompt_caching:
   cache_ttl: 1h
 openrouter:
-  response_cache: true
+  response_cache: false
   response_cache_ttl: 300
   min_coding_score: 0.65
 auxiliary:
@@ -124,21 +125,17 @@ auxiliary:
     # Must be multimodal. laguna-s is text-only and would silently drop images.
     provider: openrouter
     model: thinkingmachines/inkling:free
-  web_extract:
-    provider: openrouter
-    model: poolside/laguna-s-2.1:free
   compression:
     provider: openrouter
-    # NOT a free model on purpose: compression ingests up to the 160000-token
-    # threshold, and laguna-s tops out at 262K context. Flash-0731 has 1.3M and
-    # costs ~$0.006 per compression -- cheaper than one truncated summary.
-    model: deepseek/deepseek-v4-flash-0731
-    timeout: 180
+    # Reviewed on 2026-09-15: 1M context covers the retained 160k input cap.
+    # Free endpoints can be rate-limited; failed summaries never replace context.
+    model: thinkingmachines/inkling-small:free
+    timeout: 600
     extra_body:
       provider:
         sort: price
         require_parameters: true
-    reasoning_effort: none
+    reasoning_effort: high
   skills_hub:
     provider: openrouter
     model: poolside/laguna-s-2.1:free
@@ -187,6 +184,9 @@ memory:
   nudge_interval: 10
   flush_min_turns: 6
 delegation:
+  provider: openrouter
+  model: deepseek/deepseek-v4-flash-0731
+  reasoning_effort: high
   max_iterations: 50
   max_concurrent_children: 2
   max_spawn_depth: 1
@@ -232,10 +232,10 @@ telemetry:
   shared_metrics:
     enabled: false
 updates:
-  pre_update_backup: false
+  pre_update_backup: true
   backup_keep: 5
   non_interactive_local_changes: stash
-_config_version: 39
+_config_version: 44
 provider_routing:
   sort: price
   require_parameters: true
@@ -247,11 +247,11 @@ group_sessions_per_user: true
 mcp_servers: {}
 plugins:
   enabled:
-    - disk-cleanup
     - ponytail
     - superpowers/.hermes-plugin
   disabled:
     - web/brave_free
+    - rtk-rewrite
   entries:
     ponytail:
       allow_tool_override: false

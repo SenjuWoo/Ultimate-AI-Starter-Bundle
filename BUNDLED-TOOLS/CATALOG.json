@@ -864,7 +864,7 @@
       "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.19 package pins Playwright 1.63.0-alpha-2026-08-31; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving."
     }
   ],
-  "pack_version": "8.7.19",
+  "pack_version": "8.7.20",
   "updated_utc": "2026-09-08",
   "providers": {
     "Grok": {
@@ -941,9 +941,9 @@
   "pack_name": "Ultimate-AI-Starter-Bundle",
   "display_name": "Ultimate AI Starter Bundle",
   "provider_config_schemas": {
-    "Hermes": 39
+    "Hermes": 44
   },
-  "catalog_version": "8.7.19",
+  "catalog_version": "8.7.20",
   "updated": "2026-09-03",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

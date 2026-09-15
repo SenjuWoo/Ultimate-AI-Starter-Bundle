@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.19 -->
+<!-- Ultimate AI Starter Bundle v8.7.20 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.19
+# Ultimate AI Starter Bundle v8.7.20
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -15,7 +15,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 <p>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
-  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.19-7c9cff?labelColor=0d1117" alt="v8.7.19"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.20-7c9cff?labelColor=0d1117" alt="v8.7.20"></a>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.7.19"><img src="https://img.shields.io/badge/latest%20release-v8.7.19-9db0e8?labelColor=0d1117" alt="latest release v8.7.19"></a>
 </p>
 
@@ -35,7 +35,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
   <img src="assets/hero.svg" alt="Installed is not enabled: five providers, parked optional MCPs" width="100%">
 </p>
 
-**v8.7.19:** Repairs Grok's legacy Impeccable Bash hooks for PowerShell, detects invalid third-party hooks, and preserves explicitly reviewed local skill overrides through updates. Bootstrap and repository links follow the move to `SenjuWoo`. Includes v8.7.18's portable skill routing, RTK/Hermes fixes, compatible dependency updates and Playwright CLI. [Release notes](docs/history/V8.7.19-CHANGELOG.md).
+**v8.7.20 source update:** Incorporates reviewed Hermes tuning without distributing personal hooks, trust lists or machine paths. Existing RimWorld profiles receive core MCP updates, and specialist Context7 pins follow the catalog. The approved v8.7.19 release remains available above. [Changes and verification scope](docs/history/V8.7.20-CHANGELOG.md).
 
 ### Creating a complete GitHub project
 
@@ -290,8 +290,11 @@ Hermes is BYOK — you pay per token, so model choice is a cost decision every
 turn, not a preference. The strategy that works: **do the work on something
 cheap, escalate only when the cheap one is actually failing.**
 
-Prices are per 1M tokens, pulled from `openrouter.ai/api/v1/models`. Every slug
-below was verified against that live list — none is written from memory.
+The table below is an older price snapshot, not a current quote. Check the
+[live OpenRouter catalog](https://openrouter.ai/api/v1/models) before choosing.
+The new starter uses `deepseek/deepseek-v4.1-flash` with high reasoning; its
+text/image and tool support were checked on September 15, 2026. Existing
+installations keep their chosen model. [Hermes profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md).
 
 | Tier | Model | In | Out | Context | Use it for |
 |---|---|---|---|---|---|
@@ -307,21 +310,15 @@ below was verified against that live list — none is written from memory.
 | 👑 max | `openai/gpt-5.6-sol` | $2.00 | $10.00 | 1.05M | escalation only |
 | 👑 max | `anthropic/claude-opus-5` | $5.00 | $25.00 | 1M | escalation only |
 
-**Run Flash 0731 by default.** Gemini or GLM when planning gets hard. Grok, Sol
-or Opus only when you have already watched something cheaper fail — at $25/1M
-out, an afternoon of agent work on Opus costs more than a month of subscription.
-**If you use a frontier model heavily, buy the subscription.** The API is for
-occasional escalation, not for hours of coding.
-
-Also worth watching: `upstage/solar-pro4` at $0.03/$0.12 — currently the
-cheapest thing on the board, but that is a promotional price, so re-check it
-before you build a habit on it.
+Escalate based on a concrete failure, not a model's price tier. No measured
+quality or billing improvement is claimed for the new starter settings.
 
 Switch by alias instead of pasting slugs; the installer wires these into every
 Hermes profile:
 
 ```
-hermes model flash          # deepseek-v4-flash-0731        (daily driver)
+hermes model v4.1-flash     # deepseek-v4.1-flash          (new starter)
+hermes model flash          # deepseek-v4-flash-0731        (retained alias)
 hermes model muse           # meta/muse-spark-1.2-contributor
 hermes model flash-vision   # deepseek-v4-flash-vision-exp  (images)
 hermes model ox             # stealth/ox-alpha              (free, multimodal)
@@ -756,6 +753,8 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.20** - 2026-09-15 source update. Reviewed portable Hermes tuning and profile maintenance. **167 canonical skills**, no new dependency. Publication pending; [changes](docs/history/V8.7.20-CHANGELOG.md).
 
 **v8.7.19** - 2026-09-14. Grok Impeccable hook repair, verified local skill preservation and repository-rename synchronization. **167 canonical skills**, no new dependency or always-on server. See [release notes](docs/history/V8.7.19-CHANGELOG.md).
 

@@ -149,8 +149,8 @@ function Merge-UabsHermesEfficiencyDefaults {
   $defaults = [ordered]@{
     'agent.verbose'                           = 'false'
     'compression.enabled'                     = 'true'
-    'compression.threshold_tokens'            = '200000'
-    'compression.target_ratio'                = '0.30'
+    'compression.threshold_tokens'            = '160000'
+    'compression.target_ratio'                = '0.20'
     'compression.protect_last_n'              = '20'
     'compression.min_tail_user_messages'      = '3'
     'compression.proactive_prune_tokens'      = '80000'
@@ -160,7 +160,7 @@ function Merge-UabsHermesEfficiencyDefaults {
     'compression.idle_compact_after_seconds'  = '0'
     'prompt_caching.cache_ttl'                 = '1h'
     'mcp.auto_reload_on_config_change'         = 'false'
-    'openrouter.response_cache'                = 'true'
+    'openrouter.response_cache'                = 'false'
     'openrouter.response_cache_ttl'            = '300'
     'auxiliary.transient_retries'              = '1'
   }

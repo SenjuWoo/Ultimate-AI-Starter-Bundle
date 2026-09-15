@@ -19711,8 +19711,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml",
-  "size": 8480,
-  "sha256": "2b9305adf4e42a6f5042bc17384d0432f693b0dd2d92edfd89bca93dd5de5baf"
+  "size": 8489,
+  "sha256": "1dd0addfb5f3f563d9c2f60c6c9aa6203d44d2e118f9461933a8b40cd331d674"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
@@ -25786,13 +25786,38 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/README.txt",
-  "size": 4703,
-  "sha256": "443a062f8363497e8a3e70c5c29a12ca66fc44a73f3cb8524f25fec4459b831d"
+  "size": 4895,
+  "sha256": "983f984e0ff8deb68b3fa0a5f210617fa804086259e037753a8b4e6faedcb17f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml",
-  "size": 8480,
-  "sha256": "2b9305adf4e42a6f5042bc17384d0432f693b0dd2d92edfd89bca93dd5de5baf"
+  "size": 8489,
+  "sha256": "1dd0addfb5f3f563d9c2f60c6c9aa6203d44d2e118f9461933a8b40cd331d674"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md",
+  "size": 2168,
+  "sha256": "d2e5670242a908a8588adfee50ed663cbfded25f4bfd60ca1cbfbaa108e0d2fd"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/code/profile.yaml",
+  "size": 81,
+  "sha256": "433cb5b17f8e9fca2887cba1689e971d50d5fbb949ede27c1e217d40ede15043"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/rimworld/profile.yaml",
+  "size": 111,
+  "sha256": "b9e6e90a3aa59678732d411d4180c35a0569ffe4938103663438e443f9ab7e31"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/roblox/profile.yaml",
+  "size": 86,
+  "sha256": "57c68613998e85f4f26d749be62a1b1ce35b7e91c60396470aa1be4dbd0d6bb3"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/skyrim/profile.yaml",
+  "size": 92,
+  "sha256": "9b6db7a4a4b04220260d8bb89670c2c59037505c145534b95fae7c72bd3a4d1e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-MAP.md",
@@ -31927,17 +31952,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 43126,
-  "sha256": "40628a0e35eb778103bdad78befc3bc380677dce1797c97c0252548b290d2941"
+  "sha256": "b1e812752c11e96011afc1bfa4e66bccf2e984489ec27992ef34c2ab97d05021"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1660,
-  "sha256": "e44fc5a258c72ee00601da7fe492d082ebdbd605ca05ea3a5aafa255d3aae948"
+  "sha256": "19739e2adbd53fbe002c2cfecfc91197e12df167377af73b9e24a0f5fdb463ca"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 31962,
-  "sha256": "d83d9834c1c3d01bf7e78008537706058a5b2ff67211d717711dd164c8f8d616"
+  "sha256": "20c45410fb62f95fc9c9e2dce7cb47edffbd81f52f68fc6ca8430bea168809c3"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -34881,8 +34906,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 160041,
-  "sha256": "72aff79c971793d49cd70b3fe213dae978367fc98808fffb851c5b39ae169872"
+  "size": 160866,
+  "sha256": "8dcb1a9fe8ca89f01072cc1d75a372bf084f8af709a1e55f7d40a1d2bf848e52"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -34957,7 +34982,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 134800,
-  "sha256": "081301f10a247c2eda07067ab089c0fd3495ffe411d977dc34247b80e80a1787"
+  "sha256": "3707c09794ccb83ecc6571752cab596d93b60d16ae5a306674c7d4a545a49942"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -35006,8 +35031,8 @@
  },
  {
   "path": "README.md",
-  "size": 70067,
-  "sha256": "33678820ed95e4cfc15a2b459c8673081fbf39e35dc4401e51e72b9fc33b844a"
+  "size": 70164,
+  "sha256": "595575e817c2156198174369f7caebb17b60bc78f399162297de1c24349ff37a"
  },
  {
   "path": "SECURITY.md",
@@ -35017,12 +35042,12 @@
  {
   "path": "START-HERE.bat",
   "size": 730,
-  "sha256": "07b40f1243763c9ba013c2760a9905aa92fc39d8f120258358cd07e16c1ae00f"
+  "sha256": "a6afeae6eecf93c00672bfafd5bdc61c1c4ab35a88dd1b2cfb3911cf2e7f94fe"
  },
  {
   "path": "START-HERE.txt",
   "size": 9678,
-  "sha256": "485261d8ab13a1f619055af81ec8f51a2ba2fe55216f66580217df36572011b7"
+  "sha256": "b8dcccee7ee4073c3a796257cd69c55abd65f33d3d5b58dfbd67739944b6f089"
  },
  {
   "path": "TESTS/Test-ForgeRootResolution.ps1",
@@ -35046,8 +35071,8 @@
  },
  {
   "path": "TESTS/Test-McpProfiles.ps1",
-  "size": 57178,
-  "sha256": "8bc3021b0aed9e3407ffaae19969a3288a5ad308f95d7e846b843a269fcec4cc"
+  "size": 58415,
+  "sha256": "eb91ade437e31fc1aa516474f24b9a3f354fc1277a62ceedf78881fdba38c17f"
  },
  {
   "path": "TESTS/Test-Pack.ps1",
@@ -35241,8 +35266,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 281692,
-  "sha256": "cdfc1adeb9778aed7d2f667855fadf8ead3c69750ba548c2fd68b4e9a5b5858a"
+  "size": 282922,
+  "sha256": "216c9794af5200e4f1429bc42e41925246b1cfab3dcce270a096328699df429a"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
@@ -35291,8 +35316,8 @@
  },
  {
   "path": "TOOLS/Install-Provider-Starter-Settings.ps1",
-  "size": 18206,
-  "sha256": "e31b1e5363b070515a0e66c1c24c19cbc92561337bffecf58e86f30e7687631e"
+  "size": 18207,
+  "sha256": "5c3aa45fb26ea6bba4c62799f765e30f856a57cae8f50b9e28b0db8f60240848"
  },
  {
   "path": "TOOLS/Install-SkyrimForge.ps1",
@@ -35311,8 +35336,8 @@
  },
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
-  "size": 46601,
-  "sha256": "6b70b589b46efc2e24b01e8f168d9e76878cc285d2ff6b88eac6f94856a6e2a6"
+  "size": 48110,
+  "sha256": "fb2b4adfb2ce141374c1988907f5cc1789855b422c863664123e10dca6ca4bc5"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -35521,13 +35546,13 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 1808,
-  "sha256": "5331731f271ade8292f70ce9cb484984f86aae2c640975d16a8ee96236813805"
+  "size": 1476,
+  "sha256": "4ff2aba62ebe7c7c5ba020f2994ca73d501a0fb9966cf6d7757e7dba08c607ee"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "32c1630e7f6556f58c3da2d3df13ba031e861675b39ca82e95f7240b80751862"
+  "sha256": "fd9aa5ee3243d9f9250489c6e9702279da902f7476ab499d06eb81621bccac85"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -42128,6 +42153,11 @@
   "path": "docs/history/V8.7.2-CHANGELOG.md",
   "size": 1880,
   "sha256": "956a1c3438f9d95bf84f04aef3beac26bd171a28d0f3d2c7d2b6bb7138fa8349"
+ },
+ {
+  "path": "docs/history/V8.7.20-CHANGELOG.md",
+  "size": 1625,
+  "sha256": "b0d0f5b6d189e314e30ed24f0a20d6c77df3432d61e81f5bfe5fb5eecd14f549"
  },
  {
   "path": "docs/history/V8.7.3-CHANGELOG.md",

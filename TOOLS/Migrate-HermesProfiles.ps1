@@ -1,6 +1,7 @@
 <#
 .SYNOPSIS
   Normalize Hermes into default, code, roblox, and skyrim MCP profiles.
+  An existing externally installed rimworld profile also receives core updates.
 
 .DESCRIPTION
   Default: context7, github, headroom
@@ -146,6 +147,7 @@ function Test-UabsServerFamily($Entry, [string]$Family) {
     'housecarl' { return $text.Contains('housecarl-mcp') }
     'skyrim-forge' { return $text.Contains('skyrim-forge') -or $text.Contains('skyrim_forge') }
     'robloxforge' { return $text.Contains('robloxforge') -and $text.Contains('mcp_server') }
+    'rimworldforge' { return $text.Contains('rimworldforge') -and $text.Contains('mcp_server') }
   }
   return $false
 }
@@ -304,6 +306,7 @@ $script:UabsSupersededChains = @(
 # openrouter.ai/api/v1/models list; none is written from memory.
 $script:UabsModelAliases = [ordered]@{
   'flash'        = 'openrouter/deepseek/deepseek-v4-flash-0731'
+  'v4.1-flash'   = 'openrouter/deepseek/deepseek-v4.1-flash'
   'flash-vision' = 'openrouter/deepseek/deepseek-v4-flash-vision-exp'
   'muse'         = 'openrouter/meta/muse-spark-1.2-contributor'
   'v4-pro'       = 'openrouter/deepseek/deepseek-v4-pro-0813'
@@ -560,6 +563,19 @@ try {
     Add-UabsLedger 'untouched' "Spooky's AutoMod capability (not installed; no MCP entry created)"
   }
 
+  # RimWorldForge is external, not downloaded by this bundle. Adopt only an
+  # existing named profile with its own recognizable server; never guess paths.
+  if (Test-Path -LiteralPath (Join-Path $profileDirs 'rimworld/config.yaml') -PathType Leaf) {
+    $rimworldMap = Get-UabsMcpMap 'rimworld'
+    if ($rimworldMap.ContainsKey('rimworldforge') -and
+        (Test-UabsServerFamily $rimworldMap['rimworldforge'] 'rimworldforge')) {
+      $managedProfiles += 'rimworld'
+      $existingProfiles += 'rimworld'
+      $maps['rimworld'] = $rimworldMap
+      Add-UabsLedger 'kept' 'rimworld external server, filters and preferences (core updates only)'
+    }
+  }
+
   foreach ($profile in @('code', 'roblox', 'skyrim')) {
     $dir = Join-Path $profileDirs $profile
     $available = switch ($profile) {
@@ -606,6 +622,14 @@ try {
   $context7 = Get-UabsCoreSpec $maps['default'] 'context7' @('context-7') @{
     command = 'npx'; args = $context7Args; enabled = $true; connect_timeout = 30
   } 'context7'
+  # Keep custom launcher/options, but do not let yesterday's default-profile
+  # package pin override today's catalog in every specialist profile.
+  $catalogPin = @($context7Args | Where-Object { $_ -like '@upstash/context7-mcp@*' }) | Select-Object -First 1
+  if ($catalogPin) {
+    $context7.args = @($context7.args | ForEach-Object {
+      if ($_ -like '@upstash/context7-mcp@*') { $catalogPin } else { $_ }
+    })
+  }
   $github = Get-UabsCoreSpec $maps['default'] 'github' @('github-mcp-server') @{
     command = (Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\github-mcp-server\github-mcp-server.exe')
     args = @('stdio', '--toolsets', 'context,repos,pull_requests,actions,issues'); enabled = $true; connect_timeout = 30
@@ -758,6 +782,7 @@ try {
   }
   foreach ($profile in $managedProfiles) {
     foreach ($id in $forgeIds.Keys) {
+      if ($profile -eq 'rimworld') { continue } # external profile: no specialist removals
       $allowed = ($forgeCompatSkyrim -and $id -eq 'skyrim-forge' -and $profile -eq 'skyrim') -or
         ($forgeCompatRoblox -and $id -eq 'robloxforge' -and $profile -eq 'roblox')
       if (-not $allowed) { Remove-UabsServer $profile $maps[$profile] $id $forgeIds[$id] }
@@ -769,6 +794,7 @@ try {
     code = @('context7', 'github', 'headroom', 'codebase-memory-mcp')
     roblox = @('context7', 'github', 'headroom', 'Roblox_Studio')
     skyrim = @('context7', 'github', 'headroom', 'housecarl')
+    rimworld = @('context7', 'github', 'headroom')
   }
   if ($forgeCompatRoblox) { $expected.roblox += 'robloxforge' }
   if ($forgeCompatSkyrim) { $expected.skyrim += 'skyrim-forge' }
@@ -853,6 +879,7 @@ try {
         }
       }
       foreach ($id in $forgeIds.Keys) {
+        if ($profile -eq 'rimworld') { continue }
         $allowedHere = ($forgeCompatSkyrim -and $profile -eq 'skyrim' -and $id -eq 'skyrim-forge') -or
           ($forgeCompatRoblox -and $profile -eq 'roblox' -and $id -eq 'robloxforge')
         if (-not $allowedHere -and $actual.ContainsKey($id) -and (Test-UabsServerFamily $actual[$id] $forgeIds[$id])) {
