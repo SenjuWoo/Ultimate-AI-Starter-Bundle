@@ -256,7 +256,7 @@ function Get-UabsProviderProjectTarget {
        Kimi    none found. `kimi doctor` in a project holding .kimi-code/mcp.json
                reported only the home configs.
        Hermes  native named profiles exist, but they are not bound to a project
-               path; Migrate-HermesProfiles.ps1 owns default/code/roblox/skyrim. #>
+               path; Migrate-HermesProfiles.ps1 owns default/code/roblox/skyrim/creative. #>
   param([string]$Provider, [string]$ProjectPath)
   if ([string]::IsNullOrEmpty($ProjectPath)) { return $null }
   switch ($Provider) {
@@ -310,7 +310,7 @@ function Get-UabsProviderNoProjectScope {
   param([string]$Provider)
   switch ($Provider) {
     'Kimi'   { return 'kimi-code reads only %USERPROFILE%\.kimi-code\mcp.json' }
-    'Hermes' { return 'Hermes has native named profiles, but no project-path MCP scope; use Migrate-HermesProfiles.ps1 for default/code/roblox/skyrim' }
+    'Hermes' { return 'Hermes has native named profiles, but no project-path MCP scope; use Migrate-HermesProfiles.ps1 for default/code/roblox/skyrim/creative' }
   }
   return ('{0} has no project-scoped MCP config' -f $Provider)
 }
