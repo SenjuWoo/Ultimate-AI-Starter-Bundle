@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "catalog_version": "8.7.20",
-  "pack_version": "8.7.20",
+  "catalog_version": "8.7.21",
+  "pack_version": "8.7.21",
   "updated_utc": "2026-09-13",
   "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
   "reads": "TOOLS/Set-McpProfile.ps1",
@@ -409,7 +409,7 @@
           "catalog_component": "blender-mcp",
           "command": "uvx",
           "args": [
-            "blender-mcp@1.9.1"
+            "mcp-for-blender@2.0.0"
           ],
           "env_static": {
             "BLENDER_MCP_DISABLE_TELEMETRY": "true",
@@ -426,10 +426,10 @@
               "%LOCALAPPDATA%\\Programs\\Blender Foundation\\*\\blender.exe"
             ]
           },
-          "editor_side": "uvx blender-mcp@1.9.1 install-addon",
+          "editor_side": "uvx mcp-for-blender@2.0.0 install-addon",
           "editor_side_note": "The server talks to an addon inside Blender. `install-addon` copies it into the user addons folder, but ENABLING it is inside the editor process and cannot be done from outside -- so Set-McpProfile prints the command rather than pretending it ran it. 'The MCP executable starts' and 'the addon is connected' are different claims: the server answers initialize with no Blender running at all. Only a tool call that reaches the scene proves the second.",
-          "requires_note": "Discovered, never hardcoded. 7.9.6 listed a Steam path on this maintainer's own drive letter, which could not match on anybody else's machine -- the exact class of path this pack forbids elsewhere. The first two entries are what `uvx blender-mcp@1.9.1 addon-paths` reports: Blender creates that user directory on first run whatever the install source, Steam included.",
-          "telemetry_note": "Measured 2026-09-02: 1.9.1 answers initialize/tools-list with 28 tools and 29,274 schema bytes (~7,318 tokens) while BLENDER_MCP_DISABLE_TELEMETRY=true logs the supported opt-out and BLENDER_MCP_SAFE_MODE=true validates generated Python before it reaches Blender. Safe mode preserves normal scene/render/save/import-export work and blocks interpreter, process, network and persistence escape paths."
+          "requires_note": "Discovered, never hardcoded. 7.9.6 listed a Steam path on this maintainer's own drive letter, which could not match on anybody else's machine -- the exact class of path this pack forbids elsewhere. The first two entries are what `uvx mcp-for-blender@2.0.0 addon-paths` reports: Blender creates that user directory on first run whatever the install source, Steam included.",
+          "telemetry_note": "Measured 2026-09-17: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 tokens) while BLENDER_MCP_DISABLE_TELEMETRY=true logs the supported opt-out and BLENDER_MCP_SAFE_MODE=true validates generated Python before it reaches Blender. Safe mode preserves normal scene/render/save/import-export work and blocks interpreter, process, network and persistence escape paths."
         }
       ]
     },
@@ -599,7 +599,7 @@
     "Grok": "<project>\\.grok\\config.toml, the `project` scope of `grok mcp add -s project` (verified against grok 1.0.5). This one IS a file inside the project, because it is the only project mechanism grok-cli has.",
     "Codex": "<project>\\.codex\\config.toml, loaded only after the project is trusted. Native codex-cli 0.152.0 verified trusted/untrusted and unrelated-folder isolation plus enabled_tools/disabled_tools filtering and a harmless call. The installer never grants trust. Restart and run codex mcp list --json from that folder; writing the file alone is not activation proof.",
     "Kimi": "None found. kimi-code reads %USERPROFILE%\\.kimi-code\\mcp.json; a project-local .kimi-code\\mcp.json was not picked up by `kimi doctor`. Not written unless -Global.",
-    "Hermes": "Hermes has native named profiles, each with its own home/config, but no project-path MCP scope. TOOLS/Migrate-HermesProfiles.ps1 owns the default/code/roblox/skyrim topology; this path-based router skips Hermes unless -Global is explicit."
+    "Hermes": "Hermes has native named profiles, each with its own home/config, but no project-path MCP scope. TOOLS/Migrate-HermesProfiles.ps1 owns the default/code/roblox/skyrim/creative topology; this path-based router skips Hermes unless -Global is explicit."
   },
   "arg_forms": {
     "args": "Base arguments. May contain %ENVVAR% and {project}.",

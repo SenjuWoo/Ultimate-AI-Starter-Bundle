@@ -82,8 +82,8 @@ its historical 4,590 schema bytes are not evidence of better answers.
 `code-intel` was called `code-deep` before 7.9.6. The old id still resolves.
 
 Hermes has a smaller native topology: `default` is the always-on three, `code`
-adds codebase-memory, `roblox` adds the official Roblox Studio MCP, and `skyrim`
-adds houseCARL. Use `hermes -p code` in a code repository; its ~5,994 schema-token
+adds codebase-memory, `roblox` adds the official Roblox Studio MCP, `skyrim`
+adds houseCARL, and `creative` adds Blender MCP plus MCP for Unity. Use `hermes -p code` in a code repository; its ~5,994 schema-token
 estimate is not a bill, and its servers are absent from ordinary Hermes sessions.
 The Skyrim toolset still includes all three specialists: houseCARL through the
 profile MCP, Skyrim Forge through its skill/CLI, and Spooky's AutoMod through
@@ -117,7 +117,7 @@ reason printed.
 | Grok | `<project>\.grok\config.toml` |
 | Codex | `<project>\.codex\config.toml`, loaded only for a trusted project |
 | Kimi | no project scope established; skip unless `-Global` is explicit |
-| Hermes | native named homes via `-p default/code/roblox/skyrim`, not project-path scope |
+| Hermes | native named homes via `-p default/code/roblox/skyrim/creative`, not project-path scope |
 
 Use `TOOLS\Set-McpProfile.ps1 -Auto -Path <project> -Providers Codex` for matching
 Codex profiles. The installer never grants trust. Restart and run

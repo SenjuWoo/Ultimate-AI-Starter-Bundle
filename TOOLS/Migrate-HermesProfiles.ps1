@@ -1,13 +1,14 @@
 <#
 .SYNOPSIS
-  Normalize Hermes into default, code, roblox, and skyrim MCP profiles.
+  Normalize Hermes into default, code, roblox, skyrim, and creative MCP profiles.
   An existing externally installed rimworld profile also receives core updates.
 
 .DESCRIPTION
-  Default: context7, github, headroom
-  Code:    default + codebase-memory-mcp
-  Roblox:  default + Roblox Studio's official MCP
-  Skyrim:  default + houseCARL
+  Default:  context7, github, headroom
+  Code:     default + codebase-memory-mcp
+  Roblox:   default + Roblox Studio's official MCP
+  Skyrim:   default + houseCARL
+  Creative: default + Blender MCP and MCP for Unity (engine work)
 
   Existing profile settings are preserved. Only UABS-owned MCP ids and their
   enabled/command/args fields are changed. Before the first write, exact config
@@ -148,6 +149,8 @@ function Test-UabsServerFamily($Entry, [string]$Family) {
     'skyrim-forge' { return $text.Contains('skyrim-forge') -or $text.Contains('skyrim_forge') }
     'robloxforge' { return $text.Contains('robloxforge') -and $text.Contains('mcp_server') }
     'rimworldforge' { return $text.Contains('rimworldforge') -and $text.Contains('mcp_server') }
+    'blender' { return $text.Contains('mcp-for-blender') -or $text.Contains('blender-mcp') }
+    'unity' { return $text.Contains('mcpforunityserver') -or $text.Contains('mcp-for-unity') }
   }
   return $false
 }
@@ -576,12 +579,15 @@ try {
     }
   }
 
-  foreach ($profile in @('code', 'roblox', 'skyrim')) {
+  $uvxAvailable = Get-Command uvx -ErrorAction SilentlyContinue
+  $creativeAvailable = [bool]$uvxAvailable
+  foreach ($profile in @('code', 'roblox', 'skyrim', 'creative')) {
     $dir = Join-Path $profileDirs $profile
     $available = switch ($profile) {
       'code' { $codeAvailable }
       'roblox' { $robloxAvailable }
       'skyrim' { $skyrimAvailable }
+      'creative' { $creativeAvailable }
     }
     if (-not $available) {
       Add-UabsLedger 'untouched' "Hermes profile '$profile' (required local capability is not installed)"
@@ -643,6 +649,26 @@ try {
 
   $robloxStudio = @{
     command = 'cmd.exe'; args = @('/c', $robloxBat); enabled = $true; connect_timeout = 30
+  }
+
+  # Blender and Unity are uvx-served stdio MCP servers; both speak initialize
+  # and tools/list without their editors running, but only a tool call that
+  # reaches the live scene/editor proves the editor half is up.
+  $blenderArgs = @('--python', '3.11', 'mcp-for-blender@2.0.0')
+  if ($catalog) {
+    $blenderComp = @($catalog.components | Where-Object { $_.id -eq 'blender-mcp' }) | Select-Object -First 1
+    $fromCatalog = if ($blenderComp) { @($blenderComp.npx_args | ForEach-Object { [string]$_ }) } else { @() }
+    if (@($fromCatalog | Where-Object { $_ -like '*mcp-for-blender@*' }).Count) { $blenderArgs = @('--python', '3.11') + $fromCatalog }
+  }
+  $blenderSpec = @{
+    command = 'uvx'; args = $blenderArgs; enabled = $true; connect_timeout = 90
+    env = @{ BLENDER_HOST = '127.0.0.1'; BLENDER_MCP_DISABLE_TELEMETRY = 'true'; BLENDER_MCP_SAFE_MODE = 'true' }
+  }
+  $unitySpec = @{
+    command = 'uvx'
+    args = @('--python', '3.11', '--from', 'mcpforunityserver@10.2.0', 'mcp-for-unity', '--transport', 'stdio')
+    enabled = $true; connect_timeout = 90
+    env = @{ UNITY_MCP_DISABLE_TELEMETRY = 'true' }
   }
   $codebaseSpec = @{
     command = $codebaseMemory; args = @(); enabled = $true; connect_timeout = 90
@@ -736,6 +762,12 @@ try {
     Ensure-UabsServer 'skyrim' $maps['skyrim'] 'housecarl' $houseCarlSpec 'housecarl'
     Normalize-UabsAliases 'skyrim' $maps['skyrim'] 'housecarl' @('houseCARL', 'house-carl') 'housecarl'
   }
+  if ($creativeAvailable) {
+    Ensure-UabsServer 'creative' $maps['creative'] 'blender' $blenderSpec 'blender'
+    Normalize-UabsAliases 'creative' $maps['creative'] 'blender' @('blender-mcp') 'blender'
+    Ensure-UabsServer 'creative' $maps['creative'] 'unity' $unitySpec 'unity'
+    Normalize-UabsAliases 'creative' $maps['creative'] 'unity' @('unity-mcp') 'unity'
+  }
 
   if ($robloxAvailable) {
     foreach ($profile in @('default', 'skyrim') | Where-Object { $managedProfiles -contains $_ }) {
@@ -748,6 +780,16 @@ try {
     foreach ($profile in @('default', 'roblox') | Where-Object { $managedProfiles -contains $_ }) {
       foreach ($id in @('housecarl', 'houseCARL', 'house-carl')) {
         Remove-UabsServer $profile $maps[$profile] $id 'housecarl'
+      }
+    }
+  }
+  if ($creativeAvailable) {
+    foreach ($profile in @('default', 'code', 'roblox', 'skyrim') | Where-Object { $managedProfiles -contains $_ }) {
+      foreach ($id in @('blender', 'blender-mcp')) {
+        Remove-UabsServer $profile $maps[$profile] $id 'blender'
+      }
+      foreach ($id in @('unity', 'unity-mcp')) {
+        Remove-UabsServer $profile $maps[$profile] $id 'unity'
       }
     }
   }
@@ -794,6 +836,7 @@ try {
     code = @('context7', 'github', 'headroom', 'codebase-memory-mcp')
     roblox = @('context7', 'github', 'headroom', 'Roblox_Studio')
     skyrim = @('context7', 'github', 'headroom', 'housecarl')
+    creative = @('context7', 'github', 'headroom', 'blender', 'unity')
     rimworld = @('context7', 'github', 'headroom')
   }
   if ($forgeCompatRoblox) { $expected.roblox += 'robloxforge' }
@@ -803,6 +846,7 @@ try {
     'codebase-memory-mcp' = 'codebase-memory'
     Roblox_Studio = 'roblox'; housecarl = 'housecarl'
     robloxforge = 'robloxforge'; 'skyrim-forge' = 'skyrim-forge'
+    blender = 'blender'; unity = 'unity'
   }
   foreach ($profile in $managedProfiles) {
     foreach ($id in $maps[$profile].Keys) {
@@ -843,6 +887,7 @@ try {
       $description = switch ($item.Profile) {
         'code' { 'Code exploration with project graph memory.' }
         'roblox' { 'Roblox development with the official Studio MCP.' }
+        'creative' { 'Blender and Unity creation workflows; inherits the operator default tuning.' }
         default { 'Skyrim development with houseCARL load-order evidence.' }
       }
       [void](Invoke-UabsHermes -Arguments @('profile', 'create', $item.Profile, '--clone-from', 'default', '--description', $description))

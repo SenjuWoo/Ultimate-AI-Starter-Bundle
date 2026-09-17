@@ -439,11 +439,12 @@ def test_hermes_native_profile_migration_contract() -> None:
     assert "code = @('context7', 'github', 'headroom', 'codebase-memory-mcp')" in body
     assert "roblox = @('context7', 'github', 'headroom', 'Roblox_Studio')" in body
     assert "skyrim = @('context7', 'github', 'headroom', 'housecarl')" in body
-    assert "foreach ($profile in @('code', 'roblox', 'skyrim'))" in body
+    assert "creative = @('context7', 'github', 'headroom', 'blender', 'unity')" in body
+    assert "foreach ($profile in @('code', 'roblox', 'skyrim', 'creative'))" in body
     assert "Remove-UabsServer $profile $maps[$profile] $id 'codebase-memory'" in body, (
         "Hermes codebase-memory can leak back into default/game profiles"
     )
-    assert "profiles=@('default','code','roblox','skyrim')" in installer
+    assert "profiles=@('default','code','roblox','skyrim','creative')" in installer
     assert "mcp-profiles.json" in doctor and "scoped_for = @()" in doctor
     assert "'Hermes/' + $profileDir.Name" in doctor, (
         "the doctor cannot report MCP servers isolated in Hermes named profiles"

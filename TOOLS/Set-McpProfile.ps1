@@ -26,7 +26,7 @@
 
   Kimi and Hermes are skipped with the reason printed rather than registered
   machine-wide behind a comment that says "project-scoped". -Global is the
-  explicit opt-in, and it says what it costs. Hermes' default/code/roblox/skyrim
+  explicit opt-in, and it says what it costs. Hermes' default/code/roblox/skyrim/creative
   topology is owned separately by Migrate-HermesProfiles.ps1; Forge MCPs stay
   out of those native profiles unless compatibility is explicitly requested.
 

@@ -651,15 +651,15 @@
       "kind": "mcp-uvx",
       "mcp": true,
       "license": "MIT",
-      "version": "1.9.1",
+      "version": "2.0.0",
       "github": {
         "owner": "ahujasid",
-        "repo": "blender-mcp"
+        "repo": "mcp-for-blender"
       },
       "install": "mcp-uvx",
       "npx_command": "uvx",
       "npx_args": [
-        "blender-mcp@1.9.1"
+        "mcp-for-blender@2.0.0"
       ],
       "profile": "engine-blender",
       "auto_register": false,
@@ -667,7 +667,7 @@
       "required_for": [
         "blender-scene-control"
       ],
-      "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx blender-mcp@1.9.1 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-02 with telemetry disabled and safe mode enabled: 1.9.1 answers initialize/tools-list with 28 tools and 29,274 schema bytes (~7,318 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender."
+      "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender."
     },
     {
       "id": "godot-mcp",
@@ -864,7 +864,7 @@
       "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.19 package pins Playwright 1.63.0-alpha-2026-08-31; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving."
     }
   ],
-  "pack_version": "8.7.20",
+  "pack_version": "8.7.21",
   "updated_utc": "2026-09-08",
   "providers": {
     "Grok": {
@@ -943,7 +943,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.7.20",
+  "catalog_version": "8.7.21",
   "updated": "2026-09-03",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

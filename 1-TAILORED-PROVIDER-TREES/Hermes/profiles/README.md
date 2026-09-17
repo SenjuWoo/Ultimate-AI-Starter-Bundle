@@ -11,6 +11,7 @@ Existing models, reasoning, memory limits and tool filters are preserved.
 | code | codebase-memory installed | Core plus codebase-memory |
 | roblox | Official Studio MCP installed | Core plus Studio |
 | skyrim | houseCARL and MO2 configured | Core plus houseCARL, user's filter retained |
+| creative | uvx installed | Core plus Blender MCP and MCP for Unity; both editors connect when open |
 | rimworld | Existing RimWorldForge profile | Core updated, external server retained unchanged |
 
 Run `hermes -p code` (or the other name). Profile YAML files here document native

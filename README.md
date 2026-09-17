@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.20 -->
+<!-- Ultimate AI Starter Bundle v8.7.21 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.20
+# Ultimate AI Starter Bundle v8.7.21
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -15,7 +15,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 <p>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
-  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.20-7c9cff?labelColor=0d1117" alt="v8.7.20"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.21-7c9cff?labelColor=0d1117" alt="v8.7.21"></a>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest"><img src="https://img.shields.io/github/v/release/SenjuWoo/Ultimate-AI-Starter-Bundle?label=latest%20release&amp;color=9db0e8&amp;labelColor=0d1117" alt="latest published release"></a>
 </p>
 
@@ -35,7 +35,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
   <img src="assets/hero.svg" alt="Installed is not enabled: five providers, parked optional MCPs" width="100%">
 </p>
 
-**v8.7.20:** Incorporates reviewed Hermes tuning without distributing personal hooks, trust lists or machine paths. Existing RimWorld profiles receive core MCP updates, and specialist Context7 pins follow the catalog. Includes v8.7.19's Grok hook repairs and local skill preservation. [Changes and verification scope](docs/history/V8.7.20-CHANGELOG.md).
+**v8.7.21:** New `creative` Hermes profile (Blender MCP + MCP for Unity on the core three), the Blender MCP pin refreshed to mcp-for-blender 2.0.0 with a re-measured tool surface, and pack-gate Actions pinned to the same full commit SHAs the Forge jobs already used. Editors connect when open; schema costs measured with telemetry off. [Changes and verification scope](docs/history/V8.7.21-CHANGELOG.md).
 
 ### Creating a complete GitHub project
 
@@ -754,7 +754,9 @@ registry.
 
 ## Version
 
-**v8.7.20** - 2026-09-15. Reviewed portable Hermes tuning and profile maintenance. **167 canonical skills**, no new dependency. See [changes](docs/history/V8.7.20-CHANGELOG.md).
+**v8.7.21** - 2026-09-17. New `creative` Hermes profile (Blender + Unity on the core three), Blender MCP pin refreshed to 2.0.0 with a re-measured tool surface, pack-gate Actions pinned to full commit SHAs. **167 canonical skills**, no new dependency. See [changes](docs/history/V8.7.21-CHANGELOG.md).
+
+**v8.7.20** - 2026-09-15. Reviewed Hermes tuning and profile maintenance. **167 canonical skills**, no new dependency. See [changes](docs/history/V8.7.20-CHANGELOG.md).
 
 **v8.7.19** - 2026-09-14. Grok Impeccable hook repair, verified local skill preservation and repository-rename synchronization. **167 canonical skills**, no new dependency or always-on server. See [release notes](docs/history/V8.7.19-CHANGELOG.md).
 

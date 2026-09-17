@@ -1,3 +1,11 @@
+## 8.7.21
+
+- Add the `creative` Hermes profile: core Context7/GitHub/Headroom plus Blender and Unity, cloned from the user's default so models, compression and fallbacks are preserved. Both specialists are uvx-served stdio servers, availability-gated, alias-normalized, and swept from every other profile; editors connect when open.
+- Refresh the Blender MCP pin to `mcp-for-blender@2.0.0` (repo renamed from blender-mcp) and record the re-measured live surface: 31 tools / 35,646 schema bytes (~8,912 schema tokens at bytes/4) with telemetry disabled and safe mode on.
+- Register MCP for Unity as the official CoplayDev stdio server (`mcpforunityserver@10.2.0`, 47 tools / 108,248 schema bytes measured). The per-project editor package installs from the pinned v10.2.0 tag commit; the legacy IvanMurzak project-Library lineage is a different integration and stays out of the catalog.
+- Pin every pack-gate CI Action to the same full commit SHAs the Forge jobs already used, with `persist-credentials: false`.
+- Capability-profiles skill, profile README, installer state line and final doctor now enumerate the fifth profile.
+
 ## 8.7.20
 
 - Incorporate portable Hermes tuning: DeepSeek V4.1 Flash/high, 20% compression target, free Inkling Small/high summarizer, 600-second timeout, bounded delegation and response caching off. Preserve the prompt cache and failure safeguards; no quality/billing benchmark claimed.

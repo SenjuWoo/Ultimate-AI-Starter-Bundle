@@ -376,7 +376,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.7.20 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.7.21 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -2135,7 +2135,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.7.20'
+version = '8.7.21'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode
@@ -2196,7 +2196,7 @@ if (-not $ToolsOnly) {
       if ($SkyrimToolset) { $profileArgs += @('-SkyrimToolset', $SkyrimToolset) }
       & (Get-Command powershell.exe -ErrorAction Stop).Source @profileArgs
       if ($LASTEXITCODE -ne 0) { throw "Hermes profile migrator failed with exit code $LASTEXITCODE" }
-      $installed['hermes-native-profiles'] = @{ status='evaluated'; profiles=@('default','code','roblox','skyrim'); skyrim_toolset=$(if ($SkyrimToolset) { $SkyrimToolset } else { 'default (Lean)' }) }
+      $installed['hermes-native-profiles'] = @{ status='evaluated'; profiles=@('default','code','roblox','skyrim','creative'); skyrim_toolset=$(if ($SkyrimToolset) { $SkyrimToolset } else { 'default (Lean)' }) }
       L 'Hermes native profiles evaluated'
     } catch {
       Write-UabsWarn ('Hermes native profiles: ' + $_.Exception.Message)
@@ -2378,7 +2378,7 @@ if (-not $SkipCleanup -and -not $ToolsOnly) {
   Write-Host '  9. General leftover cleanup was skipped in this install mode.'
 }
 Write-Host '     See what would go without deleting: TOOLS\Clean-StaleState.ps1'
-Write-Host '     Native MCP profiles when installed: hermes (core), code (codebase-memory), roblox (official Studio MCP), skyrim (houseCARL).'
+Write-Host '     Native MCP profiles when installed: hermes (core), code (codebase-memory), roblox (official Studio MCP), skyrim (houseCARL), creative (Blender + Unity).'
 Write-Host '     Audit/migrate: TOOLS\Migrate-HermesProfiles.ps1 [-Apply]'
 Write-Host '     houseCARL full schema: ~41,768 estimated tokens (bytes/4), not a per-turn bill.'
 Write-Host '     Lean: ~31,369 schema estimate (-25%); ReadOnly: ~17,604 (-58%). Actual usage is unmeasured.'
