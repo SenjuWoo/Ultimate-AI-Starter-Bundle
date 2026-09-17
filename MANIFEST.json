@@ -25805,6 +25805,11 @@
   "sha256": "433cb5b17f8e9fca2887cba1689e971d50d5fbb949ede27c1e217d40ede15043"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/creative/profile.yaml",
+  "size": 103,
+  "sha256": "dd82e5c267b186d25470aef0f063788947c7b609059726141fe7d90544d66a36"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/rimworld/profile.yaml",
   "size": 111,
   "sha256": "b9e6e90a3aa59678732d411d4180c35a0569ffe4938103663438e443f9ab7e31"
@@ -42158,6 +42163,11 @@
   "path": "docs/history/V8.7.20-CHANGELOG.md",
   "size": 1628,
   "sha256": "a88a1a8a225071fbd59dfe3db513a69931a71891b6540596f751515329661ea5"
+ },
+ {
+  "path": "docs/history/V8.7.21-CHANGELOG.md",
+  "size": 2650,
+  "sha256": "0471174b40154e987a6d22206cd2f4fd160b9169cafe58a96ca217d5f178d362"
  },
  {
   "path": "docs/history/V8.7.3-CHANGELOG.md",
