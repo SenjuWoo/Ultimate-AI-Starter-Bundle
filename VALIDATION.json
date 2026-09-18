@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.24",
+  "version": "8.7.25",
   "generated": "2026-09-18",
-  "release_tag": "v8.7.24",
+  "release_tag": "v8.7.25",
   "canonical_skills": 170,
   "provider_trees": 5,
   "registry_entries": 170,
@@ -21,6 +21,6 @@
     "TESTS/Test-McpProfiles.ps1",
     "TOOLS/mcp_handshake.py --selftest"
   ],
-  "runtime_status": "v8.7.24: Adds the version-proof public copy contract as a canonical skill, enforced by skyrim-nexus-publishing, release-checklist and a release contract test. No dependency, pin, config or runtime change; credentialed and editor-connected checks remain outside this release validation.",
+  "runtime_status": "v8.7.25: Records the impeccable engine audit - CLI 4.x's compiled engine still leaks malformed close-tag bodies, so the audited CLI 3.6.1 / skill 4.1.3 pair stays; adds a rerunnable engine-fixture audit tool and a contract test pinning the hold to its evidence. No dependency, pin, config or runtime change.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

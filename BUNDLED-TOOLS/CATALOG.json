@@ -274,7 +274,7 @@
         "--ignore-scripts"
       ],
       "scope_note": "The cross-provider skill is vendored from the official skill-v4.1.3 universal.zip and bound to its published SHA-256. The executable detector is the actually published npm 3.6.1 package, pinned by npm integrity. Optional Puppeteer is omitted: Playwright/browser profiles already own live rendering, and downloading a second browser would be duplication. Lifecycle scripts are disabled. UABS removes upstream self-update/pin paths and generated hook cache so provider skill trees keep one writer. Zero MCP schemas, daemon, account or key.",
-      "compatibility_hold": "2026-09-13: upstream CLI 4.1.0 / skill 4.3.1 moves to a platform engine and first-use downloads. Retain audited CLI 3.6.1 / skill 4.1.3 until the engine, our security patches and single-writer installation are validated together."
+      "compatibility_hold": "2026-09-18 audited with TOOLS/audit-impeccable-engine.py against engine 0.1.5 (the payload CLI 4.1.0 pins): the engine still leaks bodies of browser-valid malformed close tags (</script \\t bogus>, </style bogus>) into text analysis - the exact gap UABS patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub whose payload is that engine: pinned via optionalDependencies, else first-use download into ~/.impeccable, and its install/link/update/check commands write skill trees. Retain audited CLI 3.6.1 / skill 4.1.3 until upstream closes the fixture or ships patchable source."
     },
     {
       "install": "bundle-source",
@@ -864,7 +864,7 @@
       "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.20 package pins Playwright 1.64.0-alpha-2026-09-14; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving."
     }
   ],
-  "pack_version": "8.7.24",
+  "pack_version": "8.7.25",
   "updated_utc": "2026-09-08",
   "providers": {
     "Grok": {
@@ -943,7 +943,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.7.24",
+  "catalog_version": "8.7.25",
   "updated": "2026-09-03",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

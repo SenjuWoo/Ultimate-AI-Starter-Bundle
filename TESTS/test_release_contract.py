@@ -2537,6 +2537,7 @@ def main() -> int:
         test_hermes_profile_prefs_converge_without_clobbering_user_choice,
         test_readme_model_guidance_matches_the_shipped_config,
         test_public_copy_is_version_proof,
+        test_impeccable_hold_records_a_real_engine_audit,
         test_every_defined_contract_is_actually_run,
         test_hermes_native_profile_migration_contract,
         test_same_version_forge_hotfix_refreshes_shipped_content,
@@ -5411,6 +5412,30 @@ def test_public_skyrim_workflow_requires_product_and_presentation_quality() -> N
     assert "Never present concept art or generated imagery as an in-game result" in publishing
     assert "## 0. Prove the public surface" in release
     assert "actual image pixels" in release
+
+
+def test_impeccable_hold_records_a_real_engine_audit() -> None:
+    """The impeccable hold must be evidence, not a memory of a release note.
+
+    CLI 4.x moved the detector into a compiled engine the bundle cannot patch.
+    The catalog has to say what was actually measured, and the measurement has
+    to be rerunnable, so a later maintainer can settle the question in one
+    command instead of re-deriving it.
+    """
+    catalog = json.loads(read(ROOT / "BUNDLED-TOOLS" / "CATALOG.json"))
+    entry = next(c for c in catalog["components"] if c["id"] == "impeccable")
+    hold = entry.get("compatibility_hold", "")
+    assert "audit-impeccable-engine.py" in hold, "the impeccable hold does not point at its audit tool"
+    assert "0.1.5" in hold and "malformed" in hold, (
+        "the impeccable hold no longer records which engine version was measured and what leaked"
+    )
+    assert entry["version"] == "3.6.1" and entry["skill_version"] == "4.1.3", (
+        "the audited pinned pair changed without a re-audit"
+    )
+    audit = read(ROOT / "TOOLS" / "audit-impeccable-engine.py")
+    for fixture in ("malformed-script", "malformed-style", "control"):
+        assert fixture in audit, f"the engine audit lost its {fixture} fixture"
+    assert "marketing-buzzword" in audit, "the audit no longer checks the finding the fixtures assert"
 
 
 def test_public_copy_is_version_proof() -> None:

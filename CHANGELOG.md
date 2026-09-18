@@ -1,3 +1,9 @@
+## 8.7.25
+
+- Re-audited the `impeccable` `compatibility_hold` against the real upstream payload, not the release notes. CLI 4.1.0 is a 17.8 KB stub whose detector lives in a compiled engine (pinned 0.1.5 via `optionalDependencies`, else a first-use download into `~/.impeccable` with a fail-closed sha256 sidecar). Run against that engine, the fixtures the bundle patched for on 2026-09-02 fail: bodies of browser-valid malformed close tags (`</script \t bogus>`, `</style bogus>`) still leak into text analysis, and a compiled binary cannot carry the patch. The audited CLI 3.6.1 / skill 4.1.3 pair stays.
+- New `TOOLS/audit-impeccable-engine.py` reruns the four fixtures (well-formed, two malformed, one control) against any real engine and exits non-zero on a leak, so a future maintainer settles the question in one command. `test_impeccable_hold_records_a_real_engine_audit` pins the hold to its evidence and keeps the audited pair from moving silently. Full write-up in `docs/TOOL-EVALUATIONS.md`.
+- **170 canonical skills total**, no new dependency, no new MCP server.
+
 ## 8.7.24
 
 - New canonical skill `public-copy-durability`: public copy splits by whether an agent can edit it later. Platform-locked pages (Nexus, Steam, itch, CurseForge, forums - re-typed by hand) carry durable prose only: no version numbers, dates, counts, or "latest" in titles, summaries, descriptions, or captions, and no baked version text in hero images (that costs a media re-upload). Agent-editable surfaces (GitHub README, CHANGELOG, release bodies) may carry per-release facts. One volatile fact gets one home - the platform's version field plus its changelog section.

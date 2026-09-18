@@ -640,3 +640,35 @@ stopped. If it clears all four, measure it before writing a number in
 CLI filter, a real before/after on this repository the way `rtk`'s entry
 records it. Upstream numbers are a reason to test, never a substitute for
 testing.
+
+### Impeccable CLI 4.1.0 / skill 4.3.1 - hold re-audited 2026-09-18
+
+The catalog `compatibility_hold` from 2026-09-13 was validated against the real upstream
+payload instead of the release notes.
+
+**What 4.1.0 is.** The npm package is a 17,840-byte stub (six files). The shim resolves, in
+order: `$IMPECCABLE_BIN`, the pinned platform package `@impeccable/cli-<os>-<arch>` (published
+for win32/darwin/linux, win32-x64 = 14.7 MB unpacked, integrity-checked by npm), a version-pinned
+cache (`~/.impeccable/bin/<version>/`), then a download from `engine-v<version>` release assets
+with a fail-closed `.sha256` sidecar check. Engine version travels as the pinned
+`optionalDependencies` (0.1.5). `engines.node >= 22.18`. The skill side (4.3.1, 56 files) is
+plain files and carries no detector; its launchers are read-only resolvers, so the bundle stays
+the single writer of provider skill trees - except that the engine's own `install`, `link`,
+`update` and `check` commands can write skill trees, so the bundle must never invoke them.
+
+**Why the hold stays.** The pack's 3.6.1 payload carries a 2026-09-02 security patch that keeps
+bodies of browser-valid malformed close tags (`</script \t bogus>`, `</style bogus>`) out of text
+analysis. Run against the real 0.1.5 engine, the same fixtures leak:
+
+| fixture | engine 0.1.5 | vendored 3.6.1 (patched) |
+|---|---|---|
+| well-formed `<script>` bait | 0 findings | 0 findings |
+| `</script \t bogus>` bait | **1 finding (leak)** | 0 findings |
+| `</style bogus>` bait | **1 finding (leak)** | 0 findings |
+| control: visible buzzword text | 1 finding | 1 finding |
+
+The engine is a compiled binary, so the patch cannot follow. Adopting 4.x means deleting the
+audited implementation, shipping an engine that reintroduces the defect, and adding a first-use
+download surface. Not better on the axis that matters - re-audit when upstream closes the
+fixture. Rerun any time with `python TOOLS/audit-impeccable-engine.py <impeccable-binary>`.
+

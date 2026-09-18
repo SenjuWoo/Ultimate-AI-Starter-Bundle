@@ -32031,18 +32031,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 43138,
-  "sha256": "57a68a2b07853f6157506335af0e1998d17c10b95f71b31cc5b8570240e09430"
+  "size": 43521,
+  "sha256": "7f4ec2ec4ad82daf812fe7c7d9c862271119730005f12af60a1dba9ff9dd8c65"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1660,
-  "sha256": "11de6ff5c13cb18c955714217ae6f4564a87175053b05edfda634ec4f27f7815"
+  "sha256": "5d3fa85359cfdacb3961ede982b7a1f5020968374095877e00913e9defb90f9e"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 31983,
-  "sha256": "138d2122558945cd6c87ba050ce47325bb90a7d6c407ec4a2b32f0ae5ef63cf8"
+  "sha256": "e4f6f0406697b47ce97767d8b9c95ccbcbe7f8a79be1f95219d7fdb704420337"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -34986,8 +34986,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 166875,
-  "sha256": "e9f7fa0081d96791693ce0023728f5b000b01f1061cac594a1480db956c22135"
+  "size": 167952,
+  "sha256": "ddc066d13c828bcb5a48bebb9d04621451c44609542ada4e3fd2293b902022f8"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -35062,7 +35062,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 135646,
-  "sha256": "7dc876a019713fc1962c5d831bb87820365372ddd76cfd9b205de43c25ad49ab"
+  "sha256": "09cad3d781fe86828f373c28c74950a255ed0ea48d74000d5acbeff43e9813a3"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -35111,8 +35111,8 @@
  },
  {
   "path": "README.md",
-  "size": 72510,
-  "sha256": "202894cbddc52a3a6879b79ef152ba60ce3e112bd512e90f563001a1b0e4edc1"
+  "size": 73197,
+  "sha256": "fccb0fb9397800bd03a3d90929fe55f7c90b1fd634051252e8ebe34d54376194"
  },
  {
   "path": "SECURITY.md",
@@ -35122,12 +35122,12 @@
  {
   "path": "START-HERE.bat",
   "size": 730,
-  "sha256": "72a3910b29d9ce11153ce0a4adabb2f4cc30bd2397ea18574c3878f32cecb4f6"
+  "sha256": "29cda4d05e567275c35059aa1d7e959fa851c83566f5a297069e57b57dfcb8c8"
  },
  {
   "path": "START-HERE.txt",
-  "size": 10166,
-  "sha256": "ad0825619877c46e08c798ae58bb92136e85430c5c9637611f2fe68bf3200160"
+  "size": 10242,
+  "sha256": "5f7fc10dc5fba8ba7555b6b118b8ebb9a8df0f663ebc5553466a09b4027ce43d"
  },
  {
   "path": "TESTS/Test-ForgeRootResolution.ps1",
@@ -35346,8 +35346,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 287140,
-  "sha256": "820bccb767d651a92868ce561c950c5864733ad70d3ffae9e733da78ade8ca9a"
+  "size": 288546,
+  "sha256": "ad81b817883db07f7700ca892d205a30a441a005df871c54c17161902493142f"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
@@ -35473,6 +35473,11 @@
   "path": "TOOLS/Update-From-GitHub.ps1",
   "size": 3833,
   "sha256": "27de3efb790dfc14dee8d746cb11faf46c50626a59e42d045dcea8b34e7fd194"
+ },
+ {
+  "path": "TOOLS/audit-impeccable-engine.py",
+  "size": 2919,
+  "sha256": "ca1561472c2dcd95184908462a1b0a6beeaef56ee63607514b429703f8c3df24"
  },
  {
   "path": "TOOLS/audit_catalog_versions.py",
@@ -35626,13 +35631,13 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 1468,
-  "sha256": "77787f29f06eb364b865fab3f08f644608df5c36fa8e25ee20b3261bdc66998e"
+  "size": 1490,
+  "sha256": "8803dd2de3981a97fe1a3a909809b77b39f4503e4971e49ae840f422d20ffca4"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "128986f3ff86d15cad6df8f8754b8a8f8db32286b9406f44b9be2a4fb5ce21a3"
+  "sha256": "af8ea25f79862195a66e44a60023facc8cc4b7791807b07fbf84bd47453319b6"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -41691,8 +41696,8 @@
  },
  {
   "path": "docs/TOOL-EVALUATIONS.md",
-  "size": 33630,
-  "sha256": "beba8ab7d67a1c4c6bffd80660ce05aaf4cd218656fea5c8218a4ef07e15b952"
+  "size": 35613,
+  "sha256": "e0620c4048e87b8776dedcb3fae7f4302d0a0bc52d8ec1b31e2cdabcb463fc13"
  },
  {
   "path": "docs/history/FINAL-AUDIT-v5.0.0.md",
@@ -42273,6 +42278,11 @@
   "path": "docs/history/V8.7.24-CHANGELOG.md",
   "size": 2286,
   "sha256": "475bee8707cf372cf6dffad65e80db16521d0f84fa9e4572ea589eceb0b885a5"
+ },
+ {
+  "path": "docs/history/V8.7.25-CHANGELOG.md",
+  "size": 2763,
+  "sha256": "7a7e1d8bca1cb9194045c6b57f7613b9b085ce7de846157e3313c5557be1fee3"
  },
  {
   "path": "docs/history/V8.7.3-CHANGELOG.md",

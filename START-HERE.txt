@@ -1,4 +1,4 @@
-Ultimate AI Starter Bundle V8.7.24 - ALL-IN-ONE STARTER
+Ultimate AI Starter Bundle V8.7.25 - ALL-IN-ONE STARTER
 ======================================================
 
 Not just Skyrim. A full multi-provider AI starter bundle: skills, MCP tools,
@@ -153,6 +153,7 @@ process, no yes-man, verify-don't-assume).
 
 READ NEXT
 ----------
+    docs\history\V8.7.25-CHANGELOG.md  impeccable engine audit + rerun tool
     docs\history\V8.7.24-CHANGELOG.md  version-proof public copy rule + enforcement
     docs\history\V8.7.23-CHANGELOG.md  preamble markers removed + soul duplication fixed; ox-alpha retired; 8 catalog pins refreshed
     docs\history\V8.7.22-CHANGELOG.md  workspace-organization + scratch-hygiene skills; default release flow; Hermes tuning synced
