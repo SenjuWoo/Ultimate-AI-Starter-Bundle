@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "catalog_version": "8.7.22",
-  "pack_version": "8.7.22",
+  "catalog_version": "8.7.23",
+  "pack_version": "8.7.23",
   "updated_utc": "2026-09-13",
   "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
   "reads": "TOOLS/Set-McpProfile.ps1",
@@ -170,7 +170,7 @@
           "command": "npx",
           "args": [
             "-y",
-            "@playwright/mcp@0.0.80"
+            "@playwright/mcp@0.0.81"
           ],
           "providers": [
             "Codex",
@@ -491,7 +491,7 @@
           "requires": {
             "project_rel": "Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe"
           },
-          "editor_side": "npx -y unity-mcp-cli@0.90.0 install-plugin \"{project}\"",
+          "editor_side": "npx -y unity-mcp-cli@0.91.0 install-plugin \"{project}\"",
           "requires_note": "Unity-MCP does not ship a machine-wide server. The executable is generated inside the project's Library folder by the Unity package, so there is no global registration to write -- the entry is project-scoped by construction, and the command is the resolved absolute path for that one project. Until the package is installed the exe does not exist, and the profile refuses rather than writing a path that is not there."
         }
       ]

@@ -924,9 +924,15 @@ function Get-UabsGrokHookIssues {
   }
 }
 
-# v7.5.0: SOUL + AIO preamble wiring. Appends (or replaces) the marked
-# preamble block in an agent instruction file. Idempotent, backup first.
+# v7.5.0: SOUL + AIO preamble wiring. Appends (or replaces) the pack preamble
+# block in an agent instruction file. Idempotent, backup first.
 # Existing files keep their own encoding; writes are UTF-8 without BOM.
+# v8.7.23: the HTML comment markers are gone. v7.5-v8.7 wrapped the block in
+# `<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL ... -->` so it could be found again;
+# every provider paid for those lines on every request and they instructed
+# nothing. The block is now delimited by its own content: it is the tail of
+# the file, and the writer finds where it starts by recognizing the pack's own
+# opening lines. Legacy marked blocks and duplicated tails are still replaced.
 function Install-UabsPreambleBlock {
   param(
     [string]$Path,
@@ -944,40 +950,40 @@ function Install-UabsPreambleBlock {
   $soul = ([IO.File]::ReadAllText($SoulFile)).Trim()
   $aio  = ([IO.File]::ReadAllText($AioFile)).Trim()
   $nl = "`r`n"
-  # Stamp the pack version that wired the block, so a stale block is visible
-  # on sight. The replace pattern keys on the marker prefix, not the version,
-  # so an older stamp is still found and replaced.
-  $ver = 'v8.0.0'
-  try {
-    $vf = Join-Path (Get-UabsPackRoot) 'VERSION.txt'
-    if (Test-Path -LiteralPath $vf) { $ver = ([IO.File]::ReadAllText($vf)).Trim() }
-  } catch { }
-  $open = '<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL ' + $ver + ' -->'
-  $mid  = '<!-- ULTIMATE-AI-STARTER-BUNDLE AIO (operating contract) -->'
-  $end  = '<!-- /ULTIMATE-AI-STARTER-BUNDLE SOUL -->'
-  $block = $open + $nl + $soul + $nl + $nl + $mid + $nl + $aio + $nl + $end
+  # Plain text: the soul, a blank line, then the operating contract.
+  $block = $soul + $nl + $nl + $aio
+  # The block is the TAIL of the file, so replacing it means finding where the
+  # pack's text starts: the soul's first line, the contract's first line, or
+  # either historic form (the old markers, the pre-v7.6 soul that opened "You
+  # are Hermes Agent"). Anchors are computed from the source files, so editing
+  # them cannot orphan a hardcoded pattern.
+  $soulFirst = (($soul -split "`r?`n") | Where-Object { $_.Trim() } | Select-Object -First 1).Trim()
+  $aioFirst  = (($aio  -split "`r?`n") | Where-Object { $_.Trim() } | Select-Object -First 1).Trim()
+  $anchors = @('<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL', 'You are Hermes Agent', $soulFirst, $aioFirst) |
+    Where-Object { $_ } | ForEach-Object { [regex]::Escape($_) }
+  $pat = '(?m)^[ \t]*(?:' + ($anchors -join '|') + ')'
   $dir = Split-Path $Path -Parent
   if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
   $pre = ''
-    $origBom = $false
-    if (Test-Path -LiteralPath $Path -PathType Leaf) {
-      $pre = [IO.File]::ReadAllText($Path)
-      $pb = [IO.File]::ReadAllBytes($Path)
-      $origBom = ($pb.Length -ge 3 -and $pb[0] -eq 0xEF -and $pb[1] -eq 0xBB -and $pb[2] -eq 0xBF)
-    }
-    # Hermes used to receive the bare SOUL source instead of the marked SOUL +
-    # AIO block. That exact byte-owned legacy form is safe to replace; any
-    # operator-authored content is still preserved and the block is appended.
-    if ($pre.Trim() -ceq $soul) { $pre = '' }
-    $pat = '(?ms)^[ \t]*<!--[ \t]*ULTIMATE-AI-STARTER-BUNDLE SOUL.*?^[ \t]*<!--[ \t]*/ULTIMATE-AI-STARTER-BUNDLE SOUL[ \t]*-->[ \t]*\r?\n?'
-
-    $new = ''
-    if ([regex]::IsMatch($pre, $pat)) {
-      $new = [regex]::Replace($pre, $pat, ($block + $nl))
-    } else {
-      if ($pre) { $new = $pre.TrimEnd("`r", "`n") + $nl + $nl + $block + $nl }
-      else { $new = $block + $nl }
-    }
+  $origBom = $false
+  if (Test-Path -LiteralPath $Path -PathType Leaf) {
+    $pre = [IO.File]::ReadAllText($Path)
+    $pb = [IO.File]::ReadAllBytes($Path)
+    $origBom = ($pb.Length -ge 3 -and $pb[0] -eq 0xEF -and $pb[1] -eq 0xBB -and $pb[2] -eq 0xBF)
+  }
+  $m = [regex]::Match($pre, $pat)
+  # A recognized anchor with a plausible amount of text behind it is our tail.
+  # The length floor keeps a passing mention of one anchor line in the middle
+  # of operator notes from deleting everything after it.
+  $ours = $m.Success -and ($pre.Length - $m.Index) -ge [Math]::Min($soul.Length, $aio.Length)
+  $new = ''
+  if ($ours) {
+    $head = $pre.Substring(0, $m.Index).TrimEnd("`r", "`n")
+    if ($head) { $new = $head + $nl + $nl + $block + $nl } else { $new = $block + $nl }
+  } else {
+    if ($pre) { $new = $pre.TrimEnd("`r", "`n") + $nl + $nl + $block + $nl }
+    else { $new = $block + $nl }
+  }
     if (-not $Force -and $new -ceq $pre) {
       Write-UabsOk ('preamble unchanged (already current): ' + $Path)
       return

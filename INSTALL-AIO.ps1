@@ -376,7 +376,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.7.22 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.7.23 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -1315,6 +1315,20 @@ if (-not $ToolsOnly -and -not $SkipPreamble) {
       $hhome = Get-UabsProviderHome -Provider Hermes -Catalog $catalog
       $hSoul = Join-Path $hhome 'SOUL.md'
       Install-UabsPreambleBlock -Path $hSoul -SoulFile $soulF -AioFile $aioF -Force:$ForcePreamble
+      # Profiles carry their own SOUL.md (a profile is created by cloning the
+      # default, which copies it). A profile cloned before a wiring run, or
+      # left behind by an older installer, would otherwise run a stale or
+      # duplicated soul. Wire every profile that has one; never create one,
+      # because a profile without SOUL.md inherits the home copy.
+      $pdir = Join-Path $hhome 'profiles'
+      if (Test-Path -LiteralPath $pdir) {
+        foreach ($pf in @(Get-ChildItem -LiteralPath $pdir -Directory -ErrorAction SilentlyContinue)) {
+          $pSoul = Join-Path $pf.FullName 'SOUL.md'
+          if (Test-Path -LiteralPath $pSoul -PathType Leaf) {
+            Install-UabsPreambleBlock -Path $pSoul -SoulFile $soulF -AioFile $aioF -Force:$ForcePreamble
+          }
+        }
+      }
       continue
     }
     $pmeta = $catalog.providers.$prov
@@ -2135,7 +2149,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.7.22'
+version = '8.7.23'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

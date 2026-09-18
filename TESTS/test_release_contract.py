@@ -437,8 +437,19 @@ def test_hermes_native_profile_migration_contract() -> None:
         "WithForgeCompatibility",
         "return Get-UabsProfilePrefs 'default'",
         "unowned/user-specific",
+        # v8.7.23 retirement sweep: the pack removes the dead references it
+        # shipped (an alias mapping to a delisted model, a vision-chain entry
+        # pointing at one) without touching anything it did not write.
+        "UabsRetiredModels",
+        "remove_aliases",
+        "vision_chain",
     ):
         assert token in body, f"Hermes native-profile migration lost {token!r}"
+    # The sweep must match the retired id exactly -- a prefix match would delete
+    # a user's alias for a live model that merely shares a name stem.
+    assert "$mapped -eq $dead -or $mapped.EndsWith('/' + $dead)" in body, (
+        "the retirement sweep no longer matches the dead model exactly"
+    )
 
     assert "default = @('context7', 'github', 'headroom')" in body
     assert "code = @('context7', 'github', 'headroom', 'codebase-memory-mcp')" in body
@@ -2072,6 +2083,33 @@ def test_hermes_receives_the_combined_soul_and_aio_contract() -> None:
     assert "Copy-Item -LiteralPath $soulF -Destination $hSoul" not in installer, (
         "Hermes still resets SOUL.md to the short base soul"
     )
+    # A profile carries its own SOUL.md, so wiring only the home copy leaves
+    # `hermes -p <name>` running a stale or duplicated soul.
+    assert "-Path $pSoul -SoulFile $soulF -AioFile $aioF" in installer, (
+        "profile SOUL.md files are never wired"
+    )
+
+
+def test_preamble_is_plain_text_without_markers() -> None:
+    """The preamble rides on every request. Comment markers around it are paid
+    for by every provider and instruct nothing, so v8.7.23 removed them; the
+    writer recognizes its own block from the pack's opening lines instead."""
+    common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
+    assert "$block = $soul + $nl + $nl + $aio" in common, (
+        "the preamble writer no longer builds a marker-free block"
+    )
+    assert "$open = '<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL" not in common, (
+        "the preamble writer still stamps an opening marker"
+    )
+    for rel in (
+        "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-PROVIDER-HOME/CLAUDE.md",
+        "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-PROVIDER-HOME/AGENTS.md",
+        "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-WORKSPACE/AGENTS.md",
+    ):
+        text = read(ROOT / rel)
+        assert not re.search(r"<!--[^>]*ULTIMATE-AI-STARTER-BUNDLE", text), (
+            "%s still ships a preamble marker comment" % rel
+        )
 
 
 def test_bundle_forge_install_has_single_skill_writer() -> None:
@@ -2539,6 +2577,7 @@ def main() -> int:
         test_hermes_stale_session_provider_migration,
         test_hermes_openrouter_picker_uses_the_live_tool_catalog,
         test_hermes_receives_the_combined_soul_and_aio_contract,
+        test_preamble_is_plain_text_without_markers,
         test_bundle_forge_install_has_single_skill_writer,
         test_forge_skill_has_one_canonical_source,
         test_forge_install_checked_commands_are_quiet_but_diagnostic,

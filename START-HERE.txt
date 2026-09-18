@@ -1,4 +1,4 @@
-Ultimate AI Starter Bundle V8.7.22 - ALL-IN-ONE STARTER
+Ultimate AI Starter Bundle V8.7.23 - ALL-IN-ONE STARTER
 ======================================================
 
 Not just Skyrim. A full multi-provider AI starter bundle: skills, MCP tools,
@@ -153,6 +153,7 @@ process, no yes-man, verify-don't-assume).
 
 READ NEXT
 ----------
+    docs\history\V8.7.23-CHANGELOG.md  preamble markers removed + soul duplication fixed; ox-alpha retired; 8 catalog pins refreshed
     docs\history\V8.7.22-CHANGELOG.md  workspace-organization + scratch-hygiene skills; default release flow; Hermes tuning synced
     docs\history\V8.7.21-CHANGELOG.md  creative profile: Blender + Unity MCPs; Blender pin refreshed to 2.0.0; pack-gate Actions SHA-pinned
     docs\history\V8.0.4-CHANGELOG.md  Hermes install-time MCP preservation: app closed during install, relaunched after config is final

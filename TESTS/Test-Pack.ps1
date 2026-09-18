@@ -270,6 +270,27 @@ if ($soulTxt) {
         } else {
             Bad ('legacy Hermes soul migration produced soul copies=' + $soulCopies + ', aio=' + $wired.Contains($aioTxt))
         }
+        # v8.7.23: the block is plain text. Comment markers were find-and-replace
+        # scaffolding that every provider paid for on every request; stacking
+        # copies is what put the operating contract into Hermes' SOUL.md twice.
+        $markers = ([regex]::Matches($wired, [regex]::Escape('ULTIMATE-AI-STARTER-BUNDLE'))).Count
+        if ($markers -eq 0) { Good 'wired preamble carries no comment markers' }
+        else { Bad ("wired preamble still carries $markers marker string(s)") }
+        Install-UabsPreambleBlock -Path $probeSoul -SoulFile $soulF -AioFile $aioF
+        $again = [IO.File]::ReadAllText($probeSoul)
+        $soulAgain = ([regex]::Matches($again, [regex]::Escape($soulTxt.Trim()))).Count
+        $aioAgain = ([regex]::Matches($again, [regex]::Escape($aioTxt))).Count
+        if ($soulAgain -eq 1 -and $aioAgain -eq 1) { Good 're-wiring replaces the block instead of stacking copies' }
+        else { Bad ("re-wiring stacked copies: soul=$soulAgain aio=$aioAgain") }
+        # The exact legacy shape that got duplicated: a tail that is only the AIO.
+        $probeAio = Join-Path $probeRoot 'AIO-ONLY.md'
+        [IO.File]::WriteAllText($probeAio, $aioTxt, (New-Object Text.UTF8Encoding $false))
+        Install-UabsPreambleBlock -Path $probeAio -SoulFile $soulF -AioFile $aioF
+        $fixed = [IO.File]::ReadAllText($probeAio)
+        $soulFixed = ([regex]::Matches($fixed, [regex]::Escape($soulTxt.Trim()))).Count
+        $aioFixed = ([regex]::Matches($fixed, [regex]::Escape($aioTxt))).Count
+        if ($soulFixed -eq 1 -and $aioFixed -eq 1) { Good 'an AIO-only tail is folded into one block, not duplicated' }
+        else { Bad ("AIO-only tail produced soul=$soulFixed aio=$aioFixed") }
     } finally {
         if (Test-Path -LiteralPath $probeRoot) { Remove-Item -LiteralPath $probeRoot -Recurse -Force }
     }

@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.22 -->
+<!-- Ultimate AI Starter Bundle v8.7.23 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.22
+# Ultimate AI Starter Bundle v8.7.23
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -15,7 +15,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 <p>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
-  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.22-7c9cff?labelColor=0d1117" alt="v8.7.22"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.23-7c9cff?labelColor=0d1117" alt="v8.7.23"></a>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest"><img src="https://img.shields.io/github/v/release/SenjuWoo/Ultimate-AI-Starter-Bundle?label=latest%20release&amp;color=9db0e8&amp;labelColor=0d1117" alt="latest published release"></a>
 </p>
 
@@ -323,7 +323,6 @@ hermes model v4.1-flash     # deepseek-v4.1-flash          (new starter)
 hermes model flash          # deepseek-v4-flash-0731        (retained alias)
 hermes model muse           # meta/muse-spark-1.2-contributor
 hermes model flash-vision   # deepseek-v4-flash-vision-exp  (images)
-hermes model ox             # stealth/ox-alpha              (free, multimodal)
 hermes model gemini-flash   # google/gemini-3.7-flash
 hermes model v4-pro         # deepseek-v4-pro-0813
 hermes model glm            # z-ai/glm-5.3
@@ -755,6 +754,14 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.23** - 2026-09-18. The installed preamble is plain text again (no marker comments burning tokens on
+every request) and the soul duplication is fixed everywhere: one soul + one operating contract per file, wired
+for Hermes' home and every profile. `stealth/ox-alpha` retired from the config, alias ladder and vision chain,
+with a migrator sweep that removes the pack's own dead references. Eight catalog pins refreshed (context7,
+playwright-mcp, playwright-cli, super-mcp-router, omni, unity-mcp CLI, github-mcp-server, codebase-memory)
+with offline assets re-fetched and checksum-verified; houseCARL 2.x, ponytail, rtk and impeccable stay held
+for a validated pass. **169 canonical skills**, no new dependency. See [changes](docs/history/V8.7.23-CHANGELOG.md).
 
 **v8.7.22** - 2026-09-17. Two new work-ethic skills ship by default: `workspace-organization` (ask where work lives, keep source and build output apart, maintain a `WORKSPACE.md` map) and `scratch-hygiene` (temp scratch dies with the task; bloat is swept at version bumps). The release and capability skills now carry app-closed steps as user-run, and the portable Hermes tuning is synced to the current choices (max effort, Ling 3.0 Flash VL summarizer, auto-routed vision, Nemotron pair in the alias ladder). **169 canonical skills**, no new dependency. See [changes](docs/history/V8.7.22-CHANGELOG.md).
 

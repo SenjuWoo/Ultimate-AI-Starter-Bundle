@@ -1436,8 +1436,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-PROVIDER-HOME/CLAUDE.md",
-  "size": 24383,
-  "sha256": "cf32c62039a622dd43598be41154a2069aa73181009b5084cb51dc26ae2fca91"
+  "size": 24230,
+  "sha256": "0933157847c81f0e96f3dd60a5a18da8891eb5e29c84826971bad3a2ecbbb7d4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-PROVIDER-HOME/settings.json",
@@ -7242,7 +7242,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
   "size": 1621,
-  "sha256": "3b58603e77adae0eb0965cbe1fbf81a937972942d54d88ca32062ab00287f620"
+  "sha256": "545b59ba4c88572052a7970186a22d92ef09eeca45ac36b265d5902c716ecfb1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
@@ -7546,8 +7546,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-PROVIDER-HOME/AGENTS.md",
-  "size": 24512,
-  "sha256": "fdd70c10122ccfd5aa3693dd19a8a65d10cfd5854eb6b710d4be22e461c8f105"
+  "size": 24359,
+  "sha256": "b5f14a2a9cc2c92799cacb7803ce7bca641f9650217d0347ef0fba88c361d32f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-PROVIDER-HOME/config.toml",
@@ -13352,7 +13352,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
   "size": 1621,
-  "sha256": "3b58603e77adae0eb0965cbe1fbf81a937972942d54d88ca32062ab00287f620"
+  "sha256": "545b59ba4c88572052a7970186a22d92ef09eeca45ac36b265d5902c716ecfb1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
@@ -19447,7 +19447,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
   "size": 1621,
-  "sha256": "3b58603e77adae0eb0965cbe1fbf81a937972942d54d88ca32062ab00287f620"
+  "sha256": "545b59ba4c88572052a7970186a22d92ef09eeca45ac36b265d5902c716ecfb1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
@@ -19681,8 +19681,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-WORKSPACE/AGENTS.md",
-  "size": 19029,
-  "sha256": "3b098a6ee7e239b1f60e2196837ea1967e6112a08bedb56b56e6cb8bf0000ae3"
+  "size": 18876,
+  "sha256": "4e26f5a37dfc1bf7329c32cef193698e67743f130c1752e529dafd5880229309"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/OPTIONAL-PROJECT-TEMPLATE/CHANGELOG.txt",
@@ -19741,8 +19741,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml",
-  "size": 8816,
-  "sha256": "be3c21728bdbd77686d055cfccf6d16a7a5740d6513dd2aea17a081c3405a0fa"
+  "size": 8719,
+  "sha256": "a86bdc6be16f298cb4d9a9ffff274a346534a6efa5498b772b062104ea6d36c2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
@@ -25542,7 +25542,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
   "size": 1621,
-  "sha256": "3b58603e77adae0eb0965cbe1fbf81a937972942d54d88ca32062ab00287f620"
+  "sha256": "545b59ba4c88572052a7970186a22d92ef09eeca45ac36b265d5902c716ecfb1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
@@ -25831,13 +25831,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml",
-  "size": 8816,
-  "sha256": "be3c21728bdbd77686d055cfccf6d16a7a5740d6513dd2aea17a081c3405a0fa"
+  "size": 8719,
+  "sha256": "a86bdc6be16f298cb4d9a9ffff274a346534a6efa5498b772b062104ea6d36c2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md",
-  "size": 2467,
-  "sha256": "b2bf4fc9c1ee04aa88cce489aea3e3651fd63b31b46621d0bf1253b3d61ce0ae"
+  "size": 2453,
+  "sha256": "5e447adbea46b3dcd782729128c663e1edb442b59328bef81190e4c44e65748d"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/code/profile.yaml",
@@ -31677,7 +31677,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
   "size": 1621,
-  "sha256": "3b58603e77adae0eb0965cbe1fbf81a937972942d54d88ca32062ab00287f620"
+  "sha256": "545b59ba4c88572052a7970186a22d92ef09eeca45ac36b265d5902c716ecfb1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
@@ -31986,8 +31986,8 @@
  },
  {
   "path": "3-PREAMBLES/README.md",
-  "size": 4026,
-  "sha256": "9e824d54fcd6008668a0e1a5e79b32dc9d30b56bb1dc96e08379c4bfb4227f09"
+  "size": 4655,
+  "sha256": "2d55ff2e9635f02bf5145352c018aece1e50cbf541b1f85faff8ec192c2daba0"
  },
  {
   "path": "3-PREAMBLES/SOUL.md",
@@ -32007,17 +32007,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 43138,
-  "sha256": "92b23d9652d7f7bb0c2929669b4c8624aefad6fbddacad27bd7ed837508ec265"
+  "sha256": "3dc0c67c20763d9a2b00c7cce74822eb9bf999606aad668bfeabf6429b5d73db"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1660,
-  "sha256": "44094da3210b8ee108393746d4832a32922ca540f47d2738a16c1878a0483291"
+  "sha256": "c8c89e49d5f8d299759f54566383963265a0304bf26e5f382d5e0ddfc397050e"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 31983,
-  "sha256": "b0f70024f3855f09d31a2d73cdb3932208eba3236e7b21ff3addc80f6ab94917"
+  "sha256": "dbb45550b9f406f499b0ced8c0ee8bac7710ba15c29289aa309f5e6deea9b945"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -32047,7 +32047,7 @@
  {
   "path": "BUNDLED-TOOLS/capability-records/context7.json",
   "size": 854,
-  "sha256": "c367163cdfc2461a2fa407ea75f6836fa3cdaaaf21a768e888b5077e6e15035e"
+  "sha256": "d5f9c8e4fc711dc62f6b40de432c140e2ff673c55fca1fc6e283af282b658585"
  },
  {
   "path": "BUNDLED-TOOLS/capability-records/firecrawl-mcp.json",
@@ -32101,13 +32101,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/offline/codebase-memory-mcp-windows-amd64.zip",
-  "size": 39172588,
-  "sha256": "b43ad982994c4d829670749e08d3b622a74bb20041fc0a7d02bef6113f81c34d"
+  "size": 39858881,
+  "sha256": "6eb6beaf261b19e419766e78baf93cbc3cf1c6338cff8fb7c0234859f96d1685"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/github-mcp-server-1.12.1-windows-x86_64.zip",
-  "size": 8466808,
-  "sha256": "5d8a8b69262c5026c94a1fdb063960b5a0bdf32632a4ebd5ba4a314d9b4157fa"
+  "path": "BUNDLED-TOOLS/offline/github-mcp-server-1.12.2-windows-x86_64.zip",
+  "size": 8480261,
+  "sha256": "c08872e69f700d4219e7b4ab9607d56d7993171519ee32b62fccb8fba0cab673"
  },
  {
   "path": "BUNDLED-TOOLS/offline/headroom_ai-0.37.0-cp310-abi3-win_amd64.whl",
@@ -34961,8 +34961,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 163603,
-  "sha256": "fa2c88af0a9e4c17336795b05b22cdea3199aba42e66996f521647593f66ca5a"
+  "size": 166016,
+  "sha256": "309a900666500443c6b0a893b344fc7ecedd0b0b6012f0a83158bd81f99c6778"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -35036,8 +35036,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 134839,
-  "sha256": "b168b62083dd87439133874c357678130e5482510750801ab705456decf5ab23"
+  "size": 135646,
+  "sha256": "9250c1aba7d2f6de45a45b419ea97d9730c4e7400ccf9e7aa64aa59d2741b93a"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -35086,8 +35086,8 @@
  },
  {
   "path": "README.md",
-  "size": 71291,
-  "sha256": "87c2e4b3fcef36b671a094155d0bb909260d236b5b767811fc11ceacb947d66a"
+  "size": 71981,
+  "sha256": "a76f6441824856f7dcea9709606cb8272c35e212b3ba9c373893a2a59b796090"
  },
  {
   "path": "SECURITY.md",
@@ -35097,12 +35097,12 @@
  {
   "path": "START-HERE.bat",
   "size": 730,
-  "sha256": "5f51b824e9ec9b329a9122bb60efee0e4de913907b4b4a4029ee1e87b79c4ed6"
+  "sha256": "c74fcfcf3f09cb08e09cc3a19efcc829451bc37df31f5e3c903433121657e740"
  },
  {
   "path": "START-HERE.txt",
-  "size": 9949,
-  "sha256": "b6a49113ffd73eb06fa5b9265e66f2bf2d03f5ce7800d91426b4ac83a83f3d7f"
+  "size": 10082,
+  "sha256": "38528543d27ae6a9eb8e39b58065d825e4136687510cb037c1b05c9a491097f4"
  },
  {
   "path": "TESTS/Test-ForgeRootResolution.ps1",
@@ -35131,8 +35131,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 41340,
-  "sha256": "4891b225c572a3533272bc1ccc8c716782658b77df478c66ea0de22416ef3f24"
+  "size": 43068,
+  "sha256": "57dd54ac31a4ac617e8b753d5471dfb5f2324b6c7a86a3d85643ad0fc1a33744"
  },
  {
   "path": "TESTS/Test-ProviderDetection.ps1",
@@ -35321,8 +35321,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 283581,
-  "sha256": "1769817a706988fd3b890eb6699a28dbf0b96826dba756da1d118f2fad65b074"
+  "size": 285560,
+  "sha256": "e5f9a095dfc1171bef4a911f872ab317c5a18099d1baf36a052eedba7c6b0901"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
@@ -35391,8 +35391,8 @@
  },
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
-  "size": 50652,
-  "sha256": "5dad5bf8fbcef42acd5c54a6951c1743f0ef706973aa8e0fb91e03ca26d7b18a"
+  "size": 53931,
+  "sha256": "59a0f096e55826ad5ccd06a2d45b0af5f209082f4d8c44e0d24454c73cb46c8c"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -35436,8 +35436,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 82304,
-  "sha256": "d216c3be0c15a5a50be7d18371cdccdbf3cfe22f1fbfd7d2707df30064264292"
+  "size": 82967,
+  "sha256": "7fdfcc6c370bce5cc562f83367dd1d40c086cc5d7eebd9ad4882a7dd5d16b442"
  },
  {
   "path": "TOOLS/UABS-Mcp-Write.ps1",
@@ -35601,13 +35601,13 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 1644,
-  "sha256": "7160dcefc544008149f7862117823aa41064b4b6b72da5d2093e1015e52d71c3"
+  "size": 1737,
+  "sha256": "5bfd32ea572e33a8bd062832f9144a0b4578715e13d246c966340606384dbcbd"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "d7b6679b2631481c000accf9eb64afb76a1417fbeda0f9a90a4f027166d06727"
+  "sha256": "e28fd5457a0f98324001023bf1a6a4ff989538b358c420b2b2029d8065787b7e"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -41417,7 +41417,7 @@
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/browser-cli.md",
   "size": 1621,
-  "sha256": "3b58603e77adae0eb0965cbe1fbf81a937972942d54d88ca32062ab00287f620"
+  "sha256": "545b59ba4c88572052a7970186a22d92ef09eeca45ac36b265d5902c716ecfb1"
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/scripts/discover_tools.ps1",
@@ -42233,6 +42233,11 @@
   "path": "docs/history/V8.7.22-CHANGELOG.md",
   "size": 3513,
   "sha256": "c42079bf7662b060ccd8c65ff5ac5d3803a3a8ca51fa2cbf51aa2f24d003e6ce"
+ },
+ {
+  "path": "docs/history/V8.7.23-CHANGELOG.md",
+  "size": 4887,
+  "sha256": "01e63db6290950ff325d3beeb6ccf2a1b1d47b0e245fc8c5dd554c5ea28e3b50"
  },
  {
   "path": "docs/history/V8.7.3-CHANGELOG.md",

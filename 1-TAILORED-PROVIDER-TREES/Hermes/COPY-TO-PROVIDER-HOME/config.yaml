@@ -14,7 +14,6 @@ model:
     flash-vision: openrouter/deepseek/deepseek-v4-flash-vision-exp
     muse: openrouter/meta/muse-spark-1.2-contributor
     v4-pro: openrouter/deepseek/deepseek-v4-pro-0813
-    ox: openrouter/stealth/ox-alpha
     gemini-flash: openrouter/google/gemini-3.7-flash
     glm: openrouter/z-ai/glm-5.3
     grok: openrouter/x-ai/grok-4.6
@@ -131,8 +130,6 @@ auxiliary:
     fallback_chain:
       - provider: openrouter
         model: deepseek/deepseek-v4-flash-vision-exp
-      - provider: openrouter
-        model: stealth/ox-alpha
   compression:
     provider: openrouter
     # Reviewed on 2026-09-17: 1M context covers the retained 160k input cap.

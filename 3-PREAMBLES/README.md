@@ -14,15 +14,22 @@ machine comes up with the same agent behaviour as the operator's own setup.
 
 ## What the V8 installer wires
 
-For every selected provider, `INSTALL-AIO.ps1` appends a marked block:
+For every selected provider, `INSTALL-AIO.ps1` writes one plain-text block —
+the soul, a blank line, then the operating contract:
 
 ```text
-<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL v8.0.0 -->
 <SOUL.md content>
-<!-- ULTIMATE-AI-STARTER-BUNDLE AIO (operating contract) -->
+
 <0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md content>
-<!-- /ULTIMATE-AI-STARTER-BUNDLE SOUL -->
 ```
+
+No wrapping comments. Through v8.7 the block was stamped with
+`<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL vX -->` / `<!-- /ULTIMATE-AI-STARTER-BUNDLE SOUL -->`
+so it could be found again — and every agent then paid for those lines on every
+request while they instructed nothing. The block is instead the tail of the
+file, and `Install-UabsPreambleBlock` (`TOOLS\UABS-Common.ps1`) recognizes
+where it starts from the pack's own opening lines, so re-running replaces the
+tail rather than stacking copies.
 
 | Provider | Instruction file | Notes |
 |---|---|---|
@@ -30,12 +37,14 @@ For every selected provider, `INSTALL-AIO.ps1` appends a marked block:
 | Codex | `%USERPROFILE%\.codex\AGENTS.md` | Appended, never edits existing text |
 | Kimi | `%USERPROFILE%\.kimi-code\AGENTS.md` | Created if missing |
 | Grok CLI | `%USERPROFILE%\.grok\AGENTS.md` | Grok's documented global-rules file (applies to all projects) |
-| Hermes | `%LOCALAPPDATA%\hermes\SOUL.md` | Verbatim soul copy (Hermes reads SOUL.md from its home) |
+| Hermes | `%LOCALAPPDATA%\hermes\SOUL.md` and every `profiles\<name>\SOUL.md` | Hermes reads SOUL.md from its home; each profile carries its own copy, and all of them get wired |
 | Web UIs | custom-instructions box | Manual: paste `MANUAL-PASTE.txt` (no file mechanism exists) |
 
 Rules:
 
-- Idempotent: re-running replaces the marker block instead of stacking copies.
+- Idempotent: re-running replaces the block (the tail from the pack's first
+  recognized line to end of file) instead of stacking copies. A file whose tail
+  is only the AIO text, or only the soul, folds into one block.
 - Every write gets a `.before-soul-<timestamp>.bak` first.
 - UTF-8, no BOM on writes; existing files keep their own encoding/leading BOM.
 - `-SkipPreamble` opts out; `-ForcePreamble` rewrites even an identical block.

@@ -23,7 +23,7 @@ the bundle does not download it or guess its location.
 Reviewed September 17, 2026: main DeepSeek V4.1 Flash with max reasoning,
 20% compression target, free Ling 3.0 Flash VL summarizer with ultra reasoning
 and 600-second timeout, auto-routed vision whose ordered chain is the Flash
-vision model then ox-alpha, response cache disabled, one-hour prompt cache
+vision model, response cache disabled, one-hour prompt cache
 retained, bounded delegation. The installed provider advertises these
 models/efforts; this is compatibility evidence, not a quality or
 token-saving benchmark. The 160k compression cap, material-result pruning,

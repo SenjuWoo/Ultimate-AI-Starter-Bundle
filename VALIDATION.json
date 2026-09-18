@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.22",
-  "generated": "2026-09-17",
-  "release_tag": "v8.7.22",
+  "version": "8.7.23",
+  "generated": "2026-09-18",
+  "release_tag": "v8.7.23",
   "canonical_skills": 169,
   "provider_trees": 5,
   "registry_entries": 169,
@@ -21,6 +21,6 @@
     "TESTS/Test-McpProfiles.ps1",
     "TOOLS/mcp_handshake.py --selftest"
   ],
-  "runtime_status": "v8.7.22: Adds workspace-organization and scratch-hygiene skills to every provider tree, states the default release flow with app-closed steps designated as user-run, and syncs the portable Hermes tuning (max effort, Ling 3.0 Flash VL summarizer, auto-routed vision, Nemotron aliases). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist; editor-connected tool calls and paid inference remain outside this release validation.",
+  "runtime_status": "v8.7.23: Removes the HTML comment markers from the installed preamble and converges one soul + one operating contract per file across Hermes' home and every profile; retires the delisted stealth/ox-alpha alias and vision fallback with a migrator sweep that touches only pack-written references; refreshes eight catalog pins with offline assets re-fetched and checksum-verified. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist; editor-connected tool calls and paid inference remain outside this release validation.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

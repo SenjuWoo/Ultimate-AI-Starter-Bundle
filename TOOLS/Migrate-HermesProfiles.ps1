@@ -304,6 +304,14 @@ $script:UabsSupersededChains = @(
   'openrouter/free'
 )
 
+# Model ids this pack once shipped that upstream no longer lists. The pack
+# wrote the alias and the vision fallback, so the pack removes its own dead
+# reference; an alias the user mapped themselves is not in this list and is
+# never touched. Verified unlisted on openrouter.ai/api/v1/models, 2026-09-18.
+$script:UabsRetiredModels = @(
+  'stealth/ox-alpha'
+)
+
 # Aliases for the escalation ladder, so a model can be switched by name instead
 # of by pasting a slug. Every id below was verified against the live
 # openrouter.ai/api/v1/models list; none is written from memory.
@@ -313,7 +321,6 @@ $script:UabsModelAliases = [ordered]@{
   'flash-vision' = 'openrouter/deepseek/deepseek-v4-flash-vision-exp'
   'muse'         = 'openrouter/meta/muse-spark-1.2-contributor'
   'v4-pro'       = 'openrouter/deepseek/deepseek-v4-pro-0813'
-  'ox'           = 'openrouter/stealth/ox-alpha'
   'gemini-flash' = 'openrouter/google/gemini-3.7-flash'
   'glm'          = 'openrouter/z-ai/glm-5.3'
   'grok'         = 'openrouter/x-ai/grok-4.6'
@@ -347,7 +354,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
     }).Count) {
     return Get-UabsProfilePrefs 'default'
   }
-  $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @() }
+  $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @(); vision_chain = @() }
   $fb = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'fallback_providers', '--json') -AllowMissing
   if ($fb.Code -eq 0) {
     $json = @($fb.Output | ForEach-Object { [string]$_ } |
@@ -383,6 +390,22 @@ function Get-UabsProfilePrefs([string]$Profile) {
     $json = @($al.Output | ForEach-Object { [string]$_ } |
       Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
     if ($json) { $out.aliases = ConvertTo-UabsPlain ($json | ConvertFrom-Json) }
+  }
+  # The ordered vision fallback chain, when one is configured. Read-only here;
+  # the retirement sweep is the only thing that ever writes it back. Read the
+  # parent key, not the dotted path: a key Hermes does not recognize makes the
+  # CLI print a warning on stderr, and this script runs with
+  # $ErrorActionPreference = 'Stop', so that warning is a terminating error.
+  $vc = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'auxiliary.vision', '--json') -AllowMissing
+  if ($vc.Code -eq 0) {
+    $json = @($vc.Output | ForEach-Object { [string]$_ } |
+      Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
+    if ($json) {
+      $vision = ConvertTo-UabsPlain ($json | ConvertFrom-Json)
+      if ($vision -and $vision.Contains('fallback_chain') -and $vision['fallback_chain']) {
+        $out.vision_chain = @($vision['fallback_chain'])
+      }
+    }
   }
   return $out
 }
@@ -467,6 +490,42 @@ function Ensure-UabsProfilePrefs([string]$Profile) {
     Add-UabsLedger 'untouched' "$Profile model aliases already complete"
   }
 
+  # Retirement sweep: remove the pack's own dead references. Exact match on the
+  # retired id only -- an alias pointing anywhere else, however named, is the
+  # user's and stays.
+  $retiredAliases = @()
+  foreach ($key in @($current.aliases.Keys)) {
+    $mapped = [string]$current.aliases[$key]
+    foreach ($dead in $script:UabsRetiredModels) {
+      if ($mapped -eq $dead -or $mapped.EndsWith('/' + $dead)) { $retiredAliases += [string]$key }
+    }
+  }
+  if ($retiredAliases.Count) {
+    Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'model.aliases.retired' `
+      -Key 'remove_aliases' -Value $retiredAliases `
+      -Detail ('remove retired model alias(es): ' + ($retiredAliases -join ', '))
+    $wanted['remove_aliases'] = $retiredAliases
+    foreach ($k in $retiredAliases) { Add-UabsLedger 'removed' "$Profile alias '$k' (model no longer listed upstream)" }
+  }
+  $chain = @($current.vision_chain)
+  $keptChain = @()
+  $droppedChain = @()
+  foreach ($entry in $chain) {
+    $mid = [string]$entry.model
+    $dead = $false
+    foreach ($r in $script:UabsRetiredModels) {
+      if ($mid -eq $r -or $mid.EndsWith('/' + $r)) { $dead = $true }
+    }
+    if ($dead) { $droppedChain += $mid } else { $keptChain += $entry }
+  }
+  if ($droppedChain.Count) {
+    Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'auxiliary.vision.fallback_chain' `
+      -Key 'vision_chain' -Value $keptChain `
+      -Detail ('drop retired vision fallback(s): ' + ($droppedChain -join ', '))
+    $wanted['vision_chain'] = $keptChain
+    foreach ($m in $droppedChain) { Add-UabsLedger 'removed' "$Profile vision fallback '$m' (model no longer listed upstream)" }
+  }
+
 
   # Plugin payloads live in ONE place -- the root Hermes home's plugins dir --
   # but every profile keeps its own enabled list. `profile create --clone-from`
@@ -496,13 +555,23 @@ prefs = json.loads(os.environ["UABS_HERMES_PREFS_JSON"])
 if "fallback_providers" in prefs:
     cfg["fallback_providers"] = prefs["fallback_providers"]
 aliases = prefs.get("aliases") or {}
-if aliases:
+retired = prefs.get("remove_aliases") or []
+if aliases or retired:
     model = dict(cfg.get("model") or {})
     merged = dict(model.get("aliases") or {})
     for key, value in aliases.items():
         merged.setdefault(key, value)   # never overwrite a user's own alias
+    for key in retired:                 # the pack's own dead references only
+        merged.pop(key, None)
     model["aliases"] = merged
     cfg["model"] = model
+chain = prefs.get("vision_chain")
+if chain is not None:
+    aux = dict(cfg.get("auxiliary") or {})
+    vision = dict(aux.get("vision") or {})
+    vision["fallback_chain"] = chain
+    aux["vision"] = vision
+    cfg["auxiliary"] = aux
 plugin_names = prefs.get("plugins") or []
 disable_names = prefs.get("disable_plugins") or []
 if plugin_names or disable_names:

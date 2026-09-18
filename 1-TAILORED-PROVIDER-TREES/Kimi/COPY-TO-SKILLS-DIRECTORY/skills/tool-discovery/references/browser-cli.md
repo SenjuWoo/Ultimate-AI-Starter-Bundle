@@ -1,7 +1,7 @@
 # Browser CLI fallback
 
 Use an already available native browser tool first. Otherwise the bundle
-installs Microsoft's `playwright-cli` 0.1.19 without an MCP registration.
+installs Microsoft's `playwright-cli` 0.1.20 without an MCP registration.
 It is an alternative for agents with shell access, not a replacement for
 Playwright MCP's interactive tool interface.
 

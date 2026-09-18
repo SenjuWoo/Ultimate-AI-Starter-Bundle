@@ -154,8 +154,8 @@
       "exe_rel": "codebase-memory-mcp.exe",
       "scope_note": "Installed globally but absent from global/default MCP sets. Claude, Grok and trusted Codex projects get it through code-intel; Hermes through its native code profile. Kimi needs explicit global opt-in. NEVER enable --ui / install.ps1 --ui (Windows Codebase Discovery Open-With). auto_index=false auto_watch=false default. Recorded 0.10.8: 15 tools, 23,974 schema bytes, ~5,994 schema tokens (bytes/4), not a per-turn bill.",
       "server_id": "codebase-memory-mcp",
-      "version": "0.10.8",
-      "release_tag": "v0.10.8"
+      "version": "0.11.0",
+      "release_tag": "v0.11.0"
     },
     {
       "install": "pip-or-wheel",
@@ -392,7 +392,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "@playwright/mcp@0.0.80"
+        "@playwright/mcp@0.0.81"
       ],
       "extra_args_env": "PLAYWRIGHT_MCP_EXECUTABLE_PATH",
       "extra_args_template": [
@@ -406,7 +406,7 @@
         "Kimi",
         "Hermes"
       ],
-      "version": "0.0.80",
+      "version": "0.0.81",
       "runtimes": [
         "node22"
       ],
@@ -502,7 +502,7 @@
       "kind": "mcp-npx",
       "mcp": true,
       "license": "MIT",
-      "version": "4.1.0",
+      "version": "4.1.1",
       "github": {
         "owner": "upstash",
         "repo": "context7"
@@ -511,7 +511,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "@upstash/context7-mcp@4.1.0"
+        "@upstash/context7-mcp@4.1.1"
       ],
       "auto_register": true,
       "api_key_env": "CONTEXT7_API_KEY",
@@ -542,13 +542,13 @@
       "kind": "mcp-binary",
       "mcp": true,
       "license": "MIT",
-      "version": "1.12.1",
+      "version": "1.12.2",
       "github": {
         "owner": "github",
         "repo": "github-mcp-server"
       },
       "install": "zip-extract",
-      "offline_asset": "github-mcp-server-1.12.1-windows-x86_64.zip",
+      "offline_asset": "github-mcp-server-1.12.2-windows-x86_64.zip",
       "asset_match": [
         "github-mcp-server-*-windows-x86_64.zip",
         "*github-mcp-server*Windows_x86_64.zip"
@@ -566,7 +566,7 @@
       "toolsets": "context,repos,pull_requests,actions,issues",
       "scope_note": "GitHub's official server, replacing @modelcontextprotocol/server-github, which npm marks 'Package no longer supported'. Official release binaries since 1.5.0 carry GitHub's OAuth application: no PAT is required on github.com; the first authenticated tool call opens GitHub's browser authorization and keeps that token in the server process only. A GITHUB_PERSONAL_ACCESS_TOKEN is optional and takes precedence when the user deliberately configures one. initialize + tools/list proves the binary and protocol, not completion of that later browser authorization. Registered with a scoped --toolsets list, not 'all': the server exposes 20 toolset groups and enabled groups enlarge the advertised schema; actual prompt and billed usage depend on provider discovery and caching. Widen it per project, never globally.",
       "server_id": "github",
-      "release_tag": "v1.12.1"
+      "release_tag": "v1.12.2"
     },
     {
       "id": "serena",
@@ -701,13 +701,13 @@
       "kind": "mcp-project-binary",
       "mcp": true,
       "license": "Apache-2.0",
-      "version": "0.90.0",
+      "version": "0.91.0",
       "github": {
         "owner": "IvanMurzak",
         "repo": "Unity-MCP"
       },
       "install": "unity-package",
-      "install_command": "npx -y unity-mcp-cli@0.90.0 install-plugin \"<project>\"",
+      "install_command": "npx -y unity-mcp-cli@0.91.0 install-plugin \"<project>\"",
       "exe_rel": "Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe",
       "profile": "engine-unity",
       "auto_register": false,
@@ -769,7 +769,7 @@
       "name": "OMNI (context distillation)",
       "kind": "cli-optional",
       "license": "Apache-2.0",
-      "version": "0.7.8",
+      "version": "0.7.9",
       "github": {
         "owner": "fajarhide",
         "repo": "omni"
@@ -815,7 +815,7 @@
       "kind": "mcp-npx",
       "mcp": true,
       "license": "MIT",
-      "version": "2.7.6",
+      "version": "2.8.2",
       "github": {
         "owner": "mindstone",
         "repo": "Super-MCP"
@@ -824,7 +824,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "super-mcp-router@2.7.6"
+        "super-mcp-router@2.8.2"
       ],
       "profile": null,
       "auto_register": false,
@@ -843,7 +843,7 @@
       "name": "Playwright CLI",
       "kind": "cli-optional",
       "install": "npx-or-npm",
-      "version": "0.1.19",
+      "version": "0.1.20",
       "github": {
         "owner": "microsoft",
         "repo": "playwright-cli"
@@ -852,8 +852,8 @@
       "runtimes": [
         "node22"
       ],
-      "npm_spec": "@playwright/cli@0.1.19",
-      "npm_integrity": "sha512-eGXIsYa5D+dC6wHGf+9uEislhPGip1djK+yiNAD7BVsXN3WzzR1J4ClFAhYhyu7wSEFqhcPrqXAYeBJF1dKJ7A==",
+      "npm_spec": "@playwright/cli@0.1.20",
+      "npm_integrity": "sha512-kEL+73IwNVFmUjGn0rmpBStZ8jju8MmmWBMXmVMesBzoZ8YW2b/Nv7aCOYLBrCbYzc7RvWZCbVj88+wOCg8yyw==",
       "npm_args": [
         "--ignore-scripts"
       ],
@@ -861,10 +861,10 @@
       "required_for": [
         "browser-cli"
       ],
-      "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.19 package pins Playwright 1.63.0-alpha-2026-08-31; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving."
+      "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.20 package pins Playwright 1.64.0-alpha-2026-09-14; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving."
     }
   ],
-  "pack_version": "8.7.22",
+  "pack_version": "8.7.23",
   "updated_utc": "2026-09-08",
   "providers": {
     "Grok": {
@@ -943,7 +943,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.7.22",
+  "catalog_version": "8.7.23",
   "updated": "2026-09-03",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }
