@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.23 -->
+<!-- Ultimate AI Starter Bundle v8.7.24 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.23
+# Ultimate AI Starter Bundle v8.7.24
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -15,7 +15,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 <p>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
-  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.23-7c9cff?labelColor=0d1117" alt="v8.7.23"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.24-7c9cff?labelColor=0d1117" alt="v8.7.24"></a>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest"><img src="https://img.shields.io/github/v/release/SenjuWoo/Ultimate-AI-Starter-Bundle?label=latest%20release&amp;color=9db0e8&amp;labelColor=0d1117" alt="latest published release"></a>
 </p>
 
@@ -565,7 +565,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-- **Provider skills** — 169 skills per AI (Claude, Codex, Grok, Kimi, Hermes), all generated from one canonical tree.
+- **Provider skills** — 170 skills per AI (Claude, Codex, Grok, Kimi, Hermes), all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7, official GitHub, and Headroom are the verified always-on core. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup
@@ -754,6 +754,12 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.24** - 2026-09-18. New rule, enforced by a test: public copy that ships to a platform an agent cannot
+edit later (Nexus, Steam, itch, forums) stays version-proof - no version numbers, dates or counts in titles,
+descriptions or captions, because each one is a manual edit or a stale number. The version lives in the
+platform's version field and the changelog. `skyrim-nexus-publishing` and `release-checklist` both enforce it.
+**170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.24-CHANGELOG.md).
 
 **v8.7.23** - 2026-09-18. The installed preamble is plain text again (no marker comments burning tokens on
 every request) and the soul duplication is fixed everywhere: one soul + one operating contract per file, wired

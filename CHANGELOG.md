@@ -1,3 +1,9 @@
+## 8.7.24
+
+- New canonical skill `public-copy-durability`: public copy splits by whether an agent can edit it later. Platform-locked pages (Nexus, Steam, itch, CurseForge, forums - re-typed by hand) carry durable prose only: no version numbers, dates, counts, or "latest" in titles, summaries, descriptions, or captions, and no baked version text in hero images (that costs a media re-upload). Agent-editable surfaces (GitHub README, CHANGELOG, release bodies) may carry per-release facts. One volatile fact gets one home - the platform's version field plus its changelog section.
+- `skyrim-nexus-publishing` and `release-checklist` (step 0 public surface) now enforce it, and `test_public_copy_is_version_proof` keeps both the rule and its cross-references from silently disappearing.
+- **170 canonical skills total**, no new dependency, no new MCP server.
+
 ## 8.7.23
 
 - The installed preamble is plain text again. The SOUL + AIO block carried `<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL -->` markers so it could be found again; every provider paid for those lines on every request and they instructed nothing. `Install-UabsPreambleBlock` now recognizes its own block from the pack's opening lines and rewrites the tail, so re-running is still idempotent, and the shapes that previously duplicated - a tail that is only the AIO contract, or only the soul - fold into one block.

@@ -37,7 +37,8 @@ Before versioning, make the repository understandable and credible without requi
 - a compact gallery for distinct workflows, with alt text and captions that explain what each image proves;
 - verification/test commands and results kept separate from unperformed runtime tests;
 - authors, data/assets, licences, permissions, and source provenance; and
-- no stale screenshots, placeholders, private paths, tokens, personal data, or claims unsupported by the shipped artifact.
+- no stale screenshots, placeholders, private paths, tokens, personal data, or claims unsupported by the shipped artifact;
+- public copy stays true across releases: no version numbers, dates or counts on platform-locked pages (Nexus, Steam, itch, forums) - the version lives in the platform's version field and the changelog, and agent-editable surfaces are the only place per-release facts may be scattered. See `public-copy-durability`.
 
 Inspect the rendered README/release page and the actual image pixels with `visual-verification`. A file existing is not visual proof.
 If no real final-state screenshot is available, say so and provide a capture plan instead of inventing one.

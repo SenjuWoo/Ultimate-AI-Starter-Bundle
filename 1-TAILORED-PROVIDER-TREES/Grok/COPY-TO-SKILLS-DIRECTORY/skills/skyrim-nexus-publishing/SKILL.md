@@ -59,6 +59,9 @@ Build the media set from the final release, then inspect the actual pixels with 
 - If other visual mods, ENB/ReShade, post-processing, composites, generated art, or edits materially affect the image, disclose them
   in the caption/media plan. Never present concept art or generated imagery as an in-game result.
 - Screenshots, video, filenames, captions, and displayed version must match the exact archive being published.
+- Do not bake the version or a date into the hero, thumbnail, or their captions: on a locked page,
+  changing that text costs a media re-upload. Keep the page body version-proof - see
+  `public-copy-durability`.
 
 If no verified final-state media exists, create a precise capture list and mark presentation incomplete. Do not fabricate gameplay
 screenshots or quietly reuse media from an older version.
@@ -107,6 +110,9 @@ placeholders for those facts; never fill them with guesses.
 - Keep adult releases accurately tagged and described without sanitizing their technical purpose.
 - Do not include personal local paths, API keys, crash-log identities, or private repository links.
 - Ensure screenshots, previews, links, and file names match the shipped version.
+- Keep the version in the Nexus version field and the changelog section only. The summary,
+  description body, feature list, and troubleshooting stay version-proof (`public-copy-durability`),
+  because the page is edited by hand and cannot be fixed by an agent later.
 
 The final page must distinguish static validation from in-game testing.
 

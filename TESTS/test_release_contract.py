@@ -2536,6 +2536,7 @@ def main() -> int:
         test_hermes_starter_carries_no_machine_state,
         test_hermes_profile_prefs_converge_without_clobbering_user_choice,
         test_readme_model_guidance_matches_the_shipped_config,
+        test_public_copy_is_version_proof,
         test_every_defined_contract_is_actually_run,
         test_hermes_native_profile_migration_contract,
         test_same_version_forge_hotfix_refreshes_shipped_content,
@@ -5410,6 +5411,35 @@ def test_public_skyrim_workflow_requires_product_and_presentation_quality() -> N
     assert "Never present concept art or generated imagery as an in-game result" in publishing
     assert "## 0. Prove the public surface" in release
     assert "actual image pixels" in release
+
+
+def test_public_copy_is_version_proof() -> None:
+    """Locked public pages cannot be fixed by an agent after they ship.
+
+    Nexus, Steam and itch copy is re-typed by hand, so a version number in the
+    description is a manual edit every release - and a wrong number the moment
+    someone forgets. The rule has its own skill, and both presentation skills
+    point at it.
+    """
+    durability = read(CANON / "public-copy-durability" / "SKILL.md")
+    publishing = read(CANON / "skyrim-nexus-publishing" / "SKILL.md")
+    release = read(CANON / "release-checklist" / "SKILL.md")
+
+    # The split the whole rule rests on: editable later, or not.
+    assert "Platform-locked pages" in durability, "the durability skill lost the locked/editable split"
+    assert "Agent-editable surfaces" in durability, "the durability skill no longer names the editable surfaces"
+    # The concrete prohibitions, not just the sentiment.
+    assert "No version numbers in the title, summary, description body, or alt text" in durability
+    assert 'No "latest"' in durability
+    assert "changelog section" in durability and "version field" in durability
+    assert "media re-upload" in durability, "the cost of baking a version into locked media is gone"
+
+    assert "public-copy-durability" in publishing and "media re-upload" in publishing, (
+        "the Nexus page contract no longer requires version-proof copy"
+    )
+    assert "public-copy-durability" in release, (
+        "the public-surface gate no longer checks version-proof copy"
+    )
 
 
 def test_portable_skill_routing_does_not_require_superpowers_prefix() -> None:
