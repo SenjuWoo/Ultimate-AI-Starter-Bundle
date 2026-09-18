@@ -6340,6 +6340,11 @@
   "sha256": "98046458b1d358b1678eb46acb21f69df117bd80b98d2b2113790a5b3ff24630"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/scratch-hygiene/SKILL.md",
+  "size": 2091,
+  "sha256": "d86f7a1d0e11d41731f64a3a1ead39585591f32e3267be27e5ebd58d8333ec3f"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/secret-hygiene/SKILL.md",
   "size": 1803,
   "sha256": "dd4ce2df38eaa906b2c46c7280a52dc2ecf3e37272f7248a46b39795e90e5a82"
@@ -7418,6 +7423,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/scripts/create_junction.py",
   "size": 2825,
   "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
+  "size": 2954,
+  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -12440,6 +12450,11 @@
   "sha256": "98046458b1d358b1678eb46acb21f69df117bd80b98d2b2113790a5b3ff24630"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/scratch-hygiene/SKILL.md",
+  "size": 2091,
+  "sha256": "d86f7a1d0e11d41731f64a3a1ead39585591f32e3267be27e5ebd58d8333ec3f"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/secret-hygiene/SKILL.md",
   "size": 1803,
   "sha256": "dd4ce2df38eaa906b2c46c7280a52dc2ecf3e37272f7248a46b39795e90e5a82"
@@ -13518,6 +13533,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/scripts/create_junction.py",
   "size": 2825,
   "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
+  "size": 2954,
+  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -18525,6 +18545,11 @@
   "sha256": "98046458b1d358b1678eb46acb21f69df117bd80b98d2b2113790a5b3ff24630"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/scratch-hygiene/SKILL.md",
+  "size": 2091,
+  "sha256": "d86f7a1d0e11d41731f64a3a1ead39585591f32e3267be27e5ebd58d8333ec3f"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/secret-hygiene/SKILL.md",
   "size": 1803,
   "sha256": "dd4ce2df38eaa906b2c46c7280a52dc2ecf3e37272f7248a46b39795e90e5a82"
@@ -19603,6 +19628,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/scripts/create_junction.py",
   "size": 2825,
   "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
+  "size": 2954,
+  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -24610,6 +24640,11 @@
   "sha256": "98046458b1d358b1678eb46acb21f69df117bd80b98d2b2113790a5b3ff24630"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/scratch-hygiene/SKILL.md",
+  "size": 2091,
+  "sha256": "d86f7a1d0e11d41731f64a3a1ead39585591f32e3267be27e5ebd58d8333ec3f"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/secret-hygiene/SKILL.md",
   "size": 1803,
   "sha256": "dd4ce2df38eaa906b2c46c7280a52dc2ecf3e37272f7248a46b39795e90e5a82"
@@ -25688,6 +25723,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/scripts/create_junction.py",
   "size": 2825,
   "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
+  "size": 2954,
+  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -30735,6 +30775,11 @@
   "sha256": "98046458b1d358b1678eb46acb21f69df117bd80b98d2b2113790a5b3ff24630"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/scratch-hygiene/SKILL.md",
+  "size": 2091,
+  "sha256": "d86f7a1d0e11d41731f64a3a1ead39585591f32e3267be27e5ebd58d8333ec3f"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/secret-hygiene/SKILL.md",
   "size": 1803,
   "sha256": "dd4ce2df38eaa906b2c46c7280a52dc2ecf3e37272f7248a46b39795e90e5a82"
@@ -31813,6 +31858,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/scripts/create_junction.py",
   "size": 2825,
   "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
+  "size": 2954,
+  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -40465,6 +40515,11 @@
   "sha256": "98046458b1d358b1678eb46acb21f69df117bd80b98d2b2113790a5b3ff24630"
  },
  {
+  "path": "_CANONICAL-SKILLS/scratch-hygiene/SKILL.md",
+  "size": 2091,
+  "sha256": "d86f7a1d0e11d41731f64a3a1ead39585591f32e3267be27e5ebd58d8333ec3f"
+ },
+ {
   "path": "_CANONICAL-SKILLS/secret-hygiene/SKILL.md",
   "size": 1803,
   "sha256": "dd4ce2df38eaa906b2c46c7280a52dc2ecf3e37272f7248a46b39795e90e5a82"
@@ -41545,6 +41600,11 @@
   "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
  },
  {
+  "path": "_CANONICAL-SKILLS/workspace-organization/SKILL.md",
+  "size": 2954,
+  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
+ },
+ {
   "path": "_CANONICAL-SKILLS/writing-plans/SKILL.md",
   "size": 6847,
   "sha256": "4f602fa2af606622871b2e3aeda2b61f532a4c5872e7a520e3376e84ce007dfc"
@@ -42168,6 +42228,11 @@
   "path": "docs/history/V8.7.21-CHANGELOG.md",
   "size": 2650,
   "sha256": "0471174b40154e987a6d22206cd2f4fd160b9169cafe58a96ca217d5f178d362"
+ },
+ {
+  "path": "docs/history/V8.7.22-CHANGELOG.md",
+  "size": 3513,
+  "sha256": "c42079bf7662b060ccd8c65ff5ac5d3803a3a8ca51fa2cbf51aa2f24d003e6ce"
  },
  {
   "path": "docs/history/V8.7.3-CHANGELOG.md",
