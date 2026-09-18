@@ -52,7 +52,9 @@ requests just to keep an otherwise unused cache warm.
 ## Batch and bound output
 
 Batch independent reads, reuse evidence already in context, and request only
-the fields/lines needed. Check exit codes and truncation. Do not rerun a passing
+the fields/lines needed. A workspace map (`WORKSPACE.md`, see
+`workspace-organization`) replaces re-exploration: read the map, then update
+the row you changed. Check exit codes and truncation. Do not rerun a passing
 gate unless its inputs or environment changed. Prefer targeted searches to
 dumping entire trees, histories or configuration files.
 

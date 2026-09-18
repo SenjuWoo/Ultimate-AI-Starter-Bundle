@@ -1,3 +1,11 @@
+## 8.7.22
+
+- Add two work-ethic skills that install with every provider by default. `workspace-organization`: ask the user where work lives instead of defaulting to the user profile directory, keep source, build output and release scratch apart, and maintain a `WORKSPACE.md` map so sessions stop re-exploring what they already know. `scratch-hygiene`: scratch lives in one temp folder per task, reusable scripts get promoted instead of abandoned, and a finished task or version leaves no temp folders, superseded backups or stale staging behind.
+- `release-checklist` now states the pack's default close-out - sync the live install, sync the bundle, push, converge CI on the exact pushed SHA, publish, verify the shipped bytes - and designates app-closed steps (Hermes profile migration, config-rewriting installers) as user-run instead of claiming them from inside the running app.
+- `capability-profiles` documents the Hermes closed-app rule the migrator enforces; `token-efficiency` points at the workspace map as the cheapest fix for repeated re-discovery.
+- Sync the portable Hermes tuning to the current choices: max main reasoning effort, free Ling 3.0 Flash VL summarizer with ultra reasoning and 600-second timeout, auto-routed vision chain (Flash vision then ox-alpha), and the free Nemotron Ultra pair added to the alias ladder. The 160k compression cap, pruning, summary-failure abort, disabled fan-out, one-hour prompt cache and disabled response cache are unchanged safeguards.
+- **169 canonical skills total**, all five provider trees regenerated. No new dependency, MCP server or pin change.
+
 ## 8.7.21
 
 - Add the `creative` Hermes profile: core Context7/GitHub/Headroom plus Blender and Unity, cloned from the user's default so models, compression and fallbacks are preserved. Both specialists are uvx-served stdio servers, availability-gated, alias-normalized, and swept from every other profile; editors connect when open.

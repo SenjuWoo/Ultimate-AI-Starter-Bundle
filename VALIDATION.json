@@ -1,11 +1,11 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.21",
+  "version": "8.7.22",
   "generated": "2026-09-17",
-  "release_tag": "v8.7.21",
-  "canonical_skills": 167,
+  "release_tag": "v8.7.22",
+  "canonical_skills": 169,
   "provider_trees": 5,
-  "registry_entries": 167,
+  "registry_entries": 169,
   "gates": [
     "TESTS/Test-Pack.ps1",
     "TESTS/Test-GrokHookRepair.ps1",
@@ -21,6 +21,6 @@
     "TESTS/Test-McpProfiles.ps1",
     "TOOLS/mcp_handshake.py --selftest"
   ],
-  "runtime_status": "v8.7.21: Adds the creative Hermes profile (Blender + Unity on the core three) with measured uvx schema costs, refreshes the Blender MCP pin to mcp-for-blender 2.0.0, and pins pack-gate Actions to full commit SHAs. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist; editor-connected tool calls and paid inference remain outside this release validation.",
+  "runtime_status": "v8.7.22: Adds workspace-organization and scratch-hygiene skills to every provider tree, states the default release flow with app-closed steps designated as user-run, and syncs the portable Hermes tuning (max effort, Ling 3.0 Flash VL summarizer, auto-routed vision, Nemotron aliases). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist; editor-connected tool calls and paid inference remain outside this release validation.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

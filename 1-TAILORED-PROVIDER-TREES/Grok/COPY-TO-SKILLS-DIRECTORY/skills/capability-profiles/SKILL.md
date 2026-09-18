@@ -90,6 +90,14 @@ profile MCP, Skyrim Forge through its skill/CLI, and Spooky's AutoMod through
 the routed specialist skills/CLI. Forge's MCP is opt-in compatibility, not a
 default profile member.
 
+Hermes rewrites its config when it exits, so any profile-config write is
+unsafe while the app is running: `Migrate-HermesProfiles.ps1 -Apply` refuses in
+that state, and the refusal is correct - defer it to a user-run `START-HERE.bat`
+with Hermes closed. Skill and plugin files may be synced live; profile config
+changes need the app closed and a restart before they take effect. An agent
+running inside Hermes cannot close it: hand the step over explicitly instead of
+claiming it applied.
+
 The `cloud` profile (Supabase) was withdrawn in 7.9.7: it was the only profile
 here that needed an account and a personal access token, against this pack's
 default of free, local, keyless and no signup. A machine that had it enabled

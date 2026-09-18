@@ -7,6 +7,8 @@ model:
   aliases:
     # Escalation ladder. Every id verified against openrouter.ai/api/v1/models;
     # none is written from memory. Switch with `hermes model <alias>`.
+    nemotron-ultra: openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
+    nemotron-ultra-nofree: openrouter/nvidia/nemotron-3-ultra-550b-a55b
     v4.1-flash: openrouter/deepseek/deepseek-v4.1-flash
     flash: openrouter/deepseek/deepseek-v4-flash-0731
     flash-vision: openrouter/deepseek/deepseek-v4-flash-vision-exp
@@ -57,7 +59,7 @@ agent:
   max_verify_nudges: 3
   verify_on_stop: true
   verbose: false
-  reasoning_effort: high
+  reasoning_effort: max
   personalities: {}
 terminal:
   backend: local
@@ -123,19 +125,24 @@ auxiliary:
   transient_retries: 1
   vision:
     # Must be multimodal. laguna-s is text-only and would silently drop images.
-    provider: openrouter
-    model: thinkingmachines/inkling:free
+    # Auto-routed, with the multimodal chain below as the ordered fallback.
+    provider: auto
+    model: ''
+    fallback_chain:
+      - provider: openrouter
+        model: deepseek/deepseek-v4-flash-vision-exp
+      - provider: openrouter
+        model: stealth/ox-alpha
   compression:
     provider: openrouter
-    # Reviewed on 2026-09-15: 1M context covers the retained 160k input cap.
+    # Reviewed on 2026-09-17: 1M context covers the retained 160k input cap.
     # Free endpoints can be rate-limited; failed summaries never replace context.
-    model: thinkingmachines/inkling-small:free
+    model: inclusionai/ling-3.0-flash-vl:free
     timeout: 600
     extra_body:
       provider:
-        sort: price
         require_parameters: true
-    reasoning_effort: high
+    reasoning_effort: ultra
   skills_hub:
     provider: openrouter
     model: poolside/laguna-s-2.1:free

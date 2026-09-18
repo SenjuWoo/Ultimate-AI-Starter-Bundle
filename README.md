@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.21 -->
+<!-- Ultimate AI Starter Bundle v8.7.22 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.21
+# Ultimate AI Starter Bundle v8.7.22
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -15,7 +15,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 <p>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
-  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.21-7c9cff?labelColor=0d1117" alt="v8.7.21"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.22-7c9cff?labelColor=0d1117" alt="v8.7.22"></a>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest"><img src="https://img.shields.io/github/v/release/SenjuWoo/Ultimate-AI-Starter-Bundle?label=latest%20release&amp;color=9db0e8&amp;labelColor=0d1117" alt="latest published release"></a>
 </p>
 
@@ -292,8 +292,8 @@ cheap, escalate only when the cheap one is actually failing.**
 
 The table below is an older price snapshot, not a current quote. Check the
 [live OpenRouter catalog](https://openrouter.ai/api/v1/models) before choosing.
-The new starter uses `deepseek/deepseek-v4.1-flash` with high reasoning; its
-text/image and tool support were checked on September 15, 2026. Existing
+The new starter uses `deepseek/deepseek-v4.1-flash` with max reasoning; its
+text/image and tool support were checked on September 17, 2026. Existing
 installations keep their chosen model. [Hermes profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md).
 
 | Tier | Model | In | Out | Context | Use it for |
@@ -317,6 +317,8 @@ Switch by alias instead of pasting slugs; the installer wires these into every
 Hermes profile:
 
 ```
+hermes model nemotron-ultra         # nvidia/nemotron-3-ultra-550b-a55b  (free)
+hermes model nemotron-ultra-nofree  # nvidia/nemotron-3-ultra-550b-a55b
 hermes model v4.1-flash     # deepseek-v4.1-flash          (new starter)
 hermes model flash          # deepseek-v4-flash-0731        (retained alias)
 hermes model muse           # meta/muse-spark-1.2-contributor
@@ -564,7 +566,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-- **Provider skills** — 167 skills per AI (Claude, Codex, Grok, Kimi, Hermes), all generated from one canonical tree.
+- **Provider skills** — 169 skills per AI (Claude, Codex, Grok, Kimi, Hermes), all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7, official GitHub, and Headroom are the verified always-on core. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup
@@ -753,6 +755,8 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.22** - 2026-09-17. Two new work-ethic skills ship by default: `workspace-organization` (ask where work lives, keep source and build output apart, maintain a `WORKSPACE.md` map) and `scratch-hygiene` (temp scratch dies with the task; bloat is swept at version bumps). The release and capability skills now carry app-closed steps as user-run, and the portable Hermes tuning is synced to the current choices (max effort, Ling 3.0 Flash VL summarizer, auto-routed vision, Nemotron pair in the alias ladder). **169 canonical skills**, no new dependency. See [changes](docs/history/V8.7.22-CHANGELOG.md).
 
 **v8.7.21** - 2026-09-17. New `creative` Hermes profile (Blender + Unity on the core three), Blender MCP pin refreshed to 2.0.0 with a re-measured tool surface, pack-gate Actions pinned to full commit SHAs. **167 canonical skills**, no new dependency. See [changes](docs/history/V8.7.21-CHANGELOG.md).
 

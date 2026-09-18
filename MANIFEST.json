@@ -1676,8 +1676,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 11086,
-  "sha256": "726dd0e77b3e9cec1eab1199064e3c0eb98170ca1688b570e857ae868d1e5a40"
+  "size": 11576,
+  "sha256": "6998a38a7a92a445670067942c499f1c6b3057d8afbbc0ad6b4563228a20be3d"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
@@ -6201,8 +6201,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 6455,
-  "sha256": "4b2b64ae17f4575dd075c885b6a60e4aa7f9a564a1067fa69d53e7f105faf1da"
+  "size": 6973,
+  "sha256": "e334d4704af6af575320eea32a55eb981263efc72e06e7ce8b6f82ff52b2c824"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -7221,8 +7221,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 3580,
-  "sha256": "b3644f169acbdb231632411441f2d444f10a7d6e42280a9eb688682f4c1ec78a"
+  "size": 3715,
+  "sha256": "998fd42ee67838d993e6df59fb3c1a5eddbd23f5432138cacbdbe2017073fe44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -7776,8 +7776,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 11086,
-  "sha256": "726dd0e77b3e9cec1eab1199064e3c0eb98170ca1688b570e857ae868d1e5a40"
+  "size": 11576,
+  "sha256": "6998a38a7a92a445670067942c499f1c6b3057d8afbbc0ad6b4563228a20be3d"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
@@ -12301,8 +12301,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 6455,
-  "sha256": "4b2b64ae17f4575dd075c885b6a60e4aa7f9a564a1067fa69d53e7f105faf1da"
+  "size": 6973,
+  "sha256": "e334d4704af6af575320eea32a55eb981263efc72e06e7ce8b6f82ff52b2c824"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -13321,8 +13321,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 3580,
-  "sha256": "b3644f169acbdb231632411441f2d444f10a7d6e42280a9eb688682f4c1ec78a"
+  "size": 3715,
+  "sha256": "998fd42ee67838d993e6df59fb3c1a5eddbd23f5432138cacbdbe2017073fe44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -13861,8 +13861,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 11086,
-  "sha256": "726dd0e77b3e9cec1eab1199064e3c0eb98170ca1688b570e857ae868d1e5a40"
+  "size": 11576,
+  "sha256": "6998a38a7a92a445670067942c499f1c6b3057d8afbbc0ad6b4563228a20be3d"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
@@ -18386,8 +18386,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 6455,
-  "sha256": "4b2b64ae17f4575dd075c885b6a60e4aa7f9a564a1067fa69d53e7f105faf1da"
+  "size": 6973,
+  "sha256": "e334d4704af6af575320eea32a55eb981263efc72e06e7ce8b6f82ff52b2c824"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -19406,8 +19406,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 3580,
-  "sha256": "b3644f169acbdb231632411441f2d444f10a7d6e42280a9eb688682f4c1ec78a"
+  "size": 3715,
+  "sha256": "998fd42ee67838d993e6df59fb3c1a5eddbd23f5432138cacbdbe2017073fe44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -19711,8 +19711,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml",
-  "size": 8489,
-  "sha256": "1dd0addfb5f3f563d9c2f60c6c9aa6203d44d2e118f9461933a8b40cd331d674"
+  "size": 8816,
+  "sha256": "be3c21728bdbd77686d055cfccf6d16a7a5740d6513dd2aea17a081c3405a0fa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
@@ -19946,8 +19946,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 11086,
-  "sha256": "726dd0e77b3e9cec1eab1199064e3c0eb98170ca1688b570e857ae868d1e5a40"
+  "size": 11576,
+  "sha256": "6998a38a7a92a445670067942c499f1c6b3057d8afbbc0ad6b4563228a20be3d"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
@@ -24471,8 +24471,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 6455,
-  "sha256": "4b2b64ae17f4575dd075c885b6a60e4aa7f9a564a1067fa69d53e7f105faf1da"
+  "size": 6973,
+  "sha256": "e334d4704af6af575320eea32a55eb981263efc72e06e7ce8b6f82ff52b2c824"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -25491,8 +25491,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 3580,
-  "sha256": "b3644f169acbdb231632411441f2d444f10a7d6e42280a9eb688682f4c1ec78a"
+  "size": 3715,
+  "sha256": "998fd42ee67838d993e6df59fb3c1a5eddbd23f5432138cacbdbe2017073fe44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -25791,13 +25791,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml",
-  "size": 8489,
-  "sha256": "1dd0addfb5f3f563d9c2f60c6c9aa6203d44d2e118f9461933a8b40cd331d674"
+  "size": 8816,
+  "sha256": "be3c21728bdbd77686d055cfccf6d16a7a5740d6513dd2aea17a081c3405a0fa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md",
-  "size": 2271,
-  "sha256": "08590aa5f5c7589ad2f8b4ba9be1747eb1ce3d0024bc191150e598a539bfb4a2"
+  "size": 2467,
+  "sha256": "b2bf4fc9c1ee04aa88cce489aea3e3651fd63b31b46621d0bf1253b3d61ce0ae"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/code/profile.yaml",
@@ -26071,8 +26071,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 11086,
-  "sha256": "726dd0e77b3e9cec1eab1199064e3c0eb98170ca1688b570e857ae868d1e5a40"
+  "size": 11576,
+  "sha256": "6998a38a7a92a445670067942c499f1c6b3057d8afbbc0ad6b4563228a20be3d"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
@@ -30596,8 +30596,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 6455,
-  "sha256": "4b2b64ae17f4575dd075c885b6a60e4aa7f9a564a1067fa69d53e7f105faf1da"
+  "size": 6973,
+  "sha256": "e334d4704af6af575320eea32a55eb981263efc72e06e7ce8b6f82ff52b2c824"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -31616,8 +31616,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 3580,
-  "sha256": "b3644f169acbdb231632411441f2d444f10a7d6e42280a9eb688682f4c1ec78a"
+  "size": 3715,
+  "sha256": "998fd42ee67838d993e6df59fb3c1a5eddbd23f5432138cacbdbe2017073fe44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -31956,18 +31956,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 44087,
-  "sha256": "bfc800b32715c1364904733e0ae7609dd1f323db6cb15f24cd28152e5fdc0169"
+  "size": 43138,
+  "sha256": "92b23d9652d7f7bb0c2929669b4c8624aefad6fbddacad27bd7ed837508ec265"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1660,
-  "sha256": "0e1ac8bd080ee486073c06f1b60b92cfdda93df65eeea304923694fef630b558"
+  "sha256": "44094da3210b8ee108393746d4832a32922ca540f47d2738a16c1878a0483291"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
-  "size": 32593,
-  "sha256": "cef7d1fb0b1ecb6cb95ebf59dfa44d2dd7e77ae3d79709ff5fc44dccd23a0282"
+  "size": 31983,
+  "sha256": "b0f70024f3855f09d31a2d73cdb3932208eba3236e7b21ff3addc80f6ab94917"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -31982,7 +31982,7 @@
  {
   "path": "BUNDLED-TOOLS/RETIRED-SKILLS.json",
   "size": 8153,
-  "sha256": "761f6700949bab9ef1e1e1b57286c5d10aa9b6fd2b2a81662e69b39986325a30"
+  "sha256": "e750d9730519f883f51492a6cc3bdc5a83c4f1af3ab80e2d1af982b6e4cd32c5"
  },
  {
   "path": "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md",
@@ -34911,8 +34911,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 161993,
-  "sha256": "87332dfab024fe8a015a858f764e6f728301de9353cebc5b9fd1d14f872d8159"
+  "size": 163603,
+  "sha256": "fa2c88af0a9e4c17336795b05b22cdea3199aba42e66996f521647593f66ca5a"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -34987,7 +34987,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 134839,
-  "sha256": "f201c90f622a547b7906f4cec3a859a1d205c64a88659b8a436a24c35050943d"
+  "sha256": "b168b62083dd87439133874c357678130e5482510750801ab705456decf5ab23"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -35036,8 +35036,8 @@
  },
  {
   "path": "README.md",
-  "size": 70533,
-  "sha256": "2a16fe223ae9df271cf69b5f00e1f8bdee0b05876e78d48beabd9f678a93f10b"
+  "size": 71291,
+  "sha256": "87c2e4b3fcef36b671a094155d0bb909260d236b5b767811fc11ceacb947d66a"
  },
  {
   "path": "SECURITY.md",
@@ -35047,12 +35047,12 @@
  {
   "path": "START-HERE.bat",
   "size": 730,
-  "sha256": "932a3ad6e169e8f18c0c2e2ac347473a8052b0d20d70f6e0f240157212a31940"
+  "sha256": "5f51b824e9ec9b329a9122bb60efee0e4de913907b4b4a4029ee1e87b79c4ed6"
  },
  {
   "path": "START-HERE.txt",
-  "size": 9818,
-  "sha256": "a7c13269972efe2b1c685c87f48d8633d53b6fc9d472cbba783fc2d759fc3ab5"
+  "size": 9949,
+  "sha256": "b6a49113ffd73eb06fa5b9265e66f2bf2d03f5ce7800d91426b4ac83a83f3d7f"
  },
  {
   "path": "TESTS/Test-ForgeRootResolution.ps1",
@@ -35271,8 +35271,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 283033,
-  "sha256": "427f0cf0292608655b32dafa336df69ec67a5256505fee8e4a4f16d1fad36f65"
+  "size": 283581,
+  "sha256": "1769817a706988fd3b890eb6699a28dbf0b96826dba756da1d118f2fad65b074"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
@@ -35551,13 +35551,13 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 1599,
-  "sha256": "270a652a3e3b2e03c478961d60513a6350413bb3b3746aa25d7c371513fefbaf"
+  "size": 1644,
+  "sha256": "7160dcefc544008149f7862117823aa41064b4b6b72da5d2093e1015e52d71c3"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "3f42e4b444a8d547ee27af52308720b8f3747076e24514d8e05492eacdd96462"
+  "sha256": "d7b6679b2631481c000accf9eb64afb76a1417fbeda0f9a90a4f027166d06727"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -35801,8 +35801,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/capability-profiles/SKILL.md",
-  "size": 11086,
-  "sha256": "726dd0e77b3e9cec1eab1199064e3c0eb98170ca1688b570e857ae868d1e5a40"
+  "size": 11576,
+  "sha256": "6998a38a7a92a445670067942c499f1c6b3057d8afbbc0ad6b4563228a20be3d"
  },
  {
   "path": "_CANONICAL-SKILLS/capability-routing/SKILL.md",
@@ -40326,8 +40326,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/SKILL.md",
-  "size": 6455,
-  "sha256": "4b2b64ae17f4575dd075c885b6a60e4aa7f9a564a1067fa69d53e7f105faf1da"
+  "size": 6973,
+  "sha256": "e334d4704af6af575320eea32a55eb981263efc72e06e7ce8b6f82ff52b2c824"
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -41346,8 +41346,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/token-efficiency/SKILL.md",
-  "size": 3580,
-  "sha256": "b3644f169acbdb231632411441f2d444f10a7d6e42280a9eb688682f4c1ec78a"
+  "size": 3715,
+  "sha256": "998fd42ee67838d993e6df59fb3c1a5eddbd23f5432138cacbdbe2017073fe44"
  },
  {
   "path": "_CANONICAL-SKILLS/token-efficiency/references/shell-output-compression.md",

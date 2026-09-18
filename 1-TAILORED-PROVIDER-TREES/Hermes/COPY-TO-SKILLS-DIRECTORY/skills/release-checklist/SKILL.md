@@ -15,6 +15,16 @@ Run in order. Every item is mandatory — the ones that look redundant are the
 ones that previously shipped broken releases. Nothing below depends on memory:
 each step reads the repo's actual files.
 
+## Default flow
+
+Sync the live install (`python TOOLS/install_live_skills.py _CANONICAL-SKILLS`
+when skills changed), sync the local bundle, then commit -> push -> converge CI
+on the exact pushed SHA -> tag -> publish -> verify the shipped bytes (steps
+5-7). A step that requires an application to be closed - Hermes profile
+migration, an installer that rewrites provider config - is user-run by design:
+print the exact command, say why it cannot run here, and never report it as
+applied from inside the running app.
+
 ## 0. Prove the public surface
 
 For new repositories, also apply `github-fleet-maintenance`'s repository completion contract: real CI, applicable security settings, CodeQL/scanning and Dependabot must be verified separately from files merely existing. Resolve publication authorization from the current request and earlier approvals; prepare the release fully before asking if approval is still missing.

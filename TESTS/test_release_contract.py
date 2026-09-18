@@ -347,7 +347,7 @@ def test_hermes_cost_contract() -> None:
         # so keep Hermes' whole-request retry layer bounded.
         for token in (
             "max_turns: null",
-            "reasoning_effort: high",
+            "reasoning_effort: max",
             "api_max_retries: 2",
             "tool_use_enforcement: true",
             "execution_guidance: true",
@@ -388,16 +388,21 @@ def test_hermes_cost_contract() -> None:
         assert re.search(r"(?m)^\s*transient_retries:\s*1\s*$", cfg), path
         assert re.search(r"(?m)^\s*cost_threshold_usd:\s*0\.01\s*$", cfg), path
         assert re.search(r"(?ms)^  background_review:\s*\n\s+enabled:\s*false\s*$", cfg), path
-        # Reviewed user choice: free 1M-context summarizer, using a supported
-        # effort. Compatibility is not proof of summary quality.
+        # Reviewed user choice: free multimodal summarizer; 256k context covers
+        # the retained 160k input cap. Compatibility is not proof of summary
+        # quality.
         aux_start = cfg.index("auxiliary:")
         aux_end = cfg.index("\ndisplay:", aux_start)
         aux = cfg[aux_start:aux_end]
         m = re.search(r"(?ms)^  compression:\n(.*?)(?=^  [a-z_]+:|\Z)", aux)
         assert m, f"{path}: Hermes auxiliary.compression block missing"
         compression = m.group(0)
-        assert "model: thinkingmachines/inkling-small:free" in compression, path
-        assert "reasoning_effort: high" in compression, path
+        assert "model: inclusionai/ling-3.0-flash-vl:free" in compression, path
+        # The owner's chosen effort. OpenRouter publishes no supported_efforts
+        # for this model (unlike the previous Inkling pick), so this is a
+        # chosen effort, not a catalog-verified capability; a rejected summary
+        # never replaces context (abort_on_summary_failure stays true).
+        assert "reasoning_effort: ultra" in compression, path
         assert "timeout: 600" in compression, path
 
         assert re.search(r"(?m)^\s*cache_ttl:\s*1h\s*$", cfg), path
@@ -1125,8 +1130,9 @@ def test_hermes_starter_ships_a_verified_fallback_chain() -> None:
     assert "text-only" in text or "TEXT-ONLY" in text, (
         "the config no longer warns that the first fallback is text-only")
 
-    # Vision cannot be pointed at a text-only model.
-    vision_model = None
+    # Vision cannot be pointed at a text-only model -- directly, or anywhere in
+    # the ordered chain an auto-routed block consults.
+    vision_models = []
     in_vision = False
     for line in text.splitlines():
         if line == "  vision:":
@@ -1135,13 +1141,14 @@ def test_hermes_starter_ships_a_verified_fallback_chain() -> None:
         if in_vision and line and not line.startswith("    "):
             break
         if in_vision:
-            model = re.match(r"^    model:\s*(\S+)", line)
-            if model:
-                vision_model = model.group(1)
-                break
-    assert vision_model, "auxiliary vision model not found in the starter"
-    assert vision_model != "poolside/laguna-s-2.1:free", (
-        "the vision auxiliary points at a text-only model; images would be dropped")
+            model = re.match(r"^\s+model:\s*['\"]?([^'\"]+)['\"]?\s*$", line)
+            if model and model.group(1).strip():
+                vision_models.append(model.group(1).strip())
+    assert vision_models, "auxiliary vision model not found in the starter"
+    text_only = [mid for mid in vision_models if mid.startswith("poolside/laguna")]
+    assert not text_only, (
+        "the vision auxiliary consults a text-only model (%s); images would be "
+        "dropped" % ", ".join(text_only))
 
 
 def test_hermes_starter_carries_no_machine_state() -> None:

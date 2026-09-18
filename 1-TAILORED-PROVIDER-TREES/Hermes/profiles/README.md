@@ -15,17 +15,20 @@ Existing models, reasoning, memory limits and tool filters are preserved.
 | rimworld | Existing RimWorldForge profile | Core updated, external server retained unchanged |
 
 Run `hermes -p code` (or the other name). Profile YAML files here document native
-descriptions; they are not live configs. RimWorldForge is a separate installation:
+descriptions; they are not live configs. Migration runs with Hermes closed
+(`START-HERE.bat`): the app rewrites its config on exit, and the migrator refuses
+to write while it is open. RimWorldForge is a separate installation:
 the bundle does not download it or guess its location.
 
-Reviewed September 15, 2026: main DeepSeek V4.1 Flash with high reasoning,
-20% compression target, free Inkling Small summarizer with high reasoning and
-600-second timeout, response cache disabled, one-hour prompt cache retained,
-bounded delegation. The installed provider advertises these models/efforts;
-this is compatibility evidence, not a quality or token-saving benchmark.
-The 160k compression cap, material-result pruning, summary-failure abort and
-disabled automatic multi-model fan-out remain safeguards. `ultra` was not
-promoted for Inkling: its catalog lists max/high/medium/low/minimal/none.
+Reviewed September 17, 2026: main DeepSeek V4.1 Flash with max reasoning,
+20% compression target, free Ling 3.0 Flash VL summarizer with ultra reasoning
+and 600-second timeout, auto-routed vision whose ordered chain is the Flash
+vision model then ox-alpha, response cache disabled, one-hour prompt cache
+retained, bounded delegation. The installed provider advertises these
+models/efforts; this is compatibility evidence, not a quality or
+token-saving benchmark. The 160k compression cap, material-result pruning,
+summary-failure abort and disabled automatic multi-model fan-out remain
+safeguards, and the alias ladder carries the free Nemotron Ultra pair.
 
 Personal local-model aliases, command approvals, absolute hooks/MCP paths,
 generated tool inventories and update-backup disabling are not portable
