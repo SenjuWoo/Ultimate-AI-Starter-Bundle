@@ -1,5 +1,14 @@
 # 3-PREAMBLES — SOUL + AIO for every agent
 
+## Editing the pack's own text (SOUL.md / AIO-INSTRUCTION.md)
+
+Before you change either source file, copy the OUTGOING text into `history/`
+(one file per archived text, `.md`). The installer strips any text that exactly
+matches a source file or an archived file, so an edit converges machines wired
+by the older release. Skip this and those machines keep the old block and gain
+a second one - the duplication v8.7.23 removed. Archived copies are never
+written anywhere; they are only ever deleted from installed files.
+
 The universal preamble section in v8.0.0. One install wires the same
 SOUL and the same operating contract into every supported agent, so a fresh
 machine comes up with the same agent behaviour as the operator's own setup.

@@ -971,6 +971,22 @@ function Install-UabsPreambleBlock {
     $exact = '(?m)^' + ($lines -join '\r?\n') + '(?=\r?$)(?:\r?\n)?'
     $remaining = [regex]::Replace($remaining, $exact, '')
   }
+  # The pack's own text changes between releases, and a machine wired by an
+  # older release still carries that exact block - which the source match
+  # above cannot see, because this release no longer ships it. Outgoing copies
+  # are archived beside the soul source and stripped the same exact way, so
+  # editing the pack's text converges installed machines instead of stacking a
+  # second block on them. (Without this: old block stays, new one appends.)
+  $histDir = Join-Path (Split-Path -Path $SoulFile -Parent) 'history'
+  if (Test-Path -LiteralPath $histDir) {
+    foreach ($h in @(Get-ChildItem -LiteralPath $histDir -Filter '*.md' -File -ErrorAction SilentlyContinue)) {
+      $archived = ([IO.File]::ReadAllText($h.FullName)).Trim()
+      if (-not $archived) { continue }
+      $lines = @($archived -split '\r?\n' | ForEach-Object { [regex]::Escape($_) })
+      $exact = '(?m)^' + ($lines -join '\r?\n') + '(?=\r?$)(?:\r?\n)?'
+      $remaining = [regex]::Replace($remaining, $exact, '')
+    }
+  }
   $remaining = $remaining.TrimEnd("`r", "`n")
   $new = if ($remaining) { $remaining + $nl + $nl + $block + $nl } else { $block + $nl }
     if (-not $Force -and $new -ceq $pre) {

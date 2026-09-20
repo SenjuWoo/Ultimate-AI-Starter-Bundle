@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.26",
+  "version": "8.7.27",
   "generated": "2026-09-20",
-  "release_tag": "v8.7.26",
+  "release_tag": "v8.7.27",
   "canonical_skills": 170,
   "provider_trees": 5,
   "registry_entries": 170,
@@ -22,6 +22,6 @@
     "TESTS/Test-McpProfiles.ps1",
     "TOOLS/mcp_handshake.py --selftest"
   ],
-  "runtime_status": "v8.7.26: Preamble replacement matches complete owned text instead of erasing an inferred tail. Engine audit rejects failed, empty or malformed results. Reviewed Windows notes and release guidance use exact-SHA CI and ownership-aware skill installation. No dependency or model preference changes; provider runtime and editor behavior remain separate from static gates.",
+  "runtime_status": "v8.7.27: Archives outgoing preamble text and strips it exactly, so a release that changes the pack's own soul/contract text converges installed machines instead of stacking a second block; preservation test covers the previous-release case. No dependency, pin, config or runtime change.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

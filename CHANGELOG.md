@@ -1,3 +1,9 @@
+## 8.7.27
+
+- v8.7.26 made the preamble writer match complete owned text instead of an opening line, which protects user instructions - but it could not recognize the pack's OWN older text once a release changed it: an installed machine would keep the old block and gain a second one. Outgoing copies now live in `3-PREAMBLES/history/` and are stripped exactly like a source file, so editing `SOUL.md`/`AIO-INSTRUCTION.md` converges installed machines. `3-PREAMBLES/README.md` and `release-checklist` step 0 tell the maintainer to archive before editing.
+- `Test-PreamblePreservation.ps1` gains its sixth case: previous-release text replaced via history (old text gone, personal notes kept, current text present exactly once, idempotent).
+- **170 canonical skills total**, no new dependency, no new MCP server.
+
 ## 8.7.26
 
 - Preserve personal instructions after bundle preambles; match complete owned text, not a generic opening sentence through EOF.

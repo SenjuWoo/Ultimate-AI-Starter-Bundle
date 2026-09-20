@@ -29,6 +29,10 @@ applied from inside the running app.
 
 ## 0. Prove the public surface
 
+- Edited the pack's own preamble text (`3-PREAMBLES/SOUL.md`, `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`)?
+  Copy the outgoing text into `3-PREAMBLES/history/` before committing - installed machines strip archived
+  text exactly, so the edit converges them instead of stacking a second block.
+
 For new repositories, also apply `github-fleet-maintenance`'s repository completion contract: real CI, applicable security settings, CodeQL/scanning and Dependabot must be verified separately from files merely existing. Resolve publication authorization from the current request and earlier approvals; prepare the release fully before asking if approval is still missing.
 
 Before versioning, make the repository understandable and credible without requiring the user to open the source tree:

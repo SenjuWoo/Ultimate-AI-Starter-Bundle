@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.26 -->
+<!-- Ultimate AI Starter Bundle v8.7.27 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.26
+# Ultimate AI Starter Bundle v8.7.27
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -15,7 +15,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 <p>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
-  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.26-7c9cff?labelColor=0d1117" alt="v8.7.26"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.27-7c9cff?labelColor=0d1117" alt="v8.7.27"></a>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest"><img src="https://img.shields.io/github/v/release/SenjuWoo/Ultimate-AI-Starter-Bundle?label=latest%20release&amp;color=9db0e8&amp;labelColor=0d1117" alt="latest published release"></a>
 </p>
 
@@ -754,6 +754,8 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.27** - 2026-09-20. Closed the one gap in v8.7.26's instruction-preserving writer: when the pack's own soul or contract text changes, a machine wired by the older release kept the old block and gained a second one, because the writer only matches text this release ships. Outgoing text is now archived in `3-PREAMBLES/history/` and stripped exactly like a source, so an edit converges installed machines - and the preservation test proves it with a sixth case (old block replaced, personal notes kept, idempotent). **170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.27-CHANGELOG.md).
 
 **v8.7.26** - 2026-09-20. Personal instructions after preambles are preserved, failed engine audits fail closed, and reviewed Windows/release guidance uses exact-SHA CI and ownership-aware skill deployment. **170 canonical skills**, no new dependency or model preference changes. See [changes](docs/history/V8.7.26-CHANGELOG.md).
 
