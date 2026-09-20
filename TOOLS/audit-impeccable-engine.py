@@ -50,9 +50,15 @@ def command_for(engine: str) -> list[str]:
 def findings(engine: str, path: Path) -> list[dict]:
     out = subprocess.run(
         [*command_for(engine), "detect", "--json", "--no-config", str(path)],
-        capture_output=True, text=True, timeout=180,
+        capture_output=True, text=True, encoding="utf-8", timeout=180,
     )
-    return json.loads(out.stdout or "[]")
+    # Exit 2 is the detector's findings status; runtime errors are not clean scans.
+    if out.returncode not in (0, 2) or not out.stdout.strip():
+        raise RuntimeError(f"Engine failed ({out.returncode}): {out.stderr.strip()}")
+    result = json.loads(out.stdout)
+    if not isinstance(result, list) or not all(isinstance(item, dict) for item in result):
+        raise ValueError("Engine output must be a JSON list of findings")
+    return result
 
 
 def main() -> int:

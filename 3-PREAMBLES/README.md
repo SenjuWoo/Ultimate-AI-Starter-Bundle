@@ -26,10 +26,10 @@ the soul, a blank line, then the operating contract:
 No wrapping comments. Through v8.7 the block was stamped with
 `<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL vX -->` / `<!-- /ULTIMATE-AI-STARTER-BUNDLE SOUL -->`
 so it could be found again — and every agent then paid for those lines on every
-request while they instructed nothing. The block is instead the tail of the
-file, and `Install-UabsPreambleBlock` (`TOOLS\UABS-Common.ps1`) recognizes
-where it starts from the pack's own opening lines, so re-running replaces the
-tail rather than stacking copies.
+request while they instructed nothing. `Install-UabsPreambleBlock`
+(`TOOLS\UABS-Common.ps1`) now recognizes complete source text, or an old block
+bounded by both markers. Opening sentences alone never establish ownership.
+Personal instructions before and after those blocks are preserved.
 
 | Provider | Instruction file | Notes |
 |---|---|---|
@@ -42,9 +42,9 @@ tail rather than stacking copies.
 
 Rules:
 
-- Idempotent: re-running replaces the block (the tail from the pack's first
-  recognized line to end of file) instead of stacking copies. A file whose tail
-  is only the AIO text, or only the soul, folds into one block.
+- Idempotent: exact source blocks and explicitly bounded legacy blocks fold
+  into one marker-free block. Unknown or edited unmarked text stays intact,
+  even when it starts with the same sentence; it is never erased through EOF.
 - Every write gets a `.before-soul-<timestamp>.bak` first.
 - UTF-8, no BOM on writes; existing files keep their own encoding/leading BOM.
 - `-SkipPreamble` opts out; `-ForcePreamble` rewrites even an identical block.

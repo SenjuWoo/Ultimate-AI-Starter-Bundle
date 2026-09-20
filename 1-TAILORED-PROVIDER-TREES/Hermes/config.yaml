@@ -132,7 +132,7 @@ auxiliary:
         model: deepseek/deepseek-v4-flash-vision-exp
   compression:
     provider: openrouter
-    # Reviewed on 2026-09-17: 1M context covers the retained 160k input cap.
+    # Catalog checked 2026-09-20: 262144 context covers the retained 160k cap.
     # Free endpoints can be rate-limited; failed summaries never replace context.
     model: inclusionai/ling-3.0-flash-vl:free
     timeout: 600

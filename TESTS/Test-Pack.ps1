@@ -296,6 +296,8 @@ if ($soulTxt) {
     }
 }
 
+& (Join-Path $PackRoot 'TESTS/Test-PreamblePreservation.ps1') -PackRoot $PackRoot
+
 Section '7b. No script reads a file with the ANSI codepage'
 # PS 5.1's Get-Content decodes with the ANSI codepage unless -Encoding is given,
 # so any read of a UTF-8 file that is later written back turns non-ASCII into

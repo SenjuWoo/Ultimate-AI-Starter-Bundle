@@ -65,22 +65,25 @@ the local version folder is the source of truth for a release. Verified flow:
 
 1. `gh repo clone <owner>/<repo> $LOCALAPPDATA/Temp/<name>` (use
    `$LOCALAPPDATA/Temp` for scratch — native tools handle it cleanly).
-2. Overlay: `cp -a <version-folder>/ <clone>/`, then DELETE dev material:
-   `rm -rf build dist extern __pycache__ package/Data/SKSE/Plugins/*.dll`.
+2. Review the source and copy only release-owned files into the clone. Inspect
+   junctions first; do not blindly copy dependency trees or delete directory globs.
+   Resolve any cleanup targets inside this disposable clone before removal.
 3. Expect phantom `git status` entries: with `core.autocrlf=true`, line-ending
    swaps show as modified but have no real diff. Confirm real changes with
    `git diff --name-only` (not `git status`) and `git diff <file> | head`.
 4. Unstage workspace-only artifacts that were never tracked (historical
    audit docs, previous-version Nexus changelogs) with `git reset -q -- <files>`.
-5. Commit with the project's author identity
-   (`git -c user.name=... -c user.email=... commit`), push `main`, then:
-   `gh release create v<VER> --title ... --notes-file <notes.md> <FOMOD.zip> <plain.zip> SHA256SUMS.txt`.
-6. Verify assets via `gh api ... /releases/tags/v<VER>`; the project releases
-   before CI finishes — watch the run in background with
-   `gh run watch --exit-status` + notify.
+5. Commit with the repository's configured identity and push its working branch.
+   Wait for every required check on the exact pushed SHA to succeed, then build
+   and tag that same commit. Publish only with the user's authorization.
+6. Download every published asset; compare nonempty size and SHA-256 with the
+   verified build and checksum records. Follow `release-checklist`; an older
+   green run or a release page existing is not proof of these artifact bytes.
 
 ## Pitfalls
 
+- Batch/PowerShell launchers and artifact checks:
+  `references/bat-and-powershell-tooling.md`.
 - `gh run watch` on a queued run can block: give it a few seconds first, or
   run it as a background process with notify on completion.
 - A fresh Windows clone is LF on disk: do not judge "modified" files by

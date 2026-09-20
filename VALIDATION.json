@@ -1,13 +1,14 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.25",
-  "generated": "2026-09-18",
-  "release_tag": "v8.7.25",
+  "version": "8.7.26",
+  "generated": "2026-09-20",
+  "release_tag": "v8.7.26",
   "canonical_skills": 170,
   "provider_trees": 5,
   "registry_entries": 170,
   "gates": [
     "TESTS/Test-Pack.ps1",
+    "TESTS/Test-PreamblePreservation.ps1",
     "TESTS/Test-GrokHookRepair.ps1",
     "TESTS/test_release_contract.py",
     "TESTS/test_hermes_bootstrap.py",
@@ -21,6 +22,6 @@
     "TESTS/Test-McpProfiles.ps1",
     "TOOLS/mcp_handshake.py --selftest"
   ],
-  "runtime_status": "v8.7.25: Records the impeccable engine audit - CLI 4.x's compiled engine still leaks malformed close-tag bodies, so the audited CLI 3.6.1 / skill 4.1.3 pair stays; adds a rerunnable engine-fixture audit tool and a contract test pinning the hold to its evidence. No dependency, pin, config or runtime change.",
+  "runtime_status": "v8.7.26: Preamble replacement matches complete owned text instead of erasing an inferred tail. Engine audit rejects failed, empty or malformed results. Reviewed Windows notes and release guidance use exact-SHA CI and ownership-aware skill installation. No dependency or model preference changes; provider runtime and editor behavior remain separate from static gates.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

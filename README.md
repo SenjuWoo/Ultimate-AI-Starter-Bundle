@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.25 -->
+<!-- Ultimate AI Starter Bundle v8.7.26 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.25
+# Ultimate AI Starter Bundle v8.7.26
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -15,7 +15,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 <p>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
-  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.25-7c9cff?labelColor=0d1117" alt="v8.7.25"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.26-7c9cff?labelColor=0d1117" alt="v8.7.26"></a>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest"><img src="https://img.shields.io/github/v/release/SenjuWoo/Ultimate-AI-Starter-Bundle?label=latest%20release&amp;color=9db0e8&amp;labelColor=0d1117" alt="latest published release"></a>
 </p>
 
@@ -754,6 +754,8 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.26** - 2026-09-20. Personal instructions after preambles are preserved, failed engine audits fail closed, and reviewed Windows/release guidance uses exact-SHA CI and ownership-aware skill deployment. **170 canonical skills**, no new dependency or model preference changes. See [changes](docs/history/V8.7.26-CHANGELOG.md).
 
 **v8.7.25** - 2026-09-18. The impeccable hold was re-audited against the real upstream engine instead of a release note, and it earned its keep: engine 0.1.5 still leaks bodies of browser-valid malformed close tags into text analysis - the exact gap the bundle patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub over that engine, with a first-use download and its own skill-writing commands. The audited CLI 3.6.1 / skill 4.1.3 pair stays, with the evidence recorded and `TOOLS/audit-impeccable-engine.py` left behind so the next audit is one command. **170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.25-CHANGELOG.md).
 

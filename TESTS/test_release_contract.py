@@ -2093,7 +2093,7 @@ def test_hermes_receives_the_combined_soul_and_aio_contract() -> None:
 def test_preamble_is_plain_text_without_markers() -> None:
     """The preamble rides on every request. Comment markers around it are paid
     for by every provider and instruct nothing, so v8.7.23 removed them; the
-    writer recognizes its own block from the pack's opening lines instead."""
+    writer recognizes complete owned source text instead."""
     common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
     assert "$block = $soul + $nl + $nl + $aio" in common, (
         "the preamble writer no longer builds a marker-free block"
@@ -2538,6 +2538,7 @@ def main() -> int:
         test_readme_model_guidance_matches_the_shipped_config,
         test_public_copy_is_version_proof,
         test_impeccable_hold_records_a_real_engine_audit,
+        test_review_regressions_fail_closed,
         test_every_defined_contract_is_actually_run,
         test_hermes_native_profile_migration_contract,
         test_same_version_forge_hotfix_refreshes_shipped_content,
@@ -5490,6 +5491,30 @@ def test_portable_skill_routing_does_not_require_superpowers_prefix() -> None:
     assert "Never treat one drive root" in windows
     assert "player-facing plain-text" in nexus
     assert "leftover dist zip from an older SHA" in fleet
+
+def test_review_regressions_fail_closed() -> None:
+    from unittest.mock import patch
+    spec = importlib.util.spec_from_file_location("impeccable_audit", ROOT / "TOOLS/audit-impeccable-engine.py")
+    audit = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(audit)
+    for code, output in ((1, ""), (0, ""), (1, "[]"), (0, "{}"), (0, "[1]")):
+        with patch.object(audit.subprocess, "run", return_value=subprocess.CompletedProcess([], code, output, "engine failed")):
+            try:
+                audit.findings("unused-engine", Path("unused.html"))
+            except (RuntimeError, ValueError):
+                pass
+            else:
+                raise AssertionError(f"invalid engine result accepted: {code}, {output!r}")
+    with patch.object(audit.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "[]", "")):
+        assert audit.findings("unused-engine", Path("unused.html")) == []
+    windows = read(CANON / "windows-workspace-ops/SKILL.md")
+    release = read(CANON / "release-checklist/SKILL.md")
+    assert "before CI finishes" not in windows
+    assert "exact pushed SHA" in windows
+    assert "install_live_skills.py" not in release
+    assert "-SkillsOnly" in release
+    assert (CANON / "windows-workspace-ops/references/bat-and-powershell-tooling.md").is_file()
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -1,3 +1,10 @@
+## 8.7.26
+
+- Preserve personal instructions after bundle preambles; match complete owned text, not a generic opening sentence through EOF.
+- Reject failed or malformed Impeccable audit results instead of accepting empty output as a clean scan.
+- Incorporate reviewed Hermes Windows launcher notes, correct release-order advice, and route skill deployment through the ownership-aware installer.
+- Add executable regressions. Keep 170 skills, existing dependency pins and personal model preferences.
+
 ## 8.7.25
 
 - Re-audited the `impeccable` `compatibility_hold` against the real upstream payload, not the release notes. CLI 4.1.0 is a 17.8 KB stub whose detector lives in a compiled engine (pinned 0.1.5 via `optionalDependencies`, else a first-use download into `~/.impeccable` with a fail-closed sha256 sidecar). Run against that engine, the fixtures the bundle patched for on 2026-09-02 fail: bodies of browser-valid malformed close tags (`</script \t bogus>`, `</style bogus>`) still leak into text analysis, and a compiled binary cannot carry the patch. The audited CLI 3.6.1 / skill 4.1.3 pair stays.

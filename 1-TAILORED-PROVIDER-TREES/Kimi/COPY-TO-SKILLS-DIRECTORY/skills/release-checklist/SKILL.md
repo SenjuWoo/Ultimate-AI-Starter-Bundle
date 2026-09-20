@@ -17,8 +17,10 @@ each step reads the repo's actual files.
 
 ## Default flow
 
-Sync the live install (`python TOOLS/install_live_skills.py _CANONICAL-SKILLS`
-when skills changed), sync the local bundle, then commit -> push -> converge CI
+Sync the live install through the ownership-aware installer (for skills only:
+`powershell -NoProfile -ExecutionPolicy Bypass -File INSTALL-AIO.ps1 -SkillsOnly -SkipNativePlugins -SkipStarterSettings -SkipPreamble -SkipCleanup`).
+Use the selected providers; preserve local override hashes and native-owned skills.
+Sync the local bundle, then commit -> push -> converge CI
 on the exact pushed SHA -> tag -> publish -> verify the shipped bytes (steps
 5-7). A step that requires an application to be closed - Hermes profile
 migration, an installer that rewrites provider config - is user-run by design:
