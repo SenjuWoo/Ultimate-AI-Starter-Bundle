@@ -815,6 +815,47 @@ if (-not (Test-UabsPackPath $hermesCfg)) {
     else { Good 'a fresh Hermes install inherits no MCP servers from the template' }
 }
 
+Section '15b. SillyTavern gateway stays a roleplay profile'
+$stInstaller = Join-Path $PackRoot 'TOOLS\Install-SillyTavernGateway.ps1'
+$stTemplate = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Hermes\profiles\sillytavern\config.yaml'
+if (-not (Test-Path -LiteralPath $stInstaller) -or -not (Test-Path -LiteralPath $stTemplate)) {
+    Bad 'SillyTavern gateway installer or profile template is missing'
+} else {
+    $stRaw = [IO.File]::ReadAllText($stTemplate)
+    $stCode = (($stRaw -split "`r?`n") | Where-Object { $_ -notmatch '^\s*#' }) -join "`n"
+    $bannedTools = @('terminal', 'code_execution', 'browser', 'computer_use')
+    $inApi = [regex]::Match($stCode, '(?s)platform_toolsets:\s*\r?\n\s*api_server:\s*\r?\n(?<body>(?:\s+-\s+\S+\s*\r?\n)+)')
+    $apiBody = if ($inApi.Success) { $inApi.Groups['body'].Value } else { '' }
+    $leaked = @($bannedTools | Where-Object { $apiBody -match ('(?m)^\s+-\s+' + [regex]::Escape($_) + '\s*$') })
+    $needed = @('vision', 'image_gen', 'web', 'file', 'memory', 'skills')
+    $missingTools = @($needed | Where-Object { $apiBody -notmatch ('(?m)^\s+-\s+' + [regex]::Escape($_) + '\s*$') })
+    if (-not $inApi.Success) { Bad 'SillyTavern profile has no api_server toolset list' }
+    elseif ($leaked.Count) { Bad ('SillyTavern api_server still enables ' + ($leaked -join ', ')) }
+    elseif ($missingTools.Count) { Bad ('SillyTavern api_server is missing ' + ($missingTools -join ', ')) }
+    elseif ($stCode -match 'sk-or-|ghp_|hsg_') { Bad 'SillyTavern profile template contains a live credential' }
+    else { Good 'SillyTavern api_server toolset is roleplay-only' }
+
+    $fxHome = Join-Path ([IO.Path]::GetTempPath()) ('uabs-st-gateway-' + [guid]::NewGuid().ToString('n'))
+    try {
+        New-Item -ItemType Directory -Force -Path $fxHome | Out-Null
+        [IO.File]::WriteAllText((Join-Path $fxHome '.env'), "API_SERVER_ENABLED=true`r`nAPI_SERVER_KEY=local-test-key-not-a-secret`r`nAPI_SERVER_PORT=8642`r`n")
+        & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $stInstaller -PackRoot $PackRoot -HermesHome $fxHome | Out-Null
+        $skillOk = @(
+            'skills\sillytavern-gateway\SKILL.md',
+            'skills\adult-character-sheet\SKILL.md',
+            'skills\adult-image-caption\SKILL.md'
+        ) | Where-Object { -not (Test-Path -LiteralPath (Join-Path $fxHome ('profiles\sillytavern\' + $_))) }
+        $link = Get-Item -LiteralPath (Join-Path $fxHome 'profiles\sillytavern\.env')
+        $launcher = [IO.File]::ReadAllText((Join-Path $fxHome 'START-HERMES-GATEWAY.ps1'))
+        if ($skillOk.Count) { Bad ('SillyTavern install missed skills: ' + ($skillOk -join ', ')) }
+        elseif ($link.LinkType -ne 'HardLink') { Bad 'SillyTavern profile .env was not hard-linked to the home .env' }
+        elseif ($launcher -notmatch [regex]::Escape('-p $ProfileName gateway')) { Bad 'gateway launcher does not start the sillytavern profile' }
+        else { Good 'SillyTavern installer writes the lean profile, three skills, and launcher' }
+    } finally {
+        Remove-Item -LiteralPath $fxHome -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
 Section '16. One-click install wires what is installed, not what is wanted'
 # Through v8.0.4 a plain run assumed all five providers and the bootstrap then
 # DOWNLOADED the missing ones. A detector decides that now, so it is exercised

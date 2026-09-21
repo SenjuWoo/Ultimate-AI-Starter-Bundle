@@ -25876,8 +25876,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md",
-  "size": 2453,
-  "sha256": "5e447adbea46b3dcd782729128c663e1edb442b59328bef81190e4c44e65748d"
+  "size": 2638,
+  "sha256": "6be81b86ebbdcf9fe2eded5fae434f5eeec83991744970044ddd3dfaec37acf3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/code/profile.yaml",
@@ -25900,9 +25900,44 @@
   "sha256": "57c68613998e85f4f26d749be62a1b1ce35b7e91c60396470aa1be4dbd0d6bb3"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/sillytavern/SOUL.md",
+  "size": 757,
+  "sha256": "73d8866f01eb14996169298f11134a1e7bde03f3ed3dbcf2077a636c3f9fc6bf"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/sillytavern/config.yaml",
+  "size": 2183,
+  "sha256": "a64cc8a577c31d06478482708da750431c90b0d0f6576eef0ac6fdb3ecfef3be"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/sillytavern/env.example",
+  "size": 760,
+  "sha256": "5eed47b5b4e3d1413083284c5a1f1a535747979be107dd4dd6f79ecda0bca01a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/sillytavern/profile.yaml",
+  "size": 115,
+  "sha256": "ebe6bc6d42a0e224a33a50ec0fe4917ebb13cb9cae3ad19b2a4308e6aff3587e"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/sillytavern/skills/sillytavern-gateway/SKILL.md",
+  "size": 878,
+  "sha256": "d4c6fb5dd4a2af447f464b2a287ea4d969626079c891a8c0d8247dcb011406b9"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/skyrim/profile.yaml",
   "size": 92,
   "sha256": "9b6db7a4a4b04220260d8bb89670c2c59037505c145534b95fae7c72bd3a4d1e"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/sillytavern-gateway/START-HERMES-GATEWAY.bat",
+  "size": 100,
+  "sha256": "67e602588dd176c45d207458c07ce6c4d4ab0b31329381c6061e7d611fb7685e"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/sillytavern-gateway/START-HERMES-GATEWAY.ps1",
+  "size": 2972,
+  "sha256": "080a56ed9414fc18d810cada56cb30d999706245219a6705f7d281e3d91c24e3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-MAP.md",
@@ -32062,17 +32097,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 43521,
-  "sha256": "11e6eb162203c06a63b5a04fe6ee76a6ff0023f3450252d28dcc9ae7cefebdea"
+  "sha256": "e2a265271e9cbf35c59e997624371e4a8ed7ee4ebffe0580e74fe590b12e3790"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1660,
-  "sha256": "ecfc7db64fafe184bd7f4f9f21e024e4f57976e9e0ec77558a3f8c59f65273ca"
+  "sha256": "eb4594ddcce8840d10a04b44ee6f8302ffecf8797781bf7201635f76235c8541"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 31983,
-  "sha256": "616cfb709c791f6e3a4aa262b53ffccc5525b473e3b61bf4d4cb37b50d94ae60"
+  "sha256": "234f33209e36f7e52b64c416c11f71fe11e989458595369d9f2198c61fb60c93"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -35016,8 +35051,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 170408,
-  "sha256": "1b08d85d755e9e77b87188813b6feff9c83a448649a17c2cc284f1f59f3c8736"
+  "size": 171036,
+  "sha256": "e32792fb5dd18764e85a03c521bcdfdc1f44076908b1c6e54d62fd8dc9279629"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -35091,8 +35126,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 139163,
-  "sha256": "3bb9b4604e253e98ee86845988e54e1aa5de7161862535de07584b17011dc40e"
+  "size": 139622,
+  "sha256": "d977139e374f5cc8816786b3d6eb52539cd3fc09a949fe49c699d15723db1ba1"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -35141,8 +35176,8 @@
  },
  {
   "path": "README.md",
-  "size": 74562,
-  "sha256": "44034a9691321caf3a624cb07ec953f2cf04c0b9c456848b065fd06a8872fc80"
+  "size": 74880,
+  "sha256": "4774b94b6342a25531b77d29a2d0dda25435dbc9d7616aa11760e125fc1599ad"
  },
  {
   "path": "SECURITY.md",
@@ -35152,12 +35187,12 @@
  {
   "path": "START-HERE.bat",
   "size": 730,
-  "sha256": "b5c768f7ba5e3f28315e4f21d6c5a0590d6cce1d72feff679b49ca73bf3491ec"
+  "sha256": "194f4c159b0cd222ee3fabe8d02ff2a017de6e9989a59b19fb380d4d1db8e507"
  },
  {
   "path": "START-HERE.txt",
   "size": 10311,
-  "sha256": "cfde9876b51633deeca6940b9019b6cb54f629492abc12d80205c4d689e2850c"
+  "sha256": "0d358b13d0e5bb36aa953965b7af9a196373ae3e734f3fe73c9c707147c2a93a"
  },
  {
   "path": "TESTS/Test-ForgeRootResolution.ps1",
@@ -35186,8 +35221,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 47375,
-  "sha256": "32ab0e5ca0f572eb5c8ce61d7ea2ee5107106af4aef7077419043b90253f7483"
+  "size": 50547,
+  "sha256": "dba1a633f7840af5254a7fc5f5470a7dcab5e43779c79535dc55f29c933b8b15"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -35435,6 +35470,11 @@
   "sha256": "5c3aa45fb26ea6bba4c62799f765e30f856a57cae8f50b9e28b0db8f60240848"
  },
  {
+  "path": "TOOLS/Install-SillyTavernGateway.ps1",
+  "size": 3172,
+  "sha256": "3966a01cb7835a1fd88894fd7659fb9d23ca8787274aef8676270e9811c37ace"
+ },
+ {
   "path": "TOOLS/Install-SkyrimForge.ps1",
   "size": 15897,
   "sha256": "38df7ad9cbf5e4d151474388c4d2765d980837621e142cab8aaedd7bf8a744d0"
@@ -35666,13 +35706,13 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 1541,
-  "sha256": "4dc56ba2f9af9a33fc8d3ef6b1b5fb1c93360b9ee73887b6765658979c5183a9"
+  "size": 1481,
+  "sha256": "9079528b1ed13ed3b23dd0b63623ad28f9ea5d5ce3adc06b95c5291948db7231"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "d508c50755046e4271f2649a81c86980059262a1840b48ea8ff5971e336d88ef"
+  "sha256": "bf3dc41512f451c7e9dd8102e7f80cd44301041531eb7993afefda11503f8a30"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -42338,6 +42378,11 @@
   "path": "docs/history/V8.7.28-CHANGELOG.md",
   "size": 1211,
   "sha256": "0ebf9bc65ae960bd48a360bff4a2b7768392345eb0107f14e88e96962dc79529"
+ },
+ {
+  "path": "docs/history/V8.7.29-CHANGELOG.md",
+  "size": 952,
+  "sha256": "55436d67c7cde2ce10959ec6a05397adcb677c38c560169e873e2aa2bbe58359"
  },
  {
   "path": "docs/history/V8.7.3-CHANGELOG.md",

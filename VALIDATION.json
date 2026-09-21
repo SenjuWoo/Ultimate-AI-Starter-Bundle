@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.28",
+  "version": "8.7.29",
   "generated": "2026-09-21",
-  "release_tag": "v8.7.28",
+  "release_tag": "v8.7.29",
   "canonical_skills": 170,
   "provider_trees": 5,
   "registry_entries": 170,
@@ -22,6 +22,6 @@
     "TESTS/Test-McpProfiles.ps1",
     "TOOLS/mcp_handshake.py --selftest"
   ],
-  "runtime_status": "v8.7.28: Hermes Superpowers copy drops other-harness plugin manifests; gateway restart waits until profile migration finishes; doctor fails on a stale Context7 pin, foreign Superpowers manifest, or npm spec; component fetch ledger merges instead of collapsing. 170 canonical skills. No new dependency or MCP server.",
+  "runtime_status": "v8.7.29: SillyTavern gateway profile limits the Hermes API server to vision, image generation, web, file, memory, and three roleplay skills. Coding toolsets and pack MCP servers stay off that profile. 170 canonical skills. No new dependency or MCP server.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

@@ -377,7 +377,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.7.28 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.7.29 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -2187,7 +2187,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.7.28'
+version = '8.7.29'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode
@@ -2266,6 +2266,16 @@ if (-not $ToolsOnly) {
       L 'Hermes native profiles evaluated'
     } catch {
       Write-UabsWarn ('Hermes native profiles: ' + $_.Exception.Message)
+    }
+  }
+
+  $sillyGateway = Join-Path $PackRoot 'TOOLS\Install-SillyTavernGateway.ps1'
+  if (($Providers -contains 'Hermes') -and (Test-Path -LiteralPath $sillyGateway)) {
+    try {
+      & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $sillyGateway -PackRoot $PackRoot
+      L 'SillyTavern Hermes gateway profile installed'
+    } catch {
+      Write-UabsWarn ('SillyTavern gateway: ' + $_.Exception.Message)
     }
   }
 

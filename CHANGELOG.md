@@ -1,3 +1,9 @@
+## 8.7.29
+
+- SillyTavern gets its own Hermes profile and `START-HERMES-GATEWAY` launcher. Chat stays on whatever model LM Studio has loaded. The API server toolset is vision, image generation, web, file, memory, and skills. Terminal, code execution, browser, and the coding MCP servers are not loaded.
+- The profile ships three skills: a short gateway skill, adult character sheets, and adult image captions. It does not mount the full skill library. API keys stay in the existing Hermes `.env` via a hard link. The template does not contain credentials.
+- **170 canonical skills total**, no new dependency, no new MCP server.
+
 ## 8.7.28
 
 - Hermes no longer loads Claude, Codex, Cursor, Devin, and Kimi Superpowers manifests. The shared plugin tree still has those adapters. The Hermes git bridge and the installed Hermes copy drop them, because Hermes walks one directory level and parses every sibling `plugin.json` when Superpowers has no root manifest.

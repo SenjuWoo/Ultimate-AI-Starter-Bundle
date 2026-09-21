@@ -1,0 +1,91 @@
+# SillyTavern gateway profile. LM Studio is the chat model. Hermes is the
+# harness in front of it: vision, image generation, web, files, memory, and
+# the three roleplay skills in this profile. Coding tools, coding skills, and
+# the pack MCP servers are not loaded. The API key and port come from the
+# shared Hermes .env (API_SERVER_*), not from this file.
+model:
+  # gateway-model: START-HERMES-GATEWAY.ps1 rewrites the next line to the model LM Studio has loaded.
+  default: local-model
+  provider: lmstudio
+  base_url: http://127.0.0.1:1234/v1
+  context_length: 65536
+providers:
+  lmstudio:
+    name: LM Studio
+    base_url: http://127.0.0.1:1234/v1
+    discover_models: true
+fallback_providers:
+  - provider: openrouter
+    model: deepseek/deepseek-v4.1-flash
+agent:
+  coding_context: off
+  environment_probe: false
+  execution_guidance: false
+  task_completion_guidance: false
+  parallel_tool_call_guidance: false
+  verify_guidance: false
+  verify_on_stop: false
+  tool_use_enforcement: true
+  max_verify_nudges: 0
+  disabled_toolsets:
+    - terminal
+    - code_execution
+    - browser
+    - computer_use
+    - cronjob
+    - delegation
+    - todo
+    - tts
+    - session_search
+    - clarify
+    - connections
+  reasoning_effort: medium
+  verbose: false
+compression:
+  enabled: true
+  threshold: 0.5
+  target_ratio: 0.25
+  tail_mode: lean
+  protect_last_n: 12
+  protect_first_n: 2
+auxiliary:
+  vision:
+    provider: openrouter
+    model: deepseek/deepseek-v4.1-flash
+    fallback_chain:
+      - provider: openrouter
+        model: deepseek/deepseek-v4-flash-vision-exp
+  compression:
+    provider: openrouter
+    model: deepseek/deepseek-v4.1-flash
+    timeout: 120
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+  memory_char_limit: 2200
+  user_char_limit: 800
+skills:
+  creation_nudge_interval: 0
+plugins:
+  enabled: []
+  disabled:
+    - ponytail
+    - superpowers
+    - superpowers/.hermes-plugin
+mcp_servers: {}
+platform_toolsets:
+  api_server:
+    - vision
+    - image_gen
+    - web
+    - file
+    - memory
+    - skills
+    - no_mcp
+known_plugin_toolsets:
+  api_server: []
+security:
+  allow_private_urls: true
+telemetry:
+  shared_metrics:
+    enabled: false

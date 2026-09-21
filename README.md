@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.28 -->
+<!-- Ultimate AI Starter Bundle v8.7.29 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.28
+# Ultimate AI Starter Bundle v8.7.29
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -15,7 +15,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 <p>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
-  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.28-7c9cff?labelColor=0d1117" alt="v8.7.28"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.29-7c9cff?labelColor=0d1117" alt="v8.7.29"></a>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest"><img src="https://img.shields.io/github/v/release/SenjuWoo/Ultimate-AI-Starter-Bundle?label=latest%20release&amp;color=9db0e8&amp;labelColor=0d1117" alt="latest published release"></a>
 </p>
 
@@ -754,6 +754,8 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.29** - 2026-09-21. SillyTavern can sit on a lean Hermes profile: LM Studio for chat, Hermes for vision, images, web, and character cards. Coding tools, coding skills, and the pack MCP servers stay off that gateway. **170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.29-CHANGELOG.md).
 
 **v8.7.28** - 2026-09-21. Hermes stops parsing Claude, Codex, Cursor, Devin, and Kimi Superpowers manifests on gateway start, and a running gateway stays down until profile migration has written config. The doctor catches a stale Context7 pin or npm spec, and the component ledger no longer collapses to one fetched tag. **170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.28-CHANGELOG.md).
 
