@@ -735,6 +735,58 @@ if ($hermesPluginIssues.Count -or $hermesDiscouragedPluginIssues.Count -or $herm
   }
 }
 
+# Hermes parses every plugin.json one level under plugins/. Superpowers has no
+# root manifest, so Claude/Codex/Cursor/Devin/Kimi adapters in that tree are
+# loaded as Hermes plugins and fail on every gateway start. The shared bundle
+# keeps those adapters; the Hermes copy must not.
+if ($Providers -contains 'Hermes') {
+  $hermesSuperpowers = Join-Path $hermesHomeRoot 'plugins\superpowers'
+  if (Test-Path -LiteralPath $hermesSuperpowers -PathType Container) {
+    foreach ($foreign in @('.claude-plugin', '.codex-plugin', '.cursor-plugin', '.devin-plugin', '.kimi-plugin')) {
+      $manifest = Join-Path $hermesSuperpowers ($foreign + '\plugin.json')
+      if (Test-Path -LiteralPath $manifest -PathType Leaf) {
+        Err ("Hermes Superpowers still contains " + $foreign + " (other-harness manifest; gateway will fail to parse it)")
+      }
+    }
+  }
+  $context7Comp = @($catalog.components | Where-Object { $_.id -eq 'context7' }) | Select-Object -First 1
+  $context7Pin = $null
+  if ($context7Comp) {
+    $context7Pin = @($context7Comp.npx_args | Where-Object { $_ -like '@upstash/context7-mcp@*' }) | Select-Object -First 1
+  }
+  if ($context7Pin) {
+    $pinFiles = @()
+    $homeCfg = Join-Path $hermesHomeRoot 'config.yaml'
+    if (Test-Path -LiteralPath $homeCfg -PathType Leaf) { $pinFiles += $homeCfg }
+    $profileRoot = Join-Path $hermesHomeRoot 'profiles'
+    if (Test-Path -LiteralPath $profileRoot -PathType Container) {
+      foreach ($profileDir in @(Get-ChildItem -LiteralPath $profileRoot -Directory -ErrorAction SilentlyContinue)) {
+        $profileCfg = Join-Path $profileDir.FullName 'config.yaml'
+        if (Test-Path -LiteralPath $profileCfg -PathType Leaf) { $pinFiles += $profileCfg }
+      }
+    }
+    foreach ($pinFile in $pinFiles) {
+      $pinText = [IO.File]::ReadAllText($pinFile)
+      $seen = @([regex]::Matches($pinText, '@upstash/context7-mcp@[0-9]+\.[0-9]+\.[0-9]+') | ForEach-Object { $_.Value } | Select-Object -Unique)
+      foreach ($foundPin in $seen) {
+        if ($foundPin -ne $context7Pin) {
+          $rel = $pinFile.Substring($hermesHomeRoot.Length).TrimStart('\')
+          Err ("Hermes $rel pins $foundPin; catalog pins $context7Pin")
+        }
+      }
+    }
+  }
+}
+if ($state -and $state.components -and $catalog) {
+  foreach ($comp in @($catalog.components | Where-Object { $_.npm_spec })) {
+    $recorded = $state.components.PSObject.Properties[[string]$comp.id]
+    if (-not $recorded -or -not $recorded.Value.spec) { continue }
+    if ([string]$recorded.Value.spec -ne [string]$comp.npm_spec) {
+      Err ("$($comp.id) install-state spec is $($recorded.Value.spec); catalog spec is $($comp.npm_spec)")
+    }
+  }
+}
+
 # ------------------------------------ hooks that steer toward absent MCPs ---
 # A session hook that TELLS an agent to use an MCP server is only correct while
 # that server is registered. This pack deliberately profile-gates most of its

@@ -179,6 +179,7 @@ $installLogPath = Join-Path $installLogRoot ('install-' + (Get-Date -Format 'yyy
 $installLastPath = Join-Path $installLogRoot 'INSTALL-LAST.log'
 $installFailedPath = Join-Path $installLogRoot 'INSTALL-FAILED.txt'
 $script:UabsTranscriptStarted = $false
+$script:UabsHermesGatewayWasRunning = $false
 try {
   Start-Transcript -LiteralPath $installLogPath -Force | Out-Null
   $script:UabsTranscriptStarted = $true
@@ -376,7 +377,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.7.27 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.7.28 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -617,7 +618,11 @@ if (-not $ToolsOnly -and -not $SkipStarterSettings) {
 #           bridge (Hermes rejects plain paths), with
 #           plugins.scan_on_install: false in config.yaml because the security
 #           scanner false-positives on both plugins and --force does not
-#           override it. Gateway restart ONLY if it was already running.
+#           override it. The Superpowers bridge drops Claude/Codex/Cursor/Devin/Kimi
+#           manifests; Hermes would otherwise parse them on every gateway start.
+#           A gateway that was already running stays down until profile migration
+#           finishes, then restarts. Restarting it here lets it save the pre-migration
+#           config back over the file.
 #   Codex   bundled superpowers staged into the local marketplace +
 #           [plugins."superpowers@ultimate-bundle"] enabled = true in
 #           config.toml; ponytail is detected (user's own marketplace
@@ -748,7 +753,8 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
         $gatewayWasRunning = $gatewayStatus -match '(?i)running' -and $gatewayStatus -notmatch '(?i)not running'
         if ($gatewayWasRunning) {
           if (-not (Invoke-UabsNative $hermesExe @('gateway', 'stop'))) { throw 'Hermes gateway could not be stopped for plugin refresh' }
-          Write-UabsOk 'Hermes gateway stopped for native plugin refresh'
+          $script:UabsHermesGatewayWasRunning = $true
+          Write-UabsOk 'Hermes gateway stopped for native plugin refresh; it stays down until config writes finish'
         }
         # Hermes desktop (Hermes.exe) loads config.yaml once at startup and
         # persists ITS in-memory copy on later saves. Left running, it rewrites
@@ -785,6 +791,12 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
               Write-UabsWarn ('Hermes: git missing - cannot stage ' + $pluginId + ' as a git repo; copied skills stay')
               continue
             }
+            if ($pluginId -eq 'superpowers') {
+              $bridgeStripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $pluginStage)
+              if ($bridgeStripped.Count) {
+                Write-UabsOk ('Hermes: Superpowers bridge dropped foreign manifests: ' + ($bridgeStripped -join ', '))
+              }
+            }
             [void](Invoke-UabsNative 'git' @('-C', $pluginStage, 'init'))
             [void](Invoke-UabsNative 'git' @('-C', $pluginStage, 'add', '-A'))
             if (-not (Invoke-UabsNative 'git' @('-C', $pluginStage, '-c', 'user.email=bundle@local', '-c', 'user.name=bundle', 'commit', '-m', 'bundled pin'))) {
@@ -796,7 +808,15 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
           } else {
             # Bridge exists: refresh files from the pack and commit if the
             # bundle changed (safely corrective; a no-op when nothing changed).
+            # Robocopy puts the other harness manifests back; strip them before
+            # the dirty check so the deletion is part of the bridge commit.
             Copy-UabsRobo -From (Join-Path $plugins $pluginId) -To $pluginStage
+            if ($pluginId -eq 'superpowers') {
+              $bridgeStripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $pluginStage)
+              if ($bridgeStripped.Count) {
+                Write-UabsOk ('Hermes: Superpowers bridge dropped foreign manifests: ' + ($bridgeStripped -join ', '))
+              }
+            }
             $dirty = Get-UabsNativeOutput -Exe 'git' -CmdArgs @('-C', $pluginStage, 'status', '--porcelain')
             if ($dirty -and $dirty.Trim()) {
               [void](Invoke-UabsNative 'git' @('-C', $pluginStage, 'add', '-A'))
@@ -839,6 +859,13 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
             }
           }
             if ($hEntry.native) {
+            if ($pluginId -eq 'superpowers') {
+              $installedPlugin = Join-Path $providerHome ('plugins\' + $pluginId)
+              $liveStripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $installedPlugin)
+              if ($liveStripped.Count) {
+                Write-UabsOk ('Hermes: installed Superpowers dropped foreign manifests: ' + ($liveStripped -join ', '))
+              }
+            }
             # Keep the copies. Hermes derives /skill-name slash commands and
             # desktop autofill from the skills dir (scan_skill_commands scans
             # SKILLS_DIR, not plugin registrations). Dedupe left that path
@@ -848,17 +875,14 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
             }
           }
         } finally {
-          # Restore both user-owned security policy and the gateway's prior
-          # running state even if an official plugin command fails midway.
+          # Restore the operator's scanner setting. Leave the gateway down:
+          # it rewrites config.yaml from the copy it loaded at start, and the
+          # profile migration below has not run yet. Restart is after that write.
           $pstate.scan_on_install_restore = Restore-UabsHermesPluginScan `
             -ConfigPath (Join-Path $providerHome 'config.yaml') `
             -State $pstate.scan_on_install_fix
-          if ($gatewayWasRunning) {
-            if (Invoke-UabsNative $hermesExe @('gateway', 'start')) {
-              Write-UabsOk 'Hermes gateway restarted (it was running before plugin refresh)'
-            } else {
-              Write-UabsWarn 'Hermes gateway was running before refresh but could not be restarted'
-            }
+          if ($script:UabsHermesGatewayWasRunning) {
+            Write-UabsOk 'Hermes gateway stays stopped until profile migration finishes'
           } elseif ($newInstalls -gt 0) {
             Write-UabsOk 'Hermes gateway was stopped before install - left stopped'
           }
@@ -2144,12 +2168,26 @@ if (Test-Path -LiteralPath $statePath -PathType Leaf) {
     }
   } catch { Write-UabsWarn 'Could not read the previous install state; untouched partial-install records were not carried forward.' }
 }
+if (-not $SkillsOnly) {
+  $ledgerUpdates = @()
+  foreach ($id in @($installed.Keys)) {
+    $row = $installed[$id]
+    $ver = $null
+    if ($row.version) { $ver = [string]$row.version }
+    elseif ($row.spec) { $ver = [string]$row.spec }
+    if ($ver) { $ledgerUpdates += @{ id = [string]$id; installed_version = $ver } }
+  }
+  if ($ledgerUpdates.Count) {
+    try { Update-UabsComponentLedger -Updates $ledgerUpdates }
+    catch { Write-UabsWarn ('Component ledger: ' + $_.Exception.Message) }
+  }
+}
 $knownProviders = @($Providers)
 if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.providers) }
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.7.27'
+version = '8.7.28'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode
@@ -2197,6 +2235,20 @@ if (-not $ToolsOnly) {
       # and an absent Hermes CLI both skip. Without this the migration became a
       # warning on exactly the runs that skipped that block, and the profile
       # topology silently never landed.
+      $hermesGw = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'
+      if (-not (Test-Path -LiteralPath $hermesGw -PathType Leaf)) {
+        $hermesCmd = Get-Command hermes -ErrorAction SilentlyContinue
+        if ($hermesCmd) { $hermesGw = $hermesCmd.Source } else { $hermesGw = $null }
+      }
+      if ($hermesGw) {
+        $gwText = Get-UabsNativeOutput -Exe $hermesGw -CmdArgs @('gateway', 'status')
+        $gwUp = $gwText -match '(?i)running' -and $gwText -notmatch '(?i)not running'
+        if ($gwUp) {
+          if (-not (Invoke-UabsNative $hermesGw @('gateway', 'stop'))) { throw 'Hermes gateway could not be stopped before profile migration' }
+          $script:UabsHermesGatewayWasRunning = $true
+          Write-UabsOk 'Hermes gateway stopped before profile migration'
+        }
+      }
       $hermesUp = Get-Process -Name 'Hermes' -ErrorAction SilentlyContinue
       if ($hermesUp) {
         if (-not $script:UabsHermesDesktopExe) {
@@ -2309,8 +2361,20 @@ $state.status = 'complete'
 $state.completed_utc = [DateTime]::UtcNow.ToString('o')
 $state | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $stateDir 'install-state.json') -Encoding UTF8
 
-# Relaunch Hermes desktop only after every config write is done, so it starts
-# with the complete MCP board instead of a stale pre-install copy.
+# Relaunch Hermes only after every config write is done. The gateway rewrites
+# config.yaml from the copy it loaded at start, so it cannot be up during migration.
+if ($script:UabsHermesGatewayWasRunning) {
+  $hermesGw = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'
+  if (-not (Test-Path -LiteralPath $hermesGw -PathType Leaf)) {
+    $hermesCmd = Get-Command hermes -ErrorAction SilentlyContinue
+    if ($hermesCmd) { $hermesGw = $hermesCmd.Source } else { $hermesGw = $null }
+  }
+  if ($hermesGw -and (Invoke-UabsNative $hermesGw @('gateway', 'start'))) {
+    Write-UabsOk 'Hermes gateway restarted after config writes'
+  } else {
+    Write-UabsWarn 'Hermes gateway was running before install but could not be restarted'
+  }
+}
 if ($script:UabsHermesDesktopExe) {
   if (Test-Path -LiteralPath $script:UabsHermesDesktopExe -PathType Leaf) {
     Start-Process -FilePath $script:UabsHermesDesktopExe

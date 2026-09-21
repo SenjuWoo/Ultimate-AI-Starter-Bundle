@@ -521,6 +521,61 @@ if ($aio -match "Invoke-UabsSkillDedupe -Provider 'Grok'") {
 if ($aio -match "Invoke-UabsSkillDedupe -Provider 'Hermes'") {
     Bad 'AIO still dedupes Hermes superpowers/ponytail copies (slash commands and autofill then disappear)'
 } else { Good 'AIO leaves Hermes plugin copies in the skills dir (slash commands load that path)' }
+if ($aio -match 'Remove-UabsHermesForeignHarnessDirs') {
+    Good 'AIO strips foreign Superpowers manifests from the Hermes bridge'
+} else { Bad 'INSTALL-AIO.ps1 does not strip foreign Superpowers manifests for Hermes' }
+$migAt = $aio.IndexOf('Migrate-HermesProfiles.ps1')
+$restartAt = $aio.IndexOf('Hermes gateway restarted after config writes')
+if ($migAt -ge 0 -and $restartAt -gt $migAt) {
+    Good 'AIO restarts the Hermes gateway only after profile migration'
+} else { Bad 'Hermes gateway restart is not after Migrate-HermesProfiles.ps1' }
+if ($aio -match 'Hermes gateway restarted \(it was running before plugin refresh\)') {
+    Bad 'AIO still restarts the Hermes gateway inside the plugin refresh'
+} else { Good 'AIO does not restart the Hermes gateway inside plugin refresh' }
+$stripRoot = Join-Path ([IO.Path]::GetTempPath()) ('uabs-hermes-strip-' + [guid]::NewGuid().ToString('n'))
+try {
+    New-Item -ItemType Directory -Force -Path (Join-Path $stripRoot '.hermes-plugin') | Out-Null
+    New-Item -ItemType Directory -Force -Path (Join-Path $stripRoot 'skills\using-superpowers') | Out-Null
+    [IO.File]::WriteAllText((Join-Path $stripRoot '.hermes-plugin\plugin.yaml'), "name: superpowers`n")
+    [IO.File]::WriteAllText((Join-Path $stripRoot 'skills\using-superpowers\SKILL.md'), "---\nname: using-superpowers\n---\n")
+    foreach ($foreign in @('.claude-plugin', '.codex-plugin', '.cursor-plugin', '.devin-plugin', '.kimi-plugin')) {
+        $dir = Join-Path $stripRoot $foreign
+        New-Item -ItemType Directory -Force -Path $dir | Out-Null
+        [IO.File]::WriteAllText((Join-Path $dir 'plugin.json'), '{ "name": "superpowers" }')
+    }
+    $stripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $stripRoot)
+    $left = @($stripped | Where-Object { $_ })
+    $stillThere = @()
+    foreach ($foreign in @('.claude-plugin', '.codex-plugin', '.cursor-plugin', '.devin-plugin', '.kimi-plugin')) {
+        if (Test-Path -LiteralPath (Join-Path $stripRoot ($foreign + '\plugin.json'))) { $stillThere += $foreign }
+    }
+    $adapterOk = Test-Path -LiteralPath (Join-Path $stripRoot '.hermes-plugin\plugin.yaml')
+    $skillOk = Test-Path -LiteralPath (Join-Path $stripRoot 'skills\using-superpowers\SKILL.md')
+    if ($left.Count -eq 5 -and -not $stillThere.Count -and $adapterOk -and $skillOk) {
+        Good 'Hermes Superpowers strip removes the five foreign manifests and keeps the adapter'
+    } else {
+        Bad ("Hermes Superpowers strip mismatch removed=$($left.Count) left=$($stillThere -join ',') adapter=$adapterOk skill=$skillOk")
+    }
+    $bundleSuper = Join-Path $PackRoot 'BUNDLED-TOOLS\plugins\superpowers'
+    $guarded = $false
+    try { Remove-UabsHermesForeignHarnessDirs -PluginRoot $bundleSuper } catch { $guarded = $true }
+    if ($guarded -and (Test-Path -LiteralPath (Join-Path $bundleSuper '.kimi-plugin\plugin.json'))) {
+        Good 'foreign-manifest strip refuses the shared Superpowers tree'
+    } else { Bad 'foreign-manifest strip did not protect BUNDLED-TOOLS\plugins\superpowers' }
+    $ledger = Join-Path $stripRoot 'last-github-update.json'
+    [IO.File]::WriteAllText($ledger, "{`n  `"id`": `"rtk`",`n  `"tag`": `"v0.46.0`"`n}`n")
+    Update-UabsComponentLedger -Path $ledger -Updates @(@{ id = 'rtk'; installed_version = '0.47.0' })
+    $one = [IO.File]::ReadAllText($ledger) | ConvertFrom-Json
+    Update-UabsComponentLedger -Path $ledger -Updates @(@{ id = 'playwright-cli'; installed_version = '@playwright/cli@0.1.20' })
+    $two = [IO.File]::ReadAllText($ledger) | ConvertFrom-Json
+    $ids = @($two.components | ForEach-Object { [string]$_.id })
+    $rtkRow = @($two.components | Where-Object { $_.id -eq 'rtk' }) | Select-Object -First 1
+    if ($one.schema -eq 1 -and @($one.components).Count -eq 1 -and $ids.Count -eq 2 -and $rtkRow.tag -eq 'v0.46.0' -and $rtkRow.installed_version -eq '0.47.0' -and ($ids -contains 'playwright-cli')) {
+        Good 'component ledger keeps an array and merges installed versions'
+    } else { Bad 'component ledger did not merge a legacy single object into a stable array' }
+} finally {
+    if (Test-Path -LiteralPath $stripRoot) { Remove-Item -LiteralPath $stripRoot -Recurse -Force -ErrorAction SilentlyContinue }
+}
 $grokStarter = [IO.File]::ReadAllText((Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Grok\COPY-TO-PROVIDER-HOME\config.toml'))
 if ($grokStarter -match '(?m)^\s*skills\s*=\s*false\s*$') {
     Good 'Grok starter config.toml sets compat.claude skills = false'

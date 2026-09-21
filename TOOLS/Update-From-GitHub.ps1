@@ -73,9 +73,17 @@ foreach ($id in $Components) {
   }
 }
 
-$stateDir = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle'
-New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
-$results | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $stateDir 'last-github-update.json') -Encoding UTF8
+$ledgerUpdates = @()
+foreach ($row in @($results)) {
+  $ledgerUpdates += @{
+    id = [string]$row.id
+    tag = [string]$row.tag
+    file = [string]$row.file
+    url = [string]$row.url
+    error = [string]$row.error
+  }
+}
+if ($ledgerUpdates.Count) { Update-UabsComponentLedger -Updates $ledgerUpdates }
 Write-Host ""
 $results | Format-Table -AutoSize
 if ($InstallAfter) {

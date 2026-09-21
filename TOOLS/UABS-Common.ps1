@@ -1004,6 +1004,96 @@ function Install-UabsPreambleBlock {
     Write-UabsOk ('preamble wired: ' + $Path)
 }
 
+function Remove-UabsHermesForeignHarnessDirs {
+  <#
+  Hermes walks one level into a plugin directory that has no root plugin.yaml.
+  Superpowers keeps the Hermes adapter at .hermes-plugin/plugin.yaml and ships
+  sibling plugin.json files for Claude, Codex, Cursor, Devin, and Kimi. Hermes
+  parses those siblings as its own plugins and warns on every gateway start.
+  The shared BUNDLED-TOOLS tree must keep them: Kimi installs .kimi-plugin.
+  Call this only on the Hermes git bridge or the installed Hermes plugin copy.
+  #>
+  param([Parameter(Mandatory)][string]$PluginRoot)
+  if (-not (Test-Path -LiteralPath $PluginRoot -PathType Container)) { return }
+  $full = [IO.Path]::GetFullPath($PluginRoot).TrimEnd('\')
+  if ($full -match '(?i)[\\/]BUNDLED-TOOLS[\\/]plugins([\\/]|$)') {
+    throw 'Refusing to strip foreign harness manifests inside BUNDLED-TOOLS\plugins'
+  }
+  $adapter = Join-Path $PluginRoot '.hermes-plugin\plugin.yaml'
+  if (-not (Test-Path -LiteralPath $adapter -PathType Leaf)) { return }
+  # Write-Output one name at a time. Returning the whole list makes PowerShell
+  # hand the caller a single nested array, and @() then counts it as one.
+  foreach ($name in @('.claude-plugin', '.codex-plugin', '.cursor-plugin', '.devin-plugin', '.kimi-plugin')) {
+    $dir = Join-Path $PluginRoot $name
+    if (-not (Test-Path -LiteralPath (Join-Path $dir 'plugin.json') -PathType Leaf)) { continue }
+    Remove-Item -LiteralPath $dir -Recurse -Force
+    Write-Output $name
+  }
+}
+
+function Update-UabsComponentLedger {
+  <#
+  Merge fetched or installed component facts into last-github-update.json.
+  A one-component run used to replace the file, and PowerShell 5.1 ConvertTo-Json
+  turned that single object into the whole document, so the sidecar claimed RTK
+  was still the last fetched tag after the installer had moved on.
+  installed_version is what this machine has. tag/file/url stay the last fetch.
+  #>
+  param(
+    [Parameter(Mandatory)][object[]]$Updates,
+    [string]$Path
+  )
+  if (-not $Path) { $Path = Join-Path (Get-UabsStateRoot) 'last-github-update.json' }
+  $byId = @{}
+  if (Test-Path -LiteralPath $Path -PathType Leaf) {
+    try {
+      $old = [IO.File]::ReadAllText($Path) | ConvertFrom-Json
+      $items = @()
+      if ($old.components) { $items = @($old.components) }
+      elseif ($old.id) { $items = @($old) }
+      foreach ($item in $items) {
+        if (-not $item.id) { continue }
+        $byId[[string]$item.id] = $item
+      }
+    } catch { }
+  }
+  foreach ($update in @($Updates)) {
+    if (-not $update) { continue }
+    $id = [string]$update.id
+    if (-not $id) { continue }
+    $prior = $byId[$id]
+    $row = [ordered]@{ id = $id }
+    foreach ($key in @('tag', 'file', 'url', 'error', 'installed_version')) {
+      $incoming = $update.$key
+      if ($incoming) { $row[$key] = [string]$incoming }
+      elseif ($prior -and $prior.$key) { $row[$key] = [string]$prior.$key }
+    }
+    $byId[$id] = [pscustomobject]$row
+  }
+  $components = New-Object System.Collections.Generic.List[object]
+  foreach ($id in @($byId.Keys | Sort-Object)) {
+    $src = $byId[$id]
+    $entry = New-Object 'System.Collections.Generic.Dictionary[string,object]'
+    $entry['id'] = [string]$id
+    foreach ($key in @('tag', 'file', 'url', 'error', 'installed_version')) {
+      $val = [string]$src.$key
+      if ($val) { $entry[$key] = $val }
+    }
+    [void]$components.Add($entry)
+  }
+  $doc = New-Object 'System.Collections.Generic.Dictionary[string,object]'
+  $doc['schema'] = 1
+  $doc['updated_utc'] = [DateTime]::UtcNow.ToString('o')
+  $doc['components'] = $components.ToArray()
+  Add-Type -AssemblyName System.Web.Extensions
+  $serializer = New-Object System.Web.Script.Serialization.JavaScriptSerializer
+  $serializer.MaxJsonLength = 67108864
+  $json = $serializer.Serialize($doc)
+  $enc = New-Object System.Text.UTF8Encoding($false)
+  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $Path) | Out-Null
+  [IO.File]::WriteAllText($Path, ($json + "`n"), $enc)
+}
+
 # ---------------------------------------------------------------------------
 # Native bundled plugins (superpowers / ponytail) - shared helpers.
 # The per-provider orchestration lives in INSTALL-AIO.ps1; these are the

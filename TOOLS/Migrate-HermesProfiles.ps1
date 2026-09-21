@@ -949,6 +949,12 @@ try {
   if (Get-Process -Name 'Hermes' -ErrorAction SilentlyContinue) {
     throw 'Hermes is running. Close the desktop app before applying this migration so it cannot save stale config over the changes.'
   }
+  $gwPrev = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try { $gwText = (& $HermesExe gateway status 2>&1 | Out-String) } finally { $ErrorActionPreference = $gwPrev }
+  if ($gwText -match '(?i)running' -and $gwText -notmatch '(?i)not running') {
+    throw 'Hermes gateway is running. Stop it before applying this migration so it cannot save the pre-migration config back over the file.'
+  }
 
   $backup = New-UabsBackup $existingProfiles
   try {

@@ -1,3 +1,11 @@
+## 8.7.28
+
+- Hermes no longer loads Claude, Codex, Cursor, Devin, and Kimi Superpowers manifests. The shared plugin tree still has those adapters. The Hermes git bridge and the installed Hermes copy drop them, because Hermes walks one directory level and parses every sibling `plugin.json` when Superpowers has no root manifest.
+- A Hermes gateway that was already running stays stopped until profile migration finishes, then restarts. Restarting it during plugin install let it write the pre-migration config back over `config.yaml`. `Migrate-HermesProfiles.ps1 -Apply` now refuses to run while that gateway is up.
+- The installed-state doctor fails when the Hermes Superpowers copy still has those foreign manifests, when a Hermes profile's Context7 pin disagrees with `CATALOG.json`, or when a recorded npm spec disagrees with the catalog.
+- `last-github-update.json` merges by component and stays a component array. A one-component fetch no longer replaces the file with a single object, and an install records `installed_version` without erasing the last fetched tag.
+- **170 canonical skills total**, no new dependency, no new MCP server.
+
 ## 8.7.27
 
 - v8.7.26 made the preamble writer match complete owned text instead of an opening line, which protects user instructions - but it could not recognize the pack's OWN older text once a release changed it: an installed machine would keep the old block and gain a second one. Outgoing copies now live in `3-PREAMBLES/history/` and are stripped exactly like a source file, so editing `SOUL.md`/`AIO-INSTRUCTION.md` converges installed machines. `3-PREAMBLES/README.md` and `release-checklist` step 0 tell the maintainer to archive before editing.
