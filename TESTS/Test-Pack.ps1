@@ -857,6 +857,10 @@ if (-not (Test-Path -LiteralPath $stInstaller) -or -not (Test-Path -LiteralPath 
 }
 
 Section '16. One-click install wires what is installed, not what is wanted'
+$stGatewayGate = Join-Path $PackRoot 'TESTS\Test-SillyTavernGateway.ps1'
+& (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $stGatewayGate -PackRoot $PackRoot
+if ($LASTEXITCODE -ne 0) { Bad 'SillyTavern installer/launcher regression checks failed' }
+else { Good 'SillyTavern installer/launcher regression checks passed' }
 # Through v8.0.4 a plain run assumed all five providers and the bootstrap then
 # DOWNLOADED the missing ones. A detector decides that now, so it is exercised
 # against a real filesystem rather than trusted because the source reads right.

@@ -13,28 +13,32 @@ if (-not (Test-Path -LiteralPath $ConfigPath -PathType Leaf)) {
 }
 
 try {
-  $models = Invoke-RestMethod -Uri 'http://127.0.0.1:1234/v1/models' -Method Get -TimeoutSec 5
+  $models = Invoke-RestMethod -Uri 'http://127.0.0.1:1234/api/v0/models' -Method Get -TimeoutSec 5
 } catch {
-  Write-Host '[ERROR] Start LM Studio and turn on the developer server, then load a chat model.' -ForegroundColor Red
+  Write-Host '[ERROR] Cannot query LM Studio at 127.0.0.1:1234. Start its developer server (lms server start), then load a chat model.' -ForegroundColor Red
   exit 1
 }
-$loaded = @($models.data | Where-Object { $_.id }) | Select-Object -First 1
-if (-not $loaded) {
-  Write-Host '[ERROR] LM Studio is up but no model is loaded.' -ForegroundColor Red
+$loaded = @($models.data | Where-Object { $_.id -and $_.state -eq 'loaded' -and $_.type -in @('llm', 'vlm') })
+if ($loaded.Count -ne 1) {
+  Write-Host '[ERROR] Load exactly one chat model in LM Studio. Downloaded models and embeddings do not count; unload extra chat models to choose unambiguously.' -ForegroundColor Red
   exit 1
 }
-$modelId = [string]$loaded.id
+$modelId = [string]$loaded[0].id
 
 $text = [IO.File]::ReadAllText($ConfigPath)
-$pattern = '(?m)^([ \t]*# gateway-model:.*\r?\n[ \t]*default:\s*).*$'
-$safeId = $modelId.Replace('$', '$$')
-$updated = [regex]::Replace($text, $pattern, ('${1}' + $safeId), 1)
-if ($updated -eq $text) {
-  Write-Host '[ERROR] Profile config has no gateway-model line. Re-run Install-SillyTavernGateway.ps1 -Force.' -ForegroundColor Red
+$pattern = [regex]'(?m)^([ \t]*# gateway-model:[^\r\n]*\r?\n[ \t]*default:[ \t]*)[^\r\n]*'
+if ($pattern.Matches($text).Count -ne 1) {
+  Write-Host '[ERROR] Profile config needs exactly one gateway-model comment immediately before model.default. Restore that marker without resetting your tuning.' -ForegroundColor Red
   exit 1
 }
-$utf8 = New-Object System.Text.UTF8Encoding($false)
-[IO.File]::WriteAllText($ConfigPath, $updated, $utf8)
+# JSON strings are valid YAML; retain ordinary model IDs without quote churn.
+$safeId = if ($modelId -cmatch '^[A-Za-z_][A-Za-z0-9_./-]*$' -and $modelId -notmatch '^(true|false|null|yes|no|on|off)$') { $modelId } else { ConvertTo-Json -InputObject $modelId -Compress }
+$updated = $pattern.Replace($text, [Text.RegularExpressions.MatchEvaluator]{ param($m) $m.Groups[1].Value + $safeId }, 1)
+if ($updated -cne $text) {
+  Copy-Item -LiteralPath $ConfigPath -Destination ($ConfigPath + '.bak-' + [guid]::NewGuid().ToString('n'))
+  $utf8 = New-Object System.Text.UTF8Encoding($false)
+  [IO.File]::WriteAllText($ConfigPath, $updated, $utf8)
+}
 Write-Host ("[OK] LM Studio model: " + $modelId) -ForegroundColor Green
 
 $envFile = Join-Path $ProfileDir '.env'

@@ -25936,8 +25936,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/sillytavern-gateway/START-HERMES-GATEWAY.ps1",
-  "size": 2972,
-  "sha256": "080a56ed9414fc18d810cada56cb30d999706245219a6705f7d281e3d91c24e3"
+  "size": 3675,
+  "sha256": "6fda3bb1f34d001ac64511f091a7e4a5c6d0e7a13f3e16e48c7c2aaa8d3cc74a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-MAP.md",
@@ -35051,8 +35051,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 171036,
-  "sha256": "e32792fb5dd18764e85a03c521bcdfdc1f44076908b1c6e54d62fd8dc9279629"
+  "size": 171678,
+  "sha256": "de5df4c7e43f977cd1cdd583c8aecf160e1c64038211ebf1cbb2630d2361752c"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -35176,8 +35176,8 @@
  },
  {
   "path": "README.md",
-  "size": 74880,
-  "sha256": "4774b94b6342a25531b77d29a2d0dda25435dbc9d7616aa11760e125fc1599ad"
+  "size": 76196,
+  "sha256": "9d86362bc52af931adefb458358f13a19e32413d0b345b960ea8160734c7b9dc"
  },
  {
   "path": "SECURITY.md",
@@ -35221,8 +35221,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 50547,
-  "sha256": "dba1a633f7840af5254a7fc5f5470a7dcab5e43779c79535dc55f29c933b8b15"
+  "size": 50915,
+  "sha256": "2355095e285323a4f6c52a455dc9037f599d3a29518372b06536f8441dc3eccd"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -35243,6 +35243,11 @@
   "path": "TESTS/Test-ReleaseAssetCache.ps1",
   "size": 10950,
   "sha256": "8ec744bc3b21bad9bbf8cd7ce4928593f748591e9f889bb10b9a9b66bfbefd9d"
+ },
+ {
+  "path": "TESTS/Test-SillyTavernGateway.ps1",
+  "size": 5286,
+  "sha256": "b2bbb3baa148df13282396152178f6a3c9c35c95d5a76d6721aaf5ee6e4305a4"
  },
  {
   "path": "TESTS/evidence-scenarios/A-visual-defect/EXPECTED.md",
@@ -35471,8 +35476,8 @@
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
-  "size": 3172,
-  "sha256": "3966a01cb7835a1fd88894fd7659fb9d23ca8787274aef8676270e9811c37ace"
+  "size": 3763,
+  "sha256": "dd1a905aa73b5830826f3542b6f24fd45b41a6153fd1c6b2b42fa3cb94d6bbce"
  },
  {
   "path": "TOOLS/Install-SkyrimForge.ps1",

@@ -5,9 +5,10 @@
   Copies the profile template into %LOCALAPPDATA%\hermes\profiles\sillytavern,
   adds the two roleplay skills, hard-links the existing Hermes .env so API keys
   stay in one file, and replaces START-HERMES-GATEWAY.bat/.ps1 in the Hermes home.
-  An existing profile config is left alone unless -Force is passed.
+  An existing profile config is left alone unless -Force is passed (no trailing
+  dot). Replaced text files are backed up beside the originals.
 #>
-[CmdletBinding()]
+[CmdletBinding(PositionalBinding = $false)]
 param(
   [string]$PackRoot,
   [string]$HermesHome,
@@ -27,8 +28,12 @@ if (-not (Test-Path -LiteralPath $HermesHome -PathType Container)) {
   exit 0
 }
 
+$PackRoot = (Resolve-Path -LiteralPath $PackRoot).ProviderPath
 $template = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Hermes\profiles\sillytavern'
 $launcher = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Hermes\sillytavern-gateway'
+if (-not (Test-Path -LiteralPath (Join-Path $template 'config.yaml') -PathType Leaf)) {
+  throw 'PackRoot must point to the bundle root, not TOOLS. Use -Force without a trailing dot only when resetting the profile.'
+}
 $profile = Join-Path $HermesHome 'profiles\sillytavern'
 New-Item -ItemType Directory -Force -Path (Join-Path $profile 'skills') | Out-Null
 
@@ -37,6 +42,10 @@ function Copy-TextFile([string]$From, [string]$To) {
   $text = [IO.File]::ReadAllText($From)
   $dir = Split-Path -Parent $To
   if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
+  if (Test-Path -LiteralPath $To -PathType Leaf) {
+    if ([IO.File]::ReadAllText($To) -ceq $text) { return }
+    Copy-Item -LiteralPath $To -Destination ($To + '.bak-' + [guid]::NewGuid().ToString('n'))
+  }
   [IO.File]::WriteAllText($To, $text, $utf8)
 }
 

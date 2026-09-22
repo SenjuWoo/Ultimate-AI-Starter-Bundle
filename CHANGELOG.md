@@ -1,3 +1,8 @@
+## Unreleased
+
+- SillyTavern gateway installer rejects positional arguments: a pasted `-Force.` can no longer silently set the bundle root to `.` and start a partial install. Validate the template root before writing, resolve relative roots, and back up replaced text files, including a forced profile reset.
+- Gateway launcher selects exactly one genuinely loaded chat/vision model, excludes downloaded-only models and embeddings, and preserves config bytes on repeated starts. Missing markers no longer recommend resetting the user's tuning. Add executable Windows PowerShell regression checks to the pack gate and document startup order.
+
 ## 8.7.29
 
 - SillyTavern gets its own Hermes profile and `START-HERMES-GATEWAY` launcher. Chat stays on whatever model LM Studio has loaded. The API server toolset is vision, image generation, web, file, memory, and skills. Terminal, code execution, browser, and the coding MCP servers are not loaded.

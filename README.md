@@ -421,6 +421,28 @@ budget (measured: 40 tokens in, empty reply; 600 in, 191 of 203 spent
 reasoning). It also has no free web-search backend out of the box. All three
 are covered in `local-model-ops/references/sillytavern.md`.
 
+### Optional SillyTavern through Hermes
+
+Run `TOOLS\Install-SillyTavernGateway.ps1` to install or repair the lean
+`sillytavern` profile and gateway launchers. It works from the bundle root or
+from `TOOLS`. Existing `config.yaml` tuning is preserved; `-Force` resets it
+from the template with a backup. **No trailing dot after `-Force`.** Changed
+launcher/profile text files are backed up beside the originals.
+
+Start LM Studio's developer server on `127.0.0.1:1234` (`lms server start`),
+load exactly one chat model at the profile's configured context (65,536 by
+default), then run `START-HERMES-GATEWAY.bat` from your Hermes home. The launcher
+checks actual loaded chat models, not merely downloaded models or embeddings.
+Repeated starts with the same model preserve the config. Keep LM Studio running
+while chatting: Hermes still needs its inference server.
+
+SillyTavern's Custom/OpenAI-compatible endpoint is `http://127.0.0.1:8642/v1`.
+Use your existing Hermes API server model name and authentication; unlike direct
+LM Studio, this gateway requires its configured key. `gateway-starts.log` is
+only a start-time ledger; errors are in `profiles\sillytavern\logs`.
+No MCP servers or coding plugins are enabled by this profile. Its optional
+OpenRouter fallback, vision and compression settings are not local-only.
+
 ### rtk: cut command output before it reaches the model
 
 Installed by default with a **bundle-owned narrow hook**; RTK's broad upstream
