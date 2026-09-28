@@ -32696,13 +32696,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 47180,
-  "sha256": "e1dd94f92a0c658c50797257f7196a9954bf4377eb1cbafcef41f3b41f09922e"
+  "size": 47652,
+  "sha256": "4b8664a9869d9ffb23c9ec0d991ee69313c91e6178bf41026cddb9477ead3a12"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
-  "size": 1426,
-  "sha256": "0db9b5aaf70715cdcd9929a6dd78f6f547572ed5568a127f9bb91473fa7282d5"
+  "size": 1269,
+  "sha256": "f953f06b9dde8b4d84a25fe67d603b6e4ca21fc6031be65e67bde60630d2ae78"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
@@ -32808,11 +32808,6 @@
   "path": "BUNDLED-TOOLS/offline/houseCARL-1.9.0.zip",
   "size": 17647713,
   "sha256": "56349058cdf6a090d2029dedf283db0aaa66a13ddd9560864bdceecced376947"
- },
- {
-  "path": "BUNDLED-TOOLS/offline/ponytail-v4.10.0.zip",
-  "size": 1250300,
-  "sha256": "769efc28ca0e4b387d1b683850d410b4ca9be7c2afb8bf3a3158904c1621fbe8"
  },
  {
   "path": "BUNDLED-TOOLS/offline/rtk-x86_64-pc-windows-msvc.zip",
@@ -33536,8 +33531,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/scripts/cursor-hooks.js",
-  "size": 5090,
-  "sha256": "062da6ace43aba3475f4a523a42e83a7d25469f3a1e9d8d2b80c75bdcd69cbb1"
+  "size": 5180,
+  "sha256": "3b27a20e43da1c7feed63a882aaf714243d7129f7f21b1a0c889b691fd58c48b"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/scripts/publish-openclaw-skills.js",
@@ -35871,8 +35866,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 173004,
-  "sha256": "d1bcb77ec4716cc4a34acdb12c169a771b7aa606ddeeaa97b6b01895b0f04f7b"
+  "size": 173260,
+  "sha256": "f0eaa2f1034ede6d0d53ea42e653ab09672fbbbb07edd2bede64c3716cb811de"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -35996,8 +35991,8 @@
  },
  {
   "path": "README.md",
-  "size": 77335,
-  "sha256": "75bbc999cc9e1630fa9b548fefe9b6815cb710f8816fedae98425f67ac18c4c7"
+  "size": 77414,
+  "sha256": "57dce92fcccca472b1927617ba43fd2c8692d79abb9973d9fb869fe41dc6c138"
  },
  {
   "path": "SECURITY.md",
@@ -36046,8 +36041,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 53192,
-  "sha256": "e94459a0a57d143c66cc625d387799e757b6a160cff3c2aecb3d7c5debefe2c1"
+  "size": 53877,
+  "sha256": "615a4ec30ef96ac0cbbe378b3ff11abace262dcc2d7f55ac915c08105d801448"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -36163,6 +36158,11 @@
   "path": "TESTS/impeccable-security-regressions.mjs",
   "size": 1142,
   "sha256": "66decc46d97740ccfa1dd75dc7eff10d4b5c85208a2bb64812daef5afeed422a"
+ },
+ {
+  "path": "TESTS/ponytail-cursor-regression.cjs",
+  "size": 1236,
+  "sha256": "caa28455f67a42bca9855a6211a79a7a86d49713b5d5cedc8b43ca0183dc24e3"
  },
  {
   "path": "TESTS/routing-scenarios/A-js-shell/QUESTION.md",
@@ -36536,8 +36536,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 1617,
-  "sha256": "2bb5f1ecec55271c47158d6c7c792c886ae72bc05a0cb6ee46d007fd4aa41248"
+  "size": 1661,
+  "sha256": "e3f7574aa4565c99527e09ce5f73fdbebebaa54067fc2a76efccddd5956e7a22"
  },
  {
   "path": "VERSION.txt",
@@ -43346,8 +43346,8 @@
  },
  {
   "path": "docs/history/V8.7.31-CHANGELOG.md",
-  "size": 2676,
-  "sha256": "788fa34a15b0f28fbcba8b13263b2715dae23be480b662213cf3f604b8fd28b0"
+  "size": 3662,
+  "sha256": "72259145079783cbb79a3b1e944eed54031319b009a193e636aeb6de6b799b8f"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",

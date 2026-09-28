@@ -914,6 +914,16 @@ if ($LASTEXITCODE -eq 0 -and $codexHookOut -match 'CODEX HOOK RETIREMENT GATE: P
     Good 'native legacy gates retired; exact backups, custom hooks/trust, fresh/custom homes and reruns verified'
 } else { Bad ('Codex hook retirement failed:' + [Environment]::NewLine + $codexHookOut) }
 
+Section '19. Ponytail Cursor regex security regression'
+$nodeForCursor = Get-Command node -ErrorAction SilentlyContinue
+if (-not $nodeForCursor) { Bad 'Node is required to exercise the shipped Ponytail Cursor adapter' }
+else {
+    $cursorRegression = & $nodeForCursor.Source (Join-Path $PackRoot 'TESTS\ponytail-cursor-regression.cjs') 2>&1 | Out-String
+    if ($LASTEXITCODE -eq 0 -and $cursorRegression -match 'PONYTAIL CURSOR REGRESSION: PASS') {
+        Good 'adversarial command completes within 3 seconds; real names recognized, embedded personal names preserved'
+    } else { Bad ('Ponytail Cursor security regression failed:' + [Environment]::NewLine + $cursorRegression) }
+}
+
 Write-Host ''
 if ($fail -eq 0) {
     Write-Host "PACK GATE: PASS" -ForegroundColor Green

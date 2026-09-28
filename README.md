@@ -780,7 +780,7 @@ registry.
 
 ## Version
 
-**v8.7.31** - 2026-09-28. Codex native hook upgrade cleanup, exact backups and a fail-closed doctor check. Custom hooks/trust are preserved, including missing-Python and custom-home upgrades. No new MCP schemas or broad RTK routing. See [changes](docs/history/V8.7.31-CHANGELOG.md).
+**v8.7.31** - 2026-09-28. Codex native hook upgrade cleanup, exact backups and a fail-closed doctor check. Custom hooks/trust are preserved, including missing-Python and custom-home upgrades. Fix Ponytail's bundled Cursor regex ReDoS; remove its unused raw upstream ZIP. No new MCP schemas or broad RTK routing. See [changes](docs/history/V8.7.31-CHANGELOG.md).
 
 **v8.7.30** - 2026-09-28. Audited component refresh, 171 skills, scoped MCP handshakes and pinned RTK corpus tests. Canonical/native Superpowers parity, explicit Windows Python 3.14, evidence-based compatibility holds, optional local ComfyUI CLI guidance. No new always-on MCP. See [changes](docs/history/V8.7.30-CHANGELOG.md).
 

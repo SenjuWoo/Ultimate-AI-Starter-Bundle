@@ -23,11 +23,6 @@
       "sha256": "56349058cdf6a090d2029dedf283db0aaa66a13ddd9560864bdceecced376947"
     },
     {
-      "file": "ponytail-v4.10.0.zip",
-      "size": 1250300,
-      "sha256": "769efc28ca0e4b387d1b683850d410b4ca9be7c2afb8bf3a3158904c1621fbe8"
-    },
-    {
       "file": "rtk-x86_64-pc-windows-msvc.zip",
       "size": 4511565,
       "sha256": "cb03399305135dd59ee23eb59a3260ccdeea5a8e08fbc7a271b115b85583a6c9"

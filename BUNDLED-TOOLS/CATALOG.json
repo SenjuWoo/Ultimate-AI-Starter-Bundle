@@ -212,7 +212,8 @@
         "owner": "DietrichGebert"
       },
       "name": "Ponytail",
-      "offline_asset": "ponytail-v4.10.0.zip",
+      "offline_asset": null,
+      "bundle_patch_note": "2026-09-28: bundled Cursor adapter anchors Ponytail script names at a word/hyphen boundary to prevent CodeQL #228 polynomial ReDoS. Native provider rules/skills are unchanged. AIO skills-copy and native offline fallbacks consume the vendored plugin tree, not a second plugin ZIP; remove the unused unpatched upstream ZIP rather than mislabel patched bytes as an official archive. Independent upstream marketplace caches are not rewritten by this source patch.",
       "license": "MIT",
       "required_for": [
         "minimal-diff"

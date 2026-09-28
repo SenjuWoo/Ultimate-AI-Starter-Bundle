@@ -15,7 +15,8 @@ const { isShellSafe } = require('../hooks/ponytail-config');
 
 const ROOT = path.join(__dirname, '..');
 const TEMPLATE = path.join(ROOT, 'hooks', 'cursor-hooks.json');
-const PONYTAIL_HOOK = /ponytail-[\w-]+\.js/;
+// A word/hyphen run gets only one candidate start, avoiding quadratic retries.
+const PONYTAIL_HOOK = /(?<![\w-])ponytail-[\w-]+\.js/;
 
 function isPonytailHook(entry) {
   return Boolean(entry && typeof entry.command === 'string' && PONYTAIL_HOOK.test(entry.command));
