@@ -205,10 +205,15 @@ function Remove-UabsHermesLegacyOpenRouterExtra {
     foreach ($key in @('providers', 'custom_providers')) {
       $prevEap = $ErrorActionPreference
       $ErrorActionPreference = 'Continue'
-      try { $raw = (& $exe config get $key --json 2>&1 | Out-String); $code = $LASTEXITCODE }
+      try {
+        $output = @(& $exe config get $key --json 2>&1)
+        $code = $LASTEXITCODE
+        # Keep native stderr notices out of machine-readable stdout.
+        $raw = ($output | Where-Object { $_ -isnot [System.Management.Automation.ErrorRecord] } | Out-String)
+      }
       finally { $ErrorActionPreference = $prevEap }
       if ($code -ne 0) {
-        if ($raw -notmatch 'Config key not set') {
+        if (($output | Out-String) -notmatch 'Config key not set') {
           Write-UabsWarn ("Hermes {0} inventory could not be read; preserved as-is" -f $key)
           return
         }

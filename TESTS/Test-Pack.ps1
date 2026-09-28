@@ -815,6 +815,30 @@ if (-not (Test-UabsPackPath $hermesCfg)) {
     else { Good 'a fresh Hermes install inherits no MCP servers from the template' }
 }
 
+Section '15a. Hermes JSON inventory excludes native stderr notices'
+$inventoryFn = [regex]::Match([IO.File]::ReadAllText($starterPs), '(?s)function Remove-UabsHermesLegacyOpenRouterExtra \{.*?\r?\n\}')
+$inventoryProbe = [regex]::Match($inventoryFn.Value, '(?s)try \{\s*\$output = .*?finally \{ \$ErrorActionPreference = \$prevEap \}')
+if (-not $inventoryProbe.Success) { Bad 'Hermes inventory stdout/stderr probe not found' }
+else {
+    $fixture = Join-Path ([IO.Path]::GetTempPath()) ('uabs-json-stream-' + [guid]::NewGuid().ToString('N') + '.cmd')
+    try {
+        $exe = $fixture; $key = 'providers'
+        foreach ($missing in @($false, $true)) {
+            $body = if ($missing) { "@echo off`r`necho Config key not set: providers 1>&2`r`nexit /b 1`r`n" }
+                    else { "@echo off`r`necho {`"fixture`":true}`r`necho harmless runtime notice 1>&2`r`nexit /b 0`r`n" }
+            [IO.File]::WriteAllText($fixture, $body, [Text.Encoding]::ASCII)
+            $prevEap = $ErrorActionPreference
+            $ErrorActionPreference = 'Continue'
+            . ([scriptblock]::Create($inventoryProbe.Value))
+            if ($missing) {
+                if ($code -ne 1 -or ($output | Out-String) -notmatch 'Config key not set') { throw 'missing-key stderr was lost' }
+            } elseif ($code -ne 0 -or -not ($raw | ConvertFrom-Json).fixture) { throw 'stderr contaminated JSON stdout' }
+        }
+        Good 'valid JSON survives stderr notices; missing-key stderr remains available'
+    } catch { Bad ('Hermes inventory stream regression: ' + $_.Exception.Message) }
+    finally { Remove-Item -LiteralPath $fixture -Force -ErrorAction SilentlyContinue }
+}
+
 Section '15b. SillyTavern gateway stays a roleplay profile'
 $stInstaller = Join-Path $PackRoot 'TOOLS\Install-SillyTavernGateway.ps1'
 $stTemplate = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Hermes\profiles\sillytavern\config.yaml'

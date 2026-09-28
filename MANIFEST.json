@@ -36041,8 +36041,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 50946,
-  "sha256": "78c46e54431d69e560fc8ef67808537fb9d5d9d66fee73c76417d0b647559de3"
+  "size": 52616,
+  "sha256": "f7eea14ce30b52a1a8ffaa33f496f7191fd3a2ac8b6fe170f093667acead9c14"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -36241,8 +36241,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 291580,
-  "sha256": "57d9a4469b687059ea29a0185b3ecb0beadb4697c5581b010d764d4d9d6b9fdc"
+  "size": 291963,
+  "sha256": "cdce1367fce000791586844036a32ba7b4e0520e30bba5a0d73c53a3fdea8a7f"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
@@ -36291,8 +36291,8 @@
  },
  {
   "path": "TOOLS/Install-Provider-Starter-Settings.ps1",
-  "size": 18207,
-  "sha256": "5c3aa45fb26ea6bba4c62799f765e30f856a57cae8f50b9e28b0db8f60240848"
+  "size": 18416,
+  "sha256": "f6ca2b68be89e080eaa4c1af057fa6b4548904c603cffdd5cbb9c7bd88b42a7f"
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
@@ -43336,8 +43336,8 @@
  },
  {
   "path": "docs/history/V8.7.30-CHANGELOG.md",
-  "size": 4929,
-  "sha256": "0532f5001ff3b425dd3ceb600369cc0749532f0ed0fa94bd0186f1ed5372a7e1"
+  "size": 5162,
+  "sha256": "0863801a1e708928486e093a441f3bfa1300d7a8355cf625a83b0c8edc7d28d8"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",
