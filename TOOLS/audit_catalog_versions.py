@@ -77,7 +77,7 @@ def get_json(url: str, timeout: int) -> dict:
         return json.load(response)
 
 
-def latest_version(source: tuple[str, str], timeout: int) -> str:
+def latest_version(source: tuple[str, str], timeout: int, tag_prefix: str | None = None) -> str:
     kind, name = source
     encoded = urllib.parse.quote(name, safe="")
     if kind == "npm":
@@ -85,7 +85,15 @@ def latest_version(source: tuple[str, str], timeout: int) -> str:
     if kind == "pypi":
         return str(get_json(f"https://pypi.org/pypi/{encoded}/json", timeout)["info"]["version"])
     if kind == "github":
-        tag = str(get_json(f"https://api.github.com/repos/{name}/releases/latest", timeout)["tag_name"])
+        if tag_prefix:
+            releases = get_json(f"https://api.github.com/repos/{name}/releases?per_page=100", timeout)
+            release = next((r for r in releases if not r.get("draft") and not r.get("prerelease")
+                            and str(r.get("tag_name", "")).startswith(tag_prefix)), None)
+            if not release:
+                raise ValueError(f"no stable release with prefix {tag_prefix!r}")
+        else:
+            release = get_json(f"https://api.github.com/repos/{name}/releases/latest", timeout)
+        tag = str(release["tag_name"])
         match = VERSION_RE.search(tag)
         if not match:
             raise ValueError(f"latest GitHub tag has no semantic version: {tag!r}")
@@ -114,13 +122,16 @@ def audit(catalog: dict, timeout: int) -> list[dict]:
                                 "status": "skipped", "error": "no deterministic version source"})
                 continue
             try:
-                latest = latest_version(source, timeout)
+                prefix = component.get("skill_release_prefix") if target_id.endswith(":skill") else None
+                latest = latest_version(source, timeout, prefix)
+                hold = component.get("compatibility_hold")
                 results.append({
                     "id": target_id,
                     "pinned": target_pin,
                     "latest": latest,
                     "source": f"{source[0]}:{source[1]}",
-                    "status": "current" if target_pin == latest else "stale",
+                    "status": "current" if target_pin == latest else "held" if hold else "stale",
+                    **({"hold": hold} if target_pin != latest and hold else {}),
                 })
             except Exception as exc:  # one unavailable registry must not hide the rest
                 results.append({"id": target_id, "pinned": target_pin,
@@ -150,6 +161,16 @@ def self_test() -> None:
         ("impeccable:skill", "4.1.3", ("github", "o/r")),
     ]
     assert VERSION_RE.search("release-v1.2.3").group(1) == "1.2.3"
+    from unittest.mock import patch
+    with patch(__name__ + ".get_json", return_value=[
+        {"tag_name": "engine-v0.1.6"}, {"tag_name": "skill-v4.4.0", "prerelease": True},
+        {"tag_name": "skill-v4.3.1"},
+    ]):
+        assert latest_version(("github", "o/r"), 1, "skill-v") == "4.3.1"
+    with patch(__name__ + ".latest_version", return_value="2.0.0"):
+        result = audit({"components": [{"id": "held", "version": "1.0.0", "github": {
+            "owner": "o", "repo": "r"}, "compatibility_hold": "API migration pending"}]}, 1)
+        assert result[0]["status"] == "held" and result[0]["hold"] == "API migration pending"
     print("catalog freshness self-test PASS")
 
 
@@ -173,10 +194,10 @@ def main() -> int:
     else:
         for item in results:
             latest = item.get("latest", "-")
-            detail = item.get("error") or item.get("source", "")
+            detail = item.get("error") or item.get("hold") or item.get("source", "")
             print(f"{item['status'].upper():7} {item['id']:<24} {item['pinned']:<12} {latest:<12} {detail}")
         counts = {status: sum(x["status"] == status for x in results)
-                  for status in ("current", "stale", "skipped", "error")}
+                  for status in ("current", "held", "stale", "skipped", "error")}
         print("summary: " + ", ".join(f"{key}={value}" for key, value in counts.items()))
 
     if any(x["status"] == "error" for x in results):

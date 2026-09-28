@@ -1,4 +1,8 @@
-## Unreleased
+## 8.7.30
+
+- Audited component refresh and canonical/native plugin parity; 171 canonical skills total. Narrow RTK 0.50.0 policy, scoped MCPs, and reviewed personal overrides preserved.
+- Windows MCP selects required Python 3.14 and stays off by default. Optional ComfyUI CLI guidance adds local-media workflow support without a new standing MCP.
+- Catalog freshness checks distinguish compatibility holds and independent skill releases. Full measurements and retained pins: [v8.7.30](docs/history/V8.7.30-CHANGELOG.md).
 
 - SillyTavern gateway installer rejects positional arguments: a pasted `-Force.` can no longer silently set the bundle root to `.` and start a partial install. Validate the template root before writing, resolve relative roots, and back up replaced text files, including a forced profile reset.
 - Gateway launcher selects exactly one genuinely loaded chat/vision model, excludes downloaded-only models and embeddings, and preserves config bytes on repeated starts. Missing markers no longer recommend resetting the user's tuning. Add executable Windows PowerShell regression checks to the pack gate and document startup order.

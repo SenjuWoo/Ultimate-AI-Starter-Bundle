@@ -538,7 +538,7 @@ try {
     New-Item -ItemType Directory -Force -Path (Join-Path $stripRoot 'skills\using-superpowers') | Out-Null
     [IO.File]::WriteAllText((Join-Path $stripRoot '.hermes-plugin\plugin.yaml'), "name: superpowers`n")
     [IO.File]::WriteAllText((Join-Path $stripRoot 'skills\using-superpowers\SKILL.md'), "---\nname: using-superpowers\n---\n")
-    foreach ($foreign in @('.claude-plugin', '.codex-plugin', '.cursor-plugin', '.devin-plugin', '.kimi-plugin')) {
+    foreach ($foreign in @('.claude-plugin', '.codex-plugin', '.cursor-plugin', '.devin-plugin', '.kimi-plugin', '.muse-plugin')) {
         $dir = Join-Path $stripRoot $foreign
         New-Item -ItemType Directory -Force -Path $dir | Out-Null
         [IO.File]::WriteAllText((Join-Path $dir 'plugin.json'), '{ "name": "superpowers" }')
@@ -546,13 +546,13 @@ try {
     $stripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $stripRoot)
     $left = @($stripped | Where-Object { $_ })
     $stillThere = @()
-    foreach ($foreign in @('.claude-plugin', '.codex-plugin', '.cursor-plugin', '.devin-plugin', '.kimi-plugin')) {
+    foreach ($foreign in @('.claude-plugin', '.codex-plugin', '.cursor-plugin', '.devin-plugin', '.kimi-plugin', '.muse-plugin')) {
         if (Test-Path -LiteralPath (Join-Path $stripRoot ($foreign + '\plugin.json'))) { $stillThere += $foreign }
     }
     $adapterOk = Test-Path -LiteralPath (Join-Path $stripRoot '.hermes-plugin\plugin.yaml')
     $skillOk = Test-Path -LiteralPath (Join-Path $stripRoot 'skills\using-superpowers\SKILL.md')
-    if ($left.Count -eq 5 -and -not $stillThere.Count -and $adapterOk -and $skillOk) {
-        Good 'Hermes Superpowers strip removes the five foreign manifests and keeps the adapter'
+    if ($left.Count -eq 6 -and -not $stillThere.Count -and $adapterOk -and $skillOk) {
+        Good 'Hermes Superpowers strip removes the six foreign manifests and keeps the adapter'
     } else {
         Bad ("Hermes Superpowers strip mismatch removed=$($left.Count) left=$($stillThere -join ',') adapter=$adapterOk skill=$skillOk")
     }

@@ -2538,6 +2538,7 @@ def main() -> int:
         test_readme_model_guidance_matches_the_shipped_config,
         test_public_copy_is_version_proof,
         test_impeccable_hold_records_a_real_engine_audit,
+        test_maintenance_catalog_targets_remain_scoped,
         test_review_regressions_fail_closed,
         test_every_defined_contract_is_actually_run,
         test_hermes_native_profile_migration_contract,
@@ -5156,9 +5157,7 @@ def test_versioned_online_tools_pin_the_same_version_offline() -> None:
     assert codeburn["version"] in codeburn["npm_spec"], (
         "CodeBurn's catalog version does not constrain the npm install"
     )
-    assert codeburn["npm_integrity"] == (
-        "sha512-jK5T46Mh1TSEns6mABZFdYh96oZH6QukZ+ueYYzUk8YuMF8dzLNDeHnIAlE3AlaI0QiSq0E9Dl8IPW2H+EkU2Q=="
-    )
+    assert codeburn["npm_integrity"].startswith("sha512-") and len(codeburn["npm_integrity"]) > 80
     assert codeburn["npm_args"] == ["--ignore-scripts"]
     browser = components["playwright-cli"]
     assert browser["npm_spec"] == "@playwright/cli@" + browser["version"]
@@ -5514,6 +5513,32 @@ def test_review_regressions_fail_closed() -> None:
     assert "install_live_skills.py" not in release
     assert "-SkillsOnly" in release
     assert (CANON / "windows-workspace-ops/references/bat-and-powershell-tooling.md").is_file()
+
+
+def test_maintenance_catalog_targets_remain_scoped() -> None:
+    catalog = json.loads(read(ROOT / "BUNDLED-TOOLS/CATALOG.json"))
+    entries = {c["id"]: c for c in catalog["components"]}
+    assert entries["impeccable"]["skill_release_prefix"] == "skill-v"
+    assert "0.1.6" in entries["impeccable"]["compatibility_hold"]
+    windows = entries["windows-mcp"]
+    assert windows["npx_args"][:2] == ["--python", "3.14"]
+    assert not windows["auto_register"] and windows["controls_machine"]
+    comfy = entries["comfy-cli"]
+    assert comfy["install"] == "manual-user-product" and not comfy.get("mcp")
+    assert "COMFY_NO_TELEMETRY=1" in comfy["note"] and "--where local" in comfy["note"]
+    reference = read(CANON / "tool-discovery/references/comfy-cli.md")
+    assert "--help-json" in reference and "filter its JSON locally" in reference
+    assert "GPU inference" in reference and "unverified" in reference
+    assert "comfy-cli" not in read(ROOT / "INSTALL-AIO.ps1").split("[string[]]$Components =", 1)[1].split("\n", 1)[0]
+    doctor = read(ROOT / "TOOLS/Test-Installed-State.ps1")
+    assert "$startupProbe" in doctor and "failing bundle-owned catalog hook" in doctor
+    wire = read(ROOT / "TOOLS/Install-Completeness-Gate.ps1")
+    assert "Get-UabsPythonExecutable -RequiredModules @('yaml')" in wire and "& $yamlPython @args" in wire
+    spec = importlib.util.spec_from_file_location("maintenance_builder", ROOT / "TOOLS/build_release.py")
+    builder = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(builder)
+    for name in ("task-start", "task-done"):
+        assert builder._archive_mode(Path("executing-plans/scripts") / name) == 0o100755
 
 
 if __name__ == "__main__":

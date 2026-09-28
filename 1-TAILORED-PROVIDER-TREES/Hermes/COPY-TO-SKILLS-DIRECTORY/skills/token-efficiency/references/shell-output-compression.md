@@ -1,6 +1,6 @@
 # Shell output compression: the bundle's RTK policy
 
-RTK is a local CLI, not an MCP server. The catalog currently pins **0.47.0**.
+RTK is a local CLI, not an MCP server. The catalog currently pins **0.50.0**.
 Use the pack's `TOOLS/hooks/rtk_safe_hook.py` policy, not upstream's broad
 rewrite hook. The installer registers the supported native adapter; other
 hosts receive concise manual guidance. Do not run `rtk init` over that setup.

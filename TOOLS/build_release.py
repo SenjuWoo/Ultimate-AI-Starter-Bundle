@@ -115,6 +115,8 @@ def _archive_mode(rel:Path)->int:
     posix=rel.as_posix()
     if any(posix.endswith(suffix) for suffix in LINUX_EXECUTABLES):
         return 0o100755
+    if rel.parent.name == 'scripts' and rel.name in ('task-start', 'task-done', 'task-brief', 'sdd-workspace', 'review-package'):
+        return 0o100755
     return 0o100644
 
 def _write(z:zipfile.ZipFile,prefix:str,rel:Path,data:bytes)->None:

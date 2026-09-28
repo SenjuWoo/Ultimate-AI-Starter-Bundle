@@ -9,6 +9,7 @@ $ErrorActionPreference = 'Stop'
 if (-not $PackRoot) { $PackRoot = Split-Path -Parent $PSScriptRoot }
 . (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1')
 $rtkArchive = Join-Path $PackRoot 'BUNDLED-TOOLS\offline\rtk-x86_64-pc-windows-msvc.zip'
+$expectedRtkVersion = [string]((Get-UabsCatalog).components | Where-Object { $_.id -eq 'rtk' }).version
 
 $scratch = Join-Path ([IO.Path]::GetTempPath()) ('uabs-release-cache-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Force -Path $scratch | Out-Null
@@ -145,20 +146,20 @@ try {
   Copy-Item -LiteralPath $oldExe -Destination $installedExe
   $oldHash = (Get-FileHash -LiteralPath $installedExe).Hash
   $rejected = $false
-  try { [void](Install-UabsRtkExecutable -Source $oldExe -Destination $installedExe -ExpectedVersion '0.47.0') } catch {
-    if ($_.Exception.Message -notlike '*candidate version 0.48.0, expected 0.47.0*') { throw }
+  try { [void](Install-UabsRtkExecutable -Source $oldExe -Destination $installedExe -ExpectedVersion $expectedRtkVersion) } catch {
+    if ($_.Exception.Message -notlike ("*candidate version 0.48.0, expected $expectedRtkVersion*")) { throw }
     $rejected = $true
   }
   if (-not $rejected -or (Get-FileHash -LiteralPath $installedExe).Hash -ne $oldHash) { throw 'wrong RTK candidate modified the live executable' }
   $lock = [IO.File]::Open($installedExe, 'Open', 'Read', 'None')
   $rejected = $false
-  try { [void](Install-UabsRtkExecutable -Source $newExe -Destination $installedExe -ExpectedVersion '0.47.0') } catch { $rejected = $true } finally { $lock.Dispose() }
+  try { [void](Install-UabsRtkExecutable -Source $newExe -Destination $installedExe -ExpectedVersion $expectedRtkVersion) } catch { $rejected = $true } finally { $lock.Dispose() }
   if (-not $rejected -or (Get-FileHash -LiteralPath $installedExe).Hash -ne $oldHash) { throw 'locked RTK replacement damaged the original' }
-  $result = Install-UabsRtkExecutable -Source $newExe -Destination $installedExe -ExpectedVersion '0.47.0'
-  if ($result.version -ne '0.47.0' -or (Get-FileHash -LiteralPath $result.backup).Hash -ne $oldHash) { throw 'RTK repair lost the previous executable backup' }
+  $result = Install-UabsRtkExecutable -Source $newExe -Destination $installedExe -ExpectedVersion $expectedRtkVersion
+  if ($result.version -ne $expectedRtkVersion -or (Get-FileHash -LiteralPath $result.backup).Hash -ne $oldHash) { throw 'RTK repair lost the previous executable backup' }
   $freshExe = Join-Path $scratch 'fresh\rtk.exe'
-  $result = Install-UabsRtkExecutable -Source $newExe -Destination $freshExe -ExpectedVersion '0.47.0'
-  if ($result.backup -or $result.version -ne '0.47.0') { throw 'fresh RTK installation failed' }
+  $result = Install-UabsRtkExecutable -Source $newExe -Destination $freshExe -ExpectedVersion $expectedRtkVersion
+  if ($result.backup -or $result.version -ne $expectedRtkVersion) { throw 'fresh RTK installation failed' }
 
   # Force the post-replacement check to fail, retaining the real source check.
   Copy-Item -LiteralPath $oldExe -Destination $installedExe -Force
@@ -173,7 +174,7 @@ try {
     & $versionCheck -Path $Path -ExpectedVersion $ExpectedVersion
   }
   $rejected = $false
-  try { [void](Install-UabsRtkExecutable -Source $newExe -Destination $installedExe -ExpectedVersion '0.47.0') } catch { $rejected = $true } finally { Set-Item Function:Get-UabsRtkVersion $versionCheck }
+  try { [void](Install-UabsRtkExecutable -Source $newExe -Destination $installedExe -ExpectedVersion $expectedRtkVersion) } catch { $rejected = $true } finally { Set-Item Function:Get-UabsRtkVersion $versionCheck }
   if (-not $rejected -or -not $script:postReplacementSeen -or (Get-FileHash -LiteralPath $installedExe).Hash -ne $oldHash) { throw 'failed post-check did not roll back RTK' }
   if (@(Get-ChildItem -LiteralPath (Split-Path $installedExe) -Filter 'rtk.part-*').Count) { throw 'RTK transaction left staged executables behind' }
   Write-Output 'RELEASE ASSET CACHE GATE: PASS (tag pin, offline trust, prevalidation, backup, fresh install, lock, rollback)'

@@ -170,9 +170,9 @@
         "python3"
       ],
       "name": "Headroom",
-      "version": "0.37.0",
-      "pip_spec": "headroom-ai[mcp]==0.37.0",
-      "offline_asset": "headroom_ai-0.37.0-cp310-abi3-win_amd64.whl",
+      "version": "0.39.1",
+      "pip_spec": "headroom-ai[mcp]==0.39.1",
+      "offline_asset": "headroom_ai-0.39.1-cp310-abi3-win_amd64.whl",
       "license": "see-upstream",
       "required_for": [
         "context-compress"
@@ -180,7 +180,8 @@
       "asset_match": [
         "headroom_ai-*-cp310-abi3-win_amd64.whl",
         "headroom-ai-*.tgz"
-      ]
+      ],
+      "scope_note": "Core MCP remains three tools. Windows initialize/tools-list measured 2026-09-28 at 0.39.1: 1,250 compact schema bytes (~313 bytes/4 estimate, not billing). No hosted inference or proxy traffic was used in this test."
     },
     {
       "install": "skills-copy",
@@ -192,14 +193,14 @@
         "owner": "obra"
       },
       "name": "Superpowers",
-      "offline_asset": "superpowers-v6.3.0.zip",
+      "offline_asset": "superpowers-v6.4.2.zip",
       "license": "see-upstream",
       "required_for": [
         "process-discipline"
       ],
       "bundled_skills": true,
-      "version": "6.3.0",
-      "release_tag": "v6.3.0"
+      "version": "6.4.2",
+      "release_tag": "v6.4.2"
     },
     {
       "install": "skills-copy",
@@ -211,14 +212,14 @@
         "owner": "DietrichGebert"
       },
       "name": "Ponytail",
-      "offline_asset": "ponytail-v4.9.0.zip",
+      "offline_asset": "ponytail-v4.10.0.zip",
       "license": "MIT",
       "required_for": [
         "minimal-diff"
       ],
       "bundled_skills": true,
-      "version": "4.9.0",
-      "release_tag": "v4.9.0"
+      "version": "4.10.0",
+      "release_tag": "v4.10.0"
     },
     {
       "install": "npx-or-npm",
@@ -233,14 +234,14 @@
         "owner": "getagentseal"
       },
       "name": "CodeBurn",
-      "version": "0.9.24",
+      "version": "0.9.25",
       "offline_asset": null,
       "license": "see-upstream",
       "required_for": [
         "ai-cost"
       ],
-      "npm_spec": "codeburn@0.9.24",
-      "npm_integrity": "sha512-jK5T46Mh1TSEns6mABZFdYh96oZH6QukZ+ueYYzUk8YuMF8dzLNDeHnIAlE3AlaI0QiSq0E9Dl8IPW2H+EkU2Q==",
+      "npm_spec": "codeburn@0.9.25",
+      "npm_integrity": "sha512-ozjgg463v2D3Tm2LqYpK2EySjFnpglq6cyZL2N/Bz3tC7sgif11ttf7OL6lt7+7VAY4HYj/rOZLG9u+3erecwA==",
       "npm_args": [
         "--ignore-scripts"
       ]
@@ -274,7 +275,8 @@
         "--ignore-scripts"
       ],
       "scope_note": "The cross-provider skill is vendored from the official skill-v4.1.3 universal.zip and bound to its published SHA-256. The executable detector is the actually published npm 3.6.1 package, pinned by npm integrity. Optional Puppeteer is omitted: Playwright/browser profiles already own live rendering, and downloading a second browser would be duplication. Lifecycle scripts are disabled. UABS removes upstream self-update/pin paths and generated hook cache so provider skill trees keep one writer. Zero MCP schemas, daemon, account or key.",
-      "compatibility_hold": "2026-09-18 audited with TOOLS/audit-impeccable-engine.py against engine 0.1.5 (the payload CLI 4.1.0 pins): the engine still leaks bodies of browser-valid malformed close tags (</script \\t bogus>, </style bogus>) into text analysis - the exact gap UABS patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub whose payload is that engine: pinned via optionalDependencies, else first-use download into ~/.impeccable, and its install/link/update/check commands write skill trees. Retain audited CLI 3.6.1 / skill 4.1.3 until upstream closes the fixture or ships patchable source."
+      "compatibility_hold": "2026-09-18 audited with TOOLS/audit-impeccable-engine.py against engine 0.1.5 (the payload CLI 4.1.0 pins): the engine still leaks bodies of browser-valid malformed close tags (</script \\t bogus>, </style bogus>) into text analysis - the exact gap UABS patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub whose payload is that engine: pinned via optionalDependencies, else first-use download into ~/.impeccable, and its install/link/update/check commands write skill trees. Retain audited CLI 3.6.1 / skill 4.1.3 until upstream closes the fixture or ships patchable source. Rechecked 2026-09-28 against official engine 0.1.6: well-formed/control fixtures PASS, malformed script/style fixtures still leak; keep the patched pin and reviewed local skill overrides.",
+      "skill_release_prefix": "skill-v"
     },
     {
       "install": "bundle-source",
@@ -392,7 +394,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "@playwright/mcp@0.0.81"
+        "@playwright/mcp@0.0.82"
       ],
       "extra_args_env": "PLAYWRIGHT_MCP_EXECUTABLE_PATH",
       "extra_args_template": [
@@ -406,7 +408,7 @@
         "Kimi",
         "Hermes"
       ],
-      "version": "0.0.81",
+      "version": "0.0.82",
       "runtimes": [
         "node22"
       ],
@@ -415,7 +417,7 @@
         "browser-automation"
       ],
       "offline_asset": null,
-      "scope_note": "Browser automation for CLIs with no built-in browser. Claude Code already ships a browser pane, so it is skipped there. Never used for Nexus lookups - houseCARL does those keylessly. Measured 2026-09-02: 24 tools, 18,502 schema bytes, ~4,626 schema tokens (bytes/4; actual usage unmeasured). BROWSER CHOICE: with no flags, playwright-mcp defaults to the Google Chrome channel and prompts you to install Chrome. To use your own browser (Opera GX, Edge, Brave, Vivaldi, ...), set user env PLAYWRIGHT_MCP_EXECUTABLE_PATH to the browser exe BEFORE running the installer - the wiring appends --executable-path automatically. Example (Opera GX): setx PLAYWRIGHT_MCP_EXECUTABLE_PATH \"%LOCALAPPDATA%\\Programs\\Opera GX\\opera.exe\". To change later, edit the args in your provider's MCP config (Grok/Codex config.toml, Kimi ~/.kimi-code/mcp.json). Pinned, not @latest: an unpinned npx server can change its tool surface mid-session, and npx will happily reuse a broken cache."
+      "scope_note": "Browser automation for CLIs with no built-in browser. Claude Code already ships a browser pane, so it is skipped there. Never used for Nexus lookups - houseCARL does those keylessly. Measured 2026-09-02: 24 tools, 18,502 schema bytes, ~4,626 schema tokens (bytes/4; actual usage unmeasured). BROWSER CHOICE: with no flags, playwright-mcp defaults to the Google Chrome channel and prompts you to install Chrome. To use your own browser (Opera GX, Edge, Brave, Vivaldi, ...), set user env PLAYWRIGHT_MCP_EXECUTABLE_PATH to the browser exe BEFORE running the installer - the wiring appends --executable-path automatically. Example (Opera GX): setx PLAYWRIGHT_MCP_EXECUTABLE_PATH \"%LOCALAPPDATA%\\Programs\\Opera GX\\opera.exe\". To change later, edit the args in your provider's MCP config (Grok/Codex config.toml, Kimi ~/.kimi-code/mcp.json). Pinned, not @latest: an unpinned npx server can change its tool surface mid-session, and npx will happily reuse a broken cache. Update measured 2026-09-28 at 0.0.82: initialize/tools-list PASS, 25 tools, 20,102 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake."
     },
     {
       "id": "firecrawl-mcp",
@@ -430,7 +432,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "firecrawl-mcp@3.24.0"
+        "firecrawl-mcp@3.25.5"
       ],
       "api_key_env": "FIRECRAWL_API_KEY",
       "api_key_optional": true,
@@ -457,8 +459,8 @@
         "web-docs-extract"
       ],
       "offline_asset": null,
-      "scope_note": "Scraping general web docs (CommonLib docs, wikis, GitHub READMEs). NEVER Nexus Mods - houseCARL reads Nexus keylessly with changelogs and file lists.",
-      "version": "3.24.0"
+      "scope_note": "Scraping general web docs (CommonLib docs, wikis, GitHub READMEs). NEVER Nexus Mods - houseCARL reads Nexus keylessly with changelogs and file lists. Update measured 2026-09-28 at 3.25.5: initialize/tools-list PASS, 27 tools, 74,789 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake.",
+      "version": "3.25.5"
     },
     {
       "id": "perplexity-mcp",
@@ -494,7 +496,8 @@
       "offline_asset": null,
       "scope_note": "REQUIRES PERPLEXITY_API_KEY (paid). Not installed on a keyless machine. Current-information research (new SKSE/CommonLib releases, game patch news). Never a substitute for houseCARL on Nexus, codebase-memory on code, or skyrim-memory on verified Skyrim facts.",
       "key_required": true,
-      "version": "1.2.1"
+      "version": "1.2.1",
+      "compatibility_hold": "2026-09-28: candidate 1.3.0 refuses initialization without PERPLEXITY_API_KEY. Retain the evaluated 1.2.1 pin until a user-owned authenticated smoke test is available; do not read or invent a key."
     },
     {
       "id": "context7",
@@ -597,7 +600,7 @@
       "kind": "mcp-npx",
       "mcp": true,
       "license": "Apache-2.0",
-      "version": "1.9.0",
+      "version": "1.10.1",
       "github": {
         "owner": "ChromeDevTools",
         "repo": "chrome-devtools-mcp"
@@ -606,7 +609,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "chrome-devtools-mcp@1.9.0",
+        "chrome-devtools-mcp@1.10.1",
         "--no-usage-statistics"
       ],
       "profile": "web",
@@ -617,7 +620,7 @@
         "network-inspection",
         "performance-traces"
       ],
-      "scope_note": "Reads a live Chrome: console, network, performance traces, rendered DOM. The half playwright-mcp does not do -- playwright drives a browser, this explains what the browser did. Google Chrome and Chrome for Testing only; Chromium forks are not supported by this server, unlike playwright-mcp which takes PLAYWRIGHT_MCP_EXECUTABLE_PATH. --no-usage-statistics opts out of Google's telemetry, which is on by default upstream; this pack does not enable third-party telemetry on a user's machine without asking."
+      "scope_note": "Reads a live Chrome: console, network, performance traces, rendered DOM. The half playwright-mcp does not do -- playwright drives a browser, this explains what the browser did. Google Chrome and Chrome for Testing only; Chromium forks are not supported by this server, unlike playwright-mcp which takes PLAYWRIGHT_MCP_EXECUTABLE_PATH. --no-usage-statistics opts out of Google's telemetry, which is on by default upstream; this pack does not enable third-party telemetry on a user's machine without asking. Update measured 2026-09-28 at 1.10.1: initialize/tools-list PASS, 30 tools, 26,388 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake."
     },
     {
       "id": "shadcn-mcp",
@@ -651,7 +654,7 @@
       "kind": "mcp-uvx",
       "mcp": true,
       "license": "MIT",
-      "version": "2.0.0",
+      "version": "2.1.1",
       "github": {
         "owner": "ahujasid",
         "repo": "mcp-for-blender"
@@ -659,7 +662,7 @@
       "install": "mcp-uvx",
       "npx_command": "uvx",
       "npx_args": [
-        "mcp-for-blender@2.0.0"
+        "mcp-for-blender@2.1.1"
       ],
       "profile": "engine-blender",
       "auto_register": false,
@@ -667,7 +670,7 @@
       "required_for": [
         "blender-scene-control"
       ],
-      "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender."
+      "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender. Update measured 2026-09-28 at 2.1.1: initialize/tools-list PASS, 36 tools, 45,055 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake."
     },
     {
       "id": "godot-mcp",
@@ -715,14 +718,15 @@
       "required_for": [
         "unity-editor-control"
       ],
-      "scope_note": "There is no machine-wide Unity MCP server. The executable is generated inside the project's Library folder by the Unity package, so the entry is project-scoped by construction and its command is the resolved absolute path for that one project. Until the package is installed the exe does not exist, and the profile refuses rather than writing a path that is not there."
+      "scope_note": "There is no machine-wide Unity MCP server. The executable is generated inside the project's Library folder by the Unity package, so the entry is project-scoped by construction and its command is the resolved absolute path for that one project. Until the package is installed the exe does not exist, and the profile refuses rather than writing a path that is not there.",
+      "compatibility_hold": "2026-09-28: 0.93.2 is current upstream but needs a real Unity project/editor compatibility check. Retain the evaluated 0.91.0 package pin; no Unity editor was launched or live project modified."
     },
     {
       "id": "rtk",
       "name": "RTK (Rust Token Killer)",
       "kind": "cli-optional",
       "license": "Apache-2.0",
-      "version": "0.47.0",
+      "version": "0.50.0",
       "github": {
         "owner": "rtk-ai",
         "repo": "rtk"
@@ -762,7 +766,7 @@
         ],
         "broad_upstream_hook": false
       },
-      "scope_note": "CLI output filter with zero standing schema tokens. GIT CORPUS, measured on this repo AT rtk 0.47.0 against pinned refs: git diff v8.6.1..v8.6.5 430,285 -> 55,870 bytes (87%), git log v8.6.1..v8.6.5 14,250 -> 1,658 (88%), git diff v8.6.4..v8.6.5 33,453 -> 26,820 (20%), and git log --stat -20 v8.6.5 102,301 -> 102,301 (0%). Those are summaries, not lossless replacements: on the larger diff RTK retained 341 of 5,856 changed lines and omitted 5,515. Exact short status is different: a fixture covering staged, unstaged, deleted, renamed, Unicode and untracked paths was line-identical 5/5. NON-GIT CORPUS measured at 0.46.0 on 2026-08-27: rtk test kept the failure at about 93% saved; excluding truncating rows, the aggregate was 7.4% against git's 85.2%. TRUNCATION IS NOT SAVING: rtk json returned one of 5,425 array rows plus `... +5424 more`. rtk find works with a simple -name but breaks on compound predicates; rtk-ai/rtk#3410 reports its unconditional rewrite also intercepts find -delete/-exec. Archive correction: rtk test writes a complete tee for the measured 5.4 KB run and prints its path, but RTK documents a 1 MB raw tee cap. WINDOWS INTEGRATION, re-probed at 0.47.0 on 2026-09-02: upstream rewrite still catches lossy diff/log/show, broken find, cat/read, grep, curl, gh, and mutating git add/commit/push. Therefore broad upstream init and Hermes rtk-rewrite stay off. The bundle installs RTK by default and wires its own allowlist: exact standalone git status plus standalone human-facing pytest, cargo test and go test. Machine-readable output, pipes/redirection, all mutating Git, diff/show/log/find/search/read/curl/gh stay raw. Claude, Grok and Hermes receive the executable hook; Codex and Kimi receive the same narrow instruction because no trusted command-mutation hook is established there. Telemetry remains opt-in."
+      "scope_note": "CLI output filter with zero standing schema tokens. GIT CORPUS, measured on this repo AT rtk 0.50.0 against pinned refs: git diff v8.6.1..v8.6.5 430,285 -> 55,870 bytes (87%), git log v8.6.1..v8.6.5 14,250 -> 1,660 (88%), git diff v8.6.4..v8.6.5 33,453 -> 26,820 (20%), and git log --stat -20 v8.6.5 102,301 -> 102,301 (0%). Those are summaries, not lossless replacements: on the larger diff RTK retained 341 of 5,856 changed lines and omitted 5,515. Exact short status is different: a fixture covering staged, unstaged, deleted, renamed, Unicode and untracked paths was line-identical 5/5. NON-GIT CORPUS measured at 0.46.0 on 2026-08-27: rtk test kept the failure at about 93% saved; excluding truncating rows, the aggregate was 7.4% against git's 85.2%. TRUNCATION IS NOT SAVING: rtk json returned one of 5,425 array rows plus `... +5424 more`. rtk find works with a simple -name but breaks on compound predicates; rtk-ai/rtk#3410 reports its unconditional rewrite also intercepts find -delete/-exec. Archive correction: rtk test writes a complete tee for the measured 5.4 KB run and prints its path, but RTK documents a 1 MB raw tee cap. WINDOWS INTEGRATION, re-probed at 0.47.0 on 2026-09-02: upstream rewrite still catches lossy diff/log/show, broken find, cat/read, grep, curl, gh, and mutating git add/commit/push. Therefore broad upstream init and Hermes rtk-rewrite stay off. The bundle installs RTK by default and wires its own allowlist: exact standalone git status plus standalone human-facing pytest, cargo test and go test. Machine-readable output, pipes/redirection, all mutating Git, diff/show/log/find/search/read/curl/gh stay raw. Claude, Grok and Hermes receive the executable hook; Codex and Kimi receive the same narrow instruction because no trusted command-mutation hook is established there. Telemetry remains opt-in. Remeasured 2026-09-28: all four pinned corpus rows; allowlisted rewrite protocol exit 3 PASS; --short/-s preserved staged, unstaged, deleted, renamed, Unicode and untracked status lines (0.50.0 omits the final newline). Broad hooks remain disabled; these are byte savings, not measured billed tokens."
     },
     {
       "id": "omni",
@@ -777,7 +781,8 @@
       "required_for": [
         "tool-output-deduplication"
       ],
-      "scope_note": "CLI + host hook, zero standing tokens -- same slot as rtk, different mechanism, so they stack rather than compete: rtk filters ONE command's output, OMNI remembers output across calls and returns a handle instead of resending what the agent already saw. USE THE README'S NUMBERS, NOT THE LANDING PAGE'S. The page headlines '97.2% off a file read twice' and '~24%'; the README's own corpus of 9,478 executions says '1.4% from the filters, 5.1% with the ledger'. 97.2% is a best case for one re-read, not an expected value -- treat 5% as the number and anything above it as a bonus. Ships a real x86_64-pc-windows-msvc binary with SHA256SUMS (v0.7.8, 2026-08-25), which is why it is here and lowfat is not: lowfat v0.8.0 publishes darwin and linux-gnu only and integrates through a POSIX shell eval hook, the same native-Windows degradation this catalog already documents for rtk's non-Hermes hooks. Full host rewrite on Claude Code, Codex CLI and Gemini CLI; Hermes is supported; MCP-only fallback elsewhere. Stores a local SQLite ledger (permanent project knowledge, 30-day working data, 7-day verbatim traces) -- it is a cache of your own tool output, so treat it as project data, not a temp file. REWIND CAP, measured 2026-08-26 at 0.7.8: output above 65,536 bytes is truncated and NOT archived -- the marker says `full output not archived` and those bytes are unrecoverable, which the README's byte-for-byte guarantee does not qualify. Below the cap the guarantee holds and is self-verifying: the retrieve handle IS the content's SHA-256 prefix, and a 33,453-byte diff came back byte-identical. Head-to-head on this repo's git corpus: rtk 85.2%, OMNI 71.2% headline but only 6.4% once the truncated rows are excluded -- consistent with OMNI's own published 8.8% on git. Its value is the ledger, not the filter; see docs/TOOL-EVALUATIONS.md. Not auto-installed: a 5% saving does not justify rewriting every tool result on a machine by default."
+      "scope_note": "CLI + host hook, zero standing tokens -- same slot as rtk, different mechanism, so they stack rather than compete: rtk filters ONE command's output, OMNI remembers output across calls and returns a handle instead of resending what the agent already saw. USE THE README'S NUMBERS, NOT THE LANDING PAGE'S. The page headlines '97.2% off a file read twice' and '~24%'; the README's own corpus of 9,478 executions says '1.4% from the filters, 5.1% with the ledger'. 97.2% is a best case for one re-read, not an expected value -- treat 5% as the number and anything above it as a bonus. Ships a real x86_64-pc-windows-msvc binary with SHA256SUMS (v0.7.8, 2026-08-25), which is why it is here and lowfat is not: lowfat v0.8.0 publishes darwin and linux-gnu only and integrates through a POSIX shell eval hook, the same native-Windows degradation this catalog already documents for rtk's non-Hermes hooks. Full host rewrite on Claude Code, Codex CLI and Gemini CLI; Hermes is supported; MCP-only fallback elsewhere. Stores a local SQLite ledger (permanent project knowledge, 30-day working data, 7-day verbatim traces) -- it is a cache of your own tool output, so treat it as project data, not a temp file. REWIND CAP, measured 2026-08-26 at 0.7.8: output above 65,536 bytes is truncated and NOT archived -- the marker says `full output not archived` and those bytes are unrecoverable, which the README's byte-for-byte guarantee does not qualify. Below the cap the guarantee holds and is self-verifying: the retrieve handle IS the content's SHA-256 prefix, and a 33,453-byte diff came back byte-identical. Head-to-head on this repo's git corpus: rtk 85.2%, OMNI 71.2% headline but only 6.4% once the truncated rows are excluded -- consistent with OMNI's own published 8.8% on git. Its value is the ledger, not the filter; see docs/TOOL-EVALUATIONS.md. Not auto-installed: a 5% saving does not justify rewriting every tool result on a machine by default.",
+      "compatibility_hold": "2026-09-28: informational evaluation pin only, not installed or enabled by the bundle. Candidate 0.7.10 has not been remeasured; the historical ledger/rewind findings must not be presented as measurements of a newer binary."
     },
     {
       "id": "windows-mcp",
@@ -785,7 +790,7 @@
       "kind": "mcp-uvx",
       "mcp": true,
       "license": "MIT",
-      "version": "0.8.5",
+      "version": "0.8.6",
       "github": {
         "owner": "CursorTouch",
         "repo": "Windows-MCP"
@@ -793,7 +798,9 @@
       "install": "mcp-uvx",
       "npx_command": "uvx",
       "npx_args": [
-        "windows-mcp@0.8.5",
+        "--python",
+        "3.14",
+        "windows-mcp@0.8.6",
         "serve"
       ],
       "profile": "windows",
@@ -805,9 +812,9 @@
       ],
       "offline_asset": null,
       "runtimes": [
-        "python313"
+        "python3"
       ],
-      "scope_note": "Desktop control through UI Automation: click, type, send shortcuts, run PowerShell, read and write the registry and the filesystem, enumerate windows and processes. This is the one operating surface the pack had no way to reach -- Playwright and chrome-devtools stop at the browser. UIA also lets an agent PERCEIVE controls without spending a vision call, which is most of why it earns its schema. Measured 2026-08-27 with TOOLS\\Measure-McpSchemaCost.ps1 against `uvx windows-mcp@0.8.5 serve`: 20 tools, 22,088 bytes, ~5,522 schema tokens (bytes/4; actual usage unmeasured) -- less than firecrawl-mcp's 36,337 and about four times context7, for the whole desktop. OFF by default and never auto-detected: the `windows` profile carries no detect markers, so -Auto cannot reach it. Turn it on deliberately with TOOLS\\Set-McpProfile.ps1 -Enable windows -Global. controls_machine is why TOOLS/measure_mcp_capability.py refuses to sweep it: that sweep calls every advertised tool with arguments synthesized from the schema, which here means typing into whatever window has focus and running whatever PowerShell the sample produces."
+      "scope_note": "Desktop control through UI Automation: click, type, send shortcuts, run PowerShell, read and write the registry and the filesystem, enumerate windows and processes. This is the one operating surface the pack had no way to reach -- Playwright and chrome-devtools stop at the browser. UIA also lets an agent PERCEIVE controls without spending a vision call, which is most of why it earns its schema. Measured 2026-08-27 with TOOLS\\Measure-McpSchemaCost.ps1 against `uvx windows-mcp@0.8.5 serve`: 20 tools, 22,088 bytes, ~5,522 schema tokens (bytes/4; actual usage unmeasured) -- less than firecrawl-mcp's 36,337 and about four times context7, for the whole desktop. OFF by default and never auto-detected: the `windows` profile carries no detect markers, so -Auto cannot reach it. Turn it on deliberately with TOOLS\\Set-McpProfile.ps1 -Enable windows -Global. controls_machine is why TOOLS/measure_mcp_capability.py refuses to sweep it: that sweep calls every advertised tool with arguments synthesized from the schema, which here means typing into whatever window has focus and running whatever PowerShell the sample produces. Update measured 2026-09-28 at 0.8.6: initialize/tools-list PASS, 20 tools, 22,984 compact schema bytes (~5,746 bytes/4 estimate, not billing). Python >=3.14 is now required: the uvx command explicitly selects managed Python 3.14. OFF-by-default scope is unchanged; no desktop actions were invoked."
     },
     {
       "id": "super-mcp-router",
@@ -843,7 +850,7 @@
       "name": "Playwright CLI",
       "kind": "cli-optional",
       "install": "npx-or-npm",
-      "version": "0.1.20",
+      "version": "0.1.21",
       "github": {
         "owner": "microsoft",
         "repo": "playwright-cli"
@@ -852,8 +859,8 @@
       "runtimes": [
         "node22"
       ],
-      "npm_spec": "@playwright/cli@0.1.20",
-      "npm_integrity": "sha512-kEL+73IwNVFmUjGn0rmpBStZ8jju8MmmWBMXmVMesBzoZ8YW2b/Nv7aCOYLBrCbYzc7RvWZCbVj88+wOCg8yyw==",
+      "npm_spec": "@playwright/cli@0.1.21",
+      "npm_integrity": "sha512-FfxmVJj2wJlsxPksUO+4N7gqimPEQPajpocl2Mk97ENIGfAVZ4aElzPb5sDdGXHI9J/3Y8EtUiUTas0VsTm/sg==",
       "npm_args": [
         "--ignore-scripts"
       ],
@@ -861,10 +868,32 @@
       "required_for": [
         "browser-cli"
       ],
-      "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.20 package pins Playwright 1.64.0-alpha-2026-09-14; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving."
+      "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.20 package pins Playwright 1.64.0-alpha-2026-09-14; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving. 2026-09-28: CLI 0.1.21 pins Playwright 1.64.0-alpha-1789764292000; isolated Windows Chrome navigation, raw title evaluation and named-session close PASS."
+    },
+    {
+      "id": "comfy-cli",
+      "name": "ComfyUI CLI",
+      "kind": "cli-optional",
+      "install": "manual-user-product",
+      "version": "1.21.0",
+      "pip_spec": "comfy-cli==1.21.0",
+      "license": "GPL-3.0",
+      "github": {
+        "owner": "Comfy-Org",
+        "repo": "comfy-cli"
+      },
+      "offline_asset": null,
+      "runtimes": [
+        "python3"
+      ],
+      "required_for": [
+        "local-media-workflows"
+      ],
+      "note": "Optional CLI only: COMFY_NO_TELEMETRY=1; uvx --python 3.13 --from comfy-cli==1.21.0 comfy --where local --help. Discover an existing local ComfyUI installation first; do not download models, install custom nodes, or use cloud services automatically.",
+      "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md."
     }
   ],
-  "pack_version": "8.7.29",
+  "pack_version": "8.7.30",
   "updated_utc": "2026-09-08",
   "providers": {
     "Grok": {
@@ -943,7 +972,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.7.29",
+  "catalog_version": "8.7.30",
   "updated": "2026-09-03",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

@@ -130,6 +130,7 @@ function Test-UabsPath([string]$p) {
 }
 
 function Get-UabsPythonExecutable {
+  param([string[]]$RequiredModules = @())
   <# Return a real, runnable interpreter path rather than trusting a PATH alias.
      A fresh winget install may expose only `py`, WindowsApps can expose a dead
      `python.exe`, and the AIO's Hermes install already carries a stable Python
@@ -159,7 +160,7 @@ function Get-UabsPythonExecutable {
     $seen[$key] = $true
     try {
       $prefix = @($candidate.Prefix)
-      $resolved = @(& $candidate.Source @prefix -c "import os,sys;print(os.path.abspath(sys.executable))" 2>$null |
+      $resolved = @(& $candidate.Source @prefix -c "import importlib,os,sys;[importlib.import_module(n) for n in sys.argv[1:]];print(os.path.abspath(sys.executable))" @RequiredModules 2>$null |
         Where-Object { $_ } | Select-Object -Last 1)
       if ($LASTEXITCODE -eq 0 -and $resolved.Count -and (Test-Path -LiteralPath $resolved[0] -PathType Leaf)) {
         return [string]$resolved[0]
@@ -1008,7 +1009,7 @@ function Remove-UabsHermesForeignHarnessDirs {
   <#
   Hermes walks one level into a plugin directory that has no root plugin.yaml.
   Superpowers keeps the Hermes adapter at .hermes-plugin/plugin.yaml and ships
-  sibling plugin.json files for Claude, Codex, Cursor, Devin, and Kimi. Hermes
+  sibling plugin.json files for other harnesses (including Muse). Hermes
   parses those siblings as its own plugins and warns on every gateway start.
   The shared BUNDLED-TOOLS tree must keep them: Kimi installs .kimi-plugin.
   Call this only on the Hermes git bridge or the installed Hermes plugin copy.
@@ -1023,7 +1024,9 @@ function Remove-UabsHermesForeignHarnessDirs {
   if (-not (Test-Path -LiteralPath $adapter -PathType Leaf)) { return }
   # Write-Output one name at a time. Returning the whole list makes PowerShell
   # hand the caller a single nested array, and @() then counts it as one.
-  foreach ($name in @('.claude-plugin', '.codex-plugin', '.cursor-plugin', '.devin-plugin', '.kimi-plugin')) {
+  foreach ($name in @(Get-ChildItem -LiteralPath $PluginRoot -Directory -Force | Where-Object {
+    $_.Name -like '.*-plugin' -and $_.Name -ne '.hermes-plugin'
+  } | Select-Object -ExpandProperty Name)) {
     $dir = Join-Path $PluginRoot $name
     if (-not (Test-Path -LiteralPath (Join-Path $dir 'plugin.json') -PathType Leaf)) { continue }
     Remove-Item -LiteralPath $dir -Recurse -Force

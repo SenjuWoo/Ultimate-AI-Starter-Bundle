@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-18",
-  "pack_version": "8.7.29",
+  "generated": "2026-09-28",
+  "pack_version": "8.7.30",
   "assets": [
     {
       "file": "codebase-memory-mcp-windows-amd64.zip",
@@ -13,9 +13,9 @@
       "sha256": "c08872e69f700d4219e7b4ab9607d56d7993171519ee32b62fccb8fba0cab673"
     },
     {
-      "file": "headroom_ai-0.37.0-cp310-abi3-win_amd64.whl",
-      "size": 13903214,
-      "sha256": "e961f892786f7577e75f2c26229f11e2609fc007083dae24d336e76fc4c72e58"
+      "file": "headroom_ai-0.39.1-cp310-abi3-win_amd64.whl",
+      "size": 14139344,
+      "sha256": "21a32c6622e43fee0a988a653c268442a3dd9a9240fe78ed8d82f54453ee08e5"
     },
     {
       "file": "houseCARL-1.9.0.zip",
@@ -23,14 +23,14 @@
       "sha256": "56349058cdf6a090d2029dedf283db0aaa66a13ddd9560864bdceecced376947"
     },
     {
-      "file": "ponytail-v4.9.0.zip",
-      "size": 1149510,
-      "sha256": "361c15a62c49584c40436ed162527d61c067c55eea621cf49c4a8d2de7e77163"
+      "file": "ponytail-v4.10.0.zip",
+      "size": 1250300,
+      "sha256": "769efc28ca0e4b387d1b683850d410b4ca9be7c2afb8bf3a3158904c1621fbe8"
     },
     {
       "file": "rtk-x86_64-pc-windows-msvc.zip",
-      "size": 4234070,
-      "sha256": "26401cf663797bfcfd0d7fbf3acfa5d81a6fb384e8cac188506d69c330d37596"
+      "size": 4511565,
+      "sha256": "cb03399305135dd59ee23eb59a3260ccdeea5a8e08fbc7a271b115b85583a6c9"
     },
     {
       "file": "spookys-automod-toolkit-v1.11.2.zip",
@@ -38,10 +38,9 @@
       "sha256": "2e7848961785eedda3702851d477d878cf01e98a61710ca50fe8b0aafcb28bef"
     },
     {
-      "file": "superpowers-v6.3.0.zip",
-      "size": 671445,
-      "sha256": "3d4b48b75d6ea46047183b73938088cbf22196518b3c46873446a5ff11b02104"
+      "file": "superpowers-v6.4.2.zip",
+      "size": 798617,
+      "sha256": "7a7a6cfa1bae238f49123cb676a5ec5eee453a403753b269ea5f885725563f19"
     }
-  ],
-  "note": "Skyrim Forge is not an offline asset. Its source ships in BUNDLED-TOOLS/skyrim-forge and TOOLS/Install-SkyrimForge.ps1 copies it directly, so there is no archive that can fall out of date with the installer that reads it."
+  ]
 }

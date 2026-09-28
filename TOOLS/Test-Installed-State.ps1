@@ -118,13 +118,16 @@ if(-not $SkipSkills){
     # NativeCommandError before the exit code can be checked.
     $prevEap=$ErrorActionPreference; $ErrorActionPreference='Continue'
     if ($provider -eq 'Hermes') {
-      & $exe --help 2>&1 | Out-Null
+      $startupProbe = @(& $exe --help 2>&1)
     } else {
       & $exe --version 2>&1 | Out-Null
     }
     $versionExit=$LASTEXITCODE
     $ErrorActionPreference=$prevEap
     if($versionExit -ne 0){Err "$provider executable failed its local startup probe."}
+    if ($provider -eq 'Hermes' -and ($startupProbe -join "`n") -match 'Error processing line[^\r\n]*uabs_hermes_openrouter_catalog\.pth') {
+      Err 'Hermes starts with a failing bundle-owned catalog hook; repair its editable package metadata before treating the startup as healthy.'
+    }
 
     # PowerShell variable names are case-insensitive; $HOME is a read-only
     # automatic variable on Windows PowerShell 5.1. Never use $home as a local.
@@ -742,7 +745,9 @@ if ($hermesPluginIssues.Count -or $hermesDiscouragedPluginIssues.Count -or $herm
 if ($Providers -contains 'Hermes') {
   $hermesSuperpowers = Join-Path $hermesHomeRoot 'plugins\superpowers'
   if (Test-Path -LiteralPath $hermesSuperpowers -PathType Container) {
-    foreach ($foreign in @('.claude-plugin', '.codex-plugin', '.cursor-plugin', '.devin-plugin', '.kimi-plugin')) {
+    foreach ($foreign in @(Get-ChildItem -LiteralPath $hermesSuperpowers -Directory -Force | Where-Object {
+      $_.Name -like '.*-plugin' -and $_.Name -ne '.hermes-plugin'
+    } | Select-Object -ExpandProperty Name)) {
       $manifest = Join-Path $hermesSuperpowers ($foreign + '\plugin.json')
       if (Test-Path -LiteralPath $manifest -PathType Leaf) {
         Err ("Hermes Superpowers still contains " + $foreign + " (other-harness manifest; gateway will fail to parse it)")

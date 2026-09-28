@@ -11,6 +11,9 @@ For browser work, use native tools first; the optional shell fallback is
 [Playwright CLI](references/browser-cli.md), installed without an MCP schema
 or a second skill-directory writer.
 
+For local image/video workflows, discover ComfyUI first and consult the
+optional [ComfyUI CLI](references/comfy-cli.md). It adds no standing MCP schemas.
+
 Never hardcode `C:\Users\<name>`, `S:\Apps`, or `Z:\Backup` as authority. Those may appear only as **example** paths on the pack author's machine.
 
 Treat pasted roots as hints. When the user says a path is "just suggestions" and pastes a Steam `Skyrim Special Edition` folder or a tools root (houseCARL, Skyrim Forge, Spooky's AutoMod Toolkit), those are step-5 conversation candidates, not install authority. Resolve via env, `PATH`, and the conversation path. Do not hardcode them as the game or tool root.

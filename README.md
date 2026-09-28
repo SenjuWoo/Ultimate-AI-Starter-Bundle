@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.29 -->
+<!-- Ultimate AI Starter Bundle v8.7.30 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.29
+# Ultimate AI Starter Bundle v8.7.30
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -202,7 +202,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
 | `BundledFirst` | Use `BUNDLED-TOOLS\offline`, fall back to GitHub |
 | `BundledOnly` | Offline zips only (no network) |
 
-RTK is deliberately pinned to **0.47.0** in both the installer and component
+RTK is deliberately pinned to **0.50.0** in both the installer and component
 updater: the narrow rewrite hook and measurements are version-specific. A
 new upstream release is not automatically treated as tested. RTK fallback
 archives must match the shipped SHA-256 manifest; a rejected replacement
@@ -448,11 +448,11 @@ OpenRouter fallback, vision and compression settings are not local-only.
 Installed by default with a **bundle-owned narrow hook**; RTK's broad upstream
 hook remains disabled. [RTK](https://github.com/rtk-ai/rtk) (Apache-2.0, single
 Rust binary) filters noisy dev commands. Measured here
-**at rtk 0.47.0** against **pinned tag ranges**, so the corpus cannot drift:
+**at rtk 0.50.0** against **pinned tag ranges**, so the corpus cannot drift:
 
 | Command | Raw | Through rtk | Saved |
 |---|---|---|---|
-| `git log v8.6.1..v8.6.5` | 14,250 B | 1,658 B | **88%** |
+| `git log v8.6.1..v8.6.5` | 14,250 B | 1,660 B | **88%** |
 | `git diff v8.6.1..v8.6.5` | 430,285 B | 55,870 B | **87%** |
 | `git diff v8.6.4..v8.6.5` | 33,453 B | 26,820 B | **20%** |
 | `git log --stat -20 v8.6.5` | 102,301 B | 102,301 B | **0%** |
@@ -463,8 +463,8 @@ this tool is not honest -- an earlier version of this table quoted 97% from
 
 **Pin the tool version too, not just the corpus.** That last row used to read
 **95%**, measured at rtk 0.45.0. Upgrading to 0.46.0 dropped it to zero, and
-0.47.0 still passes `--stat` straight through. The 0.47.0 diff fixes changed
-both diff rows, so every row was measured again. The old `git log --stat -20`
+0.50.0 still passes `--stat` straight through. All four rows were remeasured
+on 2026-09-28; these are output bytes, not billed token savings. The old `git log --stat -20`
 row also moved with HEAD despite the rest of the table being pinned; it now
 ends at `v8.6.5`. Pinning only the corpus or only the tool is insufficient.
 
@@ -551,7 +551,7 @@ safe hook rewrites only commands whose shape and output were measured:
 | `git add`, `git commit`, `git push` | unchanged | mutating Git is never wrapped |
 | `find`, `rg`/`grep`, `cat`, `curl`, `gh` | unchanged | broken, lossy, zero-gain, or exact-body surfaces stay raw |
 | JSON/JUnit/report output, pipes, redirects, compound commands | unchanged | machine-readable and composable output stays raw |
-| `npm test`, `dotnet test`, `python x.py` | *not rewritten* | RTK 0.47.0 provides no matching safe rewrite |
+| `npm test`, `dotnet test`, `python x.py` | *not rewritten* | Outside the bundle's tested allowlist |
 
 Claude, Grok and Hermes receive the executable hook. Codex and Kimi receive the
 same narrow routing rule in their installed instructions; no trusted
@@ -587,7 +587,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-- **Provider skills** — 170 skills per AI (Claude, Codex, Grok, Kimi, Hermes), all generated from one canonical tree.
+- **Provider skills** — 171 skills per AI (Claude, Codex, Grok, Kimi, Hermes), all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7, official GitHub, and Headroom are the verified always-on core. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup
@@ -776,6 +776,8 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.30** - 2026-09-28. Audited component refresh, 171 skills, scoped MCP handshakes and pinned RTK corpus tests. Canonical/native Superpowers parity, explicit Windows Python 3.14, evidence-based compatibility holds, optional local ComfyUI CLI guidance. No new always-on MCP. See [changes](docs/history/V8.7.30-CHANGELOG.md).
 
 **v8.7.29** - 2026-09-21. SillyTavern can sit on a lean Hermes profile: LM Studio for chat, Hermes for vision, images, web, and character cards. Coding tools, coding skills, and the pack MCP servers stay off that gateway. **170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.29-CHANGELOG.md).
 
