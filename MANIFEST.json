@@ -21,8 +21,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 16207,
-  "sha256": "8429ee13379effd6ba18e83ac99a9a3a118cc418eb2b8db76a0b326612ec4e73"
+  "size": 16709,
+  "sha256": "398a33608a50899f878c2189f84b6bf5558c1f21dced8c8fdf9c28b418ab3bf1"
  },
  {
   "path": ".gitignore",
@@ -36061,8 +36061,8 @@
  },
  {
   "path": "TESTS/Test-ReleaseAssetCache.ps1",
-  "size": 11146,
-  "sha256": "ce45ed5e9ceb3cd6e9dae2c5203aa8f1c1f126c56004e350653a36faf1a10688"
+  "size": 11582,
+  "sha256": "706a1e5e88d3be8b0e7c41c8d9db14fe60d1b42e1ae13eb7c0402218c536ca82"
  },
  {
   "path": "TESTS/Test-SillyTavernGateway.ps1",
@@ -43346,8 +43346,8 @@
  },
  {
   "path": "docs/history/V8.7.31-CHANGELOG.md",
-  "size": 3662,
-  "sha256": "72259145079783cbb79a3b1e944eed54031319b009a193e636aeb6de6b799b8f"
+  "size": 4095,
+  "sha256": "4b1abf8064e84d635ebf6b5fc5d4a83bc5efc7d89f6141bb58310f60f94a395f"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",

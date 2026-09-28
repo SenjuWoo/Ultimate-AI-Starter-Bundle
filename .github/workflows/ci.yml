@@ -65,10 +65,17 @@ jobs:
           python TESTS/test_hermes_bootstrap.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-      - name: Deterministic Core artifact smoke test
+      - name: Deterministic Core artifact and extracted pack gate
         shell: powershell
         run: |
           python TOOLS/build_release.py --root . --outdir artifacts --core-only
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $prefix = 'Ultimate-AI-Starter-Bundle-' + ([IO.File]::ReadAllText('VERSION.txt').Trim())
+          $extract = Join-Path $PWD 'artifacts\extracted-core'
+          python -m zipfile -e (Join-Path $PWD "artifacts\$prefix-Core.zip") $extract
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $coreRoot = Join-Path $extract $prefix
+          & (Join-Path $coreRoot 'TESTS\Test-Pack.ps1') -PackRoot $coreRoot
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
   manifest:

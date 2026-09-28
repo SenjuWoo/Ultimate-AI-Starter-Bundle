@@ -135,13 +135,21 @@ try {
   $Mode = 'OnlineLatest'; $script:testOffline = $true
   if ((Get-ComponentAssetPath -Comp $comp) -ne (Join-Path $offline 'tool.zip')) { throw 'network failure lost verified offline RTK' }
 
-  # Execute the shipped RTK binary; no compiler, external SDK or download.
+  # Full executes its shipped RTK. Core intentionally has no offline ZIP:
+  # use a command fixture there, still exercising the real version parser and
+  # replacement/rollback boundaries without a compiler, SDK or download.
   # The old file is opaque data: it must survive any rejected replacement.
-  Expand-Archive -LiteralPath $rtkArchive -DestinationPath (Join-Path $scratch 'rtk-payload')
-  $newExe = (Get-ChildItem -LiteralPath (Join-Path $scratch 'rtk-payload') -Recurse -Filter rtk.exe | Select-Object -First 1).FullName
+  if (Test-Path -LiteralPath $rtkArchive -PathType Leaf) {
+    Expand-Archive -LiteralPath $rtkArchive -DestinationPath (Join-Path $scratch 'rtk-payload')
+    $newExe = (Get-ChildItem -LiteralPath (Join-Path $scratch 'rtk-payload') -Recurse -Filter rtk.exe | Select-Object -First 1).FullName
+  } else {
+    $newExe = Join-Path $scratch 'correct-version.cmd'
+    [IO.File]::WriteAllText($newExe, "@echo rtk $expectedRtkVersion`r`n@exit /b 0`r`n")
+  }
+  $targetName = 'rtk' + [IO.Path]::GetExtension($newExe)
   $oldExe = Join-Path $scratch 'wrong-version.cmd'
   [IO.File]::WriteAllText($oldExe, "@echo rtk 0.48.0`r`n@exit /b 0`r`n")
-  $installedExe = Join-Path $scratch 'installed\rtk.exe'
+  $installedExe = Join-Path $scratch "installed\$targetName"
   New-Item -ItemType Directory -Path (Split-Path $installedExe) | Out-Null
   Copy-Item -LiteralPath $oldExe -Destination $installedExe
   $oldHash = (Get-FileHash -LiteralPath $installedExe).Hash
@@ -157,7 +165,7 @@ try {
   if (-not $rejected -or (Get-FileHash -LiteralPath $installedExe).Hash -ne $oldHash) { throw 'locked RTK replacement damaged the original' }
   $result = Install-UabsRtkExecutable -Source $newExe -Destination $installedExe -ExpectedVersion $expectedRtkVersion
   if ($result.version -ne $expectedRtkVersion -or (Get-FileHash -LiteralPath $result.backup).Hash -ne $oldHash) { throw 'RTK repair lost the previous executable backup' }
-  $freshExe = Join-Path $scratch 'fresh\rtk.exe'
+  $freshExe = Join-Path $scratch "fresh\$targetName"
   $result = Install-UabsRtkExecutable -Source $newExe -Destination $freshExe -ExpectedVersion $expectedRtkVersion
   if ($result.backup -or $result.version -ne $expectedRtkVersion) { throw 'fresh RTK installation failed' }
 
