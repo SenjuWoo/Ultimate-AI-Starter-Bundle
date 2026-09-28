@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.30",
+  "version": "8.7.31",
   "generated": "2026-09-28",
-  "release_tag": "v8.7.30",
+  "release_tag": "v8.7.31",
   "canonical_skills": 171,
   "provider_trees": 5,
   "registry_entries": 171,
@@ -10,6 +10,7 @@
     "TESTS/Test-Pack.ps1",
     "TESTS/Test-PreamblePreservation.ps1",
     "TESTS/Test-GrokHookRepair.ps1",
+    "TESTS/Test-CodexHookRetirement.ps1",
     "TESTS/test_release_contract.py",
     "TESTS/test_hermes_bootstrap.py",
     "TOOLS/audit_skills.py",
@@ -22,6 +23,6 @@
     "TESTS/Test-McpProfiles.ps1",
     "TOOLS/mcp_handshake.py --selftest"
   ],
-  "runtime_status": "v8.7.30: 171 canonical skills; audited component refresh and optional ComfyUI CLI guidance. Core MCP count and narrow RTK policy unchanged. See docs/history/V8.7.30-CHANGELOG.md for measured probes and explicit compatibility holds.",
+  "runtime_status": "v8.7.31: 171 canonical skills; Codex native legacy gate retirement with exact backups, ownership-aware merge and a read-only doctor check. Windows fixtures exercise fresh/custom homes, upgrades, partial tables, missing Python and repeated repair. Core MCP count, RTK policy, reviewed personal overrides and v8.7.30 compatibility holds are unchanged.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

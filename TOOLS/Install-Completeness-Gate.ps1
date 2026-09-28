@@ -26,11 +26,13 @@
     Grok    ~/.grok/hooks/*.json             always trusted, no folder-trust
                                              needed. VERIFIED against Grok's
                                              own docs/user-guide/10-hooks.md.
-    Codex   plugin from a local marketplace  Codex loads hooks from PLUGINS and
-                                             requires a trusted_hash entry in
-                                             [hooks.state]. A bare JSON file in
-                                             ~/.codex/hooks is never read.
-                                             Codex prompts once to trust it.
+    Codex   skills/native-plugin rules      Codex supports native hooks.json and
+                                             plugin hooks, with trust review.
+                                             The bundle does not forge trust or
+                                             install its executable gates there.
+                                             Legacy bundle handlers in native
+                                             hooks.json are backed up/retired;
+                                             unrelated handlers are preserved.
     Hermes  the path `hermes config path`    NOT ~/.hermes/config.yaml. Hermes's
             reports                          own docs name that path; the
                                              resolved one honours HERMES_HOME.
@@ -116,6 +118,25 @@ foreach ($g in $gates) {
 
 $installRoot = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\hooks'
 $marketRoot  = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\codex-marketplace'
+
+# Retirement must also work without Python and during uninstall/check-only.
+$codexHome = Get-UabsProviderHome -Provider Codex -Catalog (Get-UabsCatalog)
+if ($Providers -contains 'Codex') {
+  foreach ($issue in @(Repair-UabsCodexLegacyHooks -Path (Join-Path $codexHome 'hooks.json') -CheckOnly:$CheckOnly)) {
+    if ($CheckOnly) { Write-Host ('Codex   would retire ' + $issue) }
+  }
+  $codexConfig = Join-Path $codexHome 'config.toml'
+  if ((Test-Path -LiteralPath $codexConfig) -and -not $CheckOnly) {
+    # Only our retired plugin flag; never synthesize [hooks.state] trust hashes.
+    $toml = [IO.File]::ReadAllText($codexConfig)
+    $updated = [regex]::Replace($toml,
+      '(?ms)(^\[plugins\."completeness-gate@ultimate-bundle"\][^\r\n]*\r?\n(?:(?!^\[).)*?^enabled[ \t]*=[ \t]*)true\b', '${1}false')
+    if ($updated -ne $toml) {
+      Copy-Item -LiteralPath $codexConfig -Destination "$codexConfig.bak-gate-$(Get-Date -Format yyyyMMdd-HHmmssfff)" -Force
+      Set-Utf8NoBom -Path $codexConfig -Text $updated
+    }
+  }
+}
 
 $python = Get-UabsPythonExecutable
 if (-not $python) {
@@ -271,24 +292,10 @@ foreach ($p in $Providers) {
     }
 
     'Codex' {
-      $cfg = Join-Path $env:USERPROFILE '.codex\config.toml'
+      $cfg = Join-Path $codexHome 'config.toml'
       if (-not (Test-Path -LiteralPath $cfg)) { Write-Host 'Codex   not installed'; break }
       if ($CheckOnly) { Write-Host 'Codex   skill/native-plugin enforcement (no executable trust prompt)'; break }
 
-      # Codex deliberately requires explicit trust for executable plugin hooks.
-      # Do not forge [hooks.state] hashes. v7.8 uses the reliability skills and
-      # native provider plugin rules instead, and disables only our legacy gate
-      # entry if an older bundle registered it.
-      $toml = [IO.File]::ReadAllText($cfg)
-      $updated = [regex]::Replace(
-        $toml,
-        '(?ms)(^\[plugins\."completeness-gate@ultimate-bundle"\]\s*.*?^enabled\s*=\s*)true',
-        '${1}false'
-      )
-      if ($updated -ne $toml) {
-        Copy-Item -LiteralPath $cfg -Destination "$cfg.bak-gate-$(Get-Date -Format yyyyMMdd-HHmmss)" -Force
-        Set-Utf8NoBom -Path $cfg -Text $updated
-      }
       Write-Host 'Codex   skill/native-plugin enforcement (legacy executable gate disabled; trust state untouched)'
     }
 

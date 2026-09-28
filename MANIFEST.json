@@ -32697,17 +32697,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 47180,
-  "sha256": "1d2635e83e7effe388013d4c0a7ad305cb1af5c6a1861278c2ca8379e015ed9a"
+  "sha256": "e1dd94f92a0c658c50797257f7196a9954bf4377eb1cbafcef41f3b41f09922e"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1426,
-  "sha256": "5ec9384910cdde0800e4c9953397f9e8f59481ff4c0281cd2b3b79c5a460bfe4"
+  "sha256": "0db9b5aaf70715cdcd9929a6dd78f6f547572ed5568a127f9bb91473fa7282d5"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 32028,
-  "sha256": "971eb88347832b6325e6b810007d7e54eaf9f463b7babe52b601753461f25f72"
+  "sha256": "e6b025702868b0014520381f3fe9d4ebb18e2460dc85dac31c3c1e945caba147"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -35871,8 +35871,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 172184,
-  "sha256": "ad13e794d9e13ee98b22ccc045490bab98981409e3544b571db8e386585acc12"
+  "size": 173004,
+  "sha256": "d1bcb77ec4716cc4a34acdb12c169a771b7aa606ddeeaa97b6b01895b0f04f7b"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -35947,7 +35947,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 139622,
-  "sha256": "fbd2f1c46d2112012bdc2322f6b096638ace35eb2cccf7f0c2dea3768e5b8f3d"
+  "sha256": "9090df3f54e54a57b657276917a46a602ee052865a504ff30cfbbf4f83ce9345"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -35996,8 +35996,8 @@
  },
  {
   "path": "README.md",
-  "size": 76534,
-  "sha256": "602e5ec47cdbb4015ba9ec2063944f814b8071df7f5348730bd4d89d11d0d258"
+  "size": 77335,
+  "sha256": "75bbc999cc9e1630fa9b548fefe9b6815cb710f8816fedae98425f67ac18c4c7"
  },
  {
   "path": "SECURITY.md",
@@ -36007,12 +36007,17 @@
  {
   "path": "START-HERE.bat",
   "size": 730,
-  "sha256": "b798faf2bd393897f539d2a45ccf19aa621543d2ca157486d688ff2e3a28d0d4"
+  "sha256": "8bed858f4be900bb863d9f4a5539ec038919d9d0aaa55c1c70d3dcd63aee0936"
  },
  {
   "path": "START-HERE.txt",
   "size": 10311,
-  "sha256": "e64d4a87ea747a0f74be50c7e4d35daf247d7ea48d636bcee49bebd39ee4b88b"
+  "sha256": "8cccefcc93b73b16d12726f089b97a329547e90f3707773ce99f5656ac9517fb"
+ },
+ {
+  "path": "TESTS/Test-CodexHookRetirement.ps1",
+  "size": 8017,
+  "sha256": "187bf02c1a29217d5a68fa24e74379a0a113061f7beda5465465bead623a1f3f"
  },
  {
   "path": "TESTS/Test-ForgeRootResolution.ps1",
@@ -36041,8 +36046,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 52616,
-  "sha256": "f7eea14ce30b52a1a8ffaa33f496f7191fd3a2ac8b6fe170f093667acead9c14"
+  "size": 53192,
+  "sha256": "e94459a0a57d143c66cc625d387799e757b6a160cff3c2aecb3d7c5debefe2c1"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -36261,8 +36266,8 @@
  },
  {
   "path": "TOOLS/Clean-StaleState.ps1",
-  "size": 24233,
-  "sha256": "62ad4d7351531eb2890fe00d92d9bed5699df95768196ac85bce59de3390ef09"
+  "size": 24354,
+  "sha256": "e648a12526ba74c30a5f8d4d5844535ca257b8633aea6212798b84101b3993da"
  },
  {
   "path": "TOOLS/Ensure-Headroom-Grok.ps1",
@@ -36286,8 +36291,8 @@
  },
  {
   "path": "TOOLS/Install-Completeness-Gate.ps1",
-  "size": 16876,
-  "sha256": "3d9063111736d0ee3b1f99b46392bfb2855e456c5b19e16e43950583bf571325"
+  "size": 17357,
+  "sha256": "f0da8e89e3ea917dcf879594910fdf10c9e200fecb2c9399ca7d8554b92a9925"
  },
  {
   "path": "TOOLS/Install-Provider-Starter-Settings.ps1",
@@ -36346,8 +36351,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 53965,
-  "sha256": "8727f5d765095375dad2304fd47428281c037ea27c672003fd4d31ed46b3934d"
+  "size": 54746,
+  "sha256": "880b7fe749b426ebd4c24c01cb5c06968b3ccd3bf8a827dfedc259214e31bd45"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -36361,8 +36366,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 87573,
-  "sha256": "df7ffd9a67813d2195459b93b9a7588b16d578deffbd951f60bcba61ea886b55"
+  "size": 90515,
+  "sha256": "2870e40c124996668061c16d4cdd422d64647bc116bfa84720f475b34bf0c95f"
  },
  {
   "path": "TOOLS/UABS-Mcp-Write.ps1",
@@ -36531,13 +36536,13 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 1457,
-  "sha256": "943245224a40b7d885d7bd413d07cac0b14c92821e8c37c4a07627bf10778266"
+  "size": 1617,
+  "sha256": "2bb5f1ecec55271c47158d6c7c792c886ae72bc05a0cb6ee46d007fd4aa41248"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "bfd83f6a8f03f3a10719b5c5372446336b6d71de37922341096cf590ee3fdbc8"
+  "sha256": "f087a7c9443565b251c66c35d5bd92419da2b74ef269c932a9b4b8e1ee5fc0b2"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -43338,6 +43343,11 @@
   "path": "docs/history/V8.7.30-CHANGELOG.md",
   "size": 5162,
   "sha256": "0863801a1e708928486e093a441f3bfa1300d7a8355cf625a83b0c8edc7d28d8"
+ },
+ {
+  "path": "docs/history/V8.7.31-CHANGELOG.md",
+  "size": 2676,
+  "sha256": "788fa34a15b0f28fbcba8b13263b2715dae23be480b662213cf3f604b8fd28b0"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",

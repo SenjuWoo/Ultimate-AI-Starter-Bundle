@@ -185,6 +185,7 @@ $backupFamilies = @(
   @{ Dir = (Join-Path $env:USERPROFILE '.grok');      Glob = 'AGENTS.md.*bak*' }
   @{ Dir = (Join-Path $env:USERPROFILE '.codex');     Glob = 'config.toml.*bak*' }
   @{ Dir = (Join-Path $env:USERPROFILE '.codex');     Glob = 'AGENTS.md.*bak*' }
+  @{ Dir = (Get-UabsProviderHome -Provider Codex -Catalog (Get-UabsCatalog)); Glob = 'hooks.json.before-retired-*.bak' }
   @{ Dir = (Join-Path $env:USERPROFILE '.claude');    Glob = 'settings.json.bak*' }
   @{ Dir = (Join-Path $env:USERPROFILE '.claude');    Glob = 'CLAUDE.md.*bak*' }
   @{ Dir = (Join-Path $env:USERPROFILE '.kimi-code'); Glob = 'AGENTS.md.*bak*' }

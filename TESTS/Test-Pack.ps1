@@ -907,6 +907,13 @@ if ($LASTEXITCODE -eq 0 -and $hookRepairOut -match 'GROK HOOK REPAIR GATE: PASS'
     Good 'hook repair preserves settings, is idempotent, and detects effective duplicate/invalid hooks'
 } else { Bad ('Grok hook repair failed:' + [Environment]::NewLine + $hookRepairOut) }
 
+Section '18. Codex native hook retirement'
+$codexHookGate = Join-Path $PackRoot 'TESTS\Test-CodexHookRetirement.ps1'
+$codexHookOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $codexHookGate -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $codexHookOut -match 'CODEX HOOK RETIREMENT GATE: PASS') {
+    Good 'native legacy gates retired; exact backups, custom hooks/trust, fresh/custom homes and reruns verified'
+} else { Bad ('Codex hook retirement failed:' + [Environment]::NewLine + $codexHookOut) }
+
 Write-Host ''
 if ($fail -eq 0) {
     Write-Host "PACK GATE: PASS" -ForegroundColor Green

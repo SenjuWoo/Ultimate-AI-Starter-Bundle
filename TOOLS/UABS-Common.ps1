@@ -905,6 +905,62 @@ function Repair-UabsGrokImpeccableHook([string]$Path) {
   } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
 }
 
+function Repair-UabsCodexLegacyHooks {
+  param([Parameter(Mandatory=$true)][string]$Path, [switch]$CheckOnly)
+  # Codex supports native hooks.json now. Our zero-chore policy still uses
+  # skills/native plugins there; old user-level executable gates must not
+  # survive upgrades. Ownership is the FULL bundle script path, not a basename.
+  if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { return }
+  if ((Get-Item -LiteralPath $Path).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Refusing a redirected Codex hook file.' }
+  $before = [IO.File]::ReadAllText($Path)
+  $doc = $before | ConvertFrom-Json
+  $hookProperty = $doc.PSObject.Properties['hooks']
+  if (-not $hookProperty -or -not $hookProperty.Value) { return }
+  $root = (Join-Path (Get-UabsStateRoot) 'hooks').Replace('\','/').TrimEnd('/')
+  $owned = '(?i)(?:^|[\s"''])' + [regex]::Escape($root) + '/(completeness_gate\.py|assumption_gate\.py|rtk_safe_hook\.py)(?=[\s"'']|$)'
+  $issues = @()
+  foreach ($event in $hookProperty.Value.PSObject.Properties) {
+    $groups = @()
+    foreach ($group in @($event.Value)) {
+      $handlers = $group.PSObject.Properties['hooks']
+      if (-not $handlers) { $groups += $group; continue }
+      $keep = @(); $removed = $false
+      foreach ($handler in @($handlers.Value)) {
+        $scriptName = $null
+        foreach ($field in @('command','commandWindows','command_windows')) {
+          $command = $handler.PSObject.Properties[$field]
+          if ($command -and $command.Value -is [string] -and $command.Value.Replace('\','/') -match $owned) {
+            $scriptName = $Matches[1]; break
+          }
+        }
+        if ($scriptName) { $issues += ($event.Name + ': retired bundle executable hook ' + $scriptName); $removed = $true }
+        else { $keep += $handler }
+      }
+      if ($keep.Count -or -not $removed) { $handlers.Value = @($keep); $groups += $group }
+    }
+    $event.Value = @($groups)
+  }
+  if ($issues.Count -and -not $CheckOnly) {
+    $after = ($doc | ConvertTo-Json -Depth 100) + [Environment]::NewLine
+    $null = $after | ConvertFrom-Json
+    $bytes = [IO.File]::ReadAllBytes($Path)
+    $bom = $bytes.Length -ge 3 -and $bytes[0] -eq 239 -and $bytes[1] -eq 187 -and $bytes[2] -eq 191
+    $nonce = [Guid]::NewGuid().ToString('N')
+    $backup = $Path + '.before-retired-' + $nonce + '.bak'
+    $temp = $Path + '.tmp-' + $nonce
+    try {
+      [IO.File]::WriteAllText($temp, $after, (New-Object Text.UTF8Encoding $bom))
+      [IO.File]::Replace($temp, $Path, $backup)
+      if ([IO.File]::ReadAllText($Path) -cne $after) {
+        Copy-Item -LiteralPath $backup -Destination $Path -Force
+        throw 'Codex hook retirement verification failed; original restored.'
+      }
+      Write-UabsOk ('Codex: retired ' + $issues.Count + ' stale bundle hook handler(s); backup: ' + $backup)
+    } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
+  }
+  $issues
+}
+
 function Get-UabsGrokHookIssues {
   param([Parameter(Mandatory=$true)]$Inspection, [string]$HooksDir)
   # inspect lists discovered hooks even when disabled. Consult the effective

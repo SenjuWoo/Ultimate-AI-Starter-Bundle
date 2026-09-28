@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.30 -->
+<!-- Ultimate AI Starter Bundle v8.7.31 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.30
+# Ultimate AI Starter Bundle v8.7.31
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -42,6 +42,8 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 "Make a repo" now routes the existing `coding-discipline` and `one-shot-completion` skills to the [repository completion contract](_CANONICAL-SKILLS/github-fleet-maintenance/references/repository-completion.md). It covers real CI, applicable CodeQL/code scanning, Dependabot alerts/security updates/version updates, secret scanning/push protection, vulnerability reporting, a useful README, and usable release assets. The AI must verify server-side settings separately from files and verify published downloads against its build. Public release approval is reused when already given; otherwise the release is prepared before asking. Explicit empty-repo requests stay empty. This adds no MCP server or skill-index entry.
 
 If Grok reports failed Stop hooks or `global/impeccable` PowerShell errors, run `TOOLS\Install-Completeness-Gate.ps1 -Providers Grok` and restart Grok. It repairs the exact known legacy Impeccable command and Claude-hook inheritance, preserving MCP choices and custom commands. Impeccable remains project-gated: the repair does not start its engine globally or download it.
+
+If Codex reports repeated user PreToolUse failures, run `TOOLS\Install-Completeness-Gate.ps1 -Providers Codex` and restart Codex. Upgrades now back up and retire legacy bundle executable gates from native `hooks.json`, including stale Python-alias commands. Custom sibling hooks and trust state are preserved; the doctor fails if those retired handlers return. Historical failure counters are not reset.
 
 ### Keeping a reviewed local skill update
 
@@ -554,8 +556,9 @@ safe hook rewrites only commands whose shape and output were measured:
 | `npm test`, `dotnet test`, `python x.py` | *not rewritten* | Outside the bundle's tested allowlist |
 
 Claude, Grok and Hermes receive the executable hook. Codex and Kimi receive the
-same narrow routing rule in their installed instructions; no trusted
-command-mutation hook is assumed for them. Unknown payloads, missing RTK, RTK
+same narrow routing rule in their installed instructions. Codex supports native
+hooks, but this bundle does not bypass trust or install its executable gates
+there; stale bundle-owned native handlers are retired on upgrades. Unknown payloads, missing RTK, RTK
 errors, unsupported commands, and an RTK version newer than the measured catalog
 pin all fail open to the original command.
 
@@ -776,6 +779,8 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.31** - 2026-09-28. Codex native hook upgrade cleanup, exact backups and a fail-closed doctor check. Custom hooks/trust are preserved, including missing-Python and custom-home upgrades. No new MCP schemas or broad RTK routing. See [changes](docs/history/V8.7.31-CHANGELOG.md).
 
 **v8.7.30** - 2026-09-28. Audited component refresh, 171 skills, scoped MCP handshakes and pinned RTK corpus tests. Canonical/native Superpowers parity, explicit Windows Python 3.14, evidence-based compatibility holds, optional local ComfyUI CLI guidance. No new always-on MCP. See [changes](docs/history/V8.7.30-CHANGELOG.md).
 

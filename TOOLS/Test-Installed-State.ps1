@@ -651,6 +651,18 @@ if ($hermesBudgets.Count) {
   Write-Host '     Change the set: hermes -p skyrim mcp configure housecarl  (interactive, survives re-installs)' -ForegroundColor DarkGray
 }
 
+# Native Codex hooks were invisible to older installers/doctors. Only our
+# retired executable handlers are actionable here; never run arbitrary custom
+# hook commands as a health check or change user/plugin trust state.
+$codexHookIssues = @()
+if ($Providers -contains 'Codex') {
+  try {
+    $codexHooks = Join-Path (Get-UabsProviderHome -Provider Codex -Catalog $catalog) 'hooks.json'
+    $codexHookIssues = @(Repair-UabsCodexLegacyHooks -Path $codexHooks -CheckOnly)
+  } catch { $codexHookIssues += ('Native Codex hooks cannot be checked: ' + $_.Exception.Message) }
+  foreach ($issue in $codexHookIssues) { Err ('Codex hooks: ' + $issue + '. Run TOOLS\Install-Completeness-Gate.ps1 -Providers Codex, then restart Codex.') }
+}
+
 # ---- Hermes plugin payloads and shell hooks --------------------------------
 # Two failures that are invisible from inside Hermes: a profile enabling a
 # plugin whose payload it cannot reach, and a configured shell hook that was
@@ -990,6 +1002,7 @@ $doctorResult = if ($errors.Count) { 'FAIL' } else { 'PASS' }
 $report=[ordered]@{version=$packBare;checked_utc=[DateTime]::UtcNow.ToString('o');errors=@($errors);warnings=@($warnings);rtk_runtime=$rtkRuntime;capability_states=@($capabilityStates);hermes_tool_budgets=@($hermesBudgets);hermes_plugin_issues=@($hermesPluginIssues);hermes_discouraged_plugin_issues=@($hermesDiscouragedPluginIssues);hermes_hook_issues=@($hermesHookIssues);codex_skill_index=$script:codexSkillIndex;ai_autostarts=@($autostartReport);hook_misdirection=@($hookMisdirection);shadowed_tools=@($shadowReport);result=$doctorResult}
 $reportPath=Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\installed-state-doctor.json'
 $report['grok_hook_issues'] = @($grokHookIssues)
+$report['codex_hook_issues'] = @($codexHookIssues)
 $enc=New-Object System.Text.UTF8Encoding($false); [IO.File]::WriteAllText($reportPath,($report|ConvertTo-Json -Depth 8),$enc)
 if($errors.Count){Write-UabsBad ("Installed-state doctor FAIL ($($errors.Count) error(s)). Report: $reportPath");exit 1}
 Write-UabsOk ("Installed-state doctor PASS. Report: $reportPath")

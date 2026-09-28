@@ -1,3 +1,9 @@
+## 8.7.31
+
+- Codex upgrades retire stale bundle executable gate handlers from native `hooks.json`, with exact-byte backups and full-path ownership checks. Custom sibling hooks, metadata, plugin hooks and trust state are preserved. Cleanup also runs without Python and on uninstall.
+- The installed-state doctor now fails on surviving retired native handlers or unreadable native hook JSON. It never executes arbitrary user hooks as a test.
+- Fix legacy plugin cleanup crossing into another TOML table; honor custom `CODEX_HOME`. Keep native hook backups within the existing three-copy retention limit. Add executable Windows fixtures for fresh, previous, partial, missing-Python and repeated installs, including spaces/Unicode. No new always-on MCP or wider RTK allowlist. [Details](docs/history/V8.7.31-CHANGELOG.md).
+
 ## 8.7.30
 
 - Audited component refresh and canonical/native plugin parity; 171 canonical skills total. Narrow RTK 0.50.0 policy, scoped MCPs, and reviewed personal overrides preserved.
