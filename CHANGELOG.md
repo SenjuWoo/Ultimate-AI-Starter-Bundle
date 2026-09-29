@@ -1,3 +1,9 @@
+## 8.7.32
+
+- Retire the exact obsolete global Codex Impeccable executable pair behind **Design deep pass** (Stop) and **Checking UI changes** (PostToolUse) failures. The legacy CMD conditional fails under PowerShell and references an executable the current skill no longer ships.
+- Preserve current `hook.mjs` entries, similarly labelled custom commands, metadata, other providers and hook trust. Reuse atomic exact-byte backups and idempotent cleanup; the installed-state doctor now detects this pair through the shared classifier.
+- Extend the real Windows installer regression with both reported hooks, preservation and original-byte backup checks. Fresh installs still create no global design hooks. No dependency, standing schema, profile or RTK change. [Details](docs/history/V8.7.32-CHANGELOG.md).
+
 ## 8.7.31
 
 - Fix CodeQL #228 polynomial regex backtracking in the shipped Ponytail Cursor adapter. A real 900 KB adversarial command must complete within three seconds. Remove the unused unpatched upstream Ponytail ZIP; offline fallbacks still use the vendored tree.

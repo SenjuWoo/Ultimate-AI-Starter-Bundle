@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.31 -->
+<!-- Ultimate AI Starter Bundle v8.7.32 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.31
+# Ultimate AI Starter Bundle v8.7.32
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -43,7 +43,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 
 If Grok reports failed Stop hooks or `global/impeccable` PowerShell errors, run `TOOLS\Install-Completeness-Gate.ps1 -Providers Grok` and restart Grok. It repairs the exact known legacy Impeccable command and Claude-hook inheritance, preserving MCP choices and custom commands. Impeccable remains project-gated: the repair does not start its engine globally or download it.
 
-If Codex reports repeated user PreToolUse failures, run `TOOLS\Install-Completeness-Gate.ps1 -Providers Codex` and restart Codex. Upgrades now back up and retire legacy bundle executable gates from native `hooks.json`, including stale Python-alias commands. Custom sibling hooks and trust state are preserved; the doctor fails if those retired handlers return. Historical failure counters are not reset.
+If Codex reports repeated user hook failures, including **Design deep pass** (Stop) or **Checking UI changes** (PostToolUse), run `TOOLS\Install-Completeness-Gate.ps1 -Providers Codex` and restart Codex. Upgrades back up and retire legacy bundle executable gates and the exact obsolete global Impeccable command pair from native `hooks.json`. Those Impeccable entries target an executable the current skill no longer ships; current opt-in project-local `hook.mjs` handlers stay intact. Custom sibling hooks and trust state are preserved; the doctor fails if the retired handlers return. Historical failure counters are not reset, and already-open chats need to reload their configuration.
 
 ### Keeping a reviewed local skill update
 
@@ -779,6 +779,8 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.32** - 2026-09-28. Retire the obsolete global Codex Impeccable hooks behind Design deep pass / Checking UI changes failures. Exact command-pair ownership, original-byte backups, preservation of current project hooks and custom handlers, read-only doctor detection and repeated-upgrade regression. No new global engine, dependencies or MCP schemas. See [changes](docs/history/V8.7.32-CHANGELOG.md).
 
 **v8.7.31** - 2026-09-28. Codex native hook upgrade cleanup, exact backups and a fail-closed doctor check. Custom hooks/trust are preserved, including missing-Python and custom-home upgrades. Fix Ponytail's bundled Cursor regex ReDoS; remove its unused raw upstream ZIP. No new MCP schemas or broad RTK routing. See [changes](docs/history/V8.7.31-CHANGELOG.md).
 

@@ -32,7 +32,9 @@
                                              install its executable gates there.
                                              Legacy bundle handlers in native
                                              hooks.json are backed up/retired;
-                                             unrelated handlers are preserved.
+                                             obsolete global Impeccable
+                                             executable hooks are retired;
+                                             custom handlers are preserved.
     Hermes  the path `hermes config path`    NOT ~/.hermes/config.yaml. Hermes's
             reports                          own docs name that path; the
                                              resolved one honours HERMES_HOME.
@@ -123,7 +125,7 @@ $marketRoot  = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\codex-mar
 $codexHome = Get-UabsProviderHome -Provider Codex -Catalog (Get-UabsCatalog)
 if ($Providers -contains 'Codex') {
   foreach ($issue in @(Repair-UabsCodexLegacyHooks -Path (Join-Path $codexHome 'hooks.json') -CheckOnly:$CheckOnly)) {
-    if ($CheckOnly) { Write-Host ('Codex   would retire ' + $issue) }
+    if ($CheckOnly) { Write-Host ('Codex   needs repair: ' + $issue) }
   }
   $codexConfig = Join-Path $codexHome 'config.toml'
   if ((Test-Path -LiteralPath $codexConfig) -and -not $CheckOnly) {

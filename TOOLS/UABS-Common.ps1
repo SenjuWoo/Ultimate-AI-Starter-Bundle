@@ -918,6 +918,11 @@ function Repair-UabsCodexLegacyHooks {
   if (-not $hookProperty -or -not $hookProperty.Value) { return }
   $root = (Join-Path (Get-UabsStateRoot) 'hooks').Replace('\','/').TrimEnd('/')
   $owned = '(?i)(?:^|[\s"''])' + [regex]::Escape($root) + '/(completeness_gate\.py|assumption_gate\.py|rtk_safe_hook\.py)(?=[\s"'']|$)'
+  $impeccableUnix = '[ ! -f ".codex/skills/impeccable/scripts/impeccable" ] || ".codex/skills/impeccable/scripts/impeccable" hook'
+  $impeccableWindows = 'if exist ".codex/skills/impeccable/scripts/impeccable.cmd" (".codex/skills/impeccable/scripts/impeccable.cmd" hook & exit /b)'
+  # This legacy global pair targets an executable no longer shipped by the
+  # skill. Current Impeccable uses opt-in project-local hook.mjs manifests;
+  # do not manufacture global engine wiring or identify ownership by a label.
   $issues = @()
   foreach ($event in $hookProperty.Value.PSObject.Properties) {
     $groups = @()
@@ -934,7 +939,21 @@ function Repair-UabsCodexLegacyHooks {
           }
         }
         if ($scriptName) { $issues += ($event.Name + ': retired bundle executable hook ' + $scriptName); $removed = $true }
-        else { $keep += $handler }
+        else {
+          $unix = $handler.PSObject.Properties['command']
+          $legacyImpeccable = $false
+          if ($handler.type -eq 'command' -and $unix -and $unix.Value -ceq $impeccableUnix) {
+            foreach ($field in @('commandWindows','command_windows')) {
+              $windows = $handler.PSObject.Properties[$field]
+              if ($windows -and $windows.Value -ceq $impeccableWindows) {
+                $legacyImpeccable = $true
+              }
+            }
+          }
+          if ($legacyImpeccable) {
+            $issues += ($event.Name + ': retired obsolete global Impeccable executable hook'); $removed = $true
+          } else { $keep += $handler }
+        }
       }
       if ($keep.Count -or -not $removed) { $handlers.Value = @($keep); $groups += $group }
     }
@@ -955,7 +974,7 @@ function Repair-UabsCodexLegacyHooks {
         Copy-Item -LiteralPath $backup -Destination $Path -Force
         throw 'Codex hook retirement verification failed; original restored.'
       }
-      Write-UabsOk ('Codex: retired ' + $issues.Count + ' stale bundle hook handler(s); backup: ' + $backup)
+      Write-UabsOk ('Codex: retired ' + $issues.Count + ' obsolete native hook handler(s); backup: ' + $backup)
     } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
   }
   $issues

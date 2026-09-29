@@ -85,6 +85,42 @@ try {
     Assert (@(Get-ChildItem -LiteralPath $env:CODEX_HOME -Filter 'hooks.json.before-retired-*.bak').Count -eq 3) 'Native hook backups exceeded the retention limit.'
     Assert ([IO.File]::ReadAllText($personalBackup) -ceq 'keep') 'Backup pruning removed an unrelated file.'
   } finally { $env:USERPROFILE = $savedProfile }
+
+  # Obsolete global Impeccable commands must not survive upgrades. Modern
+  # hook.mjs entries and similarly labelled custom commands are not ours.
+  $impeccableUnix = '[ ! -f ".codex/skills/impeccable/scripts/impeccable" ] || ".codex/skills/impeccable/scripts/impeccable" hook'
+  $impeccableWindows = 'if exist ".codex/skills/impeccable/scripts/impeccable.cmd" (".codex/skills/impeccable/scripts/impeccable.cmd" hook & exit /b)'
+  $impeccableDoc = [ordered]@{
+    personal='keep'
+    hooks=[ordered]@{
+      Stop=@([ordered]@{hooks=@(
+        [ordered]@{type='command';command=$impeccableUnix;commandWindows=$impeccableWindows;timeout=30;statusMessage='Design deep pass'},
+        [ordered]@{type='command';command='node ".agents/skills/impeccable/scripts/hook.mjs"';timeout=30;statusMessage='Design deep pass';future='keep'}
+      )})
+      PostToolUse=@([ordered]@{matcher='Edit|Write|apply_patch';hooks=@([ordered]@{type='command';command=$impeccableUnix;commandWindows=$impeccableWindows;timeout=5;statusMessage='Checking UI changes'})})
+      PreToolUse=@([ordered]@{matcher='Write';hooks=@([ordered]@{type='command';command='personal-hook';commandWindows=$impeccableWindows;statusMessage='Checking UI changes'})})
+    }
+  }
+  [IO.File]::WriteAllText($manifest, ($impeccableDoc | ConvertTo-Json -Depth 30), $utf8)
+  $impeccableHash = (Get-FileHash -LiteralPath $manifest -Algorithm SHA256).Hash
+  Assert (@(Repair-UabsCodexLegacyHooks -Path $manifest -CheckOnly).Count -eq 2) 'Read-only check missed the two broken Impeccable Windows overrides.'
+  Assert ((Get-FileHash -LiteralPath $manifest -Algorithm SHA256).Hash -ceq $impeccableHash) 'Impeccable read-only check wrote the manifest.'
+  $trustBefore = [IO.File]::ReadAllText($config)
+  $output = & $powerShell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TOOLS\Install-Completeness-Gate.ps1') -PackRoot $PackRoot -Providers Codex 2>&1 | Out-String
+  Assert ($LASTEXITCODE -eq 0) ('Impeccable upgrade failed: ' + $output)
+  Assert ([IO.File]::ReadAllText($config) -ceq $trustBefore) 'Impeccable repair changed hook trust or unrelated settings.'
+  $doc = [IO.File]::ReadAllText($manifest) | ConvertFrom-Json
+  Assert (@(Repair-UabsCodexLegacyHooks -Path $manifest -CheckOnly).Count -eq 0) 'Impeccable overrides still need repair.'
+  Assert ($doc.personal -eq 'keep' -and $doc.hooks.Stop[0].hooks[0].future -eq 'keep') 'Impeccable retirement lost metadata.'
+  Assert (@($doc.hooks.Stop).Count -eq 1 -and @($doc.hooks.Stop[0].hooks).Count -eq 1 -and $doc.hooks.Stop[0].hooks[0].command -ceq 'node ".agents/skills/impeccable/scripts/hook.mjs"' -and $doc.hooks.Stop[0].hooks[0].timeout -eq 30 -and $doc.hooks.Stop[0].hooks[0].statusMessage -eq 'Design deep pass') 'Retirement removed or changed a current hook.mjs handler.'
+  Assert (@($doc.hooks.PostToolUse).Count -eq 0) 'Obsolete global post-edit handler survived.'
+  Assert ($doc.hooks.PreToolUse[0].hooks[0].commandWindows -ceq $impeccableWindows) 'Repair rewrote a similarly labelled custom hook without exact ownership.'
+  $impeccableBackups = @(Get-ChildItem -LiteralPath $env:CODEX_HOME -Filter 'hooks.json.before-retired-*.bak')
+  Assert (@($impeccableBackups | Where-Object { (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash -ceq $impeccableHash }).Count -eq 1) 'Impeccable original bytes were not backed up exactly once.'
+  $repairedBytes = [IO.File]::ReadAllText($manifest)
+  Repair-UabsCodexLegacyHooks -Path $manifest | Out-Null
+  Assert ([IO.File]::ReadAllText($manifest) -ceq $repairedBytes -and @(Get-ChildItem -LiteralPath $env:CODEX_HOME -Filter 'hooks.json.before-retired-*.bak').Count -eq $impeccableBackups.Count) 'Repeated Impeccable repair wrote another backup.'
+
   [IO.File]::WriteAllText($manifest, '{invalid', $utf8)
   $refused = $false
   try { Repair-UabsCodexLegacyHooks -Path $manifest | Out-Null } catch { $refused = $true }
