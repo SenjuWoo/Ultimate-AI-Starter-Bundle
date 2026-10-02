@@ -687,6 +687,7 @@ Additional canonical payloads without separate tool-catalog entries:
 |---|---|---|
 | `img2threejs` | [img2threejs/img2threejs](https://github.com/img2threejs/img2threejs) | Vendored skill, forge and fixtures |
 | `skill-creator`, `build-mcp-server`, `build-mcpb`, `build-mcp-app` | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | Selected cross-provider skills, not the entire marketplace |
+| Hermes native Unity bridge | [CoplayDev/unity-mcp](https://github.com/CoplayDev/unity-mcp) | Existing Coplay editor backend, isolated in `unity`/`creative`; distinct from the IvanMurzak project route |
 
 Skyrim Forge is the bundle author's product, shipped as source under
 `BUNDLED-TOOLS/skyrim-forge`, not a missing third-party download.
@@ -787,9 +788,9 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.7.35** - 2026-10-02. Documentation refresh, complete upstream listings,
-current Hermes model-catalog review and an exact-match repair for the retired
-free compression endpoint. **172 canonical skills**, no new always-on MCP.
+**v8.7.35** - 2026-10-02. Shared task recipes, scoped skills/CLI/MCP composition,
+narrow Hermes engine/web phases and tested RTK/Ponytail updates.
+**172 canonical skills**, no new always-on MCP.
 [Changes](docs/history/V8.7.35-CHANGELOG.md) ·
 [Latest published release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest).
 

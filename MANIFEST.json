@@ -36841,8 +36841,8 @@
  },
  {
   "path": "README.md",
-  "size": 45976,
-  "sha256": "4ae0ca7d7e30a46ceb8f2c7b9ddb92d94e64f5eb70b700ea7bf98b0f187ea8b8"
+  "size": 46145,
+  "sha256": "31e856fa6f19542f5bf86ad59c4becc1c144caf6356f7d34e2a00e516e1e7e89"
  },
  {
   "path": "SECURITY.md",
@@ -37411,8 +37411,8 @@
  },
  {
   "path": "VALIDATION.md",
-  "size": 2515,
-  "sha256": "7c5db72f8b77aa72246e675030df8e5173509c637d159956761780f9966b75c3"
+  "size": 2905,
+  "sha256": "552d5aebc180508e9eaeb204e511d073104346f82085a58570b6990c775dc3b7"
  },
  {
   "path": "VERSION.txt",

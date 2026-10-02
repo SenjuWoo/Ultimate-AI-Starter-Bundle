@@ -43,6 +43,11 @@ hardening was not overwritten by the vendor update.
 New Hermes native Blender/Unity/web configuration was applied and verified,
 with original configs backed up and existing preferences retained. Godot is
 conditional on its runtime prerequisite. Initialize/tools-list transport
+checks passed for Blender (36 tools, 46,629 schema bytes), Unity (47 tools,
+108,248 bytes) and Playwright (25 tools, 20,286 bytes). These are compact UTF-8
+schema sizes, not prompt/billing measurements. Playwright was probed through
+Hermes' actual Windows resolver/cached-npx path; raw Python spawning bare `npx`
+failed to resolve it and is not native-client connection evidence. Transport
 checks do not prove a companion editor/add-on is connected, a GPU operation
 works, or generated mods survive gameplay. No audited Unreal editor MCP is
 shipped. Open chats may need reload/restart to see new registrations.
