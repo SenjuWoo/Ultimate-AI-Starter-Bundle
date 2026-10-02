@@ -36806,8 +36806,8 @@
  },
  {
   "path": "README.md",
-  "size": 44801,
-  "sha256": "e6ae6fe44c1031602af828e85082f8f0027f4082f137f273dba639f2e7954a6a"
+  "size": 44777,
+  "sha256": "e41ed6059d3f1bc6747e1372891a94c13da380413bf107e48a6578d7e49935e3"
  },
  {
   "path": "SECURITY.md",
@@ -37066,8 +37066,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 296634,
-  "sha256": "6387b5c96c0387eb9bee28f45e912940943bab5193018d21c0b23bfdb448908e"
+  "size": 296751,
+  "sha256": "1bde402e77e78b9fb354a8878f3d19047b2712843ed7aa3bd598a05cef107e10"
  },
  {
   "path": "TESTS/test_universal_modder.py",
@@ -43666,8 +43666,8 @@
  },
  {
   "path": "assets/hero.svg",
-  "size": 2868,
-  "sha256": "96dfdd562481ba2bc356a2c268a16963a146131249e81e9b44fb45b7785658a7"
+  "size": 2864,
+  "sha256": "08b37ed32351f2e2e97a2f719eea75fa69a83aceaafefc3bb8571f98bfc8764d"
  },
  {
   "path": "assets/mark.svg",
@@ -44316,8 +44316,8 @@
  },
  {
   "path": "docs/history/V8.7.34-CHANGELOG.md",
-  "size": 2920,
-  "sha256": "424ce3a1b24136ffb9c4db52573913f3ef4226358238756e67b8b64b28a7d970"
+  "size": 3085,
+  "sha256": "31dfd436be56125ded7d8f6976fc94f998ad4a780a0c357674c1c12f8918906d"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",

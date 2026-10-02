@@ -5601,6 +5601,8 @@ def test_current_documentation_links_and_upstream_coverage() -> None:
         "README.md", "AIO-GUIDE.md", "docs/HERMES-MODELS.md",
         "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md", "_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md",
         "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md")]
+    hero = read(ROOT / "assets/hero.svg")
+    assert "Zero chat cost" not in hero and "MCP payload on disk." in hero
     from urllib.parse import unquote
     for path in paths:
         for target in re.findall(r"\]\(([^)]+)\)", read(path)):

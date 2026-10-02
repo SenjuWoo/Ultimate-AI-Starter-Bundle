@@ -24,7 +24,7 @@
   <g font-family="ui-sans-serif, system-ui, sans-serif">
     <rect x="72" y="292" width="360" height="72" rx="16" fill="#1c2434"/>
     <text x="96" y="322" fill="#7c9cff" font-size="12" font-weight="700" letter-spacing="1.6">INSTALLED</text>
-    <text x="96" y="346" fill="#d5def4" font-size="16">On disk. Zero chat cost.</text>
+    <text x="96" y="346" fill="#d5def4" font-size="16">MCP payload on disk.</text>
     <rect x="456" y="292" width="360" height="72" rx="16" fill="#7c9cff"/>
     <text x="480" y="322" fill="#0d1117" font-size="12" font-weight="700" letter-spacing="1.6">ENABLED</text>
     <text x="480" y="346" fill="#0d1117" font-size="16">Registered. You flip the switch.</text>

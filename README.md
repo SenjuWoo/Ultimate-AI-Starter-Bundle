@@ -207,9 +207,9 @@ updater: the narrow rewrite hook and measurements are version-specific. A
 new upstream release is not automatically treated as tested. RTK fallback
 archives must match the shipped SHA-256 manifest; a rejected replacement
 leaves the previous executable intact. Successful replacements retain a
-`rtk.exe.bak-uabs-*` backup beside the executable. If v8.7.17 stopped with
-`rtk installed version 0.48.0, expected 0.47.0`, rerun `START-HERE.bat` from
-the current release to repair it and finish the interrupted install.
+`rtk.exe.bak-uabs-*` backup beside the executable. If an older installation
+reports a pin mismatch, rerun `START-HERE.bat` from the current release to
+repair it and finish the interrupted install.
 
 ### Two installation entry points
 
