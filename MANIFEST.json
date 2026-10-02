@@ -33327,7 +33327,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1444,
-  "sha256": "e37a2dc2521282e31bf5fd24777b3b9eab485a756331016dea5daaeecae0c9ae"
+  "sha256": "cae9d05669ff2ab94c051fbbde478c0d0c4fe1c0cd3e36d76f668a33f12063ab"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
@@ -33451,8 +33451,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/offline/universal_modder-0.2.0-py3-none-any.whl",
-  "size": 362794,
-  "sha256": "dd33c378e6d7ff5feac1e995ae4c7d303a5fe73c441e9581661628d975797d07"
+  "size": 362834,
+  "sha256": "de69cb68b45ce0f5fdf07b1266badafca8dd51c0eeb149a58136d3120485d088"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.agents/plugins/marketplace.json",
@@ -36566,8 +36566,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_um.py",
-  "size": 11474,
-  "sha256": "8e90650b9d8a535147beeb4fd06711d05842c832ab684e1ffe9c00bdd36dbca5"
+  "size": 11651,
+  "sha256": "51a812c591fae9a87a33241f887827e601f6476712e23422114e65c50bfb5f48"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/__init__.py",
@@ -36631,8 +36631,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/kb.py",
-  "size": 23959,
-  "sha256": "c9ca938a3122f2af360094ec67b1b38d1abb8da4432297d343c9dc8b2c00ce39"
+  "size": 23975,
+  "sha256": "bbbc1df942bfbd105f09e01ff162c7c7cf40a1c89f5a1c2a8410905e80766462"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/ps1/ProcLoopback.ps1",
@@ -36646,8 +36646,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/publish.py",
-  "size": 6395,
-  "sha256": "f7222670c86480eeed7c632ffbe374342d77b160878c571ca193b0e2718cf3f6"
+  "size": 6412,
+  "sha256": "b7871a033ee74d5bc6599e4f41c2c2a43c88ea87fe5dc01bd8d912930b8dad4d"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/render3d.py",
@@ -36681,8 +36681,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 175099,
-  "sha256": "fb55e34cf1ab463a3320c927074a7e8cc565852374e79f484114897681a2322e"
+  "size": 175343,
+  "sha256": "dc4cd90bc97f7e25c4a220607f5e74b1903b41029189444b7a5a58382c5f824e"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -37071,8 +37071,8 @@
  },
  {
   "path": "TESTS/test_universal_modder.py",
-  "size": 4272,
-  "sha256": "5683d1ed50a39f454d4916f9d610991ef17ee59389df7f5a795c6c2defa9f382"
+  "size": 4892,
+  "sha256": "598203f862aa1b9d03aeb03f91ea4c28ce38c5727b18fab4825b51cad0251558"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
@@ -44306,8 +44306,8 @@
  },
  {
   "path": "docs/history/V8.7.33-CHANGELOG.md",
-  "size": 4812,
-  "sha256": "0ce21c581490815fb182839546cbef9d5e0a29602b30201de278981fd739973e"
+  "size": 5211,
+  "sha256": "4c7e14dbe340f32d9d5f9df859df45628bea08b2120b61d2b18f9cb56fabf635"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",

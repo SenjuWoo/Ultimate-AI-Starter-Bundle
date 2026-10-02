@@ -191,7 +191,8 @@ def test_publish_check(tmp_path, capsys):
     (tmp_path / "mod" / "copied.bin").write_bytes(b"x" * 4096)
     assert publish.check(str(tmp_path / "mod"), str(tmp_path / "game")) == 1
     out = capsys.readouterr().out
-    assert "game file copied verbatim" in out and "FAL_KEY assignment" in out and "Ghidra auto-name" in out
+    assert "game file copied verbatim" in out and "possible credential material" in out and "Ghidra auto-name" in out
+    assert fake_key not in out and "abcdefghijklmnopqrstuvwxyz0123" not in out
     assert "decompiler header x1 in src/Mod.cs" in out and "README.md" not in out.split("decompiler header")[-1].split("\n")[0]
 
 
@@ -257,4 +258,5 @@ def test_kb_check_rejects_secrets_and_dumps(tmp_path):
     note.write_text("---\nkind: technique\ntitle: t\ntags: [x]\ndate: 2026-09-30\nagents: [a]\n---\n# t\n"
                     f"```c\n{code}\n```\n" + "FAL" + "_KEY=abcdefghijklmnopqrstuvwxyz0123\n")
     fails, _ = kb.check_note(note)
-    assert any("code block" in f for f in fails) and any("FAL_KEY" in f for f in fails)
+    assert any("code block" in f for f in fails) and any("possible credential material" in f for f in fails)
+    assert "abcdefghijklmnopqrstuvwxyz0123" not in " ".join(fails)

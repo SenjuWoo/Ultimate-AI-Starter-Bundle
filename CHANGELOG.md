@@ -4,6 +4,7 @@
 - Fix redirected Windows UTF-8 output, knowledge note encoding, publication path separators and Steam registry discovery; package fonts, PowerShell support and knowledge in the wheel. Run 22 upstream tests plus a dependency-free bundle regression.
 - Refresh eight evaluated pins: Playwright MCP/CLI, Firecrawl, official GitHub MCP, shadcn, Blender MCP, Windows MCP and optional ComfyUI CLI. Preserve scoped activation, Windows OFF-by-default, RTK's narrow allowlist and compatibility holds. [Measurements and limits](docs/history/V8.7.33-CHANGELOG.md).
 - Fix Hermes profile migration treating harmless native stderr warnings as fatal PowerShell 5.1 errors; preserve diagnostics and nonzero-exit failure checks in the shared runner, with a real native-command regression.
+- Tighten publication/knowledge credential diagnostics to fixed messages and file paths. Resolve three CodeQL false-positive label flows without suppressing scanning or echoing matched values; synthetic rejection/no-echo tests remain runnable.
 
 ## 8.7.32
 

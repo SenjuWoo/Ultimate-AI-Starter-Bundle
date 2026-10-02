@@ -208,9 +208,9 @@ def check_note(path: Path, root: Path | None = None) -> tuple[list[str], list[st
             if ph in text]
     if left and "TEMPLATE" not in path.name:
         fails.append(f"unfilled template text: {', '.join(repr(x) for x in left)}")
-    for label, rx in SECRET_PATTERNS:
+    for _, rx in SECRET_PATTERNS:
         if rx.search(text):
-            fails.append(f"{label} in the note - remove it")
+            fails.append("possible credential material in the note - remove it")
     blocks = re.findall(r"```[^\n]*\n(.*?)```", body, re.S)
     for b in blocks:
         n = b.count("\n")

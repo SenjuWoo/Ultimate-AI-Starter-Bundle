@@ -85,9 +85,9 @@ def check(mod: str, game: str | None = None) -> int:
                 txt = f.read_text(encoding="utf-8", errors="replace")
             except OSError:
                 continue
-            for label, rx in SECRET_PATTERNS:
+            for _, rx in SECRET_PATTERNS:
                 if rx.search(txt):
-                    fails.append(f"{label} in {rel}")
+                    fails.append(f"possible credential material in {rel}")
             for label, rx in DECOMP_PATTERNS if f.suffix.lower() in CODE_EXT else ():
                 m = rx.findall(txt)
                 if m:

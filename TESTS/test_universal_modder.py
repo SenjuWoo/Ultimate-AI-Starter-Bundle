@@ -1,5 +1,7 @@
 """Offline Universal Modder packaging, command discovery and portable recon checks."""
 import json
+from contextlib import redirect_stdout
+import io
 import os
 from pathlib import Path
 import subprocess
@@ -23,10 +25,20 @@ def main():
         if args == ["--version"]:
             assert result.stdout.strip() == "universal-modder 0.2.0"
     sys.path.insert(0, str(VENDOR))
-    from um import kb, scan
+    from um import kb, publish, scan
     assert kb.local_root() == VENDOR / "knowledge"
     with tempfile.TemporaryDirectory(prefix="uabs-um-recon-") as temporary:
         fixture = Path(temporary)
+        package = fixture / "publication"
+        package.mkdir()
+        synthetic = "FAL_KEY=" + "TEST_ONLY_" * 8
+        (package / "payload.ini").write_text(synthetic, encoding="utf-8")
+        (package / "README.md").write_text("Test package", encoding="utf-8")
+        output = io.StringIO()
+        with redirect_stdout(output):
+            assert publish.check(str(package)) == 1
+        assert "possible credential material in payload.ini" in output.getvalue()
+        assert synthetic not in output.getvalue() and "TEST_ONLY_" not in output.getvalue()
         note = fixture / "unicode-note.md"
         note.write_text("R\u00e9sum\u00e9 \u2013 \u65e5\u672c\u8a9e\n", encoding="utf-8")
         legacy_env = dict(env, PYTHONUTF8="0", PYTHONIOENCODING="cp1252")
