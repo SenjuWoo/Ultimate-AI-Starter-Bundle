@@ -12,9 +12,11 @@ for convenience. **You do not own these projects** by receiving this pack.
 | Superpowers | https://github.com/obra/superpowers | see repo |
 | Ponytail | https://github.com/DietrichGebert/ponytail | MIT |
 | CodeBurn | https://github.com/getagentseal/codeburn | see repo |
-| Impeccable CLI 3.6.0 / skill 4.1.2 | https://github.com/pbakaus/impeccable | Apache-2.0 |
+| Impeccable | https://github.com/pbakaus/impeccable | Apache-2.0 |
+| Universal Modder | https://github.com/rehan-remade/universal-modder | MIT; included fonts SIL OFL |
 
-Skyrim Forge is **not** redistributed.
+Skyrim Forge is maintained by the bundle author and ships as source under
+`BUNDLED-TOOLS/skyrim-forge`; it is not a third-party download.
 
 Do not upload third-party binaries to Nexus as your own work.
 Keep attribution. Prefer `TOOLS\Update-From-GitHub.ps1` for newer versions.

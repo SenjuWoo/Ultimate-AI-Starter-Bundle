@@ -1,11 +1,11 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.32",
-  "generated": "2026-09-28",
-  "release_tag": "v8.7.32",
-  "canonical_skills": 171,
+  "version": "8.7.33",
+  "generated": "2026-10-02",
+  "release_tag": "v8.7.33",
+  "canonical_skills": 172,
   "provider_trees": 5,
-  "registry_entries": 171,
+  "registry_entries": 172,
   "gates": [
     "TESTS/Test-Pack.ps1",
     "TESTS/Test-PreamblePreservation.ps1",
@@ -22,8 +22,10 @@
     "TESTS/Test-ForgeRootResolution.ps1",
     "TESTS/Test-ProviderSkillSync.ps1",
     "TESTS/Test-McpProfiles.ps1",
-    "TOOLS/mcp_handshake.py --selftest"
+    "TOOLS/mcp_handshake.py --selftest",
+    "TESTS/test_universal_modder.py",
+    "TESTS/Test-HermesNativeStderr.ps1"
   ],
-  "runtime_status": "v8.7.32: 171 canonical skills; extend native Codex cleanup to the exact obsolete global Impeccable executable pair behind Design deep pass / Checking UI changes failures. Preserve current hook.mjs handlers, custom commands and trust; exact backups, read-only detection and idempotent upgrade fixtures. No new dependency, global design engine, MCP schema, profile change or RTK-policy change.",
+  "runtime_status": "v8.7.33: pinned Universal Modder source, packaged knowledge and Windows UTF-8/path repairs; 22 upstream tests, installed-wheel offline knowledge search and scoped MCP handshakes PASS. Isolated browser CLI navigation PASS. No game/editor/GPU/fal runtime proof; fresh whole-machine installation is not implied.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

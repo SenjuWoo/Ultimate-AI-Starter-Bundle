@@ -51,6 +51,10 @@ skill deliberately does not duplicate them.
 If the game is not listed, read `references/game-mod-unknown-game-fallback.md`
 and do not guess an API.
 
+For installed-game/engine discovery, local sprite processing, gameplay video
+editing or field-note lookup, use `universal-modder`. Its CLI complements these
+engine references; it does not replace their version or release gates.
+
 ## Cross-game workflow
 
 | Task | Reference |

@@ -5128,7 +5128,7 @@ def test_versioned_online_tools_pin_the_same_version_offline() -> None:
     assert headroom["version"] in headroom["pip_spec"]
     assert headroom["version"] in headroom["offline_asset"]
     installer = ps_code(ROOT / "INSTALL-AIO.ps1")
-    assert '$wheelSpec = ("{0}[mcp]" -f $asset)' in installer, (
+    assert "else { '[mcp]' }" in installer and '$wheelSpec = $asset + $extras' in installer, (
         "the bundled Headroom wheel is installed without its MCP dependencies"
     )
     assert "Get-Command uv" in installer and "tool','install','--force" in installer, (

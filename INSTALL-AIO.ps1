@@ -73,7 +73,7 @@ param(
   [switch]$AllProviders,
   [ValidateSet('BundledFirst','OnlineLatest','BundledOnly')]
   [string]$Mode = 'OnlineLatest',
-  [string[]]$Components = @('housecarl','spooky','codebase-memory','headroom','superpowers','ponytail','codeburn','impeccable','playwright-cli','github-mcp-server','rtk'),
+  [string[]]$Components = @('housecarl','spooky','codebase-memory','headroom','superpowers','ponytail','codeburn','impeccable','playwright-cli','github-mcp-server','rtk','universal-modder'),
   [string]$WorkspaceRoot = '',
   # The directory Skyrim Forge is installed INTO, not the folder that
   # contains it: -ForgeRoot 'S:\Apps\Skyrim Tools\Skyrim-Forge' keeps Forge
@@ -377,7 +377,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.7.32 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.7.33 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -1437,6 +1437,10 @@ if (-not $SkillsOnly) {
         }
       }
       'pip-or-wheel' {
+              $cliName = if ($comp.cli) { [string]$comp.cli } else { 'headroom' }
+              $cliEnv = if ($comp.cli_env) { [string]$comp.cli_env } else { 'HEADROOM_CMD' }
+              $extras = if ($comp.source_dir) { '' } else { '[mcp]' }
+              $packageSpec = if ($comp.source_dir) { Join-Path $PackRoot $comp.source_dir } else { $comp.pip_spec }
               <#
               Prefer a python that actually has pip. The Hermes desktop exports its
               own venv python on PATH first (no pip), which used to kill this step
@@ -1462,7 +1466,10 @@ if (-not $SkillsOnly) {
                 $installed[$id] = @{ status = 'failed' }
                 continue
               }
-              $asset = Get-ComponentAssetPath -Comp $comp
+              $asset = if ($comp.source_dir) {
+                $wheel = Join-Path $offline $comp.offline_asset
+                if (Test-Path -LiteralPath $wheel -PathType Leaf) { $wheel }
+              } else { Get-ComponentAssetPath -Comp $comp }
               $ok = $false
               $hrInstalled = $null
               $installMethod = 'pip'
@@ -1470,17 +1477,19 @@ if (-not $SkillsOnly) {
                 # Prefer uv's isolated tool environment. A pip --user install
                 # can succeed into a Scripts directory that is not on PATH,
                 # leaving an older ~/.local/bin/headroom.exe active.
-                $activeHeadroom = Get-Command headroom -ErrorAction SilentlyContinue
+                $activeHeadroom = Get-Command $cliName -ErrorAction SilentlyContinue
                 if ($activeHeadroom -and $activeHeadroom.Source) {
                   [void](Stop-UabsProcessUsingExecutable $activeHeadroom.Source)
                 }
-                $uvSpec = if ($asset -and $asset.EndsWith('.whl')) { ("{0}[mcp]" -f $asset) } else { $comp.pip_spec }
-                $ok = Invoke-UabsNative $uv.Source @('tool','install','--force',$uvSpec)
+                $uvSpec = if ($asset -and $asset.EndsWith('.whl')) { $asset + $extras } else { $packageSpec }
+                $uvArgs = @('tool','install','--force')
+                if ($comp.python) { $uvArgs += @('--python', [string]$comp.python) }
+                $ok = Invoke-UabsNative $uv.Source ($uvArgs + @($uvSpec))
                 if ($ok) {
                   $installMethod = 'uv-tool'
                   $uvBin = @(& $uv.Source tool dir --bin 2>$null | Where-Object { $_ } | Select-Object -Last 1)
                   if ($uvBin.Count) {
-                    $candidate = Join-Path ([string]$uvBin[0]) 'headroom.exe'
+                    $candidate = Join-Path ([string]$uvBin[0]) ($cliName + '.exe')
                     if (Test-Path -LiteralPath $candidate -PathType Leaf) { $hrInstalled = $candidate }
                   }
                   Refresh-ProcessPath
@@ -1489,32 +1498,34 @@ if (-not $SkillsOnly) {
               if (-not $ok -and $asset -and $asset.EndsWith('.whl') -and $py) {
                 Write-Host "  pip install $asset"
                 $env:PYTHONPATH = ''
-                $wheelSpec = ("{0}[mcp]" -f $asset)
+                $wheelSpec = $asset + $extras
                 # Invoke-UabsNative keeps pip's stderr ("already satisfied", the
                 # pip-version notice) from surfacing as a NativeCommandError.
                 if ($py -eq 'py') { $ok = Invoke-UabsNative 'py' (@('-3','-m','pip','install','--user',$wheelSpec)) }
                 else { $ok = Invoke-UabsNative $py @('-m','pip','install','--user',$wheelSpec) }
               }
               if (-not $ok -and $py) {
-                $spec = $comp.pip_spec
+                $spec = $packageSpec
                 $env:PYTHONPATH = ''
                 if ($py -eq 'py') { $ok = Invoke-UabsNative 'py' (@('-3','-m','pip','install','--user',$spec)) }
                 else { $ok = Invoke-UabsNative $py @('-m','pip','install','--user',$spec) }
               }
               if ($ok -and -not $hrInstalled -and $py) {
-                $scriptsProbe = "import os,sysconfig; print(os.path.join(sysconfig.get_path('scripts', scheme='nt_user'), 'headroom.exe'))"
+                $scriptsProbe = "import os,sysconfig; print(os.path.join(sysconfig.get_path('scripts', scheme='nt_user'), '$cliName.exe'))"
                 $probeArgs = if ($py -eq 'py') { @('-3','-c',$scriptsProbe) } else { @('-c',$scriptsProbe) }
                 $candidate = @(& $py @probeArgs 2>$null | Where-Object { $_ } | Select-Object -Last 1)
                 if ($candidate.Count -and (Test-Path -LiteralPath $candidate[0] -PathType Leaf)) { $hrInstalled = [string]$candidate[0] }
               }
         if ($ok) {
           $hr = $hrInstalled
-          if (-not $hr) { try { $hr = (Get-Command headroom -EA SilentlyContinue).Source } catch {} }
-          if ($hr) { Set-UabsUserEnv 'HEADROOM_CMD' $hr }
-          $installed[$id] = @{ status=$installMethod; headroom=$hr }
-          Write-UabsOk 'Headroom installed'
+          if (-not $hr) { try { $hr = (Get-Command $cliName -EA SilentlyContinue).Source } catch {} }
+          if ($hr) { Set-UabsUserEnv $cliEnv $hr }
+          $installed[$id] = @{ status=$installMethod; exe=$hr; version=$comp.version }
+          if ($id -eq 'headroom') { $installed[$id].headroom = $hr }
+          if (-not $hr) { $installed[$id].status = 'failed'; Write-UabsBad "$($comp.name) installed but $cliName does not resolve" }
+          else { Write-UabsOk "$($comp.name) installed: $hr" }
         } else {
-          Write-UabsBad 'Headroom install failed (need Python)'
+          Write-UabsBad "$($comp.name) install failed (need Python)"
           $installed[$id] = @{ status='failed' }
         }
       }
@@ -2187,7 +2198,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.7.32'
+version = '8.7.33'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

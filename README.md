@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.32 -->
+<!-- Ultimate AI Starter Bundle v8.7.33 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.32
+# Ultimate AI Starter Bundle v8.7.33
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -15,7 +15,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
 <p>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-7c9cff?labelColor=0d1117" alt="MIT License"></a>
-  <a href="VERSION.txt"><img src="https://img.shields.io/badge/tree-v8.7.29-7c9cff?labelColor=0d1117" alt="v8.7.29"></a>
+  <a href="VERSION.txt"><img src="https://img.shields.io/badge/source-tree-7c9cff?labelColor=0d1117" alt="source tree"></a>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest"><img src="https://img.shields.io/github/v/release/SenjuWoo/Ultimate-AI-Starter-Bundle?label=latest%20release&amp;color=9db0e8&amp;labelColor=0d1117" alt="latest published release"></a>
 </p>
 
@@ -35,7 +35,13 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
   <img src="assets/hero.svg" alt="Installed is not enabled: five providers, parked optional MCPs" width="100%">
 </p>
 
-**v8.7.21:** New `creative` Hermes profile (Blender MCP + MCP for Unity on the core three), the Blender MCP pin refreshed to mcp-for-blender 2.0.0 with a re-measured tool surface, and pack-gate Actions pinned to the same full commit SHAs the Forge jobs already used. Editors connect when open; schema costs measured with telemetry off. [Changes and verification scope](docs/history/V8.7.21-CHANGELOG.md).
+**v8.7.33:** Universal Modder adds local engine discovery, sprite processing and gameplay-video tools to all five providers through one indexed skill and on-demand guides. Eight evaluated component pins refreshed; Windows MCP stays off by default and RTK's tested narrow policy stays unchanged. [Changes and verification scope](docs/history/V8.7.33-CHANGELOG.md).
+
+### Universal Modder without extra background servers
+
+The default installer provides `um` plus the same `universal-modder` skill to all five providers. Its ten upstream guides are on-demand references, not ten additional skill-index entries. Use `um --version`, `um scan "<verified game folder>" --json`, or the relevant subcommand's `--help`. The packaged knowledge base works offline; its examples must be rechecked against your actual game. Existing engine/Skyrim skills remain the implementation specialists.
+
+The bundle does not install the upstream fal MCP or its session hooks. Paid fal generation is optional and needs the user's own setup. Video requires an installed FFmpeg; 3D-to-sprite rendering requires Blender. Core carries vendored source; Full-Offline also carries the wheel. Python/runtime and dependency setup can still need network access when they are not already cached.
 
 ### Creating a complete GitHub project
 
@@ -70,7 +76,7 @@ One distinction explains almost everything about how this pack behaves:
 | **INSTALLED** | The tool exists on disk | Disk space only. **Zero** effect on your AI chats. |
 | **ENABLED** | Registered in a provider's config | Available in that scope after trust/connection checks; schema loading and billing depend on the provider. |
 
-The 167 **skills** use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
+The 172 **skills** use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
 
 ### What's ON after install
 
@@ -590,7 +596,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-- **Provider skills** — 171 skills per AI (Claude, Codex, Grok, Kimi, Hermes), all generated from one canonical tree.
+- **Provider skills** — 172 skills per AI (Claude, Codex, Grok, Kimi, Hermes), all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7, official GitHub, and Headroom are the verified always-on core. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup
@@ -779,6 +785,8 @@ registry.
   remote bootstrap download and extract path was exercised against a local archive.
 
 ## Version
+
+**v8.7.33** - 2026-10-02. Universal Modder for all five providers, portable Windows CLI and packaged knowledge, eight measured component updates, ownership-aware local convergence. **172 canonical skills**, no new always-on MCP. See [changes](docs/history/V8.7.33-CHANGELOG.md).
 
 **v8.7.32** - 2026-09-28. Retire the obsolete global Codex Impeccable hooks behind Design deep pass / Checking UI changes failures. Exact command-pair ownership, original-byte backups, preservation of current project hooks and custom handlers, read-only doctor detection and repeated-upgrade regression. No new global engine, dependencies or MCP schemas. See [changes](docs/history/V8.7.32-CHANGELOG.md).
 

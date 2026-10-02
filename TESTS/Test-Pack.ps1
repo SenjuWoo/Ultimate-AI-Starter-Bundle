@@ -71,6 +71,19 @@ if (-not $py) {
     }
 }
 
+if ($py) {
+    & $py.Source (Join-Path $PackRoot 'TESTS\test_universal_modder.py')
+    if ($LASTEXITCODE -ne 0) { Bad 'Universal Modder offline CLI and routing check failed' }
+    else { Good 'Universal Modder offline CLI and all-provider routing' }
+}
+
+$stderrGate = Join-Path $PackRoot 'TESTS\Test-HermesNativeStderr.ps1'
+if (-not (Test-Path -LiteralPath $stderrGate)) { Bad 'Hermes native stderr regression missing' }
+else {
+    & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $stderrGate -PackRoot $PackRoot
+    if ($LASTEXITCODE -ne 0) { Bad 'Hermes native stderr handling failed' } else { Good 'Hermes native stderr handling' }
+}
+
 Section '2. PowerShell parses (excluding BUNDLED-TOOLS)'
 $n = 0; $bad = 0
 Get-ChildItem -Path $PackRoot -Recurse -Include *.ps1, *.psm1 -File |

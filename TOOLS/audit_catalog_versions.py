@@ -98,10 +98,16 @@ def latest_version(source: tuple[str, str], timeout: int, tag_prefix: str | None
         if not match:
             raise ValueError(f"latest GitHub tag has no semantic version: {tag!r}")
         return match.group(1)
+    if kind == "github-commit":
+        return str(get_json(f"https://api.github.com/repos/{name}/commits/main", timeout)["sha"])
     raise ValueError(f"unknown version source: {kind}")
 
 
 def version_targets(component: dict) -> list[tuple[str, str, tuple[str, str] | None]]:
+    if component.get("source_commit") and component.get("github"):
+        github = component["github"]
+        return [(f"{component['id']}:source", component["source_commit"],
+                 ("github-commit", f"{github['owner']}/{github['repo']}"))]
     targets = [(str(component.get("id")), str(component.get("version")), version_source(component))]
     github = component.get("github") or {}
     if component.get("skill_version") and github.get("owner") and github.get("repo"):
@@ -162,6 +168,11 @@ def self_test() -> None:
     ]
     assert VERSION_RE.search("release-v1.2.3").group(1) == "1.2.3"
     from unittest.mock import patch
+    with patch(__name__ + ".get_json", return_value={"sha": "a" * 40}):
+        assert latest_version(("github-commit", "o/r"), 1) == "a" * 40
+    assert version_targets({"id": "vendored", "source_commit": "a" * 40,
+                            "github": {"owner": "o", "repo": "r"}}) == [
+        ("vendored:source", "a" * 40, ("github-commit", "o/r"))]
     with patch(__name__ + ".get_json", return_value=[
         {"tag_name": "engine-v0.1.6"}, {"tag_name": "skill-v4.4.0", "prerelease": True},
         {"tag_name": "skill-v4.3.1"},

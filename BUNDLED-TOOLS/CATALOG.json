@@ -1,6 +1,26 @@
 {
   "components": [
     {
+      "id": "universal-modder",
+      "name": "Universal Modder",
+      "kind": "python-cli",
+      "install": "pip-or-wheel",
+      "version": "0.2.0",
+      "license": "MIT",
+      "github": { "owner": "rehan-remade", "repo": "universal-modder" },
+      "source_commit": "15d6f9d5fbd32de9b1884f29ddec3be9133bd912",
+      "source_dir": "BUNDLED-TOOLS/universal-modder",
+      "offline_asset": "universal_modder-0.2.0-py3-none-any.whl",
+      "cli": "um",
+      "cli_env": "UNIVERSAL_MODDER_CMD",
+      "python": "3.13",
+      "mcp": false,
+      "auto_register": false,
+      "providers": ["Claude", "Codex", "Grok", "Kimi", "Hermes"],
+      "required_for": ["game-recon", "sprite-processing", "gameplay-showcase-video"],
+      "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to ten upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot and discovers native Windows Steam roots from the registry. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification."
+    },
+    {
       "github": {
         "repo": "houseCARL",
         "owner": "Avick3110"
@@ -395,7 +415,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "@playwright/mcp@0.0.82"
+        "@playwright/mcp@0.0.83"
       ],
       "extra_args_env": "PLAYWRIGHT_MCP_EXECUTABLE_PATH",
       "extra_args_template": [
@@ -409,7 +429,7 @@
         "Kimi",
         "Hermes"
       ],
-      "version": "0.0.82",
+      "version": "0.0.83",
       "runtimes": [
         "node22"
       ],
@@ -418,7 +438,7 @@
         "browser-automation"
       ],
       "offline_asset": null,
-      "scope_note": "Browser automation for CLIs with no built-in browser. Claude Code already ships a browser pane, so it is skipped there. Never used for Nexus lookups - houseCARL does those keylessly. Measured 2026-09-02: 24 tools, 18,502 schema bytes, ~4,626 schema tokens (bytes/4; actual usage unmeasured). BROWSER CHOICE: with no flags, playwright-mcp defaults to the Google Chrome channel and prompts you to install Chrome. To use your own browser (Opera GX, Edge, Brave, Vivaldi, ...), set user env PLAYWRIGHT_MCP_EXECUTABLE_PATH to the browser exe BEFORE running the installer - the wiring appends --executable-path automatically. Example (Opera GX): setx PLAYWRIGHT_MCP_EXECUTABLE_PATH \"%LOCALAPPDATA%\\Programs\\Opera GX\\opera.exe\". To change later, edit the args in your provider's MCP config (Grok/Codex config.toml, Kimi ~/.kimi-code/mcp.json). Pinned, not @latest: an unpinned npx server can change its tool surface mid-session, and npx will happily reuse a broken cache. Update measured 2026-09-28 at 0.0.82: initialize/tools-list PASS, 25 tools, 20,102 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake."
+      "scope_note": "Browser automation for CLIs with no built-in browser. Claude Code already ships a browser pane, so it is skipped there. Never used for Nexus lookups - houseCARL does those keylessly. Measured 2026-09-02: 24 tools, 18,502 schema bytes, ~4,626 schema tokens (bytes/4; actual usage unmeasured). BROWSER CHOICE: with no flags, playwright-mcp defaults to the Google Chrome channel and prompts you to install Chrome. To use your own browser (Opera GX, Edge, Brave, Vivaldi, ...), set user env PLAYWRIGHT_MCP_EXECUTABLE_PATH to the browser exe BEFORE running the installer - the wiring appends --executable-path automatically. Example (Opera GX): setx PLAYWRIGHT_MCP_EXECUTABLE_PATH \"%LOCALAPPDATA%\\Programs\\Opera GX\\opera.exe\". To change later, edit the args in your provider's MCP config (Grok/Codex config.toml, Kimi ~/.kimi-code/mcp.json). Pinned, not @latest: an unpinned npx server can change its tool surface mid-session, and npx will happily reuse a broken cache. Update measured 2026-09-28 at 0.0.82: initialize/tools-list PASS, 25 tools, 20,102 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 0.0.83: initialize/tools-list PASS; 25 tools, 20,286 compact UTF-8 schema bytes. Schema bytes are transport measurements, not billed-token savings."
     },
     {
       "id": "firecrawl-mcp",
@@ -433,7 +453,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "firecrawl-mcp@3.25.5"
+        "firecrawl-mcp@3.27.2"
       ],
       "api_key_env": "FIRECRAWL_API_KEY",
       "api_key_optional": true,
@@ -460,8 +480,8 @@
         "web-docs-extract"
       ],
       "offline_asset": null,
-      "scope_note": "Scraping general web docs (CommonLib docs, wikis, GitHub READMEs). NEVER Nexus Mods - houseCARL reads Nexus keylessly with changelogs and file lists. Update measured 2026-09-28 at 3.25.5: initialize/tools-list PASS, 27 tools, 74,789 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake.",
-      "version": "3.25.5"
+      "scope_note": "Scraping general web docs (CommonLib docs, wikis, GitHub READMEs). NEVER Nexus Mods - houseCARL reads Nexus keylessly with changelogs and file lists. Update measured 2026-09-28 at 3.25.5: initialize/tools-list PASS, 27 tools, 74,789 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 3.27.2: initialize/tools-list PASS; 25 tools, 80,509 compact UTF-8 schema bytes. No credentialed scraping calls. Schema bytes are transport measurements, not billed-token savings.",
+      "version": "3.27.2"
     },
     {
       "id": "perplexity-mcp",
@@ -546,13 +566,13 @@
       "kind": "mcp-binary",
       "mcp": true,
       "license": "MIT",
-      "version": "1.12.2",
+      "version": "1.13.0",
       "github": {
         "owner": "github",
         "repo": "github-mcp-server"
       },
       "install": "zip-extract",
-      "offline_asset": "github-mcp-server-1.12.2-windows-x86_64.zip",
+      "offline_asset": "github-mcp-server-1.13.0-windows-x86_64.zip",
       "asset_match": [
         "github-mcp-server-*-windows-x86_64.zip",
         "*github-mcp-server*Windows_x86_64.zip"
@@ -568,9 +588,9 @@
       "api_key_optional": true,
       "auth_mode": "built-in-oauth-or-optional-pat",
       "toolsets": "context,repos,pull_requests,actions,issues",
-      "scope_note": "GitHub's official server, replacing @modelcontextprotocol/server-github, which npm marks 'Package no longer supported'. Official release binaries since 1.5.0 carry GitHub's OAuth application: no PAT is required on github.com; the first authenticated tool call opens GitHub's browser authorization and keeps that token in the server process only. A GITHUB_PERSONAL_ACCESS_TOKEN is optional and takes precedence when the user deliberately configures one. initialize + tools/list proves the binary and protocol, not completion of that later browser authorization. Registered with a scoped --toolsets list, not 'all': the server exposes 20 toolset groups and enabled groups enlarge the advertised schema; actual prompt and billed usage depend on provider discovery and caching. Widen it per project, never globally.",
+      "scope_note": "GitHub's official server, replacing @modelcontextprotocol/server-github, which npm marks 'Package no longer supported'. Official release binaries since 1.5.0 carry GitHub's OAuth application: no PAT is required on github.com; the first authenticated tool call opens GitHub's browser authorization and keeps that token in the server process only. A GITHUB_PERSONAL_ACCESS_TOKEN is optional and takes precedence when the user deliberately configures one. initialize + tools/list proves the binary and protocol, not completion of that later browser authorization. Registered with a scoped --toolsets list, not 'all': the server exposes 20 toolset groups and enabled groups enlarge the advertised schema; actual prompt and billed usage depend on provider discovery and caching. Widen it per project, never globally. 2026-10-02 refresh: 1.13.0: official Windows ZIP SHA-256 75accfd7f98c2d06c8cbda43d7d243a51a97baced7e6a5d61dd6f7df710fd464 verified; scoped context,repos,pull_requests,actions,issues initialize/tools-list PASS; 47 tools, 129,567 compact UTF-8 schema bytes. OAuth completion and authenticated calls not exercised. Schema bytes are transport measurements, not billed-token savings.",
       "server_id": "github",
-      "release_tag": "v1.12.2"
+      "release_tag": "v1.13.0"
     },
     {
       "id": "serena",
@@ -629,7 +649,7 @@
       "kind": "mcp-npx",
       "mcp": true,
       "license": "MIT",
-      "version": "4.21.0",
+      "version": "4.21.1",
       "github": {
         "owner": "shadcn-ui",
         "repo": "ui"
@@ -638,7 +658,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "shadcn@4.21.0",
+        "shadcn@4.21.1",
         "mcp"
       ],
       "profile": "web",
@@ -647,7 +667,7 @@
       "required_for": [
         "component-registry"
       ],
-      "scope_note": "Resolves registries from the project's components.json, so it is meaningless outside a shadcn project and is written project-scoped only. Measured 2026-09-02: 7 tools, 4,495 schema bytes, ~1,124 schema tokens (bytes/4; actual usage unmeasured)."
+      "scope_note": "Resolves registries from the project's components.json, so it is meaningless outside a shadcn project and is written project-scoped only. Measured 2026-09-02: 7 tools, 4,495 schema bytes, ~1,124 schema tokens (bytes/4; actual usage unmeasured). 2026-10-02 refresh: 4.21.1: initialize/tools-list PASS; 7 tools, 4,495 compact UTF-8 schema bytes. Schema bytes are transport measurements, not billed-token savings."
     },
     {
       "id": "blender-mcp",
@@ -655,7 +675,7 @@
       "kind": "mcp-uvx",
       "mcp": true,
       "license": "MIT",
-      "version": "2.1.1",
+      "version": "2.1.3",
       "github": {
         "owner": "ahujasid",
         "repo": "mcp-for-blender"
@@ -663,7 +683,7 @@
       "install": "mcp-uvx",
       "npx_command": "uvx",
       "npx_args": [
-        "mcp-for-blender@2.1.1"
+        "mcp-for-blender@2.1.3"
       ],
       "profile": "engine-blender",
       "auto_register": false,
@@ -671,7 +691,7 @@
       "required_for": [
         "blender-scene-control"
       ],
-      "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender. Update measured 2026-09-28 at 2.1.1: initialize/tools-list PASS, 36 tools, 45,055 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake."
+      "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender. Update measured 2026-09-28 at 2.1.1: initialize/tools-list PASS, 36 tools, 45,055 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 2.1.3: initialize/tools-list PASS; 36 tools, 45,121 compact UTF-8 schema bytes; telemetry disabled, safe mode enabled. No live editor calls. Schema bytes are transport measurements, not billed-token savings."
     },
     {
       "id": "godot-mcp",
@@ -791,7 +811,7 @@
       "kind": "mcp-uvx",
       "mcp": true,
       "license": "MIT",
-      "version": "0.8.6",
+      "version": "0.8.7",
       "github": {
         "owner": "CursorTouch",
         "repo": "Windows-MCP"
@@ -801,7 +821,7 @@
       "npx_args": [
         "--python",
         "3.14",
-        "windows-mcp@0.8.6",
+        "windows-mcp@0.8.7",
         "serve"
       ],
       "profile": "windows",
@@ -815,7 +835,7 @@
       "runtimes": [
         "python3"
       ],
-      "scope_note": "Desktop control through UI Automation: click, type, send shortcuts, run PowerShell, read and write the registry and the filesystem, enumerate windows and processes. This is the one operating surface the pack had no way to reach -- Playwright and chrome-devtools stop at the browser. UIA also lets an agent PERCEIVE controls without spending a vision call, which is most of why it earns its schema. Measured 2026-08-27 with TOOLS\\Measure-McpSchemaCost.ps1 against `uvx windows-mcp@0.8.5 serve`: 20 tools, 22,088 bytes, ~5,522 schema tokens (bytes/4; actual usage unmeasured) -- less than firecrawl-mcp's 36,337 and about four times context7, for the whole desktop. OFF by default and never auto-detected: the `windows` profile carries no detect markers, so -Auto cannot reach it. Turn it on deliberately with TOOLS\\Set-McpProfile.ps1 -Enable windows -Global. controls_machine is why TOOLS/measure_mcp_capability.py refuses to sweep it: that sweep calls every advertised tool with arguments synthesized from the schema, which here means typing into whatever window has focus and running whatever PowerShell the sample produces. Update measured 2026-09-28 at 0.8.6: initialize/tools-list PASS, 20 tools, 22,984 compact schema bytes (~5,746 bytes/4 estimate, not billing). Python >=3.14 is now required: the uvx command explicitly selects managed Python 3.14. OFF-by-default scope is unchanged; no desktop actions were invoked."
+      "scope_note": "Desktop control through UI Automation: click, type, send shortcuts, run PowerShell, read and write the registry and the filesystem, enumerate windows and processes. This is the one operating surface the pack had no way to reach -- Playwright and chrome-devtools stop at the browser. UIA also lets an agent PERCEIVE controls without spending a vision call, which is most of why it earns its schema. Measured 2026-08-27 with TOOLS\\Measure-McpSchemaCost.ps1 against `uvx windows-mcp@0.8.5 serve`: 20 tools, 22,088 bytes, ~5,522 schema tokens (bytes/4; actual usage unmeasured) -- less than firecrawl-mcp's 36,337 and about four times context7, for the whole desktop. OFF by default and never auto-detected: the `windows` profile carries no detect markers, so -Auto cannot reach it. Turn it on deliberately with TOOLS\\Set-McpProfile.ps1 -Enable windows -Global. controls_machine is why TOOLS/measure_mcp_capability.py refuses to sweep it: that sweep calls every advertised tool with arguments synthesized from the schema, which here means typing into whatever window has focus and running whatever PowerShell the sample produces. Update measured 2026-09-28 at 0.8.6: initialize/tools-list PASS, 20 tools, 22,984 compact schema bytes (~5,746 bytes/4 estimate, not billing). Python >=3.14 is now required: the uvx command explicitly selects managed Python 3.14. OFF-by-default scope is unchanged; no desktop actions were invoked. 2026-10-02 refresh: 0.8.7 with Python 3.14: initialize/tools-list PASS; 20 tools, 22,984 compact UTF-8 schema bytes. Still manually opt-in/OFF by default; no desktop actions invoked. Schema bytes are transport measurements, not billed-token savings."
     },
     {
       "id": "super-mcp-router",
@@ -851,7 +871,7 @@
       "name": "Playwright CLI",
       "kind": "cli-optional",
       "install": "npx-or-npm",
-      "version": "0.1.21",
+      "version": "0.1.22",
       "github": {
         "owner": "microsoft",
         "repo": "playwright-cli"
@@ -860,8 +880,8 @@
       "runtimes": [
         "node22"
       ],
-      "npm_spec": "@playwright/cli@0.1.21",
-      "npm_integrity": "sha512-FfxmVJj2wJlsxPksUO+4N7gqimPEQPajpocl2Mk97ENIGfAVZ4aElzPb5sDdGXHI9J/3Y8EtUiUTas0VsTm/sg==",
+      "npm_spec": "@playwright/cli@0.1.22",
+      "npm_integrity": "sha512-6WMkQNM4VEzqMkdr/l60X9Cr7i+tI/arK87IWz2K7pB6j8I2ZJ8KN+1JfhJDLnK+SXnab6Op8xGt4adcGLsyfA==",
       "npm_args": [
         "--ignore-scripts"
       ],
@@ -869,15 +889,15 @@
       "required_for": [
         "browser-cli"
       ],
-      "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.20 package pins Playwright 1.64.0-alpha-2026-09-14; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving. 2026-09-28: CLI 0.1.21 pins Playwright 1.64.0-alpha-1789764292000; isolated Windows Chrome navigation, raw title evaluation and named-session close PASS."
+      "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.20 package pins Playwright 1.64.0-alpha-2026-09-14; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving. 2026-09-28: CLI 0.1.21 pins Playwright 1.64.0-alpha-1789764292000; isolated Windows Chrome navigation, raw title evaluation and named-session close PASS. 2026-10-02 refresh: 0.1.22: isolated Windows Chrome about:blank navigation, raw document.URL evaluation and unique named-session close PASS. Schema bytes are transport measurements, not billed-token savings."
     },
     {
       "id": "comfy-cli",
       "name": "ComfyUI CLI",
       "kind": "cli-optional",
       "install": "manual-user-product",
-      "version": "1.21.0",
-      "pip_spec": "comfy-cli==1.21.0",
+      "version": "1.22.0",
+      "pip_spec": "comfy-cli==1.22.0",
       "license": "GPL-3.0",
       "github": {
         "owner": "Comfy-Org",
@@ -890,12 +910,12 @@
       "required_for": [
         "local-media-workflows"
       ],
-      "note": "Optional CLI only: COMFY_NO_TELEMETRY=1; uvx --python 3.13 --from comfy-cli==1.21.0 comfy --where local --help. Discover an existing local ComfyUI installation first; do not download models, install custom nodes, or use cloud services automatically.",
-      "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md."
+      "note": "Optional CLI only: COMFY_NO_TELEMETRY=1; uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local --help. Discover an existing local ComfyUI installation first; do not download models, install custom nodes, or use cloud services automatically.",
+      "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
     }
   ],
-  "pack_version": "8.7.32",
-  "updated_utc": "2026-09-08",
+  "pack_version": "8.7.33",
+  "updated_utc": "2026-10-02",
   "providers": {
     "Grok": {
       "skills": "skills",
@@ -973,7 +993,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.7.32",
+  "catalog_version": "8.7.33",
   "updated": "2026-09-03",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

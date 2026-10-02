@@ -1,6 +1,6 @@
 # Local image/video workflows without another MCP
 
-Comfy-Org's optional `comfy-cli` 1.21.0 can inspect, compose, validate and run
+Comfy-Org's optional `comfy-cli` 1.22.0 can inspect, compose, validate and run
 ComfyUI workflows through shell access. It is not installed by the default
 bundle, and does not replace image-generation tools already available to the
 agent. First discover the user's actual ComfyUI installation and running local
@@ -10,10 +10,10 @@ For a process-local, pinned invocation:
 
 ```powershell
 $env:COMFY_NO_TELEMETRY = '1'
-uvx --python 3.13 --from comfy-cli==1.21.0 comfy --where local --version
-uvx --python 3.13 --from comfy-cli==1.21.0 comfy --where local workflow ls-nodes .\workflow.json
-uvx --python 3.13 --from comfy-cli==1.21.0 comfy --where local workflow validate --help
-uvx --python 3.13 --from comfy-cli==1.21.0 comfy --where local run --help
+uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local --version
+uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local workflow ls-nodes .\workflow.json
+uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local workflow validate --help
+uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local run --help
 ```
 
 Inspect only the relevant subcommand's help. `--help-json` describes the entire
@@ -29,8 +29,11 @@ Do not run setup, install, login, cloud commands, custom-node installation or
 model downloads without that task being authorized. Do not install the CLI's
 agent skills into provider folders; the bundle owns canonical skill fanout.
 
-Windows evidence (2026-09-28): isolated install, version/help, offline graph
+Prior Windows evidence (2026-09-28, CLI 1.21.0): isolated install, version/help, offline graph
 inspection, and malformed-file rejection. GPU inference and live-server
 workflow validation are unverified; no ComfyUI server or models are bundled.
 
 [Official source and documentation](https://github.com/Comfy-Org/comfy-cli)
+
+2026-10-02: isolated CLI 1.22.0 version and workflow-validation help pass with
+telemetry disabled. No GPU/server/model setup was performed.

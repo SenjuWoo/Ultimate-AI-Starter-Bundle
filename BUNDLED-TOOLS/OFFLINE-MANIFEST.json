@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-28",
-  "pack_version": "8.7.32",
+  "generated": "2026-10-02",
+  "pack_version": "8.7.33",
   "assets": [
     {
       "file": "codebase-memory-mcp-windows-amd64.zip",
@@ -8,9 +8,9 @@
       "sha256": "6eb6beaf261b19e419766e78baf93cbc3cf1c6338cff8fb7c0234859f96d1685"
     },
     {
-      "file": "github-mcp-server-1.12.2-windows-x86_64.zip",
-      "size": 8480261,
-      "sha256": "c08872e69f700d4219e7b4ab9607d56d7993171519ee32b62fccb8fba0cab673"
+      "file": "github-mcp-server-1.13.0-windows-x86_64.zip",
+      "size": 8496583,
+      "sha256": "75accfd7f98c2d06c8cbda43d7d243a51a97baced7e6a5d61dd6f7df710fd464"
     },
     {
       "file": "headroom_ai-0.39.1-cp310-abi3-win_amd64.whl",
@@ -36,6 +36,11 @@
       "file": "superpowers-v6.4.2.zip",
       "size": 798617,
       "sha256": "7a7a6cfa1bae238f49123cb676a5ec5eee453a403753b269ea5f885725563f19"
+    },
+    {
+      "file": "universal_modder-0.2.0-py3-none-any.whl",
+      "size": 362794,
+      "sha256": "dd33c378e6d7ff5feac1e995ae4c7d303a5fe73c441e9581661628d975797d07"
     }
   ]
 }

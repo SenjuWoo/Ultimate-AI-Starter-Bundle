@@ -39,8 +39,8 @@ def excluded(rel:Path)->bool:
 
 CORE_NOTE=(
     'Core release: the vendored third-party offline payloads are omitted and\n'
-    'downloaded by the installer when absent. For network-free installation,\n'
-    'use the Full-Offline archive.\n'
+    'installed from source or downloaded when absent. Full-Offline carries\n'
+    'archive/wheel snapshots; uncached runtimes and dependencies may need network.\n'
     '\n'
     'Skyrim Forge is NOT one of those payloads and is present in full: its\n'
     'source ships in BUNDLED-TOOLS/skyrim-forge and is built here, not\n'
@@ -81,8 +81,9 @@ def _core_offline_manifest_bytes(root:Path)->bytes:
     m['assets']=[]
     m['variant']='Core'
     m['note']=('Core ships no vendored payloads; the installer downloads each component '
-               'when absent, and the Full-Offline archive carries them all for '
-               'network-free installation. Skyrim Forge is not listed here in either '
+               'when absent or builds vendored source. Full-Offline carries the '
+               'archive/wheel snapshots; uncached runtimes/dependencies may need network. '
+               'Skyrim Forge is not listed here in either '
                'variant: it is source in BUNDLED-TOOLS/skyrim-forge, not a payload.')
     return (json.dumps(m,indent=2)+'\n').encode('utf-8')
 

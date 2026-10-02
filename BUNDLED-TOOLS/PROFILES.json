@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "catalog_version": "8.7.32",
-  "pack_version": "8.7.32",
-  "updated_utc": "2026-09-13",
+  "catalog_version": "8.7.33",
+  "pack_version": "8.7.33",
+  "updated_utc": "2026-10-02",
   "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
   "reads": "TOOLS/Set-McpProfile.ps1",
   "always_on_note": "The always-on core is context7, github, and headroom, in TOOLS/Add-Reasoning-MCPs.ps1, not here. They earn permanent slots for current documentation, verified repository state, and context inspection/compression. sequential-thinking is the opt-in reasoning profile after measurement showed its permanent schema cost. Playwright is in the web profile; Firecrawl and Perplexity register only when their keys exist.",
@@ -170,7 +170,7 @@
           "command": "npx",
           "args": [
             "-y",
-            "@playwright/mcp@0.0.82"
+            "@playwright/mcp@0.0.83"
           ],
           "providers": [
             "Codex",
@@ -226,7 +226,7 @@
           "command": "npx",
           "args": [
             "-y",
-            "shadcn@4.21.0",
+            "shadcn@4.21.1",
             "mcp"
           ],
           "note": "search, inspect and add components from configured shadcn registries (~1,124 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
@@ -409,7 +409,7 @@
           "catalog_component": "blender-mcp",
           "command": "uvx",
           "args": [
-            "mcp-for-blender@2.1.1"
+            "mcp-for-blender@2.1.3"
           ],
           "env_static": {
             "BLENDER_MCP_DISABLE_TELEMETRY": "true",
@@ -426,7 +426,7 @@
               "%LOCALAPPDATA%\\Programs\\Blender Foundation\\*\\blender.exe"
             ]
           },
-          "editor_side": "uvx mcp-for-blender@2.1.1 install-addon",
+          "editor_side": "uvx mcp-for-blender@2.1.3 install-addon",
           "editor_side_note": "The server talks to an addon inside Blender. `install-addon` copies it into the user addons folder, but ENABLING it is inside the editor process and cannot be done from outside -- so Set-McpProfile prints the command rather than pretending it ran it. 'The MCP executable starts' and 'the addon is connected' are different claims: the server answers initialize with no Blender running at all. Only a tool call that reaches the scene proves the second.",
           "requires_note": "Discovered, never hardcoded. 7.9.6 listed a Steam path on this maintainer's own drive letter, which could not match on anybody else's machine -- the exact class of path this pack forbids elsewhere. The first two entries are what `uvx mcp-for-blender@2.0.0 addon-paths` reports: Blender creates that user directory on first run whatever the install source, Steam included.",
           "telemetry_note": "Measured 2026-09-17: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 tokens) while BLENDER_MCP_DISABLE_TELEMETRY=true logs the supported opt-out and BLENDER_MCP_SAFE_MODE=true validates generated Python before it reaches Blender. Safe mode preserves normal scene/render/save/import-export work and blocks interpreter, process, network and persistence escape paths."
@@ -547,7 +547,7 @@
           "args": [
             "--python",
             "3.14",
-            "windows-mcp@0.8.6",
+            "windows-mcp@0.8.7",
             "serve"
           ],
           "note": "desktop control: click, type, shortcuts, PowerShell, registry, filesystem, windows, processes (~5,522 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",

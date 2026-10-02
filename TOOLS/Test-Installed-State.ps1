@@ -94,6 +94,17 @@ if ($rtkComponent -and $rtkInstalled) {
   }
 }
 $grokHookIssues = @()
+$umRecorded = if ($state -and $state.components) { $state.components.PSObject.Properties['universal-modder'] } else { $null }
+if ($umRecorded) {
+  $umCommand = Get-Command um -ErrorAction SilentlyContinue
+  $umCatalog = @($catalog.components | Where-Object { $_.id -eq 'universal-modder' }) | Select-Object -First 1
+  if (-not $umCommand) { Err 'Universal Modder is recorded as installed but um does not resolve on PATH.' }
+  else {
+    $umVersion = (& $umCommand.Source --version | Out-String).Trim()
+    if ($LASTEXITCODE -ne 0 -or $umVersion -ne ('universal-modder ' + $umCatalog.version)) { Err "Universal Modder active version mismatch: $umVersion" }
+    else { Write-UabsOk "Universal Modder active version $($umCatalog.version) matches CATALOG." }
+  }
+}
 if ($Providers -contains 'Grok') {
   $grokExe = Resolve-Exe 'Grok'
   if ($grokExe) {

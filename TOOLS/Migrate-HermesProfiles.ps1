@@ -112,8 +112,13 @@ function Test-UabsValueEqual($Left, $Right) {
 
 function Invoke-UabsHermes([string[]]$Arguments, [switch]$AllowMissing) {
   Write-Verbose ("hermes " + ($Arguments -join ' '))
-  $output = @(& $HermesExe @Arguments 2>&1)
-  $code = $LASTEXITCODE
+  # PS 5.1 wraps native stderr in ErrorRecords; warnings are not exit failures.
+  $previousPreference = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try {
+    $output = @(& $HermesExe @Arguments 2>&1)
+    $code = $LASTEXITCODE
+  } finally { $ErrorActionPreference = $previousPreference }
   if ($code -ne 0 -and -not $AllowMissing) {
     throw "Hermes command failed ($code): hermes $($Arguments -join ' ')`n$($output -join [Environment]::NewLine)"
   }

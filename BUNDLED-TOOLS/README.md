@@ -23,9 +23,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
 
 | Mode | Behavior |
 |---|---|
-| `BundledFirst` (default) | Use offline zip if present; else GitHub latest |
-| `OnlineLatest` | Always query GitHub releases/latest |
-| `BundledOnly` | Never network; fail if offline asset missing |
+| `BundledFirst` | Use the evaluated offline payload when present; otherwise fetch its catalog release |
+| `OnlineLatest` | Check online sources while respecting measured release pins and compatibility holds |
+| `BundledOnly` | Require locally bundled payloads; fail when a required archive is absent |
+
+These modes select component payloads, not a complete disconnected Windows
+environment. Missing runtimes, Python/npm dependencies and provider bootstrap
+can still need network access. Full-Offline carries the declared archive/wheel
+snapshots; it does not contain every upstream dependency cache.
 
 ## Update later
 

@@ -1,3 +1,10 @@
+## 8.7.33
+
+- Add pinned Universal Modder 0.2.0 to the default local tool install and all five provider trees: 172 canonical skills total. One indexed router, ten on-demand guides, shared CLI and offline knowledge snapshot; no fal MCP or upstream session hooks.
+- Fix redirected Windows UTF-8 output, knowledge note encoding, publication path separators and Steam registry discovery; package fonts, PowerShell support and knowledge in the wheel. Run 22 upstream tests plus a dependency-free bundle regression.
+- Refresh eight evaluated pins: Playwright MCP/CLI, Firecrawl, official GitHub MCP, shadcn, Blender MCP, Windows MCP and optional ComfyUI CLI. Preserve scoped activation, Windows OFF-by-default, RTK's narrow allowlist and compatibility holds. [Measurements and limits](docs/history/V8.7.33-CHANGELOG.md).
+- Fix Hermes profile migration treating harmless native stderr warnings as fatal PowerShell 5.1 errors; preserve diagnostics and nonzero-exit failure checks in the shared runner, with a real native-command regression.
+
 ## 8.7.32
 
 - Retire the exact obsolete global Codex Impeccable executable pair behind **Design deep pass** (Stop) and **Checking UI changes** (PostToolUse) failures. The legacy CMD conditional fails under PowerShell and references an executable the current skill no longer ships.
