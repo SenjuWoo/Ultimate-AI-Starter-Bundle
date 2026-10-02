@@ -10,8 +10,8 @@
   Skyrim:   default + houseCARL
   Creative: default + Blender MCP and MCP for Unity (engine work)
 
-  Existing profile settings are preserved. Only UABS-owned MCP ids and their
-  enabled/command/args fields are changed. Before the first write, exact config
+  User preferences are preserved; owned MCP wiring, missing aliases/plugins and
+  exact retired bundle defaults are reconciled. Before the first write, config
   bytes are copied to a timestamped rollback directory. A failed verification
   restores those bytes and removes profiles created by the failed run.
   A specialist profile is created only when its local capability is installed.
@@ -359,7 +359,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
     }).Count) {
     return Get-UabsProfilePrefs 'default'
   }
-  $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @(); vision_chain = @() }
+  $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @(); vision_chain = @(); compression = @{} }
   $fb = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'fallback_providers', '--json') -AllowMissing
   if ($fb.Code -eq 0) {
     $json = @($fb.Output | ForEach-Object { [string]$_ } |
@@ -412,6 +412,12 @@ function Get-UabsProfilePrefs([string]$Profile) {
       }
     }
   }
+  $cp = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'auxiliary.compression', '--json') -AllowMissing
+  if ($cp.Code -eq 0) {
+    $json = @($cp.Output | ForEach-Object { [string]$_ } |
+      Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
+    if ($json) { $out.compression = ConvertTo-UabsPlain ($json | ConvertFrom-Json) }
+  }
   return $out
 }
 
@@ -454,6 +460,15 @@ function Ensure-UabsProfilePluginPayload([string]$Profile, [string]$HermesRoot, 
 function Ensure-UabsProfilePrefs([string]$Profile) {
   $current = Get-UabsProfilePrefs $Profile
   $wanted = @{}
+
+  # Only the retired free endpoint, not its paid sibling or another provider.
+  if ($current.compression.provider -eq 'openrouter' -and
+      $current.compression.model -in @('inclusionai/ling-3.0-flash-vl:free', 'openrouter/inclusionai/ling-3.0-flash-vl:free')) {
+    $migration = @{ retired_model = $current.compression.model; model = 'thinkingmachines/inkling:free' }
+    Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'auxiliary.compression' `
+      -Key 'compression_migration' -Value $migration -Detail 'replace delisted free Ling compression endpoint; retain other preferences'
+    $wanted['compression_migration'] = $migration
+  }
 
   $toDisable = @($current.plugins | Where-Object { $script:UabsDiscouragedPlugins -contains [string]$_ })
   Write-Verbose ("$Profile enabled plugins: {0}; catalog-rejected: {1}" -f ($current.plugins -join ', '), ($toDisable -join ', '))
@@ -577,6 +592,16 @@ if chain is not None:
     vision["fallback_chain"] = chain
     aux["vision"] = vision
     cfg["auxiliary"] = aux
+migration = prefs.get("compression_migration")
+if migration:
+    aux = dict(cfg.get("auxiliary") or {})
+    compression = dict(aux.get("compression") or {})
+    if compression.get("provider") == "openrouter" and compression.get("model") == migration["retired_model"]:
+        compression["model"] = migration["model"]
+        if compression.get("reasoning_effort") == "ultra":
+            compression["reasoning_effort"] = "max"  # Inkling advertises max, not ultra.
+        aux["compression"] = compression
+        cfg["auxiliary"] = aux
 plugin_names = prefs.get("plugins") or []
 disable_names = prefs.get("disable_plugins") or []
 if plugin_names or disable_names:
@@ -1020,6 +1045,13 @@ try {
     }
     foreach ($profile in $script:Prefs.Keys) {
       $after = Get-UabsProfilePrefs $profile
+      if ($script:Prefs[$profile].ContainsKey('compression_migration')) {
+        $want = $script:Prefs[$profile]['compression_migration'].model
+        if ($after.compression.provider -ne 'openrouter' -or $after.compression.model -ne $want -or
+            $after.compression.reasoning_effort -eq 'ultra') {
+          throw "Verification failed: $profile retired compression model was not migrated."
+        }
+      }
       if ($script:Prefs[$profile].ContainsKey('fallback_providers')) {
         $want = Get-UabsFallbackSignature $script:UabsFallbackChain
         $got = Get-UabsFallbackSignature $after.fallback

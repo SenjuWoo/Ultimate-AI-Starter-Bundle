@@ -132,14 +132,14 @@ auxiliary:
         model: deepseek/deepseek-v4-flash-vision-exp
   compression:
     provider: openrouter
-    # Catalog checked 2026-09-20: 262144 context covers the retained 160k cap.
+    # Catalog checked 2026-10-02: 1048576 context covers the retained 160k cap.
     # Free endpoints can be rate-limited; failed summaries never replace context.
-    model: inclusionai/ling-3.0-flash-vl:free
+    model: thinkingmachines/inkling:free
     timeout: 600
     extra_body:
       provider:
         require_parameters: true
-    reasoning_effort: ultra
+    reasoning_effort: max
   skills_hub:
     provider: openrouter
     model: poolside/laguna-s-2.1:free

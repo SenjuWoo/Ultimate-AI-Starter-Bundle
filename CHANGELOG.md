@@ -1,3 +1,9 @@
+## 8.7.34
+
+- Replace stale README history, broken links and incomplete third-party listings with current installation/profile guidance and complete catalog coverage. Preserve historical release notes under docs/history.
+- Refresh Hermes model guidance against the public catalog; retain the main model and existing aliases rather than remapping legacy names to newer paid endpoints.
+- Repair only the delisted OpenRouter free Ling compression endpoint to Inkling free; normalize unsupported ultra to max, preserve other fields and reuse verified backups/rollback. Add executable preservation/idempotence checks and documentation link/coverage checks. [Details](docs/history/V8.7.34-CHANGELOG.md).
+
 ## 8.7.33
 
 - Add pinned Universal Modder 0.2.0 to the default local tool install and all five provider trees: 172 canonical skills total. One indexed router, ten on-demand guides, shared CLI and offline knowledge snapshot; no fal MCP or upstream session hooks.

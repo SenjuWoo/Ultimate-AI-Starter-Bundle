@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.33 -->
+<!-- Ultimate AI Starter Bundle v8.7.34 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.33
+# Ultimate AI Starter Bundle v8.7.34
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -35,7 +35,9 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
   <img src="assets/hero.svg" alt="Installed is not enabled: five providers, parked optional MCPs" width="100%">
 </p>
 
-**v8.7.33:** Universal Modder adds local engine discovery, sprite processing and gameplay-video tools to all five providers through one indexed skill and on-demand guides. Eight evaluated component pins refreshed; Windows MCP stays off by default and RTK's tested narrow policy stays unchanged. [Changes and verification scope](docs/history/V8.7.33-CHANGELOG.md).
+**Current source:** one-click setup, 172 canonical skills, a small MCP core and
+project-specific tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest),
+[the changelog](CHANGELOG.md) and [evaluated component pins](BUNDLED-TOOLS/CATALOG.json).
 
 ### Universal Modder without extra background servers
 
@@ -55,16 +57,6 @@ If Codex reports repeated user hook failures, including **Design deep pass** (St
 
 The installer normally refreshes bundled skill names. To retain an independently maintained copy, record it in the **local-only** `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\skill-overrides.json`: `schema: 1`, then `providers`, provider name, skill name, with `digest` and a nonempty `reason`. Calculate the digest using `Get-UabsTreeDigest -Ordinal` from `TOOLS\UABS-Common.ps1`, after reviewing and backing up the entire skill directory. Do not use an ordinary single-file SHA in its place. The installer and doctor verify that whole-tree digest and report it separately as a local override, never as a bundle match. Changed or missing overrides require review; removing an entry rejoins normal bundle-managed sync. Fresh installs have no overrides. Do not publish this registry or private `/learn` reports.
 
-**Ultimate multi-provider AI starter kit** - not a Skyrim-only pack.
-
-Install skills, MCP servers, plugins, and offline tools for:
-
-- **Claude Code**, **Codex**, **Grok**, **Kimi**, **Hermes**
-- Code graph memory (with the indexing discipline that keeps it small), context compression, browser/scrape MCPs
-- Optional deep **Skyrim SE/AE** modding stack (houseCARL, Spooky, Forge, frameworks)
-
-Skyrim is a major included domain. The pack is also a general "good start" for serious AI-assisted development.
-
 ---
 
 ## ⚡ NEW TO AI CLI TOOLS? Read this first: installed ≠ enabled
@@ -73,7 +65,7 @@ One distinction explains almost everything about how this pack behaves:
 
 | State | What it means | What it costs you |
 |---|---|---|
-| **INSTALLED** | The tool exists on disk | Disk space only. **Zero** effect on your AI chats. |
+| **INSTALLED** | A CLI/server payload exists on disk | A disconnected server adds no MCP schema; installed skills/plugins have separate discovery and hook behavior. |
 | **ENABLED** | Registered in a provider's config | Available in that scope after trust/connection checks; schema loading and billing depend on the provider. |
 
 The 172 **skills** use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
@@ -84,33 +76,28 @@ The bundle's default core is `context7` (library docs), `github` (repo access), 
 
 When the matching local tool is installed, Hermes also gets native named profiles without loading them into default: `code` adds codebase-memory, `roblox` adds the official Roblox Studio MCP, and `skyrim` connects houseCARL while Skyrim Forge and Spooky's AutoMod remain available through their routed skills/CLIs. Forge MCP compatibility is explicit.
 
-### There is NO auto-disable. No timer. No expiry.
+### Profiles do not expire automatically
 
-If your AI enables something to do a job — say, the Roblox Studio server during a game jam, or houseCARL to debug a mod load order — **it stays on across restarts and chats until a human turns it off.** That is deliberate: nothing will silently rip tools out from under a running project, and nothing will silently bill you either — the switch is visible and yours. Done with it? Park it in one line:
-
-```powershell
-# Hermes (then restart the app)
-hermes config set mcp_servers.<name>.enabled false   # true to re-enable
-hermes -p code mcp list                              # isolated code graph profile
-hermes -p roblox mcp list                            # isolated Roblox profile
-hermes -p skyrim mcp list                            # isolated Skyrim profile
-
-# Claude Code
-claude mcp remove <name>          # claude mcp add ... to bring it back
-
-# Codex / Grok / Kimi — open the provider's config file and set enabled=false,
-# comment the entry out, or delete it. Restore the same way.
-```
-
-Not sure what's on, or what a task actually needs?
+An explicitly enabled project profile stays configured until disabled.
+Project scope, Hermes profile selection and provider trust still apply.
+Filtering, caching and calls determine usage; a configured schema is not a
+measured per-turn bill.
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File TOOLS\Set-McpProfile.ps1 -List            # see profiles & state
-powershell -ExecutionPolicy Bypass -File TOOLS\Set-McpProfile.ps1 -Auto -Path C:\code\my-app   # enable just what THIS project needs
-powershell -ExecutionPolicy Bypass -File TOOLS\Migrate-HermesProfiles.ps1          # dry-run Hermes topology
+.\TOOLS\Set-McpProfile.ps1 -List
+.\TOOLS\Set-McpProfile.ps1 -Detect -Path "<project folder>"
+.\TOOLS\Set-McpProfile.ps1 -Auto -Path "<project folder>"
+.\TOOLS\Set-McpProfile.ps1 -Disable code-intel -Path "<project folder>"
+hermes -p code       # specialist graph-memory profile
+hermes -p default    # return to the small core
 ```
 
-Rule of thumb: **enable for the job, park it after** — or just leave the small stuff on and never think about it again. The pack's agents know this too: the `capability-profiles` skill tells them to flip servers on and off themselves as tasks come and go.
+Claude, Grok and trusted Codex projects use project-scoped registrations.
+Hermes uses named profiles; Kimi needs explicit global opt-in for optional
+servers. The [profile catalog](BUNDLED-TOOLS/PROFILES.json) and
+[Hermes policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md) describe
+requirements. The agent must explain missing prerequisites and restart/trust
+requirements instead of pretending an installed server is callable.
 
 ---
 
@@ -145,7 +132,7 @@ Follow 0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md for every complex or factual reque
 ```
 
 
-## SOUL + AIO for every agent (v7.5.0)
+## SOUL + AIO for every agent
 
 The preamble is now **installed automatically**, not pasted by hand:
 
@@ -158,7 +145,7 @@ The preamble is now **installed automatically**, not pasted by hand:
 `INSTALL-AIO.ps1` appends `SOUL.md` + `AIO-INSTRUCTION.md` to
 Claude Code (`~/.claude/CLAUDE.md`), Codex (`~/.codex/AGENTS.md`), Kimi
 (`~/.kimi-code/AGENTS.md`) and Grok (`~/.grok/AGENTS.md`, its global-rules
-file), and copies the verbatim soul into Hermes' home (`SOUL.md`). Idempotent
+file), and merges both into Hermes' home (`SOUL.md`). Idempotent
 and backup-first; `-SkipPreamble` opts out. Full map:
 `3-PREAMBLES/README.md`.
 
@@ -178,7 +165,9 @@ preamble). With parameters:
 powershell -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/SenjuWoo/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1))) -Providers Claude,Grok"
 ```
 
-Or double-click `INSTALL-REMOTE.bat`. Re-running is a no-op.
+Or double-click `INSTALL-REMOTE.bat`. Re-running reuses the matching release
+folder and runs the installer again; newer releases refresh that folder.
+`-Force` refreshes the same release.
 
 **Windows (bundle already on disk)**
 
@@ -188,7 +177,7 @@ Or double-click `INSTALL-REMOTE.bat`. Re-running is a no-op.
 powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
 ```
 
-3. Fully restart your AI app(s).
+2. Fully restart your AI app(s).
 
 ### Common options
 
@@ -206,9 +195,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
 
 | Mode | Behavior |
 |------|----------|
-| `OnlineLatest` (default) | Fetch official current releases; RTK stays at the tested catalog pin. Fall back to verified bundled RTK if offline |
+| `OnlineLatest` (default) | Resolve online payloads while respecting evaluated catalog pins and compatibility holds |
 | `BundledFirst` | Use `BUNDLED-TOOLS\offline`, fall back to GitHub |
-| `BundledOnly` | Offline zips only (no network) |
+| `BundledOnly` | Require locally bundled payloads; missing payloads cannot be downloaded |
+
+Modes choose tool payloads, not a disconnected Windows environment. Missing
+runtimes, Python/npm dependencies and provider bootstrap can still need network.
 
 RTK is deliberately pinned to **0.50.0** in both the installer and component
 updater: the narrow rewrite hook and measurements are version-specific. A
@@ -217,18 +209,17 @@ archives must match the shipped SHA-256 manifest; a rejected replacement
 leaves the previous executable intact. Successful replacements retain a
 `rtk.exe.bak-uabs-*` backup beside the executable. If v8.7.17 stopped with
 `rtk installed version 0.48.0, expected 0.47.0`, rerun `START-HERE.bat` from
-v8.7.19 to repair it and finish the interrupted install.
+the current release to repair it and finish the interrupted install.
 
-### There are exactly two .bat files, and they do different things
+### Two installation entry points
 
 | File | Use it when |
 |---|---|
 | **`START-HERE.bat`** | You already have this folder. Double-click it. This is the install. |
 | `INSTALL-REMOTE.bat` | You have nothing yet. It downloads the latest release, then runs `START-HERE.bat` for you. |
 
-Nothing else needs running. v8.1.0 deleted `INSTALL-V8-AIO.bat`, which called
-`START-HERE.bat` and did nothing else -- a second name for one action, and a
-sixth place the version had to be restated by hand every release.
+Optional gateway/tool launchers have separate jobs; they are not additional
+bundle installation steps.
 
 ### It wires the providers you have
 
@@ -292,89 +283,65 @@ inference. See [the verification notes](docs/history/V8.7.17-CHANGELOG.md).
 and [Claude Tool Search](https://code.claude.com/docs/en/mcp#scale-with-mcp-tool-search)
 document the native capabilities; a third-party routing daemon is not required.
 
-### Hermes: which model to actually run
+### Hermes: models, subscriptions and free/local options
 
-Hermes is BYOK — you pay per token, so model choice is a cost decision every
-turn, not a preference. The strategy that works: **do the work on something
-cheap, escalate only when the cheap one is actually failing.**
+Hermes is a harness, not a model or a BYOK-only service. Its current provider
+picker supports API billing, subscription/OAuth routes and local endpoints.
+Run `hermes model` outside a chat to configure a provider; `/model` switches
+within an existing chat. Use `hermes model --refresh` when its cached catalog
+looks stale. [Official provider guide](https://hermes-agent.nousresearch.com/docs/integrations/providers).
 
-The table below is an older price snapshot, not a current quote. Check the
-[live OpenRouter catalog](https://openrouter.ai/api/v1/models) before choosing.
-The new starter uses `deepseek/deepseek-v4.1-flash` with max reasoning; its
-text/image and tool support were checked on September 17, 2026. Existing
-installations keep their chosen model. [Hermes profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md).
+The portable starter uses `deepseek/deepseek-v4.1-flash` through OpenRouter.
+This is a shipped default, not a claim that it is the newest or best model.
+Existing main-model choices are preserved. See [the dated live-catalog review](docs/HERMES-MODELS.md)
+for current candidates, legacy aliases, free fallbacks and local options.
 
-| Tier | Model | In | Out | Context | Use it for |
-|---|---|---|---|---|---|
-| 🆓 free | `thinkingmachines/inkling:free` | $0 | $0 | 1M | multimodal, no cost |
-| 🆓 free | `poolside/laguna-s-2.1:free` | $0 | $0 | 262K | text only |
-| 💸 daily | `deepseek/deepseek-v4-flash-0731` | $0.04 | $0.08 | 1.3M | **most work** |
-| 💸 daily | `meta/muse-spark-1.2-contributor` | $0.10 | $0.20 | 1M | daily alternative |
-| 💸 daily | `deepseek/deepseek-v4-flash-vision-exp` | $0.22 | $0.66 | 1M | when the task has images |
-| ⚡ medium | `deepseek/deepseek-v4-pro-0813` | $1.12 | $3.37 | 1M | Flash's bigger sibling |
-| ⚡ medium | `google/gemini-3.7-flash` | $0.38 | $1.88 | 1M | harder planning |
-| ⚡ medium | `z-ai/glm-5.3` | $1.40 | $4.40 | 1M | harder planning |
-| 🔥 big | `x-ai/grok-4.6` | $2.00 | $6.00 | 500K | when medium stalls |
-| 👑 max | `openai/gpt-5.6-sol` | $2.00 | $10.00 | 1.05M | escalation only |
-| 👑 max | `anthropic/claude-opus-5` | $5.00 | $25.00 | 1M | escalation only |
+Choose by the actual job: tool support, image input when required, sufficient
+context, then measured correctness, latency and total cost. Escalate after a
+reproducible failure; neither price nor a newer name is a quality benchmark.
 
-Escalate based on a concrete failure, not a model's price tier. No measured
-quality or billing improvement is claimed for the new starter settings.
+Shipped aliases: `v4.1-flash`, `flash`, `flash-vision`, `muse`, `v4-pro`,
+`gemini-flash`, `glm`, `grok`, `sol`, `opus`, `nemotron-ultra` and
+`nemotron-ultra-nofree`. These retain their configured targets; `sol` and
+`opus` do not automatically select the newest generation.
 
-Switch by alias instead of pasting slugs; the installer wires these into every
-Hermes profile:
-
-```
-hermes model nemotron-ultra         # nvidia/nemotron-3-ultra-550b-a55b  (free)
-hermes model nemotron-ultra-nofree  # nvidia/nemotron-3-ultra-550b-a55b
-hermes model v4.1-flash     # deepseek-v4.1-flash          (new starter)
-hermes model flash          # deepseek-v4-flash-0731        (retained alias)
-hermes model muse           # meta/muse-spark-1.2-contributor
-hermes model flash-vision   # deepseek-v4-flash-vision-exp  (images)
-hermes model gemini-flash   # google/gemini-3.7-flash
-hermes model v4-pro         # deepseek-v4-pro-0813
-hermes model glm            # z-ai/glm-5.3
-hermes model grok           # x-ai/grok-4.6
-hermes model sol            # openai/gpt-5.6-sol
-hermes model opus           # anthropic/claude-opus-5
+```powershell
+hermes model v4.1-flash
+hermes model muse
+hermes model --refresh
+.\TOOLS\Migrate-HermesProfiles.ps1         # inspect proposed changes
+.\TOOLS\Migrate-HermesProfiles.ps1 -Apply  # backup + owned migration, Hermes closed
 ```
 
-**Fallbacks are set, not assumed.** The starter ships a four-deep free chain, so
-a 429/529/503 fails over instead of failing:
+The shipped fallback chain is:
 
-```
+```text
 poolside/laguna-s-2.1:free -> thinkingmachines/inkling:free
   -> thinkingmachines/inkling-small:free -> poolside/laguna-xs-2.1:free
 ```
 
-`laguna-s` is text-only; `inkling` sits directly behind it because it takes
-text, image and audio. If a vision task fails over to the first entry, images
-are dropped — that is the trade for a free chain.
+Free endpoints are quota-limited and can disappear. Laguna is text-only:
+this chain is not an image-preserving guarantee. Custom chains and aliases
+remain user-owned; migration fills missing entries or replaces exact
+superseded bundle defaults, not arbitrary model choices.
 
-`hermes profile create --clone-from default` copies these **once**. Nothing used
-to re-converge the copies, so a `roblox` or `skyrim` profile kept the chain from
-the day it was cloned — invisible until the moment failover actually mattered.
-The migration now converges fallbacks and aliases across every profile:
+The retired `inclusionai/ling-3.0-flash-vl:free` compression endpoint is replaced
+with `thinkingmachines/inkling:free`, using supported `max` reasoning instead
+of `ultra`. Its listed 1,048,576-token context covers the 160,000-token cap.
+This is metadata compatibility, not a live summary-quality benchmark; failed
+summaries still abort without replacing context. [Profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md).
 
-```powershell
-.\TOOLS\Migrate-HermesProfiles.ps1            # show what has drifted
-.\TOOLS\Migrate-HermesProfiles.ps1 -Apply
-```
+### Hermes: native web search and keyless options
 
-It replaces a chain only when it is missing, empty, or byte-equal to one this
-pack used to ship. A chain you chose is reported and left alone. Aliases are
-additive — an alias you already defined keeps your value.
+`web_search` / `web_extract` are Hermes tools, separate from the model provider's
+web-search plugin. A local model can drive them, but search/extraction still
+contacts the selected external backend; model tokens and paid backends can bill.
 
-### Hermes: web search that does not bill you
-
-A hosted provider's own web plugin charges per search. Hermes does not use it.
-`web_search` / `web_extract` are **Hermes tools**, so the search happens outside
-the model and any model can drive it -- including a local one.
-
-With no backend configured and no key present, Hermes rotates round-robin
-across several vendors' public free tiers and fails over on rate limits
-(`web.keyless_fallback`, on by default). A failing call also retries once on
-that ring (`web.keyless_rescue`). Nothing to sign up for.
+The bundle's historical keyless-ring measurements and quotas are recorded in
+the [Hermes notes](1-TAILORED-PROVIDER-TREES/Hermes/README.txt); they are not a
+current service guarantee. Backend availability depends on installed Hermes,
+configuration and upstream quotas. Do not add a duplicate always-on web MCP
+merely because a native search call failed.
 
 For a backstop that depends on no vendor account at all, add DuckDuckGo:
 
@@ -402,23 +369,16 @@ model_aliases:
 No API key: Hermes supplies its own placeholder, because there is nothing to
 authenticate to. Never write a real secret into an `lmstudio` block.
 
-**The one thing that will stop you: set the saved context to 65,536.** Hermes
-refuses any model with a context window under 64,000 tokens and raises at
-startup, and LM Studio's saved default is commonly 32,768. 65,536 is the number
-to type -- the next power of two above the floor. A 32K window is too small for
-agent work anyway: one tool result can be tens of thousands of characters.
+**Use 65,536 for the bundle's tested LM Studio setup**, then verify the saved
+model-load settings and the context actually loaded. Hermes' normal local
+floor is 64,000; a one-off load flag does not prove the saved default.
+Weights, KV cache and desktop VRAM must fit: use [the budget/settings tools](BUNDLED-TOOLS/lm-studio/README.md)
+instead of assuming a 16 GB card can run any model at that context.
 
-Set it in LM Studio, then confirm it stuck by loading with **no** explicit
-context flag. Loading once by hand with a flag proves nothing -- a cold start
-uses the saved default, and that is what Hermes' preload picks up.
-
-Measured here on a 16 GB card, a 35B mixture-of-experts quant at 64K context:
-weights 17.08 GiB (so partial CPU offload is mandatory), ~15.5 GiB VRAM while
-generating, **41 tok/s**. Set an idle TTL so the card frees itself.
-
-Run local for the things money cannot buy -- no policy layer, no egress, no rate
-limit. For everything else the hosted ladder above is faster and costs cents.
-Full detail in the `local-model-ops` skill.
+Local inference stays on the selected server. Hosted auxiliary models, web
+backends or fallbacks can still send data elsewhere; a local main model alone
+does not make the entire harness local-only. [Local-model operations](_CANONICAL-SKILLS/local-model-ops/SKILL.md)
+covers dynamic model IDs, load verification and performance diagnosis.
 
 **Feeding a chat front-end from the same server?** SillyTavern is happy at 32K,
 so 65,536 keeps one loaded model serving both. Two of its behaviours look like
@@ -514,7 +474,8 @@ $ rtk find . -name '*.ps1' -not -path './.git/*'     # stdout: 0 bytes, exit 1
 /usr/bin/find: paths must precede expression: `INSTALL-REMOTE.ps1'
 ```
 
-`rtk-ai/rtk` carries **ten-plus open issues against `rtk find` alone**,
+The August 2026 review recorded **ten-plus issues against `rtk find` alone** in
+`rtk-ai/rtk`,
 including four near-duplicate reports of exactly this (#2469, #2847, #3256,
 #3458), silent omission of gitignored (#3656) and hidden (#3291) files, and
 **#3410** -- the rewrite rule for `find` is *unconditional*, so
@@ -586,7 +547,8 @@ agent's self-report does not prove that a rewrite actually ran.
 
 ### claude-mem is opt-in
 
-Every other component installs unattended. claude-mem pulls in the Bun runtime,
+Ordinary default components use the automated installer; optional editor/cloud
+integrations still need their prerequisites. claude-mem pulls in the Bun runtime,
 runs a background worker daemon, and needs a Claude Code restart before its
 tools appear -- three surprises for one double-click, so it moved behind a flag:
 
@@ -604,7 +566,9 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 - **codebase-memory-mcp** — installed but enabled only by Claude/Grok/trusted Codex project-scoped `code-intel` or Hermes' native `code` profile; `.cbmignore` + `TOOLS/Setup-CodebaseMemory-Index.ps1` keep the graph on source, not asset trees
 - **Headroom** (context compression, registered as an MCP server — see [Headroom + Grok](#headroom--grok))
 - **Superpowers** + **Ponytail** plugins/skills
-- **CodeBurn** (optional, via npm/npx)
+- **CodeBurn** CLI (installed by default, invoked when needed)
+- **RTK** CLI and narrow safe routing; not a blanket command rewriter
+- **Universal Modder** CLI, offline knowledge and one on-demand guide router
 - **Impeccable** — UI design router plus a pinned executable HTML/CSS detector; no second browser download
 - **img2threejs** — staged image-to-procedural-Three.js reconstruction with resumable evidence gates
 - **Safe skill discovery** — telemetry-free pinned catalog search; candidates still pass provenance and dedupe review before fanout
@@ -636,31 +600,21 @@ COPY-TO-YOUR-WORKSPACE/            workspace files + _PROJECT-TEMPLATE (incl. .c
 TOOLS/                             installers and discovery scripts
 TOOLS/Setup-CodebaseMemory-Index.ps1   index scope generator (v7.0.0+)
 _CANONICAL-SKILLS/              maintainer master skills
-INSTALL-AIO.ps1 / .bat          master installer
+INSTALL-AIO.ps1                   master installer
+START-HERE.bat / INSTALL-REMOTE.bat   local / remote entry points
 START-HERE.txt                     short human guide
 ```
 
 ## Docs
 
-- [START-HERE.txt](START-HERE.txt)
-- [AIO-GUIDE.md](AIO-GUIDE.md)
-- [V7.5.1-CHANGELOG.md](V7.5.1-CHANGELOG.md)
-- [V7.5.0-CHANGELOG.md](V7.5.0-CHANGELOG.md)
-- [V7.2.0-CHANGELOG.md](V7.2.0-CHANGELOG.md)
-- [V7.0.0-CHANGELOG.md](V7.0.0-CHANGELOG.md)
-- [V6.9.3-CHANGELOG.md](V6.9.3-CHANGELOG.md)
-- [V6.9.2-CHANGELOG.md](V6.9.2-CHANGELOG.md)
-- [V6.9.1-CHANGELOG.md](V6.9.1-CHANGELOG.md)
-- [V6.9.0-CHANGELOG.md](V6.9.0-CHANGELOG.md)
-- [V6.8.2-CHANGELOG.md](V6.8.2-CHANGELOG.md)
-- [V6.8.1-CHANGELOG.md](V6.8.1-CHANGELOG.md)
-- [V6.8-CHANGELOG.md](V6.8-CHANGELOG.md)
-- [V6.5-CHANGELOG.md](V6.5-CHANGELOG.md)
-- [BOOTSTRAP.txt](BOOTSTRAP.txt)
-- [V6-CHANGELOG.md](V6-CHANGELOG.md)
-- [BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md)
-- [WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md](WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md)
-- Historical: [V5-CHANGELOG.md](V5-CHANGELOG.md), [V5-INTEGRATION-AUDIT.md](V5-INTEGRATION-AUDIT.md), [RELEASE-NOTES-v5.2.2.md](RELEASE-NOTES-v5.2.2.md), [V4.3-CLAUDE-REVIEW-AUDIT.md](V4.3-CLAUDE-REVIEW-AUDIT.md), [V4.2-LOG-REGRESSION-AUDIT.md](V4.2-LOG-REGRESSION-AUDIT.md)
+- [Quick start](START-HERE.txt) and [AIO guide](AIO-GUIDE.md)
+- [Component catalog](BUNDLED-TOOLS/CATALOG.json), [capability profiles](BUNDLED-TOOLS/PROFILES.json) and [tool evaluations](docs/TOOL-EVALUATIONS.md)
+- [Hermes model review](docs/HERMES-MODELS.md) and [native profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md)
+- [LM Studio settings and VRAM budgeting](BUNDLED-TOOLS/lm-studio/README.md)
+- [Tool notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) and [skill notices](_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md)
+- [Changelog](CHANGELOG.md), [historical notes](docs/history/) and [latest published package](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest)
+
+Historical notes describe their release, not the current installation policy.
 
 ## AI contract
 
@@ -670,23 +624,55 @@ If a tool is missing, the AI should recommend `INSTALL-AIO.ps1`, `Ensure-Tools.p
 
 ## Third-party components
 
-Bundled offline artifacts and plugins retain their upstream licenses. See [BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md).
+This list includes redistributed code, fetched packages and catalog-only candidates.
+**A listing does not mean installed or connected.** Evaluated versions, source
+commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.json).
 
-Notable upstream projects:
+| Catalog ID | Upstream project | Integration |
+|---|---|---|
+| `universal-modder` | [Universal Modder](https://github.com/rehan-remade/universal-modder) | Vendored CLI/source and routed guides; default install |
+| `housecarl` | [houseCARL](https://github.com/Avick3110/houseCARL) | Offline payload; game/profile scope |
+| `spooky` | [Spooky's AutoMod Toolkit](https://github.com/SpookyPirate/spookys-automod-toolkit) | Offline CLI payload |
+| `codebase-memory` | [codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) | Offline payload; code profile |
+| `headroom` | [Headroom](https://github.com/headroomlabs-ai/headroom) | Wheel/source; core MCP |
+| `superpowers` | [Superpowers](https://github.com/obra/superpowers) | Vendored skills and native plugins |
+| `ponytail` | [Ponytail](https://github.com/DietrichGebert/ponytail) | Vendored skills and native plugins |
+| `codeburn` | [CodeBurn](https://github.com/getagentseal/codeburn) | Default on-demand CLI |
+| `impeccable` | [Impeccable](https://github.com/pbakaus/impeccable) | Vendored skill/detector; separately pinned CLI |
+| `code-review-skill` | [Code Review Skill](https://github.com/awesome-skills/code-review-skill) | Vendored canonical skill |
+| `obsidian-skills` | [Obsidian Skills](https://github.com/kepano/obsidian-skills) | Vendored canonical skills; no duplicate plugin needed |
+| `claude-mem` | [claude-mem](https://github.com/thedotmack/claude-mem) | Explicit -WithClaudeMem only |
+| `playwright-mcp` | [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Scoped browser MCP |
+| `firecrawl-mcp` | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server) | Credential-gated MCP |
+| `perplexity-mcp` | [Perplexity MCP](https://github.com/perplexityai/modelcontextprotocol) | Credential-gated MCP |
+| `context7` | [Context7](https://github.com/upstash/context7) | Core documentation MCP |
+| `github-mcp-server` | [GitHub MCP Server](https://github.com/github/github-mcp-server) | Official offline binary; core MCP |
+| `serena` | [Serena](https://github.com/oraios/serena) | Code-intel profile; language-server navigation |
+| `chrome-devtools-mcp` | [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) | Scoped browser inspection |
+| `shadcn-mcp` | [shadcn MCP](https://github.com/shadcn-ui/ui) | Matching project registry profile |
+| `blender-mcp` | [Blender MCP](https://github.com/ahujasid/mcp-for-blender) | Editor profile; Blender/addon prerequisite |
+| `godot-mcp` | [Godot MCP](https://github.com/Coding-Solo/godot-mcp) | Editor profile; Godot prerequisite |
+| `unity-mcp` | [Unity MCP](https://github.com/IvanMurzak/Unity-MCP) | Project package/generated executable prerequisite |
+| `rtk` | [RTK](https://github.com/rtk-ai/rtk) | Default CLI; narrow routing |
+| `omni` | [OMNI](https://github.com/fajarhide/omni) | Catalog/evaluation only; not installed |
+| `windows-mcp` | [Windows MCP](https://github.com/CursorTouch/Windows-MCP) | Manual opt-in; OFF by default |
+| `super-mcp-router` | [Super MCP Router](https://github.com/mindstone/Super-MCP) | Evaluated catalog entry; no default router wiring |
+| `playwright-cli` | [Playwright CLI](https://github.com/microsoft/playwright-cli) | Default CLI; browser installation separate |
+| `comfy-cli` | [ComfyUI CLI](https://github.com/Comfy-Org/comfy-cli) | Optional user-managed tool; not installed by default |
 
-| Component | Upstream |
-|-----------|----------|
-| houseCARL | https://github.com/Avick3110/houseCARL |
-| Spooky's AutoMod Toolkit | https://github.com/SpookyPirate/spookys-automod-toolkit |
-| codebase-memory-mcp | https://github.com/DeusData/codebase-memory-mcp |
-| Headroom | https://github.com/headroomlabs-ai/headroom |
-| Superpowers | https://github.com/obra/superpowers |
-| Ponytail | https://github.com/DietrichGebert/ponytail |
-| CodeBurn | https://github.com/getagentseal/codeburn |
-| Impeccable | https://github.com/pbakaus/impeccable |
-| img2threejs | https://github.com/img2threejs/img2threejs |
+Additional canonical payloads without separate tool-catalog entries:
 
-Do not re-upload third-party binaries to Nexus as your own work. Keep attribution. Prefer `TOOLS\Update-From-GitHub.ps1` for newer versions.
+| Payload | Upstream | Integration |
+|---|---|---|
+| `img2threejs` | [img2threejs/img2threejs](https://github.com/img2threejs/img2threejs) | Vendored skill, forge and fixtures |
+| `skill-creator`, `build-mcp-server`, `build-mcpb`, `build-mcp-app` | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | Selected cross-provider skills, not the entire marketplace |
+
+Skyrim Forge is the bundle author's product, shipped as source under
+`BUNDLED-TOOLS/skyrim-forge`, not a missing third-party download.
+[Tool notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) and
+[skill notices](_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md) retain licenses,
+credits and adaptation notes. The pack's MIT license does not relicense these
+projects. Preserve upstream attribution when redistributing.
 
 ## Headroom + Grok
 
@@ -703,10 +689,10 @@ model catalog: all retries exhausted   ->  model selector shows "unknown"
 Unauthorized (401) from http://127.0.0.1:8787/.../v1/chat/completions
 ```
 
-grok-4.5 becomes unselectable. **v5.0 of this pack applied that wrap
-automatically — that was the bug. v5.1 does not.**
+The native model list can become unavailable. An older bundle applied that
+incompatible wrap; the current installer leaves subscription inference native.
 
-### Grok shows an "unknown" model / grok-4.5 is gone
+### Grok shows an "unknown" model / expected models are missing
 
 ```powershell
 .\TOOLS\Ensure-Headroom-Grok.ps1 -Repair
@@ -741,15 +727,10 @@ mode that works.
 
 ## What's new
 
-Release notes live in [`CHANGELOG.md`](CHANGELOG.md), and every release has a
-dated write-up in [`docs/history/`](docs/history/). The **Version** section near
-the bottom of this file carries the current line, one paragraph each.
+[CHANGELOG.md](CHANGELOG.md) is the release history. Detailed measurements and
+old decisions live in [docs/history/](docs/history/), not a second README changelog.
 
-This section used to be a second changelog. It went stale at v8.0.4 while the
-pack shipped through 8.6.x, so it stood over a thirty-release-old list telling
-readers "recent releases first". One changelog, kept current, beats two.
-
-## Gates (new in v6)
+## Validation and diagnostics
 
 ```powershell
 python TOOLS\audit_skills.py <skills-dir>
@@ -757,142 +738,42 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\TESTS\Test-Pack.ps1
 python TOOLS\install_live_skills.py _CANONICAL-SKILLS --check
 ```
 
-v5.2.5's registry had *already warned* that BOM/encoding drift breaks
-valid-looking files, and v5.2.5 shipped BOMs anyway. A warning in a document is
-not a control; these are. `Test-Pack.ps1` checks every skill tree, parses
-every shipped `.ps1`, verifies offline-asset hashes, and sanity-checks the
-registry.
+The pack gate checks skill trees, PowerShell parsing, offline hashes,
+profile writers, hook retirement and fresh-home/upgrade fixtures. The
+installed-state doctor separately verifies the actual machine:
+
+```powershell
+.\TOOLS\Test-Installed-State.ps1 -Providers Claude,Codex,Grok,Hermes
+```
+
+Source validation is not a substitute for local runtime proof.
 
 ## Known limitations
 
-- 6 skills exceed the tier-2 body budget (6 warnings). They work;
-  they are not free. Trimming is deferred, not done.
-- **The knowledge graph cannot read Papyrus.** `codebase-memory-mcp` has no
-  `.psc` parser and skips `scripts/` via a built-in skip-list, so Skyrim mod
-  logic never enters the graph no matter how you configure it. The graph covers
-  C/C++/C#/Python/TS/Go/PHP and file structure — SKSE plugins and tooling, not
-  Papyrus. Use Grep + the `papyrus-reference` skill there.
-- `unrestraint-packs` is installed for every supported provider by the canonical
-  fanout. The `SCOPED` map remains available for any future, genuinely
-  provider-specific skill, but is intentionally empty in this release.
-- Everything here is **tool-validated** — gates pass, scripts parse, hashes
-  verify, and the BOM fix is confirmed live in a provider's own skill listing.
-  A real Windows PowerShell 5.1 run on an existing installation reached every
-  provider and Forge 6.0.0, then exposed two final-doctor defects that are fixed
-  and regression-tested in v7.9.2. A completely clean Windows machine remains
-  the authoritative GitHub Actions gate after push. The v7.5.0 preamble wiring
-  was sandbox-tested (fresh file, existing file, BOM file, re-run replace); the
-  remote bootstrap download and extract path was exercised against a local archive.
+- Six skills exceed the body-size budget. Their bodies load on demand;
+  these warnings do not mean they cost nothing.
+- **The knowledge graph cannot read Papyrus.** Use source search and
+  `papyrus-reference` for `.psc`. The graph covers supported languages
+  and repository structure, not live load-order truth.
+- Compatibility holds are deliberate: a newer upstream release is not
+  automatically a tested replacement. See the catalog and dated evaluations.
+- Free model availability, quotas and prices change; the live provider
+  catalog outranks a dated snapshot.
+- Full-Offline carries payload snapshots, not every runtime or dependency cache.
+  Fresh-home CI fixtures do not certify every clean Windows machine or account.
+- Parsing, packaging and protocol handshakes do not prove actual gameplay,
+  connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
 
-**v8.7.33** - 2026-10-02. Universal Modder for all five providers, portable Windows CLI and packaged knowledge, eight measured component updates, ownership-aware local convergence. **172 canonical skills**, no new always-on MCP. See [changes](docs/history/V8.7.33-CHANGELOG.md).
-
-**v8.7.32** - 2026-09-28. Retire the obsolete global Codex Impeccable hooks behind Design deep pass / Checking UI changes failures. Exact command-pair ownership, original-byte backups, preservation of current project hooks and custom handlers, read-only doctor detection and repeated-upgrade regression. No new global engine, dependencies or MCP schemas. See [changes](docs/history/V8.7.32-CHANGELOG.md).
-
-**v8.7.31** - 2026-09-28. Codex native hook upgrade cleanup, exact backups and a fail-closed doctor check. Custom hooks/trust are preserved, including missing-Python and custom-home upgrades. Fix Ponytail's bundled Cursor regex ReDoS; remove its unused raw upstream ZIP. No new MCP schemas or broad RTK routing. See [changes](docs/history/V8.7.31-CHANGELOG.md).
-
-**v8.7.30** - 2026-09-28. Audited component refresh, 171 skills, scoped MCP handshakes and pinned RTK corpus tests. Canonical/native Superpowers parity, explicit Windows Python 3.14, evidence-based compatibility holds, optional local ComfyUI CLI guidance. No new always-on MCP. See [changes](docs/history/V8.7.30-CHANGELOG.md).
-
-**v8.7.29** - 2026-09-21. SillyTavern can sit on a lean Hermes profile: LM Studio for chat, Hermes for vision, images, web, and character cards. Coding tools, coding skills, and the pack MCP servers stay off that gateway. **170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.29-CHANGELOG.md).
-
-**v8.7.28** - 2026-09-21. Hermes stops parsing Claude, Codex, Cursor, Devin, and Kimi Superpowers manifests on gateway start, and a running gateway stays down until profile migration has written config. The doctor catches a stale Context7 pin or npm spec, and the component ledger no longer collapses to one fetched tag. **170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.28-CHANGELOG.md).
-
-**v8.7.27** - 2026-09-20. Closed the one gap in v8.7.26's instruction-preserving writer: when the pack's own soul or contract text changes, a machine wired by the older release kept the old block and gained a second one, because the writer only matches text this release ships. Outgoing text is now archived in `3-PREAMBLES/history/` and stripped exactly like a source, so an edit converges installed machines - and the preservation test proves it with a sixth case (old block replaced, personal notes kept, idempotent). **170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.27-CHANGELOG.md).
-
-**v8.7.26** - 2026-09-20. Personal instructions after preambles are preserved, failed engine audits fail closed, and reviewed Windows/release guidance uses exact-SHA CI and ownership-aware skill deployment. **170 canonical skills**, no new dependency or model preference changes. See [changes](docs/history/V8.7.26-CHANGELOG.md).
-
-**v8.7.25** - 2026-09-18. The impeccable hold was re-audited against the real upstream engine instead of a release note, and it earned its keep: engine 0.1.5 still leaks bodies of browser-valid malformed close tags into text analysis - the exact gap the bundle patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub over that engine, with a first-use download and its own skill-writing commands. The audited CLI 3.6.1 / skill 4.1.3 pair stays, with the evidence recorded and `TOOLS/audit-impeccable-engine.py` left behind so the next audit is one command. **170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.25-CHANGELOG.md).
-
-**v8.7.24** - 2026-09-18. New rule, enforced by a test: public copy that ships to a platform an agent cannot
-edit later (Nexus, Steam, itch, forums) stays version-proof - no version numbers, dates or counts in titles,
-descriptions or captions, because each one is a manual edit or a stale number. The version lives in the
-platform's version field and the changelog. `skyrim-nexus-publishing` and `release-checklist` both enforce it.
-**170 canonical skills**, no new dependency. See [changes](docs/history/V8.7.24-CHANGELOG.md).
-
-**v8.7.23** - 2026-09-18. The installed preamble is plain text again (no marker comments burning tokens on
-every request) and the soul duplication is fixed everywhere: one soul + one operating contract per file, wired
-for Hermes' home and every profile. `stealth/ox-alpha` retired from the config, alias ladder and vision chain,
-with a migrator sweep that removes the pack's own dead references. Eight catalog pins refreshed (context7,
-playwright-mcp, playwright-cli, super-mcp-router, omni, unity-mcp CLI, github-mcp-server, codebase-memory)
-with offline assets re-fetched and checksum-verified; houseCARL 2.x, ponytail, rtk and impeccable stay held
-for a validated pass. **169 canonical skills**, no new dependency. See [changes](docs/history/V8.7.23-CHANGELOG.md).
-
-**v8.7.22** - 2026-09-17. Two new work-ethic skills ship by default: `workspace-organization` (ask where work lives, keep source and build output apart, maintain a `WORKSPACE.md` map) and `scratch-hygiene` (temp scratch dies with the task; bloat is swept at version bumps). The release and capability skills now carry app-closed steps as user-run, and the portable Hermes tuning is synced to the current choices (max effort, Ling 3.0 Flash VL summarizer, auto-routed vision, Nemotron pair in the alias ladder). **169 canonical skills**, no new dependency. See [changes](docs/history/V8.7.22-CHANGELOG.md).
-
-**v8.7.21** - 2026-09-17. New `creative` Hermes profile (Blender + Unity on the core three), Blender MCP pin refreshed to 2.0.0 with a re-measured tool surface, pack-gate Actions pinned to full commit SHAs. **167 canonical skills**, no new dependency. See [changes](docs/history/V8.7.21-CHANGELOG.md).
-
-**v8.7.20** - 2026-09-15. Reviewed Hermes tuning and profile maintenance. **167 canonical skills**, no new dependency. See [changes](docs/history/V8.7.20-CHANGELOG.md).
-
-**v8.7.19** - 2026-09-14. Grok Impeccable hook repair, verified local skill preservation and repository-rename synchronization. **167 canonical skills**, no new dependency or always-on server. See [release notes](docs/history/V8.7.19-CHANGELOG.md).
-
-**v8.7.17** - 2026-09-09. Trusted-project Codex MCP routing, preserved custom filters and provider ownership, native integration tests, and corrected schema measurement. **167 canonical skills**, no new MCP or dependency. See [release notes](docs/history/V8.7.17-CHANGELOG.md). Older dated entries retain historical conclusions; v8.7.17 corrects their universal per-turn billing and Codex scope claims.
-
-**v8.7.16** - 2026-09-07. Repairs duplicate Grok hooks after configuration resets, resolves a real hook interpreter, and detects effective hook drift. New GitHub projects inherit CI, security, documentation, packaging and verified release requirements through the existing skills. **167 canonical skills**, no new MCP schemas. See [release notes](docs/history/V8.7.16-CHANGELOG.md).
-
-**v8.7.15** - 2026-09-03. Skyrim work now has a player-facing quality gate, not just technical validation: new and reworked mods must design and visually verify the real UI/HUD/preview flow, supported inputs and scales, long lists, and empty/error states. The routed reference qualities include preview-dominant layouts, clear task navigation, search/filter/category hierarchy, live feedback, and cohesive controls without copying another author's assets or branding. Public Nexus work now produces a truthful media plan, crop-safe hero, proof-oriented gallery/video, captions, alt text, and rights/provenance for promotional media alongside Forge's existing archive/policy gate. GitHub releases get the same public-surface check for real final-state previews, quick start, verification, credits, and honest status. **167 canonical skills**, 126 release contracts, no new MCP schemas.
-
-**v8.7.14** - 2026-09-03. Code graph memory now reaches Hermes without taxing every Hermes chat: a native `code` profile carries codebase-memory while `default` remains the three-core baseline. Claude and Grok keep project-scoped `code-intel`; Codex and Kimi remain unregistered by default because they cannot scope MCPs per repository. The live 0.10.8 surface is corrected to 15 tools / 23,974 schema bytes (~5,994 tokens per enabled turn), including `check_index_coverage`. First-time Hermes profile creation no longer queries a profile before creating it. OpenMontage passed 1,829 tests but stays an external specialist project; Graft passed 1,214 tests and measured only ~841 schema tokens, but remains watch-only because its useful structural tier overlaps codebase-memory, semantic search missed without a configured model, and `init` is a second hook/config writer.
-
-**v8.7.13** - 2026-09-03. Fresh-install hotfix: Windows PowerShell 5.1 no longer splits provider startup options into individual characters, so the final doctor validates all five CLIs correctly while keeping Hermes on its local-only help path. Codex built-in name collisions are backed up and removed even when an obsolete provider rewrite modified the shadow copy; normal plugin-owned user edits remain protected. Hermes profile migration now fails closed if its child process exits nonzero.
-
-**v8.7.12** - 2026-09-02. Hermes 0.21's `--version` now performs an upstream fetch, so the installed-state doctor uses its local-only help path for executable validation instead of turning a local health check into a multi-minute network wait. No skills, MCP registrations, or schema budgets changed.
-
-**v8.7.11** - 2026-09-02. Release-asset integrity repair: GitHub assets with reused filenames are now cacheable only when their published SHA-256 matches, downloads are validated before atomic replacement, and failed refreshes preserve the last known-good file. The installer records and verifies RTK's executable/version after extraction; the doctor independently binds the active RTK binary to CATALOG. A Windows PowerShell 5.1 regression proves same-name, same-size stale bytes are rejected.
-
-**v8.7.10** - 2026-09-02. Same-day dependency convergence: shadcn's project-scoped MCP pin moves from 4.20.0 to 4.20.1 after an exact npm-package comparison and a real initialize/tools-list measurement. Its surface remains 7 tools / 4,495 schema bytes (~1,124 tokens per enabled turn). All 19 tracked release surfaces are current; no skill, profile, or always-on schema changed.
-
-**v8.7.9** - 2026-09-02. Security and same-day dependency convergence: Superpowers' local brainstorm companion keeps its bearer key out of page JavaScript and authenticates through an encoded HttpOnly cookie; Impeccable's poll leases are bounded, dynamic regex input is escaped, HTML marker parsing is hardened, and Ponytail's malformed-bullet matcher stays linear. Impeccable skill 4.1.3/CLI 3.6.1, Playwright MCP 0.0.80, shadcn 4.20.0, Blender MCP 1.9.1, and RTK 0.47.0 are pinned after checksum, syntax, handshake, schema, or corpus tests as applicable. Blender's profile enables telemetry opt-out and its new safe code validator. A stdlib catalog auditor checks npm, PyPI, GitHub, and secondary skill releases without creating a flaky scheduled CI gate. RTK's moving `--stat` benchmark is now tag-pinned; its narrow default allowlist remains, the broad hook stays off, Windows MCP stays off, and no always-on MCP schema was added.
-
-**v8.7.8** - 2026-09-01. Maintenance convergence: shadcn MCP is pinned to 4.19.1 in both catalog and web profile, every current Context7 fallback/example now says 4.0.4, and CodeBurn 0.9.23 is registry-integrity-bound with install scripts disabled. After a successful exact-version npm install, the installer removes only a strictly older duplicate from Hermes' private Node prefix; equal/newer or unverified copies are left alone. Grok diagnostics now follow native TOML plus the bundle's disabled Claude-MCP compatibility instead of recommending the retired npm GitHub server. No new skills or MCP schemas; Windows MCP stays off by default and RTK keeps its narrow measured allowlist.
-
-**v8.7.7** - 2026-08-31. RTK 0.46.0 is now installed by default with a bundle-owned fail-open allowlist instead of its broad upstream hook: exact standalone Git status plus human-facing pytest/cargo/go tests are routed automatically; diffs/logs/show, compound find, search/read/curl/gh, machine output, pipes and mutating Git remain raw. A five-state Git fixture was line-identical through status compression, while a large RTK diff omitted 5,531 changed lines, which is why broad routing stays disabled. Claude/Grok/Hermes receive the executable pre-hook; Codex/Kimi get the same narrow instruction. Full-Offline now includes the hash-recorded RTK archive. No new MCP schemas.
-
-The live upgrade also fixed Hermes fresh-hook consent: only the exact self-tested bundle commands are persistently allowlisted, never future third-party hooks. Codex built-in dedupe now compares installed skills to the exact provider-tailored source, while still refusing actual local edits.
-
-**v8.7.6** - 2026-08-31. Provider/profile convergence: package pins in project profiles are now contract-bound to the component catalog, fixing stale Chrome DevTools, shadcn, Blender and Unity wiring. Blender MCP 1.9.0 was measured at 28 tools / ~7,288 schema tokens per enabled turn; its server sends an anonymous startup event before Blender connects, so the profile now carries the supported `BLENDER_MCP_DISABLE_TELEMETRY=true` opt-out through the shared config writer. RTK's measured automatic-hook policy is enforced as off: the installer and live README no longer steer users into the broken rewrite table, profile migration parks stale cloned copies with backup/verification, and the doctor reports surviving drift. Fresh Hermes templates match runtime schema 39. No new always-on MCP schemas; Windows MCP remains installed and off by default.
-
-**v8.7.5** - 2026-08-30. Security follow-up for img2threejs: its optional vision environment now locks Transformers 5.16.1 and its Node verification pipeline locks esbuild 0.28.2, clearing the vulnerable 4.57.6/0.24.2 dependency lineages that GitHub reported once per generated provider tree. The v8.7.4 Codex convergence fix remains intact: built-ins are excluded before sync and exact deprecated-root duplicates are backup-migrated. Extracted-artifact testing also fixed batch launchers inheriting PowerShell 7/Codex module roots into Windows PowerShell and losing `Get-FileHash`, and partial reruns now preserve the untouched install-state ledger. **167 canonical skills**, no new tools, profiles, or always-on schemas. Windows MCP remains installed and manually opt-in.
-
-**v8.7.2** - 2026-08-30. Hotfix: the `windows` profile (windows-mcp, ~5,522 tokens/turn) is disabled machine-wide on every provider. It was enabled globally on the 29th; by the 30th Hermes, Claude Code/Cowork and the Codex app on Windows all ship native computer use, so it duplicated a capability every host already paid for on every turn. Shipped and off by default, as designed; `-Enable windows -Global` is the fallback for agents without native desktop control. 164 canonical skills, unchanged.
-
-**v8.7.1** - 2026-08-29. Maintenance release: Headroom **0.37.0**, Context7 **4.0.4**, and CodeBurn **0.9.23** are pinned consistently across online and offline installs. A true empty-home run fixed Codex failing before `.codex` existed and removed a retired claude-mem marketplace that fresh settings were adding and cleanup was removing on every run. Headroom now prefers an isolated `uv` tool install, including MCP dependencies and locked-process handling, so a successful pip install cannot leave an older executable active on PATH. MCP handshake proofs resolve a real Python interpreter even when Windows exposes no `python` alias. GitHub MCP guidance now matches the official binary's built-in browser OAuth: a PAT is optional, not required. No new always-on schemas were added.
-
-**v8.7.0** - 2026-08-27. The desktop, and a router worth 38,900 tokens a turn. New **`windows` profile** (windows-mcp): click, type, shortcuts, PowerShell, registry and filesystem over UI Automation -- the one surface Playwright and chrome-devtools cannot reach -- measured at **20 tools, 22,088 bytes, ~5,522 tokens/turn**, off by default with **no detect markers at all**, because no file on disk is evidence that an operator wants an agent clicking their mouse. Measuring it exposed that the capability sweep would have *driven* that desktop: its guard was a blocklist of REST verbs, and the one call that did land was safe only because upstream happened to order an enum `read` before `write`. **super-mcp-router** measured at 11 tools / 11,386 bytes / **~2,846 tokens per turn, fixed** -- against houseCARL's 41,768 on every turn -- and proven end to end against this pack's own houseCARL, though deliberately not wired yet. Plus a UTF-8 BOM the schema-cost tool had been sending on its first frame for seven releases.
-
-**v8.6.13** - 2026-08-27. Detection could not see a workspace of projects. 8.6.12 taught the skills and installer to say "installed but not enabled here, run this" -- then pointed at a real Skyrim workspace of **45 mod directories, 327 `.esp` and 5,877 `.psc` files**, `Set-McpProfile -Detect` answered *"no profile markers found"*, because it scanned only the root and not one marker sits there. Root-only was deliberate and its reasons were sound (recursive scans are slow and match vendored dependencies), but it missed the shape people work in. Now root **plus immediate subdirectories, depth 1, never recursive** -- 0.6 s on that tree -- bounded at 250 children with `node_modules`, `vendor`, `dist`, `.venv` and friends skipped by name.
-
-**v8.6.12** - 2026-08-27. The Full-Offline archive was shipping last month's tools. Three of seven payloads in `BUNDLED-TOOLS/offline/` were stale -- headroom **0.35.0**, github-mcp-server **1.10.1**, an August codebase-memory build -- found by *running* the installer, which pip-installed 0.35.0 seconds after the updater fetched 0.36.5: the updater writes to `cache/`, the installer reads `offline/`, and only `-UpdateCatalogOffline` bridges them. All refreshed and `OFFLINE-MANIFEST.json` regenerated from the bytes on disk. **Seven pins bumped**, including github-mcp-server **1.11.0** and context7 **4.0.3** on all five providers -- context7 re-measured rather than renumbered. And the doctor now reports **hooks that steer agents at unregistered MCP servers**: codebase-memory-mcp's own SessionStart hook was injecting 695 bytes of "ALWAYS use codebase-memory-mcp tools FIRST" on every startup, resume, clear and compact, while codebase-memory was registered on no provider at all. Reported, never rewritten. And **a marketplace outlived its tool and spread**: `claude-mem` was uninstalled weeks ago, yet `thedotmack` was still registered in Claude, still cloned at 140 MB, still present as four orphaned 140 MB temp clones, and had synced into Grok -- which reported `thedotmack (0 plugins) [error] Git sync failed` for something the user never registered, because **Grok inherits Claude's marketplace list**. New `RETIRED-PLUGINS.json` plus cleanup across all three registration shapes; **286 MB freed**, and Grok re-synced to six legitimate marketplaces with claude-mem gone. `Set-McpProfile -List` also stopped printing "enabled" and "ready to enable" identically. And the **catalog turned out to be decorative** for the one server every provider runs: bumping `context7` to 4.0.3 left all five still pinned to 4.0.2, because `Add-Reasoning-MCPs.ps1` carried its own hardcoded copy of the version and never read `CATALOG.json`. Now resolved from the catalog; all five verified at 4.0.3. Finally, **twelve files were shipping unverified**: `git ls-files` octal-quotes non-ASCII paths, so eleven files with em dashes or emoji in their names never matched the filesystem walk and silently left `MANIFEST.json` -- which `verify_manifest.py` could not detect, because it only checks that *recorded* files exist. 5,428 -> **5,440** entries, zero uncovered. And the worst one, found by checking whether this release's own bump had landed: **running the installer with your AI apps open failed the whole install.** Four live `github-mcp-server` MCP processes held the binary, robocopy returned exit 8, and the throw aborted everything -- `INSTALL FAILED` over one locked file, which is what happens whenever anyone runs `START-HERE.bat` without closing their apps. The generic extract branch now stops the owning process, and skips just that component if it still will not release. The same command that had failed then completed, updating github-mcp-server to 1.11.0.
-
-**v8.6.11** - 2026-08-27. rtk is a git tool. Every number this pack had shipped for it was a `git` command; measured off git at 0.46.0 it aggregates **7.4%** (excluding rows that truncate rather than compress) against **85.2%** on git. `rtk read` is byte-identical to `cat`, `rtk json` returns 144 bytes from 1.1 MB by printing *one* array element, and **`rtk find` returns EMPTY stdout** for `-name` patterns -- an agent reads "no files match" when 76 match. Two claims corrected: the pack said rtk keeps "no archive and no retrieval", but `rtk test` writes a **complete** tee log and prints its path. The hook now stays off on evidence -- probing `rtk hook claude` shows `-g` rewrites `find` (broken), `cat` (0.0%) and `grep` (truncating) while leaving `npm test`, `curl` and `python x.py` alone, automating the worst categories and skipping the best. Also: the **byte-order marks are gone** from `CATALOG.json` and `OFFLINE-MANIFEST.json` -- Core regenerates that manifest BOM-less, so the two archives shipped one logical file in two encodings.
-
-**v8.6.10** - 2026-08-27. Pinning the corpus was only half of it. v8.6.8 pinned the rtk savings to tag ranges so the corpus could not drift; rtk then shipped **0.46.0** and `git log --stat -20` went from **95% to 0%** -- `--stat` now passes straight through, while plain `git log` still compresses ~86% and the other three rows reproduced **to the byte**. Every number now carries the tool version it was measured on, bound by contract to the version CATALOG declares, so bumping the version without re-measuring fails the build. That contract took two attempts: the first matched "any rtk X.Y.Z in the section" and passed while the stamp was deleted, because the paragraph explaining the regression still named both versions. Also: **six reverse-engineering tools evaluated, none bundled** -- four are desktop GUIs, and GhidraMCP, the only one that puts an agent in the loop, has not been touched since **2025-06-23** while Ghidra shipped through 12.1.3. And **lean-ctx measured**: best supply chain seen here (sigstore-signed checksums), but its headline 98.1% is `-m map`, a *symbol index* that duplicates `codebase-memory`, it saved **0.0%** on the same shell corpus as rtk and OMNI, and it carries **78 MCP tools**.
-
-**v8.6.9** - 2026-08-27. The preset was fine; the model settings were not. LM Studio keeps sampling presets and per-model **load** settings in different places, and the model's own settings are what it applies. Measured for one 27B family: four of five saved configs could not load as written -- `q8_0` K/V throughout, one with **three** parallel sessions, one at **75% offload** -- and the one actually in use asked for **18.32 GiB on a card with ~14.5**, spilling to system RAM over PCIe every session. New `Optimize-LMStudioModelConfig.ps1` reads each GGUF and your card, computes the largest context that genuinely fits at `q4_0`, and writes it with one session and full offload; dry-run by default, backs up first. `Get-KvBudget.ps1` stopped guessing its reserve: measured with **no model loaded**, 6.6 GB of a 16 GB card was already held by desktop apps, so the old `total - 1.5` budget said a 10.26 GB model fit when 9.2 GB was free. And the quant question is now arithmetic: at 65,536 with `q4_0`, only `UD-IQ2_S` and `UD-IQ3_XXS` reach the window, while `UD-Q3_K_XL` reaches **3,710** -- its 14.26 GB of weights do fit on a 16 GB card, leaving 0.2 GB, which is exactly why a weights-only fit check blesses it.
-
-**v8.6.8** - 2026-08-27. The rtk advice was stale, and the README was 61% changelog. Re-measured on native Windows at rtk 0.45.0: `rtk init -g` registers a **real PreToolUse hook** (`rtk hook claude`, JSON over stdin) that rewrites commands transparently and writes a 990-byte `RTK.md` -- so the catalog's blanket "do not install the Claude/Cursor/Gemini hooks on Windows" was wrong. The distinction is `-g`, not the provider: plain `rtk init` prints `No hook installed` and writes **5,140 bytes** into `CLAUDE.md`, ~1,400 tokens every turn forever, to *ask* for savings. Its rewrites are conservative -- `curl`, `npm test` and `gh --json` untouched, `rtk read` byte-identical to `cat`. The README's own rtk table was still advertising the decayed 97% from `git diff HEAD~3` that v8.6.6 had already pinned in the catalog; both now show the honest 25%-95% spread. New **`-WithRtk`** installs it behind one flag and then *prints* the hook command rather than running it, because registering it patches your `settings.json` and rewrites every shell command -- and rtk discards what it filters, with no archive and no retrieval. The README also carried **two** changelogs, one stale at v8.0.4 while the pack shipped through 8.6.x; 1,196 lines became 635 with nothing lost, since `CHANGELOG.md` holds all 86 entries and `docs/history/` 92 write-ups.
-
-**v8.6.7** - 2026-08-27. The skill Codex already had. v8.6.6 adopted `skill-creator` into the canonical tree so all five providers would carry it -- but Codex ships a `skill-creator` of its own in `<CodexHome>\skills\.system`, so on Codex alone the pack's copy became a second index entry for a capability that was already there. The final doctor caught it on the first real install (`Codex indexes 1 skill(s) twice`), and the cost was measurable: **184 entries at 48 visible description chars with the duplicate against 183 at 50 without** -- one collision quietly taxing every other skill's description. Fixed by **discovery rather than by name**: `.system` also holds `imagegen`, `openai-docs`, `plugin-creator`, `review-agent` and `skill-installer`, so hardcoding the one known collision would have caught it and nothing else. The removal reuses the same verified remover as the plugin dedupe -- md5 against canonical, backup first, user-modified copies refused -- and the doctor now accounts plugin-owned and Codex-owned separately, because a reader who cannot tell them apart cannot act on either. `skill-creator` still installs to Claude, Grok, Kimi and Hermes, which ship no equivalent.
-
-**v8.6.6** - 2026-08-26. The index was full of the pack's own skills. Codex was rendering **211 entries at 32 visible description characters**, 18 of them indexed twice -- and the plugin contributing 26 of them was not an Anthropic skill set at all: its manifest says `"creatorType": "user"`, so it was **this pack's own skills**, uploaded to Cowork and served back as *stale* copies that canonical had since moved past. Five more duplicated Codex's native `documents`/`pdf`/`spreadsheets`/`presentations` plugins. Disabled, with the `obsidian` plugin whose five skills this pack already carries byte-identical: **180 entries at 52 chars**, descriptions 63% wider on every skill for zero capability. The installed-state doctor went **FAIL (29 errors) to PASS** -- 29 skills had drifted from canonical across Codex, Grok, Kimi and Hermes -- and 1.29 GB of claude-mem leftovers went with them (`~/.claude/plugins` 1.4 GB -> 128 MB) months after the tool itself was uninstalled. Four skills adopted from Anthropic's Apache-2.0 marketplace into `_CANONICAL-SKILLS`, which installs to **all five providers** rather than one: `skill-creator` plus the `build-mcp-server`/`build-mcpb`/`build-mcp-app` set; eleven others reviewed and rejected on the record. RTK and OMNI measured head-to-head at last: rtk 85.2% against OMNI's 71.2%, of which **17.4 points is truncation, not compression** -- above a 65,536-byte cap OMNI drops content and says `full output not archived`, which its byte-for-byte guarantee does not qualify; its real recoverable saving was 6.4%, matching its own published 8.8% on git. And our own rtk claim of 97% was quoting `git diff HEAD~3` -- a MOVING reference that measures 82.5% today -- now pinned to tag ranges with the honest 25%-95% spread.
-
-**v8.6.5** - 2026-08-26. The setting nobody looks at. v8.6.4 documented KV-cache spill correctly and then prescribed the wrong fix: on the machine it was measured against, cache quantisation was **already on at `q8_0`**. The real culprit was `llm.load.numParallelSessions: 2` -- a multiplier on the entire cache, with nothing in the name to suggest it costs VRAM. At 65,536 context on a 16 GB card holding 10.26 GB of weights, 2 sessions + q8_0 wants 16.3 GB against 4.23 available, 1 session + q8_0 still wants 8.1, and only **1 session + q4_0** fits at 4.1 GB (max context 68,205). New `Get-KvBudget.ps1` reads the GGUF header and your GPU and prints max context at each cache precision, with `-Sessions` so the multiplier is visible; it flags `key_length` 256 as double the common 128, which doubles a model's cache and appears on no model card. New `Hermes 16GB` preset is the first with a populated `load` block -- 65,536 context, q4_0 K/V, flash attention, full offload, one session -- with every key read out of LM Studio's own config files, because an invented config key is silently ignored rather than rejected.
-
-**v8.6.4** - 2026-08-26. Three bytes, and a skills index that went blank. `START-HERE.bat` shipped with a UTF-8 BOM in 8.6.2 and 8.6.3, so every user opened the launcher to a `'@echo' is not recognized` error -- the install still finished, which is why it survived two releases. Introduced here, not inherited: v8.6.1 starts `40 65 63`, v8.6.2 starts `EF BB BF`. Codex user skills moved to the supported `~/.agents/skills` root; with both it and the deprecated `$CODEX_HOME/skills` live, the index measured **314 entries, 125 duplicated names and zero visible description chars** -- every skill reduced to a bare name -- against 211/0/32 after cleanup. The doctor could not even report that: its pattern required a non-empty description, so it fell back to estimating 212 when the truth was 314. The four AIO preambles are synced on substance (web wording deliberately left different, since web surfaces filter server-side), `Web Light` is finally lighter at 1,910 bytes against Web's 2,257, and two variants stopped recommending an installer that does not exist in v8. LM Studio's intermittent slowness is documented as KV-cache spill with the arithmetic: `key_length` 256 gives 0.254 MB/token at fp16, so 16 GB hits the cliff near 20k tokens.
-
-**v8.6.3** - 2026-08-26. One keypress, and five tools that did not make it. Opening the bundled Forge folder and double-clicking `START-HERE.bat` landed on an eleven-item menu whose correct answer -- for anyone who had not used Forge before -- was always `1`; the bundle installer never showed that menu, so the only person who ever saw it was the one least able to answer it. It now installs and wires every detected AI app with no arguments, menu one keypress away, and **no files moved**: three of those scripts are executed by exact filename from `Install-SkyrimForge.ps1`, one as its integrity marker. New `BUNDLED-TOOLS/lm-studio/` ships three sampling presets and a copier the installer deliberately never calls -- `settings.json` stays out because it carries a username-bearing path and two Hugging Face credential fields, though reading it found `defaultContextLength` at 55,000, under the 64,000 floor Hermes hard-refuses. Six tool candidates evaluated in `docs/TOOL-EVALUATIONS.md`: **OMNI** taken as `cli-optional` at the number its own README reports (5.1% over 9,478 executions, not the 97.2% on its landing page); **lowfat** rejected because v0.8.0 ships no Windows binary and hooks through a POSIX shell eval -- the same degradation already documented for RTK; **Understand-Anything** rejected as a duplicate of `codebase-memory`; **Agent-Reach** rejected for installing via an agent-executed remote script; **Lightpanda** and **llmtrim** documented but not bundled.
-
-**v8.6.2** - 2026-08-26. Count it, don't infer it. The doctor reported the Codex skills index as 319 entries at "~16 visible description chars" while Codex was actually rendering 197 at 42 -- it walked `plugins\cache`, but Codex indexes only the plugins `config.toml` ENABLES, and the cache also holds marketplaces that were never enabled, backups of upgraded plugins, and payload meant for other tools. It now asks Codex directly (`codex debug prompt-input`) and measures both figures. Two silent bugs came out with it: `codex plugin list --json` fails wholesale when *any* marketplace snapshot is broken, which made the installer skip its dedupe and leave 20 skills in the index twice (197 -> 177 entries, 42 -> 54 chars once repaired); and a single-provider install erased the other providers' native-plugin records, turning a correct machine into 34 doctor errors.
-
-**v8.6.1** - 2026-08-26. Documentation only. v8.6.0 stated the rule and never the setting: Hermes refuses a context window under 64,000 tokens, and both docs said exactly that, leaving a reader to type 64,000 (passes a strict `<`, but is not a value LM Studio offers) or 32,768 (the nearest power of two, and the one commonly saved already). Both now say **65,536**, with the verification step that is usually skipped -- confirm the saved default by loading with no explicit context flag, because a cold start is what Hermes' preload reads. Also a new SillyTavern reference: it demands an API key the local server ignores, and a reasoning model returns an empty message when Response Length is small because thinking tokens come out of the same budget.
-
-**v8.6.0** - 2026-08-25. Enabled is not installed. Two cloned Hermes profiles had been running no plugins at all -- `profile create` copies the enabled list and never the payload, so Ponytail and Superpowers had never loaded in `roblox` or `skyrim`, silently. All four of this pack's own Hermes gate hooks were dead for the same reason, a rename the consent allowlist never followed. The migration now links each profile to the shared plugin root and converges the enabled list additively; the doctor reports both failures. Also: a documented free path to the web (Hermes' own keyless search ring, not a billed provider plugin), a new `local-model-ops` skill for running LM Studio as a Hermes provider -- 41 tok/s measured, and a 64,000-token context floor that blocks the obvious setup -- and RTK as an optional CLI that cut `git diff HEAD~3` from 2,010,426 to 71,268 bytes here.
-
-Earlier releases: [`CHANGELOG.md`](CHANGELOG.md) carries all 86, and
-[`docs/history/`](docs/history/) has the long-form write-up for each.
+**v8.7.34** - 2026-10-02. Documentation refresh, complete upstream listings,
+current Hermes model-catalog review and an exact-match repair for the retired
+free compression endpoint. **172 canonical skills**, no new always-on MCP.
+[Changes](docs/history/V8.7.34-CHANGELOG.md) ·
+[Latest published release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest).
 
 ## License
 
-Pack documentation and original installer scripts are provided as-is for
-personal and community use. Third-party tools inside `BUNDLED-TOOLS` keep their
-own licenses (see [BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md)).
+Original bundle code and documentation are [MIT-licensed](LICENSE).
+Third-party payloads keep their own terms: see the [tool notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md)
+and [skill notices](_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md).

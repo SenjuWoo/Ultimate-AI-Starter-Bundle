@@ -388,7 +388,7 @@ def test_hermes_cost_contract() -> None:
         assert re.search(r"(?m)^\s*transient_retries:\s*1\s*$", cfg), path
         assert re.search(r"(?m)^\s*cost_threshold_usd:\s*0\.01\s*$", cfg), path
         assert re.search(r"(?ms)^  background_review:\s*\n\s+enabled:\s*false\s*$", cfg), path
-        # Reviewed user choice: free multimodal summarizer; 256k context covers
+        # Reviewed replacement: free multimodal summarizer; 1M context covers
         # the retained 160k input cap. Compatibility is not proof of summary
         # quality.
         aux_start = cfg.index("auxiliary:")
@@ -397,12 +397,9 @@ def test_hermes_cost_contract() -> None:
         m = re.search(r"(?ms)^  compression:\n(.*?)(?=^  [a-z_]+:|\Z)", aux)
         assert m, f"{path}: Hermes auxiliary.compression block missing"
         compression = m.group(0)
-        assert "model: inclusionai/ling-3.0-flash-vl:free" in compression, path
-        # The owner's chosen effort. OpenRouter publishes no supported_efforts
-        # for this model (unlike the previous Inkling pick), so this is a
-        # chosen effort, not a catalog-verified capability; a rejected summary
-        # never replaces context (abort_on_summary_failure stays true).
-        assert "reasoning_effort: ultra" in compression, path
+        assert "model: thinkingmachines/inkling:free" in compression, path
+        # Inkling advertises max, not ultra; summary failures still abort.
+        assert "reasoning_effort: max" in compression, path
         assert "timeout: 600" in compression, path
 
         assert re.search(r"(?m)^\s*cache_ttl:\s*1h\s*$", cfg), path
@@ -1268,7 +1265,8 @@ def test_readme_model_guidance_matches_the_shipped_config() -> None:
     # machine_state forbids, so the README documents it as something the
     # reader configures rather than something the pack hands them.
     MACHINE_LOCAL_ALIASES = {"local"}
-    for alias in re.findall(r"hermes model ([a-z0-9.-]+)", readme):
+    # Options such as --refresh are CLI flags, not model aliases.
+    for alias in re.findall(r"hermes model ([a-z0-9][a-z0-9.-]*)", readme):
         if alias in MACHINE_LOCAL_ALIASES:
             assert alias not in shipped, (
                 "the starter now ships the %r alias; that puts a localhost endpoint "
@@ -2493,6 +2491,8 @@ def test_catalog_freshness_auditor_self_checks() -> None:
 
 def main() -> int:
     tests = [
+        test_compression_retirement_preserves_custom_preferences,
+        test_current_documentation_links_and_upstream_coverage,
         # v7.9.8 -- the starter template is not a place to register MCP servers,
         # and the routing decision has to be measurable.
         test_starter_templates_declare_no_mcp_servers,
@@ -3101,14 +3101,16 @@ def test_hermes_readme_matches_the_shipped_starter() -> None:
     assert "mcp_servers: {}" in readme, "the Hermes README no longer states the empty mcp_servers"
 
     # Each claim in the README that names a config value must match the file.
-    for key, claim in (
-        ("reasoning_effort", "reasoning_effort: high"),
-        ("max_turns", "max_turns: null"),
-        ("threshold_tokens", "threshold_tokens: 160000"),
+    for key, value, section in (
+        ("reasoning_effort", "max", "agent"),
+        ("max_turns", "null", "agent"),
+        ("threshold_tokens", "160000", "compression"),
     ):
-        assert claim in cfg, f"starter no longer sets {claim!r}"
-        value = claim.split(": ", 1)[1]
-        assert value in readme, (
+        claim = f"{key}: {value}"
+        block = re.search(rf"(?ms)^{section}:\n(.*?)(?=^[a-z_]+:|\Z)", cfg)
+        assert block and re.search(rf"(?m)^  {key}: {value}\s*$", block.group(1)), claim
+        documented = next((line for line in readme.splitlines() if line.startswith("- Main model:")), "") if section == "agent" else readme
+        assert claim in documented, (
             f"Hermes README does not state the shipped {key} ({value}); "
             "a README that describes executable config has to track it"
         )
@@ -5543,6 +5545,83 @@ def test_maintenance_catalog_targets_remain_scoped() -> None:
     spec.loader.exec_module(builder)
     for name in ("task-start", "task-done"):
         assert builder._archive_mode(Path("executing-plans/scripts") / name) == 0o100755
+
+
+def test_compression_retirement_preserves_custom_preferences() -> None:
+    """Execute the production writer, not a duplicate of its migration logic."""
+    import copy
+    import os
+    import types
+    from unittest.mock import patch
+
+    body = read(ROOT / "TOOLS/Migrate-HermesProfiles.ps1")
+    writer = re.search(r"(?s)\$script:UabsHermesPrefsScript = @'\n(.*?)\n'@", body).group(1)
+    planner = body.split("function Ensure-UabsProfilePrefs", 1)[1].split("$toDisable", 1)[0]
+    assert "$current.compression.provider -eq 'openrouter' -and" in planner
+    assert "'inclusionai/ling-3.0-flash-vl:free', 'openrouter/inclusionai/ling-3.0-flash-vl:free'" in planner
+    retired = "inclusionai/ling-3.0-flash-vl:free"
+    replacement = "thinkingmachines/inkling:free"
+    # A stale plan must not overwrite a value changed after planning.
+    cases = [
+        ("openrouter", retired, "ultra", retired, True),
+        ("openrouter", "openrouter/" + retired, "ultra", "openrouter/" + retired, True),
+        ("openrouter", retired, "high", retired, True),
+        ("openrouter", retired.removesuffix(":free"), "ultra", retired, False),
+        ("custom", retired, "ultra", retired, False),
+        ("openrouter", "custom/model", "ultra", retired, False),
+    ]
+    for provider, model, effort, planned, changes in cases:
+        original = {"model": {"default": "my/main", "aliases": {"mine": "my/alias"}},
+                    "fallback_providers": [{"model": "my/fallback"}],
+                    "auxiliary": {"vision": {"model": "my/vision"}, "compression": {
+                        "provider": provider, "model": model, "reasoning_effort": effort,
+                        "timeout": 731, "custom": "keep"}}, "memory": {"limit": 5000}}
+        cfg = copy.deepcopy(original)
+        expected = copy.deepcopy(original)
+        if changes:
+            expected["auxiliary"]["compression"]["model"] = replacement
+            if effort == "ultra":
+                expected["auxiliary"]["compression"]["reasoning_effort"] = "max"
+        module = types.ModuleType("hermes_cli.config")
+        module.load_config = lambda: cfg
+        saved = []
+        module.save_config = lambda value: saved.append(copy.deepcopy(value))
+        prefs = {"compression_migration": {"retired_model": planned, "model": replacement}}
+        with patch.dict(sys.modules, {"hermes_cli.config": module}), patch.dict(
+                os.environ, {"UABS_HERMES_PREFS_JSON": json.dumps(prefs)}):
+            exec(compile(writer, "Hermes production preferences writer", "exec"), {})
+            assert saved[-1] == expected, (provider, model, effort)
+            exec(compile(writer, "Hermes production preferences writer", "exec"), {})
+            assert saved[-1] == expected, "Repeated repair changed preferences"
+
+
+def test_current_documentation_links_and_upstream_coverage() -> None:
+    """The current landing pages cannot point to moved history or omit upstreams."""
+    paths = [ROOT / p for p in (
+        "README.md", "AIO-GUIDE.md", "docs/HERMES-MODELS.md",
+        "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md", "_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md",
+        "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md")]
+    from urllib.parse import unquote
+    for path in paths:
+        for target in re.findall(r"\]\(([^)]+)\)", read(path)):
+            target = target.split("#", 1)[0].strip("<>")
+            if not target or "://" in target or target.startswith("mailto:"):
+                continue
+            assert (path.parent / unquote(target)).exists(), f"{path.name}: broken link {target}"
+    catalog = json.loads(read(ROOT / "BUNDLED-TOOLS/CATALOG.json"))
+    for document in (paths[0], paths[3]):
+        text = read(document)
+        for component in catalog["components"]:
+            if component["id"] == "skyrim-forge":
+                continue
+            upstream = component["github"]
+            row = next((line for line in text.splitlines() if line.startswith(f"| `{component['id']}` |")), "")
+            assert f"https://github.com/{upstream['owner']}/{upstream['repo']}" in row, component["id"]
+    starter = read(ROOT / "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml")
+    aliases = re.search(r"(?ms)^  aliases:\n(.*?)(?=^  \w|^\w|\Z)", starter).group(1)
+    guidance = read(paths[2])
+    for alias, model in re.findall(r"(?m)^    ([\w.-]+):\s+openrouter/(\S+)", aliases):
+        assert f"| `{alias}` | `{model}` |" in guidance, alias
 
 
 if __name__ == "__main__":

@@ -6,8 +6,11 @@ below is checked against the actual file by TESTS/test_release_contract.py
 said "Empty mcp_servers" while the starter shipped five live servers, and
 nothing was watching.
 
-- DeepSeek V4.1 Flash, reasoning_effort=high, max_turns=null (unlimited)
-- Compression at 160000 tokens, lean tail (proactive tool-result prune from 80000)
+- Main model: DeepSeek V4.1 Flash, reasoning_effort: max, max_turns: null (unlimited)
+- Compression threshold_tokens: 160000, lean tail (tool-result prune from 80000)
+- Compression: thinkingmachines/inkling:free, reasoning_effort: max, timeout 600
+  The retired free Ling endpoint is repaired narrowly; other models stay unchanged.
+  Current choices and limits: docs/HERMES-MODELS.md in the bundle.
 - Profiles: default (context7/github/headroom), code (+ codebase-memory),
   roblox (+ Studio MCP), existing rimworld (+ external RimWorldForge),
   skyrim (+ houseCARL, Lean tool set: 42 of 45 tools, ~31,369 schema tokens

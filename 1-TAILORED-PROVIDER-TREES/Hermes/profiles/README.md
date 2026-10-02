@@ -21,8 +21,8 @@ descriptions; they are not live configs. Migration runs with Hermes closed
 to write while it is open. RimWorldForge is a separate installation:
 the bundle does not download it or guess its location.
 
-Reviewed September 17, 2026: main DeepSeek V4.1 Flash with max reasoning,
-20% compression target, free Ling 3.0 Flash VL summarizer with ultra reasoning
+Reviewed October 2, 2026: main DeepSeek V4.1 Flash with max reasoning,
+20% compression target, free Inkling summarizer with max reasoning
 and 600-second timeout, auto-routed vision whose ordered chain is the Flash
 vision model, response cache disabled, one-hour prompt cache
 retained, bounded delegation. The installed provider advertises these
@@ -37,6 +37,8 @@ defaults. Auto-routed auxiliary tasks can choose paid models, so existing
 explicit low-cost auxiliary defaults remain. Current Hermes ignores the old
 web-extraction model block; the starter no longer includes it.
 
-Your code-profile memory limit of 5000 characters is retained locally. Other
-profiles keep 2200; these deliberate profile preferences are not overwritten
-by migration. Original exports are backed up locally, not redistributed.
+Deliberate per-profile memory limits, models and filters are retained, not
+redistributed as defaults. Only the exact delisted free Ling compression endpoint
+is repaired; its paid sibling and custom alternatives stay unchanged.
+See [current model guidance](../../../docs/HERMES-MODELS.md). Original exports
+are backed up locally, not redistributed.

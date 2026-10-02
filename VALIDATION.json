@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.33",
+  "version": "8.7.34",
   "generated": "2026-10-02",
-  "release_tag": "v8.7.33",
+  "release_tag": "v8.7.34",
   "canonical_skills": 172,
   "provider_trees": 5,
   "registry_entries": 172,
@@ -26,6 +26,6 @@
     "TESTS/test_universal_modder.py",
     "TESTS/Test-HermesNativeStderr.ps1"
   ],
-  "runtime_status": "v8.7.33: pinned Universal Modder source, packaged knowledge and Windows UTF-8/path repairs; 22 upstream tests, installed-wheel offline knowledge search and scoped MCP handshakes PASS. Isolated browser CLI navigation PASS. No game/editor/GPU/fal runtime proof; fresh whole-machine installation is not implied.",
+  "runtime_status": "v8.7.34: documentation, upstream coverage and narrowly scoped retired Hermes compression migration checked by executable contracts. OpenRouter metadata verified 2026-10-02; no authenticated model inference or summary-quality benchmark. Earlier Universal Modder/browser/scoped MCP checks are recorded in v8.7.33 history, not repeated proof of live game/editor/GPU behavior.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

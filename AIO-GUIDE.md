@@ -1,98 +1,65 @@
-# Ultimate AI Starter Bundle v8 — AIO guide (users + AIs)
+# AIO guide: install, discover, activate, verify
 
-## What “AIO” means
+Run `START-HERE.bat` from the extracted pack. It selects detected providers,
+installs default tools/skills, merges owned settings and checks core MCPs.
+Restart affected apps after wiring changes. Installed does not mean connected.
+See [quick start](README.md#quick-start) for remote install, modes and recovery.
+Web UIs use [MANUAL-PASTE.txt](3-PREAMBLES/MANUAL-PASTE.txt).
 
-One pack that delivers:
+## When an AI cannot find a tool
 
-1. **Skills** for every supported AI (framework syntax, safety, routers)
-2. **Plugins/process skills** (Superpowers, Ponytail)
-3. **Runnable tools** (houseCARL, Spooky, codebase-memory, Headroom)
-4. **Setup automation** (MCP wire, MO2/Vortex shim)
-5. **GitHub update path** for newer upstream releases
+1. Use `tool-discovery` / `ai-tooling-stack` and `TOOLS\discover_tools.ps1`.
+2. If installed but disconnected, inspect project/profile scope; do not reinstall.
+3. If absent, use catalog IDs: `INSTALL-AIO.ps1 -ToolsOnly -Components <ids>`.
+4. Configure real editor, MO2 or user-supplied credential prerequisites.
+5. Restart affected apps and verify initialize/tools-list; never invent results.
 
-## New user path
-
-```text
-Fresh machine:  powershell ... -Command "irm <INSTALL-REMOTE.ps1> | iex"
-or locally:     START-HERE.bat
-then:           restart AI apps  →  ask a load-order question
-```
-
-Both installers wire the SOUL + AIO preamble into every provider's
-instruction file automatically (v8.0.0). Web UIs without an instruction file
-get `3-PREAMBLES\MANUAL-PASTE.txt` pasted by hand.
-
-## AI agent path (when something is missing)
-
-```text
-1. Load tool-discovery / ai-tooling-stack
-2. Run TOOLS\discover_tools.ps1  (or Ensure-Tools.ps1 -DiscoverOnly)
-3. If MISSING → run or recommend:
-     INSTALL-AIO.ps1 -ToolsOnly -Components <ids>
-     or TOOLS\Ensure-Tools.ps1
-     or TOOLS\Update-From-GitHub.ps1 -Components <ids> -InstallAfter
-4. For houseCARL instance: TOOLS\Setup-HouseCarl.ps1
-5. Tell user to fully restart the AI app after MCP changes
-6. Never invent load-order winners or tool output
-```
-
-## Component IDs (`CATALOG.json`)
-
-| id | Role |
-|---|---|
-| housecarl | Live LO MCP + patches |
-| spooky | ESP/Papyrus/NIF/BSA CLI |
-| codebase-memory | Code graph MCP |
-| headroom | Context compression MCP |
-| superpowers | Process skills |
-| ponytail | Minimal-diff skills |
-| codeburn | Token/cost CLI |
-| skyrim-forge | External product (not bundled) |
-
-## GitHub sources
-
-See `BUNDLED-TOOLS\CATALOG.json` → each component `github.owner/repo`.
-
-`Update-From-GitHub.ps1` calls `GET /repos/{owner}/{repo}/releases/latest`.
-
-## Grok MCP
-
-Installer writes `%USERPROFILE%\.grok\config.toml` blocks for:
-
-- housecarl
-- codebase-memory-mcp
-- headroom
-- skyrim-forge (only if INSTALLATION.json exists)
-
-Env vars (user scope): `HOUSECARL_MCP`, `HouseCarl__Mo2InstanceDir`, `SKYRIM_MO2_INSTANCE`, `CODEBASE_MEMORY_MCP`, `SPOOKY_AUTOMOD_ROOT`, `HEADROOM_CMD`, `SKYRIM_FORGE_ROOT`.
-
-## Vortex
-
-houseCARL still needs an MO2-shaped tree. Setup builds `%LOCALAPPDATA%\houseCARL-Shim`.
-Refresh after LO changes: `Setup-HouseCarl.ps1 -RefreshOnly`.
-
-## Gates (v6.8.2)
+From the bundle root, for the actual project folder:
 
 ```powershell
-.\TOOLS\Install-Completeness-Gate.ps1
-python TOOLS\hooks\completeness_gate.py --selftest
-python TOOLS\hooks\assumption_gate.py --selftest
-.\TOOLS\Build-Toolbelt.ps1
-Get-Content $env:LOCALAPPDATA\Ultimate-AI-Starter-Bundle\TOOLBELT.md
+.\TOOLS\Set-McpProfile.ps1 -List -Path '<project folder>'
+.\TOOLS\Set-McpProfile.ps1 -Detect -Path '<project folder>'
+.\TOOLS\Set-McpProfile.ps1 -Auto -Path '<project folder>'
 ```
 
-The completeness gate refuses a half-finished release. The assumption gate
-refuses a path nobody verified. Both fail open. Hermes is wired by asking
-`hermes config path`, not by writing the documented `~/.hermes/config.yaml`.
+Detection is marker-based, not a guess from conversation hints. Unneeded schemas
+stay parked. Windows desktop control is opt-in/OFF by default and distinct from
+browser automation. Independent servers and user filters are preserved.
 
-## Verification
+## Hermes profiles
+
+The starter has `mcp_servers: {}`; the installer registers Context7, GitHub and
+Headroom. The migrator clones the user's default for specialists when prerequisites
+exist. Use `hermes -p code`, `hermes -p skyrim` or another existing profile; see
+[scope and availability](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md).
+
+`TOOLS\Migrate-HermesProfiles.ps1` previews changes; `-Apply` requires Hermes
+closed and creates verified rollback backups. Custom models, aliases, timeouts
+and filters are retained; exact retired bundle settings are migrated.
+[Model guidance](docs/HERMES-MODELS.md) separates compatibility from quality.
+
+## Skyrim tools
+
+Skyrim Forge is included as source and an installed CLI/skill, not an always-on
+MCP. Universal Modder and Spooky's toolkit are also CLI capabilities. houseCARL
+needs MO2 or a Vortex shim: `TOOLS\Setup-HouseCarl.ps1`; refresh the shim after
+load-order changes with `-RefreshOnly`. Structural checks are not gameplay proof.
+
+## Updates and verification
+
+[CATALOG.json](BUNDLED-TOOLS/CATALOG.json) defines pins/holds and component-specific
+update strategies. “Latest” does not override holds or guarantee no-network
+bootstrap. [Evaluations](docs/TOOL-EVALUATIONS.md) are not default installation.
 
 ```powershell
-.\TOOLS\discover_tools.ps1
-Get-Content $env:LOCALAPPDATA\Ultimate-AI-Starter-Bundle\install-state.json
-Get-Content $env:LOCALAPPDATA\houseCARL-data\uabs-setup-state.json
+.\TOOLS\Test-Installed-State.ps1
+.\TESTS\Test-Pack.ps1
 ```
 
-## Licensing
+These check installed state/ownership and source packaging respectively, not
+live game/editor/model inference or a fresh whole-machine installation. Hook
+support differs by provider; retired bundle hooks are removed with ownership
+checks and backups, not blindly executed.
 
-`BUNDLED-TOOLS\THIRD-PARTY-NOTICES.md`
+[Tool notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) and
+[skill notices](_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md) credit third-party work.
