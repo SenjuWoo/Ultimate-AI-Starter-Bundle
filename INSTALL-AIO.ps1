@@ -2480,11 +2480,12 @@ if (-not $SkipCleanup -and -not $ToolsOnly) {
 }
 Write-Host '     See what would go without deleting: TOOLS\Clean-StaleState.ps1'
 Write-Host '     Native MCP profiles when installed: hermes (core), code (codebase-memory), roblox (official Studio MCP), skyrim (houseCARL), creative (Blender + Unity).'
+Write-Host '     Narrow phases when available: blender, unity, godot, web. Task routing: TOOLS\Set-McpProfile.ps1 -ListTasks or -Task <ids> -Path <project> -Plan.'
 Write-Host '     Audit/migrate: TOOLS\Migrate-HermesProfiles.ps1 [-Apply]'
 Write-Host '     houseCARL full schema: ~41,768 estimated tokens (bytes/4), not a per-turn bill.'
 Write-Host '     Lean: ~31,369 schema estimate (-25%); ReadOnly: ~17,604 (-58%). Actual usage is unmeasured.'
 Write-Host ''
-Write-Host 'AI usage: skills load automatically. Start with skyrim-memory + skyrim-tool-router.'
+Write-Host 'AI usage: describe the outcome; capability-profiles pairs task skills, installed CLIs and scoped MCPs. Skyrim tasks additionally use skyrim-memory + skyrim-tool-router.'
 Write-Host 'Missing tools: run TOOLS\Ensure-Tools.ps1 or INSTALL-AIO.ps1 - do not invent paths.'
 Write-Host ''
 
