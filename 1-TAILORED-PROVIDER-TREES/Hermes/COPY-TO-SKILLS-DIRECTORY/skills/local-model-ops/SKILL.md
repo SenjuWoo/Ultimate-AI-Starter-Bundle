@@ -2,26 +2,27 @@
 name: local-model-ops
 description: Run a local LM Studio model as a Hermes provider - context floors, VRAM budget, aliases, and keyless web search. Load before wiring local inference or when an API model must be avoided.
 metadata:
-  version: 1.0.0
+  version: 1.1.0
 ---
 
 # Local model ops
 
-Wiring a local GGUF served by LM Studio into Hermes. Everything here was
-measured against an installed Hermes and LM Studio, not recalled.
+Wiring a local GGUF served by LM Studio into Hermes. Runtime-dependent details
+come from inspected installations; recheck them after upgrades. Historical
+measurements are examples, not guarantees for another model or machine.
 
 ## Why run local at all
 
-Not to save money. A cheap hosted model costs cents per day and is several
-times faster. Run local for the three things money cannot buy:
+Choose local or hosted by measured quality, speed, budget and privacy needs.
+Local inference can provide:
 
 | Reason | What it gets you |
 |---|---|
-| **No policy layer** | Adult, red-team, and dark-fiction work that hosted models soften or refuse |
-| **No egress** | Nothing leaves the machine — no prompt, no code, no log |
-| **No rate limit** | Works offline, works at 3am, never 429s |
+| **Model choice** | Choose models suited to adult, red-team or dark-fiction work; behavior still depends on the model and harness |
+| **Local inference** | Prompts stay local only when auxiliaries, fallback routes and tools are also local or disabled |
+| **No hosted inference quota** | Offline inference after setup; local servers can still reject overloaded requests |
 
-If none of those apply, use the hosted ladder. See `token-efficiency`.
+Compare hosted options in `token-efficiency`; do not assume either route is cheaper or faster.
 
 ## Hermes speaks LM Studio natively
 
@@ -73,26 +74,24 @@ references, **none** of which matched the id the server was serving.
 Select-String -Path "$env:LOCALAPPDATA\hermes\config.yaml" -Pattern '^\s*model:'
 ```
 
-A name that no longer resolves does not fail loudly — it falls through to
-`fallback_providers`, so the symptom is "local is slow" or "it used a hosted
-model", not an error.
+A stale name may fail or fall through to `fallback_providers`, depending on
+the route and runtime. Inspect the resolved endpoint and logs before calling
+an unexpectedly slow or hosted response a local-inference failure.
 
 ## The context floor is the thing that bites
 
-Hermes refuses any model whose window is below **64,000 tokens** and raises at
-startup. A local model saved at 32K therefore **will not run** — the failure
-is a hard `ValueError` before the first turn, not a warning.
+Hermes normally enforces a **64,000-token** context floor at startup. A 32K
+window can raise a hard `ValueError` before the first turn.
 
-There is one escape hatch, and it is `lmstudio`-only: an explicit positive
-`context_length` in config lets a smaller window through. Do not reach for it
-by reflex. A 32K window is genuinely too small for agent work — a single tool
-result is capped at tens of thousands of characters, so a handful of calls
-fills the window and every turn after that pays for compression.
+In the inspected runtime, provider `lmstudio` plus an explicit positive integer
+`model.context_length` permits a smaller window. Older runtimes may reject it.
+A smaller window needs a lean tool/profile scope and bounded results; measure
+compression frequency and task quality rather than assuming it cannot work.
 
-**Set the saved context to 65,536.** That is the number to type -- not 64,000.
-The floor is a strict `<` comparison against 64,000, and LM Studio's context
-field takes powers of two, so 65,536 is the first setting that clears it with
-room to spare. Set it in the LM Studio UI (or its saved per-model config) and
+**65,536 is a tested large-context target when it fits.** The normal floor
+rejects values below 64,000, not a value equal to it. Budget weights plus KV
+cache first; use the explicit local exception when appropriate. Save the
+chosen context in the LM Studio UI (or its per-model config) and
 confirm it stuck by loading with **no** explicit context flag: the loaded
 context LM Studio reports must be the new value, not the old one. Loading it
 once by hand with a flag proves nothing -- the next cold start uses the saved
@@ -134,7 +133,8 @@ Three rules that survive contact with hardware:
    than a dense one, because only a few experts run per token.
 2. **KV cache scales linearly with context and is charged on top of weights.**
    Doubling context can cost gigabytes. Quantize the KV cache to `q8_0` before
-   giving up context — it roughly halves the cost for very little quality.
+   giving up context — it roughly halves fp16 cache storage. Verify task quality
+   and runtime support instead of promising lossless quantization.
 3. **Leave real headroom.** A card sitting at 94% has no room for a browser,
    let alone a game. Set a TTL so the model unloads when idle.
 
@@ -149,10 +149,11 @@ The model does not browse. **Hermes** browses, through its own `web_search` /
 why a local model gets internet at all.
 
 This is a different mechanism from a hosted provider's own web plugin, which
-bills per search. Hermes' path is free by default: with no backend configured
-and no key present it rotates round-robin across several vendors' public free
-tiers and fails over on rate limits (`web.keyless_fallback`, on by default).
-A single failing call also retries once on that ring (`web.keyless_rescue`).
+may bill per search. Inspected Hermes versions offer a keyless fallback ring
+across public free tiers (`web.keyless_fallback`) and a rescue retry
+(`web.keyless_rescue`). Check the installed defaults and current vendor limits;
+keyless does not guarantee unlimited or permanently free service. Searches
+send their queries to those external services, even with a local model.
 
 Add DuckDuckGo as a vendor-independent backstop by installing the optional
 `ddgs` package into the Hermes environment. It needs no account at all, and
@@ -169,8 +170,9 @@ plumbing working is not the same as the answer being right.
 ## The same model from a chat front-end
 
 One server can feed an agent CLI and a chat UI at once, but they disagree about
-what is acceptable. SillyTavern runs happily at 32K; Hermes refuses it. Load at
-**65,536** and both work off one loaded model.
+what is acceptable. A chat UI can use 32K while Hermes's normal floor rejects
+it; the explicit LM Studio exception above may allow a lean agent profile.
+Load at **65,536** if weights, cache and concurrency fit, then test both clients.
 
 Two SillyTavern behaviours look like a dead connection and are not: it demands
 a non-empty API key that a local server ignores, and a reasoning model returns
@@ -181,7 +183,8 @@ exact guard in SillyTavern's source, and how to give it keyless web search.
 ## Checklist
 
 - [ ] Model id read from the running server, not guessed from the filename
-- [ ] Saved context set to 65,536, confirmed by loading with no context flag
+- [ ] Saved context fits the VRAM budget and runtime floor/explicit exception; confirmed by loading with no context flag
+- [ ] Local-only intent also covers auxiliaries, fallbacks and external tools
 - [ ] `model_aliases` entry pins model + provider + base_url
 - [ ] No API key written into any `lmstudio` config block
 - [ ] VRAM measured while generating, not while idle

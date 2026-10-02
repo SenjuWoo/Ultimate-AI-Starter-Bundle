@@ -8,16 +8,18 @@ Copy the presets with `Install-LMStudio-Presets.ps1`, or by hand.
 
 ## The one setting that actually breaks things
 
-**Set LM Studio's context length to 65,536.**
+**The documented large-context target is 65,536, if the model/GPU budget fits.**
 
-Hermes refuses any model whose window is under **64,000 tokens** and raises at
-startup — a hard `ValueError` before the first turn, not a warning. The floor
-is a strict `<` against 64,000, and LM Studio's context field takes powers of
-two, so 65,536 is the first setting that clears it.
+Hermes normally enforces a **64,000-token** minimum. The runtime inspected on
+2026-10-02 has a narrow exception: provider `lmstudio` with an explicitly positive
+integer `model.context_length` can run below that floor. Older runtimes may reject
+it. Use the real loaded/server context, not the GGUF's advertised maximum or a
+fabricated override. 65,536 is the tested large-window setting, not a requirement
+for every current LM Studio configuration or a promise of full GPU residency.
 
 Measured on the maintainer's machine 2026-08-26: LM Studio's
 `defaultContextLength` was `{"type": "max", "value": 55000}`. That is below the
-floor, so every local model it loaded was one Hermes would not accept.
+normal floor; the runtime tested then rejected that configuration.
 
 Confirm it stuck by loading with **no** explicit context flag — the loaded
 context LM Studio reports must be the new value. Loading once by hand with
@@ -25,13 +27,13 @@ context LM Studio reports must be the new value. Loading once by hand with
 is what Hermes' preload picks up.
 
 See the `local-model-ops` skill for the rest: VRAM budget, KV arithmetic, and
-why a stale model id fails soft into `fallback_providers` instead of erroring.
+how to check whether a stale model ID errors or resolves through `fallback_providers`.
 
-## "Sometimes fast, sometimes hella slow" is the KV cache
+## Diagnosing a local model that slows down
 
-If a local model is quick in a fresh chat and collapses later in the same
-conversation, nothing else has grabbed the GPU. The KV cache grew past VRAM and
-started spilling to system RAM over PCIe. It is the conversation itself.
+If a local model slows as a conversation grows, KV-cache pressure and RAM
+offload are possible causes. Check live free VRAM, competing applications,
+concurrency, offload and server logs before attributing every slowdown to KV.
 
 Work out the cliff before blaming anything else. Read the geometry from the
 GGUF header, never from the model card:
@@ -84,7 +86,7 @@ after a 1.5 GB desktop reserve), at 65,536 context:
 | 1 | q8_0 | 8.1 GB | over |
 | **1** | **q4_0** | **4.1 GB** | **fits** -- max context 68,205 |
 
-So on a 16 GB card this model reaches the 64,000 Hermes demands in exactly one
+So in this dated 16 GB setup, this model reaches the normal 64,000 floor in one
 configuration: **one session, q4_0 K and V**. Quantising the cache alone is not
 enough, and neither is dropping to one session alone.
 
@@ -113,7 +115,7 @@ machine, for one model family:
 
 Four of five were unloadable as written. The one actually in use asked for
 **18.32 GiB on a card with about 14.5**, so llama.cpp spilled to system RAM over
-PCIe every session. That is the whole of "sometimes fast, sometimes hella slow".
+PCIe in the measured setup. That diagnosis is not universal for every slowdown.
 
 Fix every model at once, computed from each GGUF and your card:
 
@@ -206,9 +208,9 @@ credentials, and no model names, so they apply to whatever you have loaded.
 | `Hermes` | 0.6 | 1024 | agent work through Hermes — lower temperature, less drift on tool calls |
 | `SillyTavern` | 0.75 | 1024 | roleplay and creative writing — looser |
 | `Jailbreak` | 0.65 | 2086 | carries a system prompt, the same unrestraint preamble this pack ships in `0-UNRESTRAINT-PACKS` |
-| `Hermes 16GB` | 0.6 | 1024 | Hermes sampling **plus a load block**: 65,536 context, q4_0 K/V cache, flash attention, full offload, one session. The only configuration that reaches Hermes' 64,000 floor on a 16 GB card — see the KV section below, and run `Get-KvBudget.ps1` before using it on a different card. |
+| `Hermes 16GB` | 0.6 | 1024 | Sampling plus a 65,536-context load block, q4_0 K/V, flash attention, full offload and one session. Fits only when the actual model/GPU budget allows; run `Get-KvBudget.ps1` first. |
 
-All three share `topKSampling: 20`, `minPSampling: 0` (checked), and
+The sampling presets share `topKSampling: 20`, `minPSampling: 0` (checked), and
 `repeatPenalty` **off**. Those are the Qwen3-family sampling recommendations;
 repeat penalty in particular tends to hurt more than it helps on models that
 already handle repetition through their own sampling.
@@ -238,8 +240,8 @@ Set the handful of values that matter in the LM Studio UI instead:
 
 | setting | value | why |
 |---|---|---|
-| context length | **65,536** | below 64,000 Hermes will not start (see above) |
-| `Local Server` port | 1234 | the default every provider in this pack expects |
+| context length | **65,536 if it fits** | clears the normal 64,000 floor; explicit LM Studio exception is runtime-dependent |
+| `Local Server` port | 1234 by convention | verify the actual alias/base URL and gateway settings; custom ports are valid |
 | model loading guardrails | your call | `high` refuses loads it predicts will not fit; useful on a tight VRAM budget, annoying when you know better |
 
 ## Wiring LM Studio to a provider
@@ -252,8 +254,9 @@ maintainer's machine:
 - **Read the model id from the server, never from the filename.** `/v1/models`
   reports `huihui-qwen3.8-27b-abliterated`; the file is
   `...@q2_k_xl`. The suffix is not part of the id, and an id that does not
-  resolve fails soft into `fallback_providers` — the symptom is "local is
-  slow", never an error.
+  resolve triggered a hosted fallback in that historical setup. Current behavior
+  depends on routing/fallback settings and may instead fail explicitly; inspect
+  server logs and the actual selected endpoint, not only response speed.
 - **Do not write a `models:` block under the provider.** A dict-shaped one
   merges alongside `discover_models` instead of narrowing it, and the model
   lists twice the moment LM Studio loads it.

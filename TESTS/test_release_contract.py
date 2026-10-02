@@ -3452,15 +3452,20 @@ def test_no_shipped_text_file_carries_a_stray_control_character() -> None:
 def test_local_model_ops_carries_what_actually_blocks_a_local_run() -> None:
     """The skill exists to stop one specific wasted afternoon.
 
-    Hermes refuses a model whose context window is under 64,000 tokens and
-    raises before the first turn. LM Studio's saved default is commonly 32K,
-    so the obvious setup fails at startup with no hint that the loader, not
-    the config, is what has to change. A skill that omits that number is
-    prose.
+    Hermes normally enforces a 64,000-token floor. The inspected LM Studio
+    route also permits an explicit smaller window; hiding that condition
+    sends users back to a load setting that may not fit their GPU.
     """
     skill = ROOT / "_CANONICAL-SKILLS" / "local-model-ops" / "SKILL.md"
     assert skill.is_file(), "_CANONICAL-SKILLS/local-model-ops/SKILL.md is missing"
     body = read(skill)
+
+    assert "model.context_length" in body and "positive integer" in body, (
+        "local-model-ops omits the explicit LM Studio below-floor condition"
+    )
+    assert "Nothing leaves the machine" not in body, (
+        "local-model-ops incorrectly promises privacy even with hosted auxiliaries/tools"
+    )
 
     assert "64,000" in body or "64000" in body, (
         "local-model-ops no longer states the context floor that blocks a local run"
@@ -5601,6 +5606,7 @@ def test_current_documentation_links_and_upstream_coverage() -> None:
         "README.md", "AIO-GUIDE.md", "docs/HERMES-MODELS.md",
         "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md", "_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md",
         "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md")]
+    paths.extend([ROOT / "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md", ROOT / "BUNDLED-TOOLS/lm-studio/README.md"])
     hero = read(ROOT / "assets/hero.svg")
     assert "Zero chat cost" not in hero and "MCP payload on disk." in hero
     from urllib.parse import unquote

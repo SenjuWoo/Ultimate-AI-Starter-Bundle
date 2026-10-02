@@ -70,9 +70,28 @@ installation decision.
 | `obsidian-cli` |
 | `obsidian-markdown` |
 
-These were absorbed earlier. The upstream `obsidian` plugin is therefore
-**redundant on this machine** and is left disabled: it served the same five
-skills to one provider while these serve all five providers.
+These MIT-licensed guides are included canonically. A native plugin serving
+the same files adds duplicate index entries; prefer one owner per provider.
+Independently configured user plugins are not globally disabled by this notice.
+
+## Code Review Skill — `awesome-skills/code-review-skill`, MIT
+
+`code-review-skill` retains the upstream `LICENSE` and attribution. Its canonical
+copy is distributed across provider trees rather than reinstalled over itself.
+
+## houseCARL — `Avick3110/houseCARL`, GPL-3.0-only
+
+The canonical `housecarl` guide retains upstream GPL text and its third-party
+notice. The separate tool payload and prerequisites are listed in the tool
+catalog. Inclusion here does not change those terms or enable its MCP globally.
+
+## Process guides — Superpowers and Ponytail, MIT
+
+The canonical process family incorporates guides from
+[`obra/superpowers`](https://github.com/obra/superpowers) and
+[`DietrichGebert/ponytail`](https://github.com/DietrichGebert/ponytail).
+Their native plugin payloads retain upstream licences; provider tailoring and
+bundle-specific routing are adaptations, not a claim of original authorship.
 
 ## What was deliberately NOT taken
 

@@ -1446,8 +1446,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
-  "size": 5144,
-  "sha256": "acae51ffba88cde65688e8c25c3eca169fc1f2e307e950b86e96d638b7267c15"
+  "size": 6080,
+  "sha256": "e2970e453534d614d14ecb5947783093c51e59c8c59b32807dd91d890ff5efe4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
@@ -5011,8 +5011,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/SKILL.md",
-  "size": 8946,
-  "sha256": "ca216a7202fb984dd6e1abfcebf28dc8e5f84108747759abac9d3e8bd4c0e826"
+  "size": 9400,
+  "sha256": "4b98b0489d90f6d576fcda22899c01d5b3613672fed7999f8ca80f024e97a707"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/references/gguf-metadata.md",
@@ -7811,8 +7811,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
-  "size": 5144,
-  "sha256": "acae51ffba88cde65688e8c25c3eca169fc1f2e307e950b86e96d638b7267c15"
+  "size": 6080,
+  "sha256": "e2970e453534d614d14ecb5947783093c51e59c8c59b32807dd91d890ff5efe4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
@@ -11376,8 +11376,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/SKILL.md",
-  "size": 8946,
-  "sha256": "ca216a7202fb984dd6e1abfcebf28dc8e5f84108747759abac9d3e8bd4c0e826"
+  "size": 9400,
+  "sha256": "4b98b0489d90f6d576fcda22899c01d5b3613672fed7999f8ca80f024e97a707"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/references/gguf-metadata.md",
@@ -14161,8 +14161,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
-  "size": 5144,
-  "sha256": "acae51ffba88cde65688e8c25c3eca169fc1f2e307e950b86e96d638b7267c15"
+  "size": 6080,
+  "sha256": "e2970e453534d614d14ecb5947783093c51e59c8c59b32807dd91d890ff5efe4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
@@ -17726,8 +17726,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/SKILL.md",
-  "size": 8946,
-  "sha256": "ca216a7202fb984dd6e1abfcebf28dc8e5f84108747759abac9d3e8bd4c0e826"
+  "size": 9400,
+  "sha256": "4b98b0489d90f6d576fcda22899c01d5b3613672fed7999f8ca80f024e97a707"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/references/gguf-metadata.md",
@@ -20511,8 +20511,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
-  "size": 5144,
-  "sha256": "acae51ffba88cde65688e8c25c3eca169fc1f2e307e950b86e96d638b7267c15"
+  "size": 6080,
+  "sha256": "e2970e453534d614d14ecb5947783093c51e59c8c59b32807dd91d890ff5efe4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
@@ -24076,8 +24076,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/SKILL.md",
-  "size": 8946,
-  "sha256": "ca216a7202fb984dd6e1abfcebf28dc8e5f84108747759abac9d3e8bd4c0e826"
+  "size": 9400,
+  "sha256": "4b98b0489d90f6d576fcda22899c01d5b3613672fed7999f8ca80f024e97a707"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/references/gguf-metadata.md",
@@ -26936,8 +26936,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
-  "size": 5144,
-  "sha256": "acae51ffba88cde65688e8c25c3eca169fc1f2e307e950b86e96d638b7267c15"
+  "size": 6080,
+  "sha256": "e2970e453534d614d14ecb5947783093c51e59c8c59b32807dd91d890ff5efe4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
@@ -30501,8 +30501,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/SKILL.md",
-  "size": 8946,
-  "sha256": "ca216a7202fb984dd6e1abfcebf28dc8e5f84108747759abac9d3e8bd4c0e826"
+  "size": 9400,
+  "sha256": "4b98b0489d90f6d576fcda22899c01d5b3613672fed7999f8ca80f024e97a707"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/references/gguf-metadata.md",
@@ -33391,8 +33391,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/lm-studio/README.md",
-  "size": 11638,
-  "sha256": "27591e72a9459b49c348f76d26b78094085f8b0f7a227321e9891fd43442a809"
+  "size": 11990,
+  "sha256": "160de1df47bdb26ebb0657208b6538a15da573ba1a4b0a169cfa9d7f661b4fed"
  },
  {
   "path": "BUNDLED-TOOLS/lm-studio/config-presets/Hermes 16GB.preset.json",
@@ -36806,8 +36806,8 @@
  },
  {
   "path": "README.md",
-  "size": 44777,
-  "sha256": "e41ed6059d3f1bc6747e1372891a94c13da380413bf107e48a6578d7e49935e3"
+  "size": 44889,
+  "sha256": "c3a3f3a20eba2cc43d837bff8132f135ef8d3054baa7befcc811f86d7d0dc3d2"
  },
  {
   "path": "SECURITY.md",
@@ -37066,8 +37066,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 296751,
-  "sha256": "1bde402e77e78b9fb354a8878f3d19047b2712843ed7aa3bd598a05cef107e10"
+  "size": 297074,
+  "sha256": "c97fd1fc3633fb6a4bb7a50a3b8b99a725e1454fbb821269edb4fd207890f489"
  },
  {
   "path": "TESTS/test_universal_modder.py",
@@ -37371,8 +37371,8 @@
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
-  "size": 18490,
-  "sha256": "84116c76f2f6694415dfccda6a0b9890e1bc31b887a8aa5eb4fd55ad2336b38f"
+  "size": 3736,
+  "sha256": "6e956d715ae41aaa5cfe21604b2dc13eaa1a4d9d55c09f14e64786494d147773"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -40946,8 +40946,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/local-model-ops/SKILL.md",
-  "size": 8946,
-  "sha256": "ca216a7202fb984dd6e1abfcebf28dc8e5f84108747759abac9d3e8bd4c0e826"
+  "size": 9400,
+  "sha256": "4b98b0489d90f6d576fcda22899c01d5b3613672fed7999f8ca80f024e97a707"
  },
  {
   "path": "_CANONICAL-SKILLS/local-model-ops/references/gguf-metadata.md",
@@ -44316,8 +44316,8 @@
  },
  {
   "path": "docs/history/V8.7.34-CHANGELOG.md",
-  "size": 3085,
-  "sha256": "31dfd436be56125ded7d8f6976fc94f998ad4a780a0c357674c1c12f8918906d"
+  "size": 3500,
+  "sha256": "8e3c16cf88ea80d4c8b9aa21873f880a1d27967f014a9b82c413bd3b1d209a22"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",
