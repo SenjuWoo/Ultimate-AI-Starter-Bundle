@@ -233,14 +233,14 @@
       },
       "name": "Ponytail",
       "offline_asset": null,
-      "bundle_patch_note": "2026-09-28: bundled Cursor adapter anchors Ponytail script names at a word/hyphen boundary to prevent CodeQL #228 polynomial ReDoS. Native provider rules/skills are unchanged. AIO skills-copy and native offline fallbacks consume the vendored plugin tree, not a second plugin ZIP; remove the unused unpatched upstream ZIP rather than mislabel patched bytes as an official archive. Independent upstream marketplace caches are not rewritten by this source patch.",
+      "bundle_patch_note": "2026-09-28: bundled Cursor adapter anchors Ponytail script names at a word/hyphen boundary to prevent CodeQL #228 polynomial ReDoS. Native provider rules/skills are unchanged. AIO skills-copy and native offline fallbacks consume the vendored plugin tree, not a second plugin ZIP; remove the unused unpatched upstream ZIP rather than mislabel patched bytes as an official archive. Independent upstream marketplace caches are not rewritten by this source patch. 2026-10-02: reviewed v4.10.1 source c6ce46179874ea7368da0eb9e67c1ad5c10f08bc; 16 upstream adapter tests and Cursor security regression pass; existing Cursor fix retained.",
       "license": "MIT",
       "required_for": [
         "minimal-diff"
       ],
       "bundled_skills": true,
-      "version": "4.10.0",
-      "release_tag": "v4.10.0"
+      "version": "4.10.1",
+      "release_tag": "v4.10.1"
     },
     {
       "install": "npx-or-npm",
@@ -747,7 +747,7 @@
       "name": "RTK (Rust Token Killer)",
       "kind": "cli-optional",
       "license": "Apache-2.0",
-      "version": "0.50.0",
+      "version": "0.51.0",
       "github": {
         "owner": "rtk-ai",
         "repo": "rtk"
@@ -787,7 +787,7 @@
         ],
         "broad_upstream_hook": false
       },
-      "scope_note": "CLI output filter with zero standing schema tokens. GIT CORPUS, measured on this repo AT rtk 0.50.0 against pinned refs: git diff v8.6.1..v8.6.5 430,285 -> 55,870 bytes (87%), git log v8.6.1..v8.6.5 14,250 -> 1,660 (88%), git diff v8.6.4..v8.6.5 33,453 -> 26,820 (20%), and git log --stat -20 v8.6.5 102,301 -> 102,301 (0%). Those are summaries, not lossless replacements: on the larger diff RTK retained 341 of 5,856 changed lines and omitted 5,515. Exact short status is different: a fixture covering staged, unstaged, deleted, renamed, Unicode and untracked paths was line-identical 5/5. NON-GIT CORPUS measured at 0.46.0 on 2026-08-27: rtk test kept the failure at about 93% saved; excluding truncating rows, the aggregate was 7.4% against git's 85.2%. TRUNCATION IS NOT SAVING: rtk json returned one of 5,425 array rows plus `... +5424 more`. rtk find works with a simple -name but breaks on compound predicates; rtk-ai/rtk#3410 reports its unconditional rewrite also intercepts find -delete/-exec. Archive correction: rtk test writes a complete tee for the measured 5.4 KB run and prints its path, but RTK documents a 1 MB raw tee cap. WINDOWS INTEGRATION, re-probed at 0.47.0 on 2026-09-02: upstream rewrite still catches lossy diff/log/show, broken find, cat/read, grep, curl, gh, and mutating git add/commit/push. Therefore broad upstream init and Hermes rtk-rewrite stay off. The bundle installs RTK by default and wires its own allowlist: exact standalone git status plus standalone human-facing pytest, cargo test and go test. Machine-readable output, pipes/redirection, all mutating Git, diff/show/log/find/search/read/curl/gh stay raw. Claude, Grok and Hermes receive the executable hook; Codex and Kimi receive the same narrow instruction because no trusted command-mutation hook is established there. Telemetry remains opt-in. Remeasured 2026-09-28: all four pinned corpus rows; allowlisted rewrite protocol exit 3 PASS; --short/-s preserved staged, unstaged, deleted, renamed, Unicode and untracked status lines (0.50.0 omits the final newline). Broad hooks remain disabled; these are byte savings, not measured billed tokens."
+      "scope_note": "CLI output filter with zero standing schema tokens. GIT CORPUS, measured on this repo AT rtk 0.51.0 against pinned refs: git diff v8.6.1..v8.6.5 430,285 -> 55,870 bytes (87%), git log v8.6.1..v8.6.5 14,250 -> 1,660 (88%), git diff v8.6.4..v8.6.5 33,453 -> 26,820 (20%), and git log --stat -20 v8.6.5 102,301 -> 102,301 (0%). Those are summaries, not lossless replacements: on the larger diff RTK retained 341 of 5,856 changed lines and omitted 5,515. Exact short status is different: a fixture covering staged, unstaged, deleted, renamed, Unicode and untracked paths was line-identical 5/5. NON-GIT CORPUS measured at 0.46.0 on 2026-08-27: rtk test kept the failure at about 93% saved; excluding truncating rows, the aggregate was 7.4% against git's 85.2%. TRUNCATION IS NOT SAVING: rtk json returned one of 5,425 array rows plus `... +5424 more`. rtk find works with a simple -name but breaks on compound predicates; rtk-ai/rtk#3410 reports its unconditional rewrite also intercepts find -delete/-exec. Archive correction: rtk test writes a complete tee for the measured 5.4 KB run and prints its path, but RTK documents a 1 MB raw tee cap. WINDOWS INTEGRATION, re-probed at 0.47.0 on 2026-09-02: upstream rewrite still catches lossy diff/log/show, broken find, cat/read, grep, curl, gh, and mutating git add/commit/push. Therefore broad upstream init and Hermes rtk-rewrite stay off. The bundle installs RTK by default and wires its own allowlist: exact standalone git status plus standalone human-facing pytest, cargo test and go test. Machine-readable output, pipes/redirection, all mutating Git, diff/show/log/find/search/read/curl/gh stay raw. Claude, Grok and Hermes receive the executable hook; Codex and Kimi receive the same narrow instruction because no trusted command-mutation hook is established there. Telemetry remains opt-in. Remeasured 2026-10-02 with TESTS/test_rtk_candidate.py: all four pinned corpus rows; allowlisted rewrite protocol exit 3 PASS; --short/-s preserved staged, unstaged, deleted, renamed, Unicode and untracked status lines (status comparison is line-wise). Broad hooks remain disabled; these are byte savings, not measured billed tokens."
     },
     {
       "id": "omni",
@@ -914,7 +914,7 @@
       "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
     }
   ],
-  "pack_version": "8.7.34",
+  "pack_version": "8.7.35",
   "updated_utc": "2026-10-02",
   "providers": {
     "Grok": {
@@ -993,7 +993,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.7.34",
+  "catalog_version": "8.7.35",
   "updated": "2026-09-03",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

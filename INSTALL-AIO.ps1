@@ -377,7 +377,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.7.34 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.7.35 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -2198,7 +2198,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.7.34'
+version = '8.7.35'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode
@@ -2273,7 +2273,9 @@ if (-not $ToolsOnly) {
       if ($SkyrimToolset) { $profileArgs += @('-SkyrimToolset', $SkyrimToolset) }
       & (Get-Command powershell.exe -ErrorAction Stop).Source @profileArgs
       if ($LASTEXITCODE -ne 0) { throw "Hermes profile migrator failed with exit code $LASTEXITCODE" }
-      $installed['hermes-native-profiles'] = @{ status='evaluated'; profiles=@('default','code','roblox','skyrim','creative'); skyrim_toolset=$(if ($SkyrimToolset) { $SkyrimToolset } else { 'default (Lean)' }) }
+      $profileHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }
+      $evaluatedProfiles = @('default') + @(Get-ChildItem -LiteralPath (Join-Path $profileHome 'profiles') -Directory -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name)
+      $installed['hermes-native-profiles'] = @{ status='evaluated'; profiles=$evaluatedProfiles; skyrim_toolset=$(if ($SkyrimToolset) { $SkyrimToolset } else { 'default (Lean)' }) }
       L 'Hermes native profiles evaluated'
     } catch {
       Write-UabsWarn ('Hermes native profiles: ' + $_.Exception.Message)

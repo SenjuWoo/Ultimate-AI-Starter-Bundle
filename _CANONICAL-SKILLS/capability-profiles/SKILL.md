@@ -1,6 +1,6 @@
 ---
 name: capability-profiles
-description: Use when a task needs a capability the connected MCP servers do not cover (game-specific Forge tools, browser debugging, symbol-level code navigation, Blender, Godot, Unity), when deciding whether to add an MCP server, when a server is configured but shows no tools, when a session feels slow and MCP tool schemas are the suspected cause, or when choosing the smallest capability that can produce the evidence a task actually needs.
+description: Use when making or modding games, building web/UI or 3D assets, preparing publication, combining skills with MCPs, selecting task profiles, or diagnosing unavailable tools and excessive context overhead.
 ---
 
 # Capability profiles
@@ -8,6 +8,49 @@ description: Use when a task needs a capability the connected MCP servers do not
 The right number of connected MCP servers is **the fewest that can do the
 task**, and it changes per project. This pack ships the rest as profiles that
 are off until something needs them.
+
+## Prompt-first task composition
+
+The user describes the outcome, not server/profile names. Select the matching
+entry from `references/task-recipes.json` using intent and verified project
+evidence. Load only its phase-relevant skills. Compose recipes for real extra
+phases (for example `game-unity` + `assets-3d` + `publication`), not all engines.
+Universal Modder is a local CLI/skill, not a free local modding MCP; its upstream
+fal MCP is a separately authenticated paid asset service.
+
+Resolve the installed bundle via `tool-discovery`. The shared profile writer
+consumes the same recipe data; do not maintain a second mapping in a hook:
+
+```powershell
+TOOLS\Set-McpProfile.ps1 -Task game-unity,assets-3d -Path <owned-project> -Plan
+TOOLS\Set-McpProfile.ps1 -Task game-unity,assets-3d -Path <owned-project> -Providers Codex
+```
+
+`-Plan` is read-only JSON. Ordinary task wiring stays project-scoped and leaves
+personal/unowned entries intact. Choose only the current provider. Do supported
+scoped setup yourself for an authorized implementation task; do not give the
+user a profile-selection homework assignment. Unknown tasks fail, and a
+machine-wide capability still requires explicit `-Global`.
+
+Hermes gets narrow `blender`, `unity`, `godot` and `web` native profiles when
+their launch prerequisites exist, alongside the preserved combined `creative`
+profile. The recipe prints native phase choices; it cannot switch a running
+chat. Use installed CLIs immediately. If a needed editor MCP is unavailable,
+state the precise host/addon/reload requirement once, continue every phase that
+can run, and retain a concise handoff. Do not spawn another agent or silently
+change models. Kimi has the same skills/CLI recipes but optional MCP wiring
+still requires explicit global opt-in; do not fake project scope.
+
+New-game creation and modding a packaged game are different routes. An
+installed Unity game is not a Unity editor project. Unreal has no audited
+editor MCP in this pack: discover actual engine build/cook/package tools and
+use existing native/editor capabilities rather than inventing a bridge.
+
+For one-shot quality: infer low-risk defaults, build one playable/usable slice,
+reuse it, preview assets in their target engine, run real tests and inspect
+rendered output, then package with credits/permissions and truthful previews.
+Publication preparation does not authorize public publishing. Record missing
+runtime/editor proof rather than claiming guaranteed one-shot success.
 
 ## Installed is not enabled
 

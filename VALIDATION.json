@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.34",
+  "version": "8.7.35",
   "generated": "2026-10-02",
-  "release_tag": "v8.7.34",
+  "release_tag": "v8.7.35",
   "canonical_skills": 172,
   "provider_trees": 5,
   "registry_entries": 172,
@@ -24,8 +24,9 @@
     "TESTS/Test-McpProfiles.ps1",
     "TOOLS/mcp_handshake.py --selftest",
     "TESTS/test_universal_modder.py",
-    "TESTS/Test-HermesNativeStderr.ps1"
+    "TESTS/Test-HermesNativeStderr.ps1",
+    "TESTS/Test-TaskRecipes.ps1"
   ],
-  "runtime_status": "v8.7.34: documentation, upstream coverage and narrowly scoped retired Hermes compression migration checked by executable contracts. OpenRouter metadata verified 2026-10-02; no authenticated model inference or summary-quality benchmark. Earlier Universal Modder/browser/scoped MCP checks are recorded in v8.7.33 history, not repeated proof of live game/editor/GPU behavior.",
+  "runtime_status": "v8.7.35: executable task plans, scoped activation and user configuration preservation tested in disposable homes. Native Hermes phase profiles reuse cloning/config/rollback. RTK 0.51.0 fixed corpus/status and safe hooks verified; Ponytail 4.10.1 adapter/security regressions passed. Editor/gameplay/GPU and one-shot quality remain unverified; no audited Unreal editor MCP added.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

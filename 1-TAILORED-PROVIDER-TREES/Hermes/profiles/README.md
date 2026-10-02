@@ -12,6 +12,10 @@ Existing models, reasoning, memory limits and tool filters are preserved.
 | roblox | Official Studio MCP installed | Core plus Studio |
 | skyrim | houseCARL and MO2 configured | Core plus houseCARL, user's filter retained |
 | creative | uvx installed | Core plus Blender MCP and MCP for Unity; both editors connect when open |
+| blender | uvx installed | Core plus Blender only; requires its running editor/addon for scene calls |
+| unity | uvx installed | Core plus CoplayDev MCP for Unity only; requires its running editor/package for editor calls |
+| godot | npx and configured Godot executable | Core plus Godot; pin/environment from the shared profile catalog |
+| web | available browser server prerequisites | Core plus available browser tools; no shadcn without a project registry |
 | rimworld | Existing RimWorldForge profile | Core updated, external server retained unchanged |
 | sillytavern | `TOOLS\Install-SillyTavernGateway.ps1` | None. Vision, image generation, web, file, memory, and three roleplay skills. Coding tools and the pack MCP servers stay off. |
 

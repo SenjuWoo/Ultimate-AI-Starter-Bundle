@@ -6,6 +6,14 @@ Restart affected apps after wiring changes. Installed does not mean connected.
 See [quick start](README.md#quick-start) for remote install, modes and recovery.
 Web UIs use [MANUAL-PASTE.txt](3-PREAMBLES/MANUAL-PASTE.txt).
 
+## Let the task select the tools
+
+The shared `capability-profiles` recipes compose skills, CLIs and project MCPs
+for games/mods, UI, assets, code and publication. Agents can inspect a route with
+`TOOLS\Set-McpProfile.ps1 -Task <task IDs> -Path '<project>' -Plan`, then apply it
+for the current provider. See [task routing](docs/TASK-ROUTING.md). Personal
+entries stay intact; editor prerequisites and host reload requirements are real.
+
 ## When an AI cannot find a tool
 
 1. Use `tool-discovery` / `ai-tooling-stack` and `TOOLS\discover_tools.ps1`.

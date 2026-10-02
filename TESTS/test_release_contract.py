@@ -457,7 +457,11 @@ def test_hermes_native_profile_migration_contract() -> None:
     assert "Remove-UabsServer $profile $maps[$profile] $id 'codebase-memory'" in body, (
         "Hermes codebase-memory can leak back into default/game profiles"
     )
-    assert "profiles=@('default','code','roblox','skyrim','creative')" in installer
+    assert "profiles=$evaluatedProfiles" in installer
+    assert "Get-ChildItem -LiteralPath (Join-Path $profileHome 'profiles')" in installer
+    for profile in ('blender', 'unity', 'godot', 'web'):
+        assert "'%s'" % profile in body, f"Missing Hermes phase {profile}"
+    assert "'playwright-mcp' = 'playwright'" in body, 'New web profile cannot pass family verification'
     assert "mcp-profiles.json" in doctor and "scoped_for = @()" in doctor
     assert "'Hermes/' + $profileDir.Name" in doctor, (
         "the doctor cannot report MCP servers isolated in Hermes named profiles"
@@ -2491,6 +2495,7 @@ def test_catalog_freshness_auditor_self_checks() -> None:
 
 def main() -> int:
     tests = [
+        test_task_recipes_resolve_only_shipped_capabilities,
         test_compression_retirement_preserves_custom_preferences,
         test_current_documentation_links_and_upstream_coverage,
         # v7.9.8 -- the starter template is not a place to register MCP servers,
@@ -5598,6 +5603,21 @@ def test_compression_retirement_preserves_custom_preferences() -> None:
             assert saved[-1] == expected, (provider, model, effort)
             exec(compile(writer, "Hermes production preferences writer", "exec"), {})
             assert saved[-1] == expected, "Repeated repair changed preferences"
+
+
+def test_task_recipes_resolve_only_shipped_capabilities() -> None:
+    """A missing recipe dependency must fail before an installer ships it."""
+    recipes = json.loads(read(CANON / 'capability-profiles/references/task-recipes.json'))['tasks']
+    profiles = {p['id'] for p in json.loads(read(ROOT / 'BUNDLED-TOOLS/PROFILES.json'))['profiles']}
+    components = {c['id'] for c in json.loads(read(ROOT / 'BUNDLED-TOOLS/CATALOG.json'))['components']}
+    assert len({r['id'] for r in recipes}) == len(recipes), 'Ambiguous task id'
+    for recipe in recipes:
+        assert recipe['checks'], f"No verification phase: {recipe['id']}"
+        assert set(recipe['profiles']) <= profiles, recipe['id']
+        assert set(recipe['cli']) <= components, recipe['id']
+        for skill in recipe['skills']:
+            assert (CANON / skill / 'SKILL.md').is_file(), (recipe['id'], skill)
+    # Real command behavior is exercised by Test-TaskRecipes.ps1 in Test-Pack.
 
 
 def test_current_documentation_links_and_upstream_coverage() -> None:

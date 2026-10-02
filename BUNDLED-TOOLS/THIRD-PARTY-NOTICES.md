@@ -34,6 +34,7 @@ of every dependency. Preserve all included licences and attribution.
 | `blender-mcp` | [Blender MCP](https://github.com/ahujasid/mcp-for-blender) | MIT |
 | `godot-mcp` | [Godot MCP](https://github.com/Coding-Solo/godot-mcp) | MIT |
 | `unity-mcp` | [Unity MCP](https://github.com/IvanMurzak/Unity-MCP) | Apache-2.0 |
+| Hermes native Unity bridge | [MCP for Unity](https://github.com/CoplayDev/unity-mcp) | MIT |
 | `rtk` | [RTK (Rust Token Killer)](https://github.com/rtk-ai/rtk) | Apache-2.0 |
 | `omni` | [OMNI (context distillation)](https://github.com/fajarhide/omni) | Apache-2.0 |
 | `windows-mcp` | [Windows MCP](https://github.com/CursorTouch/Windows-MCP) | MIT |

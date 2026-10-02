@@ -1,3 +1,9 @@
+## 8.7.35
+
+- Add one shared, executable task-recipe map across all five providers: compose relevant skills, CLIs and scoped MCP profiles for games/mods, UI, assets, code, research and publication; preserve personal registrations and keep Windows desktop opt-in.
+- Add narrow native Hermes Blender, Unity, Godot and web phases when prerequisites exist; retain existing creative/code/game profiles and personal tuning.
+- Update tested RTK to 0.51.0 and Ponytail to 4.10.1, retaining the safe rewrite allowlist and Cursor security patch. Add disposable-home routing checks. [Details](docs/history/V8.7.35-CHANGELOG.md).
+
 ## 8.7.34
 
 - Replace stale README history, broken links and incomplete third-party listings with current installation/profile guidance and complete catalog coverage. Preserve historical release notes under docs/history.

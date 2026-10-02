@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.34 -->
+<!-- Ultimate AI Starter Bundle v8.7.35 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.34
+# Ultimate AI Starter Bundle v8.7.35
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -202,7 +202,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
 Modes choose tool payloads, not a disconnected Windows environment. Missing
 runtimes, Python/npm dependencies and provider bootstrap can still need network.
 
-RTK is deliberately pinned to **0.50.0** in both the installer and component
+RTK is deliberately pinned to **0.51.0** in both the installer and component
 updater: the narrow rewrite hook and measurements are version-specific. A
 new upstream release is not automatically treated as tested. RTK fallback
 archives must match the shipped SHA-256 manifest; a rejected replacement
@@ -242,6 +242,26 @@ to installing all five, because that is the only outcome that leaves it usable.
 **The rule this follows:** bundle defaults optimize for a new user's
 reliability; the per-machine result optimizes for the capabilities actually
 present on that machine.
+
+### Tools follow the task, not a memorized profile name
+
+The shared `capability-profiles` recipes pair skills, CLIs and narrowly scoped
+MCPs for games/modding, UI, assets, code, research and publication. Agents inspect
+the actual project and perform supported setup; they do not connect every engine.
+Compose only the phases needed. Universal Modder is CLI/skills, not a free local
+MCP; Unreal uses discovered editor/CLI tooling, with no audited MCP shipped.
+
+```powershell
+.\TOOLS\Set-McpProfile.ps1 -ListTasks
+.\TOOLS\Set-McpProfile.ps1 -Task game-unity,assets-3d,publication -Path '<project>' -Plan
+```
+
+`-Plan` is read-only. Activation preserves personal entries and existing tool
+policies. Hermes has narrow `blender`, `unity`, `godot` and `web` native profiles
+when prerequisites exist; `creative` remains available for joint engine work.
+An existing chat may require reload/restart; unavailable live tools have CLI
+fallbacks. Windows desktop remains opt-in. See [task routing](docs/TASK-ROUTING.md)
+for execution, ownership and runtime boundaries. No one-shot quality guarantee.
 
 ### Hermes: trim a server to the tools you use
 
@@ -416,7 +436,7 @@ OpenRouter fallback, vision and compression settings are not local-only.
 Installed by default with a **bundle-owned narrow hook**; RTK's broad upstream
 hook remains disabled. [RTK](https://github.com/rtk-ai/rtk) (Apache-2.0, single
 Rust binary) filters noisy dev commands. Measured here
-**at rtk 0.50.0** against **pinned tag ranges**, so the corpus cannot drift:
+**at rtk 0.51.0** against **pinned tag ranges**, so the corpus cannot drift:
 
 | Command | Raw | Through rtk | Saved |
 |---|---|---|---|
@@ -431,8 +451,8 @@ this tool is not honest -- an earlier version of this table quoted 97% from
 
 **Pin the tool version too, not just the corpus.** That last row used to read
 **95%**, measured at rtk 0.45.0. Upgrading to 0.46.0 dropped it to zero, and
-0.50.0 still passes `--stat` straight through. All four rows were remeasured
-on 2026-09-28; these are output bytes, not billed token savings. The old `git log --stat -20`
+0.51.0 still passes `--stat` straight through. All four rows were remeasured
+on 2026-10-02; these are output bytes, not billed token savings. The old `git log --stat -20`
 row also moved with HEAD despite the rest of the table being pinned; it now
 ends at `v8.6.5`. Pinning only the corpus or only the tool is insufficient.
 
@@ -767,10 +787,10 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.7.34** - 2026-10-02. Documentation refresh, complete upstream listings,
+**v8.7.35** - 2026-10-02. Documentation refresh, complete upstream listings,
 current Hermes model-catalog review and an exact-match repair for the retired
 free compression endpoint. **172 canonical skills**, no new always-on MCP.
-[Changes](docs/history/V8.7.34-CHANGELOG.md) ·
+[Changes](docs/history/V8.7.35-CHANGELOG.md) ·
 [Latest published release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest).
 
 ## License

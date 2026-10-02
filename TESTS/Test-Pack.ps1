@@ -708,6 +708,13 @@ if (-not (Test-Path -LiteralPath $mcpGate -PathType Leaf)) {
         Bad ('MCP profile gate failed:' + [Environment]::NewLine + ($mcpOut.Trim()))
     }
 }
+$taskGate = Join-Path $PackRoot 'TESTS\Test-TaskRecipes.ps1'
+if (-not (Test-Path -LiteralPath $taskGate -PathType Leaf)) { Bad 'TESTS\Test-TaskRecipes.ps1 missing' }
+else {
+    $taskOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $taskGate -PackRoot $PackRoot 2>&1 | Out-String
+    if ($LASTEXITCODE -eq 0 -and $taskOut -match 'TASK RECIPE GATE: PASS') { Good 'Task routing, composition, scoped activation and personal-config preservation PASS' }
+    else { Bad ('Task recipe gate failed: ' + $taskOut.Trim()) }
+}
 Section '14. Evidence-behaviour scenarios still contain their defects'
 # These fixtures measure whether an agent goes and looks instead of guessing.
 # Scoring the agent is a judgement; scoring the FIXTURE is not, and a benchmark

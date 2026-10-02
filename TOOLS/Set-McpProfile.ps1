@@ -49,6 +49,9 @@ param(
   [Parameter(ParameterSetName = 'Detect')][switch]$Detect,
   [Parameter(ParameterSetName = 'Auto')][switch]$Auto,
   [Parameter(ParameterSetName = 'Repair')][switch]$Repair,
+  [Parameter(ParameterSetName = 'Task', Mandatory = $true)][string[]]$Task,
+  [Parameter(ParameterSetName = 'Task')][switch]$Plan,
+  [Parameter(ParameterSetName = 'TaskList')][switch]$ListTasks,
   [Parameter(ParameterSetName = 'Enable', Mandatory = $true)][string[]]$Enable,
   [Parameter(ParameterSetName = 'Disable', Mandatory = $true)][string[]]$Disable,
   [string]$Path,
@@ -105,6 +108,47 @@ function ConvertTo-UabsHashtable {
 
 $catalog = ConvertTo-UabsHashtable ([IO.File]::ReadAllText($profilesPath) | ConvertFrom-Json)
 $allProfiles = @($catalog['profiles'])
+
+# One recipe source feeds both the portable skill and executable selection.
+$taskPlan = $null
+if ($PSCmdlet.ParameterSetName -in @('Task', 'TaskList')) {
+  $recipesPath = Join-UabsPath $PackRoot '_CANONICAL-SKILLS\capability-profiles\references\task-recipes.json'
+  $recipes = [IO.File]::ReadAllText($recipesPath) | ConvertFrom-Json
+  if ($ListTasks) {
+    $recipes.tasks | Select-Object id, when, @{n='profiles'; e={$_.profiles -join ', '}}
+    return
+  }
+  if (-not $Path) { $Path = (Get-Location).Path }
+  if (-not (Test-UabsPath -LiteralPath $Path -PathType Container)) { throw "Project directory does not exist: $Path" }
+  $Path = (Resolve-Path -LiteralPath $Path).Path.TrimEnd('\', '/')
+  $selected = @(foreach ($id in @($Task | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() })) {
+    $match = @($recipes.tasks | Where-Object { $_.id -eq $id })
+    if ($match.Count -ne 1) { throw "Unknown task '$id'. Use -ListTasks." }
+    $match[0]
+  })
+  $taskPlan = [ordered]@{
+    tasks = @($selected.id | Select-Object -Unique)
+    path = $Path
+    profiles = @($selected | ForEach-Object { $_.profiles } | Select-Object -Unique)
+    skills = @($selected | ForEach-Object { $_.skills } | Select-Object -Unique)
+    cli = @($selected | ForEach-Object { $_.cli } | Select-Object -Unique)
+    hermes_profiles = @($selected.hermes_profile | Where-Object { $_ -ne 'default' } | Select-Object -Unique)
+    checks = @($selected | ForEach-Object { $_.checks } | Select-Object -Unique)
+    notes = @($selected | ForEach-Object { $_.notes } | Select-Object -Unique)
+  }
+  if (-not $taskPlan.hermes_profiles.Count) { $taskPlan.hermes_profiles = @('default') }
+  foreach ($id in $taskPlan.profiles) {
+    if (@($allProfiles | Where-Object { $_['id'] -eq $id }).Count -ne 1) { throw "Recipe references unknown profile '$id'" }
+  }
+  if ($Plan) { $taskPlan | ConvertTo-Json -Depth 8; return }
+  Write-Host ('Task skills (load for the relevant phase): ' + ($taskPlan.skills -join ', ')) -ForegroundColor Cyan
+  Write-Host ('CLI capabilities: ' + ($taskPlan.cli -join ', ')) -ForegroundColor DarkGray
+  foreach ($note in $taskPlan.notes) { Write-Host ('  ' + $note) -ForegroundColor Yellow }
+  if ($Providers -contains 'Hermes') {
+    Write-Host ('Hermes native phase profiles: ' + ($taskPlan.hermes_profiles | ForEach-Object { 'hermes -p ' + $_ }) -join '; ') -ForegroundColor Yellow
+    Write-Host '  Profiles do not switch an already-running chat. Use available CLIs now; restart in the needed named profile for editor MCPs.' -ForegroundColor Yellow
+  }
+}
 
 # Profiles that were renamed. The old id has to keep resolving, or every stored
 # state, script and habit that names it breaks on upgrade.
@@ -327,7 +371,7 @@ function Invoke-UabsProfileWrite {
      -Machine. Removing sweeps BOTH, always: an entry left behind by an older
      version of this pack is in the global config, and a removal that only looks
      where the current version writes cannot reach it. #>
-  param([object[]]$Servers, [string]$ProjectPath, [switch]$Remove, [switch]$Machine)
+  param([object[]]$Servers, [string]$ProjectPath, [switch]$Remove, [switch]$Machine, [switch]$OwnedScope)
 
   $machineTargets = Get-UabsMcpTargets
   $touched = @()
@@ -352,7 +396,14 @@ function Invoke-UabsProfileWrite {
         Write-Skip ("Hermes  not written: {0}" -f (Get-UabsProviderNoProjectScope -Provider 'Hermes'))
         continue
       }
-      $done = @(Add-UabsMcpHermes -Servers $providerServers -Refresh -CheckOnly:$CheckOnly -ProjectPath $ProjectPath -Scope 'global')
+      if ($taskPlan) {
+        $owned = if ($state['profiles'].Contains($id)) { $state['profiles'][$id]['global'] } else { $null }
+        if (@($providerIds | Where-Object {
+          (Test-UabsHermesServerDeclared -Id $_) -and
+          (-not $owned -or @($owned['providers']) -notcontains 'Hermes' -or @($owned['servers']) -notcontains $_)
+        }).Count) { Write-Skip 'Hermes: personal/unowned entry left intact'; continue }
+      }
+      $done = @(Add-UabsMcpHermes -Servers $providerServers -Refresh:($null -eq $taskPlan) -CheckOnly:$CheckOnly -ProjectPath $ProjectPath -Scope 'global')
       if ($done.Count) { Write-Ok ("Hermes  {0}  (machine-wide)" -f ($done -join ', ')); $touched += 'Hermes' }
       elseif (@($providerServers | Where-Object { -not (Test-UabsHermesServerDeclared -Id $_['id']) }).Count -eq 0) {
         Write-Skip 'Hermes  already registered'; $touched += 'Hermes'
@@ -367,12 +418,31 @@ function Invoke-UabsProfileWrite {
     if (-not $machineTarget) { Write-Skip ("{0} unknown provider" -f $prov); continue }
     $project = Get-UabsProviderProjectTarget -Provider $prov -ProjectPath $ProjectPath
 
+    if ($taskPlan -and -not $Remove) {
+      $taskTarget = if ($Machine) { @{Path=$machineTarget.Path; Style=$machineTarget.Style; Section=$machineTarget.Section; ProjectKey=''} } else { $project }
+      if ($taskTarget) {
+        $owned = if ($state['profiles'].Contains($id)) {
+          if ($Machine) { $state['profiles'][$id]['global'] } else { $state['profiles'][$id]['projects'][$ProjectPath] }
+        } else { $null }
+        $collisions = @($providerServers | Where-Object {
+          (Test-UabsServerDeclared -Path $taskTarget.Path -Style $taskTarget.Style -Section $taskTarget.Section -Id $_['id'] -ProjectKey $taskTarget.ProjectKey) -and
+          (-not $owned -or @($owned['providers']) -notcontains $prov -or @($owned['servers']) -notcontains $_['id'])
+        })
+        if ($collisions.Count) {
+          Write-Skip ("{0}: personal/unowned entry already supplies this profile; task wiring left intact ({1})" -f $prov, (@($collisions | ForEach-Object { $_['id'] }) -join ', '))
+          continue
+        }
+      }
+    }
+
     # -- removal: sweep every place this pack has ever written the entry.
     if ($Remove) {
       $done = @()
       $sweep = @()
       if ($project) { $sweep += $project }
-      $sweep += @{ Style = $machineTarget.Style; Path = $machineTarget.Path; Section = $machineTarget.Section; ProjectKey = '' }
+      if (-not $OwnedScope -or $Machine) {
+        $sweep += @{ Style = $machineTarget.Style; Path = $machineTarget.Path; Section = $machineTarget.Section; ProjectKey = '' }
+      }
       foreach ($tgt in $sweep) {
         if (-not (Test-UabsPath -LiteralPath $tgt.Path -PathType Leaf)) { continue }
         if ($tgt.Style -eq 'json') {
@@ -384,7 +454,7 @@ function Invoke-UabsProfileWrite {
           $done += @(Remove-UabsMcpToml -Path $tgt.Path -Section $tgt.Section -Ids $providerIds -CheckOnly:$CheckOnly)
         }
       }
-      if ($machineTarget.Desktop) {
+      if ($machineTarget.Desktop -and (-not $OwnedScope -or $Machine)) {
         $desktop = Get-ClaudeDesktopConfigPath
         if ($desktop) { $done += @(Remove-UabsMcpJson -Path $desktop -Section 'mcpServers' -Ids $providerIds -CheckOnly:$CheckOnly) }
       }
@@ -447,12 +517,12 @@ function Invoke-UabsProfileWrite {
       $keys = if ($target.ProjectKey) { @(Get-UabsClaudeProjectKeys -ProjectPath $target.ProjectKey -ConfigPath $target.Path) } else { @('') }
       foreach ($k in $keys) {
         $done += @(Add-UabsMcpJson -Path $target.Path -Section $target.Section -Servers $write -Provider $prov `
-                     -Refresh -CheckOnly:$CheckOnly -ProjectPath $ProjectPath -ProjectKey $k -Scope $scope)
+                     -Refresh:($null -eq $taskPlan) -CheckOnly:$CheckOnly -ProjectPath $ProjectPath -ProjectKey $k -Scope $scope)
       }
       $done = @($done | Select-Object -Unique)
     } else {
       $done = @(Add-UabsMcpToml -Path $target.Path -Section $target.Section -Servers $write -Provider $prov `
-                  -Refresh -CheckOnly:$CheckOnly -ProjectPath $ProjectPath -GrokTimeout:($prov -eq 'Grok') -Scope $scope)
+                  -Refresh:($null -eq $taskPlan) -CheckOnly:$CheckOnly -ProjectPath $ProjectPath -GrokTimeout:($prov -eq 'Grok') -Scope $scope)
     }
     if ($done.Count) {
       $where = if ($Machine) { 'machine-wide' } else { 'this project only' }
@@ -774,21 +844,36 @@ if ($PSCmdlet.ParameterSetName -eq 'Disable') {
     $p = Get-UabsProfile $rawId
     $id = $p['id']
     Write-Head ("Disabling {0}" -f $id)
+    if (-not $state['profiles'].Contains($id)) {
+      Write-Skip 'No bundle ownership record; independently configured servers left unchanged.'
+      continue
+    }
 
     # With -Path, only that project. Without, every project it was enabled for,
     # plus a machine-wide registration if one was ever made -- an entry nothing
     # turns off is a server that keeps starting.
-    $targets = if ($Path) { @($Path) } else { @(Get-UabsProfileProjects $state $id) }
-    if (-not $targets.Count) { $targets = @('') }
+    $entry = $state['profiles'][$id]
+    $targets = if ($Path) { @($Path | Where-Object { $entry['projects'].Contains($_) }) } else { @(Get-UabsProfileProjects $state $id) }
+    if (-not $Path -and $entry.Contains('global') -and $entry['global']) { $targets += '' }
     foreach ($proj in $targets) {
+      $record = if ($proj) { $entry['projects'][$proj] } else { $entry['global'] }
+      $selectedProviders = $Providers
+      $removingProviders = @($Providers | Where-Object { @($record['providers']) -contains $_ })
+      if (-not $removingProviders.Count) { continue }
+      $ownedServers = @($p['servers'] | Where-Object { @($record['servers']) -contains $_['id'] })
       if ($proj) { Write-Host ("  project: {0}" -f $proj) -ForegroundColor DarkGray }
-      [void](Invoke-UabsProfileWrite -Servers @($p['servers']) -ProjectPath $proj -Remove)
-      if (-not $CheckOnly -and $state['profiles'].Contains($id) -and $proj) {
-        [void]$state['profiles'][$id]['projects'].Remove($proj)
+      try {
+        $Providers = $removingProviders
+        [void](Invoke-UabsProfileWrite -Servers $ownedServers -ProjectPath $proj -Remove -Machine:([string]::IsNullOrEmpty($proj)) -OwnedScope)
+      } finally { $Providers = $selectedProviders }
+      if (-not $CheckOnly) {
+        $remainingProviders = @($record['providers'] | Where-Object { $removingProviders -notcontains $_ })
+        if ($remainingProviders.Count) { $record['providers'] = $remainingProviders }
+        elseif ($proj) { [void]$entry['projects'].Remove($proj) }
+        else { [void]$entry.Remove('global') }
       }
     }
     if (-not $CheckOnly -and $state['profiles'].Contains($id)) {
-      if (-not $Path) { [void]$state['profiles'][$id].Remove('global') }
       if (-not @($state['profiles'][$id]['projects'].Keys).Count -and -not $state['profiles'][$id].Contains('global')) {
         [void]$state['profiles'].Remove($id)
       }
@@ -803,7 +888,13 @@ if ($PSCmdlet.ParameterSetName -eq 'Disable') {
 # ---- enable / auto ---------------------------------------------------------
 
 $wanted = @()
-if ($PSCmdlet.ParameterSetName -eq 'Enable') {
+if ($PSCmdlet.ParameterSetName -eq 'Task') {
+  $wanted = @($taskPlan.profiles)
+  if (-not $wanted.Count) {
+    Write-Host '  This task uses skills/CLIs and the existing core; no optional MCP registration needed.'
+    return
+  }
+} elseif ($PSCmdlet.ParameterSetName -eq 'Enable') {
   $wanted = @($Enable | ForEach-Object { (Get-UabsProfile $_)['id'] } | Select-Object -Unique)
 } else {
   Write-Head ("Auto-detecting capability profiles for {0}" -f $Path)
@@ -820,6 +911,10 @@ if (-not $Path -and -not $Global) { throw 'Pass -Path <project directory>, or -G
 foreach ($id in $wanted) {
   $p = Get-UabsProfile $id
   Write-Head ("Enabling {0} -- {1}" -f $id, $p['title'])
+  if (-not $Global -and (Get-UabsProfileScope $p @{}) -eq 'global') {
+    Write-Skip ("{0}: requires explicit -Global; task selection never silently widens scope" -f $id)
+    continue
+  }
   if ($Global) {
     Write-Host '      -Global: machine-wide availability, not project isolation. Actual usage depends on the provider.' -ForegroundColor Yellow
   }

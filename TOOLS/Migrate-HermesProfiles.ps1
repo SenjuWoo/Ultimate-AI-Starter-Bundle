@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Normalize Hermes into default, code, roblox, skyrim, and creative MCP profiles.
+  Normalize Hermes into default, code, roblox, skyrim, creative and phase profiles.
   An existing externally installed rimworld profile also receives core updates.
 
 .DESCRIPTION
@@ -9,6 +9,7 @@
   Roblox:   default + Roblox Studio's official MCP
   Skyrim:   default + houseCARL
   Creative: default + Blender MCP and MCP for Unity (engine work)
+  Phases:   blender, unity, godot, web; each adds only its available tools
 
   User preferences are preserved; owned MCP wiring, missing aliases/plugins and
   exact retired bundle defaults are reconciled. Before the first write, config
@@ -156,6 +157,9 @@ function Test-UabsServerFamily($Entry, [string]$Family) {
     'rimworldforge' { return $text.Contains('rimworldforge') -and $text.Contains('mcp_server') }
     'blender' { return $text.Contains('mcp-for-blender') -or $text.Contains('blender-mcp') }
     'unity' { return $text.Contains('mcpforunityserver') -or $text.Contains('mcp-for-unity') }
+    'godot' { return $text.Contains('@coding-solo/godot-mcp') }
+    'playwright' { return $text.Contains('@playwright/mcp') }
+    'chrome-devtools' { return $text.Contains('chrome-devtools-mcp') }
   }
   return $false
 }
@@ -773,6 +777,46 @@ try {
     command = $codebaseMemory; args = @(); enabled = $true; connect_timeout = 90
   }
 
+  # Preserve the existing combined creative profile. New task profiles isolate
+  # engines instead of connecting Unity for a Blender-only phase (or vice versa).
+  $taskServers = @{}
+  if ($creativeAvailable) {
+    $taskServers['blender'] = @(@{ Id='blender'; Spec=$blenderSpec; Family='blender' })
+    $taskServers['unity'] = @(@{ Id='unity'; Spec=$unitySpec; Family='unity' })
+  }
+  $profileCatalog = [IO.File]::ReadAllText((Join-Path (Split-Path -Parent $PSScriptRoot) 'BUNDLED-TOOLS\PROFILES.json')) | ConvertFrom-Json
+  foreach ($route in @(@{ Native='godot'; Id='engine-godot' }, @{ Native='web'; Id='web' })) {
+    $definition = @($profileCatalog.profiles | Where-Object { $_.id -eq $route.Id }) | Select-Object -First 1
+    $entries = @()
+    foreach ($object in @($definition.servers)) {
+      $server = ConvertTo-UabsPlain $object
+      if ($server.ContainsKey('providers') -and @($server['providers']) -notcontains 'Hermes') { continue }
+      if (-not (Test-UabsServerRequirement -Server $server -ProjectPath '').Ok) { continue }
+      $spec = @{
+        command = (Expand-UabsTemplate -Text $server['command'])
+        args = (Resolve-UabsServerArgs -Server $server -Provider 'Hermes' -Scope 'global')
+        enabled = $true; connect_timeout = 90
+      }
+      $environment = Resolve-UabsServerEnv -Server $server
+      if ($environment.Count) { $spec['env'] = $environment }
+      $family = switch ($server['id']) { 'playwright-mcp' { 'playwright' }; 'chrome-devtools' { 'chrome-devtools' }; 'godot' { 'godot' } }
+      if ($family) { $entries += @{ Id=$server['id']; Spec=$spec; Family=$family } }
+    }
+    if ($entries.Count) { $taskServers[$route.Native] = $entries }
+  }
+  foreach ($profile in @($taskServers.Keys | Sort-Object)) {
+    $dir = Join-Path $profileDirs $profile
+    $managedProfiles += $profile
+    if (Test-Path -LiteralPath $dir -PathType Container) {
+      $existingProfiles += $profile
+      $maps[$profile] = Get-UabsMcpMap $profile
+    } else {
+      Add-UabsPlan -Kind 'CreateProfile' -Profile $profile -Id '' -Key '' -Value $null -Detail 'clone user default for a narrow task capability'
+      $maps[$profile] = Copy-UabsValue $maps['default']
+      Add-UabsLedger 'newly_created' "Hermes task profile '$profile'"
+    }
+  }
+
   # The tool budget is DATA. Reading it here rather than hardcoding names keeps
   # the measured numbers and the applied filter in one place, and makes the next
   # oversized server a catalog change.
@@ -867,6 +911,22 @@ try {
     Ensure-UabsServer 'creative' $maps['creative'] 'unity' $unitySpec 'unity'
     Normalize-UabsAliases 'creative' $maps['creative'] 'unity' @('unity-mcp') 'unity'
   }
+  foreach ($profile in $taskServers.Keys) {
+    foreach ($item in $taskServers[$profile]) {
+      Ensure-UabsServer $profile $maps[$profile] $item.Id $item.Spec $item.Family
+    }
+    # Exact recognized bundle families only; unknown user servers stay intact.
+    $wantedIds = @($taskServers[$profile] | ForEach-Object { $_.Id })
+    $families = @{
+      'blender'='blender'; 'blender-mcp'='blender'; 'unity'='unity'; 'unity-mcp'='unity'
+      'codebase-memory-mcp'='codebase-memory'; 'codebase-memory'='codebase-memory'
+      'housecarl'='housecarl'; 'Roblox_Studio'='roblox'; 'godot'='godot'
+      'playwright-mcp'='playwright'; 'chrome-devtools'='chrome-devtools'
+    }
+    foreach ($id in $families.Keys) {
+      if ($wantedIds -notcontains $id) { Remove-UabsServer $profile $maps[$profile] $id $families[$id] }
+    }
+  }
 
   if ($robloxAvailable) {
     foreach ($profile in @('default', 'skyrim') | Where-Object { $managedProfiles -contains $_ }) {
@@ -938,6 +998,9 @@ try {
     creative = @('context7', 'github', 'headroom', 'blender', 'unity')
     rimworld = @('context7', 'github', 'headroom')
   }
+  foreach ($profile in $taskServers.Keys) {
+    $expected[$profile] = @('context7', 'github', 'headroom') + @($taskServers[$profile] | ForEach-Object { $_.Id })
+  }
   if ($forgeCompatRoblox) { $expected.roblox += 'robloxforge' }
   if ($forgeCompatSkyrim) { $expected.skyrim += 'skyrim-forge' }
   $expectedFamilies = @{
@@ -946,6 +1009,7 @@ try {
     Roblox_Studio = 'roblox'; housecarl = 'housecarl'
     robloxforge = 'robloxforge'; 'skyrim-forge' = 'skyrim-forge'
     blender = 'blender'; unity = 'unity'
+    godot = 'godot'; 'playwright-mcp' = 'playwright'; 'chrome-devtools' = 'chrome-devtools'
   }
   foreach ($profile in $managedProfiles) {
     foreach ($id in $maps[$profile].Keys) {
@@ -993,6 +1057,10 @@ try {
         'code' { 'Code exploration with project graph memory.' }
         'roblox' { 'Roblox development with the official Studio MCP.' }
         'creative' { 'Blender and Unity creation workflows; inherits the operator default tuning.' }
+        'blender' { 'Blender asset work without unrelated Unity schemas; inherits personal tuning.' }
+        'unity' { 'Unity editor work without unrelated Blender schemas; inherits personal tuning.' }
+        'godot' { 'Godot project runtime tools; inherits personal tuning.' }
+        'web' { 'Browser UI testing and diagnostics; inherits personal tuning.' }
         default { 'Skyrim development with houseCARL load-order evidence.' }
       }
       [void](Invoke-UabsHermes -Arguments @('profile', 'create', $item.Profile, '--clone-from', 'default', '--description', $description))
