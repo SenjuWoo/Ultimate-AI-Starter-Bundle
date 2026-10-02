@@ -40,6 +40,12 @@ hardening was not overwritten by the vendor update.
 
 ## Runtime boundaries
 
+Final catalog refresh: GitHub MCP 1.14.0 (47 tools/129,567 bytes), Firecrawl
+3.27.3 (25/81,489), Super-MCP Router 2.8.3 (12/12,475) passed unauthenticated
+initialize/tools-list. GitHub's official Windows ZIP digest/size matched;
+Firecrawl stays credential-gated and router testing used a disposable home.
+No OAuth completion, authenticated scraping or child-server dispatch was run.
+
 New Hermes native Blender/Unity/web configuration was applied and verified,
 with original configs backed up and existing preferences retained. Godot is
 conditional on its runtime prerequisite. Initialize/tools-list transport
@@ -53,6 +59,10 @@ works, or generated mods survive gameplay. No audited Unreal editor MCP is
 shipped. Open chats may need reload/restart to see new registrations.
 
 ## Release gates
+
+The component-list regression first failed against the old installer, then
+passed after comma splitting, trimming and deduplication were added. The
+provider-detection gate executes the installer's own normalization statement.
 
 The release procedure requires the exact pushed commit's terminal CI/security
 checks, manifest/version validation, both built/extracted archive gates, and

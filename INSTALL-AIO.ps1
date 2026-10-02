@@ -26,7 +26,7 @@
 
 .PARAMETER Components
   Base components to install. V8 adds the full optional catalog unless
-  -CoreOnly is passed.
+  -CoreOnly is passed. Accepts arrays or comma-separated names through -File.
 
 .PARAMETER WorkspaceRoot
   Optional workspace to receive AGENTS.md / CLAUDE.md / _PROJECT-TEMPLATE
@@ -154,6 +154,8 @@ param(
   [switch]$SkipCleanup
 )
 
+# Match -Providers: powershell -File forwards comma-separated names as one string.
+$Components = @($Components | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ } | Select-Object -Unique)
 if (-not $CoreOnly) {
   $Components = @($Components) + @(
     'code-review-skill', 'obsidian-skills',

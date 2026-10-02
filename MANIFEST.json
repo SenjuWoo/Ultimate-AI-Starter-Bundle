@@ -33351,13 +33351,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 50967,
-  "sha256": "d20c4db6be135b72982a0951f30ec954062c02e701ece3a31daa76e696288022"
+  "size": 51190,
+  "sha256": "0ee43fda8053c055b984cf3ed68b2b55d3ff33ea1d84ec3ad3a7d02a60d95fbc"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1444,
-  "sha256": "62240de6b370adb0567d85cb289a07a839b1e37e4c6bd675a89b28b1434a2509"
+  "sha256": "495b70aabf1a4803194036a430cecf02a59ef9756306b468b0c6c843e8dfc6a6"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
@@ -33450,9 +33450,9 @@
   "sha256": "6eb6beaf261b19e419766e78baf93cbc3cf1c6338cff8fb7c0234859f96d1685"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/github-mcp-server-1.13.0-windows-x86_64.zip",
-  "size": 8496583,
-  "sha256": "75accfd7f98c2d06c8cbda43d7d243a51a97baced7e6a5d61dd6f7df710fd464"
+  "path": "BUNDLED-TOOLS/offline/github-mcp-server-1.14.0-windows-x86_64.zip",
+  "size": 8814345,
+  "sha256": "0277e5fca965ae7fa31c7193954eae948ddc13997bc4b835858be858ac55cabe"
  },
  {
   "path": "BUNDLED-TOOLS/offline/headroom_ai-0.39.1-cp310-abi3-win_amd64.whl",
@@ -36791,8 +36791,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 141059,
-  "sha256": "ce7211d1730fb33f97efcd9e2a432d7f0e513d1148a03e549be06c18061a4018"
+  "size": 141338,
+  "sha256": "8e4748987e3c06eb42d6bb5c099c5e3ed4dafa77f51e73422634fa3a81e104d9"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -36906,8 +36906,8 @@
  },
  {
   "path": "TESTS/Test-ProviderDetection.ps1",
-  "size": 9460,
-  "sha256": "03f7a81697aa711ccd837646cad4736b8132a90b8947e379c67afc50d574f3cf"
+  "size": 10888,
+  "sha256": "799f25de025bdd4b292453022716f2c1f7019ea8390229a143b145c91e0e201d"
  },
  {
   "path": "TESTS/Test-ProviderSkillSync.ps1",
@@ -37411,8 +37411,8 @@
  },
  {
   "path": "VALIDATION.md",
-  "size": 2905,
-  "sha256": "552d5aebc180508e9eaeb204e511d073104346f82085a58570b6990c775dc3b7"
+  "size": 3516,
+  "sha256": "26685b679a0833c73ffcb77492918c5eac13fa7536f39ad4b8f101526d92c25f"
  },
  {
   "path": "VERSION.txt",
@@ -44381,8 +44381,8 @@
  },
  {
   "path": "docs/history/V8.7.35-CHANGELOG.md",
-  "size": 3243,
-  "sha256": "ef9ed81749b789ca981cda110ed2842dd9053b4d749c39f39f62775cd7fc113f"
+  "size": 3891,
+  "sha256": "d2c9ca59507862b9dc4e606d548a1605e6c5e1423f5536a995f78c6f03273827"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",

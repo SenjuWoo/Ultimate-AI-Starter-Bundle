@@ -121,6 +121,28 @@ try {
 
     Write-Host '=== installer honours the detector ===' -ForegroundColor Cyan
     $aio = [IO.File]::ReadAllText((Join-Path $PackRoot 'INSTALL-AIO.ps1'))
+    # Execute the installer's own normalization, including the single string
+    # that powershell -File passes for a comma-separated component list.
+    $parseTokens = $null; $parseErrors = $null
+    $aioAst = [System.Management.Automation.Language.Parser]::ParseInput($aio, [ref]$parseTokens, [ref]$parseErrors)
+    $componentSplit = $aioAst.Find({ param($node)
+        $node -is [System.Management.Automation.Language.AssignmentStatementAst] -and
+        $node.Left.Extent.Text -eq '$Components' -and $node.Right.Extent.Text -match '-split'
+    }, $true)
+    if (-not $componentSplit) {
+        Bad 'installer does not normalize comma-separated component choices'
+    } else {
+        $normalize = [scriptblock]::Create('param([string[]]$Components)' + [Environment]::NewLine +
+            $componentSplit.Extent.Text + [Environment]::NewLine + '$Components')
+        foreach ($inputList in @(
+            @{value=@(' github-mcp-server,firecrawl-mcp,super-mcp-router '); expected='github-mcp-server,firecrawl-mcp,super-mcp-router'},
+            @{value=@('rtk', ' headroom,rtk ', ''); expected='rtk,headroom'}
+        )) {
+            $normalized = @(& $normalize -Components $inputList.value)
+            if (($normalized -join ',') -eq $inputList.expected) { Good 'component names split, trim and deduplicate correctly' }
+            else { Bad ('wrong normalized components: ' + ($normalized -join ',')) }
+        }
+    }
     # Single quotes: in a double-quoted PowerShell string `\$Providers` is not
     # an escape -- backtick is -- so $Providers interpolates to empty and the
     # pattern silently stops matching what it names.
