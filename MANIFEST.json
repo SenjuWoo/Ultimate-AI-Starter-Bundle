@@ -37106,8 +37106,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 298389,
-  "sha256": "dd07a1b72ae7e32d684f313fadadde368cf6ec17fd83f769f8e7bf73e5c2f351"
+  "size": 299628,
+  "sha256": "17ee05bbd9252eb6bb608bcb2f5cabed305a15ada39a8ca055c262d3bc879d90"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -37261,8 +37261,8 @@
  },
  {
   "path": "TOOLS/audit_skills.py",
-  "size": 3595,
-  "sha256": "0ab9e90abc63aa4872721c285e7296078eaed4bede77ce6da2dc5790d94b652b"
+  "size": 3772,
+  "sha256": "64d28eccc4c030bf9b82e8d60f1607d6bf7a78e440d44e2665f4ec3f8a6f64f7"
  },
  {
   "path": "TOOLS/build_canonical_skills.py",
@@ -37411,8 +37411,8 @@
  },
  {
   "path": "VALIDATION.md",
-  "size": 3516,
-  "sha256": "26685b679a0833c73ffcb77492918c5eac13fa7536f39ad4b8f101526d92c25f"
+  "size": 3852,
+  "sha256": "59a455be25d78ec86b0f81333b403a4522c38b37dd89c2b9d62ff87d94da49bc"
  },
  {
   "path": "VERSION.txt",
@@ -44381,8 +44381,8 @@
  },
  {
   "path": "docs/history/V8.7.35-CHANGELOG.md",
-  "size": 3891,
-  "sha256": "d2c9ca59507862b9dc4e606d548a1605e6c5e1423f5536a995f78c6f03273827"
+  "size": 4111,
+  "sha256": "9cfd3886a0c60f6119c672c30a080f4c2952c38c62b32f7b9cb84908c29b9c9c"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",

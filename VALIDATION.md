@@ -64,6 +64,12 @@ The component-list regression first failed against the old installer, then
 passed after comma splitting, trimming and deduplication were added. The
 provider-detection gate executes the installer's own normalization statement.
 
+Extracted Core testing reproduced a skill-auditor `UnicodeEncodeError` under a
+Unicode path and the Windows legacy console. Its new regression first failed,
+then passed with printable diagnostics; a malformed BOM-bearing skill still
+returns failure. Both archives must be rebuilt from the corrected CI-green
+commit before publication.
+
 The release procedure requires the exact pushed commit's terminal CI/security
 checks, manifest/version validation, both built/extracted archive gates, and
 published-asset size/SHA-256 equality. Publication evidence belongs to the

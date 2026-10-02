@@ -2495,6 +2495,7 @@ def test_catalog_freshness_auditor_self_checks() -> None:
 
 def main() -> int:
     tests = [
+        test_skill_audit_survives_unicode_console_paths,
         test_task_recipes_resolve_only_shipped_capabilities,
         test_compression_retirement_preserves_custom_preferences,
         test_current_documentation_links_and_upstream_coverage,
@@ -5603,6 +5604,26 @@ def test_compression_retirement_preserves_custom_preferences() -> None:
             assert saved[-1] == expected, (provider, model, effort)
             exec(compile(writer, "Hermes production preferences writer", "exec"), {})
             assert saved[-1] == expected, "Repeated repair changed preferences"
+
+
+def test_skill_audit_survives_unicode_console_paths() -> None:
+    """Legacy Windows console encoding must not turn a valid path into a crash."""
+    import os
+    env = dict(os.environ, PYTHONIOENCODING="ascii")
+    with tempfile.TemporaryDirectory(prefix="UABS skill audit \u03a9 ") as directory:
+        root = Path(directory)
+        skill = root / "example" / "SKILL.md"
+        skill.parent.mkdir()
+        content = "---\nname: example\ndescription: Minimal audit fixture.\n---\nA fixture.\n"
+        for data, expected in ((content.encode("utf-8"), 0),
+                               (b"\xef\xbb\xbf" + content.encode("utf-8"), 1)):
+            skill.write_bytes(data)
+            result = subprocess.run([sys.executable, str(ROOT / "TOOLS/audit_skills.py"),
+                                     str(root)], env=env, capture_output=True, timeout=30)
+            assert result.returncode == expected, result.stderr.decode("ascii", "backslashreplace")
+            assert b"RESULT:" in result.stdout and b"UnicodeEncodeError" not in result.stderr
+            if expected:
+                assert b"UTF-8 BOM" in result.stdout, "Encoding repair swallowed a real skill failure"
 
 
 def test_task_recipes_resolve_only_shipped_capabilities() -> None:

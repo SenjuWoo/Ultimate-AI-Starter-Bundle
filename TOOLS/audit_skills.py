@@ -74,6 +74,9 @@ def audit(root):
 
 
 def main():
+    # Keep the host encoding; escape unprintable paths instead of crashing.
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(errors='backslashreplace')
     roots = sys.argv[1:]
     if not roots:
         print(__doc__)
