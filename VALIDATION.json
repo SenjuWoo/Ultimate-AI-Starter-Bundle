@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.37",
+  "version": "8.7.38",
   "generated": "2026-10-07",
-  "release_tag": "v8.7.37",
+  "release_tag": "v8.7.38",
   "canonical_skills": 172,
   "provider_trees": 5,
   "registry_entries": 172,
@@ -28,6 +28,6 @@
     "TESTS/Test-TaskRecipes.ps1",
     "TESTS/Test-GitHubFlags.ps1"
   ],
-  "runtime_status": "v8.7.37: Get-GitHubFlags WhatIf names the five GitHub endpoints and exits 0 without calling gh. The probe prints secret type and url only. Code quality setup on this public repository returned 404, which is unavailable rather than zero findings. Editor/gameplay/GPU remain unverified. No new MCP.",
+  "runtime_status": "v8.7.38: the wired preamble requires every install to fix open Dependabot, code-scanning, and secret-scanning alerts on the repository just created or updated, then query again. Get-GitHubFlags WhatIf names the five endpoints and exits 0 without calling gh. Editor/gameplay/GPU remain unverified. No new MCP.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

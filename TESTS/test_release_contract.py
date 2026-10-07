@@ -269,18 +269,31 @@ def test_release_checklist_exact_sha_contract() -> None:
 def test_github_flags_are_queried_after_push() -> None:
     """A green workflow is not a clean security tab.
 
-    Code scanning and code quality can open after required checks are already
-    green. The etiquette has to query them, and a 404 must not count as zero.
+    Creating or updating any repository can open Dependabot, code-scanning,
+    and secret-scanning alerts after the workflow is already green. The wired
+    preamble and the push skills fix that repository and query again. A failed
+    query is not zero, and a 404 on code quality is not zero findings.
     """
     convergence = read(CANON / "ci-convergence" / "SKILL.md").lower()
     discipline = read(CANON / "coding-discipline" / "SKILL.md").lower()
     release = read(CANON / "release-checklist" / "SKILL.md").lower()
     fleet = read(CANON / "github-fleet-maintenance" / "SKILL.md").lower()
+    aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").lower()
     probe = read(ROOT / "TOOLS" / "Get-GitHubFlags.ps1")
     for text in (convergence, discipline, release, fleet):
-        assert "get-githubflags.ps1" in text, "push etiquette does not run the flag probe"
+        assert "get-githubflags.ps1" in text, "push etiquette does not name the flag probe"
+        assert "gh api" in text, "push etiquette only works inside this pack checkout"
+        assert "fix the cause" in text, "open alerts are reported instead of fixed"
+        assert "this personal public repository" not in text
+        assert "2026-10-07" not in text
+    assert "github alerts:" in aio
+    assert "dependabot" in aio and "code-scanning" in aio and "secret-scanning" in aio
+    assert "get-githubflags.ps1" in aio and "gh api" in aio
+    assert "do not dismiss" in aio
+    assert "senjuwoo" not in aio
     assert "flags=unknown" in convergence, "a failed flag query can still be treated as clean"
     assert "do not dismiss" in convergence, "open flags can be dismissed instead of fixed"
+    assert "outside that push" not in convergence, "alerts outside one push are still report-only"
     assert "code_quality=unavailable" in convergence, "a missing code-quality API can count as zero findings"
     assert "do not print" in convergence and "secret" in convergence
     lowered = probe.lower()
@@ -2169,7 +2182,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "745af517238c06ac78decc495bb55ba8f7cdb0f79b2fba8aa8065376dbb61adb", (
+    assert digest == "1005a5497c246be5be050dc84fc22cc77cfa1de11c985e653169dec022ee0b8b", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )

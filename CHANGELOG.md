@@ -1,3 +1,7 @@
+## 8.7.38
+
+- The wired preamble now makes every install fix open Dependabot, code-scanning, and secret-scanning alerts on the repository just created, pushed, or updated, then check again. The pack probe is used when it is present; otherwise the same `gh api` queries run against that repository. A failed query is not zero. Alerts are not dismissed. 172 canonical skills. No new MCP and no dependency pin change. [Details](docs/history/V8.7.38-CHANGELOG.md).
+
 ## 8.7.37
 
 - After a push or dependency update, query open Dependabot, code-scanning, secret-scanning, and code-quality flags. A failed query is not a clean repository, and a 404 on code quality is not zero findings. Secret output is the type and alert URL only. 172 canonical skills. No new MCP and no dependency pin change. [Details](docs/history/V8.7.37-CHANGELOG.md).

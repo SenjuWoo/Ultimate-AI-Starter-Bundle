@@ -14,7 +14,7 @@ Use the fleet loop only when multiple repositories are in scope. Reuse authentic
 1. **Inventory** — `gh api --paginate "user/repos?per_page=100&type=owner"` → dump RAW JSON to a file, flatten page arrays in Python. Never trust `--paginate --jq` merging (it doesn't merge pages).
 2. **Parallel audit** — one Python script, `concurrent.futures.ThreadPoolExecutor(max_workers=10)`, checking per repo: workflows present + last run conclusion, description, topics count, license, releases vs tags, `.github/dependabot.yml`, open dependabot/code-scanning/secret-scanning alerts. Print only gaps.
 3. **Fix gaps** — batch edits through the API (see below); ask the user 3–4 decision questions FIRST when defaults are ambiguous (forks included? which license? branch protection?). Record answers; they apply fleet-wide.
-4. **Verify per repo** — every new workflow must produce a terminal-green run on the default branch before declaring done. Pending is not success. CodeQL/security alerts close minutes AFTER CI goes green — re-query alert counts at the end.
+4. **Verify per repo** — every new workflow must produce a terminal-green run on the default branch before declaring done. Pending is not success. CodeQL and security alerts can open after CI goes green. Re-query them and fix the cause of any alert this pass opened before declaring the repo done.
 5. **Report honestly** — per-repo table: green / intentionally-CI-less (say why) / known limitation (e.g. `continue-on-error` job with root cause).
 
 ## Editing repos WITHOUT cloning (preferred for small batches)
@@ -48,9 +48,11 @@ Some of the user's repos (SkyrimForge, Ultimate-AI-Starter-Bundle) gate tracked 
 
 ## Security alerts cleanup
 
-For one repository, run `TOOLS/Get-GitHubFlags.ps1`. It prints allowlisted fields for open Dependabot, code-scanning, and secret-scanning alerts, plus code-quality setup and findings. A secret row is number, `secret_type`, and url. `code_quality=unavailable` (403 or 404) is not an empty clean scan. A failed query is `flags=unknown`, not zero. Do not dismiss an alert from this probe.
+On every repository you create or update, query the open alerts and fix the cause in the same turn. When `TOOLS/Get-GitHubFlags.ps1` is in the checkout, run it with `-Repo OWNER/REPO`. Otherwise `gh api` `repos/{o}/{r}/dependabot/alerts?state=open`, `/code-scanning/alerts?state=open`, and `/secret-scanning/alerts?state=open`, plus `GET /repos/{o}/{r}/code-quality/setup` and `code-quality/findings?state=open`. A secret row is number, `secret_type`, and url. `code_quality=unavailable` (403 or 404) is not an empty clean scan and is not a switch to turn on. A failed query is `flags=unknown`, not zero. Do not dismiss an alert. Do not PATCH code quality, validity checks, or non-provider patterns on. Validity checks and non-provider patterns need organization Secret Protection. Code Quality spends Actions minutes and needs a paid plan.
 
-A fleet pass that does not use the script still sweeps `repos/{o}/{r}/dependabot/alerts?state=open`, `/code-scanning/alerts?state=open`, and `/secret-scanning/alerts?state=open`, and also `GET /repos/{o}/{r}/code-quality/findings?state=open`. Project the same allowlist. Code-scanning location fields live at `.most_recent_instance.location.{path,start_line}` (shortcut fields return null on list endpoints). Never print a secret body. Do not PATCH code quality, validity checks, or non-provider patterns on for a personal public repository: code quality returned 404 here on 2026-10-07, and the other two need organization Secret Protection.
+Fix a Dependabot alert by updating or replacing that dependency. Fix a code-scanning alert at the path and line it names. Remove a secret from the tree and rotate it. Push the fix and query again. Do not rewrite a vendored third-party tree just to silence a scanner.
+
+A fleet pass uses the same allowlist. Code-scanning location fields live at `.most_recent_instance.location.{path,start_line}` (shortcut fields return null on list endpoints). Never print a secret body.
 
 **ReDoS in PowerShell string regexes (CodeQL py/redos)** — vulnerable shape `` r'"(?:`.|[^"\r\n])*"' ``: backtick matches BOTH alternation branches → exponential backtracking. Correct fix makes branches DISJOINT by excluding the backtick from the class: `` r'"(?:[^"`\r\n]|`.)*"' ``. Two failed shortcuts to never repeat:
 1. Reordering alternation alone is NOT enough — `` [^"\r\n] `` still admits the backtick; CodeQL re-flags and it stays exponential on unterminated strings.

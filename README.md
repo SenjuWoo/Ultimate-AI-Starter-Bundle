@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.37 -->
+<!-- Ultimate AI Starter Bundle v8.7.38 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.37
+# Ultimate AI Starter Bundle v8.7.38
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -788,10 +788,10 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.7.37** - 2026-10-07. After a push, etiquette queries GitHub security and
-quality flags. A failed or missing query is not a clean repository.
+**v8.7.38** - 2026-10-07. After a create, push, or dependency update, every
+install fixes that repository's open GitHub security alerts and checks again.
 **172 canonical skills**, no new always-on MCP.
-[Changes](docs/history/V8.7.37-CHANGELOG.md) ·
+[Changes](docs/history/V8.7.38-CHANGELOG.md) ·
 [Latest published release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest).
 
 ## License

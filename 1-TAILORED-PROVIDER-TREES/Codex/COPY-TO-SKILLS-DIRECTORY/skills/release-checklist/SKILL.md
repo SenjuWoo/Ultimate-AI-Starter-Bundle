@@ -114,12 +114,14 @@ check fails, inspect its job/log, fix the root cause, commit and push a NEW SHA,
 and restart this section from that new SHA. Never tag, build a release, or end
 the release task while the chosen SHA is pending or red.
 
-Then run `TOOLS/Get-GitHubFlags.ps1` on that same repository. Required checks
-do not include security or quality flags, and those flags can open after the
-workflow is green. `flags=open` or `flags=unknown` blocks the tag the same way
-a red check does. Follow `ci-convergence`: fix a flag on a file this push
-changed, report one outside the push, and do not dismiss either. A failed
-query is not zero alerts. Do not print a secret.
+Then query open Dependabot, code-scanning, and secret-scanning alerts on that
+same repository. Use `TOOLS/Get-GitHubFlags.ps1` when the checkout contains it;
+otherwise `gh api` those open-alert endpoints. Required checks do not include
+those alerts, and they can open after the workflow is green. `flags=open` or
+`flags=unknown` blocks the tag the same way a red check does. Fix the cause,
+push a new SHA, wait for that SHA's checks, and query again. Do not dismiss an
+alert. A failed query is not zero alerts. Do not print a secret. A 403 or 404
+on code quality is unavailable on that repository; leave it off.
 
 ## 6. Tag and build artifacts from the GREEN commit
 

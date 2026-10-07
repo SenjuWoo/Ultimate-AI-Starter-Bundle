@@ -14,4 +14,4 @@ The default branch and the latest published release are supported. Older release
 
 ## Scanner results
 
-A Dependabot, code-scanning, secret-scanning, or code-quality finding is fixed at the cause or reported. It is not dismissed to clear a dashboard. A secret-scanning result is rotated. The secret itself is not copied into a commit, issue, or log.
+A Dependabot, code-scanning, or secret-scanning finding is fixed at the cause, then checked again. It is not dismissed to clear a dashboard. A secret-scanning result is rotated. The secret itself is not copied into a commit, issue, or log. Code quality that returns 403 or 404 on a repository is unavailable there; it is not turned on to clear the tab.

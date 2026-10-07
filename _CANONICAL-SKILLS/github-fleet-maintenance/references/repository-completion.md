@@ -54,6 +54,8 @@ gh api repos/OWNER/REPO/commits/SHA/check-runs --paginate
 
 Check the exit status. The alerts-enable endpoint returns 204 on success, not a JSON boolean. Paginate when counting open alerts; select counts/status only, never raw secret content. For advanced CodeQL setup, inspect its workflow and analysis results instead of interpreting an unconfigured default as no scanning.
 
+After you create or update that repository, fix the cause of each open Dependabot, code-scanning, and secret-scanning alert, push the fix, and query again. `TOOLS/Get-GitHubFlags.ps1` is the probe when that file is in the checkout. On any other checkout, the `gh api` lines above are the query. Do not dismiss an alert. Do not print a secret. A 403 or 404 on code quality is unavailable for that repository; leave it off.
+
 ## Final handoff
 
 Report the repository URL, tested commit, CI result, security controls verified versus unavailable, artifact/release URL and downloaded-hash result when published. If publication needs approval, give the concrete version, tested commit and prepared artifacts; mark it **prepared, not published**. Never finish with only "repo created" when these deliverables are in scope.
