@@ -35,16 +35,50 @@ if (Select-String -LiteralPath $canonFile -SimpleMatch -Pattern $needle -Quiet) 
     Good 'canonical skill text is on disk'
 } else { Bad 'canonical token-efficiency line was not found' }
 
-$canonRel = Get-RelPath $canonFile
-& git -C $PackRoot check-ignore -q --no-index -- $canonRel
-if ($LASTEXITCODE -eq 0) { Bad 'canonical skill is gitignored' }
-else { Good 'canonical skill stays searchable' }
+# An extracted Core archive is not its own work tree. git -C on it walks up
+# to the CI checkout and then treats every extracted path as ignored because
+# it lives under artifacts/. Only the real work-tree root may ask git.
+# Start git directly. A missing repository writes to stderr, and Stop would
+# otherwise fail the extracted archive before the disk checks can pass.
+$gitProbe = New-Object System.Diagnostics.ProcessStartInfo
+$gitProbe.FileName = 'git'
+$gitProbe.Arguments = '-C "' + $PackRoot.Replace('"','') + '" rev-parse --show-toplevel'
+$gitProbe.RedirectStandardOutput = $true
+$gitProbe.RedirectStandardError = $true
+$gitProbe.UseShellExecute = $false
+$gitProbe.CreateNoWindow = $true
+$gitProc = [Diagnostics.Process]::Start($gitProbe)
+$topText = $gitProc.StandardOutput.ReadToEnd().Trim()
+[void]$gitProc.StandardError.ReadToEnd()
+$gitProc.WaitForExit()
+$isRepo = $false
+if ($gitProc.ExitCode -eq 0 -and $topText) {
+    $topPath = (Resolve-Path -LiteralPath $topText).Path.TrimEnd('\')
+    $rootPath = (Resolve-Path -LiteralPath $PackRoot).Path.TrimEnd('\')
+    if ($topPath.Equals($rootPath, [StringComparison]::OrdinalIgnoreCase)) { $isRepo = $true }
+}
+$ignoreBody = [IO.File]::ReadAllText((Join-Path $PackRoot '.gitignore'))
+if ($ignoreBody -match '1-TAILORED-PROVIDER-TREES/\*/COPY-TO-SKILLS-DIRECTORY/skills/') {
+    Good 'shipped gitignore names the generated skill copies'
+} else { Bad 'shipped gitignore lost the generated skill rule' }
 
 $textExt = @{ '.md' = $true; '.txt' = $true; '.py' = $true; '.ps1' = $true; '.json' = $true; '.yml' = $true; '.yaml' = $true }
 $provPaths = @(Get-ChildItem -LiteralPath $provRoot -Recurse -File | Where-Object { $textExt.ContainsKey($_.Extension.ToLowerInvariant()) } | ForEach-Object { $_.FullName })
 $provHits = @(Select-String -LiteralPath $provPaths -SimpleMatch -Pattern $needle | Where-Object { $_ })
 if ($provHits.Count -lt 5) { Bad ("expected the five generated copies on disk, found " + $provHits.Count) }
 else { Good ("found " + $provHits.Count + " generated copies on disk") }
+
+$profileReadme = Join-Path $provRoot 'Hermes\profiles\README.md'
+$profileHit = @(Select-String -LiteralPath $profileReadme -Pattern 'sillytavern' -SimpleMatch | Where-Object { $_ })
+if ($profileHit.Count -ge 1) { Good 'Hermes profile docs mention sillytavern' }
+else { Bad 'Hermes profiles/README.md did not mention sillytavern' }
+
+if (-not $isRepo) { Good 'git checks skipped outside the work tree' }
+else {
+$canonRel = Get-RelPath $canonFile
+& git -C $PackRoot check-ignore -q --no-index -- $canonRel
+if ($LASTEXITCODE -eq 0) { Bad 'canonical skill is gitignored' }
+else { Good 'canonical skill stays searchable' }
 
 $rels = @($provHits | ForEach-Object { Get-RelPath $_.Path })
 # Do not pipe paths to git. Windows PowerShell writes a CR and quotes the
@@ -63,12 +97,10 @@ else {
     Bad "generated skill copies are not ignored: $sample"
 }
 
-$profileReadme = Join-Path $provRoot 'Hermes\profiles\README.md'
 $profileRel = Get-RelPath $profileReadme
-$profileHit = @(Select-String -LiteralPath $profileReadme -Pattern 'sillytavern' -SimpleMatch | Where-Object { $_ })
 & git -C $PackRoot check-ignore -q --no-index -- $profileRel
-if ($profileHit.Count -ge 1 -and $LASTEXITCODE -ne 0) { Good 'Hermes profile docs stay searchable' }
-else { Bad 'Hermes profiles/README.md was ignored or did not mention sillytavern' }
+if ($LASTEXITCODE -ne 0) { Good 'Hermes profile docs stay searchable' }
+else { Bad 'Hermes profiles/README.md is gitignored' }
 
 $rg = $null
 if (-not $SkipRipgrep) { $rg = (Get-Command rg -ErrorAction SilentlyContinue).Source }
@@ -106,6 +138,7 @@ try {
     else { Bad ("git ls-files lost the provider skill: " + ($listed -join ' ')) }
 } finally {
     if (Test-Path -LiteralPath $probeDir) { Remove-Item -LiteralPath $probeDir -Recurse -Force }
+}
 }
 
 if ($fail) { Write-Host "SEARCH COLLAPSE GATE: FAIL ($fail)"; exit 1 }

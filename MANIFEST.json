@@ -36926,8 +36926,8 @@
  },
  {
   "path": "TESTS/Test-SearchCollapse.ps1",
-  "size": 5808,
-  "sha256": "e55aceca734caf028f17b3de09325608f03ad2bd18c0e32c26886413767ca3e8"
+  "size": 7436,
+  "sha256": "820779a261b709b78cc1ed313cfa9a6d44ad61d2a32dbb8f988fbaf1c3528391"
  },
  {
   "path": "TESTS/Test-SillyTavernGateway.ps1",
@@ -44406,8 +44406,8 @@
  },
  {
   "path": "docs/history/V8.7.36-CHANGELOG.md",
-  "size": 1699,
-  "sha256": "ea90aaf2bfb8978af24e673b5e5067453f0a55ee42a1118d0269256abc1ffd49"
+  "size": 1825,
+  "sha256": "6416ee7030f601f603d69a8f710757bd6c3e574f722268d23413f4aea66762e5"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",
