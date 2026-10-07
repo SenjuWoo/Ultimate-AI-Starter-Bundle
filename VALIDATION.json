@@ -27,6 +27,6 @@
     "TESTS/Test-HermesNativeStderr.ps1",
     "TESTS/Test-TaskRecipes.ps1"
   ],
-  "runtime_status": "v8.7.36: default search skips generated skill copies while git still tracks them; full fanout parity and the wired preamble hash passed; Wait-External local exit codes and GitHub -WhatIf passed. openrouter/free is not a default route. Test-Pack exited 0 with PACK GATE: PASS, including search-collapse and external-wait. Release contract passed 140. Editor/gameplay/GPU remain unverified. GitHub CI was not watched live. No new MCP.",
+  "runtime_status": "v8.7.36: default search skips generated skill copies while git still tracks them; the search gate proves the gitignore rule without ripgrep and calls ripgrep when it is installed. Full fanout parity and the wired preamble hash passed. Wait-External local exit codes and GitHub -WhatIf passed. openrouter/free is not a default route. Editor/gameplay/GPU remain unverified. No new MCP.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

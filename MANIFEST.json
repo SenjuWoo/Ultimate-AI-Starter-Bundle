@@ -36901,8 +36901,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 55813,
-  "sha256": "ce5cebea0e8c95c2b2fcf341eea33a3cbf1c12922322ab3c037abe0227e01b1f"
+  "size": 55896,
+  "sha256": "80bd3cc448884389c7f2d3c8fb37150cad3273ef1ada814bada6cb8806f49a6b"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -36926,8 +36926,8 @@
  },
  {
   "path": "TESTS/Test-SearchCollapse.ps1",
-  "size": 3246,
-  "sha256": "510b619d576b079f470c83a3f2ebe563c346e10a823473b5436a65603244a368"
+  "size": 5808,
+  "sha256": "e55aceca734caf028f17b3de09325608f03ad2bd18c0e32c26886413767ca3e8"
  },
  {
   "path": "TESTS/Test-SillyTavernGateway.ps1",
@@ -37426,8 +37426,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 1857,
-  "sha256": "a6ecedc299b1de2e8ababcac5d25eb8655aaa2f5ef0058e88adb6b27e5d75137"
+  "size": 1808,
+  "sha256": "c700c92c94902658e353a849bdc392d575a018d3de7967c0b104c4d369c14504"
  },
  {
   "path": "VALIDATION.md",
@@ -44406,8 +44406,8 @@
  },
  {
   "path": "docs/history/V8.7.36-CHANGELOG.md",
-  "size": 1584,
-  "sha256": "c249096da56ca4641154b38c80e650fd2502fac14dd5336a4120d4176021a0c4"
+  "size": 1699,
+  "sha256": "ea90aaf2bfb8978af24e673b5e5067453f0a55ee42a1118d0269256abc1ffd49"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",

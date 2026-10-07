@@ -1,7 +1,13 @@
 # Default search must see canonical skills and provider-specific files, and
 # must not see the five generated skill copies. Those copies stay tracked.
+# GitHub's Windows runner does not install ripgrep. The rule under test is the
+# gitignore entry, which ripgrep honors. Prove that with git, and also call
+# ripgrep when this machine has it.
 [CmdletBinding()]
-param([string]$PackRoot)
+param(
+    [string]$PackRoot,
+    [switch]$SkipRipgrep
+)
 $ErrorActionPreference = 'Stop'
 if (-not $PackRoot) {
     $here = $PSScriptRoot
@@ -12,29 +18,72 @@ $fail = 0
 function Bad([string]$Message) { Write-Host "FAIL $Message"; $script:fail++ }
 function Good([string]$Message) { Write-Host "ok   $Message" }
 
-$rg = (Get-Command rg -ErrorAction SilentlyContinue).Source
-if (-not $rg) { Bad 'rg is not on PATH'; exit 1 }
+function Get-RelPath([string]$Full) {
+    $root = (Resolve-Path -LiteralPath $PackRoot).Path.TrimEnd('\')
+    $item = (Resolve-Path -LiteralPath $Full).Path
+    if (-not $item.StartsWith($root, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "outside pack: $Full"
+    }
+    return ($item.Substring($root.Length).TrimStart('\') -replace '\\', '/')
+}
 
 $needle = 'RTK is lossy and command/version dependent, not a universal 97% saving.'
 $canonRoot = Join-Path $PackRoot '_CANONICAL-SKILLS'
 $provRoot = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES'
-$canonHits = @(& $rg -n --fixed-strings --glob '!**/1-TAILORED-PROVIDER-TREES/**' $needle $canonRoot)
-if ($LASTEXITCODE -eq 0 -and $canonHits.Count -ge 1) { Good 'canonical skill text is searchable' }
-else { Bad 'canonical token-efficiency line was not found' }
+$canonFile = Join-Path $canonRoot 'token-efficiency\SKILL.md'
+if (Select-String -LiteralPath $canonFile -SimpleMatch -Pattern $needle -Quiet) {
+    Good 'canonical skill text is on disk'
+} else { Bad 'canonical token-efficiency line was not found' }
 
-$provHits = @(& $rg -n --fixed-strings $needle $provRoot 2>$null)
-if (-not $provHits -or $provHits.Count -eq 0) { Good 'generated skill copies are hidden from default search' }
+$canonRel = Get-RelPath $canonFile
+& git -C $PackRoot check-ignore -q --no-index -- $canonRel
+if ($LASTEXITCODE -eq 0) { Bad 'canonical skill is gitignored' }
+else { Good 'canonical skill stays searchable' }
+
+$textExt = @{ '.md' = $true; '.txt' = $true; '.py' = $true; '.ps1' = $true; '.json' = $true; '.yml' = $true; '.yaml' = $true }
+$provPaths = @(Get-ChildItem -LiteralPath $provRoot -Recurse -File | Where-Object { $textExt.ContainsKey($_.Extension.ToLowerInvariant()) } | ForEach-Object { $_.FullName })
+$provHits = @(Select-String -LiteralPath $provPaths -SimpleMatch -Pattern $needle | Where-Object { $_ })
+if ($provHits.Count -lt 5) { Bad ("expected the five generated copies on disk, found " + $provHits.Count) }
+else { Good ("found " + $provHits.Count + " generated copies on disk") }
+
+$rels = @($provHits | ForEach-Object { Get-RelPath $_.Path })
+# Do not pipe paths to git. Windows PowerShell writes a CR and quotes the
+# line, so check-ignore --stdin looks at a different path than the file.
+$visible = @()
+$matchedRule = $false
+foreach ($rel in $rels) {
+    $line = @(& git -C $PackRoot check-ignore -v --no-index -- $rel)
+    if ($LASTEXITCODE -eq 0 -and (($line -join "`n") -match 'COPY-TO-SKILLS-DIRECTORY/skills/')) {
+        $matchedRule = $true
+    } else { $visible += $rel }
+}
+if ($visible.Count -eq 0 -and $matchedRule) { Good 'generated skill copies match the gitignore rule' }
 else {
-    $sample = ($provHits | Select-Object -First 3) -join ' | '
-    Bad "generated skill copies still match: $sample"
+    $sample = ($visible | Select-Object -First 3) -join ' | '
+    Bad "generated skill copies are not ignored: $sample"
 }
 
-$profileRoot = Join-Path $provRoot 'Hermes\profiles'
-$profileHits = @(& $rg -n -i --fixed-strings sillytavern $profileRoot)
-$profileOk = $false
-foreach ($line in $profileHits) { if ($line -match 'README\.md') { $profileOk = $true } }
-if ($profileOk) { Good 'Hermes profile docs stay searchable' }
-else { Bad 'Hermes profiles/README.md was not found by default search' }
+$profileReadme = Join-Path $provRoot 'Hermes\profiles\README.md'
+$profileRel = Get-RelPath $profileReadme
+$profileHit = @(Select-String -LiteralPath $profileReadme -Pattern 'sillytavern' -SimpleMatch | Where-Object { $_ })
+& git -C $PackRoot check-ignore -q --no-index -- $profileRel
+if ($profileHit.Count -ge 1 -and $LASTEXITCODE -ne 0) { Good 'Hermes profile docs stay searchable' }
+else { Bad 'Hermes profiles/README.md was ignored or did not mention sillytavern' }
+
+$rg = $null
+if (-not $SkipRipgrep) { $rg = (Get-Command rg -ErrorAction SilentlyContinue).Source }
+if ($rg) {
+    $canonHits = @(& $rg -n --fixed-strings --glob '!**/1-TAILORED-PROVIDER-TREES/**' $needle $canonRoot)
+    if ($LASTEXITCODE -eq 0 -and $canonHits.Count -ge 1) { Good 'ripgrep finds the canonical skill' }
+    else { Bad 'ripgrep did not find the canonical token-efficiency line' }
+
+    $rgProv = @(& $rg -n --fixed-strings $needle $provRoot 2>$null)
+    if (-not $rgProv -or $rgProv.Count -eq 0) { Good 'ripgrep hides the generated skill copies' }
+    else {
+        $sample = ($rgProv | Select-Object -First 3) -join ' | '
+        Bad "ripgrep still matches generated copies: $sample"
+    }
+} else { Good 'ripgrep is not installed; gitignore proof stands in' }
 
 $probeDir = Join-Path $provRoot 'Claude\COPY-TO-SKILLS-DIRECTORY\skills\zz-search-collapse-probe'
 $probe = Join-Path $probeDir 'SKILL.md'

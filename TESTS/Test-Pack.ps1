@@ -312,9 +312,9 @@ if ($soulTxt) {
 & (Join-Path $PackRoot 'TESTS/Test-PreamblePreservation.ps1') -PackRoot $PackRoot
 
 $searchCollapse = Join-Path $PackRoot 'TESTS\Test-SearchCollapse.ps1'
-& (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $searchCollapse -PackRoot $PackRoot
-if ($LASTEXITCODE -ne 0) { Bad 'generated skill copies are still in default search' }
-else { Good 'generated skill copies stay out of default search' }
+$searchOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $searchCollapse -PackRoot $PackRoot 2>&1 | Out-String
+if ($searchOut -match 'SEARCH COLLAPSE GATE: PASS') { Good 'generated skill copies stay out of default search' }
+else { Bad ('search collapse gate failed:' + [Environment]::NewLine + $searchOut.Trim()) }
 
 $waitExternal = Join-Path $PackRoot 'TESTS\Test-WaitExternal.ps1'
 & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $waitExternal -PackRoot $PackRoot
