@@ -2114,6 +2114,47 @@ def test_preamble_is_plain_text_without_markers() -> None:
         )
 
 
+def test_free_model_routing_stays_off() -> None:
+    """A free auto-router is not a cheaper main model.
+
+    openrouter/free selects at random. A $0 account is 50 requests/day.
+    Cloudflare's free pool is neurons, not tokens. Neither becomes a default.
+    """
+    text = read(CANON / "token-efficiency" / "SKILL.md")
+    for needle in ("openrouter/free", "50 requests/day", "10,000 neurons", "not a retry"):
+        assert needle in text, "token-efficiency lost the free-tier limit: %s" % needle
+    assert "uabs budget" not in text
+    assert "Goblin Governor" not in text
+    assert "do not change models" in text.lower() or "Do not change models" in text
+
+
+def test_wired_preamble_prefix_is_stable() -> None:
+    """The wired SOUL + AIO block is the stable prompt prefix.
+
+    Install-UabsPreambleBlock writes soul, a CRLF blank line, then the AIO
+    contract. A timestamp, generated token, or an edit that does not update
+    this hash changes the bytes every provider caches.
+    """
+    soul = read(ROOT / "3-PREAMBLES" / "SOUL.md").strip()
+    aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
+    block = soul + "\r\n\r\n" + aio
+    digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
+    assert digest == "745af517238c06ac78decc495bb55ba8f7cdb0f79b2fba8aa8065376dbb61adb", (
+        "wired preamble prefix hash is %s; update this constant only in the "
+        "same change as an intentional SOUL or AIO edit" % digest
+    )
+    assert "<!--" not in block, "wired preamble contains an HTML comment marker"
+    assert "generated" not in block.lower(), "wired preamble contains a generated token"
+    assert not re.search(r"\d{4}-\d{2}-\d{2}", block), "wired preamble contains an ISO date"
+    common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
+    start = common.find("function Install-UabsPreambleBlock")
+    end = common.find("function Remove-UabsHermesForeignHarnessDirs")
+    body = common[start:end]
+    assert "$block = $soul + $nl + $nl + $aio" in body
+    assert "-Provider" not in body, "the preamble writer branches on provider"
+    assert "$nl = \"`r`n\"" in body, "the wired prefix newline is no longer CRLF"
+
+
 def test_bundle_forge_install_has_single_skill_writer() -> None:
     wrapper = read(ROOT / "TOOLS" / "Install-SkyrimForge.ps1")
     installer = read(ROOT / "INSTALL-AIO.ps1")
@@ -2588,6 +2629,8 @@ def main() -> int:
         test_hermes_openrouter_picker_uses_the_live_tool_catalog,
         test_hermes_receives_the_combined_soul_and_aio_contract,
         test_preamble_is_plain_text_without_markers,
+        test_wired_preamble_prefix_is_stable,
+        test_free_model_routing_stays_off,
         test_bundle_forge_install_has_single_skill_writer,
         test_forge_skill_has_one_canonical_source,
         test_forge_install_checked_commands_are_quiet_but_diagnostic,
@@ -4846,36 +4889,66 @@ def test_every_canonical_skill_reached_every_provider_tree() -> None:
       predates this check; failing on it would train people to ignore the
       contract.
 
-    Everything else must match, for all 164 skills across all five trees.
+    Every file under each skill directory must match, not only SKILL.md.
+    A stale reference still ships, and search used to return it five times.
     """
     providers = ["Claude", "Codex", "Grok", "Kimi", "Hermes"]
-    tag = re.compile(r"(?m)^\s*provider:\s*\S+\s*$\n?")
+    tag = re.compile(r"(?m)^\s*provider:\s*\S+\s*\n?")
+    json_tag = re.compile(r'"provider":\s*"[^"]*"')
+    text_ext = {".md", ".json", ".txt", ".yaml", ".yml", ".py", ".ps1"}
 
-    def norm(raw: bytes) -> str:
+    def norm(raw: bytes, name: str) -> str:
         text = raw.decode("utf-8").replace("\r\n", "\n")
-        return tag.sub("", text)
+        if name.endswith("SKILL.md"):
+            text = tag.sub("", text)
+        if name.upper().endswith("ERROR-REGISTRY.JSON"):
+            text = json_tag.sub('"provider": ""', text, count=1)
+        return text
 
     canon = sorted(CANON.glob("*/SKILL.md"))
     assert len(canon) >= 100, "canonical tree looks empty (%d skills)" % len(canon)
 
     drifted = []
     missing = []
-    for p in canon:
-        name = p.parent.name
-        expected = norm(p.read_bytes())
+    extra = []
+    for skill_dir in sorted(p for p in CANON.iterdir() if p.is_dir()):
+        files = [p for p in skill_dir.rglob("*") if p.is_file()]
         for prov in providers:
-            q = (ROOT / "1-TAILORED-PROVIDER-TREES" / prov /
-                 "COPY-TO-SKILLS-DIRECTORY" / "skills" / name / "SKILL.md")
-            if not q.is_file():
-                missing.append("%s/%s" % (prov, name))
-                continue
-            if norm(q.read_bytes()) != expected:
-                drifted.append("%s/%s" % (prov, name))
+            dest = (ROOT / "1-TAILORED-PROVIDER-TREES" / prov /
+                    "COPY-TO-SKILLS-DIRECTORY" / "skills" / skill_dir.name)
+            seen = set()
+            for src in files:
+                rel = src.relative_to(skill_dir).as_posix()
+                seen.add(rel)
+                copy = dest / rel
+                label = "%s/%s/%s" % (prov, skill_dir.name, rel)
+                if not copy.is_file():
+                    missing.append(label)
+                    continue
+                raw = src.read_bytes()
+                got = copy.read_bytes()
+                if src.suffix.lower() in text_ext:
+                    if norm(got, rel) != norm(raw, rel):
+                        drifted.append(label)
+                elif got != raw:
+                    drifted.append(label)
+            if dest.is_dir():
+                for copy in dest.rglob("*"):
+                    if not copy.is_file():
+                        continue
+                    rel = copy.relative_to(dest).as_posix()
+                    if rel not in seen:
+                        extra.append("%s/%s/%s" % (prov, skill_dir.name, rel))
 
     assert not missing, (
-        "%d canonical skill(s) never reached a provider tree: %s -- run "
+        "%d canonical skill file(s) never reached a provider tree: %s -- run "
         "`python TOOLS/fanout_providers.py _CANONICAL-SKILLS .`"
         % (len(missing), ", ".join(sorted(missing)[:5]))
+    )
+    assert not extra, (
+        "%d provider file(s) are not in canonical: %s -- run "
+        "`python TOOLS/fanout_providers.py _CANONICAL-SKILLS .`"
+        % (len(extra), ", ".join(sorted(extra)[:5]))
     )
     assert not drifted, (
         "%d provider copy(ies) differ from canonical in content: %s. Editing "

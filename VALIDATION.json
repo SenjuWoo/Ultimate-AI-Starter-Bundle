@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.35",
+  "version": "8.7.36",
   "generated": "2026-10-02",
-  "release_tag": "v8.7.35",
+  "release_tag": "v8.7.36",
   "canonical_skills": 172,
   "provider_trees": 5,
   "registry_entries": 172,
@@ -27,6 +27,6 @@
     "TESTS/Test-HermesNativeStderr.ps1",
     "TESTS/Test-TaskRecipes.ps1"
   ],
-  "runtime_status": "v8.7.35: executable task plans, scoped activation and user configuration preservation tested in disposable homes. Native Hermes phase profiles reuse cloning/config/rollback. RTK 0.51.0 fixed corpus/status and safe hooks verified; Ponytail 4.10.1 adapter/security regressions passed. Editor/gameplay/GPU and one-shot quality remain unverified; no audited Unreal editor MCP added.",
+  "runtime_status": "v8.7.36: default search skips generated skill copies while git still tracks them; full fanout parity and the wired preamble hash passed; Wait-External local exit codes and GitHub -WhatIf passed. openrouter/free is not a default route. Test-Pack exited 0 with PACK GATE: PASS, including search-collapse and external-wait. Release contract passed 140. Editor/gameplay/GPU remain unverified. GitHub CI was not watched live. No new MCP.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

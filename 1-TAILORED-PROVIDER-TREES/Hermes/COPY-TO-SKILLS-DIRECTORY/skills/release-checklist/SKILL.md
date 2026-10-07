@@ -102,8 +102,11 @@ Do not use "latest on main" as a proxy. Query workflow/check state for that
 **exact pushed SHA**. GitHub CLI examples:
 
     gh run list --commit "$SHA" --json databaseId,headSha,status,conclusion,workflowName
-    gh run watch <run-id> --exit-status
+    powershell -NoProfile -File TOOLS/Wait-External.ps1 -GitHubRun <run-id>
     gh api repos/{owner}/{repo}/commits/$SHA/check-runs
+
+`Wait-External.ps1` runs `gh run watch --compact --exit-status` and returns
+the failed-step log only when the run fails. It does not call a model.
 
 Wait through queued/in-progress states. Every required check must reach a
 terminal successful/skipped state according to branch policy. If any required

@@ -1,3 +1,7 @@
+## 8.7.36
+
+- Hide generated provider skill copies from default search and pin the wired preamble hash. Add Wait-External.ps1 so a CI or local wait returns one exit code and the failed-step log. Record why openrouter/free stays off the main route. 172 canonical skills total. No new MCP and no dependency pin change. [Details](docs/history/V8.7.36-CHANGELOG.md).
+
 ## 8.7.35
 
 - Add one shared, executable task-recipe map across all five providers: compose relevant skills, CLIs and scoped MCP profiles for games/mods, UI, assets, code, research and publication; preserve personal registrations and keep Windows desktop opt-in.

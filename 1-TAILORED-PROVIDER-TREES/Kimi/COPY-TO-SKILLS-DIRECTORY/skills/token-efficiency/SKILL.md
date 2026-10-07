@@ -17,8 +17,10 @@ Time spent waiting in a process does not itself generate model tokens, though
 tool notifications, hosted execution and later model calls may have costs.
 
 For GitHub releases, record the exact pushed SHA, discover its required runs,
-and use the existing CI watcher or `gh run watch <run-id> --exit-status`.
-Verify every required check succeeded on that SHA before publishing.
+and wait with `TOOLS/Wait-External.ps1 -GitHubRun <run-id>`. It runs
+`gh run watch <run-id> --compact --exit-status` and, on failure, fetches
+`gh run view <run-id> --log-failed` once. Verify every required check
+succeeded on that SHA before publishing.
 No runs, failed/cancelled runs, or a different SHA are not success.
 Respect the host's wait limits and keep the user informed without busy polling.
 
@@ -48,6 +50,11 @@ requests just to keep an otherwise unused cache warm.
   or billed tokens. Measure the current provider rather than quoting old totals.
 - Do not change models, auxiliary routing or providers merely to save tokens
   without the user's requested quality and configuration constraints.
+- Do not route the main model through `openrouter/free`. That router picks a
+  free model at random, which breaks a stable prompt prefix. A $0 OpenRouter
+  account is 50 requests/day and 20/minute. Cloudflare's free pool is
+  10,000 neurons/day and is not a token allowance. A 429 on a free auxiliary
+  is exhaustion, not a retry fan-out. Checked 2026-10-06.
 
 ## Batch and bound output
 

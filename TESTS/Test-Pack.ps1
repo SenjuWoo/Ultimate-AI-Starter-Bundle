@@ -311,6 +311,16 @@ if ($soulTxt) {
 
 & (Join-Path $PackRoot 'TESTS/Test-PreamblePreservation.ps1') -PackRoot $PackRoot
 
+$searchCollapse = Join-Path $PackRoot 'TESTS\Test-SearchCollapse.ps1'
+& (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $searchCollapse -PackRoot $PackRoot
+if ($LASTEXITCODE -ne 0) { Bad 'generated skill copies are still in default search' }
+else { Good 'generated skill copies stay out of default search' }
+
+$waitExternal = Join-Path $PackRoot 'TESTS\Test-WaitExternal.ps1'
+& (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $waitExternal -PackRoot $PackRoot
+if ($LASTEXITCODE -ne 0) { Bad 'external wait gate failed' }
+else { Good 'external waits return an exit code without a model' }
+
 Section '7b. No script reads a file with the ANSI codepage'
 # PS 5.1's Get-Content decodes with the ANSI codepage unless -Encoding is given,
 # so any read of a UTF-8 file that is later written back turns non-ASCII into

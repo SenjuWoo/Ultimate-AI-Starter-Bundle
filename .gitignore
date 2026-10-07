@@ -55,3 +55,9 @@ artifacts/
 # Written by TESTS/evidence-scenarios/check_fixtures.py when it proves scenario C
 # still fails. Output of running a fixture, not pack content.
 TESTS/evidence-scenarios/*/app.log
+
+# Generated skill bodies. They stay tracked so the installer and MANIFEST keep
+# them; default search skips them. A brand-new skill path is untracked AND
+# ignored, so stage it with git add -f. Modifications to already tracked
+# skill files still show up in git status.
+1-TAILORED-PROVIDER-TREES/*/COPY-TO-SKILLS-DIRECTORY/skills/

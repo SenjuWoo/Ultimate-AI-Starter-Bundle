@@ -1,0 +1,13 @@
+# codebase-memory scope for this pack repository.
+# Do not regenerate this file with TOOLS/Setup-CodebaseMemory-Index.ps1.
+# That writer is for a Skyrim asset tree, and it would replace this scope.
+#
+# Generated provider skill copies are byte-identical to _CANONICAL-SKILLS
+# except the provider tag. Index the canonical tree only.
+
+1-TAILORED-PROVIDER-TREES/*/COPY-TO-SKILLS-DIRECTORY/skills/
+
+artifacts/
+dist/
+__pycache__/
+BUNDLED-TOOLS/cache/

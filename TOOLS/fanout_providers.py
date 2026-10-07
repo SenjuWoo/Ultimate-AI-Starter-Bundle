@@ -99,6 +99,13 @@ def main():
                 note = '  (%d files withheld: %s)' % (skipped, held)
             print('  %-34s %-8s %4d files%s' % (family + '/' + prov, tag_of(prov), n, note))
     print('\n%d files written across provider trees' % total)
+    # The skills directory is gitignored so search does not read five copies.
+    # git add without -f silently drops a brand-new skill path.
+    staged = ' '.join(
+        '%s/%s/COPY-TO-SKILLS-DIRECTORY/skills' % (TAILORED, prov)
+        for prov in PROVIDERS)
+    print('new skill paths are gitignored; stage them with:')
+    print('  git add -f -- %s' % staged)
     if SCOPED:
         print('scoped skills (not fanned out to every provider): %s'
               % ', '.join('%s -> %s' % (k, '/'.join(sorted(v))) for k, v in SCOPED.items()))
