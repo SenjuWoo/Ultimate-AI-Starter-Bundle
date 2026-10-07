@@ -43,6 +43,7 @@ when_to_use: Use for operating contract for changing code, scripts, configuratio
 - Exercise failure paths and boundary cases.
 - Never claim a command ran unless its output was observed.
 - Report remaining risks explicitly.
+- After a push or a dependency update, load `ci-convergence` and run `TOOLS/Get-GitHubFlags.ps1` before calling the push done. An open flag on a file this push changed is part of the change. `flags=unknown` is not a clean repository. Do not dismiss an alert. Do not print a secret.
 
 ## Context efficiency
 

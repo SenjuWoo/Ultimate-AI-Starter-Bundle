@@ -1,3 +1,7 @@
+## 8.7.37
+
+- After a push or dependency update, query open Dependabot, code-scanning, secret-scanning, and code-quality flags. A failed query is not a clean repository, and a 404 on code quality is not zero findings. Secret output is the type and alert URL only. 172 canonical skills. No new MCP and no dependency pin change. [Details](docs/history/V8.7.37-CHANGELOG.md).
+
 ## 8.7.36
 
 - Hide generated provider skill copies from default search and pin the wired preamble hash. Add Wait-External.ps1 so a CI or local wait returns one exit code and the failed-step log. Record why openrouter/free stays off the main route. 172 canonical skills total. No new MCP and no dependency pin change. [Details](docs/history/V8.7.36-CHANGELOG.md).

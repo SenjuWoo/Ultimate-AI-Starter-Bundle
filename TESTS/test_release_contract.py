@@ -266,6 +266,36 @@ def test_release_checklist_exact_sha_contract() -> None:
     assert "--branch main --limit 1" not in text, "release checklist still polls latest-on-main instead of the pushed SHA"
 
 
+def test_github_flags_are_queried_after_push() -> None:
+    """A green workflow is not a clean security tab.
+
+    Code scanning and code quality can open after required checks are already
+    green. The etiquette has to query them, and a 404 must not count as zero.
+    """
+    convergence = read(CANON / "ci-convergence" / "SKILL.md").lower()
+    discipline = read(CANON / "coding-discipline" / "SKILL.md").lower()
+    release = read(CANON / "release-checklist" / "SKILL.md").lower()
+    fleet = read(CANON / "github-fleet-maintenance" / "SKILL.md").lower()
+    probe = read(ROOT / "TOOLS" / "Get-GitHubFlags.ps1")
+    for text in (convergence, discipline, release, fleet):
+        assert "get-githubflags.ps1" in text, "push etiquette does not run the flag probe"
+    assert "flags=unknown" in convergence, "a failed flag query can still be treated as clean"
+    assert "do not dismiss" in convergence, "open flags can be dismissed instead of fixed"
+    assert "code_quality=unavailable" in convergence, "a missing code-quality API can count as zero findings"
+    assert "do not print" in convergence and "secret" in convergence
+    lowered = probe.lower()
+    for endpoint in (
+        "dependabot/alerts?state=open",
+        "code-scanning/alerts?state=open",
+        "secret-scanning/alerts?state=open",
+        "code-quality/setup",
+        "code-quality/findings?state=open",
+    ):
+        assert endpoint in lowered, "flag probe does not name " + endpoint
+    assert not re.search(r"\.secret\b", probe), "flag probe selects secret material"
+    assert "do not add osv-scanner, gitleaks, or zizmor" in convergence
+
+
 def test_no_skill_restates_the_pack_version() -> None:
     """A skill that restates the release number is a drift point, not a fact.
 
@@ -2561,6 +2591,7 @@ def main() -> int:
         test_documented_skill_counts,
         test_bootstrap,
         test_release_checklist_exact_sha_contract,
+        test_github_flags_are_queried_after_push,
         test_provider_bootstrap_contract,
         test_gate_and_remote_fail_closed,
         test_hermes_cost_contract,

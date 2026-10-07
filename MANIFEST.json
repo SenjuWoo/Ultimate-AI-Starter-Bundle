@@ -1701,8 +1701,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 1133,
-  "sha256": "ee97f8a8628cdf067eb40ac164adb6c6f5b794efd8a623463cf1825a838d84bd"
+  "size": 2781,
+  "sha256": "5c2e61681d640d36fe0447c79d479700ac0bac635d411b608e40342d185f089b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -1961,8 +1961,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
-  "size": 3958,
-  "sha256": "91501af2c4546b8ab4bbe145eadc93b7a2c0b9901827cb88c642f51cc970a173"
+  "size": 4240,
+  "sha256": "604a9d200fd24ce8a2ac6b7bceba374cfa552a7a2b51b459fe8a5cfa57de103d"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/compatibility-matrix/SKILL.md",
@@ -2441,13 +2441,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 7959,
-  "sha256": "525f51df9e0cc82994e4272d9847c912472d19e903802d3945a2509406e8784a"
+  "size": 8708,
+  "sha256": "5b0ef0ccefb8108f023e9a6cac3bd5f311aff095e9a7d48a827fa0b752f9025a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 6753,
-  "sha256": "11a40a21396ea4e00f8f8f605d3a638d8a266abb64dbcb6bcc14439ec50d9d52"
+  "size": 7296,
+  "sha256": "d7ee473b55eed8ec51967a91350c24a015957c838cc23b698abbab5eb433130f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -6326,8 +6326,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 7977,
-  "sha256": "b82e8e948be234b4b22134ad9b537b480460d5a98882317281dac130b282d83b"
+  "size": 8409,
+  "sha256": "0bc4ac0f01dce2bb48b69e10c456d667b015450522388f35510afe67c2a0c2e2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -8071,8 +8071,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 1133,
-  "sha256": "ee97f8a8628cdf067eb40ac164adb6c6f5b794efd8a623463cf1825a838d84bd"
+  "size": 2781,
+  "sha256": "5c2e61681d640d36fe0447c79d479700ac0bac635d411b608e40342d185f089b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -8331,8 +8331,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
-  "size": 3957,
-  "sha256": "fc6af6975d14cb9a9eedf826882fa72a320c1c407928aff3ef83570e1edbb918"
+  "size": 4239,
+  "sha256": "136a3035ff2a79fb2304b4f8536aedf025a0c83b5e84c4f7b321802aaf9a45e4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/compatibility-matrix/SKILL.md",
@@ -8811,13 +8811,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 7959,
-  "sha256": "525f51df9e0cc82994e4272d9847c912472d19e903802d3945a2509406e8784a"
+  "size": 8708,
+  "sha256": "5b0ef0ccefb8108f023e9a6cac3bd5f311aff095e9a7d48a827fa0b752f9025a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 6753,
-  "sha256": "11a40a21396ea4e00f8f8f605d3a638d8a266abb64dbcb6bcc14439ec50d9d52"
+  "size": 7296,
+  "sha256": "d7ee473b55eed8ec51967a91350c24a015957c838cc23b698abbab5eb433130f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -12696,8 +12696,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 7977,
-  "sha256": "b82e8e948be234b4b22134ad9b537b480460d5a98882317281dac130b282d83b"
+  "size": 8409,
+  "sha256": "0bc4ac0f01dce2bb48b69e10c456d667b015450522388f35510afe67c2a0c2e2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -14426,8 +14426,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 1133,
-  "sha256": "ee97f8a8628cdf067eb40ac164adb6c6f5b794efd8a623463cf1825a838d84bd"
+  "size": 2781,
+  "sha256": "5c2e61681d640d36fe0447c79d479700ac0bac635d411b608e40342d185f089b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -14686,8 +14686,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
-  "size": 3956,
-  "sha256": "9f94f8023ec8e49e88831d3cb3a55ad4aaf879243eb3a065a10efda5131818b9"
+  "size": 4238,
+  "sha256": "8bc01b14c055843af5ddb47ede9de2a4fa23209636f1e631bc39be4a9e6d3c24"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/compatibility-matrix/SKILL.md",
@@ -15166,13 +15166,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 7959,
-  "sha256": "525f51df9e0cc82994e4272d9847c912472d19e903802d3945a2509406e8784a"
+  "size": 8708,
+  "sha256": "5b0ef0ccefb8108f023e9a6cac3bd5f311aff095e9a7d48a827fa0b752f9025a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 6753,
-  "sha256": "11a40a21396ea4e00f8f8f605d3a638d8a266abb64dbcb6bcc14439ec50d9d52"
+  "size": 7296,
+  "sha256": "d7ee473b55eed8ec51967a91350c24a015957c838cc23b698abbab5eb433130f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -19051,8 +19051,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 7977,
-  "sha256": "b82e8e948be234b4b22134ad9b537b480460d5a98882317281dac130b282d83b"
+  "size": 8409,
+  "sha256": "0bc4ac0f01dce2bb48b69e10c456d667b015450522388f35510afe67c2a0c2e2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -20781,8 +20781,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 1133,
-  "sha256": "ee97f8a8628cdf067eb40ac164adb6c6f5b794efd8a623463cf1825a838d84bd"
+  "size": 2781,
+  "sha256": "5c2e61681d640d36fe0447c79d479700ac0bac635d411b608e40342d185f089b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -21041,8 +21041,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
-  "size": 3958,
-  "sha256": "fb45eab1c5e3f4c8758e9b816011150362e0c236f0bf3ae134cf39f7036f30ad"
+  "size": 4240,
+  "sha256": "b9c88b457997fe99bb6141fc361691cca4470cebdaf4887a0d00069ec045ae99"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/compatibility-matrix/SKILL.md",
@@ -21521,13 +21521,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 7959,
-  "sha256": "525f51df9e0cc82994e4272d9847c912472d19e903802d3945a2509406e8784a"
+  "size": 8708,
+  "sha256": "5b0ef0ccefb8108f023e9a6cac3bd5f311aff095e9a7d48a827fa0b752f9025a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 6753,
-  "sha256": "11a40a21396ea4e00f8f8f605d3a638d8a266abb64dbcb6bcc14439ec50d9d52"
+  "size": 7296,
+  "sha256": "d7ee473b55eed8ec51967a91350c24a015957c838cc23b698abbab5eb433130f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -25406,8 +25406,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 7977,
-  "sha256": "b82e8e948be234b4b22134ad9b537b480460d5a98882317281dac130b282d83b"
+  "size": 8409,
+  "sha256": "0bc4ac0f01dce2bb48b69e10c456d667b015450522388f35510afe67c2a0c2e2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -27211,8 +27211,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 1133,
-  "sha256": "ee97f8a8628cdf067eb40ac164adb6c6f5b794efd8a623463cf1825a838d84bd"
+  "size": 2781,
+  "sha256": "5c2e61681d640d36fe0447c79d479700ac0bac635d411b608e40342d185f089b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -27471,8 +27471,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
-  "size": 3956,
-  "sha256": "8e88e82ad7700e69a967a908f232d6c1fd5798c0485b855d405b4422392d96c5"
+  "size": 4238,
+  "sha256": "e94985afdfb2b60926ac6fee39f3af155d427950b269ef6917255b8f2b62b16e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/compatibility-matrix/SKILL.md",
@@ -27951,13 +27951,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 7959,
-  "sha256": "525f51df9e0cc82994e4272d9847c912472d19e903802d3945a2509406e8784a"
+  "size": 8708,
+  "sha256": "5b0ef0ccefb8108f023e9a6cac3bd5f311aff095e9a7d48a827fa0b752f9025a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 6753,
-  "sha256": "11a40a21396ea4e00f8f8f605d3a638d8a266abb64dbcb6bcc14439ec50d9d52"
+  "size": 7296,
+  "sha256": "d7ee473b55eed8ec51967a91350c24a015957c838cc23b698abbab5eb433130f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -31836,8 +31836,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 7977,
-  "sha256": "b82e8e948be234b4b22134ad9b537b480460d5a98882317281dac130b282d83b"
+  "size": 8409,
+  "sha256": "0bc4ac0f01dce2bb48b69e10c456d667b015450522388f35510afe67c2a0c2e2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -33357,17 +33357,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 51190,
-  "sha256": "52d54a03b0e21daf487cad34be1b695a05178eeff5c5cfe70c61c1871942a0cf"
+  "sha256": "5cecd1c0e05d0f43917678702018b0048973458dd5412e79aba7101735b07833"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1444,
-  "sha256": "0c7c84fe372ae37d698658c51cbd78530a3675c5233e20aa303778c277e996de"
+  "sha256": "9987223c9813e312a870bbe384b22e5b1979657a2950867e1d33718225c71250"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 32028,
-  "sha256": "ace46f173ee434ef13ddb77d0280a6883eeae1da80bfb277e50dc2301a13a554"
+  "sha256": "d063cab38e2772047ea01eedf0cbf5b4d153140bab95695ffec68cb145eb8c52"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -36721,8 +36721,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 177022,
-  "sha256": "831a100e17e880da94fa6a7e90dc980c37c05248fcac0c1ed2795ce6eae0ea42"
+  "size": 177395,
+  "sha256": "88e0cdd4c03f00c9473ae025c472102e4a4102a6b069043057ff7d1da48aadcf"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -36797,7 +36797,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 141338,
-  "sha256": "67aaae6aa7e2e67fa934b9622c9fe6c99c480d8554b3f7e728567ecfeebc4f9d"
+  "sha256": "f1c911da3e4174bda8ff1bb4abfb22d1c4d443dec568c72816f5ffb32dc7dda5"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -36846,23 +36846,23 @@
  },
  {
   "path": "README.md",
-  "size": 46164,
-  "sha256": "08a2a0d6e5d96d004dad3f1010af74ef7d51bb6561dfa4f765de5134e3ac46aa"
+  "size": 46144,
+  "sha256": "203e56f13aaddb2aa511adccc80c5b7fb3f71250250e90888bc7977cd2942085"
  },
  {
   "path": "SECURITY.md",
-  "size": 324,
-  "sha256": "558220058c7e62f5888560af913dea79fae07b869c88593b33ad3ff3a8c379ba"
+  "size": 822,
+  "sha256": "e06eeea7538d2268fdd493cd3f62636c3facc0631a99190e6c62962509f51e99"
  },
  {
   "path": "START-HERE.bat",
   "size": 730,
-  "sha256": "6070b39a2f61428d98e54f6cbb2ed686f71e1828f18638036a8a7f928e94c582"
+  "sha256": "1dba6fb881fc5c0d7580f83710901e1e6d0a82dfacb9223a7490cbd82ec7e1c1"
  },
  {
   "path": "START-HERE.txt",
   "size": 10311,
-  "sha256": "5ff6acffd0622d3e7361df81795f5561e99b8daa6994e2e7b0567800e3ebb065"
+  "sha256": "0618402799314d238340804d143b5d7e40f74bd22848ae80813c6d59d598701d"
  },
  {
   "path": "TESTS/Test-CodexHookRetirement.ps1",
@@ -36873,6 +36873,11 @@
   "path": "TESTS/Test-ForgeRootResolution.ps1",
   "size": 8643,
   "sha256": "1a6cf12c270522c478336e3c101e797ead219fd88b300bea5d3272e208d622d3"
+ },
+ {
+  "path": "TESTS/Test-GitHubFlags.ps1",
+  "size": 1594,
+  "sha256": "20296198877d7671d3377c7bd4ac5a989218c7396b21e59107c79ce82948d031"
  },
  {
   "path": "TESTS/Test-GrokHookRepair.ps1",
@@ -36901,8 +36906,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 55896,
-  "sha256": "80bd3cc448884389c7f2d3c8fb37150cad3273ef1ada814bada6cb8806f49a6b"
+  "size": 56318,
+  "sha256": "d6e5057f441ad591cec33ae647a83a9393b4c8d336dc93c612052c7f19fb623e"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -37121,8 +37126,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 303330,
-  "sha256": "30cfad9caf0e1220456387b80381d17c885dc428d5ec2f909e2d57e178a25d58"
+  "size": 305004,
+  "sha256": "2c11a69229642905f6f40cc129db263b907d571cbe2b34604dbb324f9b690372"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -37173,6 +37178,11 @@
   "path": "TOOLS/Fix-Grok-Codebase-Memory-Direct.ps1",
   "size": 4401,
   "sha256": "06600724855125fbabfb356251fe09037220e740f60bb28d268eaeac14ec5b7c"
+ },
+ {
+  "path": "TOOLS/Get-GitHubFlags.ps1",
+  "size": 7225,
+  "sha256": "a6c3a4805e3562322b84343557511ddf8f712fdda7639ca5fe2226f6398058ee"
  },
  {
   "path": "TOOLS/Install-Completeness-Gate.ps1",
@@ -37426,8 +37436,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 1808,
-  "sha256": "c700c92c94902658e353a849bdc392d575a018d3de7967c0b104c4d369c14504"
+  "size": 1755,
+  "sha256": "e8d4430b4a4c6e839212c033dd09db5302318a2a68bd2c0f394523f215880f09"
  },
  {
   "path": "VALIDATION.md",
@@ -37437,7 +37447,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "6123924c0027fa09a3647f67ebb890bd527a67d6062c2b4592e513fb7a283a48"
+  "sha256": "15a40c2c6c4af1ad21019e52ccf306c69e7eaabd700730df43ca6b234986a794"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -37701,8 +37711,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/ci-convergence/SKILL.md",
-  "size": 1133,
-  "sha256": "ee97f8a8628cdf067eb40ac164adb6c6f5b794efd8a623463cf1825a838d84bd"
+  "size": 2781,
+  "sha256": "5c2e61681d640d36fe0447c79d479700ac0bac635d411b608e40342d185f089b"
  },
  {
   "path": "_CANONICAL-SKILLS/code-review-skill/.gitignore",
@@ -37961,8 +37971,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/coding-discipline/SKILL.md",
-  "size": 3958,
-  "sha256": "91501af2c4546b8ab4bbe145eadc93b7a2c0b9901827cb88c642f51cc970a173"
+  "size": 4240,
+  "sha256": "604a9d200fd24ce8a2ac6b7bceba374cfa552a7a2b51b459fe8a5cfa57de103d"
  },
  {
   "path": "_CANONICAL-SKILLS/compatibility-matrix/SKILL.md",
@@ -38441,13 +38451,13 @@
  },
  {
   "path": "_CANONICAL-SKILLS/github-fleet-maintenance/SKILL.md",
-  "size": 7959,
-  "sha256": "525f51df9e0cc82994e4272d9847c912472d19e903802d3945a2509406e8784a"
+  "size": 8708,
+  "sha256": "5b0ef0ccefb8108f023e9a6cac3bd5f311aff095e9a7d48a827fa0b752f9025a"
  },
  {
   "path": "_CANONICAL-SKILLS/github-fleet-maintenance/references/repository-completion.md",
-  "size": 6753,
-  "sha256": "11a40a21396ea4e00f8f8f605d3a638d8a266abb64dbcb6bcc14439ec50d9d52"
+  "size": 7296,
+  "sha256": "d7ee473b55eed8ec51967a91350c24a015957c838cc23b698abbab5eb433130f"
  },
  {
   "path": "_CANONICAL-SKILLS/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -42326,8 +42336,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/SKILL.md",
-  "size": 7977,
-  "sha256": "b82e8e948be234b4b22134ad9b537b480460d5a98882317281dac130b282d83b"
+  "size": 8409,
+  "sha256": "0bc4ac0f01dce2bb48b69e10c456d667b015450522388f35510afe67c2a0c2e2"
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -44408,6 +44418,11 @@
   "path": "docs/history/V8.7.36-CHANGELOG.md",
   "size": 1825,
   "sha256": "6416ee7030f601f603d69a8f710757bd6c3e574f722268d23413f4aea66762e5"
+ },
+ {
+  "path": "docs/history/V8.7.37-CHANGELOG.md",
+  "size": 1670,
+  "sha256": "a91d72637ab179717f6e08c63972581cb5f3d9bafa415026a385623ac0c04189"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",

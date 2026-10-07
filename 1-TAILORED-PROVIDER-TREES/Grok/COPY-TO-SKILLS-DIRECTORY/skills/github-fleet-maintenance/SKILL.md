@@ -48,7 +48,9 @@ Some of the user's repos (SkyrimForge, Ultimate-AI-Starter-Bundle) gate tracked 
 
 ## Security alerts cleanup
 
-Sweep all three kinds: `repos/{o}/{r}/dependabot/alerts?state=open`, `/code-scanning/alerts?state=open`, `/secret-scanning/alerts?state=open`. Code-scanning location fields live at `.most_recent_instance.location.{path,start_line}` (shortcut fields return null on list endpoints).
+For one repository, run `TOOLS/Get-GitHubFlags.ps1`. It prints allowlisted fields for open Dependabot, code-scanning, and secret-scanning alerts, plus code-quality setup and findings. A secret row is number, `secret_type`, and url. `code_quality=unavailable` (403 or 404) is not an empty clean scan. A failed query is `flags=unknown`, not zero. Do not dismiss an alert from this probe.
+
+A fleet pass that does not use the script still sweeps `repos/{o}/{r}/dependabot/alerts?state=open`, `/code-scanning/alerts?state=open`, and `/secret-scanning/alerts?state=open`, and also `GET /repos/{o}/{r}/code-quality/findings?state=open`. Project the same allowlist. Code-scanning location fields live at `.most_recent_instance.location.{path,start_line}` (shortcut fields return null on list endpoints). Never print a secret body. Do not PATCH code quality, validity checks, or non-provider patterns on for a personal public repository: code quality returned 404 here on 2026-10-07, and the other two need organization Secret Protection.
 
 **ReDoS in PowerShell string regexes (CodeQL py/redos)** — vulnerable shape `` r'"(?:`.|[^"\r\n])*"' ``: backtick matches BOTH alternation branches → exponential backtracking. Correct fix makes branches DISJOINT by excluding the backtick from the class: `` r'"(?:[^"`\r\n]|`.)*"' ``. Two failed shortcuts to never repeat:
 1. Reordering alternation alone is NOT enough — `` [^"\r\n] `` still admits the backtick; CodeQL re-flags and it stays exponential on unterminated strings.

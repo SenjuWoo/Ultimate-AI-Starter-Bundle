@@ -114,6 +114,13 @@ check fails, inspect its job/log, fix the root cause, commit and push a NEW SHA,
 and restart this section from that new SHA. Never tag, build a release, or end
 the release task while the chosen SHA is pending or red.
 
+Then run `TOOLS/Get-GitHubFlags.ps1` on that same repository. Required checks
+do not include security or quality flags, and those flags can open after the
+workflow is green. `flags=open` or `flags=unknown` blocks the tag the same way
+a red check does. Follow `ci-convergence`: fix a flag on a file this push
+changed, report one outside the push, and do not dismiss either. A failed
+query is not zero alerts. Do not print a secret.
+
 ## 6. Tag and build artifacts from the GREEN commit
 
     git tag -a vX.Y.Z -m '<summary>'

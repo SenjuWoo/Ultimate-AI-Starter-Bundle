@@ -17,6 +17,7 @@ Reuse existing permissions and prior approval. Prepare implementation, tests, do
 | CI | Real build/test/lint commands for the actual stack on push and pull request; relevant supported OS coverage | All required checks completed successfully on the exact pushed SHA |
 | Dependencies | Dependency graph plus Dependabot alerts, security updates, and version-update configuration for actual manifests/directories including GitHub Actions | Read settings independently; a dependabot.yml file proves only version-update configuration |
 | Code scanning | CodeQL default setup for supported languages, or an existing justified advanced setup / suitable scanner | Read setup state and a successful completed analysis of the relevant commit; enabled alone does not prove analysis |
+| Code quality | Open findings from `GET /repos/{owner}/{repo}/code-quality/findings?state=open` when the repository can use the feature | 403 and 404 are unavailable, not zero findings. Do not enable Code Quality when that spends Actions minutes or needs a paid plan |
 | Secret protection | Secret scanning and push protection where supported and authorized | Read their reported states; never print raw secret-alert responses or credentials |
 | Vulnerability reporting | SECURITY.md with supported versions and a real reporting route; private vulnerability reporting where available | Reporting endpoint is enabled and the policy points to it; no invented email address |
 | Release | Versioned usable assets, release notes, checksums; source-only is appropriate only for source-delivered projects | Tag resolves to the tested SHA; download each published asset, require nonempty bytes and matching SHA-256 |
@@ -44,6 +45,9 @@ gh api repos/OWNER/REPO/vulnerability-alerts --silent
 gh api repos/OWNER/REPO/automated-security-fixes
 gh api repos/OWNER/REPO/private-vulnerability-reporting
 gh api repos/OWNER/REPO/code-scanning/default-setup
+gh api -H "X-GitHub-Api-Version: 2026-03-10" repos/OWNER/REPO/code-quality/setup
+gh api -H "X-GitHub-Api-Version: 2026-03-10" "repos/OWNER/REPO/code-quality/findings?state=open"
+powershell -NoProfile -ExecutionPolicy Bypass -File TOOLS/Get-GitHubFlags.ps1 -Repo OWNER/REPO
 gh run list --repo OWNER/REPO --commit SHA --json headSha,status,conclusion,workflowName
 gh api repos/OWNER/REPO/commits/SHA/check-runs --paginate
 ```

@@ -321,6 +321,11 @@ $waitExternal = Join-Path $PackRoot 'TESTS\Test-WaitExternal.ps1'
 if ($LASTEXITCODE -ne 0) { Bad 'external wait gate failed' }
 else { Good 'external waits return an exit code without a model' }
 
+$githubFlags = Join-Path $PackRoot 'TESTS\Test-GitHubFlags.ps1'
+$flagsOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $githubFlags -PackRoot $PackRoot 2>&1 | Out-String
+if ($flagsOut -match 'GITHUB FLAGS GATE: PASS') { Good 'github flag probe stays local and prints no secrets' }
+else { Bad ('github flag gate failed:' + [Environment]::NewLine + $flagsOut.Trim()) }
+
 Section '7b. No script reads a file with the ANSI codepage'
 # PS 5.1's Get-Content decodes with the ANSI codepage unless -Encoding is given,
 # so any read of a UTF-8 file that is later written back turns non-ASCII into
