@@ -2,7 +2,7 @@
 
 - Active version: 5.2.0
 - Parent: v5.1.5 at 1e9f645
-- Authoritative owner: `https://github.com/ShugokiFable/SkyrimForge`, branch
+- Authoritative owner: `https://github.com/SenjuWoo/SkyrimForge`, branch
   `main`
 - Preserved installed releases: `Skyrim-Forge-5.1.3`, `Skyrim-Forge-5.1.4`
 - 5.1.5 MCP symptom: Claude Code 2026-07-28 listed Forge tools then rejected

@@ -1,5 +1,5 @@
 {
-  "$id": "https://github.com/ShugokiFable/skyrim-forge/blob/main/schemas/nexus-publication-plan.schema.json",
+  "$id": "https://github.com/SenjuWoo/skyrim-forge/blob/main/schemas/nexus-publication-plan.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {

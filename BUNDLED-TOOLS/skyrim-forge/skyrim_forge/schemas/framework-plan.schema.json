@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/ShugokiFable/skyrim-forge/blob/main/schemas/framework-plan.schema.json",
+  "$id": "https://github.com/SenjuWoo/skyrim-forge/blob/main/schemas/framework-plan.schema.json",
   "title": "Skyrim Forge Framework Plan",
   "type": "object",
   "additionalProperties": false,

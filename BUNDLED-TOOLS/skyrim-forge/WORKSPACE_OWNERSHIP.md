@@ -1,7 +1,7 @@
 # Workspace ownership
 
 - Product: Skyrim Forge
-- Authoritative repository: `https://github.com/ShugokiFable/SkyrimForge`
+- Authoritative repository: `https://github.com/SenjuWoo/SkyrimForge`
 - Branch: `main`
 - Parent: tag `v5.1.5`, commit `1e9f645`
 - Active version: `5.2.0`

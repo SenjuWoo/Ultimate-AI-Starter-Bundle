@@ -91,7 +91,7 @@ Because the contract is CSS selectors rather than a schema, a wrong class name
 returns HTTP 200 with zero results and no error anywhere. Any implementation
 needs a test that parses its own output the same way the extension does.
 
-Reference implementation: <https://github.com/ShugokiFable/SillyTavern-LocalSearch>
+Reference implementation: <https://github.com/SenjuWoo/SillyTavern-LocalSearch>
 
 If the model also serves embeddings, SillyTavern's **Vectors** extension can use
 the same endpoint and the same non-secret key for local RAG.

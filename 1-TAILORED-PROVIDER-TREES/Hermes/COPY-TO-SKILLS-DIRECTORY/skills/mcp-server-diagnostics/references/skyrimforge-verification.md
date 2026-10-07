@@ -6,7 +6,7 @@ NOT a git repo**. The repo is source of truth.
 
 ## Verify local install matches the release tag
 ```bash
-cd "$TMP" && git clone --quiet https://github.com/ShugokiFable/SkyrimForge.git clone
+cd "$TMP" && git clone --quiet https://github.com/SenjuWoo/SkyrimForge.git clone
 cd clone
 git rev-parse main v5.1.6                # same sha = tag cut at main tip
 git diff --stat main v5.1.6 | tail -1    # empty = identical trees

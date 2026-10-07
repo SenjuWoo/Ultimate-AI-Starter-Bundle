@@ -5031,8 +5031,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/references/sillytavern.md",
-  "size": 4043,
-  "sha256": "f91f450eb404e4988eb66d723a4b9d8e9ed5b31bafa25a6d12fb4907eedb327f"
+  "size": 4039,
+  "sha256": "7daa886203011d000c8e9547709e4566fe46de7d3243be8ac4a19569b00f8f59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/mantella-config/SKILL.md",
@@ -5091,8 +5091,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/skyrimforge-verification.md",
-  "size": 3962,
-  "sha256": "2bc152187789d50b2b678b1ee9ea9c8e9ef0d59712551a5ae56254f67d865a7f"
+  "size": 3958,
+  "sha256": "a55a10c689ea797ba25cfc8aab24780ee4595493a838532831c804bfee73bfde"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/migration-rollback/SKILL.md",
@@ -11401,8 +11401,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/references/sillytavern.md",
-  "size": 4043,
-  "sha256": "f91f450eb404e4988eb66d723a4b9d8e9ed5b31bafa25a6d12fb4907eedb327f"
+  "size": 4039,
+  "sha256": "7daa886203011d000c8e9547709e4566fe46de7d3243be8ac4a19569b00f8f59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/mantella-config/SKILL.md",
@@ -11461,8 +11461,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/skyrimforge-verification.md",
-  "size": 3962,
-  "sha256": "2bc152187789d50b2b678b1ee9ea9c8e9ef0d59712551a5ae56254f67d865a7f"
+  "size": 3958,
+  "sha256": "a55a10c689ea797ba25cfc8aab24780ee4595493a838532831c804bfee73bfde"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/migration-rollback/SKILL.md",
@@ -17756,8 +17756,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/references/sillytavern.md",
-  "size": 4043,
-  "sha256": "f91f450eb404e4988eb66d723a4b9d8e9ed5b31bafa25a6d12fb4907eedb327f"
+  "size": 4039,
+  "sha256": "7daa886203011d000c8e9547709e4566fe46de7d3243be8ac4a19569b00f8f59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/mantella-config/SKILL.md",
@@ -17816,8 +17816,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/skyrimforge-verification.md",
-  "size": 3962,
-  "sha256": "2bc152187789d50b2b678b1ee9ea9c8e9ef0d59712551a5ae56254f67d865a7f"
+  "size": 3958,
+  "sha256": "a55a10c689ea797ba25cfc8aab24780ee4595493a838532831c804bfee73bfde"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/migration-rollback/SKILL.md",
@@ -24111,8 +24111,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/references/sillytavern.md",
-  "size": 4043,
-  "sha256": "f91f450eb404e4988eb66d723a4b9d8e9ed5b31bafa25a6d12fb4907eedb327f"
+  "size": 4039,
+  "sha256": "7daa886203011d000c8e9547709e4566fe46de7d3243be8ac4a19569b00f8f59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/mantella-config/SKILL.md",
@@ -24171,8 +24171,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/skyrimforge-verification.md",
-  "size": 3962,
-  "sha256": "2bc152187789d50b2b678b1ee9ea9c8e9ef0d59712551a5ae56254f67d865a7f"
+  "size": 3958,
+  "sha256": "a55a10c689ea797ba25cfc8aab24780ee4595493a838532831c804bfee73bfde"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/migration-rollback/SKILL.md",
@@ -30541,8 +30541,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/local-model-ops/references/sillytavern.md",
-  "size": 4043,
-  "sha256": "f91f450eb404e4988eb66d723a4b9d8e9ed5b31bafa25a6d12fb4907eedb327f"
+  "size": 4039,
+  "sha256": "7daa886203011d000c8e9547709e4566fe46de7d3243be8ac4a19569b00f8f59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/mantella-config/SKILL.md",
@@ -30601,8 +30601,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/skyrimforge-verification.md",
-  "size": 3962,
-  "sha256": "2bc152187789d50b2b678b1ee9ea9c8e9ef0d59712551a5ae56254f67d865a7f"
+  "size": 3958,
+  "sha256": "a55a10c689ea797ba25cfc8aab24780ee4595493a838532831c804bfee73bfde"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/migration-rollback/SKILL.md",
@@ -35626,8 +35626,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/STATE.md",
-  "size": 2310,
-  "sha256": "4e3e90cd06988e160d0cad527726b03d58da1ae3532c8a2badb5fcb7dac33167"
+  "size": 2306,
+  "sha256": "05ec5a07c13fef0ab7c45c395e46c83c5878aaf23c9c4e7e7dff25eae6e57336"
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/Skyrim Forge GUI.bat",
@@ -35661,8 +35661,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/WORKSPACE_OWNERSHIP.md",
-  "size": 725,
-  "sha256": "e38f928c8b66b1ba52093e3805a15b84b1792321bf3285e9981f1ac907ae18e9"
+  "size": 721,
+  "sha256": "5997c2b6218856e2b2d69ae97b0578ce39cddd2aee60a800e5691a8a263b6bf5"
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/config.example.toml",
@@ -35986,8 +35986,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/schemas/framework-plan.schema.json",
-  "size": 10830,
-  "sha256": "db6f4ca4f4cce819949d5c0d580a62f04e19c59904568225045dc540c333ed4b"
+  "size": 10826,
+  "sha256": "072ad8869d38bac9aa3d0af32b1ab278fe0ae426fd4324ab4c150ed609f2eff9"
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/schemas/native-plugin-plan.schema.json",
@@ -35996,8 +35996,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/schemas/nexus-publication-plan.schema.json",
-  "size": 27473,
-  "sha256": "413a63f0b2ec7faf4b393697dfd92518b4ac965d2d7b34eb8245269d4e736f97"
+  "size": 27469,
+  "sha256": "dd2cf27112396e2296b16d7daf9d34dd359f5a58064bce80b7fbc21924d15f8a"
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/schemas/plugin-plan.schema.json",
@@ -36326,8 +36326,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/skyrim_forge/schemas/framework-plan.schema.json",
-  "size": 10830,
-  "sha256": "db6f4ca4f4cce819949d5c0d580a62f04e19c59904568225045dc540c333ed4b"
+  "size": 10826,
+  "sha256": "072ad8869d38bac9aa3d0af32b1ab278fe0ae426fd4324ab4c150ed609f2eff9"
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/skyrim_forge/schemas/native-plugin-plan.schema.json",
@@ -36336,8 +36336,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/skyrim_forge/schemas/nexus-publication-plan.schema.json",
-  "size": 27473,
-  "sha256": "413a63f0b2ec7faf4b393697dfd92518b4ac965d2d7b34eb8245269d4e736f97"
+  "size": 27469,
+  "sha256": "dd2cf27112396e2296b16d7daf9d34dd359f5a58064bce80b7fbc21924d15f8a"
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/skyrim_forge/schemas/plugin-plan.schema.json",
@@ -41046,8 +41046,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/local-model-ops/references/sillytavern.md",
-  "size": 4043,
-  "sha256": "f91f450eb404e4988eb66d723a4b9d8e9ed5b31bafa25a6d12fb4907eedb327f"
+  "size": 4039,
+  "sha256": "7daa886203011d000c8e9547709e4566fe46de7d3243be8ac4a19569b00f8f59"
  },
  {
   "path": "_CANONICAL-SKILLS/mantella-config/SKILL.md",
@@ -41106,8 +41106,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/mcp-server-diagnostics/references/skyrimforge-verification.md",
-  "size": 3962,
-  "sha256": "2bc152187789d50b2b678b1ee9ea9c8e9ef0d59712551a5ae56254f67d865a7f"
+  "size": 3958,
+  "sha256": "a55a10c689ea797ba25cfc8aab24780ee4595493a838532831c804bfee73bfde"
  },
  {
   "path": "_CANONICAL-SKILLS/migration-rollback/SKILL.md",
@@ -44206,8 +44206,8 @@
  },
  {
   "path": "docs/history/V8.6.1-CHANGELOG.md",
-  "size": 3447,
-  "sha256": "78a44ae21af716ae5c73f209ab4d0e4273564fbd20b636a5418fa03a7c96feaa"
+  "size": 3443,
+  "sha256": "efc2407f0dfbb81a736f89c5ded668214aec295c0ea376db32946bb5efb2df8a"
  },
  {
   "path": "docs/history/V8.6.10-CHANGELOG.md",
