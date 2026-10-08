@@ -531,8 +531,8 @@
     {
       "executable": false,
       "path": "schemas/framework-plan.schema.json",
-      "sha256": "db6f4ca4f4cce819949d5c0d580a62f04e19c59904568225045dc540c333ed4b",
-      "size": 10830
+      "sha256": "072ad8869d38bac9aa3d0af32b1ab278fe0ae426fd4324ab4c150ed609f2eff9",
+      "size": 10826
     },
     {
       "executable": false,
@@ -543,8 +543,8 @@
     {
       "executable": false,
       "path": "schemas/nexus-publication-plan.schema.json",
-      "sha256": "413a63f0b2ec7faf4b393697dfd92518b4ac965d2d7b34eb8245269d4e736f97",
-      "size": 27473
+      "sha256": "dd2cf27112396e2296b16d7daf9d34dd359f5a58064bce80b7fbc21924d15f8a",
+      "size": 27469
     },
     {
       "executable": false,
@@ -963,8 +963,8 @@
     {
       "executable": false,
       "path": "skyrim_forge/schemas/framework-plan.schema.json",
-      "sha256": "db6f4ca4f4cce819949d5c0d580a62f04e19c59904568225045dc540c333ed4b",
-      "size": 10830
+      "sha256": "072ad8869d38bac9aa3d0af32b1ab278fe0ae426fd4324ab4c150ed609f2eff9",
+      "size": 10826
     },
     {
       "executable": false,
@@ -975,8 +975,8 @@
     {
       "executable": false,
       "path": "skyrim_forge/schemas/nexus-publication-plan.schema.json",
-      "sha256": "413a63f0b2ec7faf4b393697dfd92518b4ac965d2d7b34eb8245269d4e736f97",
-      "size": 27473
+      "sha256": "dd2cf27112396e2296b16d7daf9d34dd359f5a58064bce80b7fbc21924d15f8a",
+      "size": 27469
     },
     {
       "executable": false,
@@ -1083,8 +1083,8 @@
     {
       "executable": false,
       "path": "STATE.md",
-      "sha256": "4e3e90cd06988e160d0cad527726b03d58da1ae3532c8a2badb5fcb7dac33167",
-      "size": 2310
+      "sha256": "05ec5a07c13fef0ab7c45c395e46c83c5878aaf23c9c4e7e7dff25eae6e57336",
+      "size": 2306
     },
     {
       "executable": false,
@@ -1215,8 +1215,8 @@
     {
       "executable": false,
       "path": "WORKSPACE_OWNERSHIP.md",
-      "sha256": "e38f928c8b66b1ba52093e3805a15b84b1792321bf3285e9981f1ac907ae18e9",
-      "size": 725
+      "sha256": "5997c2b6218856e2b2d69ae97b0578ce39cddd2aee60a800e5691a8a263b6bf5",
+      "size": 721
     },
     {
       "executable": false,

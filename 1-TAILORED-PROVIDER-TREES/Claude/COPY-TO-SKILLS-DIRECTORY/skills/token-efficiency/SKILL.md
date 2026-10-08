@@ -51,10 +51,18 @@ requests just to keep an otherwise unused cache warm.
 - Do not change models, auxiliary routing or providers merely to save tokens
   without the user's requested quality and configuration constraints.
 - Do not route the main model through `openrouter/free`. That router picks a
-  free model at random, which breaks a stable prompt prefix. A $0 OpenRouter
+  free model at random, so model/cache reuse is not predictable. A $0 OpenRouter
   account is 50 requests/day and 20/minute. Cloudflare's free pool is
-  10,000 neurons/day and is not a token allowance. A 429 on a free auxiliary
-  is exhaustion, not a retry fan-out. Checked 2026-10-06.
+  10,000 neurons/day and is not a token allowance. Confirmed daily quota
+  exhaustion is not a retry fan-out. A 429 can also mean temporary rate limits
+  or capacity: inspect the error/reset metadata and honor `Retry-After` with
+  bounded backoff. Do not silently switch models or paid routes. Checked 2026-10-07.
+
+Free-route sources:
+[OpenRouter limits](https://openrouter.ai/docs/api-reference/limits),
+[free router](https://openrouter.ai/openrouter/free),
+[Cloudflare pricing](https://developers.cloudflare.com/workers-ai/platform/pricing/),
+[Cloudflare error codes](https://developers.cloudflare.com/workers-ai/platform/errors/).
 
 ## Batch and bound output
 

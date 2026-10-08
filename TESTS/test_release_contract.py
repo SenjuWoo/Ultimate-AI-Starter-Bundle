@@ -2169,6 +2169,7 @@ def test_free_model_routing_stays_off() -> None:
     assert "uabs budget" not in text
     assert "Goblin Governor" not in text
     assert "do not change models" in text.lower() or "Do not change models" in text
+    assert "temporary rate limits" in text and "Retry-After" in text, "429 is not always daily quota exhaustion"
 
 
 def test_wired_preamble_prefix_is_stable() -> None:
@@ -2578,7 +2579,10 @@ def test_catalog_freshness_auditor_self_checks() -> None:
 
 
 def main() -> int:
+    # A failed gate must report Unicode paths on legacy Windows consoles too.
+    sys.stdout.reconfigure(errors="backslashreplace")
     tests = [
+        test_release_runner_reports_unicode_failures,
         test_skill_audit_survives_unicode_console_paths,
         test_task_recipes_resolve_only_shipped_capabilities,
         test_compression_retirement_preserves_custom_preferences,
@@ -5721,6 +5725,26 @@ def test_compression_retirement_preserves_custom_preferences() -> None:
             assert saved[-1] == expected, (provider, model, effort)
             exec(compile(writer, "Hermes production preferences writer", "exec"), {})
             assert saved[-1] == expected, "Repeated repair changed preferences"
+
+
+def test_release_runner_reports_unicode_failures() -> None:
+    import os
+    code = """
+import runpy, sys
+ns = runpy.run_path(sys.argv[1])['main'].__globals__
+for name in list(ns):
+    if name.startswith('test_'):
+        ns[name] = lambda: None
+def fail():
+    raise AssertionError('path ' + chr(937))
+ns['test_version_sources'] = fail
+sys.exit(ns['main']())
+"""
+    env = dict(os.environ, PYTHONIOENCODING="ascii:strict")
+    result = subprocess.run([sys.executable, "-c", code, __file__], env=env, capture_output=True)
+    assert result.returncode == 1, result.stderr.decode("ascii", "backslashreplace")
+    assert b"FAIL fail - path \\u03a9" in result.stdout
+    assert b"1 failed" in result.stdout and b"UnicodeEncodeError" not in result.stderr
 
 
 def test_skill_audit_survives_unicode_console_paths() -> None:

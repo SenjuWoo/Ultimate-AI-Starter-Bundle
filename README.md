@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.38 -->
+<!-- Ultimate AI Starter Bundle v8.7.39 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.38
+# Ultimate AI Starter Bundle v8.7.39
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -788,10 +788,12 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.7.38** - 2026-10-07. After a create, push, or dependency update, every
-install fixes that repository's open GitHub security alerts and checks again.
+**v8.7.39** - 2026-10-07. Harden the GitHub security probe against missing
+responses and hangs; preserve Windows process exit codes and distinguish
+daily quota exhaustion from transient 429 limits. Repair Forge's stale
+manifest after repository-link changes.
 **172 canonical skills**, no new always-on MCP.
-[Changes](docs/history/V8.7.38-CHANGELOG.md) ·
+[Changes](docs/history/V8.7.39-CHANGELOG.md) ·
 [Latest published release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest).
 
 ## License

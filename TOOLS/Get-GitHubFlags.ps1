@@ -5,7 +5,8 @@
 # not zero. This script only reads. It does not change settings or alerts.
 [CmdletBinding(SupportsShouldProcess=$true)]
 param(
-    [string]$Repo
+    [string]$Repo,
+    [ValidateRange(1, 300)][int]$TimeoutSeconds = 60
 )
 $ErrorActionPreference = 'Stop'
 
@@ -31,11 +32,19 @@ function Invoke-Native([string]$File, [string]$Arguments) {
     $info.RedirectStandardError = $true
     $info.UseShellExecute = $false
     $info.CreateNoWindow = $true
-    $proc = [Diagnostics.Process]::Start($info)
-    $stdout = $proc.StandardOutput.ReadToEnd()
-    $stderr = $proc.StandardError.ReadToEnd()
-    $proc.WaitForExit()
-    return @{ Exit = $proc.ExitCode; Out = $stdout; Err = $stderr }
+    try { $proc = [Diagnostics.Process]::Start($info) }
+    catch { return @{ Exit = 127; Out = ''; Err = 'Unable to start gh' } }
+    try {
+        # Drain both pipes together; a full stderr pipe must not hang stdout.
+        $stdout = $proc.StandardOutput.ReadToEndAsync()
+        $stderr = $proc.StandardError.ReadToEndAsync()
+        if (-not $proc.WaitForExit($TimeoutSeconds * 1000)) {
+            $proc.Kill()
+            $proc.WaitForExit()
+            return @{ Exit = 124; Out = ''; Err = 'gh request timed out' }
+        }
+        return @{ Exit = $proc.ExitCode; Out = $stdout.Result; Err = $stderr.Result }
+    } finally { $proc.Dispose() }
 }
 
 function Get-HttpStatus($Result) {
@@ -49,11 +58,14 @@ function Get-HttpStatus($Result) {
 function Convert-Rows($Text) {
     # The comma keeps an empty array from unrolling into $null. @($null).Count
     # is 1 in Windows PowerShell 5.1, which would report one phantom flag.
-    if (-not $Text) { return ,@() }
+    if (-not $Text) { throw 'Missing alert response' }
     $trimmed = $Text.Trim()
-    if (-not $trimmed -or $trimmed -eq '[]') { return ,@() }
+    if (-not $trimmed.StartsWith('[') -or -not $trimmed.EndsWith(']')) { throw 'Expected an alert array' }
+    if ($trimmed -match '^\[\s*\]$') { return ,@() }
     $parsed = $trimmed | ConvertFrom-Json
-    if ($null -eq $parsed) { return ,@() }
+    foreach ($row in @($parsed)) {
+        if ($null -eq $row -or -not $row.PSObject.Properties['number']) { throw 'Invalid alert row' }
+    }
     return ,@($parsed)
 }
 
@@ -79,6 +91,11 @@ if (-not $Repo) {
     }
     $Repo = $view.Out.Trim()
 }
+if ($Repo -notmatch '^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9_.-]+$') {
+    Write-Host 'reason=invalid-repo'
+    Write-Host 'flags=unknown'
+    exit 1
+}
 Write-Host ('repo=' + $Repo)
 
 $unknown = $false
@@ -89,7 +106,7 @@ if ($settings.Exit -ne 0) {
     Write-Host 'settings=unknown'
     $unknown = $true
 } else {
-    $repoObj = $settings.Out | ConvertFrom-Json
+    try { $repoObj = $settings.Out | ConvertFrom-Json } catch { $repoObj = $null }
     $analysis = $repoObj.security_and_analysis
     if ($null -eq $analysis) {
         Write-Host 'settings=missing'
@@ -114,12 +131,14 @@ function Get-Api([string]$ApiPath) {
 
 function Write-AlertCount([string]$Name, $Result) {
     if ($Result.Status -eq 200 -and $Result.Exit -eq 0) {
-        $rows = Convert-Rows $Result.Out
-        $count = @($rows).Count
-        Write-Host ($Name + '_open=' + $count)
-        if ($count -ge 100) { Write-Host ('truncated ' + $Name + '=yes') }
-        $script:open += $count
-        return $rows
+        try {
+            $rows = Convert-Rows $Result.Out
+            $count = @($rows).Count
+            Write-Host ($Name + '_open=' + $count)
+            if ($count -ge 100) { Write-Host ('truncated ' + $Name + '=yes') }
+            $script:open += $count
+            return $rows
+        } catch { } # Do not echo malformed JSON: it may contain secret material.
     }
     Write-Host ($Name + '_open=unknown')
     $script:unknown = $true
@@ -150,17 +169,24 @@ if ($quality.Status -eq 404 -or $quality.Status -eq 403) {
     Write-Host 'code_quality_open=unknown'
     $unknown = $true
 } else {
-    $setup = $quality.Out | ConvertFrom-Json
+    try { $setup = $quality.Out | ConvertFrom-Json } catch { $setup = $null }
     $state = Get-Field $setup @('state')
     if (-not $state) { $state = 'unknown' }
     Write-Host ('code_quality=' + $state)
     if ($state -eq 'configured') {
         $findings = Get-Api 'code-quality/findings?state=open&per_page=100'
-        foreach ($row in @(Write-AlertCount 'code_quality' $findings)) {
-            Write-Host ('flag code_quality number=' + (Get-Field $row @('number')) + ' rule=' + (Get-Field $row @('rule','id')) + ' severity=' + (Get-Field $row @('rule','severity')) + ' path=' + (Get-Field $row @('location','path')) + ' line=' + (Get-Field $row @('location','start_line')) + ' url=' + (Get-Field $row @('url')))
+        if ($findings.Status -in @(403, 404)) {
+            Write-Host 'code_quality_open=unavailable'
+        } else {
+            foreach ($row in @(Write-AlertCount 'code_quality' $findings)) {
+                Write-Host ('flag code_quality number=' + (Get-Field $row @('number')) + ' rule=' + (Get-Field $row @('rule','id')) + ' severity=' + (Get-Field $row @('rule','severity')) + ' path=' + (Get-Field $row @('location','path')) + ' line=' + (Get-Field $row @('location','start_line')) + ' url=' + (Get-Field $row @('url')))
+            }
         }
-    } else {
+    } elseif ($state -eq 'not-configured') {
         Write-Host 'code_quality_open=unavailable'
+    } else {
+        Write-Host 'code_quality_open=unknown'
+        $unknown = $true
     }
 }
 

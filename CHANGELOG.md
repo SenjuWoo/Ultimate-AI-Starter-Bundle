@@ -1,3 +1,7 @@
+## 8.7.39
+
+- Review follow-up: security probes fail closed on missing/malformed responses and unknown quality state, drain both native pipes and time out hung requests. Windows waits retain signed/259 exit codes and read only the requested log tail. Correct 429 guidance without changing models or adding MCPs. Repair Forge's stale manifest after repository-link changes. [Details](docs/history/V8.7.39-CHANGELOG.md).
+
 ## 8.7.38
 
 - The wired preamble now makes every install fix open Dependabot, code-scanning, and secret-scanning alerts on the repository just created, pushed, or updated, then check again. The pack probe is used when it is present; otherwise the same `gh api` queries run against that repository. A failed query is not zero. Alerts are not dismissed. 172 canonical skills. No new MCP and no dependency pin change. [Details](docs/history/V8.7.38-CHANGELOG.md).

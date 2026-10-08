@@ -7351,8 +7351,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 4184,
-  "sha256": "d6755a0ff08bc31b94f4d0c812fb73721c2bac25176b1799a6f79b6be91828ba"
+  "size": 4687,
+  "sha256": "cd7fef52dd9f6e150ea56559320b03a9644d30ce532383779ef56972578d5e52"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -13721,8 +13721,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 4184,
-  "sha256": "d6755a0ff08bc31b94f4d0c812fb73721c2bac25176b1799a6f79b6be91828ba"
+  "size": 4687,
+  "sha256": "cd7fef52dd9f6e150ea56559320b03a9644d30ce532383779ef56972578d5e52"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -20076,8 +20076,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 4184,
-  "sha256": "d6755a0ff08bc31b94f4d0c812fb73721c2bac25176b1799a6f79b6be91828ba"
+  "size": 4687,
+  "sha256": "cd7fef52dd9f6e150ea56559320b03a9644d30ce532383779ef56972578d5e52"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -26431,8 +26431,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 4184,
-  "sha256": "d6755a0ff08bc31b94f4d0c812fb73721c2bac25176b1799a6f79b6be91828ba"
+  "size": 4687,
+  "sha256": "cd7fef52dd9f6e150ea56559320b03a9644d30ce532383779ef56972578d5e52"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -32861,8 +32861,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 4184,
-  "sha256": "d6755a0ff08bc31b94f4d0c812fb73721c2bac25176b1799a6f79b6be91828ba"
+  "size": 4687,
+  "sha256": "cd7fef52dd9f6e150ea56559320b03a9644d30ce532383779ef56972578d5e52"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -33362,17 +33362,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 51190,
-  "sha256": "57abba50aac5aa1a83e7aac09516afb0b0d14606a167385dfbc03183bcca994b"
+  "sha256": "5c77d5cf2f4fe3dd9abbcb7c4022bd70ef597f4f5505069e7a28c4c8473aa7a1"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1444,
-  "sha256": "0822d8e540d83797839bd48d22c1bda70020bc882f2a34f943c1521d7f28b0b8"
+  "sha256": "174978b58e5f6f7ad9304391e3df6ee47e755106bfc7be045e9806c95d42b762"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 32028,
-  "sha256": "c7d3d7688606e44b5e2374ee81f54e018626ae1b036fcbb68e3711f02f7b485d"
+  "sha256": "d70734643e4f7f80d00e1c6cac3081939d203e080aedc89986e66bc95bdd2738"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -35567,7 +35567,7 @@
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/MANIFEST.json",
   "size": 40769,
-  "sha256": "c189bedf9c25d928692e1164c0971834b5d8b022b6dcb2f7c6d2dd62023c6313"
+  "sha256": "354affec5835fc3b57bfda31118fad0c32154fe9f096906ac01c085305f7dcca"
  },
  {
   "path": "BUNDLED-TOOLS/skyrim-forge/NOTICE.md",
@@ -36726,8 +36726,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 177856,
-  "sha256": "c25e5910dafc0b40ce894b8ac7659b50429b2fbbfaf46c16de2e0335c6a12f70"
+  "size": 178275,
+  "sha256": "4b1cdaa4ce721e8e0403925ee07b354ba666757e9b312b79fd82d0cd0cd50d04"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -36802,7 +36802,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 141338,
-  "sha256": "20cc5e9796a7b0350fa801a69b2fdd66929f082e5e6c9a92dd2d284ecf6b57f0"
+  "sha256": "5c497c485ed75459e90bba114184dbe10f1a56416d752a2f90be1f1016bd0c65"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -36851,8 +36851,8 @@
  },
  {
   "path": "README.md",
-  "size": 46152,
-  "sha256": "ca50b083f8ecd148b83e7da44eb6afda9b18019b322968c171c7d2c59cc88bc9"
+  "size": 46257,
+  "sha256": "1d23b09921bee9707092ea43a5fba0d205ceceee752da75a311439b81ac5c767"
  },
  {
   "path": "SECURITY.md",
@@ -36862,12 +36862,12 @@
  {
   "path": "START-HERE.bat",
   "size": 730,
-  "sha256": "f04dd1320220bc4c8a28a208a2ed2ddd69615214986b80fe203a2dd6e3a2eaf8"
+  "sha256": "db631184dab7e23fae2a20ccbac2407c2c6806f6be4f9154e5cc0b34460eb3bc"
  },
  {
   "path": "START-HERE.txt",
   "size": 10311,
-  "sha256": "a5f308ed2a0c43136e468230509ed2000c90e123e4799595b848b7702f3b2fdc"
+  "sha256": "035dc7736eca61b726d5c8f7f99ed3d500c669de5b7f2596962645d04124d8ad"
  },
  {
   "path": "TESTS/Test-CodexHookRetirement.ps1",
@@ -36881,8 +36881,8 @@
  },
  {
   "path": "TESTS/Test-GitHubFlags.ps1",
-  "size": 1594,
-  "sha256": "20296198877d7671d3377c7bd4ac5a989218c7396b21e59107c79ce82948d031"
+  "size": 6923,
+  "sha256": "e8d7145a0a6fb56bf4810968187035fece626d4d30e16db9a7b19b48adeae5d6"
  },
  {
   "path": "TESTS/Test-GrokHookRepair.ps1",
@@ -36951,8 +36951,8 @@
  },
  {
   "path": "TESTS/Test-WaitExternal.ps1",
-  "size": 2628,
-  "sha256": "e4e11cf6c62c6c7a0ee15116ebeaa8e0d61e9947141e6f8c5d5f8e9813454fa7"
+  "size": 3178,
+  "sha256": "2b21ddcdd285f49fb6341d9d6cae541f7e85d1b4e2102c3fc84a1ad8678413e9"
  },
  {
   "path": "TESTS/evidence-scenarios/A-visual-defect/EXPECTED.md",
@@ -37131,8 +37131,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 305850,
-  "sha256": "a6430da2c6cad8da7927af3b5ece2afd0449327ab67c63e98b67b7aee83eeb76"
+  "size": 306902,
+  "sha256": "790530b5172edff6eb5d2dedb2494e6d3d2d793647fad1e07370030edff3b5e1"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -37186,8 +37186,8 @@
  },
  {
   "path": "TOOLS/Get-GitHubFlags.ps1",
-  "size": 7225,
-  "sha256": "a6c3a4805e3562322b84343557511ddf8f712fdda7639ca5fe2226f6398058ee"
+  "size": 8514,
+  "sha256": "19aed6e3f4468c0989fd7690fe61e5ca6a1063bc461a9884bd7ccbb9ed4f492b"
  },
  {
   "path": "TOOLS/Install-Completeness-Gate.ps1",
@@ -37281,8 +37281,8 @@
  },
  {
   "path": "TOOLS/Wait-External.ps1",
-  "size": 2936,
-  "sha256": "995419cffb2656f17bdd4ae3d5f8c397f5f7ea27b423054aab292fc366048a1b"
+  "size": 1938,
+  "sha256": "060aa683a86d5486e29211398f8239dd79d74922d8bf1376932298f0807d030e"
  },
  {
   "path": "TOOLS/audit-impeccable-engine.py",
@@ -37441,8 +37441,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 1767,
-  "sha256": "64ba64a8c47b38819c8cae3a848f5f60c4674a9698e604e13b6f0e3906f29263"
+  "size": 1952,
+  "sha256": "1673e488deffed6b919e0f4216fa870cf05b639b69d0bb1c843f2548122fb73a"
  },
  {
   "path": "VALIDATION.md",
@@ -37452,7 +37452,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "e0654f856879e4b21c33ce92ff276171c046699c355d4425818936467a675dba"
+  "sha256": "6959a64adffef9d2a805d0173c9ec07a6153705fa5a1d5e4e203a2ae67678580"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -43366,8 +43366,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/token-efficiency/SKILL.md",
-  "size": 4184,
-  "sha256": "d6755a0ff08bc31b94f4d0c812fb73721c2bac25176b1799a6f79b6be91828ba"
+  "size": 4687,
+  "sha256": "cd7fef52dd9f6e150ea56559320b03a9644d30ce532383779ef56972578d5e52"
  },
  {
   "path": "_CANONICAL-SKILLS/token-efficiency/references/shell-output-compression.md",
@@ -44433,6 +44433,11 @@
   "path": "docs/history/V8.7.38-CHANGELOG.md",
   "size": 1264,
   "sha256": "8da0df79268dc47e26c4f4a3eb505692301d2f1dd3ad5dde35a9a7f051e29334"
+ },
+ {
+  "path": "docs/history/V8.7.39-CHANGELOG.md",
+  "size": 2416,
+  "sha256": "877205faa41e1acd7b64295ffbab4165a6950ee08a72b01cdc7406fa4da98d6b"
  },
  {
   "path": "docs/history/V8.7.4-CHANGELOG.md",

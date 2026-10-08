@@ -51,6 +51,16 @@ if ($r.Code -eq 0 -and $text -match 'gh run watch 1 --compact --exit-status' -an
     Good 'GitHub -WhatIf prints the watch command and does not call gh'
 } else { Bad ("GitHub -WhatIf returned $($r.Code): $text") }
 
+foreach ($code in @(259, -1)) {
+    $child = Start-Process -FilePath $ps -ArgumentList @('-NoProfile','-Command',("Start-Sleep -Seconds 2; exit " + $code)) -WindowStyle Hidden -PassThru
+    try {
+        $r = Invoke-Waiter @('-ProcessId', "$($child.Id)")
+        if ($r.Code -eq $code -and ($r.Output -join "`n") -match ("exit=" + $code + '\b')) {
+            Good ("local exit " + $code + " is preserved")
+        } else { Bad ("local exit " + $code + " returned " + $r.Code + ': ' + ($r.Output -join ' | ')) }
+    } finally { $child.Dispose() }
+}
+
 if ($fail) { Write-Host "WAIT EXTERNAL GATE: FAIL ($fail)"; exit 1 }
 Write-Host 'WAIT EXTERNAL GATE: PASS'
 exit 0

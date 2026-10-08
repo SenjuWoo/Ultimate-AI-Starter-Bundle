@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.38",
+  "version": "8.7.39",
   "generated": "2026-10-07",
-  "release_tag": "v8.7.38",
+  "release_tag": "v8.7.39",
   "canonical_skills": 172,
   "provider_trees": 5,
   "registry_entries": 172,
@@ -26,8 +26,10 @@
     "TESTS/test_universal_modder.py",
     "TESTS/Test-HermesNativeStderr.ps1",
     "TESTS/Test-TaskRecipes.ps1",
-    "TESTS/Test-GitHubFlags.ps1"
+    "TESTS/Test-GitHubFlags.ps1",
+    "TESTS/Test-WaitExternal.ps1",
+    "TESTS/Test-SearchCollapse.ps1"
   ],
-  "runtime_status": "v8.7.38: the wired preamble requires every install to fix open Dependabot, code-scanning, and secret-scanning alerts on the repository just created or updated, then query again. Get-GitHubFlags WhatIf names the five endpoints and exits 0 without calling gh. Editor/gameplay/GPU remain unverified. No new MCP.",
+  "runtime_status": "v8.7.39: offline fake-gh regressions cover empty/malformed responses, unknown quality state, open alerts, unavailable quality, input validation, stderr saturation and timeout without printing sensitive fields. Windows PowerShell 5.1 local waits preserve 0, 3, 259 and -1. Full provider/fresh-install gates remain mandatory. Editor/gameplay/GPU and token-billing improvements remain unverified. No new MCP or model change.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }
