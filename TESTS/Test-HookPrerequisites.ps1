@@ -38,6 +38,14 @@ try {
   Assert ($issues.Count -eq 1 -and $env:PATH -ceq $before) 'Read-only shell check changed PATH or missed the gap.'
   $env:PATH = $shell + ';' + $env:PATH
   Assert (@(Repair-UabsHookShellPath -GitExecutable $git -CheckOnly).Count -eq 0) 'Available Git shells were reported missing.'
+  # WSL puts bash.exe in System32. Only the first match on PATH runs.
+  $wsl = Join-Path $fixture 'wsl\System32'
+  New-Item -ItemType Directory -Force -Path $wsl | Out-Null
+  [IO.File]::WriteAllText((Join-Path $wsl 'bash.exe'), '')
+  $env:PATH = $shell + ';' + $wsl + ';' + $env:SystemRoot + '\System32'
+  Assert (@(Repair-UabsHookShellPath -GitExecutable $git -CheckOnly).Count -eq 0) 'A later WSL bash.exe hid the Git shell that runs first.'
+  $env:PATH = $wsl + ';' + $shell + ';' + $env:SystemRoot + '\System32'
+  Assert (@(Repair-UabsHookShellPath -GitExecutable $git -CheckOnly).Count -eq 1) 'A WSL bash.exe ahead of Git was accepted as the hook shell.'
   $env:PATH = $savedPath
 
   # Hooks must not be wired to an AI app's private Python (inherited first on

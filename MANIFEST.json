@@ -38011,8 +38011,8 @@
  },
  {
   "path": "TESTS/Test-HookPrerequisites.ps1",
-  "size": 5098,
-  "sha256": "320b5124b4af731705c682a175843744a11a684729a627e9e830994c6f413d2d"
+  "size": 5758,
+  "sha256": "410557443eb48105e10fcb899359a9a9a6fd710e4793cec93d153ca5f613941e"
  },
  {
   "path": "TESTS/Test-JsonCaseKeys.ps1",
@@ -38381,8 +38381,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 116201,
-  "sha256": "9f771c815aed61dc2817ac66dc7db8ea559a516d3a8404c5b851e343bd5da8cf"
+  "size": 116381,
+  "sha256": "9e523e9ff7e3d00fa656351d5918965cc43ea8b0854584dddca609102609e8f7"
  },
  {
   "path": "TOOLS/UABS-Mcp-Write.ps1",
@@ -45586,8 +45586,8 @@
  },
  {
   "path": "docs/history/V8.7.40-CHANGELOG.md",
-  "size": 9254,
-  "sha256": "54ab8e3b5ee529ce79425d19b327504dbcf317d7ae057b382306991d74b57822"
+  "size": 9476,
+  "sha256": "bca3667381037dff93f771367de6775d2d51113c1bd44a6fba5772002dfd7cc9"
  },
  {
   "path": "docs/history/V8.7.5-CHANGELOG.md",

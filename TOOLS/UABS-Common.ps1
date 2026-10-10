@@ -41,8 +41,10 @@ function Get-UabsGitShellDirectory {
 function Repair-UabsHookShellPath {
   param([switch]$CheckOnly, [string]$GitExecutable)
   $directory = Get-UabsGitShellDirectory -GitExecutable $GitExecutable
+  # Judge only the first match, the one a hook would run: with WSL installed,
+  # System32\bash.exe also matches and made a working Git bash look missing.
   $missing = @('sh.exe','bash.exe' | Where-Object {
-    $command = Get-Command $_ -CommandType Application -ErrorAction SilentlyContinue
+    $command = Get-Command $_ -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
     -not $command -or $command.Source -match '(?i)\\(System32|Sysnative|WindowsApps)\\'
   })
   if ($CheckOnly) {
