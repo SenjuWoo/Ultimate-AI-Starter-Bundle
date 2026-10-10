@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.40 -->
+<!-- Ultimate AI Starter Bundle v8.8.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.40
+# Ultimate AI Starter Bundle v8.8.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -35,8 +35,9 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
   <img src="assets/hero.svg" alt="Installed is not enabled: five providers, parked optional MCPs" width="100%">
 </p>
 
-**Current source:** one-click setup, 172 canonical skills, a small MCP core and
-project-specific tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest),
+**Current source:** one-click setup, 123 general skills plus a 49-skill Skyrim
+pack that installs only where Skyrim is, a small MCP core and project-specific
+tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest),
 [the changelog](CHANGELOG.md) and [evaluated component pins](BUNDLED-TOOLS/CATALOG.json).
 
 ### Universal Modder without extra background servers
@@ -68,7 +69,7 @@ One distinction explains almost everything about how this pack behaves:
 | **INSTALLED** | A CLI/server payload exists on disk | A disconnected server adds no MCP schema; installed skills/plugins have separate discovery and hook behavior. |
 | **ENABLED** | Registered in a provider's config | Available in that scope after trust/connection checks; schema loading and billing depend on the provider. |
 
-The 172 **skills** use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
+The 123 general **skills** (plus 49 with the Skyrim pack) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
 
 ### What's ON after install
 
@@ -191,7 +192,31 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
 .\INSTALL-AIO.ps1 -WorkspaceRoot "D:\My\AI-Workspace"
 .\INSTALL-AIO.ps1 -WithRtk        # compatibility alias; rtk is already in the default install
 .\INSTALL-AIO.ps1 -WithClaudeMem  # + claude-mem (pulls in Bun, runs a daemon)
+.\INSTALL-AIO.ps1 -Packs skyrim   # force the Skyrim pack on (-ExcludePacks skyrim: off)
+.\INSTALL-AIO.ps1 -ProfileTemplate autonomous-builder   # seed your personal profile
 ```
+
+### Packs: content only some users need
+
+`BUNDLED-TOOLS\PACKS.json` lists them; today there is one, `skyrim` (49 skills,
+an instruction block, Skyrim Forge, houseCARL, Spooky). It turns on when the
+installer finds Skyrim (Steam or GOG install, `My Games`, Vortex, tool
+variables) and stays off otherwise, so general users do not pay for its skill
+index and instructions on every request. `-Packs skyrim` / `-ExcludePacks skyrim`
+override detection and are remembered; installing Skyrim later turns it on by
+itself. Turning it off retires the unmodified Skyrim skills and keeps any you
+edited.
+
+### Personal profile
+
+`%USERPROFILE%\.uabs\profile\PROFILE.md` is yours: how you like to work, your
+folders, your release habits. Each install also writes `MACHINE-MAP.md` (game
+folders, mod-manager staging, game logs, tool roots, AI app homes) and adds
+both to every provider as one capped block, so agents stop rediscovering paths.
+Nothing there is ever part of a repository. Start from the shipped template with
+`-ProfileTemplate autonomous-builder`; turn it off with `-SkipProfile`. To see
+where your own usage goes, run `python TOOLS\usage_report.py`
+([what it found here](docs/USAGE-ECONOMY.md)).
 
 | Mode | Behavior |
 |------|----------|
@@ -578,11 +603,11 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-- **Provider skills** — 172 skills per AI (Claude, Codex, Grok, Kimi, Hermes), all generated from one canonical tree.
+- **Provider skills** — 123 general skills per AI (Claude, Codex, Grok, Kimi, Hermes), plus 49 with the Skyrim pack, all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7, official GitHub, and Headroom are the verified always-on core. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
-- **houseCARL** MCP + MO2 instance or Vortex shim setup
-- **Spooky's AutoMod Toolkit**
+- **houseCARL** MCP + MO2 instance or Vortex shim setup (Skyrim pack)
+- **Spooky's AutoMod Toolkit** (Skyrim pack)
 - **codebase-memory-mcp** — installed but enabled only by Claude/Grok/trusted Codex project-scoped `code-intel` or Hermes' native `code` profile; `.cbmignore` + `TOOLS/Setup-CodebaseMemory-Index.ps1` keep the graph on source, not asset trees
 - **Headroom** (context compression, registered as an MCP server — see [Headroom + Grok](#headroom--grok))
 - **Superpowers** + **Ponytail** plugins/skills
@@ -596,7 +621,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ### Skyrim Forge
 
-**Skyrim Forge 6.0.0 is developed in this repository**, at `BUNDLED-TOOLS/skyrim-forge`. It is source, not a downloaded payload, so both release variants carry it in full and there is no separately released archive that can drift out of step with the installer that reads it -- which is exactly how v7.8.0 shipped an installer calling a contract field Forge never emitted. The AIO installs or repairs it into ONE versionless install root, migrating any version-stamped install onto it and preserving `Workspaces` and the virtualenv, refreshes the five provider skills/descriptors, sets `SKYRIM_FORGE_ROOT`, and proves the result runs with `forge doctor` before the final success banner. Its 52-tool MCP is no longer global: `game-skyrim` activates it only for matching Claude/Grok/trusted Codex projects; Kimi/Hermes use the same installed CLI through the skill. Choose where it lands with `-ForgeRoot`; the default is `%LOCALAPPDATA%\Skyrim-Tools\Skyrim-Forge`.
+**Skyrim Forge 6.0.1** is released from [SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge) and installed by this bundle only with the Skyrim pack. CATALOG.json pins the release tag, archive and SHA-256; the installer takes the Full-Offline copy or downloads it, refuses an archive whose digest differs before extracting, installs into ONE versionless root (migrating a version-stamped install, preserving `Workspaces` and the virtualenv), refreshes the provider descriptors, sets `SKYRIM_FORGE_ROOT`, and proves the result with `forge doctor`. This repository's CI installs that exact release end to end, which is the check v7.8.0 lacked when the two repositories drifted. Its 52-tool MCP is not global: `game-skyrim` activates it only for matching Claude/Grok/trusted Codex projects; Kimi/Hermes use the CLI through the skill. Choose where it lands with `-ForgeRoot`; the default is `%LOCALAPPDATA%\Skyrim-Tools\Skyrim-Forge`.
 
 ## Update tools later
 
@@ -689,8 +714,8 @@ Additional canonical payloads without separate tool-catalog entries:
 | `skill-creator`, `build-mcp-server`, `build-mcpb`, `build-mcp-app` | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | Selected cross-provider skills, not the entire marketplace |
 | Hermes native Unity bridge | [CoplayDev/unity-mcp](https://github.com/CoplayDev/unity-mcp) | Existing Coplay editor backend, isolated in `unity`/`creative`; distinct from the IvanMurzak project route |
 
-Skyrim Forge is the bundle author's product, shipped as source under
-`BUNDLED-TOOLS/skyrim-forge`, not a missing third-party download.
+Skyrim Forge is the bundle author's product, released from
+[SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge) and pinned by digest.
 [Tool notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) and
 [skill notices](_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md) retain licenses,
 credits and adaptation notes. The pack's MIT license does not relicense these
@@ -788,15 +813,14 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.7.40** - 2026-10-10. START-HERE now checks GitHub for a newer bundle
-release and updates itself (clean clone fast-forward or digest-checked release
-swap; offline falls back to the local copy). Fix Codex hooks that cmd.exe could
-never start, hooks wired to Codex's private Python, an invalid skill frontmatter
-Codex skipped, Git shell discovery and duplicate Superpowers installs. Add the
-opt-in optional skills (`-OptionalSkills melty-mashups`), per-engine
-debug-logging rules for every game/mod route, and refresh Universal Modder plus
-ten other tested pins. **172 canonical skills**, no new always-on MCP.
-[Changes](docs/history/V8.7.40-CHANGELOG.md) ·
+**v8.8.0** - 2026-10-10. Skyrim becomes a pack that installs only where Skyrim
+is found or requested, so general users stop paying for its skill index and
+instructions. Skyrim Forge 6.0.1 is released from its own repository and pinned
+by SHA-256. Old preamble copies are stripped exactly, provider templates are a
+few lines, and a personal profile plus a generated machine map tell every agent
+how you work and where things are. `TOOLS/usage_report.py` measures where your
+usage goes. 123 general + 49 Skyrim-pack skills, no new always-on MCP.
+[Changes](docs/history/V8.8.0-CHANGELOG.md) ·
 [Latest published release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest).
 
 ## License

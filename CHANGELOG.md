@@ -1,3 +1,13 @@
+## 8.8.0
+
+- Skyrim is a pack now. Its 49 skills, instruction block, Skyrim Forge, houseCARL and Spooky install only where the installer finds Skyrim (Steam/GOG install, My Games, Vortex, tool env vars) or `-Packs skyrim` asks for it; `-ExcludePacks skyrim` turns it off. Choices are remembered; a disabled pack's unmodified skills are retired, edited ones kept. Non-Skyrim users stop paying ~2.7k tokens of skill index and a 24 KB instruction template on every request.
+- Skyrim Forge moves back to [SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge) (6.0.1, its own CI). The bundle pins the release by tag and SHA-256, refuses a mismatched archive before extracting, and CI installs that exact release end to end with `forge doctor`. CI drops from 14 jobs to 4.
+- Every old preamble/template version this pack shipped is archived (21 texts) and stripped exactly on install; one Codex `AGENTS.md` carried a stale 12.5 KB contract (~3k tokens per request). New provider templates are a few lines.
+- Codex MCP refresh treated Codex's own `enabled = true` as user policy, so context7 stayed at 4.0.4 while every other app ran the 4.3.0 pin; real custom policy now keeps its filters and gets the pin moved in place, and Codex's re-serialization no longer causes a rewrite (and backup) every install.
+- Hermes named profiles were frozen clones of the default skills folder (26-47 stale skills each, ~72 retired ones in three); managed profiles are now refreshed, with Skyrim skills only in `skyrim`.
+- Personal profile: `%USERPROFILE%\.uabs\profile\PROFILE.md` plus a generated machine map (game folders, mod managers, logs, tool roots) are added to every provider as one capped block, never part of a repository. `-ProfileTemplate autonomous-builder` seeds a profile distilled from heavy real use.
+- `TOOLS/usage_report.py` measures where your usage goes from local logs. Its findings (124k-token median context per Codex call, 23% approval reviews, 12% forked subagents, 71 limit resumes) shaped `token-efficiency`, `state-resumption`, `release-checklist` (mod-site changelog and payload-only archives) and `docs/USAGE-ECONOMY.md`. 172 canonical skills total (123 general + 49 Skyrim pack). [Details](docs/history/V8.8.0-CHANGELOG.md).
+
 ## 8.7.40
 
 - START-HERE checks GitHub for a newer bundle release before installing: a clean git clone fast-forwards, a release copy installs the newer release through INSTALL-REMOTE (release-asset SHA-256 verified, previous copy kept), and an offline or failed check installs the local copy. `-SkipSelfUpdate` / `UABS_NO_SELF_UPDATE=1` opt out.

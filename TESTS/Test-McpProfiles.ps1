@@ -866,6 +866,25 @@ $context7 = @{ command = 'wrapper'; args = @('user-owned.js') }
 . $pinRepair
 Is ($context7.args -join '|') 'user-owned.js' 'unrecognized wrapper arguments remain untouched'
 
+# Codex writes `enabled = true` into its own tables and re-serializes them.
+# Treating that as user policy froze context7 at 4.0.4 on a live machine for
+# months while every other provider moved to the catalog pin.
+Section 'Codex refresh: enabled=true is not policy; real policy keeps filters but gets the pin'
+$ct = Join-Path $sandbox 'codex-refresh.toml'
+$srv = @(@{ id = 'context7'; command = 'npx'; args = @('-y', '@upstash/context7-mcp@9.9.9'); note = 'docs'; key = $null })
+[IO.File]::WriteAllText($ct, "[mcp_servers.context7]`r`ncommand = `"npx`"`r`nargs = [ `"-y`", `"@upstash/context7-mcp@4.0.4`" ]`r`nenabled = true`r`n")
+Is (@(Add-UabsMcpToml -Path $ct -Section 'mcp_servers' -Servers $srv -Provider 'Codex' -Refresh) -join ',') 'context7' 'enabled = true no longer blocks a pin refresh'
+$ctText = [IO.File]::ReadAllText($ct)
+if ($ctText -match 'context7-mcp@9\.9\.9' -and $ctText -notmatch '4\.0\.4') { Good 'stale Codex pin replaced' } else { Bad ('stale Codex pin survived: ' + $ctText) }
+Is (@(Add-UabsMcpToml -Path $ct -Section 'mcp_servers' -Servers $srv -Provider 'Codex' -Refresh).Count) 0 'an identical table is not rewritten'
+[IO.File]::WriteAllText($ct, "[mcp_servers.context7]`r`ncommand = 'npx'`r`nargs = [ '-y', '@upstash/context7-mcp@9.9.9' ]`r`nenabled = true`r`n")
+Is (@(Add-UabsMcpToml -Path $ct -Section 'mcp_servers' -Servers $srv -Provider 'Codex' -Refresh).Count) 0 'Codex re-serialization of the same table is not a change'
+[IO.File]::WriteAllText($ct, "[mcp_servers.context7]`r`ncommand = `"npx`"`r`nargs = [`"-y`", `"@upstash/context7-mcp@4.0.4`"]`r`nenabled_tools = [`"resolve-library-id`"]`r`n")
+[void](Add-UabsMcpToml -Path $ct -Section 'mcp_servers' -Servers $srv -Provider 'Codex' -Refresh)
+$ctText = [IO.File]::ReadAllText($ct)
+if ($ctText -match 'context7-mcp@9\.9\.9' -and $ctText -match 'enabled_tools = \["resolve-library-id"\]' -and $ctText -notmatch '4\.0\.4') { Good 'custom policy kept, package pin moved in place' }
+else { Bad ('custom-policy table lost its filter or kept the old pin: ' + $ctText) }
+
 # ------------------------------------------------------- vision canary ----
 Section 'the vision canary is falsifiable'
 

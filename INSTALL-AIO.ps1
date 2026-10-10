@@ -159,7 +159,21 @@ param(
   [switch]$SkipSelfUpdate,
   # Opt-in skills from BUNDLED-TOOLS\optional-skills, e.g. -OptionalSkills
   # melty-mashups. Never installed by default; refreshed once present.
-  [string[]]$OptionalSkills = @()
+  [string[]]$OptionalSkills = @(),
+  # Content packs from BUNDLED-TOOLS\PACKS.json (today: skyrim). A pack
+  # installs when this machine shows evidence for it (game install, mod
+  # manager, tool env vars). -Packs turns one on, -ExcludePacks turns it off;
+  # both are remembered for later runs. A disabled pack costs no skill index
+  # entries, no instruction text and no tool downloads.
+  [string[]]$Packs = @(),
+  [string[]]$ExcludePacks = @(),
+  # Personal profile folder (PROFILE.md + MACHINE-MAP.md). Default
+  # %USERPROFILE%\.uabs\profile; its compact text is added to every provider's
+  # instruction file. -ProfileTemplate <name> seeds PROFILE.md from
+  # BUNDLED-TOOLS\optional-profiles when the user has none yet.
+  [string]$ProfileRoot = '',
+  [string]$ProfileTemplate = '',
+  [switch]$SkipProfile
 )
 
 # Match -Providers: powershell -File forwards comma-separated names as one string.
@@ -178,6 +192,9 @@ foreach ($opt in $OptionalSkills) {
   }
 }
 if ($WithRtk) { $Components = @($Components) + @('rtk') | Select-Object -Unique }
+$Packs = @($Packs | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim().ToLowerInvariant() } | Where-Object { $_ } | Select-Object -Unique)
+$ExcludePacks = @($ExcludePacks | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim().ToLowerInvariant() } | Where-Object { $_ } | Select-Object -Unique)
+foreach ($both in @($Packs | Where-Object { $ExcludePacks -contains $_ })) { throw "Pack '$both' is in both -Packs and -ExcludePacks." }
 
 $ErrorActionPreference = 'Stop'
 $PackRoot = $PSScriptRoot
@@ -278,6 +295,24 @@ if ($AllProviders) {
 $script:UabsSkippedProviders = @($script:UabsAllProviders | Where-Object { $Providers -notcontains $_ })
 Invoke-UabsLegacyStateMigration
 $catalog = Get-UabsCatalog
+
+# ---------- Content packs ----------
+# Skyrim content used to install for everyone: 49 skills (~2.7k tokens of skill
+# descriptions in every request), a 24 KB instruction section, Forge, houseCARL
+# and Spooky. It now installs where Skyrim is found or asked for.
+$packSel = Resolve-UabsPackSelection -PackRoot $PackRoot -Requested $Packs -Excluded $ExcludePacks
+foreach ($packName in @($packSel.Reasons.Keys)) {
+  $packMeta = $packSel.Catalog.packs.$packName
+  if ($packSel.Enabled -contains $packName) {
+    Write-UabsOk ("Pack '{0}' ON: {1}  (turn off: {2})" -f $packName, $packSel.Reasons[$packName], $packMeta.disable)
+  } else {
+    Write-Host ("  ..  Pack '{0}' off: {1}  (turn on: {2})" -f $packName, $packSel.Reasons[$packName], $packMeta.enable) -ForegroundColor DarkGray
+  }
+}
+if (-not $PSBoundParameters.ContainsKey('Components')) {
+  $Components = @($Components | Where-Object { $packSel.DisabledComponents -notcontains $_ })
+}
+$skyrimPackOn = (-not $packSel.Catalog) -or ($packSel.Enabled -contains 'skyrim')
 $offline = Join-Path $PackRoot 'BUNDLED-TOOLS\offline'
 $cache = Join-Path $PackRoot 'BUNDLED-TOOLS\cache'
 $plugins = Join-Path $PackRoot 'BUNDLED-TOOLS\plugins'
@@ -401,7 +436,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.7.40 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.8.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -541,8 +576,28 @@ if (-not $ToolsOnly) {
       }
     }
 
-    Sync-UabsProviderSkills -From $srcSkills -To $destSkills -Provider $prov -ExcludeNames $codexBuiltins
+    # Skills of a disabled pack are left out; the managed-skill ledger then
+    # retires the unmodified copies an earlier install put here.
+    Sync-UabsProviderSkills -From $srcSkills -To $destSkills -Provider $prov -ExcludeNames (@($codexBuiltins) + @($packSel.ExcludedSkills))
     $null = Sync-UabsOptionalSkills -SourceRoot (Join-Path $PackRoot 'BUNDLED-TOOLS\optional-skills') -SkillsDir $destSkills -Provider $prov -Requested $OptionalSkills
+    if ($prov -eq 'Hermes') {
+      # A Hermes profile clones the default skills folder when it is created
+      # and nothing refreshes it afterwards: measured 26-47 stale bundle skills
+      # per profile and ~72 retired ones in three of them. Refresh the profiles
+      # this bundle manages; Skyrim pack skills belong only in `skyrim`.
+      $allPackSkills = @($packSel.Catalog.packs.PSObject.Properties | ForEach-Object { @($_.Value.skills) })
+      $hermesOverrides = @(Get-UabsPreservedSkillNames -Provider 'Hermes' -SkillsDir $destSkills)
+      foreach ($pf in @(Get-UabsHermesManagedProfiles -HermesHome $providerHome -SoulFile (Join-Path $PackRoot '3-PREAMBLES\SOUL.md'))) {
+        $profileSkills = Join-Path $pf.FullName 'skills'
+        $notHere = if ($pf.Name -eq 'skyrim') { @($packSel.ExcludedSkills) } else { $allPackSkills }
+        try {
+          Sync-UabsProviderSkills -From $srcSkills -To $profileSkills -Provider ('Hermes.' + $pf.Name) -ExcludeNames (@($notHere) + $hermesOverrides)
+          $aside = Move-UabsSkillsAside -SkillsDir $profileSkills -Names $notHere -Label ('hermes-profile-' + $pf.Name + '-pack-skills')
+          if ($aside.Moved.Count) { Write-UabsOk ("Hermes profile {0}: {1} pack skill(s) moved out of its index -> {2}" -f $pf.Name, $aside.Moved.Count, $aside.Backup) }
+          Write-UabsOk ("Hermes profile {0}: skills refreshed" -f $pf.Name)
+        } catch { Write-UabsWarn ("Hermes profile {0} skills: {1}" -f $pf.Name, $_.Exception.Message) }
+      }
+    }
     if ($legacyCodexSkills -and
         $legacyCodexSkills.TrimEnd('\') -ine $destSkills.TrimEnd('\') -and
         (Test-Path -LiteralPath $legacyCodexSkills -PathType Container)) {
@@ -1350,6 +1405,61 @@ if (-not $ToolsOnly -and ($Providers -contains 'Codex')) {
   }
 }
 
+# ---------- Pack instruction blocks ----------
+# Each enabled pack adds one short marked block to every provider instruction
+# file; a disabled pack's block is removed. An exact copy of an older bundle's
+# long unmarked Skyrim section is replaced by the provider's general template.
+if (-not $ToolsOnly) {
+  $tailoredHome = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES'
+  $soulMark = (([IO.File]::ReadAllText((Join-Path $PackRoot '3-PREAMBLES\SOUL.md'))).Trim() -split '\r?\n')[0]
+  $profileText = ''
+  if (-not $SkipProfile) {
+    # Personal profile: the user's own PROFILE.md plus a generated map of this
+    # PC's game, mod-manager and tool folders. Never part of any repository.
+    $profileDir = Get-UabsProfileRoot $ProfileRoot
+    if ($ProfileTemplate) {
+      $tpl = Join-Path $PackRoot ('BUNDLED-TOOLS\optional-profiles\' + $ProfileTemplate + '.md')
+      if (-not (Test-Path -LiteralPath $tpl -PathType Leaf)) { throw ("Unknown profile template '$ProfileTemplate'. Available: " + ((Get-ChildItem -LiteralPath (Join-Path $PackRoot 'BUNDLED-TOOLS\optional-profiles') -Filter '*.md' | ForEach-Object BaseName) -join ', ')) }
+      $mine = Join-Path $profileDir 'PROFILE.md'
+      if (Test-Path -LiteralPath $mine -PathType Leaf) { Write-UabsOk ('PROFILE.md already exists; template not copied over it: ' + $mine) }
+      else { New-Item -ItemType Directory -Force -Path $profileDir | Out-Null; Copy-Item -LiteralPath $tpl -Destination $mine; Write-UabsOk ('profile seeded from ' + $ProfileTemplate + ': ' + $mine) }
+    }
+    try { & (Join-Path $PackRoot 'TOOLS\Build-MachineMap.ps1') -ProfileRoot $profileDir -PackRoot $PackRoot } catch { Write-UabsWarn ('machine map: ' + $_.Exception.Message) }
+    try { $profileText = Get-UabsProfileText -Root $profileDir } catch { Write-UabsWarn $_.Exception.Message; $profileText = '' }
+  }
+  foreach ($prov in $Providers) {
+    $provHome = Get-UabsProviderHome -Provider $prov -Catalog $catalog
+    $targets = @()
+    $general = $null
+    if ($prov -eq 'Hermes') {
+      $targets += (Join-Path $provHome 'SOUL.md')
+      # Bundle-managed profiles only (they carry the bundle soul); a profile
+      # with its own persona, such as a role-play gateway, is left alone.
+      foreach ($pf in @(Get-ChildItem -LiteralPath (Join-Path $provHome 'profiles') -Filter 'SOUL.md' -Recurse -Depth 1 -File -ErrorAction SilentlyContinue)) {
+        if ([IO.File]::ReadAllText($pf.FullName).Contains($soulMark)) { $targets += $pf.FullName }
+      }
+    } else {
+      $instName = $catalog.providers.$prov.instructions
+      if (-not $instName) { $instName = 'AGENTS.md' }
+      $targets += (Join-Path $provHome $instName)
+      $srcName = $catalog.providers.$prov.instruction_src
+      if ($srcName) { $general = Join-Path $tailoredHome ($prov + '\COPY-TO-PROVIDER-HOME\' + $srcName) }
+    }
+    foreach ($t in $targets) {
+      $isSkyrimHermes = $t -match '(?i)[\\/]profiles[\\/]skyrim[\\/]SOUL\.md$'
+      $packsHere = if ($prov -eq 'Hermes' -and $t -match '(?i)[\\/]profiles[\\/]' -and -not $isSkyrimHermes) { @() } else { $packSel.Enabled }
+      try {
+        if (Update-UabsInstructionPacks -Path $t -PackRoot $PackRoot -Enabled $packsHere -GeneralTemplate $general) {
+          Write-UabsOk ("{0}: pack instructions updated ({1}) -> {2}" -f $prov, $(if ($packsHere.Count) { $packsHere -join ', ' } else { 'none' }), $t)
+        }
+        if (-not $SkipProfile -and (Update-UabsInstructionProfile -Path $t -Text $profileText)) {
+          Write-UabsOk ("{0}: personal profile {1} -> {2}" -f $prov, $(if ($profileText) { 'updated' } else { 'removed' }), $t)
+        }
+      } catch { Write-UabsWarn ("$prov instructions: " + $_.Exception.Message) }
+    }
+  }
+}
+
 # ---------- AI preamble: SOUL + AIO for every agent (v7.5.0) ----------
 # Wires the same preamble into every selected provider so a fresh machine
 # behaves like the operator's own setup. Idempotent: re-running replaces the
@@ -2095,7 +2205,7 @@ if (-not $SkillsOnly -and ($Providers -contains 'Grok')) {
   }
 }
 # ---------- houseCARL MO2/Vortex ----------
-if (-not $SkipHouseCarlSetup -and -not $SkillsOnly) {
+if (-not $SkipHouseCarlSetup -and -not $SkillsOnly -and $skyrimPackOn) {
   $setup = Join-Path $PackRoot 'TOOLS\Setup-HouseCarl.ps1'
   if (Test-Path $setup) {
     Write-UabsStep "houseCARL MO2/Vortex setup"
@@ -2109,22 +2219,22 @@ if (-not $SkipHouseCarlSetup -and -not $SkillsOnly) {
   }
 }
 
-# ---------- Bundled Skyrim Forge ----------
-# Forge's source lives in this repository at BUNDLED-TOOLS\skyrim-forge, so
-# what installs is whatever this commit contains -- there is no separately
-# released archive to drift. The installer resolves ONE versionless install
-# root (migrating a version-stamped install onto it), refreshes provider skill
-# descriptors without global MCP registration, and proves `forge doctor`.
-#
-# No -BundleVersion is passed any more. 7.8.0 negotiated a compatibility range
-# with a separately released Forge and read a field back that Forge has never
-# emitted, so this step threw on every run and aborted the whole install here.
-if (-not $ToolsOnly -and -not $SkillsOnly) {
+# ---------- Skyrim Forge (Skyrim pack) ----------
+# Forge is released from github.com/SenjuWoo/SkyrimForge again. CATALOG.json
+# pins the release tag, asset and SHA-256; the installer uses the Full-Offline
+# copy or a verified cached download, resolves ONE versionless install root,
+# refreshes provider skill descriptors without global MCP registration, and
+# proves `forge doctor`. The bundle's CI installs that exact release end to end,
+# which is the check 7.8.0 lacked when the two repositories drifted apart.
+if (-not $ToolsOnly -and -not $SkillsOnly -and -not $skyrimPackOn) {
+  Write-Host '  ..  Skyrim Forge skipped: Skyrim pack is off' -ForegroundColor DarkGray
+  $installed['skyrim-forge'] = @{ status='skipped'; reason='skyrim pack off' }
+}
+if (-not $ToolsOnly -and -not $SkillsOnly -and $skyrimPackOn) {
   $forgeInstaller = Join-Path $PackRoot 'TOOLS\Install-SkyrimForge.ps1'
   if (-not (Test-Path -LiteralPath $forgeInstaller -PathType Leaf)) { throw 'TOOLS\Install-SkyrimForge.ps1 missing from pack.' }
-  $forgeVersionFile = Join-Path $PackRoot 'BUNDLED-TOOLS\skyrim-forge\VERSION.txt'
-  if (-not (Test-Path -LiteralPath $forgeVersionFile -PathType Leaf)) { throw 'BUNDLED-TOOLS\skyrim-forge is missing from pack.' }
-  $forgeSourceVersion = if ([IO.File]::ReadAllText($forgeVersionFile) -match '(?m)^Skyrim Forge\s+(?<ver>\d+\.\d+\.\d+)\s*$') { $Matches['ver'] } else { 'unknown' }
+  $forgeEntry = @($catalog.components | Where-Object { $_.id -eq 'skyrim-forge' }) | Select-Object -First 1
+  $forgeSourceVersion = if ($forgeEntry) { [string]$forgeEntry.version } else { 'unknown' }
   $forgeArgs = @('-NoProfile','-ExecutionPolicy','Bypass','-File',$forgeInstaller,'-PackRoot',$PackRoot,'-Providers',($Providers -join ','),'-BundleOwnsProviderSkills')
   if ($ForgeRoot) { $forgeArgs += @('-ForgeRoot', $ForgeRoot) }
   & (Get-Command powershell.exe -ErrorAction Stop).Source @forgeArgs
@@ -2232,7 +2342,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.7.40'
+version = '8.8.0'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.40",
+  "version": "8.8.0",
   "generated": "2026-10-10",
-  "release_tag": "v8.7.40",
+  "release_tag": "v8.8.0",
   "canonical_skills": 172,
   "provider_trees": 5,
   "registry_entries": 172,
@@ -33,8 +33,11 @@
     "TESTS/Test-CodexPluginDedupe.ps1",
     "TESTS/Test-BundleSelfUpdate.ps1",
     "TESTS/Test-GrokPluginDedupe.ps1",
-    "TESTS/Test-JsonCaseKeys.ps1"
+    "TESTS/Test-JsonCaseKeys.ps1",
+    "TESTS/Test-Packs.ps1",
+    "TESTS/Test-UserProfile.ps1",
+    "TOOLS/generate_preamble_history.py --check"
   ],
-  "runtime_status": "v8.7.40: Codex hook commands are exercised through the exact cmd.exe /C invocation Codex uses; interpreter selection is tested against a private-runtime junction fixture; the self-update decision, argument forwarding, a real git clone and INSTALL-REMOTE staging exit codes are tested offline. Universal Modder 5506516: 87 upstream tests pass. Melty MCP measured with initialize/tools-list only; no authenticated or publishing call was made. Editor/gameplay/GPU and token-billing improvements remain unverified. No new always-on MCP or model change.",
+  "runtime_status": "v8.8.0: content packs are tested with fixture roots (Steam manifest, My Games, Vortex, tool env vars), remembered -Packs/-ExcludePacks choices, marked instruction blocks that add and remove byte-exactly, conversion of an archived older Skyrim section, and retirement of a disabled pack's unmodified skills. Skyrim Forge 6.0.1 is installed from its pinned, SHA-256-verified release in CI, including a tampered-archive refusal; Forge's own matrix runs in SenjuWoo/SkyrimForge. The personal profile block is size-capped and tested for placement, refresh and exact removal. Usage figures in docs/USAGE-ECONOMY.md come from one machine's local logs via TOOLS/usage_report.py. Editor/gameplay/GPU and token-billing improvements remain unverified. No new always-on MCP or model change.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

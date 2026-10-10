@@ -20,15 +20,14 @@ def _prefix(root:Path)->str:
 EXCLUDE_PARTS={'.git','.worktrees','.venv','venv','__pycache__','node_modules','.pytest_cache','.mypy_cache','.ruff_cache','.tox','.nox','htmlcov','cache','dist','artifacts'}
 EXCLUDE_SUFFIXES={'.pyc','.pyo','.log'}
 EXCLUDE_NAMES={'INSTALLATION.json','.DS_Store','.coverage','coverage.xml','config.MAINTAINER.yaml'}
-# Forge is not an offline payload any more. Its source lives in the tree at
-# BUNDLED-TOOLS/skyrim-forge, so BOTH variants carry it without a special case,
-# and there is no archive whose version could disagree with the installer.
-FORGE_SOURCE=PurePosixPath('BUNDLED-TOOLS/skyrim-forge')
-def _forge_version(root:Path)->str:
-    text=(root/FORGE_SOURCE/'VERSION.txt').read_text(encoding='utf-8-sig')
-    match=re.search(r'(?m)^Skyrim Forge\s+(\d+\.\d+\.\d+)\s*$',text)
-    if not match: raise SystemExit(f'{FORGE_SOURCE}/VERSION.txt declares no version')
-    return match.group(1)
+# Skyrim Forge is released from github.com/SenjuWoo/SkyrimForge again and is
+# pinned in CATALOG.json by tag, asset and SHA-256. Full-Offline carries that
+# exact archive; Core downloads it, and only for users with the Skyrim pack.
+def _forge_pin(root:Path)->dict:
+    cat=json.loads((root/'BUNDLED-TOOLS'/'CATALOG.json').read_text(encoding='utf-8-sig'))
+    rows=[c for c in cat.get('components',[]) if c.get('id')=='skyrim-forge']
+    if len(rows)!=1: raise SystemExit('CATALOG.json must pin exactly one skyrim-forge release')
+    return rows[0]
 
 def excluded(rel:Path)->bool:
     if any(part in EXCLUDE_PARTS for part in rel.parts): return True
@@ -42,9 +41,8 @@ CORE_NOTE=(
     'installed from source or downloaded when absent. Full-Offline carries\n'
     'archive/wheel snapshots; uncached runtimes and dependencies may need network.\n'
     '\n'
-    'Skyrim Forge is NOT one of those payloads and is present in full: its\n'
-    'source ships in BUNDLED-TOOLS/skyrim-forge and is built here, not\n'
-    'downloaded.\n'
+    'Skyrim Forge is one of those payloads: it is downloaded from its pinned\n'
+    'GitHub release (SHA-256 checked) only when the Skyrim pack is on.\n'
 ).encode('utf-8')
 
 def files(root:Path, core:bool):
@@ -61,9 +59,8 @@ def files(root:Path, core:bool):
             raise RuntimeError(f'unsafe source manifest path: {name}')
         if not p.is_file(): raise RuntimeError(f'source manifest file missing: {name}')
         if excluded(rel): continue
-        # Core drops every vendored third-party payload; the installer's
-        # BundledFirst online fallback fetches them. Forge is unaffected --
-        # it is source in the tree, not an archive in offline/.
+        # Core drops every vendored payload, Forge included; the installer
+        # downloads and verifies what an enabled pack needs.
         if core and len(rel.parts)>=2 and rel.parts[0]=='BUNDLED-TOOLS' and rel.parts[1]=='offline':
             continue
         yield p,rel
@@ -82,9 +79,7 @@ def _core_offline_manifest_bytes(root:Path)->bytes:
     m['variant']='Core'
     m['note']=('Core ships no vendored payloads; the installer downloads each component '
                'when absent or builds vendored source. Full-Offline carries the '
-               'archive/wheel snapshots; uncached runtimes/dependencies may need network. '
-               'Skyrim Forge is not listed here in either '
-               'variant: it is source in BUNDLED-TOOLS/skyrim-forge, not a payload.')
+               'archive/wheel snapshots; uncached runtimes/dependencies may need network.')
     return (json.dumps(m,indent=2)+'\n').encode('utf-8')
 
 def _core_overrides(root:Path)->dict[str,bytes]:
@@ -105,17 +100,9 @@ def _core_manifest_bytes(root:Path)->bytes:
     rows.sort(key=lambda r:str(r['path']))
     return (json.dumps(rows,indent=1)+'\n').encode('utf-8')
 
-# Any Linux ELF the tree ships, wherever it ships it. Naming one path missed
-# skyrim_forge/bin/linux-x64/SkyrimForge.Native, which went out at 0644 while
-# its sibling went out at 0755.
-LINUX_EXECUTABLES=('linux-x64/SkyrimForge.Native',)
 def _archive_mode(rel:Path)->int:
-    # ZIPs created on Windows do not preserve POSIX execute bits. The merged
-    # Forge tree carries published Linux helpers that repository validation
-    # executes after extraction, so encode that portable contract explicitly.
-    posix=rel.as_posix()
-    if any(posix.endswith(suffix) for suffix in LINUX_EXECUTABLES):
-        return 0o100755
+    # ZIPs created on Windows do not preserve POSIX execute bits; encode the
+    # few shipped POSIX scripts explicitly.
     if rel.parent.name == 'scripts' and rel.name in ('task-start', 'task-done', 'task-brief', 'sdd-workspace', 'review-package'):
         return 0o100755
     return 0o100644
@@ -154,15 +141,16 @@ def verify(path:Path,root:Path)->None:
             top=Path(td)/_prefix(root)
             for rel in ('START-HERE.bat','INSTALL-AIO.ps1','BUNDLED-TOOLS/CATALOG.json','VERSION.txt'):
                 if not (top/rel).is_file(): raise RuntimeError(f'extracted required file missing: {rel}')
-            # Both variants must carry buildable Forge source. Check the EXTRACTED
-            # tree, not the source: that is the copy the user actually receives.
-            forge=top/FORGE_SOURCE
-            for rel in ('VERSION.txt','Install-or-Update.ps1','skyrim_forge/__init__.py'):
-                if not (forge/rel).is_file():
-                    raise RuntimeError(f'extracted archive has no {FORGE_SOURCE}/{rel}')
-            extracted=re.search(r'(?m)^Skyrim Forge\s+(\d+\.\d+\.\d+)\s*$',(forge/'VERSION.txt').read_text(encoding='utf-8-sig'))
-            if not extracted or extracted.group(1)!=_forge_version(root):
-                raise RuntimeError('extracted Forge source is not the version this tree ships')
+            # Full-Offline must carry the exact pinned Forge archive; Core must not.
+            pin=_forge_pin(root)
+            forge_zip=top/'BUNDLED-TOOLS'/'offline'/str(pin['asset'])
+            if (top/'BUNDLED-TOOLS'/'skyrim-forge').exists():
+                raise RuntimeError('archive still carries vendored Forge source')
+            if forge_zip.is_file():
+                if hashlib.sha256(forge_zip.read_bytes()).hexdigest()!=str(pin['sha256']).lower():
+                    raise RuntimeError('offline Forge archive does not match the pinned SHA-256')
+            elif not (top/'README-CORE.txt').is_file():
+                raise RuntimeError(f"Full-Offline archive has no {pin['asset']}")
             if (top/'VERSION.txt').read_text(encoding='utf-8-sig').strip().lstrip('vV')!=_pack_version(root):
                 raise RuntimeError('extracted VERSION.txt does not match the archive name')
             manifest=top/'MANIFEST.json'

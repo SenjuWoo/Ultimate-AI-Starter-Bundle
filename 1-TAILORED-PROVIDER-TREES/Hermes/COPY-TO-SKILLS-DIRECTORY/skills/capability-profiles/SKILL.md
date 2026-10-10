@@ -203,7 +203,7 @@ one that answers this question, not the set that looks related:
 | symbol-level refactor in a real codebase | `code-intel` |
 | "which API does this library have now" | `research-verification` — installed `--help`, upstream, Context7. No Blender, no DevTools. |
 | Blender / Godot / Unity work | that engine's profile, plus a render or capture if you can see it |
-| Skyrim mod project | Hermes `skyrim` for houseCARL evidence; use Skyrim Forge and Spooky through their routed skills/CLIs unless Forge MCP compatibility is explicitly needed |
+| Skyrim mod project | Hermes `skyrim` for houseCARL evidence; use Skyrim Forge and Spooky through their routed skills/CLIs unless Forge MCP compatibility is explicitly needed. No `skyrim-*` skills installed = Skyrim pack off: `START-HERE.bat -Packs skyrim` |
 | Roblox project | Hermes `roblox` for the official Studio bridge; use RobloxForge through its skill/CLI |
 | Saints Row project | `game-saints-row` when markers match; otherwise its installed CLI/skill |
 | Skyrim crash | the crash log and the Skyrim diagnostic skills. Only reach outward if a version fact is genuinely unresolved. |

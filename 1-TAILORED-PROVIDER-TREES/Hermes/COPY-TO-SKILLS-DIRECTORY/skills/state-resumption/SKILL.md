@@ -1,6 +1,6 @@
 ---
 name: state-resumption
-description: Use when resuming interrupted, long-running, multi-session, compacted, or partially completed work.
+description: Use when resuming interrupted, long-running, multi-session, compacted, or partially completed work, including after a usage limit or another model's changes.
 ---
 
 # State Resumption
@@ -19,6 +19,21 @@ Maintain a tiny **ledger** with:
 - next smallest safe action.
 
 On resume, verify the ledger against disk/git before trusting it. If a claimed file or build no longer exists, treat it as lost work and rebuild rather than reporting it as present.
+
+## Usage limits and switching models
+
+Users hit limits mid-task and continue in another app or model. Write the
+ledger to the project's `STATE.md` at every milestone, not only at the end, so
+the next model can resume from it. On "continue", "usage reset" or "X made
+changes":
+
+1. Read `STATE.md`, then `git status`/`git diff` (or the versioned folder's
+   CHANGELOG) to see what actually changed since the ledger.
+2. Treat the previous model's summary as a claim: re-run its tests or open the
+   files it says it changed before building on them.
+3. Do not redo research the ledger records as verified; continue from the next
+   smallest safe action.
+4. Reconnect tools the work needs (MCP servers, editors) before relying on them.
 
 ## Compression discipline
 Before context compaction or handoff, update the ledger with facts, not narrative. Keep volatile logs out; preserve only commands, outcomes, hashes, decisions, and blockers needed to continue deterministically.

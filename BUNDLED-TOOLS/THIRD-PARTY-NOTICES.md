@@ -42,9 +42,10 @@ of every dependency. Preserve all included licences and attribution.
 | `playwright-cli` | [Playwright CLI](https://github.com/microsoft/playwright-cli) | Apache-2.0 |
 | `comfy-cli` | [ComfyUI CLI](https://github.com/Comfy-Org/comfy-cli) | GPL-3.0 |
 
-Skyrim Forge is maintained by the bundle author and ships as source in
-[`skyrim-forge`](skyrim-forge/README.md), including its licence and dependency
-notices. It is not a third-party download.
+Skyrim Forge is maintained by the bundle author at
+[SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge); its release
+archive carries its own licence and dependency notices. The bundle installs the
+pinned, SHA-256-verified release only with the Skyrim pack.
 
 Additional sources—Anthropic MCP/skill-creator guides, img2threejs, the discovery
 CLI and canonical process/design/Obsidian skills—are in

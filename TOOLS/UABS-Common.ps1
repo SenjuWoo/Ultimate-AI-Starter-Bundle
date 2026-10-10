@@ -788,6 +788,288 @@ function Sync-UabsOptionalSkills {
   return $written
 }
 
+function Get-UabsPackCatalog([string]$PackRoot) {
+  $path = Join-Path $PackRoot 'BUNDLED-TOOLS\PACKS.json'
+  if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { return $null }
+  $doc = [IO.File]::ReadAllText($path) | ConvertFrom-Json
+  if ($doc.schema -ne 1 -or -not $doc.packs) { throw ('Invalid pack catalog: ' + $path) }
+  return $doc
+}
+
+function Find-UabsPackEvidence {
+  <# Signs on this machine that a pack's subject is installed or used. Read-only.
+     Roots are parameters so tests can point detection at fixtures. #>
+  param(
+    $Detect,
+    [string[]]$SteamLibraries,
+    [string]$DocumentsRoot = [Environment]::GetFolderPath('MyDocuments'),
+    [string]$AppDataRoot = $env:APPDATA,
+    [switch]$SkipRegistry
+  )
+  $found = New-Object System.Collections.Generic.List[string]
+  if (-not $Detect) { return @() }
+  if ($null -eq $SteamLibraries) {
+    $SteamLibraries = @()
+    $steam = $null
+    if (-not $SkipRegistry) {
+      try { $steam = (Get-ItemProperty -Path 'HKCU:\Software\Valve\Steam' -Name SteamPath -ErrorAction Stop).SteamPath } catch { $steam = $null }
+    }
+    if ($steam) {
+      $steam = $steam.Replace('/', '\')
+      $SteamLibraries += $steam
+      $vdf = Join-Path $steam 'steamapps\libraryfolders.vdf'
+      if (Test-Path -LiteralPath $vdf -PathType Leaf) {
+        foreach ($m in [regex]::Matches([IO.File]::ReadAllText($vdf), '"path"\s+"([^"]+)"')) {
+          $SteamLibraries += $m.Groups[1].Value.Replace('\\', '\')
+        }
+      }
+    }
+  }
+  foreach ($lib in @($SteamLibraries | Where-Object { $_ } | Select-Object -Unique)) {
+    foreach ($id in @($Detect.steam_appids)) {
+      if (Test-Path -LiteralPath (Join-Path $lib ('steamapps\appmanifest_' + $id + '.acf')) -PathType Leaf) { $found.Add('steam app ' + $id) }
+    }
+  }
+  if ($DocumentsRoot) {
+    foreach ($name in @($Detect.my_games)) {
+      if ($name -and (Test-Path -LiteralPath (Join-Path $DocumentsRoot ('My Games\' + $name)) -PathType Container)) { $found.Add('My Games\' + $name) }
+    }
+  }
+  if ($AppDataRoot) {
+    foreach ($game in @($Detect.vortex_games)) {
+      if ($game -and (Test-Path -LiteralPath (Join-Path $AppDataRoot ('Vortex\' + $game)) -PathType Container)) { $found.Add('Vortex ' + $game) }
+    }
+  }
+  foreach ($var in @($Detect.env)) {
+    if (-not $var) { continue }
+    $value = [Environment]::GetEnvironmentVariable($var, 'Process')
+    if (-not $value -and -not $SkipRegistry) { $value = [Environment]::GetEnvironmentVariable($var, 'User') }
+    if ($value -and (Test-Path -LiteralPath $value)) { $found.Add($var) }
+  }
+  if ($Detect.gog_game_name -and -not $SkipRegistry) {
+    foreach ($key in @(Get-ChildItem -Path 'HKLM:\SOFTWARE\WOW6432Node\GOG.com\Games' -ErrorAction SilentlyContinue)) {
+      $name = $null
+      try { $name = (Get-ItemProperty -LiteralPath $key.PSPath -Name gameName -ErrorAction Stop).gameName } catch { $name = $null }
+      if ($name -and $name -like ('*' + $Detect.gog_game_name + '*')) { $found.Add('GOG ' + $name) }
+    }
+  }
+  return @($found | Select-Object -Unique)
+}
+
+function Resolve-UabsPackSelection {
+  <# Decide which packs install. Precedence: -ExcludePacks, -Packs, a choice
+     remembered from an earlier explicit run, then evidence on this machine.
+     Only explicit choices are remembered; detection runs again every time,
+     so installing the game later turns its pack on by itself. #>
+  param(
+    [string]$PackRoot,
+    [string[]]$Requested = @(),
+    [string[]]$Excluded = @(),
+    [string]$StatePath = (Join-Path (Get-UabsStateRoot) 'packs.json'),
+    [hashtable]$EvidenceArgs = @{}
+  )
+  $catalog = Get-UabsPackCatalog -PackRoot $PackRoot
+  $result = [ordered]@{ Enabled=@(); Disabled=@(); Reasons=[ordered]@{}; ExcludedSkills=@(); DisabledComponents=@(); Catalog=$catalog }
+  if (-not $catalog) { return [pscustomobject]$result }
+  $names = @($catalog.packs.PSObject.Properties.Name)
+  foreach ($n in @($Requested) + @($Excluded)) {
+    if ($n -and $names -notcontains $n) { throw ("Unknown pack '" + $n + "'. Available: " + ($names -join ', ')) }
+  }
+  $remembered = @{}
+  if (Test-Path -LiteralPath $StatePath -PathType Leaf) {
+    try {
+      $doc = [IO.File]::ReadAllText($StatePath) | ConvertFrom-Json
+      foreach ($p in @($doc.packs.PSObject.Properties)) { $remembered[$p.Name] = [bool]$p.Value.enabled }
+    } catch { Write-UabsWarn ('pack choices unreadable; detecting again: ' + $_.Exception.Message) }
+  }
+  $changed = $false
+  foreach ($name in $names) {
+    $pack = $catalog.packs.$name
+    if ($Excluded -contains $name) { $on = $false; $why = 'excluded (-ExcludePacks)'; if ($remembered[$name] -ne $false) { $remembered[$name] = $false; $changed = $true } }
+    elseif ($Requested -contains $name) { $on = $true; $why = 'requested (-Packs)'; if ($remembered[$name] -ne $true) { $remembered[$name] = $true; $changed = $true } }
+    elseif ($remembered.ContainsKey($name)) { $on = $remembered[$name]; $why = 'your earlier choice' }
+    else {
+      $evidence = @(Find-UabsPackEvidence -Detect $pack.detect @EvidenceArgs)
+      $on = $evidence.Count -gt 0
+      $why = if ($on) { 'found ' + ($evidence -join ', ') } else { 'nothing found on this machine' }
+    }
+    $result.Reasons[$name] = $why
+    if ($on) { $result.Enabled += $name } else {
+      $result.Disabled += $name
+      $result.ExcludedSkills += @($pack.skills)
+      $result.DisabledComponents += @($pack.components)
+    }
+  }
+  if ($changed) {
+    $out = [ordered]@{ schema = 1; packs = [ordered]@{} }
+    foreach ($k in @($remembered.Keys | Sort-Object)) { $out.packs[$k] = [ordered]@{ enabled = $remembered[$k] } }
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $StatePath) | Out-Null
+    [IO.File]::WriteAllText($StatePath, ($out | ConvertTo-Json -Depth 4), (New-Object System.Text.UTF8Encoding $false))
+  }
+  return [pscustomobject]$result
+}
+
+function Update-UabsInstructionPacks {
+  <# Keep pack text in a provider instruction file in step with the selection.
+     Pack blocks are marked so they can be refreshed or removed. Older bundles
+     wrote a long Skyrim section unmarked; an exact copy of one is ours, so it is
+     replaced by the provider's short general template and the marked block.
+     Anything else in the file belongs to the user and is left alone. #>
+  param(
+    [string]$Path,
+    [string]$PackRoot,
+    [string[]]$Enabled = @(),
+    [string]$GeneralTemplate
+  )
+  $catalog = Get-UabsPackCatalog -PackRoot $PackRoot
+  if (-not $catalog) { return $false }
+  $exists = Test-Path -LiteralPath $Path -PathType Leaf
+  $pre = if ($exists) { [IO.File]::ReadAllText($Path) } else { '' }
+  $bom = $false
+  if ($exists) { $b = [IO.File]::ReadAllBytes($Path); $bom = ($b.Length -ge 3 -and $b[0] -eq 0xEF -and $b[1] -eq 0xBB -and $b[2] -eq 0xBF) }
+  $nl = if ($pre -match "`r`n") { "`r`n" } else { "`n" }
+  $text = [regex]::Replace($pre, '(?ms)^[ \t]*<!-- UABS-PACK:([a-z0-9-]+) -->[ \t]*\r?\n.*?^[ \t]*<!-- /UABS-PACK:\1 -->[ \t]*(?:\r?\n|$)', '')
+  $legacyHit = $false
+  foreach ($name in @($catalog.packs.PSObject.Properties.Name)) {
+    $legacyDir = Join-Path $PackRoot ('BUNDLED-TOOLS\packs\' + $name + '\legacy')
+    foreach ($h in @(Get-ChildItem -LiteralPath $legacyDir -Filter '*.md' -File -ErrorAction SilentlyContinue)) {
+      $owned = ([IO.File]::ReadAllText($h.FullName)).Trim()
+      if (-not $owned) { continue }
+      $lines = @($owned -split '\r?\n' | ForEach-Object { [regex]::Escape($_) })
+      $rx = '(?m)^' + ($lines -join '\r?\n') + '(?=\r?$)(?:\r?\n)?'
+      if ([regex]::IsMatch($text, $rx)) { $text = [regex]::Replace($text, $rx, ''); $legacyHit = $true }
+    }
+  }
+  $text = $text.Trim("`r", "`n")
+  $head = ''
+  if ($GeneralTemplate -and (Test-Path -LiteralPath $GeneralTemplate -PathType Leaf)) {
+    $general = (([IO.File]::ReadAllText($GeneralTemplate)).TrimStart([char]0xFEFF).Trim()) -replace '\r?\n', $nl
+    if ($text.StartsWith($general, [StringComparison]::Ordinal)) {
+      $head = $general; $text = $text.Substring($general.Length).Trim("`r", "`n")
+    } elseif ($legacyHit -and $text.IndexOf($general, [StringComparison]::Ordinal) -lt 0) {
+      $head = $general
+    }
+  }
+  $blocks = @()
+  foreach ($name in @($Enabled)) {
+    $rel = [string]$catalog.packs.$name.instructions
+    if (-not $rel) { continue }
+    $src = Join-Path $PackRoot ($rel.Replace('/', '\'))
+    if (-not (Test-Path -LiteralPath $src -PathType Leaf)) { throw ('pack instructions missing: ' + $src) }
+    $body = ([IO.File]::ReadAllText($src)).Trim() -replace '\r?\n', $nl
+    $blocks += ('<!-- UABS-PACK:' + $name + ' -->' + $nl + $body + $nl + '<!-- /UABS-PACK:' + $name + ' -->')
+  }
+  # Provider head, then pack blocks, then everything else: the bundle preamble
+  # is appended after this step and re-appended at the end by later installs.
+  $parts = @($(if ($head) { $head })) + @($blocks) + @($(if ($text) { $text }))
+  # Only the text built here uses $nl. The rest keeps its bytes: the preamble
+  # writer appends LF text to CRLF files, and normalizing the whole file made
+  # the two writers convert it back and forth on every install.
+  $new = if ($parts.Count) { ($parts -join ($nl + $nl)) + $nl } else { '' }
+  if ($new -ceq $pre) { return $false }
+  # Nothing of ours was there and nothing is added: never rewrite user text
+  # just to normalise its whitespace.
+  if (-not $legacyHit -and -not $blocks.Count -and $pre -notmatch '<!-- UABS-PACK:') { return $false }
+  if ($exists) { Copy-Item -LiteralPath $Path -Destination ($Path + '.before-pack-' + (Get-Date -Format 'yyyyMMdd-HHmmssfff') + '.bak') -Force }
+  else { New-Item -ItemType Directory -Force -Path (Split-Path -Parent $Path) | Out-Null }
+  [IO.File]::WriteAllText($Path, $new, (New-Object System.Text.UTF8Encoding $bom))
+  return $true
+}
+
+function Get-UabsHermesManagedProfiles {
+  <# Hermes named profiles that this bundle manages: they have their own skills
+     folder and carry the bundle soul. A profile with its own persona (for
+     example a role-play gateway) is not returned. #>
+  param([string]$HermesHome, [string]$SoulFile)
+  $mark = (([IO.File]::ReadAllText($SoulFile)).Trim() -split '\r?\n')[0]
+  foreach ($pf in @(Get-ChildItem -LiteralPath (Join-Path $HermesHome 'profiles') -Directory -ErrorAction SilentlyContinue)) {
+    $soul = Join-Path $pf.FullName 'SOUL.md'
+    if (-not (Test-Path -LiteralPath (Join-Path $pf.FullName 'skills') -PathType Container)) { continue }
+    if (-not (Test-Path -LiteralPath $soul -PathType Leaf)) { continue }
+    if (-not ([IO.File]::ReadAllText($soul)).Contains($mark)) { continue }
+    $pf
+  }
+}
+
+function Move-UabsSkillsAside {
+  <# Move named skill folders out of an indexed skills root into a backup.
+     Reversible, unlike deletion: used for pack skills a profile should not
+     index when no ledger proves the copy is unmodified. #>
+  param([string]$SkillsDir, [string[]]$Names, [string]$Label)
+  $moved = @()
+  $dest = $null
+  foreach ($n in @($Names | Select-Object -Unique)) {
+    $src = Join-Path $SkillsDir $n
+    if (-not (Test-Path -LiteralPath (Join-Path $src 'SKILL.md') -PathType Leaf)) { continue }
+    if (-not $dest) {
+      $dest = Join-Path (Get-UabsStateRoot) ('backups\' + $Label + '-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+      New-Item -ItemType Directory -Force -Path $dest | Out-Null
+    }
+    Move-Item -LiteralPath $src -Destination (Join-Path $dest $n)
+    $moved += $n
+  }
+  return [pscustomobject]@{ Moved = $moved; Backup = $dest }
+}
+
+function Get-UabsProfileRoot([string]$Override) {
+  if ($Override) { return [IO.Path]::GetFullPath($Override) }
+  if ($env:UABS_PROFILE_ROOT) { return [IO.Path]::GetFullPath($env:UABS_PROFILE_ROOT) }
+  return (Join-Path $env:USERPROFILE '.uabs\profile')
+}
+
+function Get-UabsProfileText {
+  <# PROFILE.md (the user's own preferences) plus MACHINE-MAP.md (generated
+     paths for this PC). Lives outside every repository. Capped: this text
+     rides on every request of every provider. #>
+  param([string]$Root, [int]$MaxChars = 6000)
+  $parts = @()
+  foreach ($name in 'PROFILE.md', 'MACHINE-MAP.md') {
+    $p = Join-Path $Root $name
+    if (Test-Path -LiteralPath $p -PathType Leaf) {
+      $t = ([IO.File]::ReadAllText($p)).TrimStart([char]0xFEFF).Trim()
+      if ($t) { $parts += $t }
+    }
+  }
+  $text = ($parts -join "`n`n")
+  if ($text.Length -gt $MaxChars) {
+    throw ("Profile text is {0} characters; the cap is {1} because it is sent with every request. Shorten {2}." -f $text.Length, $MaxChars, (Join-Path $Root 'PROFILE.md'))
+  }
+  return $text
+}
+
+function Update-UabsInstructionProfile {
+  <# One marked UABS-PROFILE block per instruction file: refreshed when the
+     profile changes, removed when it is empty. It sits after any pack block. #>
+  param([string]$Path, [string]$Text)
+  $exists = Test-Path -LiteralPath $Path -PathType Leaf
+  if (-not $exists -and -not $Text) { return $false }
+  $pre = if ($exists) { [IO.File]::ReadAllText($Path) } else { '' }
+  if (-not $Text -and $pre -notmatch '<!-- UABS-PROFILE -->') { return $false }
+  $bom = $false
+  if ($exists) { $b = [IO.File]::ReadAllBytes($Path); $bom = ($b.Length -ge 3 -and $b[0] -eq 0xEF -and $b[1] -eq 0xBB -and $b[2] -eq 0xBF) }
+  $nl = if ($pre -match "`r`n") { "`r`n" } else { "`n" }
+  # Take the blank line that separated the block with it, so removal restores
+  # the surrounding text exactly.
+  $body = [regex]::Replace($pre, '(?ms)(?:\r?\n)?^[ \t]*<!-- UABS-PROFILE -->[ \t]*\r?\n.*?^[ \t]*<!-- /UABS-PROFILE -->[ \t]*(?:\r?\n|$)', '').Trim("`r", "`n")
+  $new = $body
+  if ($Text) {
+    $block = '<!-- UABS-PROFILE -->' + $nl + ($Text.Trim() -replace '\r?\n', $nl) + $nl + '<!-- /UABS-PROFILE -->'
+    $packs = [regex]::Matches($body, '(?m)^[ \t]*<!-- /UABS-PACK:[a-z0-9-]+ -->[ \t]*(?=\r?$)')
+    if ($packs.Count) {
+      $at = $packs[$packs.Count - 1].Index + $packs[$packs.Count - 1].Length
+      $new = $body.Substring(0, $at).TrimEnd() + $nl + $nl + $block + $nl + $nl + $body.Substring($at).Trim("`r", "`n")
+    } else {
+      $new = $block + $(if ($body) { $nl + $nl + $body } else { '' })
+    }
+  }
+  $new = $new.Trim("`r", "`n") + $nl
+  if ($new -ceq $pre) { return $false }
+  if ($exists) { Copy-Item -LiteralPath $Path -Destination ($Path + '.before-profile-' + (Get-Date -Format 'yyyyMMdd-HHmmssfff') + '.bak') -Force }
+  else { New-Item -ItemType Directory -Force -Path (Split-Path -Parent $Path) | Out-Null }
+  [IO.File]::WriteAllText($Path, $new, (New-Object System.Text.UTF8Encoding $bom))
+  return $true
+}
+
 function Get-UabsTreeDigest([string]$Path, [switch]$Ordinal) {
   $root = (Resolve-Path -LiteralPath $Path).Path.TrimEnd('\') + '\'
   $rows = @(Get-ChildItem -LiteralPath $Path -Recurse -File -Force -ErrorAction Stop |

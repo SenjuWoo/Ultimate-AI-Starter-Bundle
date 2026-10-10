@@ -18,6 +18,5 @@ updates:
     groups:
       actions:
         patterns: ["actions/*"]
-  - package-ecosystem: gomod
-    directory: /BUNDLED-TOOLS/skyrim-forge/writer/native-go
-    schedule: {interval: monthly}
+  # Skyrim Forge's Go module is maintained in github.com/SenjuWoo/SkyrimForge,
+  # whose own Dependabot config watches it; this repo pins a Forge release.

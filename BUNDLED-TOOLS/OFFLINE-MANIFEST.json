@@ -1,6 +1,6 @@
 {
   "generated": "2026-10-10",
-  "pack_version": "8.7.40",
+  "pack_version": "8.8.0",
   "assets": [
     {
       "file": "codebase-memory-mcp-windows-amd64.zip",
@@ -26,6 +26,11 @@
       "file": "rtk-x86_64-pc-windows-msvc.zip",
       "size": 4579791,
       "sha256": "1623e9b45d28b15122d69e7314776e1123a804224885ce07e7182fb40080f05c"
+    },
+    {
+      "file": "Skyrim-Forge-6.0.1.zip",
+      "size": 3732625,
+      "sha256": "69e5dfbf5932d82a145d8cb6b87019cc32642f632c201df726da848d58f7fe79"
     },
     {
       "file": "spookys-automod-toolkit-v1.11.2.zip",

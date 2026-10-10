@@ -1,4 +1,4 @@
-Ultimate AI Starter Bundle V8.7.40 - ALL-IN-ONE STARTER
+Ultimate AI Starter Bundle V8.8.0 - ALL-IN-ONE STARTER
 ======================================================
 
 Not just Skyrim. A full multi-provider AI starter bundle: skills, MCP tools,
@@ -40,6 +40,16 @@ THE TWO .BAT FILES
                         then runs START-HERE.bat for you.
 
 Nothing else needs running.
+
+SKYRIM PACK AND PERSONAL PROFILE
+--------------------------------
+Skyrim skills, Skyrim Forge, houseCARL and Spooky install only when Skyrim is
+found on this PC (Steam/GOG, My Games, Vortex, tool variables). Force it:
+    START-HERE.bat -Packs skyrim          (off: -ExcludePacks skyrim; remembered)
+Your own working preferences go in %USERPROFILE%\.uabs\profile\PROFILE.md; each
+install adds it, plus a generated map of this PC's game/mod/tool folders, to
+every AI app. Seed it once:
+    START-HERE.bat -ProfileTemplate autonomous-builder      (off: -SkipProfile)
 
 
 WHICH PROVIDERS GET CONFIGURED

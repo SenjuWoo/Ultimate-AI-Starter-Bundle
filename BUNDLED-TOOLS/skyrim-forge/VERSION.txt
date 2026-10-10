@@ -1,3 +1,0 @@
-Skyrim Forge 6.0.0
-Parent: Skyrim Forge 5.2.1
-Status: validated release

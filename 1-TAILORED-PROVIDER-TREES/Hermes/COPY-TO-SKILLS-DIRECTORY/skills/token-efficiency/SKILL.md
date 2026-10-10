@@ -9,6 +9,27 @@ Reduce repetition, not verification. Context size, cached input, output and
 reasoning usage are different measurements; fewer bytes are not proof of a
 lower bill or unchanged answer quality.
 
+## Where usage actually goes
+
+Measured from one heavy user's local logs (2026-10-10, ~1,100 sessions across
+Codex, Claude Code, Hermes and Grok). Run `python TOOLS/usage_report.py` for
+your own numbers before changing anything.
+
+- Every tool call re-sends the whole context. In long Codex sessions the median
+  was ~124k tokens per call, so what is always loaded (instruction files, skill
+  index, MCP schemas) and every large tool output is paid again on each call.
+  Keep those small; end a phase by updating STATE.md and continue in a fresh
+  session instead of one marathon thread.
+- Codex approval reviews were ~23% of Codex usage: each escalated command
+  started a reviewer that re-read the transcript. Fewer escalations mean fewer
+  reviews: work inside the writable roots, batch commands, and let the user
+  decide whether to widen `sandbox_workspace_write.writable_roots` for folders
+  they always work in. Never change sandbox or approval settings yourself.
+- Forked subagents were ~12%: a fork re-reads the parent history. Spawn only for
+  independent work and give each a narrow written brief.
+- 71 sessions were resumptions after a usage limit. A current STATE.md makes a
+  resume a short read instead of a re-investigation (`state-resumption`).
+
 ## Wait once, report meaningful changes
 
 Use the host's background/notification mechanism for long builds and CI.

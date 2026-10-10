@@ -1,18 +1,20 @@
 ﻿<#
 .SYNOPSIS
-  Install Skyrim Forge from this pack's source tree and prove it runs.
+  Install the pinned Skyrim Forge release and prove it runs.
 
 .DESCRIPTION
-  Forge is not a downloaded third-party payload any more. Its source lives in
-  this repository at BUNDLED-TOOLS\skyrim-forge, so what gets installed is
-  whatever this commit contains -- there is no separately released archive that
-  can drift out from under the installer.
+  Forge is released from github.com/SenjuWoo/SkyrimForge. CATALOG.json pins the
+  release tag, the archive name and its SHA-256. The archive comes from, in
+  order: -SourceZip, the Full-Offline copy in BUNDLED-TOOLS\offline, a verified
+  earlier download in the bundle state folder, or a fresh download that must
+  match the pinned digest before anything is extracted. -SourceDir installs an
+  already extracted tree or a Forge checkout (development and tests).
 
-  That merge fixed a specific failure. Bundle 7.8.0 ended this script with
-  `if (-not $contract.compatible) { throw }`. Forge has never emitted a
-  `compatible` field, `-not $null` is `$true`, so it threw on EVERY run and
-  The previous AIO aborted the whole install on the non-zero exit. Two files that
-  had to agree, in two repositories, with no single commit that could test both.
+  Bundle 7.8.0 ended this script with `if (-not $contract.compatible) { throw }`.
+  Forge never emitted a `compatible` field, `-not $null` is `$true`, so it threw
+  on every run. The only contract kept between the two repositories is the one
+  that can genuinely fail: `forge doctor` after installation, run by this script
+  and by the bundle's CI against the exact pinned release.
 
   The install directory carries NO version suffix, and that is the whole point.
 
@@ -51,23 +53,87 @@ param(
   # is found, then stop. Path resolution is the part that has broken repeatedly,
   # so it has to be runnable on its own -- TESTS/Test-ForgeRootResolution.ps1
   # drives this switch against synthetic layouts.
-  [switch]$ResolveOnly
+  [switch]$ResolveOnly,
+  # A release archive to use instead of the offline copy or a download. It
+  # must still match the SHA-256 pinned in CATALOG.json.
+  [string]$SourceZip,
+  # An extracted Forge tree or checkout to install as-is (no digest check).
+  [string]$SourceDir
 )
 $ErrorActionPreference = 'Stop'
 if (-not $PackRoot) { $PackRoot = Split-Path -Parent $PSScriptRoot }
 $Providers = @($Providers | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+. (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1')
 
-# The source tree names the version in exactly one place; nothing here restates
-# it. Bump BUNDLED-TOOLS\skyrim-forge\VERSION.txt and this follows.
-$source = Join-Path $PackRoot 'BUNDLED-TOOLS\skyrim-forge'
-if (-not (Test-Path -LiteralPath (Join-Path $source 'Install-or-Update.ps1') -PathType Leaf)) {
-  throw "Bundled Forge source is missing or incomplete: $source"
+$catalogPath = Join-Path $PackRoot 'BUNDLED-TOOLS\CATALOG.json'
+$forgeEntry = @(([IO.File]::ReadAllText($catalogPath) | ConvertFrom-Json).components | Where-Object { $_.id -eq 'skyrim-forge' }) | Select-Object -First 1
+if (-not $forgeEntry) { throw "CATALOG.json has no skyrim-forge entry: $catalogPath" }
+$forgeVersion = [string]$forgeEntry.version
+if ($forgeVersion -notmatch '^\d+\.\d+\.\d+$') { throw "CATALOG.json skyrim-forge version is invalid: $forgeVersion" }
+
+function Resolve-ForgeSource {
+  if ($SourceDir) {
+    if (-not (Test-Path -LiteralPath (Join-Path $SourceDir 'Install-or-Update.ps1') -PathType Leaf)) { throw "-SourceDir is not a Forge tree: $SourceDir" }
+    return (Resolve-Path -LiteralPath $SourceDir).Path
+  }
+  $asset = [string]$forgeEntry.asset
+  $pinned = ([string]$forgeEntry.sha256).ToUpperInvariant()
+  if ($asset -notmatch '^[A-Za-z0-9._-]+\.zip$' -or $pinned -notmatch '^[0-9A-F]{64}$') { throw 'CATALOG.json skyrim-forge asset or sha256 is invalid.' }
+  $downloads = Join-Path (Get-UabsStateRoot) 'downloads'
+  $zip = $null
+  if ($SourceZip) {
+    # A named archive is a decision: refuse it outright instead of silently
+    # installing something else.
+    if (-not (Test-Path -LiteralPath $SourceZip -PathType Leaf)) { throw "-SourceZip not found: $SourceZip" }
+    if ((Get-FileHash -LiteralPath $SourceZip -Algorithm SHA256).Hash -ne $pinned) {
+      throw "-SourceZip $SourceZip does not match the pinned release SHA-256 $pinned. Nothing was installed."
+    }
+    $zip = $SourceZip
+  }
+  foreach ($candidate in @($(if (-not $zip) { @((Join-Path $PackRoot ('BUNDLED-TOOLS\offline\' + $asset)), (Join-Path $downloads $asset)) }))) {
+    if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) { continue }
+    if ((Get-FileHash -LiteralPath $candidate -Algorithm SHA256).Hash -eq $pinned) { $zip = $candidate; break }
+    Write-Host "  ..  ignoring $candidate (SHA-256 does not match the pinned release)" -ForegroundColor DarkYellow
+  }
+  if (-not $zip) {
+    $repo = [string]$forgeEntry.github.owner + '/' + [string]$forgeEntry.github.repo
+    $url = 'https://github.com/' + $repo + '/releases/download/' + [string]$forgeEntry.release_tag + '/' + $asset
+    $part = Join-Path $downloads ($asset + '.part-' + [guid]::NewGuid().ToString('N'))
+    try {
+      Save-UabsUrl -Url $url -OutFile $part
+      $actual = (Get-FileHash -LiteralPath $part -Algorithm SHA256).Hash
+      if ($actual -ne $pinned) { throw "Downloaded $asset has SHA-256 $actual; the bundle pins $pinned. Nothing was installed." }
+      Move-Item -LiteralPath $part -Destination (Join-Path $downloads $asset) -Force
+      $zip = Join-Path $downloads $asset
+    } finally { Remove-Item -LiteralPath $part -Force -ErrorAction SilentlyContinue }
+  }
+  # Extract once per pinned digest; later runs reuse the verified tree.
+  $extractRoot = Join-Path (Get-UabsStateRoot) 'forge-src'
+  $extract = Join-Path $extractRoot ($forgeVersion + '-' + $pinned.Substring(0, 12).ToLowerInvariant())
+  $tree = Join-Path $extract ('Skyrim-Forge-' + $forgeVersion)
+  if (-not (Test-Path -LiteralPath (Join-Path $tree 'MANIFEST.json') -PathType Leaf)) {
+    $stage = $extract + '.part-' + [guid]::NewGuid().ToString('N')
+    try {
+      Expand-UabsZip -Zip $zip -Dest $stage -WipeDest
+      if (-not (Test-Path -LiteralPath (Join-Path $stage ('Skyrim-Forge-' + $forgeVersion + '\Install-or-Update.ps1')) -PathType Leaf)) { throw "$asset does not contain Skyrim-Forge-$forgeVersion\Install-or-Update.ps1" }
+      if (Test-Path -LiteralPath $extract) { Remove-Item -LiteralPath $extract -Recurse -Force }
+      Move-Item -LiteralPath $stage -Destination $extract
+    } finally { if (Test-Path -LiteralPath $stage) { Remove-Item -LiteralPath $stage -Recurse -Force -ErrorAction SilentlyContinue } }
+  }
+  # Only the pinned extraction is kept.
+  foreach ($old in @(Get-ChildItem -LiteralPath $extractRoot -Directory -ErrorAction SilentlyContinue | Where-Object { $_.FullName -ne $extract })) {
+    Remove-Item -LiteralPath $old.FullName -Recurse -Force -ErrorAction SilentlyContinue
+  }
+  return $tree
 }
-$versionText = [IO.File]::ReadAllText((Join-Path $source 'VERSION.txt'))
-if ($versionText -notmatch '(?m)^Skyrim Forge\s+(?<ver>\d+\.\d+\.\d+)\s*$') {
-  throw "Cannot read a version from $source\VERSION.txt"
+
+if ($ResolveOnly) { $source = $null } else { $source = Resolve-ForgeSource }
+if ($source) {
+  $versionText = [IO.File]::ReadAllText((Join-Path $source 'VERSION.txt'))
+  if ($versionText -notmatch '(?m)^Skyrim Forge\s+(?<ver>\d+\.\d+\.\d+)\s*$') { throw "Cannot read a version from $source\VERSION.txt" }
+  if (-not $SourceDir -and $Matches['ver'] -ne $forgeVersion) { throw "Release archive holds Forge $($Matches['ver']); CATALOG.json pins $forgeVersion." }
+  $forgeVersion = $Matches['ver']
 }
-$forgeVersion = $Matches['ver']
 
 # ---- Resolve ONE versionless install root -------------------------------
 # Strip a trailing -1.2 / -1.2.3 from a directory leaf.
@@ -222,11 +288,6 @@ if ($refreshRequired) {
 
 $bundleCatalog = $null
 if ($BundleOwnsProviderSkills) {
-  $commonPath = Join-Path $PackRoot 'TOOLS\UABS-Common.ps1'
-  $catalogPath = Join-Path $PackRoot 'BUNDLED-TOOLS\CATALOG.json'
-  if (-not (Test-Path -LiteralPath $commonPath -PathType Leaf)) { throw "Bundle common helpers missing: $commonPath" }
-  if (-not (Test-Path -LiteralPath $catalogPath -PathType Leaf)) { throw "Bundle catalog missing: $catalogPath" }
-  . $commonPath
   $bundleCatalog = [IO.File]::ReadAllText($catalogPath) | ConvertFrom-Json
 }
 

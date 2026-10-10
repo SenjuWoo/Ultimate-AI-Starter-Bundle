@@ -11,7 +11,7 @@
   StandardInput AutoFlush emitted a BOM before a BaseStream wrapper could fix
   it; do not reintroduce a second transport implementation here.
 .EXAMPLE
-  TOOLS\Measure-McpSchemaCost.ps1 -Command 'npx -y @upstash/context7-mcp@4.0.4' -Name context7
+  TOOLS\Measure-McpSchemaCost.ps1 -Command 'npx -y @upstash/context7-mcp@4.3.0' -Name context7
 .EXAMPLE
   TOOLS\Measure-McpSchemaCost.ps1 -Executable 'C:\Program Files\Tool\server.exe' -Arguments @('serve')
 #>

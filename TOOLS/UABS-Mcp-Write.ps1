@@ -730,6 +730,14 @@ function Add-UabsMcpJson {
   return $added
 }
 
+function Get-UabsTomlTableFingerprint([string]$Text) {
+  <# Comments, whitespace, `enabled = true` and literal-vs-basic string quoting
+     do not change what a table means. #>
+  $t = $Text -replace '(?m)^[ \t]*#.*$', '' -replace '(?m)^[ \t]*enabled\s*=\s*true[ \t]*\r?$', ''
+  $t = [regex]::Replace($t, "'([^'\r\n]*)'", { param($m) '"' + ($m.Groups[1].Value -replace '\\', '\\') + '"' })
+  return ($t -replace '\s+', '')
+}
+
 function Add-UabsMcpToml {
   <# Append rather than round-trip. Re-serializing the user's TOML would
      reorder and strip the comments in a file they own. #>
@@ -765,13 +773,33 @@ function Add-UabsMcpToml {
       # backup for it drops a .bak file into the user's project every run.
       $family = [regex]::Escape("$Section.$($s['id'])")
       $existing = [regex]::Match($text, '(?ms)(?:^[ \t]*#[^\r\n]*\r?\n)?^\[' + $family + '\].*?(?=^(?:[ \t]*#[^\r\n]*\r?\n)?\[(?!' + $family + '\.)|\z)')
-      if ($existing.Success -and $existing.Value.Trim() -eq $block.Trim()) { continue }
-      if ($Provider -eq 'Codex' -and $existing.Success -and
-          $existing.Value -match '(?m)^[ \t]*(?:enabled_tools|disabled_tools|enabled|default_tools_approval_mode|required|tool_timeout_sec)\s*=|^\[mcp_servers\.[^.\]]+\.tools\.') {
-        # User policy is not a template target. Leave the entry intact instead
-        # of dropping filters/approvals during a transport refresh.
-        Write-Host ("Codex   custom policy for {0} preserved; automatic transport refresh skipped" -f $s['id']) -ForegroundColor Yellow
-        continue
+      # Codex re-serializes its config (spacing, literal 'strings', its own
+      # `enabled = true`), so compare meaning, not bytes: a byte compare
+      # rewrote and backed up the same three tables on every install.
+      if ($existing.Success -and (Get-UabsTomlTableFingerprint $existing.Value) -ceq (Get-UabsTomlTableFingerprint $block)) { continue }
+      if ($Provider -eq 'Codex' -and $existing.Success) {
+        # User policy is not a template target: keep filters and approvals.
+        # `enabled = true` is Codex's own default (its app writes it), not a
+        # policy; treating it as one froze context7 at 4.0.4 for months.
+        $policy = @([regex]::Matches($existing.Value, '(?m)^[ \t]*(enabled_tools|disabled_tools|enabled|default_tools_approval_mode|required|tool_timeout_sec)\s*=\s*(.*?)\s*$|^\[mcp_servers\.[^.\]]+\.tools\.') |
+          Where-Object { -not ($_.Groups[1].Value -eq 'enabled' -and $_.Groups[2].Value -eq 'true') })
+        if ($policy.Count) {
+          # Still move a pinned npm package to the catalog version, in place.
+          $updated = $existing.Value
+          foreach ($a in @($argv)) {
+            $pin = [regex]::Match([string]$a, '^(@?[^@\s"'']+)@(\d[^\s"'']*)$')
+            if (-not $pin.Success) { continue }
+            $updated = [regex]::Replace($updated, '(["''])' + [regex]::Escape($pin.Groups[1].Value) + '@[^"'']+(["''])', { param($m) $m.Groups[1].Value + $a + $m.Groups[2].Value })
+          }
+          if ($updated -cne $existing.Value) {
+            $text = $text.Substring(0, $existing.Index) + $updated + $text.Substring($existing.Index + $existing.Length)
+            $added += $s['id']
+            Write-Host ("Codex   custom policy for {0} preserved; package pin refreshed" -f $s['id']) -ForegroundColor Yellow
+          } else {
+            Write-Host ("Codex   custom policy for {0} preserved; automatic transport refresh skipped" -f $s['id']) -ForegroundColor Yellow
+          }
+          continue
+        }
       }
       $dropped = Remove-UabsMcpToml -Path $Path -Section $Section -Ids @($s['id']) -CheckOnly:$CheckOnly
       if ($dropped.Count -and -not $CheckOnly) { $text = [IO.File]::ReadAllText($Path) }

@@ -95,6 +95,12 @@ else { Bad ('Bundle self-update gate failed:' + [Environment]::NewLine + $selfUp
 $jsonCaseOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-JsonCaseKeys.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $jsonCaseOut -match 'JSON CASE-KEY GATE: PASS') { Good 'Provider JSON with case-variant keys: byte-exact round trip, scoped add/remove' }
 else { Bad ('JSON case-key gate failed:' + [Environment]::NewLine + $jsonCaseOut) }
+$packsOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-Packs.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $packsOut -match 'PACKS GATE: PASS') { Good 'Content packs: detection, remembered choices, instruction blocks, skill retirement' }
+else { Bad ('Packs gate failed:' + [Environment]::NewLine + $packsOut) }
+$profileOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-UserProfile.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $profileOut -match 'USER PROFILE GATE: PASS') { Good 'Personal profile: seed, machine map, size cap, injection and removal' }
+else { Bad ('User profile gate failed:' + [Environment]::NewLine + $profileOut) }
 
 Section '2. PowerShell parses (excluding BUNDLED-TOOLS)'
 $n = 0; $bad = 0

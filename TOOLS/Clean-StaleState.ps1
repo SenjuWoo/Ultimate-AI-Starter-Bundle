@@ -133,6 +133,14 @@ $providerSkillDirs = [ordered]@{
   Kimi   = Join-Path $env:USERPROFILE '.kimi-code\skills'
   Hermes = Join-Path $env:LOCALAPPDATA 'hermes\skills'
 }
+# Hermes named profiles keep their own cloned skills folder; the managed ones
+# carried ~72 retired skills each that the default folder had long shed.
+$soulSource = Join-Path $PackRoot '3-PREAMBLES\SOUL.md'
+if (Test-Path -LiteralPath $soulSource -PathType Leaf) {
+  foreach ($pf in @(Get-UabsHermesManagedProfiles -HermesHome (Join-Path $env:LOCALAPPDATA 'hermes') -SoulFile $soulSource)) {
+    $providerSkillDirs[('Hermes.' + $pf.Name)] = Join-Path $pf.FullName 'skills'
+  }
+}
 
 $retiredPath = Join-Path $PackRoot 'BUNDLED-TOOLS\RETIRED-SKILLS.json'
 $retired = @()
@@ -196,6 +204,11 @@ $backupFamilies = @(
   # Install-UabsRtkExecutable keeps the replaced binary beside the new one.
   @{ Dir = (Join-Path $env:USERPROFILE '.local\bin'); Glob = 'rtk.exe.bak-uabs-*' }
 )
+if (Test-Path -LiteralPath $soulSource -PathType Leaf) {
+  foreach ($pf in @(Get-UabsHermesManagedProfiles -HermesHome (Join-Path $env:LOCALAPPDATA 'hermes') -SoulFile $soulSource)) {
+    $backupFamilies += @{ Dir = $pf.FullName; Glob = 'SOUL.md.*bak*' }
+  }
+}
 
 foreach ($family in $backupFamilies) {
   if (-not (Test-Path -LiteralPath $family.Dir -PathType Container)) { continue }
