@@ -36951,8 +36951,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 151235,
-  "sha256": "938e3d7688c5195bcfc87d117d3f1b20296d1d12ca280acadbf80cc5386b00f9"
+  "size": 151262,
+  "sha256": "69a85318b3c55b4c685bd69defeeb4026cafee9b3695803336b58c9886ff9784"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -37091,8 +37091,8 @@
  },
  {
   "path": "TESTS/Test-Packs.ps1",
-  "size": 11784,
-  "sha256": "3131cab7386ed9d23e5ba0e73c8542b8e80bc7f92f71ecebc04dc8dbaf4db363"
+  "size": 12227,
+  "sha256": "42508cc622b60534ef376b8879bcbe9100a3235084d16e272f69cf495f4f3444"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -37316,8 +37316,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 309387,
-  "sha256": "46d362d8ca583edb004cde1a9069b86ca59b57b881989c47338c5fd2fe71e23b"
+  "size": 309815,
+  "sha256": "ce3246c38d5e6802dd11d5bf9d4cf3933f031a4ac475037cb96f8d487f820390"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -37351,8 +37351,8 @@
  },
  {
   "path": "TOOLS/Clean-StaleState.ps1",
-  "size": 25341,
-  "sha256": "77331c7f1dd4447c4927dbd2109f2317949b7d74cada278ce01968f5cb728b79"
+  "size": 25356,
+  "sha256": "de7a1c776dd4b72c921a31d6d970925d653b0c387388458f59d75127e450f9eb"
  },
  {
   "path": "TOOLS/Ensure-Headroom-Grok.ps1",
@@ -37456,8 +37456,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 130816,
-  "sha256": "0f3b161a9897ef595f3d2e87501903c4fdc250f6c9b864e485dae91a2299754b"
+  "size": 130860,
+  "sha256": "424605a666dc9e394aa7ec9e4fdfe9e1b96ef90aa857c4c4b7cc7617a7e90e5c"
  },
  {
   "path": "TOOLS/UABS-Mcp-Write.ps1",

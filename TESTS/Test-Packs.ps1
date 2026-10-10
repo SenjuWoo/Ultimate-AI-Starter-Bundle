@@ -130,8 +130,12 @@ try {
     $soul = if ($p -eq 'rp') { "You are a role-play gateway.`n" } else { $soulText }
     [IO.File]::WriteAllText((Join-Path $hh "profiles\$p\SOUL.md"), $soul)
   }
-  $managed = @(Get-UabsHermesManagedProfiles -HermesHome $hh -SoulFile $soulSrc | ForEach-Object Name | Sort-Object)
-  Assert (($managed -join ',') -eq 'code,skyrim') ('Managed Hermes profiles misdetected: ' + ($managed -join ','))
+  New-Item -ItemType Directory -Force -Path (Join-Path $hh 'profiles\bare') | Out-Null
+  [IO.File]::WriteAllText((Join-Path $hh 'profiles\bare\SOUL.md'), $soulText)
+  $managed = @(Get-UabsHermesManagedProfiles -HermesHome $hh -SoulFile $soulSrc -RequireSkills | ForEach-Object Name | Sort-Object)
+  Assert (($managed -join ',') -eq 'code,skyrim') ('Managed Hermes profiles with skills misdetected: ' + ($managed -join ','))
+  $souls = @(Get-UabsHermesManagedProfiles -HermesHome $hh -SoulFile $soulSrc | ForEach-Object Name | Sort-Object)
+  Assert (($souls -join ',') -eq 'bare,code,skyrim') ('Managed Hermes profiles for preamble wiring misdetected: ' + ($souls -join ','))
   $aside = Move-UabsSkillsAside -SkillsDir (Join-Path $hh 'profiles\code\skills') -Names @('skyrim-memory', 'not-there') -Label 'fixture'
   Assert ($aside.Moved -contains 'skyrim-memory' -and $aside.Moved.Count -eq 1 -and (Test-Path -LiteralPath (Join-Path $aside.Backup 'skyrim-memory\SKILL.md'))) 'Pack skill was not moved to a backup.'
   Assert (-not (Test-Path -LiteralPath (Join-Path $hh 'profiles\code\skills\skyrim-memory'))) 'Moved skill is still indexed.'

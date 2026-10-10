@@ -2148,9 +2148,12 @@ def test_hermes_receives_the_combined_soul_and_aio_contract() -> None:
     )
     # A profile carries its own SOUL.md, so wiring only the home copy leaves
     # `hermes -p <name>` running a stale or duplicated soul.
-    assert "-Path $pSoul -SoulFile $soulF -AioFile $aioF" in installer, (
-        "profile SOUL.md files are never wired"
-    )
+    assert "Get-UabsHermesManagedProfiles -HermesHome $hhome -SoulFile $soulF" in installer and (
+        "Install-UabsPreambleBlock -Path (Join-Path $pf.FullName 'SOUL.md') -SoulFile $soulF -AioFile $aioF" in installer
+    ), "bundle-managed profile SOUL.md files are never wired"
+    # ...and only those: a persona profile (the SillyTavern gateway) had the
+    # coding contract appended and then overwritten again on every install.
+    assert "-Path $pSoul -SoulFile $soulF" not in installer, "every profile SOUL.md is wired, persona profiles included"
 
 
 def test_preamble_is_plain_text_without_markers() -> None:

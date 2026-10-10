@@ -587,7 +587,7 @@ if (-not $ToolsOnly) {
       # this bundle manages; Skyrim pack skills belong only in `skyrim`.
       $allPackSkills = @($packSel.Catalog.packs.PSObject.Properties | ForEach-Object { @($_.Value.skills) })
       $hermesOverrides = @(Get-UabsPreservedSkillNames -Provider 'Hermes' -SkillsDir $destSkills)
-      foreach ($pf in @(Get-UabsHermesManagedProfiles -HermesHome $providerHome -SoulFile (Join-Path $PackRoot '3-PREAMBLES\SOUL.md'))) {
+      foreach ($pf in @(Get-UabsHermesManagedProfiles -HermesHome $providerHome -SoulFile (Join-Path $PackRoot '3-PREAMBLES\SOUL.md') -RequireSkills)) {
         $profileSkills = Join-Path $pf.FullName 'skills'
         $notHere = if ($pf.Name -eq 'skyrim') { @($packSel.ExcludedSkills) } else { $allPackSkills }
         try {
@@ -1488,14 +1488,11 @@ if (-not $ToolsOnly -and -not $SkipPreamble) {
       # left behind by an older installer, would otherwise run a stale or
       # duplicated soul. Wire every profile that has one; never create one,
       # because a profile without SOUL.md inherits the home copy.
-      $pdir = Join-Path $hhome 'profiles'
-      if (Test-Path -LiteralPath $pdir) {
-        foreach ($pf in @(Get-ChildItem -LiteralPath $pdir -Directory -ErrorAction SilentlyContinue)) {
-          $pSoul = Join-Path $pf.FullName 'SOUL.md'
-          if (Test-Path -LiteralPath $pSoul -PathType Leaf) {
-            Install-UabsPreambleBlock -Path $pSoul -SoulFile $soulF -AioFile $aioF -Force:$ForcePreamble
-          }
-        }
+      # Only profiles that carry the bundle soul: a persona profile (the
+      # SillyTavern role-play gateway) got the coding contract appended here
+      # and its own installer overwrote it again, on every install.
+      foreach ($pf in @(Get-UabsHermesManagedProfiles -HermesHome $hhome -SoulFile $soulF)) {
+        Install-UabsPreambleBlock -Path (Join-Path $pf.FullName 'SOUL.md') -SoulFile $soulF -AioFile $aioF -Force:$ForcePreamble
       }
       continue
     }

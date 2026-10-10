@@ -980,11 +980,11 @@ function Get-UabsHermesManagedProfiles {
   <# Hermes named profiles that this bundle manages: they have their own skills
      folder and carry the bundle soul. A profile with its own persona (for
      example a role-play gateway) is not returned. #>
-  param([string]$HermesHome, [string]$SoulFile)
+  param([string]$HermesHome, [string]$SoulFile, [switch]$RequireSkills)
   $mark = (([IO.File]::ReadAllText($SoulFile)).Trim() -split '\r?\n')[0]
   foreach ($pf in @(Get-ChildItem -LiteralPath (Join-Path $HermesHome 'profiles') -Directory -ErrorAction SilentlyContinue)) {
     $soul = Join-Path $pf.FullName 'SOUL.md'
-    if (-not (Test-Path -LiteralPath (Join-Path $pf.FullName 'skills') -PathType Container)) { continue }
+    if ($RequireSkills -and -not (Test-Path -LiteralPath (Join-Path $pf.FullName 'skills') -PathType Container)) { continue }
     if (-not (Test-Path -LiteralPath $soul -PathType Leaf)) { continue }
     if (-not ([IO.File]::ReadAllText($soul)).Contains($mark)) { continue }
     $pf
