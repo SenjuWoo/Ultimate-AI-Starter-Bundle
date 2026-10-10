@@ -9,7 +9,6 @@ node_modules/
 # promptfoo eval artifacts
 .promptfoo/
 benchmarks/output*
-benchmarks/benchmark-local-results.json
 
 # Python
 __pycache__/
@@ -24,3 +23,4 @@ ponytail-*.gif
 
 # agentic benchmark workspaces (agent output, kept locally for inspection)
 benchmarks/agentic/runs/
+benchmarks/agentic/fixtures/

@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.7.39",
-  "generated": "2026-10-07",
-  "release_tag": "v8.7.39",
+  "version": "8.7.40",
+  "generated": "2026-10-10",
+  "release_tag": "v8.7.40",
   "canonical_skills": 172,
   "provider_trees": 5,
   "registry_entries": 172,
@@ -28,8 +28,13 @@
     "TESTS/Test-TaskRecipes.ps1",
     "TESTS/Test-GitHubFlags.ps1",
     "TESTS/Test-WaitExternal.ps1",
-    "TESTS/Test-SearchCollapse.ps1"
+    "TESTS/Test-SearchCollapse.ps1",
+    "TESTS/Test-HookPrerequisites.ps1",
+    "TESTS/Test-CodexPluginDedupe.ps1",
+    "TESTS/Test-BundleSelfUpdate.ps1",
+    "TESTS/Test-GrokPluginDedupe.ps1",
+    "TESTS/Test-JsonCaseKeys.ps1"
   ],
-  "runtime_status": "v8.7.39: offline fake-gh regressions cover empty/malformed responses, unknown quality state, open alerts, unavailable quality, input validation, stderr saturation and timeout without printing sensitive fields. Windows PowerShell 5.1 local waits preserve 0, 3, 259 and -1. Full provider/fresh-install gates remain mandatory. Editor/gameplay/GPU and token-billing improvements remain unverified. No new MCP or model change.",
+  "runtime_status": "v8.7.40: Codex hook commands are exercised through the exact cmd.exe /C invocation Codex uses; interpreter selection is tested against a private-runtime junction fixture; the self-update decision, argument forwarding, a real git clone and INSTALL-REMOTE staging exit codes are tested offline. Universal Modder 5506516: 87 upstream tests pass. Melty MCP measured with initialize/tools-list only; no authenticated or publishing call was made. Editor/gameplay/GPU and token-billing improvements remain unverified. No new always-on MCP or model change.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

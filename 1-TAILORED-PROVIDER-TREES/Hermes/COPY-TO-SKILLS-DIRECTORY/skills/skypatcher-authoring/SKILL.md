@@ -125,8 +125,10 @@ gap and the leads recorded there; do not guess OMOD syntax.
 
 - **Provenance.** The `references/` corpus is reconstructed from SkyPatcher's official Nexus
   documentation (v6.4.1), covering 27 record types (Object Modification / OMOD is a documented
-  gap — see `references/records/object-modification.md`). On a SkyPatcher version bump, re-derive
-  from the updated articles before trusting it for new operations.
+  gap — see `references/records/object-modification.md`). SkyPatcher is 7.1.3 on Nexus as of
+  2026-10-10, a major version past this corpus: treat every operation as 6.4.1-verified only, check
+  the user's installed version and its articles before writing one, and re-derive the corpus from
+  the 7.x articles when they are available.
 - **Lookup without authoring.** The same reference answers "what filters/operations does record X
   support" or "what are the legal cast types" — open the record file or `value-tables.md`; no patch
   needs to be written.

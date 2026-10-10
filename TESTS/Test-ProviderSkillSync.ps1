@@ -135,6 +135,43 @@ try {
         throw 'excluded provider-owned skill remained in the ownership ledger'
     }
 
+    # Read-only ownership survives a skills-only sync with plugin lifecycle
+    # disabled. Disabled, missing or malformed plugin roots own no skills.
+    $kimiHome=Join-Path $tempRoot 'Kimi home'
+    $kimiPlugin=Join-Path $kimiHome 'plugins\managed\superpowers'
+    New-Item -ItemType Directory -Force -Path $kimiPlugin | Out-Null
+    [IO.File]::WriteAllText((Join-Path $kimiPlugin 'plugin.json'), '{"name":"superpowers"}', $utf8)
+    $kimiStore=Join-Path $kimiHome 'plugins\installed.json'
+    $kimiDoc=@{version=1;plugins=@(@{id='superpowers';enabled=$true;root=$kimiPlugin})}
+    [IO.File]::WriteAllText($kimiStore,($kimiDoc|ConvertTo-Json -Depth 5),$utf8)
+    $storeBefore=[IO.File]::ReadAllBytes($kimiStore)
+    if (@(Get-UabsKimiEnabledPluginIds -KimiHome $kimiHome) -notcontains 'superpowers') { throw 'Enabled Kimi plugin ownership was lost.' }
+    if ([Convert]::ToBase64String([IO.File]::ReadAllBytes($kimiStore)) -cne [Convert]::ToBase64String($storeBefore)) { throw 'Kimi inventory mutated its registry.' }
+    $kimiDoc.plugins[0].enabled=$false
+    [IO.File]::WriteAllText($kimiStore,($kimiDoc|ConvertTo-Json -Depth 5),$utf8)
+    if (@(Get-UabsKimiEnabledPluginIds -KimiHome $kimiHome).Count) { throw 'Disabled Kimi plugin was treated as an owner.' }
+    $kimiDoc.plugins[0].enabled=$true
+    [IO.File]::WriteAllText($kimiStore,($kimiDoc|ConvertTo-Json -Depth 5),$utf8)
+    [IO.File]::WriteAllText((Join-Path $kimiPlugin 'plugin.json'), '{invalid', $utf8)
+    if (@(Get-UabsKimiEnabledPluginIds -KimiHome $kimiHome).Count) { throw 'Malformed Kimi plugin was treated as an owner.' }
+    # Optional skills: absent unless requested, refreshed once present, a
+    # changed copy is backed up, and the real optional tree never fans out.
+    $optSrc = Join-Path $tempRoot 'optional'
+    $optDst = Join-Path $tempRoot 'optional dest'
+    New-Item -ItemType Directory -Force -Path (Join-Path $optSrc 'opt-in'), $optDst | Out-Null
+    [IO.File]::WriteAllText((Join-Path $optSrc 'opt-in\SKILL.md'), "---`nname: opt-in`ndescription: x`n---`nv2`n", $utf8)
+    if (@(Sync-UabsOptionalSkills -SourceRoot $optSrc -SkillsDir $optDst -Provider Test).Count -or (Test-Path -LiteralPath (Join-Path $optDst 'opt-in'))) { throw 'An optional skill was installed without being requested.' }
+    if (@(Sync-UabsOptionalSkills -SourceRoot $optSrc -SkillsDir $optDst -Provider Test -Requested 'opt-in') -notcontains 'opt-in') { throw 'A requested optional skill was not installed.' }
+    if (@(Sync-UabsOptionalSkills -SourceRoot $optSrc -SkillsDir $optDst -Provider Test).Count) { throw 'An identical optional skill was rewritten.' }
+    [IO.File]::WriteAllText((Join-Path $optDst 'opt-in\SKILL.md'), 'user edit', $utf8)
+    if (@(Sync-UabsOptionalSkills -SourceRoot $optSrc -SkillsDir $optDst -Provider Test) -notcontains 'opt-in') { throw 'An installed optional skill was not refreshed.' }
+    if (-not @(Get-ChildItem -LiteralPath (Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\backups') -Directory -Filter 'optional-skill-Test-opt-in-*').Count) { throw 'A changed optional skill was overwritten without a backup.' }
+    foreach ($provider in 'Claude','Codex','Grok','Hermes','Kimi') {
+      foreach ($opt in @(Get-ChildItem -LiteralPath (Join-Path $PackRoot 'BUNDLED-TOOLS\optional-skills') -Directory)) {
+        if (Test-Path -LiteralPath (Join-Path $PackRoot ("1-TAILORED-PROVIDER-TREES\$provider\COPY-TO-SKILLS-DIRECTORY\skills\" + $opt.Name))) { throw ('Optional skill fanned out by default: ' + $opt.Name) }
+        if (Test-Path -LiteralPath (Join-Path $PackRoot ('_CANONICAL-SKILLS\' + $opt.Name))) { throw ('Optional skill is canonical: ' + $opt.Name) }
+      }
+    }
     Write-Host 'PROVIDER SKILL SYNC: PASS' -ForegroundColor Green
     exit 0
 }

@@ -1,5 +1,39 @@
 # Tool evaluations
 
+## 2026-10-10 full MCP remeasurement (v8.7.40)
+
+Every shipped or routed MCP that can start without a user credential, editor
+or mod-manager instance was started at its pinned version and measured with
+`TOOLS\Measure-McpSchemaCost.ps1` (initialize, then every `tools/list` page;
+compact UTF-8 bytes of the advertised array). Bytes/4 is a schema estimate,
+not loaded, cached or billed tokens; Claude defers MCP schemas and Codex/Hermes
+filter tools, so the active surface is usually smaller.
+
+| Server (pin) | Scope | Tools | Schema bytes | ~bytes/4 |
+|---|---|---:|---:|---:|
+| Headroom 0.40.0 | always-on | 3 | 1,250 | 313 |
+| Context7 4.3.0 | always-on | 2 | 5,231 | 1,308 |
+| GitHub MCP 2.0.2 (five toolsets) | always-on | 47 | 129,679 | 32,420 |
+| codebase-memory 0.11.0 | `code-intel` profile | 17 | 17,308 | 4,327 |
+| Serena 1.7.0 (`agent` context) | `code-intel` profile | 28 | 36,553 | 9,138 |
+| Playwright MCP 0.0.83 | `web` profile | 25 | 20,286 | 5,072 |
+| Chrome DevTools MCP 1.10.1 | `web` profile | 30 | 26,388 | 6,597 |
+| shadcn 4.21.4 | `web` profile | 7 | 4,495 | 1,124 |
+| Godot MCP 0.1.1 | `engine-godot` profile | 14 | 4,967 | 1,242 |
+| Blender MCP 2.1.9 | `engine-blender` profile | 9 | 15,597 | 3,899 |
+| Windows MCP 0.8.8 | opt-in `windows` | 21 | 23,545 | 5,886 |
+| Firecrawl 3.29.1 | extra | 26 | 84,657 | 21,164 |
+| super-mcp-router 2.8.3 | evaluated | 12 | 12,475 | 3,119 |
+| Melty 1.0.0 (melty.gg, user-registered) | Melty app | 21 | 41,702 | 10,426 |
+
+Context7, GitHub, shadcn, Blender, Windows and Firecrawl figures are the
+candidate measurements recorded in `docs/history/V8.7.40-CHANGELOG.md`; the
+rest were taken in this pass. Not remeasured: houseCARL 1.9.0 (needs a real
+MO2/Vortex instance; historical 45 tools / 167,072 bytes), Perplexity (refuses
+initialize without a key), Unity (needs an open editor). GitHub's five-toolset
+surface is the largest always-on cost; it is kept because it is the only
+always-on route to CI/security state, and Claude's Tool Search defers it.
+
 ## 2026-09-13 maintenance and browser CLI
 
 **Taken:** Microsoft's [Playwright CLI](https://github.com/microsoft/playwright-cli)

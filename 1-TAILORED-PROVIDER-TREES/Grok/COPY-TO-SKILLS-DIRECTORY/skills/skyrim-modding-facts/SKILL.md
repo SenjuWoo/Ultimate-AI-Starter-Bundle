@@ -5,8 +5,8 @@ description: Evidence gate for Skyrim facts that are easy to hallucinate, includ
 compatibility: Windows 10/11; Skyrim Special Edition or Anniversary Edition; PowerShell and Python 3 when bundled scripts
   are used
 metadata:
-  version: 4.3.0
-  updated: '2026-07-22'
+  version: 4.4.0
+  updated: '2026-10-10'
   library: overseer-skyrim-agent-skills
   error_registry_revision: 4.3.0
 ---
@@ -46,6 +46,23 @@ Do not substitute memory, an old example, or a plausible token. Record the evide
 - New SSE/AE records normally use form version 44; inspect historical records before normalization.
 
 Read `references/plugin-invariants.md` before plugin work.
+
+## Runtime landscape (verified 2026-10-10; re-check, it moves)
+
+| Store/edition | Game runtime | SKSE |
+|---|---|---|
+| Steam AE (current) | 1.7.104 (1.7.99 shipped 2026-08-20, 1.7.104 on 08-27) | 2.3.1 |
+| GOG AE | 1.6.1179 | 2.2.6 |
+| SE (downgraded) | 1.5.97 | 2.0.20 |
+| VR | 1.4.15 | 2.0.12 |
+
+Address Library All-in-One v13 covers runtimes up to 1.7.104. Many SKSE DLLs
+needed rebuilds for 1.7.x (a version-mismatch or Address Library error at load
+is the usual symptom); check each DLL's release for 1.7 support before telling
+a user to update. The maintained CommonLibSSE-NG line is `alandtse/CommonLibSSE-NG`
+(`ng` branch); the CharmedBaryon fork is frozen. Read the user's actual runtime
+from `SKSE\skse64.log` or the game executable before giving version advice.
+Sources: skse.silverlock.org, the SKSE64 and Address Library Nexus pages.
 
 ## Stop conditions
 

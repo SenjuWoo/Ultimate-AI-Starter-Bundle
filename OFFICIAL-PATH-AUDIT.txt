@@ -1,64 +1,53 @@
 OFFICIAL PATH AND BEHAVIOR BASIS
 ================================
 
-Reviewed July 21, 2026.
+Reviewed October 10, 2026 against BUNDLED-TOOLS\CATALOG.json and the
+installer's own resolvers (Get-UabsProviderHome, Get-UabsProviderSkillsDir).
+A set environment variable always wins over the default.
 
 CODEX
 -----
 
-Provider-native user skills:
-
-    %CODEX_HOME%\skills
-    default %USERPROFILE%\.codex\skills
-
-Global instructions:
-
-    %CODEX_HOME%\AGENTS.md
+Home:                %CODEX_HOME%, default %USERPROFILE%\.codex
+User Agent Skills:   %USERPROFILE%\.agents\skills
+                     (Codex still reads %CODEX_HOME%\skills for compatibility;
+                     writing both indexes every skill twice, so the pack
+                     writes only .agents\skills)
+Global instructions: %CODEX_HOME%\AGENTS.md
+Hooks:               %CODEX_HOME%\hooks.json, run on Windows as
+                     cmd.exe /C "<command>" unless commandWindows is set
 
 CLAUDE CODE
 -----------
 
-Personal skills:
-
-    %CLAUDE_CONFIG_DIR%\skills
-    default %USERPROFILE%\.claude\skills
-
-Global instructions:
-
-    %CLAUDE_CONFIG_DIR%\CLAUDE.md
+Home:                %CLAUDE_CONFIG_DIR%, default %USERPROFILE%\.claude
+Personal skills:     %CLAUDE_CONFIG_DIR%\skills
+Global instructions: %CLAUDE_CONFIG_DIR%\CLAUDE.md
+User MCP servers:    %USERPROFILE%\.claude.json
 
 GROK BUILD
 ----------
 
-Provider-native skills:
-
-    %GROK_HOME%\skills
-    default %USERPROFILE%\.grok\skills
-
-Project instructions use workspace AGENTS.md. This package does not create a
-provider-home AGENTS.md for Grok.
+Home:                %GROK_HOME%, default %USERPROFILE%\.grok
+Skills:              %GROK_HOME%\skills
+Global instructions: %GROK_HOME%\AGENTS.md (bundle preamble block)
+Hooks:               %GROK_HOME%\hooks\ultimate-bundle.json
 
 KIMI CODE
 ---------
 
-Provider-native skills:
-
-    %KIMI_CODE_HOME%\skills
-    default %USERPROFILE%\.kimi-code\skills
-
-Global instructions:
-
-    %KIMI_CODE_HOME%\AGENTS.md
+Home:                %KIMI_CODE_HOME%, default %USERPROFILE%\.kimi-code
+Skills:              %KIMI_CODE_HOME%\skills
+Global instructions: %KIMI_CODE_HOME%\AGENTS.md
+Native plugins:      %KIMI_CODE_HOME%\plugins\installed.json
 
 HERMES AGENT
 ------------
 
-Provider-native skills:
-
-    %HERMES_HOME%\skills
-    default %USERPROFILE%\.hermes\skills
-
-Project rules use workspace AGENTS.md. SOUL.md is identity and is not modified.
+Home:                %HERMES_HOME%, default %LOCALAPPDATA%\hermes
+Skills:              %HERMES_HOME%\skills
+Identity/preamble:   %HERMES_HOME%\SOUL.md (and each profile's SOUL.md)
+Config:              %HERMES_HOME%\config.yaml
 
 WORKSPACE
 ---------

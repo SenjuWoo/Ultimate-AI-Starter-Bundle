@@ -18,7 +18,7 @@ VENDOR = ROOT / "BUNDLED-TOOLS/universal-modder"
 def main():
     env = dict(os.environ, PYTHONPATH=str(VENDOR), PYTHONUTF8="1")
     for args in [["--version"], *[[group, "--help"] for group in
-                ("scan", "sprite", "render3d", "video", "win", "backup", "publish", "kb", "fal")]]:
+                ("scan", "sprite", "render3d", "video", "win", "backup", "publish", "kb", "fal", "comfy")]]:
         result = subprocess.run([sys.executable, "-m", "um", *args], env=env,
                                 capture_output=True, text=True, timeout=30)
         assert result.returncode == 0, result.stderr
@@ -71,7 +71,7 @@ def main():
                 patch.object(scan, "is_wsl", return_value=False), patch.object(scan, "is_mac", return_value=False):
             assert scan.steam_roots() == [steam.resolve()]
 
-    wheel = ROOT / "BUNDLED-TOOLS/offline/universal_modder-0.2.0-py3-none-any.whl"
+    wheel = ROOT / "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.5506516-py3-none-any.whl"
     if wheel.exists():
         with zipfile.ZipFile(wheel) as archive:
             assert archive.testzip() is None
@@ -80,12 +80,12 @@ def main():
                 assert name in archive.namelist(), name
     catalog = json.loads((ROOT / "BUNDLED-TOOLS/CATALOG.json").read_text(encoding="utf-8-sig"))
     component = next(x for x in catalog["components"] if x["id"] == "universal-modder")
-    assert component["source_commit"] == "15d6f9d5fbd32de9b1884f29ddec3be9133bd912"
+    assert component["source_commit"] == "550651675153070cce68066e07c3c8f95df86d08"
     assert not component["mcp"] and not component["auto_register"]
     for provider in component["providers"]:
         skill = ROOT / f"1-TAILORED-PROVIDER-TREES/{provider}/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder"
         assert (skill / "SKILL.md").exists(), provider
-        assert len(list((skill / "references/upstream").glob("*/GUIDE.md"))) == 10
+        assert len(list((skill / "references/upstream").glob("*/GUIDE.md"))) == 11
         assert len(list(skill.rglob("SKILL.md"))) == 1, "reference guides must not enlarge discovery"
     print("Universal Modder offline CLI, recon, wheel and all-provider routing PASS")
 

@@ -13,12 +13,12 @@ as a plugin: a plugin serves one provider, a canonical skill serves all five.
 
 ## Universal Modder — `rehan-remade/universal-modder`, MIT
 
-`universal-modder` routes to all ten upstream skill guides as on-demand
-references, from commit `15d6f9d5fbd32de9b1884f29ddec3be9133bd912` (0.2.0).
+`universal-modder` routes to all eleven upstream skill guides as on-demand
+references, from commit `550651675153070cce68066e07c3c8f95df86d08` (0.2.0, built as 0.2.0+uabs.5506516).
 The CLI source, offline tests and knowledge snapshot are in
 `BUNDLED-TOOLS/universal-modder`, with upstream LICENSE and the font OFL notices.
 UABS pins dependencies, includes the knowledge snapshot in the wheel, and
-discovers Windows Steam roots from the registry. Upstream plugin hooks and
+discovers Windows Steam roots from the registry, and never echoes matched credentials. Upstream plugin hooks and
 fal MCP registrations are not installed; cloud asset calls remain optional.
 
 ## Anthropic — `anthropics/claude-plugins-official`, Apache-2.0

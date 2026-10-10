@@ -26,7 +26,6 @@ const VERSION_FILES = [
   '.qoder-plugin/plugin.json',   // Qoder plugin
   'gemini-extension.json',       // Gemini CLI extension
   'package.json',                // pi-package / repo root
-  'ponytail-mcp/package.json',   // MCP server (private, internal-only)
 ];
 
 function readVersion(relPath) {

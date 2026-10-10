@@ -109,16 +109,15 @@ function Get-ServersFromFile {
   $text = [IO.File]::ReadAllText($ConfigPath)
   $out = @()
   if ($Style -eq 'json') {
-    $doc = $text | ConvertFrom-Json
-    $json = Get-UabsJsonScopeContainer -Json $doc -ProjectKey $ProjectKey
-    if ($null -eq $json) { return @() }
-    if (-not $json.PSObject.Properties[$Section]) { return @() }
-    foreach ($p in $json.($Section).PSObject.Properties) {
-      $enabledProp = $p.Value.PSObject.Properties['enabled']
-      $disabledProp = $p.Value.PSObject.Properties['disabled']
-      if (($enabledProp -and $p.Value.enabled -eq $false) -or
-          ($disabledProp -and $p.Value.disabled -eq $true)) { continue }
-      $out += @{ id = $p.Name; command = $p.Value.command; args = @($p.Value.args); scope = $Scope }
+    $doc = Read-UabsJsonDocument -Path $ConfigPath
+    $sectionMap = Get-UabsJsonSection -Container (Get-UabsJsonScopeContainer -Json $doc -ProjectKey $ProjectKey) -Section $Section
+    if ($null -eq $sectionMap) { return @() }
+    foreach ($name in @($sectionMap.Keys)) {
+      $v = $sectionMap[$name]
+      if ($v -isnot [System.Collections.IDictionary]) { continue }
+      if (($v.ContainsKey('enabled') -and $v['enabled'] -eq $false) -or
+          ($v.ContainsKey('disabled') -and $v['disabled'] -eq $true)) { continue }
+      $out += @{ id = $name; command = $v['command']; args = @($v['args']); scope = $Scope }
     }
     return $out
   }

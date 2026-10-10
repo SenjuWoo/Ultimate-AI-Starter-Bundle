@@ -3,15 +3,15 @@ name: skyrim-base-object-swapper
 description: Author current Skyrim Base Object Swapper sectioned pipe syntax and validate version-sensitive swaps.
 compatibility: Windows 10/11; Skyrim Special Edition or Anniversary Edition; exact installed framework version must be verified
 metadata:
-  version: 4.3.0
-  updated: '2026-07-22'
+  version: 4.4.0
+  updated: '2026-10-10'
   library: overseer-skyrim-agent-skills
   error_registry_revision: 4.3.0
 ---
 
 # Base Object Swapper
 
-This skill owns Skyrim BOS `3.4.1` sectioned pipe grammar.
+This skill owns Skyrim BOS `3.4.1` sectioned pipe grammar, re-verified unchanged in 3.5.0.
 
 ## Sections and entries
 

@@ -5,8 +5,8 @@ description: Create, repair, compile, and validate Skyrim Papyrus scripts, quest
 compatibility: Windows 10/11; Skyrim Special Edition or Anniversary Edition; PowerShell and Python 3 when bundled scripts
   are used
 metadata:
-  version: 4.3.0
-  updated: '2026-07-22'
+  version: 4.4.0
+  updated: '2026-10-10'
   library: overseer-skyrim-agent-skills
   error_registry_revision: 4.3.0
 ---
@@ -31,6 +31,7 @@ metadata:
 - Use `Game.GetFormFromFile` or a verified soft-dependency pattern when a dependency is optional.
 - Preserve property names and persisted state across updates unless a migration is provided.
 - Use MCM Helper as the default for new configuration menus when the installed stack supports it; verify its exact schema from installed examples. Maintain SKI_ConfigBase as a legacy fallback and do not auto-migrate an existing menu without a save/configuration migration plan.
+- Ship a debug switch from the first build (an MCM toggle or GlobalVariable, off by default). When it is on, write through one helper to `Debug.OpenUserLog("<ModName>")` / `Debug.TraceUser("<ModName>", msg)`: the mod version on init and update, resolved settings, state changes and every failed lookup or soft dependency. Tell the user the file is `Documents\My Games\Skyrim Special Edition\Logs\Script\User\<ModName>.0.log` and needs `[Papyrus] bEnableLogging=1` (plus `bEnableTrace=1` for `Debug.Trace`).
 
 ## Workflow
 

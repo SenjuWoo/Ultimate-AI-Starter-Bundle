@@ -514,7 +514,7 @@ The idioms above are traced from the pinned CommonLibSSE-NG / SKSE64 source and 
 A handful of **runtime** behaviors are visible in the source but can't be *proven* from headers — they need
 an empirical build-and-run before you rely on them. Treat these as sound-but-unconfirmed:
 
-- **The exact thread `AddTask` runs on** for the current AE runtime (1.6.x), and whether an off-thread
+- **The exact thread `AddTask` runs on** for the current AE runtimes (1.6.x GOG, 1.7.x Steam), and whether an off-thread
   form/NiNode mutation *without* `AddTask` actually corrupts vs races benignly. The game-thread claim is
   well-established community knowledge and matches the source's intent, but the shallow SKSE64 clone can't
   confirm the current-runtime hook target.

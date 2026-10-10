@@ -189,7 +189,7 @@ relied on as exact:
   hardcoded `-0` component, are inferred from the exact-match code, not observed on those installs.
 - **The unguarded-DllMain crash presentation** — the "no reason line, game CTDs" row is inferred from the
   absence of a guard around the install-time `LoadLibrary`; the exact on-screen presentation is unconfirmed.
-- **Popup wording is version-pinned** to SKSE 2.2.6. Older SKSE releases may word the aggregate dialog
+- **Popup wording is version-pinned** to SKSE 2.2.6 and unverified on 2.3.x (Steam 1.7.x). Other SKSE releases may word the aggregate dialog
   differently — when crash-diagnostics consumes these strings, pin them to the user's SKSE version.
 
 Present none of these as proven runtime behavior; where a triage hinges on one, say it's inferred and

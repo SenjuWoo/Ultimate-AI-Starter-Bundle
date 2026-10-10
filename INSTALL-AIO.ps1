@@ -151,7 +151,15 @@ param(
   # a machine converges on the current tree instead of accumulating every
   # version it has ever seen. -SkipCleanup opts out; the tool is also runnable
   # on its own (TOOLS\Clean-StaleState.ps1, dry-run by default).
-  [switch]$SkipCleanup
+  [switch]$SkipCleanup,
+  # START-HERE checks GitHub for a newer bundle release first: a clean git
+  # clone fast-forwards, a release copy installs the new release through
+  # INSTALL-REMOTE.ps1. Offline/failed checks fall back to this copy.
+  # -SkipSelfUpdate (or UABS_NO_SELF_UPDATE=1) installs this copy as-is.
+  [switch]$SkipSelfUpdate,
+  # Opt-in skills from BUNDLED-TOOLS\optional-skills, e.g. -OptionalSkills
+  # melty-mashups. Never installed by default; refreshed once present.
+  [string[]]$OptionalSkills = @()
 )
 
 # Match -Providers: powershell -File forwards comma-separated names as one string.
@@ -163,6 +171,12 @@ if (-not $CoreOnly) {
   ) | Select-Object -Unique
 }
 if ($WithClaudeMem) { $Components = @($Components) + @('claude-mem') | Select-Object -Unique }
+$OptionalSkills = @($OptionalSkills | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ } | Select-Object -Unique)
+foreach ($opt in $OptionalSkills) {
+  if (-not (Test-Path -LiteralPath (Join-Path $PSScriptRoot ('BUNDLED-TOOLS\optional-skills\' + $opt + '\SKILL.md')) -PathType Leaf)) {
+    throw ("Unknown optional skill '$opt'. Available: " + ((Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'BUNDLED-TOOLS\optional-skills') -Directory -ErrorAction SilentlyContinue).Name -join ', '))
+  }
+}
 if ($WithRtk) { $Components = @($Components) + @('rtk') | Select-Object -Unique }
 
 $ErrorActionPreference = 'Stop'
@@ -226,6 +240,14 @@ if (-not (Test-Path (Join-Path $PackRoot 'BUNDLED-TOOLS\CATALOG.json'))) {
 . (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1')
 . (Join-Path $PackRoot 'TOOLS\UABS-Mcp-Write.ps1')
 $script:UabsPackRoot = $PackRoot
+
+if (-not $SkipSelfUpdate -and $Mode -ne 'BundledOnly' -and $env:UABS_NO_SELF_UPDATE -ne '1') {
+  $handoff = Invoke-UabsBundleSelfUpdate -PackRoot $PackRoot -Bound $PSBoundParameters
+  if ($null -ne $handoff) {
+    if ($script:UabsTranscriptStarted) { try { Stop-Transcript | Out-Null } catch {} }
+    exit $handoff
+  }
+}
 
 # ---------- Which providers this run touches ----------
 # powershell -File collapses -Providers Grok,Claude into ONE string, so split
@@ -379,7 +401,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.7.39 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.7.40 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -520,6 +542,7 @@ if (-not $ToolsOnly) {
     }
 
     Sync-UabsProviderSkills -From $srcSkills -To $destSkills -Provider $prov -ExcludeNames $codexBuiltins
+    $null = Sync-UabsOptionalSkills -SourceRoot (Join-Path $PackRoot 'BUNDLED-TOOLS\optional-skills') -SkillsDir $destSkills -Provider $prov -Requested $OptionalSkills
     if ($legacyCodexSkills -and
         $legacyCodexSkills.TrimEnd('\') -ine $destSkills.TrimEnd('\') -and
         (Test-Path -LiteralPath $legacyCodexSkills -PathType Container)) {
@@ -695,6 +718,8 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
         }
         $pluginStage = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\plugins-src\superpowers'
         Copy-UabsRobo -From (Join-Path $plugins 'superpowers') -To $pluginStage
+        $spCatalog = $catalog.components | Where-Object { $_.id -eq 'superpowers' } | Select-Object -First 1
+        $pinnedGrokSource = $spCatalog.github.owner + '/' + $spCatalog.github.repo + '@' + $spCatalog.release_tag
         # Collapse marketplace + local-path clones BEFORE treating "already
         # native" as success. Two plugins named superpowers both own
         # systematic-debugging and Grok reports that as a skill error.
@@ -702,13 +727,18 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
         $hits = @($hits | Where-Object { -not $_.path -or (Test-Path -LiteralPath $_.path -PathType Container) })
         if ($hits.Count -ge 1) {
           [void](Invoke-UabsNative $grokExe @('plugin','update','superpowers'))
+          $hits = @(Get-UabsGrokPluginList -GrokExe $grokExe | Where-Object { $_.name -eq 'superpowers' })
+          $currentHits = @($hits | Where-Object { try { [version]$_.version -ge [version]$spCatalog.version } catch { $false } })
+          if (-not $currentHits.Count) {
+            [void](Invoke-UabsNative $grokExe @('plugin','install',$pinnedGrokSource,'--trust'))
+          }
           $hits = @(Repair-UabsGrokDuplicatePlugins -GrokExe $grokExe -PluginName 'superpowers')
           $spEntry.native = $true
           $spEntry.status = 'updated-official-cli'
           Write-UabsOk ('Grok: superpowers installed/updated (' + $hits[0].repo_key + ')')
         } else {
-          Write-Host '  grok plugin install superpowers --trust'
-          [void](Invoke-UabsNative $grokExe @('plugin', 'install', 'superpowers', '--trust'))
+          Write-Host ('  grok plugin install ' + $pinnedGrokSource + ' --trust')
+          [void](Invoke-UabsNative $grokExe @('plugin', 'install', $pinnedGrokSource, '--trust'))
           $hits = @(Get-UabsGrokPluginList -GrokExe $grokExe | Where-Object { $_.name -eq 'superpowers' })
           if ($hits.Count -eq 0) {
             Write-Host ('  grok plugin install "' + $pluginStage + '" --trust')
@@ -1246,12 +1276,14 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
 if (-not $ToolsOnly -and $SkipNativePlugins) {
   $backupRoot = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\backups'
   New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
-  foreach ($prov in @($Providers | Where-Object { $_ -in @('Claude', 'Codex') })) {
+  foreach ($prov in @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Kimi') })) {
     $providerHome = Get-UabsProviderHome -Provider $prov -Catalog $catalog
     $skillsDir = Get-UabsProviderSkillsDir -Provider $prov -Catalog $catalog
     $enabledIds = @()
     if ($prov -eq 'Codex') {
       $enabledIds = @(Get-UabsCodexEnabledPluginIds -CodexHome $providerHome)
+    } elseif ($prov -eq 'Kimi') {
+      $enabledIds = @(Get-UabsKimiEnabledPluginIds -KimiHome $providerHome)
     } else {
       $settingsPath = Join-Path $providerHome 'settings.json'
       if (Test-Path -LiteralPath $settingsPath -PathType Leaf) {
@@ -1269,7 +1301,7 @@ if (-not $ToolsOnly -and $SkipNativePlugins) {
     foreach ($pluginId in @('superpowers', 'ponytail')) {
       $srcRoot = Join-Path $plugins $pluginId
       $marketName = Get-UabsClaudeMarketplaceName -PluginRoot $srcRoot
-      $nativeId = if ($marketName) { $pluginId + '@' + $marketName } else { '' }
+      $nativeId = if ($prov -eq 'Kimi') { $pluginId } elseif ($marketName) { $pluginId + '@' + $marketName } else { '' }
       $isNative = $nativeId -and ($enabledIds -contains $nativeId)
       if ($isNative -and $prov -eq 'Claude') {
         $isNative = Test-Path -LiteralPath (Join-Path $providerHome ('plugins\cache\' + $marketName + '\' + $pluginId)) -PathType Container
@@ -2200,7 +2232,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.7.39'
+version = '8.7.40'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

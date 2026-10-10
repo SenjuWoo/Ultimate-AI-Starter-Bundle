@@ -82,7 +82,7 @@ The team will immediately review the incident and determine:
 - What happened.
 - Whether this event constitutes a code of conduct violation.
 - Who the reported person is.
-- Whether this is an ongoing situation, or if there is a threat to anyone's physical safety.
+- Whether this is an ongoing situation, or if there is a threat to anyone's physical safety. 
 
 If this is determined to be an ongoing incident or a threat to physical safety, the team's immediate priority will be to protect everyone involved. This means they may delay an official response until they believe that the situation has concluded and that everyone is physically safe.
 

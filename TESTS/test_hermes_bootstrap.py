@@ -29,11 +29,13 @@ def load_adapter():
 class FakeCtx:
     def __init__(self):
         self.skills = {}
+        self.descriptions = {}
         self.hooks = {}
 
-    def register_skill(self, name, path):
+    def register_skill(self, name, path, description=""):
         assert isinstance(path, Path), "register_skill needs a Path, not a str"
         self.skills[name] = path
+        self.descriptions[name] = description
 
     def register_hook(self, name, fn):
         self.hooks[name] = fn
@@ -45,6 +47,7 @@ def main():
     mod.register(ctx)
 
     assert ctx.skills, "no skills registered"
+    assert all(ctx.descriptions.values()), "Hermes routing needs a nonempty description for every skill"
     hook = ctx.hooks.get("pre_llm_call")
     assert hook, "pre_llm_call not registered"
     marker = mod.BOOTSTRAP_MARKER

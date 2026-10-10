@@ -46,10 +46,9 @@ function Get-TomlMcpIds {
 
 function Get-JsonMcpIds {
   param([string]$Path, [string]$Section = 'mcpServers')
-  $json = Read-JsonFile $Path
-  if (-not $json) { return @() }
-  if ($json.PSObject.Properties.Name -notcontains $Section) { return @() }
-  return @($json.$Section.PSObject.Properties.Name)
+  try { $servers = Get-UabsJsonSection -Container (Read-UabsJsonDocument -Path $Path) -Section $Section } catch { return @() }
+  if (-not $servers) { return @() }
+  return @($servers.Keys)
 }
 
 $lines = New-Object System.Collections.Generic.List[string]

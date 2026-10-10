@@ -54,6 +54,17 @@ def _strip_frontmatter(content: str) -> str:
     return (match.group(1) if match else content).strip()
 
 
+def _frontmatter_value(content: str, key: str) -> str:
+    """Read stock single-line frontmatter scalars for Hermes discovery."""
+    match = re.match(r"^---\n([\s\S]*?)\n---\n", content)
+    if match:
+        for line in match.group(1).splitlines():
+            name, sep, value = line.partition(":")
+            if sep and name.strip() == key:
+                return value.strip().strip("\"'")
+    return ""
+
+
 def _build_bootstrap(skills_dir: str) -> str:
     with open(
         os.path.join(skills_dir, "using-superpowers", "SKILL.md"),
@@ -99,7 +110,9 @@ def register(ctx):
     for name in sorted(os.listdir(skills_dir)):
         skill_md = os.path.join(skills_dir, name, "SKILL.md")
         if os.path.isfile(skill_md):
-            ctx.register_skill(name, Path(skill_md))
+            with open(skill_md, encoding="utf-8") as f:
+                description = _frontmatter_value(f.read(), "description")
+            ctx.register_skill(name, Path(skill_md), description=description)
 
     # pre_llm_call returning {"context": ...} is the documented injection path
     # (on_session_start return values are ignored, and ctx.inject_message

@@ -40,6 +40,13 @@
 
 .PARAMETER KeepZip
   Keep the downloaded release zip in %TEMP% instead of deleting it.
+
+.PARAMETER SelfUpdate
+  Set by INSTALL-AIO.ps1's START-HERE update check. A failure before the new
+  installer starts exits 20, so the caller can install its local copy instead.
+
+.PARAMETER InstallerArgs
+  Extra arguments forwarded verbatim to the new INSTALL-AIO.ps1.
 #>
 [CmdletBinding()]
 param(
@@ -49,7 +56,9 @@ param(
   [switch]$Force,
   [switch]$SkipPreamble,
   [switch]$SkipHouseCarlSetup,
-  [switch]$KeepZip
+  [switch]$KeepZip,
+  [switch]$SelfUpdate,
+  [string[]]$InstallerArgs = @()
 )
 
 $ErrorActionPreference = 'Stop'
@@ -58,7 +67,9 @@ $Repo = 'Ultimate-AI-Starter-Bundle'
 $Api = "https://api.github.com/repos/$Owner/$Repo"
 $H = @{ 'User-Agent' = 'Ultimate-AI-Starter-Bundle/remote-installer' }
 
-function Fail([string]$m) { Write-Host ('XX  ' + $m) -ForegroundColor Red; exit 1 }
+# 20 until the new installer starts: nothing was replaced, the caller's copy is whole.
+$script:FailCode = $(if ($SelfUpdate) { 20 } else { 1 })
+function Fail([string]$m) { Write-Host ('XX  ' + $m) -ForegroundColor Red; exit $script:FailCode }
 function Step([string]$m) { Write-Host ('==> ' + $m) -ForegroundColor Cyan }
 function Ok([string]$m)   { Write-Host ('  OK  ' + $m) -ForegroundColor Green }
 function Warn([string]$m) { Write-Host ('  !!  ' + $m) -ForegroundColor Yellow }
@@ -109,6 +120,13 @@ if (-not $Force -and (Test-Path -LiteralPath $catalog) -and $installedVersion -e
     if ($asset) {
       Ok ("release asset: " + $asset.name)
       Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $zip -Headers $H -TimeoutSec 1800
+      # GitHub publishes a SHA-256 for every release asset; refuse a mismatch.
+      if ([string]$asset.digest -match '^sha256:([0-9a-fA-F]{64})$') {
+        $want = $Matches[1].ToLowerInvariant()
+        $got = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
+        if ($got -ne $want) { Remove-Item -LiteralPath $zip -Force -ErrorAction SilentlyContinue; Fail ("release asset digest mismatch (expected $want, got $got)") }
+        Ok 'release asset SHA-256 verified'
+      }
     } else {
       Warn 'no zip asset on the release - falling back to the source archive'
       Invoke-WebRequest -Uri "https://codeload.github.com/$Owner/$Repo/zip/refs/tags/$tag" -OutFile $zip -Headers $H -TimeoutSec 1800
@@ -170,7 +188,9 @@ $args = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $installer)
 if ($Providers -and $Providers.Count -gt 0) { $args += '-Providers', ($Providers -join ',') }
 if ($SkipPreamble) { $args += '-SkipPreamble' }
 if ($SkipHouseCarlSetup) { $args += '-SkipHouseCarlSetup' }
+if ($InstallerArgs.Count) { $args += $InstallerArgs }
 Step "Running installer from $dest"
+$script:FailCode = 1
 & powershell @args
 if ($LASTEXITCODE -ne 0) { Fail ('installer exit code: ' + $LASTEXITCODE) }
 
@@ -189,6 +209,6 @@ if (Test-Path -LiteralPath $legacyRoot -PathType Container) {
 Write-Host ''
 Write-Host '=====================================================' -ForegroundColor Green
 Write-Host ' DONE. Fully restart every AI app you use.' -ForegroundColor Green
-Write-Host ' Bundle: ' + $dest -ForegroundColor Green
+Write-Host (' Bundle: ' + $dest) -ForegroundColor Green
 Write-Host ' Update later: run TOOLS\Update-From-GitHub.ps1' -ForegroundColor Green
 Write-Host '=====================================================' -ForegroundColor Green

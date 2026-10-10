@@ -1,4 +1,4 @@
-ONE-SHOT BOOTSTRAP (v8.0.0)
+ONE-SHOT BOOTSTRAP
 Paste this into a fresh session of any agentic AI (Grok, Claude Code, Codex,
 Kimi, Hermes) that can run commands. It sets itself up on a machine with
 NOTHING installed. You do nothing else.
@@ -7,53 +7,31 @@ NOTHING installed. You do nothing else.
 Set up my AI tooling from the Ultimate AI Starter Bundle. Work autonomously and
 do not ask me to run anything you can run yourself.
 
-1. Get the bundle.
-   - First look for a local copy: any folder containing
-     INSTALL-AIO.ps1 and BUNDLED-TOOLS\CATALOG.json.
-   - If none exists, download the latest release to a temp folder:
-
-       $zip = Join-Path $env:TEMP 'uabs.zip'
-       $rel = Invoke-RestMethod 'https://api.github.com/repos/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest'
-       $asset = @($rel.assets | Where-Object { $_.name -like '*.zip' }) | Select-Object -First 1
-       if ($asset) { Invoke-WebRequest $asset.browser_download_url -OutFile $zip }
-       else { Invoke-WebRequest "https://codeload.github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/zip/refs/tags/$($rel.tag_name)" -OutFile $zip }
-       $stage = Join-Path $env:TEMP "uabs-$($rel.tag_name)"
-       Expand-Archive $zip $stage -Force
-       $bundle = Get-ChildItem $stage -Directory | Select-Object -First 1
-       if (-not $bundle) { $bundle = Get-Item $stage }
-       $final = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle'
-       New-Item -ItemType Directory -Force $final | Out-Null
-       $dest = Join-Path $final $rel.tag_name
-       if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
-       Move-Item $bundle.FullName $dest
-       Remove-Item $stage -Recurse -Force -EA SilentlyContinue
-   - Prefer the local copy if one exists; otherwise use $dest above
-     (a.k.a. the bundle root).
-
-2. From the bundle root, run:
-     powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
-   This installs the skills, wires the MCP servers, installs the tools, and
-   wires the SOUL + AIO preamble into every agent instruction file
+1. Get the bundle and install it.
+   - If a local copy exists (a folder containing INSTALL-AIO.ps1 and
+     BUNDLED-TOOLS\CATALOG.json), run its START-HERE.bat with
+     UABS_NO_PAUSE=1, or from that folder:
+       powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
+     It checks GitHub for a newer bundle release first and updates itself.
+   - Otherwise install the latest release into the stable location
+     (%LOCALAPPDATA%\Programs\Ultimate-AI-Starter-Bundle; release SHA-256
+     checked, previous copy kept as .previous):
+       powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/SenjuWoo/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
+   The installer installs skills, tools and plugins, wires the core MCP
+   servers, the completeness/assumption gates and the SOUL + AIO preamble
    (~/.claude/CLAUDE.md, ~/.codex/AGENTS.md, ~/.kimi-code/AGENTS.md,
-   ~/.grok/AGENTS.md, Hermes home SOUL.md). Do not skip it.
+   ~/.grok/AGENTS.md, Hermes SOUL.md), then runs its installed-state doctor.
 
-3. Run:
-     powershell -NoProfile -ExecutionPolicy Bypass -File .\TOOLS\Install-Completeness-Gate.ps1
-     powershell -NoProfile -ExecutionPolicy Bypass -File .\TOOLS\Add-Reasoning-MCPs.ps1 -Refresh
-     powershell -NoProfile -ExecutionPolicy Bypass -File .\TOOLS\Build-Toolbelt.ps1
-   Gates stop a half-release and an unverified path. The MCP script pins the
-   one-shot servers. The toolbelt lists what is actually installed.
+2. Read the doctor's result at the end of the output. Fix every XX line it
+   reports rather than reporting it to me, then re-run the doctor:
+     powershell -NoProfile -ExecutionPolicy Bypass -File .\TOOLS\Test-Installed-State.ps1
 
-4. Verify, and fix anything that fails rather than reporting it to me:
-     python TOOLS\audit_skills.py "%USERPROFILE%\.claude\skills"
-     powershell -NoProfile -ExecutionPolicy Bypass -File .\TESTS\Test-Pack.ps1
+3. Read 0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md and 3-PREAMBLES\README.md and
+   follow the rules for the rest of this session. This machine was just
+   configured with the SOUL + AIO preamble, so the rules are already in
+   effect - behave that way from the start, including this session.
 
-5. Read 0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md and 3-PREAMBLES\README.md and follow the rules
-   for the rest of this session. This machine was just configured with the
-   SOUL + AIO preamble, so the rules are already in effect - behave that way
-   from the start, including this session.
-
-6. Tell me, in under ten lines: what got installed, what did not and why, and
+4. Tell me, in under ten lines: what got installed, what did not and why, and
    what I have to do myself (restarts, API keys, anything needing my hands).
 
 Rules: do not invent paths - discover them. Do not skip a step because it looks

@@ -181,6 +181,130 @@ function Set-Utf8NoBom {
   [System.IO.File]::WriteAllText($Path, $Text, $enc)
 }
 
+function ConvertFrom-UabsJsonText {
+  <# Case-sensitive, order-preserving parse into Dictionary[string,object] and
+     object[]. Windows PowerShell's ConvertFrom-Json compares keys without case
+     and throws on ~/.claude.json, which records each project under the exact
+     cwd spelling ("Ai documentation" and "Ai Documentation" both occur). #>
+  param([string]$Text)
+  if ($PSVersionTable.PSEdition -ne 'Core') {
+    Add-Type -AssemblyName System.Web.Extensions
+    $serializer = New-Object System.Web.Script.Serialization.JavaScriptSerializer
+    $serializer.MaxJsonLength = [int]::MaxValue
+    $serializer.RecursionLimit = 1000
+    return ,$serializer.DeserializeObject($Text)
+  }
+  $document = [System.Text.Json.JsonDocument]::Parse($Text)
+  try { return ,(ConvertFrom-UabsJsonElement $document.RootElement) } finally { $document.Dispose() }
+}
+
+function ConvertFrom-UabsJsonElement($Element) {
+  switch ([string]$Element.ValueKind) {
+    'Object' {
+      $map = New-Object 'System.Collections.Generic.Dictionary[string,object]'
+      foreach ($p in $Element.EnumerateObject()) { $map[$p.Name] = ConvertFrom-UabsJsonElement $p.Value }
+      return ,$map
+    }
+    'Array' { return ,@($Element.EnumerateArray() | ForEach-Object { ,(ConvertFrom-UabsJsonElement $_) }) }
+    'String' { return $Element.GetString() }
+    'Number' { $l = 0L; if ($Element.TryGetInt64([ref]$l)) { return $l }; return $Element.GetDecimal() }
+    'True' { return $true }
+    'False' { return $false }
+    default { return $null }
+  }
+}
+
+function ConvertTo-UabsJsonText {
+  <# JSON.stringify(value, null, 2) layout: what Claude, Kimi and Node tools
+     write. -Compress gives one line. Non-ASCII is kept, not \u-escaped. #>
+  param($Value, [string]$Indent = '', [switch]$Compress)
+  if ($null -eq $Value) { return 'null' }
+  if ($Value -is [bool]) { if ($Value) { return 'true' } else { return 'false' } }
+  if ($Value -is [string] -or $Value -is [char]) {
+    $s = [string]$Value
+    if ($s -notmatch '["\\\x00-\x1f]') { return '"' + $s + '"' }
+    $sb = New-Object System.Text.StringBuilder
+    [void]$sb.Append('"')
+    # Ordinal code points: switch/-eq compare culture-sensitively, where control
+    # characters are ignorable and an em dash "equals" a newline.
+    foreach ($ch in $s.ToCharArray()) {
+      $code = [int]$ch
+      if ($code -eq 34) { [void]$sb.Append('\"') }
+      elseif ($code -eq 92) { [void]$sb.Append('\\') }
+      elseif ($code -eq 10) { [void]$sb.Append('\n') }
+      elseif ($code -eq 13) { [void]$sb.Append('\r') }
+      elseif ($code -eq 9) { [void]$sb.Append('\t') }
+      elseif ($code -eq 8) { [void]$sb.Append('\b') }
+      elseif ($code -eq 12) { [void]$sb.Append('\f') }
+      elseif ($code -lt 32) { [void]$sb.Append(('\u{0:x4}' -f $code)) }
+      else { [void]$sb.Append($ch) }
+    }
+    [void]$sb.Append('"')
+    return $sb.ToString()
+  }
+  if ($Value -is [System.Enum]) { return '"' + [string]$Value + '"' }
+  if ($Value -is [datetime]) { return '"' + $Value.ToString('o', [Globalization.CultureInfo]::InvariantCulture) + '"' }
+  if ($Value -is [double] -or $Value -is [single]) { return $Value.ToString('R', [Globalization.CultureInfo]::InvariantCulture) }
+  if ($Value -is [ValueType]) { return ([IFormattable]$Value).ToString($null, [Globalization.CultureInfo]::InvariantCulture) }
+  $inner = $Indent + '  '
+  $nl = $(if ($Compress) { '' } else { "`n" })
+  $sep = $(if ($Compress) { ':' } else { ': ' })
+  $lead = $(if ($Compress) { '' } else { $inner })
+  $close = $(if ($Compress) { '' } else { $Indent })
+  # Explicit loops into a List: pipeline output unrolls one-element arrays.
+  $items = New-Object System.Collections.Generic.List[string]
+  if ($Value -is [System.Collections.IDictionary]) {
+    foreach ($key in @($Value.Keys)) {
+      $items.Add($lead + (ConvertTo-UabsJsonText ([string]$key)) + $sep + (ConvertTo-UabsJsonText -Value $Value[$key] -Indent $inner -Compress:$Compress))
+    }
+    if (-not $items.Count) { return '{}' }
+    return '{' + $nl + ($items -join (',' + $nl)) + $nl + $close + '}'
+  }
+  if ($Value -is [System.Management.Automation.PSCustomObject]) {
+    foreach ($prop in $Value.PSObject.Properties) {
+      $items.Add($lead + (ConvertTo-UabsJsonText $prop.Name) + $sep + (ConvertTo-UabsJsonText -Value $prop.Value -Indent $inner -Compress:$Compress))
+    }
+    if (-not $items.Count) { return '{}' }
+    return '{' + $nl + ($items -join (',' + $nl)) + $nl + $close + '}'
+  }
+  if ($Value -is [System.Collections.IEnumerable]) {
+    foreach ($item in $Value) { $items.Add($lead + (ConvertTo-UabsJsonText -Value $item -Indent $inner -Compress:$Compress)) }
+    if (-not $items.Count) { return '[]' }
+    return '[' + $nl + ($items -join (',' + $nl)) + $nl + $close + ']'
+  }
+  return ConvertTo-UabsJsonText ([string]$Value)
+}
+
+function Read-UabsJsonDocument {
+  <# Parsed document as Dictionary[string,object], or an empty one when the
+     file is absent. A malformed file throws: callers must not overwrite it. #>
+  param([string]$Path)
+  $empty = New-Object 'System.Collections.Generic.Dictionary[string,object]'
+  if (-not (Test-UabsPath -LiteralPath $Path -PathType Leaf)) { return ,$empty }
+  $text = [IO.File]::ReadAllText($Path)
+  if (-not $text.Trim()) { return ,$empty }
+  $doc = ConvertFrom-UabsJsonText $text
+  if ($doc -isnot [System.Collections.IDictionary]) { throw ('JSON root is not an object: ' + $Path) }
+  return ,$doc
+}
+
+function Write-UabsJsonDocument {
+  <# Back up, then write the dictionary in the file's own Node-style layout and
+     newline convention. Unchanged keys keep their spelling, order and case. #>
+  param([string]$Path, $Document)
+  $dir = Split-Path -Parent $Path
+  if ($dir -and -not (Test-UabsPath -LiteralPath $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
+  $newline = "`n"; $trailing = ''
+  if (Test-UabsPath -LiteralPath $Path) {
+    $old = [IO.File]::ReadAllText($Path)
+    if ($old.Contains("`r`n")) { $newline = "`r`n" }
+    if ($old.EndsWith("`n")) { $trailing = $newline }
+    Copy-Item -LiteralPath $Path -Destination "$Path.bak-mcp-$(Get-Date -Format yyyyMMdd-HHmmss)" -Force
+  }
+  $text = (ConvertTo-UabsJsonText $Document) -replace "`n", $newline
+  Set-Utf8NoBom -Path $Path -Text ($text + $trailing)
+}
+
 function Write-JsonFile {
   param([string]$Path, $Object)
   $dir = Split-Path -Parent $Path
@@ -324,16 +448,26 @@ function Get-UabsClaudeProjectKeys {
      only when the file already has one, so an entry is never invisible in
      whichever shell the user actually opens. #>
   param([string]$ProjectPath, [string]$ConfigPath)
+  # Windows paths are case-insensitive but Claude keys them by the spelling it
+  # saw, so "Ai documentation" and "Ai Documentation" can both exist: mirror
+  # into every existing spelling of the same folder too.
   $canonical = $ProjectPath.TrimEnd('\', '/')
   $keys = @($canonical)
-  $alt = $canonical -replace '\\', '/'
-  if ($alt -ne $canonical -and (Test-UabsPath -LiteralPath $ConfigPath -PathType Leaf)) {
+  $slash = $canonical -replace '\\', '/'
+  if (Test-UabsPath -LiteralPath $ConfigPath -PathType Leaf) {
     try {
-      $existing = [IO.File]::ReadAllText($ConfigPath) | ConvertFrom-Json
-      if ($existing.projects -and ($existing.projects.PSObject.Properties.Name -contains $alt)) { $keys += $alt }
+      $existing = Read-UabsJsonDocument -Path $ConfigPath
+      if ($existing.ContainsKey('projects') -and $existing['projects'] -is [System.Collections.IDictionary]) {
+        foreach ($key in @($existing['projects'].Keys)) {
+          $plain = ([string]$key).TrimEnd('\', '/')
+          if (($plain -ieq $canonical -or $plain -ieq $slash) -and $keys -cnotcontains $key) { $keys += [string]$key }
+        }
+      }
     } catch { }
   }
-  return ,@($keys)
+  # Unrolled on purpose: callers collect with @(...); ,@() nested the array and
+  # turned two spellings into one "A B" key.
+  return $keys
 }
 
 function Expand-UabsTemplate {
@@ -486,37 +620,46 @@ function Get-UabsJsonScopeContainer {
      machine-wide entry, or projects["<abs path>"] for a project-scoped one.
      Returns $null when -Create was not asked for and the project is absent. #>
   param($Json, [string]$ProjectKey, [switch]$Create)
-  if (-not $ProjectKey) { return $Json }
-  if ($Json.PSObject.Properties.Name -notcontains 'projects') {
+  # $Json is a Read-UabsJsonDocument dictionary; project keys match exactly.
+  if (-not $ProjectKey) { return ,$Json }
+  if (-not $Json.ContainsKey('projects') -or $Json['projects'] -isnot [System.Collections.IDictionary]) {
     if (-not $Create) { return $null }
-    $Json | Add-Member -NotePropertyName 'projects' -NotePropertyValue ([pscustomobject]@{})
+    $Json['projects'] = New-Object 'System.Collections.Generic.Dictionary[string,object]'
   }
-  if ($Json.projects.PSObject.Properties.Name -notcontains $ProjectKey) {
+  $projects = $Json['projects']
+  if (-not $projects.ContainsKey($ProjectKey) -or $projects[$ProjectKey] -isnot [System.Collections.IDictionary]) {
     if (-not $Create) { return $null }
-    $Json.projects | Add-Member -NotePropertyName $ProjectKey -NotePropertyValue ([pscustomobject]@{})
+    $projects[$ProjectKey] = New-Object 'System.Collections.Generic.Dictionary[string,object]'
   }
-  return $Json.projects.$ProjectKey
+  return ,$projects[$ProjectKey]
+}
+
+function Get-UabsJsonSection {
+  <# The server map in a scope container, or $null. #>
+  param($Container, [string]$Section, [switch]$Create)
+  if ($null -eq $Container) { return $null }
+  if (-not $Container.ContainsKey($Section) -or $Container[$Section] -isnot [System.Collections.IDictionary]) {
+    if (-not $Create) { return $null }
+    $Container[$Section] = New-Object 'System.Collections.Generic.Dictionary[string,object]'
+  }
+  return ,$Container[$Section]
 }
 
 function Remove-UabsMcpJson {
   param([string]$Path, [string]$Section, [string[]]$Ids = @(), [string[]]$MatchLiterals = @(), [switch]$CheckOnly, [string]$ProjectKey)
   if (-not (Test-UabsPath -LiteralPath $Path -PathType Leaf)) { return @() }
-  $doc = [IO.File]::ReadAllText($Path) | ConvertFrom-Json
-  $json = Get-UabsJsonScopeContainer -Json $doc -ProjectKey $ProjectKey
-  if ($null -eq $json) { return @() }
-  if (-not $json.PSObject.Properties[$Section] -or $null -eq $json.$Section) { return @() }
+  $doc = Read-UabsJsonDocument -Path $Path
+  $sectionMap = Get-UabsJsonSection -Container (Get-UabsJsonScopeContainer -Json $doc -ProjectKey $ProjectKey) -Section $Section
+  if ($null -eq $sectionMap) { return @() }
   $dropped = @()
-  foreach ($prop in @($json.$Section.PSObject.Properties)) {
-    $hit = ($Ids -contains $prop.Name)
+  foreach ($name in @($sectionMap.Keys)) {
+    $hit = ($Ids -contains $name)
     if (-not $hit -and $MatchLiterals.Count) {
-      $hit = Test-UabsTextMatchesAny -Text ($prop.Value | ConvertTo-Json -Depth 20 -Compress) -Literals $MatchLiterals
+      $hit = Test-UabsTextMatchesAny -Text (ConvertTo-UabsJsonText $sectionMap[$name] -Compress) -Literals $MatchLiterals
     }
-    if ($hit) {
-      $json.$Section.PSObject.Properties.Remove($prop.Name)
-      $dropped += $prop.Name
-    }
+    if ($hit) { [void]$sectionMap.Remove($name); $dropped += $name }
   }
-  if ($dropped.Count -and -not $CheckOnly) { Write-JsonFile -Path $Path -Object $doc }
+  if ($dropped.Count -and -not $CheckOnly) { Write-UabsJsonDocument -Path $Path -Document $doc }
   return $dropped
 }
 
@@ -562,14 +705,8 @@ function Add-UabsMcpJson {
     [switch]$Refresh, [switch]$CheckOnly, [string]$ProjectPath,
     [string]$ProjectKey, [string]$Scope = 'global'
   )
-  $doc = if (Test-UabsPath -LiteralPath $Path) {
-    [IO.File]::ReadAllText($Path) | ConvertFrom-Json
-  } else { [pscustomobject]@{} }
-  $json = Get-UabsJsonScopeContainer -Json $doc -ProjectKey $ProjectKey -Create
-
-  if ($json.PSObject.Properties.Name -notcontains $Section) {
-    $json | Add-Member -NotePropertyName $Section -NotePropertyValue ([pscustomobject]@{})
-  }
+  $doc = Read-UabsJsonDocument -Path $Path
+  $sectionMap = Get-UabsJsonSection -Container (Get-UabsJsonScopeContainer -Json $doc -ProjectKey $ProjectKey -Create) -Section $Section -Create
   $added = @()
   foreach ($s in $Servers) {
     $entry = [ordered]@{
@@ -578,19 +715,18 @@ function Add-UabsMcpJson {
     }
     $envBlock = Resolve-UabsServerEnv -Server $s
     if ($envBlock.Count) { $entry['env'] = $envBlock }
-    if ($json.$Section.PSObject.Properties.Name -contains $s['id']) {
+    if ($sectionMap.ContainsKey($s['id'])) {
       if (-not $Refresh) { continue }
       # Rewriting a byte-identical entry is not a change. Reporting it as one is
       # noise; taking a timestamped backup for it is litter.
-      $before = $json.$Section.($s['id']) | ConvertTo-Json -Depth 20 -Compress
-      $after  = ([pscustomobject]$entry) | ConvertTo-Json -Depth 20 -Compress
-      if ($before -eq $after) { continue }
-      $json.$Section.PSObject.Properties.Remove($s['id'])
+      $before = ConvertTo-UabsJsonText $sectionMap[$s['id']] -Compress
+      $after  = ConvertTo-UabsJsonText $entry -Compress
+      if ($before -ceq $after) { continue }
     }
-    $json.$Section | Add-Member -NotePropertyName $s['id'] -NotePropertyValue ([pscustomobject]$entry)
+    $sectionMap[$s['id']] = $entry
     $added += $s['id']
   }
-  if ($added.Count -and -not $CheckOnly) { Write-JsonFile -Path $Path -Object $doc }
+  if ($added.Count -and -not $CheckOnly) { Write-UabsJsonDocument -Path $Path -Document $doc }
   return $added
 }
 
@@ -677,11 +813,9 @@ function Test-UabsServerDeclared {
   if ($Style -eq 'toml') {
     return (Test-UabsTomlTableDeclared -Text $text -Section $Section -Id $Id)
   }
-  try { $doc = $text | ConvertFrom-Json } catch { return $false }
-  $c = Get-UabsJsonScopeContainer -Json $doc -ProjectKey $ProjectKey
-  if ($null -eq $c) { return $false }
-  if (-not $c.PSObject.Properties[$Section] -or $null -eq $c.$Section) { return $false }
-  return ($c.$Section.PSObject.Properties.Name -contains $Id)
+  try { $doc = Read-UabsJsonDocument -Path $Path } catch { return $false }
+  $sectionMap = Get-UabsJsonSection -Container (Get-UabsJsonScopeContainer -Json $doc -ProjectKey $ProjectKey) -Section $Section
+  return ($null -ne $sectionMap -and $sectionMap.ContainsKey($Id))
 }
 
 function Test-UabsHermesServerDeclared {

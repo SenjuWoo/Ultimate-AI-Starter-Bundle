@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.7.39 -->
+<!-- Ultimate AI Starter Bundle v8.7.40 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.7.39
+# Ultimate AI Starter Bundle v8.7.40
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -41,7 +41,7 @@ project-specific tools. See [published packages](https://github.com/SenjuWoo/Ult
 
 ### Universal Modder without extra background servers
 
-The default installer provides `um` plus the same `universal-modder` skill to all five providers. Its ten upstream guides are on-demand references, not ten additional skill-index entries. Use `um --version`, `um scan "<verified game folder>" --json`, or the relevant subcommand's `--help`. The packaged knowledge base works offline; its examples must be rechecked against your actual game. Existing engine/Skyrim skills remain the implementation specialists.
+The default installer provides `um` plus the same `universal-modder` skill to all five providers. Its eleven upstream guides are on-demand references, not eleven additional skill-index entries. `um comfy` adds key-free local ComfyUI image generation. Use `um --version`, `um scan "<verified game folder>" --json`, or the relevant subcommand's `--help`. The packaged knowledge base works offline; its examples must be rechecked against your actual game. Existing engine/Skyrim skills remain the implementation specialists.
 
 The bundle does not install the upstream fal MCP or its session hooks. Paid fal generation is optional and needs the user's own setup. Video requires an installed FFmpeg; 3D-to-sprite rendering requires Blender. Core carries vendored source; Full-Offline also carries the wheel. Python/runtime and dependency setup can still need network access when they are not already cached.
 
@@ -788,12 +788,15 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.7.39** - 2026-10-07. Harden the GitHub security probe against missing
-responses and hangs; preserve Windows process exit codes and distinguish
-daily quota exhaustion from transient 429 limits. Repair Forge's stale
-manifest after repository-link changes.
-**172 canonical skills**, no new always-on MCP.
-[Changes](docs/history/V8.7.39-CHANGELOG.md) ·
+**v8.7.40** - 2026-10-10. START-HERE now checks GitHub for a newer bundle
+release and updates itself (clean clone fast-forward or digest-checked release
+swap; offline falls back to the local copy). Fix Codex hooks that cmd.exe could
+never start, hooks wired to Codex's private Python, an invalid skill frontmatter
+Codex skipped, Git shell discovery and duplicate Superpowers installs. Add the
+opt-in optional skills (`-OptionalSkills melty-mashups`), per-engine
+debug-logging rules for every game/mod route, and refresh Universal Modder plus
+ten other tested pins. **172 canonical skills**, no new always-on MCP.
+[Changes](docs/history/V8.7.40-CHANGELOG.md) ·
 [Latest published release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest).
 
 ## License

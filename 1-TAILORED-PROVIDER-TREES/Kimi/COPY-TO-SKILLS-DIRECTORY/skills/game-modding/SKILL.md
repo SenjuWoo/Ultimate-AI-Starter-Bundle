@@ -78,7 +78,7 @@ engine references; it does not replace their version or release gates.
 | Roots, manifests, dependencies, optional branches | `references/game-mod-packaging.md` |
 | Dependency graph, load order, patch precedence | `references/game-mod-load-order-compatibility.md` |
 | Startup failures, crashes, loader and script errors | `references/game-mod-crash-diagnostics.md` |
+| Toggleable debug log and where each engine writes it | `observability-first` (`references/game-mod-logging.md`) |
 | CPU, GPU, memory, I/O, startup cost | `references/game-mod-performance-profiling.md` |
-
 The cross-game error registry is `references/ERROR-REGISTRY.json`; read it
 before substantial repair, packaging, or release work.

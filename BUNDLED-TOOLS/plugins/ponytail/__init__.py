@@ -12,9 +12,9 @@ DEFAULT_MODE = "full"
 RUNTIME_MODES = {"off", "lite", "full", "ultra"}
 CONFIG_MODES = RUNTIME_MODES | {"review"}
 SKILL_COMMANDS = {
-    "ponytail-review": "Review the current diff or provided target for over-engineering.",
-    "ponytail-audit": "Audit the repo for over-engineering and deletion opportunities.",
-    "ponytail-debt": "List every deliberate `ponytail:` shortcut and its upgrade path.",
+    "ponytail-review": "Review the current diff or provided target: bugs, security, load, missing tests, speed, and what to cut.",
+    "ponytail-audit": "Audit the whole repo: bugs, security, load, missing tests, speed, and what to cut.",
+    "ponytail-debt": "List every deliberate `shortcut:` comment and its upgrade path.",
     "ponytail-gain": "Show the measured-impact scoreboard (less code, less cost, more speed).",
     "ponytail-help": "Show the Ponytail command reference.",
 }
@@ -50,12 +50,12 @@ def _config_dir() -> Path:
 
 
 def _default_mode() -> str:
-    env_mode = _normalize_config_mode(os.environ.get("PONYTAIL_DEFAULT_MODE"))
+    env_mode = _normalize_runtime_mode(os.environ.get("PONYTAIL_DEFAULT_MODE"))
     if env_mode:
         return env_mode
     try:
-        data = json.loads((_config_dir() / "config.json").read_text(encoding="utf-8"))
-        file_mode = _normalize_config_mode(data.get("defaultMode"))
+        data = json.loads((_config_dir() / "config.json").read_text(encoding="utf-8-sig"))
+        file_mode = _normalize_runtime_mode(data.get("defaultMode"))
         if file_mode:
             return file_mode
     except Exception:
@@ -70,14 +70,22 @@ def _strip_frontmatter(text: str) -> str:
 def _filter_skill_body_for_mode(body: str, mode: str) -> str:
     effective = _normalize_runtime_mode(mode) or DEFAULT_MODE
     lines = []
-    for line in _strip_frontmatter(body).splitlines():
+    # str.splitlines() drops a trailing line terminator instead of yielding a
+    # trailing empty element, so a body ending in "\n" loses that newline on
+    # rejoin. re.split keeps it, matching the JS filter's split(/\r?\n/).
+    for line in re.split(r"\r?\n", _strip_frontmatter(body)):
         table_label = re.match(r"^\|\s*\*\*(.+?)\*\*\s*\|", line)
         if table_label:
             label_mode = _normalize_runtime_mode(table_label.group(1))
             if label_mode and label_mode != effective:
                 continue
 
-        example_label = re.match(r"^-\s*([^:]+):\s*", line)
+        # Require a quoted value: every worked example is `- lite: "..."`. Without
+        # this, an ordinary rule bullet that happens to start with a mode word
+        # (e.g. "- Full: ...") is silently dropped in every other mode — it looks
+        # like a worked example but is really prose meant to survive verbatim.
+        # Mirrors the fix in hooks/ponytail-instructions.js (#571).
+        example_label = re.match(r'^-\s*([^:]+):\s*"', line)
         if example_label:
             label_mode = _normalize_runtime_mode(example_label.group(1))
             if label_mode and label_mode != effective:
@@ -90,15 +98,13 @@ def _filter_skill_body_for_mode(body: str, mode: str) -> str:
 def _fallback_instructions(mode: str) -> str:
     return (
         f"PONYTAIL MODE ACTIVE — level: {mode}\n\n"
-        "You are a lazy senior developer. Lazy means efficient, not careless. "
-        "The best code is the code never written.\n\n"
-        "Before any code, stop at the first rung that holds: YAGNI, stdlib, "
-        "native platform, installed dependency, one line, then minimum code. "
-        "No unrequested abstractions, avoidable dependencies, boilerplate, or "
-        "speculative scaffolding. Deletion over addition. Boring over clever. "
-        "Do not simplify away trust-boundary validation, data-loss handling, "
-        "security, accessibility, explicitly requested behavior, or one small "
-        "runnable check for non-trivial logic."
+        "You are a lazy senior developer. The best code is the code never written. "
+        "Before you write, list every place your change must reach (callers, tests, "
+        "fixtures) and what it could break for users. First rung that works: skip what "
+        "is not needed, reuse what the codebase has, stdlib or platform, installed "
+        "dependency, one readable line, then minimum code. No unrequested abstractions, "
+        "wrappers, options or boilerplate. Never cut trust-boundary validation, "
+        "data-loss handling, security, accessibility or anything asked for."
     )
 
 
@@ -112,7 +118,7 @@ def build_injected_context(mode: str | None = None) -> str:
             body = REVIEW_SKILL.read_text(encoding="utf-8")
             return f"PONYTAIL MODE ACTIVE — level: review\n\n{_strip_frontmatter(body)}"
         except OSError:
-            return "PONYTAIL MODE ACTIVE — level: review. Review diffs for unnecessary complexity."
+            return "PONYTAIL MODE ACTIVE — level: review. Review the diff for bugs, risks, load, missing tests, speed and bloat; explain each finding in plain English."
 
     effective = _normalize_runtime_mode(configured) or DEFAULT_MODE
     try:
@@ -122,10 +128,28 @@ def build_injected_context(mode: str | None = None) -> str:
         return _fallback_instructions(effective)
 
 
-def _pre_llm_call(session_id: str = "", **_: Any) -> dict[str, str] | None:
+def _pre_llm_call(
+    session_id: str = "", conversation_history: Any = None, **_: Any
+) -> dict[str, str] | None:
     mode = _current_mode or _default_mode()
     context = build_injected_context(mode)
-    return {"context": context} if context else None
+    if not context:
+        return None
+
+    # Hermes persists hook context in api_content for cache-stable replay.
+    # Re-inject only when the active mode changed or compaction removed it.
+    marker = "PONYTAIL MODE ACTIVE — level: "
+    for message in reversed(conversation_history or []):
+        if not isinstance(message, dict):
+            continue
+        api_content = message.get("api_content")
+        if not isinstance(api_content, str):
+            continue
+        matches = re.findall(rf"{re.escape(marker)}([a-z]+)", api_content)
+        if matches:
+            return None if matches[-1] == mode else {"context": context}
+
+    return {"context": context}
 
 
 def _skill_prompt(command: str, args: str = "") -> str:
@@ -168,8 +192,12 @@ def _handle_mode_command(raw_args: str) -> str:
     global _current_mode
     arg = (raw_args or "").strip().lower()
     if not arg:
+        # Bare /ponytail switches ponytail on, or reports the level when it already is (#639).
         mode = _current_mode or _default_mode()
-        return f"Ponytail mode: {mode}. Use `/ponytail lite|full|ultra|off`."
+        if mode != "off":
+            return f"Ponytail mode: {mode}. Use `/ponytail lite|full|ultra|off`."
+        _current_mode = "full" if _default_mode() == "off" else _default_mode()
+        return f"Ponytail mode set to {_current_mode}."
     mode = _normalize_runtime_mode(arg)
     if not mode:
         return "Usage: /ponytail [lite|full|ultra|off]"

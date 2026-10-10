@@ -136,5 +136,5 @@ the reference may be behind and offer to re-derive from the current KID source/d
 ## Validation
 
 - `scripts/validate_kid.py` — offline KID row validation against pinned grammar (merged from the former skyrim-kid-distribution skill).
-- `references/KID-4.0.6-AUTHORITY.md` — pinned KID 4.0.6 grammar authority (commit 895df224d4964dc9723460038eb533bfff06d860).
+- `references/KID-4.0.6-AUTHORITY.md` — pinned KID 4.0.6 grammar authority (commit 895df224d4964dc9723460038eb533bfff06d860), re-verified unchanged in 4.1.0.
 - Cross-framework lint + runtime log checks: `skyrim-distr-kid-validation`.

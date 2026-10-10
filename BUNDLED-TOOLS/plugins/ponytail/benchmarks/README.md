@@ -1,5 +1,21 @@
 # Benchmark
 
+## Current numbers: Ponytail 5 (2026-10-07)
+
+The headline benchmark is the [agentic benchmark](agentic/): a headless Claude Code session per task, the same agent with and without the skill, scored on what it leaves behind. 39 tasks, Opus 5.5, 5 runs each, Ponytail 5, the previous Ponytail (v4.13) and no skill in one interleaved run.
+
+| vs no skill | lines of code | output tokens | cost | time | hidden checks passed |
+|---|--:|--:|--:|--:|--:|
+| **Ponytail 5** | **-53%** | **-45%** | **-26%** | **-41%** | **97%** |
+| Ponytail (v4.13) | -48% | -43% | -16% | -38% | 96% |
+| no skill | | | | | 96% |
+
+98% of risky logic ships with a test (no skill: 68%). Full method, per-task tables and limits: [results/2026-10-07-agentic.md](results/2026-10-07-agentic.md).
+
+Everything below is the earlier single-shot benchmark of the previous Ponytail, kept for history.
+
+## Single-shot benchmark (previous Ponytail, 2026-06)
+
 Three arms (no skill, [caveman](https://github.com/JuliusBrussee/caveman), ponytail), three models, five everyday tasks, **10 runs per cell, median reported**. Code LOC is counted from fenced code blocks; tokens, cost, and latency come straight from the API.
 
 ## Reproduce
@@ -10,26 +26,13 @@ Requires an Anthropic API key and **Node.js ≥ 22.22.0** (promptfoo's engine co
 check with `node --version` and upgrade if needed):
 
 ```bash
-cp ../.env.example .env      # add your ANTHROPIC_API_KEY
+cp .env.example ../.env      # add your ANTHROPIC_API_KEY
 npx promptfoo@latest eval -c promptfooconfig.yaml --env-file ../.env --repeat 10
 npx promptfoo@latest view
 ```
 
 `--env-file ../.env` is required because promptfoo reads `.env` from the current
 directory (`benchmarks/`), not the repo root where the file lives.
-
-### Local models via Ollama
-
-No API key or promptfoo required. Runs against any model served by Ollama:
-
-```bash
-ollama pull llama3.2          # or any other model
-python benchmarks/benchmark-local.py --model llama3.2 --repeat 3
-```
-
-See `benchmarks/results/2026-06-15-llama3.2-local.md` for what to expect: the skill works
-well on instruction-following models (Claude-class) but transfers poorly to small local
-models where the multi-step decision ladder isn't reliably followed.
 
 Tasks: email validator, JS debounce, CSV sum, React countdown, FastAPI rate-limit (see `promptfooconfig.yaml`). Single-shot completions, default temperature.
 

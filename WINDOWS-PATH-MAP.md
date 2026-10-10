@@ -1,4 +1,4 @@
-﻿# Provider-native Windows path map (V5)
+﻿# Provider-native Windows path map
 
 This package does not assume a workspace name, drive letter, or username.
 
@@ -6,11 +6,11 @@ This package does not assume a workspace name, drive letter, or username.
 
 | Application | Provider home | Provider-native skills | Global instructions |
 |---|---|---|---|
-| Codex | `%CODEX_HOME%`, default `%USERPROFILE%\.codex` | `%CODEX_HOME%\skills` | `%CODEX_HOME%\AGENTS.md` |
+| Codex | `%CODEX_HOME%`, default `%USERPROFILE%\.codex` | `%USERPROFILE%\.agents\skills` (the user Agent Skills root; `%CODEX_HOME%\skills` is only read for compatibility) | `%CODEX_HOME%\AGENTS.md` |
 | Claude Code | `%CLAUDE_CONFIG_DIR%`, default `%USERPROFILE%\.claude` | `%CLAUDE_CONFIG_DIR%\skills` | `%CLAUDE_CONFIG_DIR%\CLAUDE.md` |
-| Grok Build | `%GROK_HOME%`, default `%USERPROFILE%\.grok` | `%GROK_HOME%\skills` | none installed; use workspace `AGENTS.md` |
+| Grok Build | `%GROK_HOME%`, default `%USERPROFILE%\.grok` | `%GROK_HOME%\skills` | `%GROK_HOME%\AGENTS.md` |
 | Kimi Code | `%KIMI_CODE_HOME%`, default `%USERPROFILE%\.kimi-code` | `%KIMI_CODE_HOME%\skills` | `%KIMI_CODE_HOME%\AGENTS.md` |
-| Hermes Agent | `%HERMES_HOME%`, default `%USERPROFILE%\.hermes` | `%HERMES_HOME%\skills` | none installed; use workspace `AGENTS.md` |
+| Hermes Agent | `%HERMES_HOME%`, default `%LOCALAPPDATA%\hermes` | `%HERMES_HOME%\skills` | `%HERMES_HOME%\SOUL.md` (and each profile) |
 
 The package intentionally avoids cross-tool shared skill directories for the
 **tailored** edition. The optional generic edition is still per-provider copy.

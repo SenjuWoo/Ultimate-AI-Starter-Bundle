@@ -187,11 +187,14 @@ $backupFamilies = @(
   @{ Dir = (Join-Path $env:USERPROFILE '.codex');     Glob = 'AGENTS.md.*bak*' }
   @{ Dir = (Get-UabsProviderHome -Provider Codex -Catalog (Get-UabsCatalog)); Glob = 'hooks.json.before-retired-*.bak' }
   @{ Dir = (Join-Path $env:USERPROFILE '.claude');    Glob = 'settings.json.bak*' }
+  @{ Dir = $env:USERPROFILE;                          Glob = '.claude.json.bak-mcp-*' }
   @{ Dir = (Join-Path $env:USERPROFILE '.claude');    Glob = 'CLAUDE.md.*bak*' }
   @{ Dir = (Join-Path $env:USERPROFILE '.kimi-code'); Glob = 'AGENTS.md.*bak*' }
   @{ Dir = (Join-Path $env:USERPROFILE '.kimi-code'); Glob = 'mcp.json.bak*' }
   @{ Dir = (Join-Path $env:LOCALAPPDATA 'hermes');    Glob = 'config.yaml.bak*' }
   @{ Dir = (Join-Path $env:LOCALAPPDATA 'hermes');    Glob = 'SOUL.md.*bak*' }
+  # Install-UabsRtkExecutable keeps the replaced binary beside the new one.
+  @{ Dir = (Join-Path $env:USERPROFILE '.local\bin'); Glob = 'rtk.exe.bak-uabs-*' }
 )
 
 foreach ($family in $backupFamilies) {

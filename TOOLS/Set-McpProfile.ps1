@@ -357,8 +357,8 @@ function Get-ClaudeDeclared {
   $p = Join-UabsPath $env:USERPROFILE '.claude.json'
   if (-not (Test-UabsPath -LiteralPath $p)) { return @() }
   try {
-    $cj = [IO.File]::ReadAllText($p) | ConvertFrom-Json
-    if ($cj.mcpServers) { return @($cj.mcpServers.PSObject.Properties.Name) }
+    $cjServers = Get-UabsJsonSection -Container (Read-UabsJsonDocument -Path $p) -Section 'mcpServers'
+    if ($cjServers) { return @($cjServers.Keys) }
   } catch { }
   return @()
 }

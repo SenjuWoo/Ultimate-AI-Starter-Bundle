@@ -15,6 +15,69 @@ function Refresh-ProcessPath {
   $env:Path = (@($machine, $user) | Where-Object { $_ }) -join ';'
 }
 
+function Get-UabsGitShellDirectory {
+  param([string]$GitExecutable)
+  # Git's cmd directory is normally on PATH, but its POSIX shells are not.
+  # Resolve from the installed executable, never a developer's drive/root.
+  $executables = if ($GitExecutable) { @($GitExecutable) } else {
+    @(Get-Command git.exe -CommandType Application -All -ErrorAction SilentlyContinue | ForEach-Object Source)
+  }
+  # git.exe lives in <Git>\cmd, <Git>\bin or <Git>\mingw64\bin; the shells
+  # live in <Git>\bin. Walk up to the install root rather than one level.
+  foreach ($exe in $executables) {
+    if (-not $exe -or -not (Test-Path -LiteralPath $exe -PathType Leaf)) { continue }
+    $dir = Split-Path -Parent $exe
+    for ($i = 0; $i -lt 3 -and $dir; $i++) {
+      foreach ($candidate in @($dir, (Join-Path $dir 'bin'))) {
+        if ((Test-Path -LiteralPath (Join-Path $candidate 'bash.exe') -PathType Leaf) -and
+            (Test-Path -LiteralPath (Join-Path $candidate 'sh.exe') -PathType Leaf)) { return $candidate }
+      }
+      $dir = Split-Path -Parent $dir
+    }
+  }
+  return $null
+}
+
+function Repair-UabsHookShellPath {
+  param([switch]$CheckOnly, [string]$GitExecutable)
+  $directory = Get-UabsGitShellDirectory -GitExecutable $GitExecutable
+  $missing = @('sh.exe','bash.exe' | Where-Object {
+    $command = Get-Command $_ -CommandType Application -ErrorAction SilentlyContinue
+    -not $command -or $command.Source -match '(?i)\\(System32|Sysnative|WindowsApps)\\'
+  })
+  if ($CheckOnly) {
+    if ($missing.Count) { 'Plugin shell prerequisite missing: ' + ($missing -join ', ') + '. Run TOOLS\Install-Completeness-Gate.ps1 and restart the AI apps.' }
+    return
+  }
+  if (-not $directory) {
+    if ($missing.Count) { Write-UabsWarn 'Git POSIX shells not found. Install Git for Windows, then re-run the installer; plugin hooks need sh/bash.' }
+    return
+  }
+  $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+  $entries = @($userPath -split ';' | Where-Object { $_ })
+  $present = @($entries | Where-Object { [Environment]::ExpandEnvironmentVariables($_).TrimEnd('\') -ieq $directory.TrimEnd('\') }).Count -gt 0
+  if (-not $present -and $missing.Count) {
+    $backupRoot = Join-Path (Get-UabsStateRoot) 'backups'
+    New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
+    $backup = Join-Path $backupRoot ('hook-shell-path-' + [guid]::NewGuid().ToString('N') + '.json')
+    $snapshot = [ordered]@{ schema=1; user_path=$userPath; added_directory=$directory }
+    [IO.File]::WriteAllText($backup, ($snapshot | ConvertTo-Json), (New-Object Text.UTF8Encoding($false)))
+    $roundTrip = [IO.File]::ReadAllText($backup) | ConvertFrom-Json
+    if ($roundTrip.user_path -cne $userPath) { throw 'PATH backup verification failed; PATH was not changed.' }
+    $updated = (@($userPath, $directory) | Where-Object { $_ }) -join ';'
+    [Environment]::SetEnvironmentVariable('Path', $updated, 'User')
+    if ([Environment]::GetEnvironmentVariable('Path', 'User') -cne $updated) {
+      [Environment]::SetEnvironmentVariable('Path', $userPath, 'User')
+      throw 'PATH repair verification failed; original restored.'
+    }
+    Write-UabsOk ('Git hook shells added to user PATH; original saved at ' + $backup)
+    Write-UabsWarn 'Restart AI apps launched before this repair; their inherited PATH is unchanged.'
+  }
+  # Preserve private runtime prefixes in this process; Refresh-ProcessPath
+  # would replace them with the registry PATH and can hide its Python/Node.
+  if ($missing.Count) { $env:PATH = $directory + ';' + $env:PATH }
+}
+
 function Get-UabsCodexCli {
   <# Prefer an independently updatable Codex CLI over Hermes' private copy.
      The desktop AppX resource appears on PATH but Windows does not permit
@@ -154,6 +217,7 @@ function Get-UabsPythonExecutable {
   }
 
   $seen = @{}
+  $privateFallback = $null
   foreach ($candidate in $candidates) {
     $key = ([string]$candidate.Source + '|' + (@($candidate.Prefix) -join ' ')).ToLowerInvariant()
     if ($seen.ContainsKey($key)) { continue }
@@ -163,11 +227,25 @@ function Get-UabsPythonExecutable {
       $resolved = @(& $candidate.Source @prefix -c "import importlib,os,sys;[importlib.import_module(n) for n in sys.argv[1:]];print(os.path.abspath(sys.executable))" @RequiredModules 2>$null |
         Where-Object { $_ } | Select-Object -Last 1)
       if ($LASTEXITCODE -eq 0 -and $resolved.Count -and (Test-Path -LiteralPath $resolved[0] -PathType Leaf)) {
+        # An installer run from inside an AI app inherits that app's private
+        # runtime first on PATH; hooks wired to it break when the app updates.
+        if (Test-UabsPrivateRuntimePath $resolved[0]) {
+          if (-not $privateFallback) { $privateFallback = [string]$resolved[0] }
+          continue
+        }
         return [string]$resolved[0]
       }
     } catch { }
   }
-  return $null
+  return $privateFallback
+}
+
+function Test-UabsPrivateRuntimePath([string]$Path) {
+  <# True for interpreters an AI desktop app ships for itself (Codex keeps one
+     under ~\.cache\codex-runtimes and %LOCALAPPDATA%\OpenAI\Codex\runtimes).
+     The app replaces or removes them on update/uninstall without notice. #>
+  if (-not $Path) { return $false }
+  return $Path -match '(?i)[\\/](\.cache[\\/]codex-runtimes|OpenAI[\\/]Codex[\\/]runtimes|AnthropicClaude[\\/]app-[^\\/]+)[\\/]'
 }
 
 function Test-UabsPathWithin([string]$Path, [string]$Root) {
@@ -219,6 +297,112 @@ function Invoke-UabsGitHubLatest {
   param([string]$Owner, [string]$Repo)
   $uri = "https://api.github.com/repos/$Owner/$Repo/releases/latest"
   return Invoke-RestMethod -Uri $uri -Headers $script:UabsHeaders -TimeoutSec 60
+}
+
+function Get-UabsBundleUpdatePlan {
+  <# Pure decision for START-HERE's update check; no I/O.
+     none = already latest, skip = keep the local pack (with reason),
+     git-pull = fast-forward a clean clone, release = install the newer release. #>
+  param([string]$LocalVersion, [string]$LatestTag, [bool]$IsGit, [bool]$GitClean, [bool]$GitTracksUpstream)
+  $plan = [ordered]@{ action = 'skip'; reason = ''; latest = $LatestTag }
+  try {
+    $local = [version]($LocalVersion.Trim().TrimStart('v','V'))
+    $latest = [version]($LatestTag.Trim().TrimStart('v','V'))
+  } catch { $plan.reason = 'Bundle update check skipped: unreadable version (local ' + $LocalVersion + ', latest ' + $LatestTag + ').'; return $plan }
+  if ($latest -le $local) { $plan.action = 'none'; return $plan }
+  if ($IsGit -and -not ($GitClean -and $GitTracksUpstream)) {
+    $plan.reason = "Bundle $LatestTag is available, but this git checkout has local changes or no upstream branch; not updating it. Commit/stash, then git pull."
+    return $plan
+  }
+  $plan.action = $(if ($IsGit) { 'git-pull' } else { 'release' })
+  return $plan
+}
+
+function Get-UabsGitCheckoutState {
+  param([string]$Root)
+  $state = [ordered]@{ is_git = $false; clean = $false; tracks = $false }
+  if (-not (Test-Path -LiteralPath (Join-Path $Root '.git'))) { return $state }
+  $git = Get-Command git -ErrorAction SilentlyContinue
+  if (-not $git) { return $state }
+  $state.is_git = $true
+  $previous = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  try {
+    $porcelain = @(& $git.Source -C $Root status --porcelain 2>$null)
+    $state.clean = ($LASTEXITCODE -eq 0 -and -not $porcelain.Count)
+    $null = & $git.Source -C $Root rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>$null
+    $state.tracks = ($LASTEXITCODE -eq 0)
+  } finally { $ErrorActionPreference = $previous }
+  return $state
+}
+
+function ConvertTo-UabsArgList {
+  <# Re-create a script's bound parameters as powershell.exe -File arguments. #>
+  param([System.Collections.IDictionary]$Bound, [string[]]$Exclude = @())
+  $out = @()
+  foreach ($key in $Bound.Keys) {
+    if ($Exclude -contains $key) { continue }
+    $value = $Bound[$key]
+    if ($value -is [System.Management.Automation.SwitchParameter]) { if ($value.IsPresent) { $out += ('-' + $key) }; continue }
+    if ($value -is [bool]) { if ($value) { $out += ('-' + $key) }; continue }
+    $out += ('-' + $key)
+    $out += $(if ($value -is [array]) { (@($value) -join ',') } else { [string]$value })
+  }
+  return $out
+}
+
+function Get-UabsSelfUpdateRemoteArgs {
+  <# INSTALL-REMOTE forwards -Providers/-SkipPreamble/-SkipHouseCarlSetup to the
+     new installer itself; everything else rides in -InstallerArgs. Passing a
+     parameter both ways makes the new installer fail to bind it twice. #>
+  param([System.Collections.IDictionary]$Bound, [string]$Tag)
+  $own = @('Providers','SkipPreamble','SkipHouseCarlSetup')
+  $splat = @{ Tag = $Tag; SelfUpdate = $true; InstallerArgs = @(@(ConvertTo-UabsArgList -Bound $Bound -Exclude (@('SkipSelfUpdate') + $own)) + '-SkipSelfUpdate') }
+  if ($Bound.Contains('Providers')) { $splat.Providers = @(@($Bound['Providers']) -join ',') }
+  foreach ($name in @('SkipPreamble','SkipHouseCarlSetup')) { if ($Bound.Contains($name) -and $Bound[$name]) { $splat[$name] = $true } }
+  return $splat
+}
+
+function Invoke-UabsBundleSelfUpdate {
+  <# START-HERE update check. Returns $null to continue the local install, or
+     the exit code of the newer installer that already ran. Never blocks: any
+     network, git or staging failure falls back to the local pack. #>
+  param([string]$PackRoot, [System.Collections.IDictionary]$Bound)
+  $local = ([IO.File]::ReadAllText((Join-Path $PackRoot 'VERSION.txt'))).Trim()
+  Write-UabsStep ('Checking for a newer bundle release (local ' + $local + ')')
+  try {
+    $release = Invoke-RestMethod -Uri 'https://api.github.com/repos/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest' -Headers $script:UabsHeaders -TimeoutSec 15
+    $latest = [string]$release.tag_name
+  } catch { Write-UabsWarn ('Bundle update check skipped (offline or GitHub unavailable): ' + $_.Exception.Message); return $null }
+  $git = Get-UabsGitCheckoutState -Root $PackRoot
+  $plan = Get-UabsBundleUpdatePlan -LocalVersion $local -LatestTag $latest -IsGit $git.is_git -GitClean $git.clean -GitTracksUpstream $git.tracks
+  $forward = @(ConvertTo-UabsArgList -Bound $Bound -Exclude @('SkipSelfUpdate'))
+  $powershell = (Get-Command powershell.exe -ErrorAction Stop).Source
+  switch ($plan.action) {
+    'none' {
+      if ($local.TrimStart('v','V') -eq $latest.TrimStart('v','V')) { Write-UabsOk ('Bundle ' + $local + ' is the latest release.') }
+      else { Write-UabsOk ('Bundle ' + $local + ' is newer than the latest published release ' + $latest + '; keeping it.') }
+      return $null
+    }
+    'skip' { Write-UabsWarn $plan.reason; return $null }
+    'git-pull' {
+      Write-UabsStep ('Fast-forwarding this clone to ' + $latest)
+      $previous = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+      try { $pull = & (Get-Command git).Source -C $PackRoot pull --ff-only 2>&1 | Out-String; $pulled = ($LASTEXITCODE -eq 0) }
+      finally { $ErrorActionPreference = $previous }
+      if (-not $pulled) { Write-UabsWarn ('git pull --ff-only failed; installing the local copy instead: ' + $pull.Trim()); return $null }
+      & $powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'INSTALL-AIO.ps1') @forward -SkipSelfUpdate
+      return $LASTEXITCODE
+    }
+    'release' {
+      $remote = Join-Path $PackRoot 'INSTALL-REMOTE.ps1'
+      $remoteArgs = Get-UabsSelfUpdateRemoteArgs -Bound $Bound -Tag $latest
+      try { & $remote @remoteArgs } catch { Write-UabsWarn ('Bundle update failed; installing the local copy instead: ' + $_.Exception.Message); return $null }
+      # 20 = the newer release could not be staged; the local copy is still whole.
+      if ($LASTEXITCODE -eq 20) { Write-UabsWarn 'Newer release could not be staged; installing the local copy instead.'; return $null }
+      return $LASTEXITCODE
+    }
+  }
+  return $null
 }
 
 function Get-UabsComponentGitHubRelease {
@@ -280,6 +464,12 @@ function Install-UabsRtkExecutable {
   [void](Get-UabsRtkVersion -Path $Source -ExpectedVersion $ExpectedVersion)
   $digest = (Get-FileHash -LiteralPath $Source -Algorithm SHA256).Hash
   $parent = Split-Path -Parent $Destination
+  # Same bytes already installed: re-copying only left a 9.5 MB backup per run
+  # (14 of them measured beside one rtk.exe, 2026-10-10).
+  if ((Test-Path -LiteralPath $Destination -PathType Leaf) -and (Get-FileHash -LiteralPath $Destination -Algorithm SHA256).Hash -eq $digest) {
+    $version = Get-UabsRtkVersion -Path $Destination -ExpectedVersion $ExpectedVersion
+    return @{ status='current'; root=$parent; exe=$Destination; version=$version; backup=$null }
+  }
   New-Item -ItemType Directory -Force -Path $parent | Out-Null
   $nonce = [Guid]::NewGuid().ToString('N')
   $part = Join-Path $parent ('rtk.part-' + $nonce + '.exe')
@@ -577,6 +767,25 @@ function Copy-UabsRobo([string]$From, [string]$To) {
   }
 }
 
+function Sync-UabsOptionalSkills {
+  <# Opt-in skills never join the default index. Install one only when
+     requested; afterwards refresh it only where the user already has it,
+     backing up a changed copy first. Returns the names it wrote. #>
+  param([string]$SourceRoot, [string]$SkillsDir, [string]$Provider, [string[]]$Requested = @())
+  $written = @()
+  foreach ($opt in @(Get-ChildItem -LiteralPath $SourceRoot -Directory -ErrorAction SilentlyContinue)) {
+    $target = Join-Path $SkillsDir $opt.Name
+    $present = Test-Path -LiteralPath (Join-Path $target 'SKILL.md') -PathType Leaf
+    if (-not $present -and $Requested -notcontains $opt.Name) { continue }
+    if ($present -and (Get-UabsTreeDigest $target -Ordinal) -ceq (Get-UabsTreeDigest $opt.FullName -Ordinal)) { continue }
+    if ($present) { Copy-UabsRobo -From $target -To (Join-Path (Get-UabsStateRoot) ('backups\optional-skill-' + $Provider + '-' + $opt.Name + '-' + [guid]::NewGuid().ToString('N'))) }
+    Copy-UabsRobo -From $opt.FullName -To $target
+    Write-UabsOk ("${Provider}: optional skill " + $opt.Name + $(if ($present) { ' refreshed' } else { ' installed' }))
+    $written += $opt.Name
+  }
+  return $written
+}
+
 function Get-UabsTreeDigest([string]$Path, [switch]$Ordinal) {
   $root = (Resolve-Path -LiteralPath $Path).Path.TrimEnd('\') + '\'
   $rows = @(Get-ChildItem -LiteralPath $Path -Recurse -File -Force -ErrorAction Stop |
@@ -670,6 +879,17 @@ function Sync-UabsProviderSkills(
     }
   }
 
+  New-Item -ItemType Directory -Force -Path $To | Out-Null
+  $workRoot = Join-Path (Split-Path -Parent ([IO.Path]::GetFullPath($To).TrimEnd('\'))) '.uabs-skill-work'
+  New-Item -ItemType Directory -Force -Path $workRoot | Out-Null
+  # Older installers staged inside the skills root. Restore an orphaned backup
+  # whose skill is missing (an interrupted swap); drop every other leftover.
+  foreach ($left in @(Get-ChildItem -LiteralPath $To -Directory -Force -ErrorAction SilentlyContinue | Where-Object { $_.Name -match '^\.uabs-skill-(stage|backup)-(.+)-[0-9a-f]{32}$' })) {
+    $owner = Join-Path $To $Matches[2]
+    if ($Matches[1] -eq 'backup' -and -not (Test-Path -LiteralPath $owner)) { Move-Item -LiteralPath $left.FullName -Destination $owner; Write-UabsWarn ('restored interrupted skill swap: ' + $Matches[2]) }
+    else { Remove-Item -LiteralPath $left.FullName -Recurse -Force }
+  }
+
   foreach ($skillDir in @(Get-ChildItem -LiteralPath $From -Directory -Force -ErrorAction Stop)) {
     if ($ExcludeNames -contains $skillDir.Name) { continue }
     $sourceSkillMd = Join-Path $skillDir.FullName 'SKILL.md'
@@ -684,9 +904,16 @@ function Sync-UabsProviderSkills(
     }
 
     $destSkill = Join-Path $To $skillDir.Name
+    # Identical bytes already installed: rewriting them made every skill vanish
+    # and reappear in running apps on each install.
+    if ((Test-Path -LiteralPath $destSkill -PathType Container) -and
+        -not ((Get-Item -LiteralPath $destSkill -Force).Attributes -band [IO.FileAttributes]::ReparsePoint) -and
+        (Get-UabsTreeDigest $destSkill -Ordinal) -ceq (Get-UabsTreeDigest $skillDir.FullName -Ordinal)) { continue }
     $nonce = [Guid]::NewGuid().ToString('N')
-    $stage = Join-Path $To ('.uabs-skill-stage-' + $skillDir.Name + '-' + $nonce)
-    $backup = Join-Path $To ('.uabs-skill-backup-' + $skillDir.Name + '-' + $nonce)
+    # Stage beside the skills root, not inside it: apps index every folder in
+    # the root, so a staging copy showed up as a second skill mid-install.
+    $stage = Join-Path $workRoot ('stage-' + $skillDir.Name + '-' + $nonce)
+    $backup = Join-Path $workRoot ('backup-' + $skillDir.Name + '-' + $nonce)
     $movedExisting = $false
 
     try {
@@ -938,6 +1165,24 @@ function Repair-UabsCodexLegacyHooks {
             $scriptName = $Matches[1]; break
           }
         }
+        if (-not $scriptName -and $event.Name -in @('SessionStart','SubagentStart')) {
+          $command = $handler.PSObject.Properties['command']
+          if ($command -and $command.Value -is [string]) {
+            $target = $command.Value.Trim().Trim('"',"'").Replace('/','\')
+            $hookRoot = Join-Path (Split-Path -Parent $Path) 'hooks'
+            foreach ($name in @('cbm-session-reminder','cbm-subagent-reminder')) {
+              $expected = Join-Path $hookRoot $name
+              if ($target -ieq $expected -and (Test-Path -LiteralPath $expected -PathType Leaf)) {
+                $body = [IO.File]::ReadAllText($expected)
+                $steers = ($body.Contains('CRITICAL - Code Discovery Protocol:') -and $body.Contains('run index_repository FIRST')) -or
+                  ($name -eq 'cbm-subagent-reminder' -and $body.Contains('prefer codebase-memory-mcp tools'))
+                if ($steers -and $body -notmatch '\|\|\s*(exit\s+0|return)\b') {
+                  $scriptName = ($name + ' (unconditional legacy codebase-memory reminder)')
+                }
+              }
+            }
+          }
+        }
         if ($scriptName) { $issues += ($event.Name + ': retired bundle executable hook ' + $scriptName); $removed = $true }
         else {
           $unix = $handler.PSObject.Properties['command']
@@ -952,16 +1197,30 @@ function Repair-UabsCodexLegacyHooks {
           }
           if ($legacyImpeccable) {
             $issues += ($event.Name + ': retired obsolete global Impeccable executable hook'); $removed = $true
-          } else { $keep += $handler }
+          } else {
+            # Codex on Windows runs `cmd.exe /C "<command>"` unless commandWindows
+            # is set, so a quoted extensionless bash script can never start.
+            $posix = Get-UabsCodexPosixOnlyScript -Handler $handler -HookRoot (Join-Path (Split-Path -Parent $Path) 'hooks')
+            if ($posix) {
+              $bashDir = Get-UabsGitShellDirectory
+              $bash = if ($bashDir) { Join-Path $bashDir 'bash.exe' } else { $null }
+              if ($bash -and (Test-Path -LiteralPath $bash -PathType Leaf)) {
+                $issues += ($event.Name + ': bash-only hook given a Windows command: ' + (Split-Path -Leaf $posix))
+                $handler | Add-Member -NotePropertyName commandWindows -NotePropertyValue ('"' + $bash + '" "' + $posix.Replace('\','/') + '"') -Force
+              } else {
+                $issues += ($event.Name + ': bash-only hook cannot run on Windows without Git for Windows: ' + (Split-Path -Leaf $posix))
+              }
+            }
+            $keep += $handler
+          }
         }
       }
       if ($keep.Count -or -not $removed) { $handlers.Value = @($keep); $groups += $group }
     }
     $event.Value = @($groups)
   }
-  if ($issues.Count -and -not $CheckOnly) {
-    $after = ($doc | ConvertTo-Json -Depth 100) + [Environment]::NewLine
-    $null = $after | ConvertFrom-Json
+  $after = ($doc | ConvertTo-Json -Depth 100) + [Environment]::NewLine
+  if ($issues.Count -and -not $CheckOnly -and ($after | ConvertFrom-Json | ConvertTo-Json -Depth 100 -Compress) -cne ($before | ConvertFrom-Json | ConvertTo-Json -Depth 100 -Compress)) {
     $bytes = [IO.File]::ReadAllBytes($Path)
     $bom = $bytes.Length -ge 3 -and $bytes[0] -eq 239 -and $bytes[1] -eq 187 -and $bytes[2] -eq 191
     $nonce = [Guid]::NewGuid().ToString('N')
@@ -974,10 +1233,29 @@ function Repair-UabsCodexLegacyHooks {
         Copy-Item -LiteralPath $backup -Destination $Path -Force
         throw 'Codex hook retirement verification failed; original restored.'
       }
-      Write-UabsOk ('Codex: retired ' + $issues.Count + ' obsolete native hook handler(s); backup: ' + $backup)
+      Write-UabsOk ('Codex: repaired ' + $issues.Count + ' native hook handler(s); backup: ' + $backup)
     } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
   }
   $issues
+}
+
+function Get-UabsCodexPosixOnlyScript {
+  <# Full path of the bash script a Codex handler runs when that handler has no
+     Windows override and its command is just a (quoted) path to a shebang
+     script inside <CODEX_HOME>\hooks; otherwise $null. Never executes it. #>
+  param($Handler, [string]$HookRoot)
+  if (-not $Handler -or $Handler.type -ne 'command') { return $null }
+  foreach ($field in @('commandWindows','command_windows')) { if ($Handler.PSObject.Properties[$field]) { return $null } }
+  $command = $Handler.PSObject.Properties['command']
+  if (-not $command -or $command.Value -isnot [string]) { return $null }
+  $target = $command.Value.Trim().Trim('"',"'").Replace('/','\')
+  if (-not $target -or $target.IndexOfAny([IO.Path]::GetInvalidPathChars() + [char[]]'"*?<>|') -ge 0) { return $null }
+  if ($target -match '\s' -and -not (Test-Path -LiteralPath $target -PathType Leaf)) { return $null }
+  if (-not (Test-UabsPathWithin -Path $target -Root $HookRoot) -or [IO.Path]::GetExtension($target)) { return $null }
+  if (-not (Test-Path -LiteralPath $target -PathType Leaf)) { return $null }
+  $first = @([IO.File]::ReadAllLines($target) | Select-Object -First 1)
+  if ($first.Count -and $first[0] -match '^#!.*\b(ba)?sh\b') { return $target }
+  return $null
 }
 
 function Get-UabsGrokHookIssues {
@@ -1366,6 +1644,99 @@ function Get-UabsCodexEnabledPluginIds {
   return @($ids)
 }
 
+function Repair-UabsCodexDuplicatePlugins {
+  param([string]$CodexHome, $Inventory, [switch]$CheckOnly)
+  $path = Join-Path $CodexHome 'config.toml'
+  if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { return }
+  if (-not $Inventory) {
+    $cli = Get-UabsCodexCli
+    if (-not $cli) { return }
+    $savedCodexHome = $env:CODEX_HOME
+    try {
+      $env:CODEX_HOME = $CodexHome
+      $Inventory = Get-UabsNativeOutput -Exe $cli.Source -CmdArgs @('plugin','list','--json') | ConvertFrom-Json
+    }
+    catch { Write-UabsWarn 'Codex plugin inventory unavailable; duplicate-plugin repair skipped.'; return }
+    finally { $env:CODEX_HOME = $savedCodexHome }
+  }
+  $native = @($Inventory.installed | Where-Object { $_.pluginId -eq 'superpowers@superpowers-dev' -and $_.enabled })
+  $curated = @($Inventory.installed | Where-Object { $_.pluginId -eq 'superpowers@openai-curated-remote' -and $_.enabled })
+  if ($native.Count -ne 1 -or $curated.Count -ne 1) { return }
+  try { if ([version]$native[0].version -lt [version]$curated[0].version) { return } } catch { return }
+  $before = [IO.File]::ReadAllText($path)
+  $header = '[plugins."superpowers@openai-curated-remote"]'
+  $newline = if ($before.Contains("`r`n")) { "`r`n" } else { "`n" }
+  $pattern = '(?ms)^' + [regex]::Escape($header) + '[ \t]*\r?\n(?:(?!^\[).)*'
+  $match = [regex]::Match($before, $pattern)
+  if ($match.Success) {
+    $section = $match.Value
+    if ($section -match '(?m)^enabled\s*=\s*false\b') { return }
+    if ($section -match '(?m)^enabled\s*=') {
+      $replacement = [regex]::Replace($section, '(?m)^(enabled[ \t]*=[ \t]*)true\b', '${1}false')
+    } else { $replacement = $section.Insert($section.IndexOf("`n") + 1, 'enabled = false' + $newline) }
+    $after = $before.Substring(0,$match.Index) + $replacement + $before.Substring($match.Index+$match.Length)
+  } else { $after = $before + $newline + $header + $newline + 'enabled = false' + $newline }
+  if ($after -ceq $before) { return }
+  $issue = 'Two Superpowers plugins enabled; keep the same/newer upstream installation and disable the duplicate curated copy.'
+  if (-not $CheckOnly) {
+    if ((Get-Item -LiteralPath $path).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Refusing redirected Codex config.' }
+    $nonce = [guid]::NewGuid().ToString('N')
+    $backup = $path + '.bak-plugin-dedupe-' + $nonce
+    $temp = $path + '.tmp-' + $nonce
+    try {
+      [IO.File]::WriteAllText($temp, $after, (New-Object Text.UTF8Encoding($false)))
+      [IO.File]::Replace($temp, $path, $backup)
+      if ([IO.File]::ReadAllText($path) -cne $after) {
+        Copy-Item -LiteralPath $backup -Destination $path -Force
+        throw 'Plugin dedupe verification failed; original restored.'
+      }
+      Write-UabsOk ('Codex: duplicate curated Superpowers disabled; upstream retained. Backup: ' + $backup)
+    } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
+  }
+  $issue
+}
+
+function Repair-UabsCodexRetiredFeatures {
+  <# Codex reports these [features] keys as unknown/ignored on every config
+     load (1,180+ log lines in one day, measured 2026-10-10). Codex already
+     ignores them, so dropping the exact line changes no behaviour. Other
+     tables and every other key are left byte-for-byte. #>
+  param([string]$CodexHome, [switch]$CheckOnly)
+  $retired = @('rmcp_client')   # the streamable-HTTP MCP client is always on now
+  if (-not $CodexHome) { return }
+  $path = Join-Path $CodexHome 'config.toml'
+  if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { return }
+  $before = [IO.File]::ReadAllText($path)
+  $newline = if ($before.Contains("`r`n")) { "`r`n" } else { "`n" }
+  $kept = New-Object System.Collections.Generic.List[string]
+  $inFeatures = $false; $dropped = @()
+  foreach ($line in ($before -split '\r?\n')) {
+    $t = $line.Trim()
+    if ($t.StartsWith('[')) { $inFeatures = ($t -ceq '[features]') }
+    elseif ($inFeatures -and $t -match '^([A-Za-z0-9_-]+)\s*=' -and $retired -contains $Matches[1]) { $dropped += $Matches[1]; continue }
+    $kept.Add($line)
+  }
+  if (-not $dropped.Count) { return }
+  $issue = 'Codex ignores retired [features] key(s): ' + ($dropped -join ', ') + ' (log noise on every load).'
+  if (-not $CheckOnly) {
+    if ((Get-Item -LiteralPath $path).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Refusing redirected Codex config.' }
+    $after = $kept -join $newline
+    $nonce = [guid]::NewGuid().ToString('N')
+    $backup = $path + '.bak-retired-features-' + $nonce
+    $temp = $path + '.tmp-' + $nonce
+    try {
+      [IO.File]::WriteAllText($temp, $after, (New-Object Text.UTF8Encoding($false)))
+      [IO.File]::Replace($temp, $path, $backup)
+      if ([IO.File]::ReadAllText($path) -cne $after) {
+        Copy-Item -LiteralPath $backup -Destination $path -Force
+        throw 'Codex feature cleanup verification failed; original restored.'
+      }
+      Write-UabsOk ('Codex: removed ignored feature key(s) ' + ($dropped -join ', ') + '; backup: ' + $backup)
+    } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
+  }
+  $issue
+}
+
 function Get-UabsCodexBuiltinSkillNames {
   <#
   Names of the skills Codex ships ITSELF, from <CodexHome>\skills\.system.
@@ -1406,7 +1777,8 @@ function Repair-UabsGrokDuplicatePlugins {
   also `grok plugin install` the staged local copy under
   %LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\plugins-src\superpowers. Two plugins with the
   same name both own systematic-debugging, and the TUI reports that as a
-  skill error. Keep the marketplace/git copy; drop extra local clones.
+  skill error. Keep the newest version, preferring marketplace on a tie.
+  Back up duplicate bytes and registry before removing owned install folders.
 
   Do NOT `grok plugin uninstall <name>` while duplicates exist: the CLI
   matches on plugin name only, so it removed the marketplace copy and left
@@ -1416,27 +1788,42 @@ function Repair-UabsGrokDuplicatePlugins {
   param([string]$GrokExe, [string]$PluginName)
   $hits = @(Get-UabsGrokPluginList -GrokExe $GrokExe | Where-Object { $_.name -eq $PluginName })
   if ($hits.Count -le 1) { return $hits }
-  $keep = @($hits | Where-Object { $_.marketplace }) | Select-Object -First 1
-  if (-not $keep) {
-    $keep = @($hits | Where-Object { $_.source -match '^https?://' }) | Select-Object -First 1
-  }
-  if (-not $keep) { $keep = $hits[0] }
-  $regPath = Join-Path $env:USERPROFILE '.grok\installed-plugins\registry.json'
+  $keep = $hits | Sort-Object @{Expression={try{[version]$_.version}catch{[version]'0.0.0'}};Descending=$true},
+    @{Expression={[bool]$_.marketplace};Descending=$true} | Select-Object -First 1
+  $installRoot = Join-Path $env:USERPROFILE '.grok\installed-plugins'
+  $regPath = Join-Path $installRoot 'registry.json'
   foreach ($h in $hits) {
     if ($h.repo_key -eq $keep.repo_key) { continue }
-    Write-UabsWarn ("Grok: duplicate {0} ({1}) - dropping registry repo {2}" -f $PluginName, $h.source, $h.repo_key)
+    if (-not $h.path -or -not (Test-UabsPathWithin -Path $h.path -Root $installRoot) -or
+        ([IO.Path]::GetFullPath($h.path).TrimEnd('\') -ieq [IO.Path]::GetFullPath($installRoot).TrimEnd('\'))) {
+      Write-UabsWarn ('Grok: duplicate outside the managed install root was preserved: ' + $h.repo_key)
+      continue
+    }
+    if ((Test-Path -LiteralPath $h.path) -and ((Get-Item -LiteralPath $h.path).Attributes -band [IO.FileAttributes]::ReparsePoint)) {
+      Write-UabsWarn 'Grok: redirected duplicate directory preserved.'
+      continue
+    }
     if (Test-Path -LiteralPath $regPath -PathType Leaf) {
-      $ts = Get-Date -Format 'yyyyMMdd-HHmmss'
-      Copy-Item -LiteralPath $regPath -Destination ($regPath + '.before-dedupe-' + $ts + '.bak') -Force
       $doc = ([IO.File]::ReadAllText($regPath) | ConvertFrom-Json)
       if ($doc.repos -and $doc.repos.PSObject.Properties.Name -contains [string]$h.repo_key) {
+        $nonce = [guid]::NewGuid().ToString('N')
+        if (Test-Path -LiteralPath $h.path -PathType Container) {
+          $backup = Join-Path (Get-UabsStateRoot) ('backups\grok-plugin-dedupe-' + $nonce)
+          Copy-UabsRobo -From $h.path -To $backup
+          if ((Get-UabsTreeDigest $h.path -Ordinal) -cne (Get-UabsTreeDigest $backup -Ordinal)) {
+            throw 'Grok plugin backup verification failed; duplicate was not changed.'
+          }
+        }
         $doc.repos.PSObject.Properties.Remove([string]$h.repo_key)
         $utf8 = New-Object System.Text.UTF8Encoding $false
-        [IO.File]::WriteAllText($regPath, (($doc | ConvertTo-Json -Depth 20) + [Environment]::NewLine), $utf8)
+        $temp = $regPath + '.tmp-' + $nonce
+        try {
+          [IO.File]::WriteAllText($temp, (($doc | ConvertTo-Json -Depth 20) + [Environment]::NewLine), $utf8)
+          [IO.File]::Replace($temp, $regPath, ($regPath + '.before-dedupe-' + $nonce + '.bak'))
+        } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
+        if (Test-Path -LiteralPath $h.path) { Remove-Item -LiteralPath $h.path -Recurse -Force }
+        Write-UabsOk ('Grok: backed up and retired duplicate ' + $h.repo_key)
       }
-    }
-    if ($h.path -and (Test-Path -LiteralPath $h.path)) {
-      Remove-Item -LiteralPath $h.path -Recurse -Force
     }
   }
   $left = @(Get-UabsGrokPluginList -GrokExe $GrokExe | Where-Object { $_.name -eq $PluginName })
@@ -1781,6 +2168,30 @@ function Install-UabsKimiPlugin {
     $res.reason = $_.Exception.Message
     return $res
   }
+}
+
+function Get-UabsKimiEnabledPluginIds {
+  <#
+  Read-only: ids in Kimi's <home>\plugins\installed.json that are enabled and
+  whose root still holds a parseable manifest (plugin.json, else
+  .kimi-plugin\plugin.json - Kimi's own lookup order). A disabled, missing or
+  malformed plugin owns no skills, so its copied skills must stay.
+  #>
+  param([string]$KimiHome)
+  if (-not $KimiHome) { return @() }
+  $store = Join-Path $KimiHome 'plugins\installed.json'
+  if (-not (Test-Path -LiteralPath $store -PathType Leaf)) { return @() }
+  try { $doc = [IO.File]::ReadAllText($store) | ConvertFrom-Json } catch { return @() }
+  $ids = @()
+  foreach ($p in @($doc.plugins)) {
+    if (-not $p -or -not $p.id -or $p.enabled -ne $true -or -not $p.root) { continue }
+    $manifest = @((Join-Path $p.root 'plugin.json'), (Join-Path $p.root '.kimi-plugin\plugin.json')) |
+      Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } | Select-Object -First 1
+    if (-not $manifest) { continue }
+    try { $null = [IO.File]::ReadAllText($manifest) | ConvertFrom-Json } catch { continue }
+    $ids += [string]$p.id
+  }
+  return $ids
 }
 
 function Restore-UabsHermesPluginScan {

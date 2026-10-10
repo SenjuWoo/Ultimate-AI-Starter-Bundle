@@ -89,6 +89,12 @@ has an edge-case hole. The other 18 runs used a regex and passed.
 
 ## Reproduce
 
+`promptfooconfig.gpt.yaml` was removed from `main` in #1042. Check out the last commit that still has it, then run the steps below:
+
+```bash
+git checkout 08e952d7a8057a57ce561ff1330d093fd92eec67
+```
+
 ```bash
 # GPT arms (needs OPENAI_API_KEY in ../.env)
 cd benchmarks

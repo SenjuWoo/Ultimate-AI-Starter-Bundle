@@ -27,4 +27,6 @@ Baseline worth emitting: startup with version/build, the configuration actually 
 
 What not to emit: whole payloads, request bodies, file contents, per-iteration chatter, or anything from `secret-hygiene`. A field that cannot help reproduce, localise or explain a failure is cost with no return.
 
+Games and mods: ship a toggleable debug log in the first build, quiet by default, and tell the user where it lands. Engine APIs and log locations (Papyrus, SKSE, BepInEx, MelonLoader, Unity, Unreal, Godot, Minecraft, RimWorld, Roblox, web): `references/game-mod-logging.md`.
+
 When existing evidence is not enough to explain a failure, add **targeted** instrumentation, reproduce once, then use what it produced -- rather than editing speculative fixes and re-running. `systematic-debugging` owns the isolation loop itself.

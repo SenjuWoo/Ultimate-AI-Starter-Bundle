@@ -7,14 +7,16 @@ import sys
 
 from um import __doc__ as DOC, __version__
 
-GROUPS = ["scan", "fal", "sprite", "render3d", "video", "win", "backup", "publish", "kb"]
+GROUPS = ["scan", "fal", "comfy", "sprite", "render3d", "video", "win", "backup", "publish", "kb"]
 
 
 def main(argv=None):
-    # Redirected Windows output otherwise depends on the caller's legacy code page.
+    # notes and game titles are UTF-8; a cp1252 console must not crash on them
     for stream in (sys.stdout, sys.stderr):
-        if hasattr(stream, "reconfigure"):
-            stream.reconfigure(encoding="utf-8")
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError, OSError):
+            pass
     ap = argparse.ArgumentParser(prog="um", description=DOC, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--version", action="version", version=f"universal-modder {__version__}")
     sub = ap.add_subparsers(dest="group", metavar="<group>")

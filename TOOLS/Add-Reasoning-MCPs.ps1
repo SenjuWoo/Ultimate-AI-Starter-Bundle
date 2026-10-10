@@ -253,8 +253,8 @@ foreach ($p in $Providers) {
       $claudeHas = @()
       if (Test-Path -LiteralPath $claudeJson) {
         try {
-          $cj = [IO.File]::ReadAllText($claudeJson) | ConvertFrom-Json
-          if ($cj.mcpServers) { $claudeHas = @($cj.mcpServers.PSObject.Properties.Name) }
+          $cjServers = Get-UabsJsonSection -Container (Read-UabsJsonDocument -Path $claudeJson) -Section 'mcpServers'
+          if ($cjServers) { $claudeHas = @($cjServers.Keys) }
         } catch { }
       }
       $tomlServers = @($servers | Where-Object {

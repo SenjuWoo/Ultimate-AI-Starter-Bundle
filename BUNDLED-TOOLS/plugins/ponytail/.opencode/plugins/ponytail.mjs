@@ -12,11 +12,11 @@
 // One default export serves both plugin APIs: V2 reads `id` + `setup`, V1 calls
 // `server()`.
 
-import { createRequire } from 'module';
-import fs from 'fs';
-import os from 'os';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { createRequire } from 'node:module';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -53,7 +53,9 @@ function writeMode(mode) {
 // synchronous store if same-turn switching ever matters.
 function persistMode(args) {
   const wanted = String(args == null ? '' : args).trim();
-  const mode = wanted ? normalizePersistedMode(wanted) : getDefaultMode();
+  // Bare /ponytail switches ponytail on, or keeps the level when it already is (#639).
+  if (!wanted && readMode() !== 'off') return;
+  const mode = wanted ? normalizePersistedMode(wanted) : (getDefaultMode() === 'off' ? 'full' : getDefaultMode());
   if (!mode) return;
   writeMode(mode);
   console.log('ponytail ' + mode);

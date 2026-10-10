@@ -28,6 +28,8 @@ boss music, a voiced line.
   - anything else: point its MCP config at the URL and header above.
   MCP tools: `search_models`, `recommend_model`, `get_model_schema`, `get_pricing`, `run_model`,
   `submit_job`/`check_job`/`get_job_result`, `upload_file`, `search_docs`.
+- **No fal key?** For images, `um comfy` uses a local ComfyUI server instead (`um comfy status`, then
+  `um comfy image "..." --sprite`). It has no audio, 3D or video recipes.
 - **CLI alternatives:** `pip install fal` gives `fal api <endpoint> key=value key:=json`; the genmedia CLI
   (`genmedia run ... --json --download`) is agent-friendly too.
 

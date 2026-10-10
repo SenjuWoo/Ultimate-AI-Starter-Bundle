@@ -107,6 +107,10 @@ $wireSrc   = Join-Path $hooksSrc 'hermes_wire.py'
 $v7Common = Join-Path $PackRoot 'TOOLS\UABS-Common.ps1'
 . $v7Common
 
+if (-not $Uninstall) {
+  foreach ($issue in @(Repair-UabsHookShellPath -CheckOnly:$CheckOnly)) { Write-Host $issue }
+}
+
 # Every gate the pack ships, with the tools each one needs to see.
 $gates = @(
   @{ Name = 'completeness_gate.py'; Matcher = 'Bash|Shell|Terminal|PowerShell|run_command|execute_command'; AllTools = $false; Stop = $true }
@@ -124,6 +128,10 @@ $marketRoot  = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\codex-mar
 # Retirement must also work without Python and during uninstall/check-only.
 $codexHome = Get-UabsProviderHome -Provider Codex -Catalog (Get-UabsCatalog)
 if ($Providers -contains 'Codex') {
+  if (-not $Uninstall) {
+    foreach ($issue in @(Repair-UabsCodexDuplicatePlugins -CodexHome $codexHome -CheckOnly:$CheckOnly)) { Write-Host $issue }
+    foreach ($issue in @(Repair-UabsCodexRetiredFeatures -CodexHome $codexHome -CheckOnly:$CheckOnly)) { if ($CheckOnly) { Write-Host ('Codex   needs repair: ' + $issue) } }
+  }
   foreach ($issue in @(Repair-UabsCodexLegacyHooks -Path (Join-Path $codexHome 'hooks.json') -CheckOnly:$CheckOnly)) {
     if ($CheckOnly) { Write-Host ('Codex   needs repair: ' + $issue) }
   }

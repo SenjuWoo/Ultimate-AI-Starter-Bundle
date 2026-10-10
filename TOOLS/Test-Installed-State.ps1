@@ -39,6 +39,7 @@ function Resolve-Exe([string]$Provider) {
   return $null
 }
 Write-UabsStep 'Final installed-state doctor'
+foreach ($issue in @(Repair-UabsHookShellPath -CheckOnly)) { Err $issue }
 # VERSION.txt is the one source. The doctor used to restate 7.8.0 in four
 # places, so a release bump could leave the doctor failing a correct install.
 $packVersion = [IO.File]::ReadAllText((Join-Path $PackRoot 'VERSION.txt')).Trim()
@@ -667,11 +668,27 @@ if ($hermesBudgets.Count) {
 # hook commands as a health check or change user/plugin trust state.
 $codexHookIssues = @()
 if ($Providers -contains 'Codex') {
+  foreach ($issue in @(Repair-UabsCodexDuplicatePlugins -CodexHome (Get-UabsProviderHome -Provider Codex -Catalog $catalog) -CheckOnly)) { Err ('Codex plugins: ' + $issue) }
+  foreach ($issue in @(Repair-UabsCodexRetiredFeatures -CodexHome (Get-UabsProviderHome -Provider Codex -Catalog $catalog) -CheckOnly)) { Warn ('Codex config: ' + $issue + ' Run TOOLS\Install-Completeness-Gate.ps1 -Providers Codex.') }
   try {
     $codexHooks = Join-Path (Get-UabsProviderHome -Provider Codex -Catalog $catalog) 'hooks.json'
     $codexHookIssues = @(Repair-UabsCodexLegacyHooks -Path $codexHooks -CheckOnly)
   } catch { $codexHookIssues += ('Native Codex hooks cannot be checked: ' + $_.Exception.Message) }
   foreach ($issue in $codexHookIssues) { Err ('Codex hooks: ' + $issue + '. Run TOOLS\Install-Completeness-Gate.ps1 -Providers Codex, then restart Codex.') }
+}
+
+# Bundle gates wired to an AI app's private Python (Codex ships one under
+# ~\.cache\codex-runtimes) stop working when that app updates or is removed.
+$gateHookFiles = @((Join-Path $env:USERPROFILE '.claude\settings.json'))
+foreach ($p in @('Grok','Hermes')) {
+  try { $h = Get-UabsProviderHome -Provider $p -Catalog $catalog } catch { continue }
+  $gateHookFiles += $(if ($p -eq 'Grok') { Join-Path $h 'hooks\ultimate-bundle.json' } else { Join-Path $h 'config.yaml' })
+}
+foreach ($f in $gateHookFiles) {
+  if (-not (Test-Path -LiteralPath $f -PathType Leaf)) { continue }
+  $privateGate = @([IO.File]::ReadAllLines($f) | ForEach-Object { $_.Replace('\\','\') } |
+    Where-Object { $_ -match '(completeness_gate|assumption_gate|rtk_safe_hook)\.py' -and (Test-UabsPrivateRuntimePath $_) })
+  if ($privateGate.Count) { Err ('Bundle hooks in ' + $f + ' run on an AI app''s private Python. Run TOOLS\Install-Completeness-Gate.ps1, then restart the apps.') }
 }
 
 # ---- Hermes plugin payloads and shell hooks --------------------------------

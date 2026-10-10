@@ -12,13 +12,12 @@ const { spawn } = require('child_process');
 const http = require('http');
 const WebSocket = require('ws');
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
 const assert = require('assert');
 
 const SERVER_PATH = path.join(__dirname, '../../skills/brainstorming/scripts/server.cjs');
 const TEST_PORT = 3334;
-const TEST_DIR = path.join(os.tmpdir(), 'brainstorm-test');
+const TEST_DIR = '/tmp/brainstorm-test';
 const CONTENT_DIR = path.join(TEST_DIR, 'content');
 const STATE_DIR = path.join(TEST_DIR, 'state');
 // Fixed session key so the test client can authenticate (see auth.test.js for
@@ -210,6 +209,20 @@ async function runTests() {
       assert(!res.body.includes('<!-- CONTENT -->'), 'Placeholder should be replaced');
       assert(res.body.includes('Pick a layout'), 'Fragment content should be present');
       assert(res.body.includes('data-choice="a"'), 'Fragment interactive elements intact');
+    });
+
+    await test('preserves literal replacement tokens in content fragments', async () => {
+      const tokens = ["$'", '$`', '$&', '$$', '$1', '$<name>'];
+      const fragment = '<h2>Literal tokens</h2><pre>' + tokens.join(' | ') + '</pre>';
+      fs.writeFileSync(path.join(CONTENT_DIR, 'literal-tokens.html'), fragment);
+      await sleep(300);
+
+      const res = await fetch(`http://localhost:${TEST_PORT}/`);
+      assert.strictEqual(res.status, 200);
+      assert(res.body.includes(fragment), 'Fragment must be inserted verbatim');
+      assert.strictEqual(res.body.split('<div class="header">').length - 1, 1, 'Frame chrome must not be duplicated');
+      assert(!res.body.includes('<!-- CONTENT -->'), 'Replacement tokens must not restore the placeholder');
+      assert(res.body.includes('WebSocket'), 'Helper must still be injected');
     });
 
     await test('serves newest file by mtime', async () => {
@@ -578,7 +591,8 @@ async function runTests() {
 
     // ========== Summary ==========
     console.log(`\n--- Results: ${passed} passed, ${failed} failed, ${skipped} skipped ---`);
-    if (failed > 0) process.exit(1);
+    // exitCode, not exit(): exit() would skip the finally below and orphan the server.
+    if (failed > 0) process.exitCode = 1;
 
   } finally {
     server.kill();

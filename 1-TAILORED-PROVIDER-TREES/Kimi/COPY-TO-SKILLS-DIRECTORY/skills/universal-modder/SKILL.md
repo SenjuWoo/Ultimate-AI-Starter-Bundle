@@ -15,7 +15,7 @@ relevant command's `--help`. If missing, run the pack's `INSTALL-AIO.ps1
 -Components universal-modder -CoreOnly -ToolsOnly` from its root.
 
 The pack supplies one skill entry to Claude, Codex, Grok, Kimi and Hermes.
-The upstream guides below are references, not ten extra indexed skills.
+The upstream guides below are references, not eleven extra indexed skills.
 Use existing `game-modding` and engine-specific skills for implementation;
 Skyrim still routes through `skyrim-tool-router` and Forge.
 
@@ -33,6 +33,7 @@ Skyrim still routes through `skyrim-tool-router` and Forge.
 | Packaging and credits | `references/upstream/publish-mod/GUIDE.md` |
 | Searching and contributing field notes | `references/upstream/share-field-notes/GUIDE.md` |
 | User-requested fal asset generation | `references/upstream/fal-assets/GUIDE.md` |
+| Prior art on the open web: dead forums via archives, GitHub, Nexus/Workshop APIs | `references/upstream/game-research-websearch/GUIDE.md` |
 
 When a guide mentions a companion skill, open its row here. Its `references/`
 paths are relative to that guide. Upstream `examples/` remain in the pinned
@@ -44,6 +45,7 @@ upstream repository; the bundle does not ship or invent those game projects.
 um scan --list --json
 um scan "<verified game folder>" --json
 um sprite --help
+um comfy --help          # local ComfyUI image generation, no API key
 um render3d --help
 um video --help
 um kb search "<game or engine>"
@@ -79,4 +81,4 @@ image tools when they fit. Only use fal when the user requests that service and
 has arranged their own authentication and spending authorization.
 
 Credits/license: upstream MIT, commit
-`15d6f9d5fbd32de9b1884f29ddec3be9133bd912`; included fonts are SIL OFL.
+`550651675153070cce68066e07c3c8f95df86d08`; included fonts are SIL OFL.

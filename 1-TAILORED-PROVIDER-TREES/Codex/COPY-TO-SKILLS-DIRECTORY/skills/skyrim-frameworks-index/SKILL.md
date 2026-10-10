@@ -4,8 +4,8 @@ description: Conceptual framework selector for Skyrim runtime patching. Routes t
   and prevents conflicting dialects.
 compatibility: Windows 10/11; Skyrim Special Edition or Anniversary Edition; exact installed framework version must be verified
 metadata:
-  version: 4.3.0
-  updated: '2026-07-22'
+  version: 4.4.0
+  updated: '2026-10-10'
   library: overseer-skyrim-agent-skills
   error_registry_revision: 4.3.0
 ---
@@ -44,10 +44,10 @@ A dedicated skill never outranks the actual parser. When evidence proves a skill
 
 ## Locked current decisions
 
-- **SPID 7.3.x:** supported keys do not include `Weapon`; inventory objects use `Item` or generic `Form`. Level range endpoints must both exist. TraitFilters split on `/`, `D/-D` are valid, and Chance may end in `!`.
-- **KID 4.0.6:** use human-readable type labels. Trailing optional fields may be omitted.
-- **BOS 3.4.1:** use pipe-delimited entries under current sections including `[Forms]`, `[References]`, `[Transforms]`, and `[Properties]`.
-- **SkyPatcher 6.4.2:** category placement is mandatory and operation names are category/version-specific.
+- **SPID 7.3.x (verified through 7.3.3):** supported keys do not include `Weapon`; inventory objects use `Item` or generic `Form`. Level range endpoints must both exist. TraitFilters split on `/`, `D/-D` are valid, and Chance may end in `!`.
+- **KID 4.0.6 grammar (unchanged through 4.1.0, now GPL-3.0):** use human-readable type labels. Trailing optional fields may be omitted.
+- **BOS 3.4.1 grammar (unchanged through 3.5.0, now GPL-3.0):** use pipe-delimited entries under current sections including `[Forms]`, `[References]`, `[Transforms]`, and `[Properties]`.
+- **SkyPatcher (corpus 6.4.x; Nexus is 7.1.3 as of 2026-10-10):** category placement is mandatory and operation names are category/version-specific; verify 7.x operations against the installed articles.
 - **MCM:** MCM Helper is the normal new-menu route; SKI_ConfigBase remains a legacy maintenance route.
 
 The historical integration plan's comma-based SPID-trait decision is superseded by the current parser source. Historical documents are evidence leads, not executable syntax authorities.

@@ -2,6 +2,12 @@
 
 Pinned source commit: `e5ef32b99ecb277778644f4deae0ac04851ca614`.
 
+Re-verified 2026-10-10 against SPID 7.3.3 (`a6f2177eb6dc8dd48c8377e30f868854c99f629e`):
+the config grammar is unchanged (one VR build-macro rename in
+`LookupConfigs.cpp`). 7.3.2-7.3.3 fix outfit restore for recycled actors,
+consecutive summons and templated NPCs after reload, disable on-death
+distribution for summons, and fix 1.6.1130 hooks. Still MIT.
+
 ## Ordinary type names
 
 `Form`, `Spell`, `Perk`, `Item`, `Shout`, `LevSpell`, `Package`, `Outfit`,

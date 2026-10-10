@@ -5,6 +5,7 @@ non-zero on a FAIL so it can gate a build or a CI step.
 
 FAIL conditions (these break the agent, silently):
   * SKILL.md that a strict frontmatter reader cannot open (BOM is the usual cause)
+  * frontmatter that is not valid YAML (Codex skips the skill at session start)
   * SKILL.md with no description -- the agent has nothing to match on
   * mojibake in a description
 
@@ -33,6 +34,39 @@ def tokens(s):
     return len(s) / 4.0      # ~4 chars/token, adequate for budgeting
 
 
+def yaml_error(fm):
+    """Return why a strict YAML loader (Codex's) rejects this frontmatter, or ''.
+
+    PyYAML when present; otherwise the rule Codex tripped on: a top-level plain
+    scalar (and its folded continuation lines) cannot contain ': ' or ' #'.
+    """
+    try:
+        import yaml
+    except ImportError:
+        yaml = None
+    if yaml is not None:
+        try:
+            doc = yaml.safe_load(fm)
+        except yaml.YAMLError as e:
+            return str(e).split('\n')[0]
+        if not isinstance(doc, dict):
+            return 'frontmatter is not a mapping'
+        return '' if isinstance(doc.get('description'), str) else 'description is not a string'
+    key, plain = None, []
+    for line in fm.split('\n') + ['end:']:
+        m = re.match(r'^([A-Za-z_][\w-]*):(?:\s+(.*))?$', line)
+        if m:
+            text = ' '.join(plain)
+            if key and (': ' in text or ' #' in text or text.endswith(':')):
+                return "plain scalar '%s' contains ': ' or ' #' -- quote it" % key
+            v = (m.group(2) or '').strip()
+            key = m.group(1) if v and v[0] not in '"\'|>[{&*!' else None
+            plain = [v]
+        elif key and line.strip():
+            plain.append(line.strip())
+    return ''
+
+
 def audit(root):
     fails, warns, rows = [], [], []
     if not os.path.isdir(root):
@@ -55,8 +89,11 @@ def audit(root):
             fails.append('%s: frontmatter block does not open' % sk)
             continue
         fm, body = m.group(1), m.group(2)
+        ye = yaml_error(fm)
+        if ye:
+            fails.append('%s: invalid YAML frontmatter (strict loaders skip the skill): %s' % (sk, ye))
 
-        dm = re.search(r'^description:\s*(.*?)(?=^\w+:|\Z)', fm, re.S | re.M)
+        dm =re.search(r'^description:\s*(.*?)(?=^\w+:|\Z)', fm, re.S | re.M)
         desc = ' '.join((dm.group(1) if dm else '').split())
         if not desc:
             fails.append('%s: no description -- skill is undiscoverable' % sk)

@@ -9,8 +9,8 @@ Rule zero: **read the real thing, don't guess.** Decompiled code, the actual dat
 GPU capture is the spec. Write what you learn into `MODLOG.md` (names, IDs, offsets, formats) as you go.
 
 Keep all decompiled output and extracted assets **outside** the mod repo (e.g. `~/<game>-decomp/`) and never
-publish them. Offline/single-player only. Never attach debuggers or scanners to games with anti-cheat (see
-`skills/mod-any-game/references/safety.md`).
+publish them. Single-player, offline or servers the user runs. Never attach debuggers or scanners to games
+with anti-cheat (see `skills/mod-any-game/references/safety.md`).
 
 ## Pick the tool by what the code is (`um scan` tells you)
 
@@ -67,6 +67,20 @@ Use the community tool first:
 - Source: VRF, Crowbar
 - FromSoft: WitchyBND, Smithbox
 - Godot: GDRE Tools
+
+Before reversing a format yourself, search the community archives. Most game formats from the 2000s and
+2010s were worked out there:
+- **XeNTaX** (closed in 2023): the [forum](https://archive.org/details/forum.xentax.com_2023-08-15),
+  [wiki](https://archive.org/details/wiki-wikixentaxcom_202305) and
+  [attachments](https://archive.org/details/Xentax-forum-attachments-archive) are on archive.org, with a
+  [public backup on GitHub](https://github.com/XeNTaXBackup/XeNTaXBackup.github.io);
+- **[ZenHAX](https://zenhax.com/index.php.html)**: game file research and QuickBMS scripts (posts up to
+  early 2023);
+- **[The definitive guide to exploring file formats](https://archive.org/details/definitive-guide-to-exploring-file-formats)**
+  (Mr. Mouse, XeNTaX): the classic tutorial on reading an unknown format.
+
+Use them for format knowledge and tools, whatever its origin (betas, leaked SDKs). Don't download game files,
+leaked code, SDKs or license keys from them.
 
 For an **undocumented format**:
 1. Collect several stock files. Compare sizes, and hex-dump the headers (`xxd | head`). Look for magic

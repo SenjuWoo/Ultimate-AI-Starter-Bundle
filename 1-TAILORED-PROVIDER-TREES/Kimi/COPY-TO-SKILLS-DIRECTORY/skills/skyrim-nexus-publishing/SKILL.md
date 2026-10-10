@@ -1,7 +1,7 @@
 ---
 name: skyrim-nexus-publishing
-description: Prepare a truthful, visually strong Nexus Mods publication kit: page copy, screenshots and previews, requirements,
-  permissions, credits, changelog, troubleshooting, and file metadata after the artifact passes the ship gate.
+description: Prepare a truthful, visually strong Nexus Mods publication kit (page copy, screenshots and previews, requirements,
+  permissions, credits, changelog, troubleshooting, and file metadata) after the artifact passes the ship gate.
 compatibility: Windows 10/11; Skyrim Special Edition or Anniversary Edition; PowerShell and Python 3 when bundled scripts
   are used
 metadata:

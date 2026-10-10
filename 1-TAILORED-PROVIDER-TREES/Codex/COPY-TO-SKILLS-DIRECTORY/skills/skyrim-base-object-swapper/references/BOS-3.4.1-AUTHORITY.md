@@ -1,5 +1,10 @@
 # Base Object Swapper 3.4.1 authority
 
+Re-verified 2026-10-10 against BOS 3.5.0 (`c0b9c093aa6260fd9b68beddea411db97f585ea2`):
+section names, `|` and `,` splitting and property syntax are unchanged.
+Conditional filters now resolve each non-dynamic form once (faster, same
+matches). BOS is GPL-3.0 from 3.5.0 (MIT before).
+
 Current documented sections are `[Forms]`, `[References]`, `[Transforms]`, and
 `[Properties]`, including qualified variants.
 

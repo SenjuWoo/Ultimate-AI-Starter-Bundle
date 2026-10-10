@@ -1,4 +1,4 @@
-Ultimate AI Starter Bundle V8.7.39 - ALL-IN-ONE STARTER
+Ultimate AI Starter Bundle V8.7.40 - ALL-IN-ONE STARTER
 ======================================================
 
 Not just Skyrim. A full multi-provider AI starter bundle: skills, MCP tools,
@@ -31,6 +31,11 @@ THE TWO .BAT FILES
 ------------------
     START-HERE.bat      you already have this folder - double-click it.
                         That is the install.
+                        It first checks GitHub for a newer bundle release:
+                        a clean git clone fast-forwards, a release copy
+                        installs the new release (SHA-256 checked), and an
+                        offline or failed check installs this copy as-is.
+                        Opt out: -SkipSelfUpdate or set UABS_NO_SELF_UPDATE=1.
     INSTALL-REMOTE.bat  you have nothing yet - downloads the latest release,
                         then runs START-HERE.bat for you.
 

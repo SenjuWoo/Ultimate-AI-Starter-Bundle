@@ -1,3 +1,15 @@
+## 8.7.40
+
+- START-HERE checks GitHub for a newer bundle release before installing: a clean git clone fast-forwards, a release copy installs the newer release through INSTALL-REMOTE (release-asset SHA-256 verified, previous copy kept), and an offline or failed check installs the local copy. `-SkipSelfUpdate` / `UABS_NO_SELF_UPDATE=1` opt out.
+- Codex on Windows runs hooks as `cmd.exe /C`; quoted extensionless bash hooks could never start. They now get a Git-bash `commandWindows`; the ungated codebase-memory subagent reminder is retired. Bundle gates no longer wire to an AI app's private Python (Codex's runtime was chosen when the installer ran inside Codex). Remove Codex's ignored `features.rmcp_client`. Git shells resolve from `mingw64\bin` installs too. All four are doctor checks with backups.
+- Fix `skyrim-nexus-publishing` frontmatter that strict YAML loaders (Codex) skipped; the skill audit now parses frontmatter strictly. Pin Headroom's release tag so OnlineLatest cannot install an untested upstream, with a contract for every asset-matched component.
+- Add opt-in optional skills (`INSTALL-AIO.ps1 -OptionalSkills <name>`, refreshed only where already installed). First: `melty-mashups` for the Melty launcher's MCP (21 public tools, 41,702 schema bytes); never installed or routed by default, and the app's per-client token is never copied. Add a BUILD HYGIENE preamble rule and per-engine debug-logging conventions to `observability-first`, carried by every game/mod route.
+- Refresh Universal Modder to upstream 5506516 (local ComfyUI generation, SHA-256-checked ffmpeg setup, ZenGin detection, 160 knowledge notes, eleventh guide) with UABS pins/no-echo/Steam patches rebased; 87 upstream tests pass. 172 canonical skills total.
+- Repair plugin shell prerequisites using the installed Git location, with a verified user-PATH backup and restart guidance. Detect the prerequisite in the doctor; test real Windows-to-shell execution and multiple Git installs.
+- Disable only a duplicate older/equal Codex curated Superpowers when its newer upstream counterpart is enabled. Back up exactly; preserve personal settings and trust, and scope inventory to the selected home.
+- Retire known unconditional legacy CBM reminders that instructed automatic indexing. Preserve custom/gated hooks; do not enable indexing or watching.
+- Refresh nine tested component pins and retain bundle security/compaction patches. Remove three superseded offline payloads from distribution; canonical personal skill changes remain intact. [Evidence and limits](docs/history/V8.7.40-CHANGELOG.md).
+
 ## 8.7.39
 
 - Review follow-up: security probes fail closed on missing/malformed responses and unknown quality state, drain both native pipes and time out hung requests. Windows waits retain signed/259 exit codes and read only the requested log tail. Correct 429 guidance without changing models or adding MCPs. Repair Forge's stale manifest after repository-link changes. [Details](docs/history/V8.7.39-CHANGELOG.md).

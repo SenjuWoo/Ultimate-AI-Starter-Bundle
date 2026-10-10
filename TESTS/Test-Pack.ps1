@@ -84,6 +84,18 @@ else {
     if ($LASTEXITCODE -ne 0) { Bad 'Hermes native stderr handling failed' } else { Good 'Hermes native stderr handling' }
 }
 
+& (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-HookPrerequisites.ps1') -PackRoot $PackRoot
+if ($LASTEXITCODE -ne 0) { Bad 'Hook shell prerequisites failed' } else { Good 'Hook shell prerequisites' }
+& (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-CodexPluginDedupe.ps1') -PackRoot $PackRoot
+if ($LASTEXITCODE -ne 0) { Bad 'Codex duplicate plugin repair failed' } else { Good 'Codex duplicate plugin repair' }
+# Require the PASS line, not just exit 0: a script that stops early also exits 0.
+$selfUpdateOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-BundleSelfUpdate.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $selfUpdateOut -match 'BUNDLE SELF-UPDATE GATE: PASS') { Good 'START-HERE bundle update decision, forwarding, git fixture and staging exit code' }
+else { Bad ('Bundle self-update gate failed:' + [Environment]::NewLine + $selfUpdateOut) }
+$jsonCaseOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-JsonCaseKeys.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $jsonCaseOut -match 'JSON CASE-KEY GATE: PASS') { Good 'Provider JSON with case-variant keys: byte-exact round trip, scoped add/remove' }
+else { Bad ('JSON case-key gate failed:' + [Environment]::NewLine + $jsonCaseOut) }
+
 Section '2. PowerShell parses (excluding BUNDLED-TOOLS)'
 $n = 0; $bad = 0
 Get-ChildItem -Path $PackRoot -Recurse -Include *.ps1, *.psm1 -File |
@@ -936,6 +948,9 @@ if (-not (Test-UabsPackPath $detectGate)) {
 }
 
 Section '17. Grok hook repair and effective discovery'
+$grokPluginOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-GrokPluginDedupe.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $grokPluginOut -match 'GROK PLUGIN DEDUPE GATE: PASS') { Good 'Grok plugin version selection and backup scope' }
+else { Bad ('Grok plugin dedupe failed:' + [Environment]::NewLine + $grokPluginOut) }
 $hookRepairGate = Join-Path $PackRoot 'TESTS\Test-GrokHookRepair.ps1'
 $hookRepairOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $hookRepairGate -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $hookRepairOut -match 'GROK HOOK REPAIR GATE: PASS') {

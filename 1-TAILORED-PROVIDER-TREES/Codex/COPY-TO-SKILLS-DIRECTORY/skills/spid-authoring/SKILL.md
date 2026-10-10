@@ -138,5 +138,5 @@ SPID documentation.
 ## Validation
 
 - `scripts/validate_spid.py` — offline SPID `_DISTR.ini` validation against pinned grammar (merged from the former skyrim-spid-distribution skill).
-- `references/SPID-7.3.1-AUTHORITY.md`, `references/SPID-7.3.1-PARSER-AUTHORITY.md` — pinned SPID 7.3.1 grammar/parser authorities.
+- `references/SPID-7.3.1-AUTHORITY.md`, `references/SPID-7.3.1-PARSER-AUTHORITY.md` — pinned SPID 7.3.1 grammar/parser authorities, re-verified unchanged in 7.3.3.
 - Cross-framework lint + runtime log checks: `skyrim-distr-kid-validation`.

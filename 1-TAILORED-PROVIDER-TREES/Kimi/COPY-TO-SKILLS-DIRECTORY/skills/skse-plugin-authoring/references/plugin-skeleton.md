@@ -33,7 +33,7 @@ authoritative. Setting up native functions in depth is `native-papyrus-functions
 SKSE has **two loader generations**, and a DLL that loads on every runtime must satisfy both. The
 difference is whether the loader *runs* your code to decide compatibility:
 
-- **AE-era SKSE** (since 2.1.2; current 2.2.6) maps the DLL as a resource, reads an exported **data
+- **AE-era SKSE** (since 2.1.2; current 2.3.1 for Steam 1.7.104, 2.2.6 for GOG 1.6.1179) maps the DLL as a resource, reads an exported **data
   blob** `SKSEPlugin_Version`, validates it without executing anything, and only then loads the DLL and
   calls `SKSEPlugin_Load`.
 - **SE 1.5.x and VR SKSE** (the Query era) instead call an exported **function** `SKSEPlugin_Query` and

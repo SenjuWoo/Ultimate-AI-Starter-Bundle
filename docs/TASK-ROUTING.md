@@ -23,6 +23,8 @@ you to memorize MCP names. Models and personal settings stay yours.
 | Repair/research/local models | Debugging/primary-source/runtime evidence first; compose symbol navigation only when useful |
 | Publication | Credits/perms + truthful media + durable public copy + repo/security/CI + exact-SHA archive verification |
 
+Every game/mod route also carries `observability-first`: a toggleable debug log (version at startup, failures with cause) whose path is reported to you.
+
 ## The executable route
 
 Usually the agent handles this. For inspection or recovery, run from the pack:

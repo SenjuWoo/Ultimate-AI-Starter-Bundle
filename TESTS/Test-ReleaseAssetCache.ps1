@@ -165,6 +165,9 @@ try {
   if (-not $rejected -or (Get-FileHash -LiteralPath $installedExe).Hash -ne $oldHash) { throw 'locked RTK replacement damaged the original' }
   $result = Install-UabsRtkExecutable -Source $newExe -Destination $installedExe -ExpectedVersion $expectedRtkVersion
   if ($result.version -ne $expectedRtkVersion -or (Get-FileHash -LiteralPath $result.backup).Hash -ne $oldHash) { throw 'RTK repair lost the previous executable backup' }
+  $backupsBefore = @(Get-ChildItem -LiteralPath (Split-Path $installedExe) -Filter ($targetName + '.bak-uabs-*')).Count
+  $again = Install-UabsRtkExecutable -Source $newExe -Destination $installedExe -ExpectedVersion $expectedRtkVersion
+  if ($again.status -ne 'current' -or $again.backup -or @(Get-ChildItem -LiteralPath (Split-Path $installedExe) -Filter ($targetName + '.bak-uabs-*')).Count -ne $backupsBefore) { throw 'reinstalling identical RTK bytes made another backup' }
   $freshExe = Join-Path $scratch "fresh\$targetName"
   $result = Install-UabsRtkExecutable -Source $newExe -Destination $freshExe -ExpectedVersion $expectedRtkVersion
   if ($result.backup -or $result.version -ne $expectedRtkVersion) { throw 'fresh RTK installation failed' }

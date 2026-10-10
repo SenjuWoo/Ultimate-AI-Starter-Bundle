@@ -8,8 +8,19 @@ $fixture = Join-Path ([IO.Path]::GetTempPath()) ('uabs-codex-hooks-' + [guid]::N
 $savedLocal = $env:LOCALAPPDATA; $savedCodex = $env:CODEX_HOME; $savedPy = $env:SKYRIM_FORGE_PYTHON; $savedPath = $env:PATH
 $powerShell = (Get-Command powershell.exe -ErrorAction Stop).Source
 $python = Get-UabsPythonExecutable
+$shellDirectory = Get-UabsGitShellDirectory
+if ($shellDirectory) { $env:PATH = $shellDirectory + ';' + $env:PATH }
 $utf8 = New-Object Text.UTF8Encoding($false)
 function Assert($Condition, $Message) { if (-not $Condition) { throw $Message } }
+function Invoke-CodexCmd([string]$Line) {
+  # Exactly what Codex does on Windows: cmd.exe /C "<command>" (raw argument).
+  $info = New-Object Diagnostics.ProcessStartInfo $env:ComSpec
+  $info.Arguments = '/d /c "' + $Line + '"'
+  $info.UseShellExecute = $false; $info.RedirectStandardOutput = $true; $info.RedirectStandardError = $true
+  $proc = [Diagnostics.Process]::Start($info)
+  $err = $proc.StandardError.ReadToEndAsync(); $out = $proc.StandardOutput.ReadToEnd(); $proc.WaitForExit()
+  [pscustomobject]@{ Code = $proc.ExitCode; Out = $out + $err.Result }
+}
 try {
   $env:LOCALAPPDATA = Join-Path $fixture ('App Data [x] ' + [char]0xE9)
   $env:CODEX_HOME = Join-Path $fixture 'custom Codex home'
@@ -120,6 +131,58 @@ try {
   $repairedBytes = [IO.File]::ReadAllText($manifest)
   Repair-UabsCodexLegacyHooks -Path $manifest | Out-Null
   Assert ([IO.File]::ReadAllText($manifest) -ceq $repairedBytes -and @(Get-ChildItem -LiteralPath $env:CODEX_HOME -Filter 'hooks.json.before-retired-*.bak').Count -eq $impeccableBackups.Count) 'Repeated Impeccable repair wrote another backup.'
+
+  # Retire only the upstream-generated, unconditional indexing reminders.
+  # Gated or personal same-basename hooks must stay untouched.
+  $cbmDir = Join-Path $env:CODEX_HOME 'hooks'
+  New-Item -ItemType Directory -Path $cbmDir -Force | Out-Null
+  $cbm = Join-Path $cbmDir 'cbm-session-reminder'
+  [IO.File]::WriteAllText($cbm, "#!/bin/bash`ncat << 'REMINDER'`nCRITICAL - Code Discovery Protocol:`nrun index_repository FIRST.`nREMINDER`n", $utf8)
+  $cbmDoc = @{ hooks=@{SessionStart=@(@{matcher='startup';hooks=@(
+    @{type='command';command=("'" + $cbm + "'")},
+    @{type='command';command="'C:\personal\cbm-session-reminder'"}
+  )})} }
+  [IO.File]::WriteAllText($manifest, ($cbmDoc | ConvertTo-Json -Depth 20), $utf8)
+  Assert (@(Repair-UabsCodexLegacyHooks -Path $manifest -CheckOnly).Count -eq 1) 'Unconditional legacy CBM indexing reminder was missed.'
+  Repair-UabsCodexLegacyHooks -Path $manifest | Out-Null
+  $cbmAfter = [IO.File]::ReadAllText($manifest) | ConvertFrom-Json
+  Assert ($cbmAfter.hooks.SessionStart[0].hooks.Count -eq 1 -and $cbmAfter.hooks.SessionStart[0].hooks[0].command -ceq "'C:\personal\cbm-session-reminder'") 'CBM migration removed a personal hook.'
+  [IO.File]::WriteAllText($cbm, "#!/bin/bash`ntest -x /no-cbm-registered || exit 0`ncat << 'REMINDER'`nCRITICAL - Code Discovery Protocol:`nrun index_repository FIRST.`nREMINDER`n", $utf8)
+  [IO.File]::WriteAllText($manifest, ($cbmDoc | ConvertTo-Json -Depth 20), $utf8)
+  # Codex on Windows runs `cmd.exe /C "<command>"`; prove the quoted bash path
+  # really cannot start there, then that the added commandWindows can.
+  $quoted = "'" + $cbm + "'"
+  Assert ((Invoke-CodexCmd $quoted).Code -ne 0) 'cmd.exe unexpectedly ran a quoted bash script.'
+  $gated = @(Repair-UabsCodexLegacyHooks -Path $manifest -CheckOnly)
+  if ($shellDirectory) {
+    Assert ($gated.Count -eq 1 -and $gated[0] -match 'Windows command') ('A user-gated reminder was not given a Windows command: ' + ($gated -join '; '))
+    Repair-UabsCodexLegacyHooks -Path $manifest | Out-Null
+    $g = @(([IO.File]::ReadAllText($manifest) | ConvertFrom-Json).hooks.SessionStart[0].hooks)
+    Assert ($g.Count -eq 2 -and $g[0].command -ceq $quoted -and $g[0].commandWindows -like '*bash.exe" "*/cbm-session-reminder"') 'Gated reminder was lost or not wrapped for Windows.'
+    Assert ($g[1].command -ceq "'C:\personal\cbm-session-reminder'" -and -not $g[1].PSObject.Properties['commandWindows']) 'A hook outside CODEX_HOME\hooks was rewritten.'
+    $run = Invoke-CodexCmd $g[0].commandWindows
+    Assert ($run.Code -eq 0 -and -not $run.Out.Trim()) ('Windows command did not run the gated script quietly: ' + $run.Out)
+    Assert (@(Repair-UabsCodexLegacyHooks -Path $manifest -CheckOnly).Count -eq 0) 'Windows command repair is not idempotent.'
+  } else {
+    Assert ($gated.Count -eq 1 -and $gated[0] -match 'Git for Windows') 'Missing Git was not reported for a bash-only hook.'
+  }
+
+  # The ungated subagent reminder steers every subagent at profile-gated tools.
+  $sub = Join-Path $cbmDir 'cbm-subagent-reminder'
+  [IO.File]::WriteAllText($sub, "#!/usr/bin/env bash`ncat << 'REMINDER'`n{""hookSpecificOutput"":{""additionalContext"":""Code discovery: prefer codebase-memory-mcp tools (search_graph)""}}`nREMINDER`n", $utf8)
+  $subDoc = @{ hooks=@{SubagentStart=@(@{matcher='*';hooks=@(@{type='command';command=("'" + $sub + "'")})})} }
+  [IO.File]::WriteAllText($manifest, ($subDoc | ConvertTo-Json -Depth 20), $utf8)
+  Repair-UabsCodexLegacyHooks -Path $manifest | Out-Null
+  Assert (@(([IO.File]::ReadAllText($manifest) | ConvertFrom-Json).hooks.SubagentStart).Count -eq 0) 'Ungated subagent reminder survived.'
+
+  # Retired [features] keys: only that exact line in [features] goes.
+  $cfg = Join-Path $env:CODEX_HOME 'config.toml'
+  $toml = "model = 'x'`r`n[features]`r`nmemories = true`r`nrmcp_client = true`r`n`r`n[mcp_servers.demo]`r`nrmcp_client = true`r`nurl = 'https://example.invalid/mcp'`r`n"
+  [IO.File]::WriteAllText($cfg, $toml, $utf8)
+  Assert (@(Repair-UabsCodexRetiredFeatures -CodexHome $env:CODEX_HOME -CheckOnly).Count -eq 1 -and [IO.File]::ReadAllText($cfg) -ceq $toml) 'Check-only feature cleanup changed config or missed the key.'
+  Repair-UabsCodexRetiredFeatures -CodexHome $env:CODEX_HOME | Out-Null
+  Assert ([IO.File]::ReadAllText($cfg) -ceq $toml.Replace("rmcp_client = true`r`n`r`n", "`r`n")) ('Feature cleanup touched more than the retired key: ' + [IO.File]::ReadAllText($cfg))
+  Assert (@(Repair-UabsCodexRetiredFeatures -CodexHome $env:CODEX_HOME -CheckOnly).Count -eq 0) 'Feature cleanup is not idempotent.'
 
   [IO.File]::WriteAllText($manifest, '{invalid', $utf8)
   $refused = $false

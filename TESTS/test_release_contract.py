@@ -1917,8 +1917,11 @@ def test_provider_skill_sync_is_content_authoritative() -> None:
     assert "robocopy" not in sync_body.lower(), (
         "provider skill sync still depends on Robocopy metadata classification instead of content-authoritative replacement"
     )
-    for needle in ("Get-FileHash", "Move-Item", ".uabs-skill-stage-", ".uabs-skill-backup-"):
+    for needle in ("Get-FileHash", "Move-Item", "'.uabs-skill-work'", "('stage-'", "('backup-'"):
         assert needle in sync_body, f"provider skill sync missing {needle} stage/verify/swap contract"
+    # Staging inside the skills root was indexed by apps as a second skill.
+    assert "Join-Path $To ('.uabs-skill-stage-" not in sync_body, "provider skill sync stages inside the indexed skills root again"
+    assert "Get-UabsTreeDigest $destSkill -Ordinal" in sync_body, "unchanged skills are rewritten on every install again"
     assert "Sync-UabsProviderSkills -From $srcSkills -To $destSkills -Provider $prov -ExcludeNames $codexBuiltins" in installer, (
         "AIO does not use content-authoritative provider skill sync"
     )
@@ -2183,7 +2186,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "1005a5497c246be5be050dc84fc22cc77cfa1de11c985e653169dec022ee0b8b", (
+    assert digest == "6e46eaed1be0faedee81046ed4b4ac705400904052e90532b06fd008ee38fad8", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -5245,7 +5248,7 @@ def test_mcp_proofs_do_not_require_a_python_path_alias() -> None:
         "indent; current ruamel config launches every MCP with no arguments"
     )
     handshake = read(ROOT / "TOOLS" / "Test-McpHandshake.ps1")
-    assert "enabledProp" in handshake and "disabledProp" in handshake, (
+    assert "ContainsKey('enabled')" in handshake and "ContainsKey('disabled')" in handshake, (
         "the JSON handshake reader launches servers the provider marks disabled"
     )
     assert "enabledLine" in handshake and "Value -eq 'false'" in handshake, (
@@ -5261,6 +5264,14 @@ def test_versioned_online_tools_pin_the_same_version_offline() -> None:
     headroom = components["headroom"]
     assert headroom["version"] in headroom["pip_spec"]
     assert headroom["version"] in headroom["offline_asset"]
+    # OnlineLatest downloads a GitHub asset from the catalog release_tag, else
+    # from upstream "latest" -- an untested release. Every asset-matched
+    # component pins its tag (RTK derives its tag from version).
+    for comp in catalog["components"]:
+        if comp.get("github") and comp.get("asset_match") and comp["id"] != "rtk":
+            assert comp.get("release_tag") and comp["version"] in comp["release_tag"], (
+                f"{comp['id']} would install upstream latest instead of its tested {comp.get('version')}"
+            )
     installer = ps_code(ROOT / "INSTALL-AIO.ps1")
     assert "else { '[mcp]' }" in installer and '$wheelSpec = $asset + $extras' in installer, (
         "the bundled Headroom wheel is installed without its MCP dependencies"
