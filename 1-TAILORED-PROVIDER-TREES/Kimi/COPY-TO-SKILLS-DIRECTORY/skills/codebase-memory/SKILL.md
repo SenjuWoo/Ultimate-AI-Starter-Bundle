@@ -53,6 +53,58 @@ Measured on 0.10.8 (2026-09-03): 23,974 schema bytes, about 5,994 schema tokens
 (bytes/4, not measured billing). Use Claude/Grok/trusted Codex project scope or Hermes' native
 `code` profile; do not register it globally just because the executable exists.
 
+## The `cli` mode (v0.11.0+) — every tool is terminal-drivable
+
+v0.11.0 (installed here 2026-10-12) added `codebase-memory-mcp cli [--quiet] [--json] <tool> [--flag value]`:
+one tool runs locally, then the process exits — no MCP client needed. Use it for
+maintenance an agent session cannot do:
+
+```powershell
+$cbm = "$env:LOCALAPPDATA\Programs\codebase-memory-mcp\codebase-memory-mcp.exe"
+& $cbm cli --quiet list_projects                                # names + quoted paths
+& $cbm cli --quiet delete_project --project <Name>              # immediate, unrecoverable
+& $cbm cli --quiet index_repository --repo-path <root> --mode moderate --name <Name>
+```
+
+`index_repository` returns JSON: `nodes`, `edges`, `excluded.count`,
+`not_indexed_files_count`, `status`, `logfile`. Sanity-check nodes vs files.
+Supports `--args-file <json>` and stdin JSON for scripted batches.
+
+**Purge discipline — what never deserves a graph:** personal chat/export
+folders, roots that were moved or deleted, and unmodified third-party tool
+installs (SSEEdit/DynDOLOD-class binaries). Tool SOURCE trees the operator
+works on (houseCARL, Spooky's toolkit, Skyrim-Forge, Grabber) DO get indexed.
+The registry at
+`!!!SkyrimAEaiWorkspace/_AI-SHARED-MEMORY/locations/CODEBASE-MEMORY-PROJECTS.md`
+is the authority on what is indexed and why — check it before deleting
+anything (a 2026-10-12 over-eager purge of five registry-listed tools had to be
+reverted). Never index personal exports: the graph is queryable and has no
+backup.
+
+**One-shot ignore+index rework:**
+
+```powershell
+.\TOOLS\Setup-CodebaseMemory-Index.ps1 -Path <project-or-workspace> [-Recurse] -Apply -Index
+```
+
+Writes/refreshes every `.cbmignore` (snapshot rule + source-carrier exception),
+then reindexes each project in scope and prints
+nodes/edges/excluded/secs/status per project; exit code = number of failures.
+Prefer it over hand-running `index_repository` — it encodes the policies below.
+
+`-Apply` is non-destructive to hand-tuned rules: custom lines survive re-runs
+(kept under a `# --- custom rules ...` header) and
+`-ExtraIgnore 'a/','b.json'` adds project-specific rules that persist. The base
+covers `bin/`, `src/SKSE/`, `SKSEMenuFramework.h`, `zAssets/`, `zOlder/` in
+addition to vendored deps and Skyrim assets.
+
+**Auto-routing per provider:** agents enable the graph per project with
+`TOOLS\Set-McpProfile.ps1 -Task code -Path <project>` (profile `code-intel`:
+`coding-discipline` + `codebase-memory` + `test-driven-development` + `check-work`;
+Hermes uses its native `code` profile). Claude/Grok/Codex are project-scoped by
+design; Kimi needs explicit global opt-in. Never global-register it just because
+the executable exists.
+
 ## Edge Types
 CALLS, HTTP_CALLS, ASYNC_CALLS, IMPORTS, DEFINES, DEFINES_METHOD,
 HANDLES, IMPLEMENTS, OVERRIDE, USAGE, FILE_CHANGES_WITH,

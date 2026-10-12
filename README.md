@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.10.0 -->
+<!-- Ultimate AI Starter Bundle v8.11.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.10.0
+# Ultimate AI Starter Bundle v8.11.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -821,6 +821,15 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.11.0** - 2026-10-12. Codebase-memory lifecycle: the index setup tool gains
+`-Index` (apply ignores, index every project in scope, per-project table, exit
+code = failures), `-ExtraIgnore`, and custom-rule preservation so hand-tuned
+`.cbmignore` files survive re-runs. The `codebase-memory` skill documents the
+server's v0.11.0 `cli` maintenance mode, the registry-anchored purge discipline,
+and per-provider auto-routing. Measured after the rework: 45 projects /
+63,544 nodes, worst rebuild 90,546 -> 2,852 nodes. 173 canonical skills total.
+[Changes](docs/history/V8.11.0-CHANGELOG.md).
 
 **v8.10.0** - 2026-10-12. Project intel: the operator's project history
 (318-conversation Claude/ChatGPT export plus the agent-log scans behind 8.9.0)

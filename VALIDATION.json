@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.10.0",
+  "version": "8.11.0",
   "generated": "2026-10-12",
-  "release_tag": "v8.10.0",
+  "release_tag": "v8.11.0",
   "canonical_skills": 173,
   "provider_trees": 5,
   "registry_entries": 173,
@@ -39,6 +39,6 @@
     "TESTS/Test-UserProfile.ps1",
     "TOOLS/generate_preamble_history.py --check"
   ],
-  "runtime_status": "v8.10.0: the personal-data boundary is enforced (SECURITY.md policy, .gitignore patterns, TESTS/test_privacy_boundary.py in CI) after two real findings were fixed - a third party's e-mail inside the leaked-prompt collection and the maintainer's folder layout in a PowerShell fixture. The new project-intel skill carries dated, era-tagged results from the operator's project history (318-conversation export plus the agent-log scans behind 8.9.0) as six on-demand cards; the AIO family gains a SECURITY WORK clause in every variant (reverse engineering, cracking, exploit analysis authorized on the user's own systems; no malware; no unauthorized targets; verify before alarming) with every NSFW clause untouched; the wired-preamble digest moved intentionally (cc9840a5 -> 14daff05). 173 canonical skills, no new always-on MCP or model change.",
+  "runtime_status": "v8.11.0: codebase-memory lifecycle lands in the bundle - the index setup tool gains -Index (write ignores, index every project in scope, per-project table, exit code = failures), -ExtraIgnore, and custom-rule preservation so hand-tuned .cbmignore files survive re-runs. The codebase-memory skill documents the v0.11.0 cli maintenance surface (list/delete/index without an MCP client), the purge discipline anchored to the operator's registry, and per-provider auto-routing via Set-McpProfile. Measured on the operator's machine: 45 projects, 63,544 nodes, six bloat rebuilds (worst 90,546 -> 2,852 nodes), store verified clean by a whole-store outlier sweep. 173 canonical skills total.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }
