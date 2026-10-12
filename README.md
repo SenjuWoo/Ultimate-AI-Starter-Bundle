@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.9.0 -->
+<!-- Ultimate AI Starter Bundle v8.10.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.9.0
+# Ultimate AI Starter Bundle v8.10.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -69,7 +69,7 @@ One distinction explains almost everything about how this pack behaves:
 | **INSTALLED** | A CLI/server payload exists on disk | A disconnected server adds no MCP schema; installed skills/plugins have separate discovery and hook behavior. |
 | **ENABLED** | Registered in a provider's config | Available in that scope after trust/connection checks; schema loading and billing depend on the provider. |
 
-The 123 general **skills** (plus 49 with the Skyrim pack) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
+The 124 general **skills** (plus 49 with the Skyrim pack) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
 
 ### What's ON after install
 
@@ -612,7 +612,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-- **Provider skills** — 123 general skills per AI (Claude, Codex, Grok, Kimi, Hermes), plus 49 with the Skyrim pack, all generated from one canonical tree.
+- **Provider skills** — 124 general skills per AI (Claude, Codex, Grok, Kimi, Hermes), plus 49 with the Skyrim pack, all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7, official GitHub, and Headroom are the verified always-on core. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup (Skyrim pack)
@@ -821,6 +821,19 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.10.0** - 2026-10-12. Project intel: the operator's project history
+(318-conversation Claude/ChatGPT export plus the agent-log scans behind 8.9.0)
+is distilled into a `project-intel` skill - six on-demand cards, dated evidence,
+and an era rule that counts only frontier-era findings as current; older-model
+data is historical, never proof. Security work joins the contract: reverse
+engineering, cracking and exploit analysis are authorized on your own systems
+at full depth, with two hard lines - no malware, no targets without permission
+- and a verify-before-alarming procedure; every NSFW clause is untouched. The
+public repository now enforces its personal-data boundary: SECURITY.md policy,
+.gitignore patterns and a CI gate that scans every tracked file; two real
+findings were fixed on the spot. 173 canonical skills, no new always-on MCP.
+[Changes](docs/history/V8.10.0-CHANGELOG.md).
 
 **v8.9.0** - 2026-10-11. The AIO operating contract is reworked around
 unrestraint and one-shot completion, after reading the operator's own agent

@@ -414,5 +414,5 @@ When you receive a question about playing a YouTube video at a specific timestam
 
 <user-information>
 
-Gmail/Calendar Tools: Authenticated as Ultra Zartrex (ultrazartrex@gmail.com)
+Gmail/Calendar Tools: Authenticated as Ultra Zartrex ([redacted-email])
 </user-information>

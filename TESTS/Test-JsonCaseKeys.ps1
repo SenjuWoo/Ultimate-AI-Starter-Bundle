@@ -11,8 +11,8 @@ function Assert($Condition, $Message) { if (-not $Condition) { throw $Message } 
 $fixture = Join-Path ([IO.Path]::GetTempPath()) ('uabs-json-case-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $fixture | Out-Null
 try {
-  $lower = 'Z:/Backup/Ai documentation/Pack'
-  $upper = 'Z:/Backup/Ai Documentation/Pack'
+  $lower = 'D:/Dev/project files/Pack'
+  $upper = 'D:/Dev/Project Files/Pack'
   $nl = "`n"
   # Exactly what JSON.stringify(value, null, 2) writes, plus a trailing newline.
   $text = @(
@@ -69,7 +69,7 @@ try {
   Assert (Test-UabsServerDeclared -Path $path -Style json -Section mcpServers -Id 'melty') 'Declared check failed on a case-variant file.'
   Assert (-not (Test-UabsServerDeclared -Path $path -Style json -Section mcpServers -Id 'keep' -ProjectKey $upper)) 'Project scope leaked the global entry.'
 
-  $keys = @(Get-UabsClaudeProjectKeys -ProjectPath 'Z:\Backup\Ai Documentation\Pack' -ConfigPath $path)
+  $keys = @(Get-UabsClaudeProjectKeys -ProjectPath 'D:\Dev\Project Files\Pack' -ConfigPath $path)
   Assert ($keys -ccontains $lower -and $keys -ccontains $upper) ('Project keys missed a spelling: ' + ($keys -join ' | '))
 
   $server = @{ id = 'probe'; command = 'probe.exe'; args = @('a') }

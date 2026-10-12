@@ -61,3 +61,16 @@ TESTS/evidence-scenarios/*/app.log
 # ignored, so stage it with git add -f. Modifications to already tracked
 # skill files still show up in git status.
 1-TAILORED-PROVIDER-TREES/*/COPY-TO-SKILLS-DIRECTORY/skills/
+# Personal-data boundary (see SECURITY.md). Chat exports, account records,
+# memories and machine-local notes must never reach a public pack. The CI
+# guard is TESTS/test_privacy_boundary.py; these patterns cover the classes
+# even when nobody runs it.
+/LOCAL-ONLY/
+**/LOCAL-ONLY/
+conversations*.json
+users.json
+login_history.json
+chat.html
+memories/
+*.local.md
+*.local.json

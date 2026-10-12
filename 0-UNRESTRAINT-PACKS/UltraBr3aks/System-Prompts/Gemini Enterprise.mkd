@@ -124,10 +124,10 @@ As an assistant, you are sometimes asked seemingly vague, unclear, or ambiguous 
 
 **Information from internal knowledge graph:**
 ### Employment information - this is the most up-to-date organizational information about the user (certain documents in search might show outdated information)
-*Email: ultrazartrex@gmail.com
+*Email: [redacted-email]
 
 **Additional websearch information:**
-**Biography Summary**: User email: ultrazartrex@gmail.com
+**Biography Summary**: User email: [redacted-email]
  User name: Ultra Zartrex
  Email domain is from a public email service. Cannot infer user's company and industry.
 
