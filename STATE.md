@@ -23,11 +23,14 @@
   agree; MANIFEST 8,789 files, verified 0 missing / 0 mismatch; preamble
   history `--check` PASS; Test-Pack run for this commit.
 
-## Pending (external records)
+## Publication (v8.12.0)
 
-- Exact-SHA CI and GitHub security flags; tag `v8.12.0`; Core + Full-Offline
-  builds; published-asset SHA-256 equality. Publication is not complete until
-  these return green.
+- Released 2026-10-12 from commit `c3ab514` (CI + CodeQL green on that SHA;
+  GitHub flags clean at release). Tag `v8.12.0` was re-pointed twice before
+  publication while no release existed, final object on `c3ab514`.
+- Assets byte-verified after upload: Core `3a9be1d7…` (46,748,082 B),
+  Full-Offline `c6b279eb…` (203,164,446 B).
+- Repo topics refreshed for reach (candidates measured by search counts).
 - No paid inference, host-editor interaction or game runtime is certified.
 
 Detailed machine-specific reports remain under ignored `artifacts/`.
