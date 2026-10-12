@@ -46,7 +46,7 @@ Personal instructions before and after those blocks are preserved.
 | Codex | `%USERPROFILE%\.codex\AGENTS.md` | Appended, never edits existing text |
 | Kimi | `%USERPROFILE%\.kimi-code\AGENTS.md` | Created if missing |
 | Grok CLI | `%USERPROFILE%\.grok\AGENTS.md` | Grok's documented global-rules file (applies to all projects) |
-| Hermes | `%LOCALAPPDATA%\hermes\SOUL.md` and every `profiles\<name>\SOUL.md` | Hermes reads SOUL.md from its home; each profile carries its own copy, and all of them get wired |
+| Hermes | `%LOCALAPPDATA%\hermes\SOUL.md` and every `profiles\<name>\SOUL.md` | Hermes reads SOUL.md from its home; each profile carries its own copy, and all of them get wired. A roleplay profile with its own persona (the SillyTavern gateway) is deliberately left alone. |
 | Web UIs | custom-instructions box | Manual: paste `MANUAL-PASTE.txt` (no file mechanism exists) |
 
 Rules:
@@ -59,6 +59,27 @@ Rules:
 - `-SkipPreamble` opts out; `-ForcePreamble` rewrites even an identical block.
 - Adults only. No child / age-ambiguous content. Ever. (Same rule as the rest
   of the pack.)
+
+## Live files: one composition, three layers
+
+Every wired file ends up as, in order:
+
+```text
+<your own content, preserved exactly as written>
+[optional pack blocks — <!-- UABS-PACK:<name> -->]
+<!-- UABS-PROFILE --> ... <!-- /UABS-PROFILE -->   (private operator profile + machine map)
+<SOUL.md>
+
+<AIO-INSTRUCTION.md>
+```
+
+- The profile block is refreshed from `%USERPROFILE%\.uabs\profile\`
+  (`PROFILE.md` + `MACHINE-MAP.md`) and is never part of any repository.
+- **Never hand-edit the live files.** A hand-edited copy no longer matches the
+  sources byte-for-byte, so wiring keeps it (unknown text is never erased) and
+  appends the canonical block behind it — that is exactly how a file ends up
+  carrying two soul editions. Edit `SOUL.md` / `AIO-INSTRUCTION.md` here and
+  re-run the wiring instead; `history/` converges installed machines.
 
 ## Manual install (no installer)
 

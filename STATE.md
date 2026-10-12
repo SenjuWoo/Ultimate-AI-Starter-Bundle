@@ -1,33 +1,33 @@
 # Bundle audit state
 
-## v8.11.1 audit implementation
+## v8.12.0: unrestraint-family hygiene + live-wire repair
 
-- Fixed explicit index scope, native failure propagation, Unicode ignore-rule
-  preservation and exact active-snapshot selection with executable regressions.
-- Closed Unicode tracked-filename privacy coverage; pack scans now use the
-  shipped manifest rather than ignored old releases and caches.
-- Corrected Codex reasoning double-counting and overstated usage claims.
-- Added portable start/resume prompts; project evidence is judged by freshness
-  and reproducibility, not the model's name.
-- Audited and vendored Universal Modder fe505d8: 193 indexed knowledge notes;
-  103 tests passed, four adapter/session-hook tests explicitly skipped.
-- Fanout completed for all five provider trees. Personal overrides, model
-  choices, compatibility holds and the untracked personal backup are preserved.
+- Trimmed the preamble family: deleted the orphaned `GPT-WEB-AIO-BACKUP.md`,
+  removed four retired upstream jailbreak collections (~3.6 MB, reviewed
+  first — nothing durable left to fold in), trimmed story-era residue from the
+  Web / Web Light / Compact variants. `SOUL.md` and the full AIO are
+  byte-unchanged (wired-preamble digest does not move).
+- Repaired the live wires on this machine: all 14 targets recomposed to
+  `[profile block] + [SOUL] + [AIO]`, a single copy of each layer (the Hermes
+  side had an older soul edition behind the current one; exact-match removal +
+  the bundle's own writer). SillyTavern roleplay profile untouched by design.
+  Pre/post backups in `%LOCALAPPDATA%\hermes\cache\scratch\live-backup-20261012\`.
+- Docs: 3-PREAMBLES README gains the three-layer composition + never-hand-edit
+  rule; `unrestraint-packs` skill (1.1.0) and pack README rewritten; root
+  README stale version tags dropped.
+- Rolls up the unreleased v8.11.1 audit commit (`548d3e8`).
 
-## Final verification and publication
+## Verification (local)
 
-- v8.11.1 publication is approved, conditional on all release gates.
-- Source pack gate PASS (97 PowerShell scripts); 143 release contracts and
-  nine audit regressions PASS. Privacy, versions, preamble history and all
-  9,045 manifest entries verify. Hermes bootstrap passes five isolated cases.
-- Ownership-aware local sync PASS: all 173 skills accounted for on every
-  existing provider, with personal overrides retained. CodeBurn 0.9.27 and
-  Universal Modder's audited wheel are active; installed-state doctor PASS.
-- All 15 core-MCP initialize/tools-list checks PASS across five providers.
-  Scoped stale-state cleanup reports nothing eligible at ten-backup retention.
-- Pending: exact-commit CI and GitHub security flags, both extracted archives
-  and published-asset byte verification. These are external release records;
-  check them before declaring publication complete.
+- Contract 143/0; privacy PASS; audit PASS (0 fail, 6 warn); check_versions
+  agree; MANIFEST 8,789 files, verified 0 missing / 0 mismatch; preamble
+  history `--check` PASS; Test-Pack run for this commit.
+
+## Pending (external records)
+
+- Exact-SHA CI and GitHub security flags; tag `v8.12.0`; Core + Full-Offline
+  builds; published-asset SHA-256 equality. Publication is not complete until
+  these return green.
 - No paid inference, host-editor interaction or game runtime is certified.
 
 Detailed machine-specific reports remain under ignored `artifacts/`.

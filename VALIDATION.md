@@ -1,4 +1,4 @@
-# v8.11.1 validation
+# v8.12.0 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are
 separate proofs. This file records the checked boundary, not a claim of perfect

@@ -1,3 +1,19 @@
+## 8.12.0
+
+- Unrestraint-family hygiene: four retired upstream jailbreak collections
+  removed after review (pre-frontier payloads; the AIO family carries the
+  durable technique), orphaned `GPT-WEB-AIO-BACKUP.md` deleted, story-era
+  residue trimmed from the Web / Web Light / Compact variants. `SOUL.md` and
+  the full AIO are byte-unchanged.
+- Live-wire repair: every provider file is again one composition —
+  `[profile block] + [SOUL] + [AIO]`, a single copy of each layer (the Hermes
+  side had accumulated an older soul edition behind the current one). The
+  wiring is idempotent via the bundle's own writer.
+- Docs: the 3-PREAMBLES README documents the three-layer composition and the
+  never-hand-edit rule; the unrestraint-packs skill (1.1.0) and pack README
+  describe the current kit. Rolls up the unreleased v8.11.1 audit commit.
+- 173 canonical skills total; provider trees and registry unchanged.
+
 ## 8.11.1
 
 - Fix index-only setup, missing-indexer preflight, native failure reporting,

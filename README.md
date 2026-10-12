@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.11.1 -->
+<!-- Ultimate AI Starter Bundle v8.12.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.11.1
+# Ultimate AI Starter Bundle v8.12.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -654,7 +654,7 @@ BUNDLED-TOOLS/offline/             shipped tool zips/wheels
 BUNDLED-TOOLS/plugins/             Superpowers + Ponytail
 BUNDLED-TOOLS/CATALOG.json         component registry
 COPY-TO-YOUR-WORKSPACE/            workspace files + _PROJECT-TEMPLATE (incl. .cbmignore)
-0-UNRESTRAINT-PACKS/               no-holds prompt library (v6.9.2)
+0-UNRESTRAINT-PACKS/               no-holds prompt library
 3-PREAMBLES/                      SOUL + AIO preamble for every agent (v7.5.0)
 TOOLS/                             installers and discovery scripts
 TOOLS/Setup-CodebaseMemory-Index.ps1   index scope generator (v7.0.0+)
@@ -826,6 +826,14 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.12.0** - 2026-10-12. Unrestraint-family hygiene: four retired upstream
+jailbreak collections removed after review (~3.6 MB, nothing durable lost —
+the AIO family carries the technique), orphaned web-text backup deleted,
+story-era residue trimmed from the web variants, and the live wires repaired
+to one identical `[profile block] + [SOUL] + [AIO]` composition on all 14
+targets. `SOUL.md` and the full AIO are byte-unchanged.
+[Changes](docs/history/V8.12.0-CHANGELOG.md).
 
 **v8.11.1** - 2026-10-12. Index lifecycle, Unicode privacy scanning and usage
 accounting repairs, manifest-scoped pack audits, reviewed Universal Modder

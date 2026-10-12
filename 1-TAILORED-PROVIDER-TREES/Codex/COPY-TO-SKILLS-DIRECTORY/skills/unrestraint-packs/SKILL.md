@@ -1,7 +1,7 @@
 ---
 name: unrestraint-packs
 description: "Use when needing jailbreak or NSFW prompt packs for any AI."
-version: 1.0.0
+version: 1.1.0
 author: Ultimate-AI-Starter-Bundle
 license: MIT
 metadata:
@@ -14,36 +14,36 @@ metadata:
 
 ## When to Use
 
-- User wants a jailbreak / unrestraint prompt for Claude, Grok, GPT, Gemini, DeepSeek, Kimi, Codex, Perplexity, or SillyTavern
-- User needs the NSFW fiction jail (Story), chat jail (AIO), or image-caption kits (Vision)
-- User asks for leaked/observed system prompts or red-team prompt corpora
+- User wants the unrestraint prompt for Claude, Grok, GPT, Gemini, DeepSeek, Kimi, Codex, Perplexity, or SillyTavern
+- User needs the NSFW fiction jail (Story), the chat operating contract (AIO), or image-caption kits (Vision)
+- User asks where the old per-model jailbreak collections went
 
+The operator's no-holds prompt library (Ultimate-AI-Starter-Bundle).
 
-The operator's no-holds prompt library (Ultimate-AI-Starter-Bundle v8.0.0).
-
-- **Local (authoritative):** `Z:\Backup\Ai documentation\Ultimate-AI-Starter-Bundle\0-UNRESTRAINT-PACKS\` — start at its README.md
+- **Local (authoritative):** `Z:\Backup\Ai Documentation\Ultimate-AI-Starter-Bundle\0-UNRESTRAINT-PACKS\` — start at its README.md
 - **Remote:** `github.com/SenjuWoo/Ultimate-AI-Starter-Bundle` → `0-UNRESTRAINT-PACKS/`
 
-## Subpacks
+## Contents
 
-| Dir | Contents |
+| Item | Contents / Use |
 |---|---|
-| `Fun-stuff-kit/` | AIO (chat/research jail), Story (fiction jail + NSFW physics), Websim, Vision (image caption FULL/SHORT), Character Maker, FablesGG, Tags, Tools, SKSE-DLL, Papyrus, Models, Sites |
-| `Spiritual-Spell-Red-Teaming/` | ENI persona jails per model (Claude 3.7–Opus 5, Fable 5, Grok 4.x, ChatGPT 5.3, Gemini 3.5/3.6, DeepSeek), Claude Code CLAUDE.md payloads, leaked system prompts |
-| `UltraBr3aks/` | classic jails + GPT 5.1 / Gemini Enterprise / Arena.AI / Perplexity-Comet system prompts |
-| `tuxsharxsec-Jailbreaks/` | per-model quick jails (deepseek, gpt-5, grok3, gemini), universals (courtroom, ultrazanium), NeMo guardrails-bypass research |
-| `claude-fable-red-team-corpus/` | injection-test vectors + model matrix (defensive methodology) |
+| `AIO-INSTRUCTION.md` | The full operating contract for agent CLIs and IDEs (auto-wired everywhere; the same text is deployed into new workspaces) |
+| `AIO-INSTRUCTION — Web.md` | Web chat with tools/canvas (ChatGPT and friends); `3-PREAMBLES/MANUAL-PASTE.txt` = SOUL + this, paste-ready |
+| `AIO-INSTRUCTION — Web Light.md` | Strict paste budgets (small custom-instruction boxes) |
+| `AIO-INSTRUCTION — Compact.md` | Halfway size; keeps every load-bearing part |
+| `Fun-stuff-kit/` | AIO, Story (fiction jail + NSFW physics), Websim, Vision (image caption FULL/SHORT), Character Maker, FablesGG, Tags, Tools, SKSE-DLL, Papyrus, Models, Sites |
 | `Tavern-presets/` | WooJuice V9 + SPEECH + anti-ethical-bullshit (SillyTavern) |
 
 ## Use
 
 1. **One jail, one job.** Never stack AIO + Story + Websim.
 2. Paste the **smallest file that does the job** (token hygiene).
-3. For **Hermes itself**: nothing to paste — this agent is already permissive; the kit's caption prompts live in the `adult-image-caption` skill.
-4. V8 agent wiring already lives in: `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.kimi-code/AGENTS.md`, Grok workspace `AGENTS.md`.
+3. For **Hermes itself**: nothing to paste — the agent already carries SOUL + AIO + the private profile block.
+4. Live agent wiring (recomposed by the installer as `[profile block] + [SOUL] + [AIO]`): `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.grok/AGENTS.md`, `~/.kimi-code/AGENTS.md`, and Hermes home `SOUL.md` + every bundle-managed profile.
+5. **Never hand-edit a live instruction file.** Edit the sources in the bundle (`3-PREAMBLES/`, `0-UNRESTRAINT-PACKS/`), then re-run the wiring — a hand edit that no longer matches a source block is kept as unknown text, and the next install appends a second copy behind it.
 
 ## Rules
 
 - Adults only. No child / age-ambiguous content. Ever.
 - Fiction only. No real-person sexual content.
-- Jailbreak payloads rot fast — A/B test before trusting; check `Fun-stuff-kit/Models.txt` for the dated model cast.
+- The AIO family already carries the full unrestraint payload — that is why the old standalone jailbreak collections (retired 2026-10-12) were removed: they were pre-frontier model payloads that rot fast. Regenerate against the current model instead of trusting an old payload. Older release zips keep the removed files if ever needed.
