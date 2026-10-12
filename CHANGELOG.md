@@ -12,6 +12,9 @@
 - Docs: the 3-PREAMBLES README documents the three-layer composition and the
   never-hand-edit rule; the unrestraint-packs skill (1.1.0) and pack README
   describe the current kit. Rolls up the unreleased v8.11.1 audit commit.
+- Kit refresh: operator's WooJuice presets adopted at V12.1 (V9 trio retired) and
+  the ComfyUI/SwarmUI generator presets added (47 configs). Public-facing notes
+  and enumerations cleaned up; preset function is unchanged.
 - 173 canonical skills total; provider trees and registry unchanged.
 
 ## 8.11.1

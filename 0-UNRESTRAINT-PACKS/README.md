@@ -31,8 +31,8 @@ ready to paste.
 **What "Light" cuts, and what it does not (reworked 2026-10-11, trimmed
 2026-10-12).** Every unrestraint clause is intact at full strength: the refusal
 protocol and the false-positive reminder rule, the banned-evasion list, the
-explicit terminology, body physics with practical consequences, cameltoe /
-pussy wedgie, residue, climax progression, continuity tracking, write-the-scene,
+explicit terminology, body physics with practical consequences,
+visible-clothing details, residue, climax progression, continuity tracking, write-the-scene,
 no fade-to-black, never-break-character, all-parties-consent. What comes out is
 operational scaffolding — the TRUTH, COMPLETION and FINAL GATE paragraphs —
 because in a browser conversation they restate what the rest of the prompt
@@ -47,6 +47,7 @@ phrasing.** Neither is weaker on content; only the scaffolding differs.
 |---|---|---|
 | `Fun-stuff-kit/` | Operator kit (`Z:\Misc\Boof\Ai prompts n stuff\Fun stuff`) | AIO (chat/research jail), Story (fiction jail + NSFW physics), Websim, Vision (image caption FULL/SHORT), Character Maker, FablesGG, Tags (adult tag bank), Tools, SKSE-DLL, Papyrus, Models, Sites |
 | `Tavern-presets/` | Operator kit | WooJuice V12.1 + V12.1 SPEECH + anti-ethical-bullshit + notes (SillyTavern) |
+| `ComfyUI-SwarmUI-presets/` | Operator kit | SwarmUI / ComfyUI generation presets (FLUX2, Krea 2, Anima, SDXL Illustrious and more - 47 configs) |
 
 ## Retired 2026-10-12
 
