@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import ntpath
 import os
 import shutil
 import subprocess
@@ -196,7 +197,13 @@ def launch(target: str, args: list[str], steam: bool = False):
         subprocess.run(["cmd.exe" if is_wsl() else "cmd", "/c", "start", "", url], cwd="/mnt/c" if is_wsl() else None, timeout=30)
         return
     exe = to_win(target)
-    subprocess.run(["cmd.exe" if is_wsl() else "cmd", "/c", "start", "", exe, *args], cwd="/mnt/c" if is_wsl() else None, timeout=30)
+    # Start in the exe's own folder: games open their data files relative to the working directory
+    # (Tomb Raider: Legend dies with "Failed to open BIGFILE.000" when started from anywhere else).
+    exe_dir = ntpath.dirname(exe)
+    cmd = ["cmd.exe" if is_wsl() else "cmd", "/c", "start", ""]
+    if exe_dir:
+        cmd += ["/D", exe_dir]
+    subprocess.run([*cmd, exe, *args], cwd="/mnt/c" if is_wsl() else None, timeout=30)
 
 
 # --------------------------------------------------------------------------- capture

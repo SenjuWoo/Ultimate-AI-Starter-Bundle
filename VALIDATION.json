@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.8.0",
-  "generated": "2026-10-10",
-  "release_tag": "v8.8.0",
+  "version": "8.9.0",
+  "generated": "2026-10-11",
+  "release_tag": "v8.9.0",
   "canonical_skills": 172,
   "provider_trees": 5,
   "registry_entries": 172,
@@ -38,6 +38,6 @@
     "TESTS/Test-UserProfile.ps1",
     "TOOLS/generate_preamble_history.py --check"
   ],
-  "runtime_status": "v8.8.0: content packs are tested with fixture roots (Steam manifest, My Games, Vortex, tool env vars), remembered -Packs/-ExcludePacks choices, marked instruction blocks that add and remove byte-exactly, conversion of an archived older Skyrim section, and retirement of a disabled pack's unmodified skills. Skyrim Forge 6.0.1 is installed from its pinned, SHA-256-verified release in CI, including a tampered-archive refusal; Forge's own matrix runs in SenjuWoo/SkyrimForge. The personal profile block is size-capped and tested for placement, refresh and exact removal. Usage figures in docs/USAGE-ECONOMY.md come from one machine's local logs via TOOLS/usage_report.py. Editor/gameplay/GPU and token-billing improvements remain unverified. No new always-on MCP or model change.",
+  "runtime_status": "v8.9.0: the AIO family is reworked - all four variants carry the expanded unrestraint payload (reminder false-positive handling, banned-evasion list, body-physics craft, continuity) and the one-shot additions (deliver the finished artifact, obvious-call rule, sub-0.8 confidence); MANUAL-PASTE.txt is SOUL + the Web variant (pure ASCII) and COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt is synced off the stale v6.0 contract; outgoing texts are archived for install convergence. Universal Modder is refreshed to upstream 2c22014 with the UABS deltas rebased and the offline wheel rebuilt and hash-pinned; its vendored upstream suite runs 94 passed / 1 skipped and TESTS/test_universal_modder.py passes. Impeccable's compatibility hold was re-audited against engine 0.1.14 (cli-v4.5.2 payload): malformed close-tag fixtures still leak, so the audited CLI 3.6.1 / skill 4.1.3 pin and reviewed local overrides stand. RTK 0.51.0 remains the newest non-prerelease; Ponytail 5.1.0, Superpowers 7.0.0 and Headroom 0.40.0 are current. Editor/gameplay/GPU and token-billing improvements remain unverified. No new always-on MCP or model change.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

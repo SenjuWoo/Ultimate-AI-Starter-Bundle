@@ -60,8 +60,13 @@ def check(mod: str, game: str | None = None) -> int:
     # game files, matched by size then hash
     if game:
         g = Path(to_posix(game))
+        gr, mine = g.resolve(), root.resolve()
+        # a mod inside the install (Dwarf Fortress mods/<name>) is not game content: don't match it against itself
+        inside = mine.relative_to(gr).parts if mine != gr and mine.is_relative_to(gr) else None
         by_size: dict[int, list[Path]] = {}
         for p in g.rglob("*"):
+            if inside and p.relative_to(g).parts[:len(inside)] == inside:
+                continue
             if p.is_file():
                 try:
                     by_size.setdefault(p.stat().st_size, []).append(p)

@@ -66,7 +66,9 @@ Context7 also answered both documentation tools without credentials. Its
 capability sweep uses a different JSON serialization (4,870 bytes); do not
 compare that with compact transport bytes as a performance change.
 CodeBurn 0.9.24's version probe passed and its isolated production dependency
-audit reported zero advisories. These checks are not malware certification.
+audit reported zero advisories. Rechecked 2026-10-11 for 0.9.27: the version
+probe passed and the isolated dependency audit reports zero advisories at
+every severity. These checks are not malware certification.
 [GitHub 1.12.1 fixes advertised OAuth scopes](https://github.com/github/github-mcp-server/releases/tag/v1.12.1);
 its Windows archive matched the upstream SHA-256 before adoption.
 
@@ -705,4 +707,21 @@ The engine is a compiled binary, so the patch cannot follow. Adopting 4.x means 
 audited implementation, shipping an engine that reintroduces the defect, and adding a first-use
 download surface. Not better on the axis that matters - re-audit when upstream closes the
 fixture. Rerun any time with `python TOOLS/audit-impeccable-engine.py <impeccable-binary>`.
+
+### Impeccable CLI 4.5.2 / engine 0.1.14 - hold re-audited 2026-10-11
+
+Upstream moved to skill-v4.5.2 / cli-v4.5.2 (engine 0.1.14 in `optionalDependencies`, same
+stub-plus-platform-package layout). Audited against the real binary from
+`@impeccable/cli-windows-x64@0.1.14`, installed to a scratch prefix from the npm registry:
+
+| fixture | engine 0.1.14 | vendored 3.6.1 (patched) |
+|---|---|---|
+| well-formed `<script>` bait | 0 findings | 0 findings |
+| `</script \t bogus>` bait | **1 finding (leak)** | 0 findings |
+| `</style bogus>` bait | **1 finding (leak)** | 0 findings |
+| control: visible buzzword text | 1 finding | 1 finding |
+
+The defect is unchanged across 0.1.5 → 0.1.14, so the hold stays and the audited CLI 3.6.1 /
+skill 4.1.3 pin (plus the reviewed local skill overrides) remains the shipped pair.
+`TESTS/impeccable-security-regressions.mjs` still passes on the vendored CLI.
 

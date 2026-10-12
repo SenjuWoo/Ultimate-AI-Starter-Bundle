@@ -12,7 +12,7 @@ tools: ["Bannerlord module system (ModuleData XML + XSLT, C# net472 SubModule)",
 agents: ["Claude Code (Opus 5.5)", "Claude Code subagents (Sonnet 5.5)"]
 humans: ["@theartur2000"]
 date: 2026-10-07
-links: []
+links: ["https://github.com/theartur2000/bannerlord-editor-free-sdk/tree/v1.4.8.119303"]
 tags: [bannerlord, native, crash, hang, minidump, ghidra, harmony, guards, validators, ik, watchdog]
 ---
 
@@ -79,14 +79,20 @@ each (+0xf0 parent, +0x104 body part, +0x110 ik-joint index), bone count a signe
    search then walks the agent grid for about 2^62 cells. **Fix:** no monster bone field the editor validates with "has parent" (body rotation reference, head
    and thorax look, neck root, hand and item bones, foot IK, slope bones) may be a root; a runtime guard sets the monster's body-rotation
    reference bone index to -1 at mission start when `MBActionSet.GetBoneHasParentBone` is false. `Monster.BodyRotationReferenceBoneIndex`
-   is get-only in the public API; how the guard writes it is not documented here. [dump analysis V; guard compiled, no in-game run recorded]
+   is get-only in the public API, so the guard calls its private setter by reflection (`GetProperty(...).GetSetMethod(true)`, invoked
+   with `(sbyte)-1`) for each monster whose reference bone has no parent, at every mission start; no Harmony patch. [dump analysis V;
+   the guard runs in game (its log line in 187 test runs, no failure lines); that it cures the freeze is not shown, since no control run
+   with it switched off was recorded]
 10. **Symptom.** Siege with creature riders crashes seconds after spawn (+0x6fcc23); field battles never do. **Cause:** native fall damage builds a blow on the
     mount's `fall_blow_damage_bone` and `Mission.FallDamageCallback` repeats it for the RIDER, whose 28-bone skeleton has no such bone. **Fix:** keep a mount's
     fall bone below 28 and add a Harmony prefix on `Mission.FallDamageCallback` that remaps or skips. Any blow whose bone index belongs to another skeleton
     ends here: fix the class. [V]
 11. **Symptom.** Crash about 3 s after a custom boss dies (+0x616dab), or a stuck agent when a custom skeleton dies. **Cause:** `ragdoll_*` monster bones name
-    bones with no ragdoll body (index -1 read unchecked); the death path dereferences bone 0's ragdoll body. **Fix:** every such bone needs a body; always a
-    capsule on the root bone; joints are optional. [crash at +0x616dab V; which of the two causes it confirmed is not recorded; TN 15]
+    bones with no ragdoll body (index -1 read unchecked). The boss's `ragdoll_stationary_check_bone_*` and `ragdoll_fall_sound_bone_*` fields named arm and
+    leg bones while only the spine, neck and head had bodies. The death path also dereferences bone 0's ragdoll body unchecked. **Fix:** point those fields
+    at the nearest ancestor with a ragdoll body (or give every such bone a body); always a capsule on the root bone; joints are optional. [crash at +0x616dab
+    V from the Windows crash event, not a dump; the next three runs that reached the boss's death did not crash, but the fix was not re-tested on its own or
+    reverted; the root half is read from the code only, TN 15]
 12. **NaN bone frames, NaN eye position, damage `int.MinValue` and an AI that never fires, only on AI-driven agents.** See TN 14.
 13. **A riderless creature fighter crashes in five places (+0x6f45a6, +0x6fca17, voice, formation, +0x6a1004).** See TN 25; the working
     fix is the hidden-rider jockey pair in the [races note](bannerlord-custom-races-and-creatures.md).

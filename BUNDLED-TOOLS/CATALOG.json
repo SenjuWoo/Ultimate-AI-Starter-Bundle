@@ -11,9 +11,9 @@
         "owner": "rehan-remade",
         "repo": "universal-modder"
       },
-      "source_commit": "550651675153070cce68066e07c3c8f95df86d08",
+      "source_commit": "2c2201437ca676fb4e5f06a18fff6e8db99eef0f",
       "source_dir": "BUNDLED-TOOLS/universal-modder",
-      "offline_asset": "universal_modder-0.2.0+uabs.5506516-py3-none-any.whl",
+      "offline_asset": "universal_modder-0.2.0+uabs.2c22014-py3-none-any.whl",
       "cli": "um",
       "cli_env": "UNIVERSAL_MODDER_CMD",
       "python": "3.13",
@@ -31,7 +31,7 @@
         "sprite-processing",
         "gameplay-showcase-video"
       ],
-      "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to eleven upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (160 notes), discovers native Windows Steam roots from the registry and never echoes matched credentials; the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. Upstream now adds local ComfyUI generation (no key, 127.0.0.1:8188), SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification."
+      "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to eleven upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (185 notes), discovers native Windows Steam roots from the registry and never echoes matched credentials; the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. Upstream now adds local ComfyUI generation (no key, 127.0.0.1:8188), SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification."
     },
     {
       "github": {
@@ -270,14 +270,14 @@
         "owner": "getagentseal"
       },
       "name": "CodeBurn",
-      "version": "0.9.25",
+      "version": "0.9.27",
       "offline_asset": null,
       "license": "see-upstream",
       "required_for": [
         "ai-cost"
       ],
-      "npm_spec": "codeburn@0.9.25",
-      "npm_integrity": "sha512-ozjgg463v2D3Tm2LqYpK2EySjFnpglq6cyZL2N/Bz3tC7sgif11ttf7OL6lt7+7VAY4HYj/rOZLG9u+3erecwA==",
+      "npm_spec": "codeburn@0.9.27",
+      "npm_integrity": "sha512-dNCy09sYCdvrijcoOun+ZVyTbp/GYGmdBbBTe8uTSLRO8rSWqS4IEOzQdRoPRhbt7twCuSqVBjTNNl+CdTNrKQ==",
       "npm_args": [
         "--ignore-scripts"
       ]
@@ -311,7 +311,7 @@
         "--ignore-scripts"
       ],
       "scope_note": "The cross-provider skill is vendored from the official skill-v4.1.3 universal.zip and bound to its published SHA-256. The executable detector is the actually published npm 3.6.1 package, pinned by npm integrity. Optional Puppeteer is omitted: Playwright/browser profiles already own live rendering, and downloading a second browser would be duplication. Lifecycle scripts are disabled. UABS removes upstream self-update/pin paths and generated hook cache so provider skill trees keep one writer. Zero MCP schemas, daemon, account or key.",
-      "compatibility_hold": "2026-09-18 audited with TOOLS/audit-impeccable-engine.py against engine 0.1.5 (the payload CLI 4.1.0 pins): the engine still leaks bodies of browser-valid malformed close tags (</script \\t bogus>, </style bogus>) into text analysis - the exact gap UABS patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub whose payload is that engine: pinned via optionalDependencies, else first-use download into ~/.impeccable, and its install/link/update/check commands write skill trees. Retain audited CLI 3.6.1 / skill 4.1.3 until upstream closes the fixture or ships patchable source. Rechecked 2026-09-28 against official engine 0.1.6: well-formed/control fixtures PASS, malformed script/style fixtures still leak; keep the patched pin and reviewed local skill overrides.",
+      "compatibility_hold": "2026-09-18 audited with TOOLS/audit-impeccable-engine.py against engine 0.1.5 (the payload CLI 4.1.0 pins): the engine still leaks bodies of browser-valid malformed close tags (</script \t bogus>, </style bogus>) into text analysis - the exact gap UABS patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub whose payload is that engine: pinned via optionalDependencies, else first-use download into ~/.impeccable, and its install/link/update/check commands write skill trees. Retain audited CLI 3.6.1 / skill 4.1.3 until upstream closes the fixture or ships patchable source. Rechecked 2026-09-28 against official engine 0.1.6 (still leaking), and 2026-10-11 against engine 0.1.14 (cli-v4.5.2 pins it): well-formed/control fixtures PASS, malformed script/style fixtures still leak the tag body into analysis - hold reaffirmed; the vendored patched CLI 3.6.1 passes TESTS/impeccable-security-regressions.mjs.",
       "skill_release_prefix": "skill-v"
     },
     {
@@ -938,7 +938,7 @@
       "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
     }
   ],
-  "pack_version": "8.8.0",
+  "pack_version": "8.9.0",
   "updated_utc": "2026-10-02",
   "providers": {
     "Grok": {
@@ -1017,7 +1017,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.8.0",
-  "updated": "2026-10-02",
+  "catalog_version": "8.9.0",
+  "updated": "2026-10-11",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

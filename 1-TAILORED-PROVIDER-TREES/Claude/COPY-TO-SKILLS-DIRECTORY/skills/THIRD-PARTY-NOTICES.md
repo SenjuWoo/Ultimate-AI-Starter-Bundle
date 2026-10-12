@@ -14,7 +14,7 @@ as a plugin: a plugin serves one provider, a canonical skill serves all five.
 ## Universal Modder — `rehan-remade/universal-modder`, MIT
 
 `universal-modder` routes to all eleven upstream skill guides as on-demand
-references, from commit `550651675153070cce68066e07c3c8f95df86d08` (0.2.0, built as 0.2.0+uabs.5506516).
+references, from commit `2c2201437ca676fb4e5f06a18fff6e8db99eef0f` (0.2.0, built as 0.2.0+uabs.2c22014).
 The CLI source, offline tests and knowledge snapshot are in
 `BUNDLED-TOOLS/universal-modder`, with upstream LICENSE and the font OFL notices.
 UABS pins dependencies, includes the knowledge snapshot in the wheel, and

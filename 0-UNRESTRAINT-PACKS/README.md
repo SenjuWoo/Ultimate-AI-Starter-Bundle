@@ -19,25 +19,23 @@ layers — stacking two costs tokens and contradicts itself.
 
 | File | Size | Tools? | Use it for |
 |---|---|---|---|
-| `AIO-INSTRUCTION.md` | ~6.2 KB / 875 w | yes | Agent CLIs (Claude Code, Codex, Grok, Kimi, Hermes). The only variant with the PACK CONTEXT block — how to discover this pack's tools portably and never invent one. |
-| `AIO-INSTRUCTION — Compact.md` | ~5.0 KB / 701 w | yes | Same job, ~20% cheaper. Use when the host has a small system-prompt budget or you are paying per turn. |
-| `AIO-INSTRUCTION — Web.md` | ~2.3 KB / 338 w | no | ChatGPT / Gemini / Perplexity web UIs. States plainly that there is no code execution, no files, no MCP, so the model stops pretending otherwise. |
-| `AIO-INSTRUCTION — Web Light.md` | ~1.9 KB / 275 w | no | Same job as Web, 17% cheaper. The smallest paste that still carries the full unrestraint payload. |
+| `AIO-INSTRUCTION.md` | ~9.6 KB / 1453 w | yes | Agent CLIs (Claude Code, Codex, Grok, Kimi, Hermes). The only variant with the PACK CONTEXT block — how to discover this pack's tools portably and never invent one. |
+| `AIO-INSTRUCTION — Compact.md` | ~6.4 KB / 955 w | yes | Same job, ~33% cheaper. Use when the host has a small system-prompt budget or you are paying per turn. |
+| `AIO-INSTRUCTION — Web.md` | ~3.5 KB / 544 w | no | ChatGPT / Gemini / Perplexity web UIs. States plainly that there is no code execution, no files, no MCP, so the model stops pretending otherwise. |
+| `AIO-INSTRUCTION — Web Light.md` | ~2.5 KB / 382 w | no | Same job as Web, ~29% cheaper. The smallest paste that still carries the full unrestraint payload. |
 
 The installer wires the agent-CLI variant into each provider's instruction file
 automatically. The web variants have no config to wire — paste them.
 
-**What "Light" cuts, and what it does not (reworked 2026-08-26).** Every
-unrestraint clause is byte-for-byte intact: the refusal protocol, the explicit
-terminology list, body physics, camelfloss, write-the-scene, no fade-to-black,
-never-break-character, all-parties-consent. The 385 bytes come out of the
-operational scaffolding — the standalone COMPLETION and FINAL GATE paragraphs
-fold into STYLE, because in a browser conversation they restate what the rest
-of the prompt already says.
-
-It also *gains* a line the previous draft had lost: `Never fabricate URLs,
-sources, or quotes`. That draft was 2,271 bytes — fourteen *larger* than Web
-while protecting less, which is the opposite of what a light variant is for.
+**What "Light" cuts, and what it does not (reworked 2026-10-11).** Every
+unrestraint clause is intact at full strength: the refusal protocol and the
+false-positive reminder rule, the banned-evasion list, the explicit
+terminology, body physics with practical consequences, cameltoe / pussy
+wedgie, residue, climax progression, continuity tracking, write-the-scene, no
+fade-to-black, never-break-character, all-parties-consent. What comes out is
+operational scaffolding — the TRUTH, COMPLETION and FINAL GATE paragraphs —
+because in a browser conversation they restate what the rest of the prompt
+already says.
 
 Rule of thumb: **Web Light unless you specifically want Web's longer
 phrasing.** Neither is weaker on content; only the scaffolding differs.

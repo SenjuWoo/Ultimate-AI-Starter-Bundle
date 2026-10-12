@@ -1,4 +1,4 @@
-# v8.7.35 validation
+# v8.9.0 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are
 separate proofs. This file records the checked boundary, not a claim of perfect
@@ -37,6 +37,24 @@ Ponytail v4.10.1 upstream tag commit:
 `c6ce46179874ea7368da0eb9e67c1ad5c10f08bc`. Its 16 OpenCode adapter tests and
 the retained Cursor adversarial-regex regression passed. Existing Cursor
 hardening was not overwritten by the vendor update.
+
+## v8.9.0 additions
+
+The reworked AIO family passes the pack's own gates: preamble source checks
+(clean UTF-8, provider-neutral SOUL, marker-free wiring, idempotent re-wire,
+history-based replacement), the deployed-artifact ASCII checks for
+`MANUAL-PASTE.txt` and `COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt`, and
+`TOOLS/generate_preamble_history.py --check` after the outgoing texts were
+archived. Universal Modder's refresh was verified with the vendored upstream
+pytest suite (94 passed / 1 skipped - the skip is the upstream hooks test the
+pack does not ship) and `TESTS/test_universal_modder.py` (wheel contents,
+`--version`, recon fixtures, catalog pins, all five provider trees).
+Impeccable's hold was re-audited against the real engine 0.1.14 binary from
+`@impeccable/cli-windows-x64@0.1.14` (`TOOLS/audit-impeccable-engine.py`:
+malformed-tag fixtures still leak, control passes) and the vendored CLI 3.6.1
+still passes `TESTS/impeccable-security-regressions.mjs`. Prompt-level
+unrestraint is not measured here: whether a given consumer surface complies
+remains a user-tested boundary.
 
 ## Runtime boundaries
 

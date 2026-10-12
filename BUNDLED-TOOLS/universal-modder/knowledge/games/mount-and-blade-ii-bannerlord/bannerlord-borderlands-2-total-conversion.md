@@ -13,7 +13,7 @@ status: in-progress
 agents: ["Claude Code (Opus 5.5)", "Claude Code subagents (Sonnet 5.5)"]
 humans: ["@theartur2000"]
 date: 2026-10-07
-links: []
+links: ["https://github.com/theartur2000/bannerlord-editor-free-sdk/tree/v1.4.8.119303"]
 tags: [bannerlord, borderlands-2, total-conversion, mashup, csharp-submodule, harmony, moduledata, xslt, project-mbproj, custom-race, creatures, guns, siege, campaign, gauntlet, fmod, psai, cel-shading, umodel, ghidra, minidump, test-harness]
 ---
 
@@ -221,9 +221,10 @@ are managed TaleWorlds names unless marked "native". Companion notes:
   assign `_videoPlayerView`, PlayVideo, RefreshVideoAspect). Replaying on the existing view stays black.
 
 ## Build steps
-The asset writers, validators, safe installer, test harness and crash-dump tools are the author's own SDK, which is not published yet
-(the author may add a link later); the Borderlands 2 conversion pipeline itself is not published either. The order we recommend for a
-NEW Bannerlord mod:
+The asset writers, validators, safe installer, test harness and crash-dump tools are published as
+[bannerlord-editor-free-sdk](https://github.com/theartur2000/bannerlord-editor-free-sdk/tree/v1.4.8.119303) (the author's own
+repository, MIT, tagged for game v1.4.8.119303); the Borderlands 2 conversion pipeline itself is not published. The order we
+recommend for a NEW Bannerlord mod:
 1. An empty module loading with `Native`, `SandBoxCore`, `Sandbox`, `CustomBattle` and a log you control, plus the compile gate.
 2. A test harness BEFORE content: command-line launch with an explicit module list, muted test config restored byte for byte, kill only
    the PID it started, mod log, first-chance exception logger, a watchdog that dumps a hung game.
@@ -253,7 +254,8 @@ verified each claim (harness, self-test, in game).
 **Not verified:**
 - The converter as a whole. The shield-partner fix (`blends_with` restored on 7,974 clips) and the IK hit-bone guard were compiled
   but never A/B tested in game; refit hit capsules were measured only offline.
-- The body-rotation-reference guard (crash note gotcha 9) was compiled; no in-game run of it is recorded.
+- The body-rotation-reference guard (crash note gotcha 9) runs in game (its log line is in 187 test runs), but no control run with it
+  switched off was recorded, so that it cures the freeze is not shown.
 - Riderless creature fighters (still crash at the AI target scorer), Spiderant mounts in full battles, Helios sky at dusk or night.
 - Audio was never heard by the agent (tests are silent); the FMOD bank loads clean (1,628 to 1,634 events).
 - Cold-cache start-up after packing; other Bannerlord versions; multiplayer; saved-game compatibility (new campaign required).

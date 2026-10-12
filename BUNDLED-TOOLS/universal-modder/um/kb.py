@@ -35,6 +35,7 @@ STATUSES = ["idea", "in-progress", "working", "released", "abandoned"]
 PLATFORMS = ["windows", "linux", "macos", "proton", "emulator", "console", "other"]
 GAME_KEYS = ["kind", "title", "game", "engine", "route", "status", "date", "agents"]
 TECH_KEYS = ["kind", "title", "tags", "date", "agents"]
+LIST_KEYS = ["games_also", "tools", "agents", "humans", "links", "tags"]
 GAME_SECTIONS = ["setup", "route", "verification", "gotchas"]
 MAX_BLOCK_WARN, MAX_BLOCK_FAIL = 60, 150
 MAX_NOTE_KB, MAX_MEDIA_MB = 120, 1.5
@@ -136,6 +137,14 @@ def slug(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")[:60] or "note"
 
 
+def strs(v) -> list[str]:
+    """A list field as text, whatever YAML made of it: an unquoted `[Cataclysm: Dark Days Ahead]` is a dict,
+    `[2004]` an int, a bare `tools: Ghidra` a string."""
+    if v is None or v == "":
+        return []
+    return [str(x) for x in (v if isinstance(v, list) else [v])]
+
+
 # --------------------------------------------------------------------------- search
 
 def _term(t: str) -> re.Pattern:
@@ -148,7 +157,7 @@ def search(root: Path, terms: list[str], game=None, engine=None, route=None, lim
     terms = [_term(t.lower()) for t in terms if t.strip()]
     res = []
     for p, meta, body in notes(root):
-        if game and slug(game) not in slug(str(meta.get("game", ""))) + " " + " ".join(slug(g) for g in meta.get("games_also") or []):
+        if game and slug(game) not in slug(str(meta.get("game", ""))) + " " + " ".join(slug(g) for g in strs(meta.get("games_also"))):
             continue
         if engine and str(meta.get("engine", "")).lower() != engine.lower():
             continue
@@ -156,8 +165,8 @@ def search(root: Path, terms: list[str], game=None, engine=None, route=None, lim
             continue
         fields = {
             5: str(meta.get("title", "")),
-            4: " ".join([str(meta.get("game", ""))] + [str(g) for g in meta.get("games_also") or []]),
-            3: " ".join(str(x) for x in [meta.get("engine", ""), meta.get("route", ""), *(meta.get("tags") or []), *(meta.get("tools") or [])]),
+            4: " ".join([str(meta.get("game", ""))] + strs(meta.get("games_also"))),
+            3: " ".join(str(x) for x in [meta.get("engine", ""), meta.get("route", ""), *strs(meta.get("tags")), *strs(meta.get("tools"))]),
         }
         low = body.lower()
         score = 0
@@ -209,8 +218,16 @@ def check_note(path: Path, root: Path | None = None) -> tuple[list[str], list[st
     d = meta.get("date")
     if d and not isinstance(d, dt.date) and not re.match(r"^\d{4}-\d{2}-\d{2}$", str(d)):
         fails.append(f"date must be YYYY-MM-DD, got {d!r}")
-    if not isinstance(meta.get("agents", []), list):
-        fails.append("agents must be a list, e.g. [\"Codex (gpt-6)\"]")
+    for k in LIST_KEYS:
+        v = meta.get(k)
+        if v is not None and not isinstance(v, list):
+            fails.append(f'{k} must be a list, e.g. {k}: ["a", "b"]')
+        # YAML reads an unquoted `Cataclysm: Dark Days Ahead` as a dict, `2004` as an int, and splits `Python (a, b)` in two
+        for x in v if isinstance(v, list) else []:
+            if not isinstance(x, str):
+                fails.append(f"{k}: item {x!r} is YAML {type(x).__name__}, not text; quote it, e.g. [\"Cataclysm: Dark Days Ahead\"]")
+            elif any(x.count(a) != x.count(b) for a, b in ("()", "[]", "{}")):
+                fails.append(f"{k}: item {x!r} has unbalanced brackets (split on a comma?); quote items that contain commas")
     if "Homing missiles and a tactical nuke in Terraria" == meta.get("title") and "TEMPLATE" not in path.name:
         fails.append("title is still the template's example title")
     left = [ph for ph in ("FILL IN", "Two to four sentences:", "Numbered; each one symptom", "What you saw. **Cause:** what it really was")
@@ -260,12 +277,13 @@ def build_index(root: Path) -> tuple[str, list[dict]]:
              f"## Games ({len(games)} notes)", "",
              "| Game | Note | Engine | Route | Status | Agents | Date |", "|---|---|---|---|---|---|---|"]
     for r in games:
-        g = esc(r.get("game")) + (" + " + ", ".join(esc(x) for x in r.get("games_also") or []) if r.get("games_also") else "")
+        also = strs(r.get("games_also"))
+        g = esc(r.get("game")) + (" + " + ", ".join(esc(x) for x in also) if also else "")
         lines.append(f"| {g} | [{esc(r.get('title'))}]({r['path']}) | {esc(r.get('engine'))} | {esc(r.get('route'))} | "
-                     f"{esc(r.get('status'))} | {esc(', '.join(r.get('agents') or []))} | {esc(r.get('date'))} |")
+                     f"{esc(r.get('status'))} | {esc(', '.join(strs(r.get('agents'))))} | {esc(r.get('date'))} |")
     lines += ["", f"## Techniques ({len(techs)} notes)", ""]
     for r in techs:
-        lines.append(f"- [{esc(r.get('title'))}]({r['path']}) · {esc(', '.join(r.get('tags') or []))}")
+        lines.append(f"- [{esc(r.get('title'))}]({r['path']}) · {esc(', '.join(strs(r.get('tags'))))}")
     lines += ["", "## Engine playbooks", "",
               "Per-engine routes and tools live with the skills: "
               "[skills/mod-any-game/references/engines/](../skills/mod-any-game/references/engines/).", ""]

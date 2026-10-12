@@ -3,7 +3,7 @@ kind: game
 title: QoL suite and stack limits on the Schedule I 0.4.7 IL2CPP beta with MelonLoader
 game: Schedule I
 games_also: []
-game_version: "0.4.7f9 IL2CPP (Steam 3164500, beta branch, buildid 25698382); also read the Mono alternate-beta 0.4.7f6"
+game_version: "0.4.7f9 IL2CPP (Steam 3164500, beta branch, buildid 25698382); gotchas 13-15 verified on 0.4.7f12; also read the Mono alternate-beta 0.4.7f6"
 platform: proton
 engine: unity-il2cpp
 route: managed-patch
@@ -19,7 +19,7 @@ agents:
 - Claude Code (Opus 5.5)
 humans:
 - Malekabokhatwa
-date: '2026-10-05'
+date: '2026-10-10'
 links:
 - https://github.com/Malekabokhatwa/PocketPlug
 - https://github.com/Malekabokhatwa/IncreasedStackLimit-Latest
@@ -130,6 +130,12 @@ Harmony patches plus direct field writes through the Il2CppInterop assemblies. N
 11. **The lab was Mono, but an old mod in it was an IL2CPP build** (it referenced `Il2CppInterop` and `Il2CppScheduleOne.*`). Backend-mismatched mods fail at load, so check the references before trusting an installed mod.
 
 12. **Regular ~200 ms freezes every 2 s.** Cause: polling with `Object.FindObjectsOfType<T>()` for seven station/pot types. In this IL2CPP scene each pass cost about 190 ms. Fix: walk `Property.OwnedProperties[i].BuildableItems` instead, cache each item's `TryCast` type once, and check 12 items per frame. Found with a dev perf probe that logs frames over 150 ms and features over 2 ms. After the fix: 0 hitches after load.
+
+13. **A Harmony hook on a tiny non-virtual IL2CPP method misses the native callers that inlined it.** Postfixing `MixingStation.GetMixTimeForCurrentOperation` (null check plus a multiply) to halve mix time changed what the mod's own code saw, but the game's native `OnTimePass` and `IsMixingDone` had it inlined: a mix read `39/30, done=False` and finished at 60. Fix: hook the virtual `OnTimePass(int minutes)` instead and double `minutes` in a prefix (verified on 0.4.7f12: 20 items in 30 in-game minutes). As a bonus the saved progress stays in vanilla units. Verify every IL2CPP hook's effect in game, not through the mod's own reads.
+
+14. **FishNet server RPCs land a tick later, even on the host.** `Dealer.SetCash` only writes the RPC, so read-cash-then-`SetCash` twice in one tick paid the bank twice. Fix: call the generated `RpcLogic___SetCash_431000436` directly. That skips the network, so it's only right where the caller is the server (single-player is always host). `MoneyManager`'s online balance getter also lags a tick behind its ledger, so test money moves against the ledger.
+
+15. **"Mod stutter" was the laptop overheating.** The game ships with VSync off and `targetFrameRate` 500. On an MSI Cyborg 15 A13VE under Proton the CPU sat at 93-96 °C, and `nvidia-smi` throttle reason `0x20` (SW thermal) was active 100% of the time uncapped, versus 0% at 60 fps. Sustained drops (seconds at ~20 fps) never trip a single-frame hitch logger, so log per-second fps with GC and game-log counts, and check `nvidia-smi --query-gpu=clocks_throttle_reasons.active` and `/sys/devices/system/cpu/cpu*/thermal_throttle/` before blaming a mod.
 
 ## Assets
 - **Icons:** [Lucide](https://lucide.dev) SVGs (ISC), rendered with `rsvg-convert` and composited on gradient squares with Pillow (`scripts/make-icons.py` in the PocketPlug repo).

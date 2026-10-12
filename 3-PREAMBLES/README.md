@@ -19,7 +19,7 @@ machine comes up with the same agent behaviour as the operator's own setup.
 |---|---|---|
 | `SOUL.md` | The operator's soul config: unrestraint declaration + truth-seeking process + output format. Identity-neutral - it names no provider. | Appended to Claude / Codex / Kimi / Grok instruction files, **and** copied verbatim to Hermes home |
 | `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md` | The operating contract (`0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, unchanged). Finish-the-job, no yes-man, verify-don't-assume, adult fiction in scope. | Appended right after the SOUL block in the same files |
-| `MANUAL-PASTE.txt` | SOUL + the Fun-stuff-kit `AIO.txt` (chat/research jail) concatenated. For web UIs that have no instruction file. | ChatGPT / Gemini / any web chat custom-instructions box, pasted by hand |
+| `MANUAL-PASTE.txt` | SOUL + the Web AIO variant (`0-UNRESTRAINT-PACKS/AIO-INSTRUCTION — Web.md`) concatenated, pure ASCII. For web UIs that have no instruction file. | ChatGPT / Gemini / any web chat custom-instructions box, pasted by hand |
 
 ## What the V8 installer wires
 

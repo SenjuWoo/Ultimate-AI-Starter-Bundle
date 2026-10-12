@@ -14,7 +14,7 @@ agents: ["Claude Code (Opus 5.5)"]
 humans: ["GR33N"]
 date: 2026-10-09
 links: []
-tags: [d3d8, d3d9ex, proxy-dll, crash-fix, heap-corruption, widescreen, menus, fonts, fog, dgvoodoo, rts, 2004]
+tags: [d3d8, d3d9ex, proxy-dll, crash-fix, heap-corruption, widescreen, menus, fonts, fog, dgvoodoo, rts, "2004"]
 ---
 
 # The Dark Legions Reloaded: crash fixes, a D3D8 -> D3D9Ex renderer, widescreen and new menus in one d3d8.dll

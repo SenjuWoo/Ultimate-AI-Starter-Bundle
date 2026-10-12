@@ -38,10 +38,12 @@ tags: ["anvilnext", "coop", "avatar", "transform", "wow64-debugging", "hardware-
 
 - Chose `native-hook` + fixed addresses over pattern scanning: single pinned build, and
   all addresses are re-resolved live anyway (heap objects move per session).
-- The avatar is NOT spawned. The game has no reachable spawn/duplicate path from a plugin,
-  so the remote body is a *hijacked crowd character* whose transform is overwritten each
-  frame. Engine-side spawning exists (the graphic factory is table-registry driven) but is
-  a separate, larger project.
+- The avatar is NOT spawned. We found no spawn/duplicate path a plugin could reach, so the
+  remote body is a *hijacked crowd character* whose transform is overwritten each frame.
+  Engine-side spawning exists (the graphic factory is table-registry driven) but is a
+  separate, larger project; the
+  [spawn note](spawning-a-new-character-in-ac4-black-flag-single-player-dea.md) records the
+  spawn paths tried and where each stopped.
 - Networking is the plugin's own: each copy of AC4BFSP.exe sends and receives 72-byte pose packets over UDP,
   peer to peer (tested over Radmin VPN between two PCs). Nothing goes through Ubisoft Connect, Ubisoft's servers
   or AC4BFMP.exe.

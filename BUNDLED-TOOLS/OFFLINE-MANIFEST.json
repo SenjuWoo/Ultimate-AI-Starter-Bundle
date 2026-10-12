@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-10",
-  "pack_version": "8.8.0",
+  "generated": "2026-10-11",
+  "pack_version": "8.9.0",
   "assets": [
     {
       "file": "codebase-memory-mcp-windows-amd64.zip",
@@ -38,9 +38,9 @@
       "sha256": "2e7848961785eedda3702851d477d878cf01e98a61710ca50fe8b0aafcb28bef"
     },
     {
-      "file": "universal_modder-0.2.0+uabs.5506516-py3-none-any.whl",
-      "size": 1274131,
-      "sha256": "eaa74497e5fe2c148227a639c2049cdc9220fdc03143eed200e87defe02b4583"
+      "file": "universal_modder-0.2.0+uabs.2c22014-py3-none-any.whl",
+      "size": 1469327,
+      "sha256": "61a34ae83208a46a03de3bfb3ea2fc42cf4a2653495e79d9b4c4299d4433c861"
     }
   ]
 }

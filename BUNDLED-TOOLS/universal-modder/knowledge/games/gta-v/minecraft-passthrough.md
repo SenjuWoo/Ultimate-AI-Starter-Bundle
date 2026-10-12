@@ -228,9 +228,10 @@ GTA V story mode                                   Minecraft 26.3 + Fabric
 24. **Prism can hang on "logging in with Microsoft account" during a scripted launch.** The token refresh
     needs the human (Accounts > Refresh, or sign in again). The agent must not handle the sign-in.
 25. **The example's shell scripts fail in WSL with CRLF line endings.** A Windows checkout (or the plugin
-    cache) can give `gradle.sh`, `gta/*.sh` and `mc/gradlew` CRLF endings, which WSL bash can't run. Convert
-    them to LF (`sed -i 's/\r$//'`) and pin it with `.gitattributes` (`*.sh text eol=lf` and
-    `gradlew text eol=lf`: `mc/gradlew` has no `.sh` extension).
+    cache) can give `gradle.sh`, `gta/*.sh` and `mc/gradlew` CRLF endings, which WSL bash can't run. The
+    repo's root `.gitattributes` now pins `*.sh`, `gradlew` and `bin/um` to LF (`mc/gradlew` has no `.sh`
+    extension, so it needs its own line). A copy made before that still needs converting
+    (`sed -i 's/\r$//'`).
 26. **No WSL.** `fetch_deps.sh` runs as-is in Git Bash (curl + unzip); `build.bat` and `mc\gradlew.bat` run
     natively. `install.sh` needs `wslpath`: under Git Bash use `cygpath -u` and `/c/...` instead of
     `/mnt/c/...`, and point `BUILD` at `gta/build`. With WSL, a `PASSTHROUGH_WIN_DIR` inside the project
@@ -258,10 +259,11 @@ game finished installing.
   `knowledge/techniques/frame-compositing-depth-and-pose-sync.md`.
   - **Pose lag:** the gotcha above says a lag of 1 frame, but the compositor defaults to 0 (a code comment
     says 0 measured best) and only the director's `poselag` op changes it. Record the value used per capture.
-  - **`install.sh --remove`** deletes `ReShade.ini` unconditionally, including one the user had before
-    installing (install itself preserves it). 2026-10-09, second PC: a local patch (not in the example yet)
-    writes a marker file when install creates `ReShade.ini`, and `--remove` deletes `ReShade.ini` only when
-    the marker is there.
+  - **`install.sh --remove`** deletes `ReShade.ini` only when install created it: install then writes a
+    `.mcpassthrough_reshade_ini` marker. Tested on a folder with a dummy `GTA5.exe` (with and without a
+    `ReShade.ini` already there); on a real install the marker was written, but `--remove` hasn't been run
+    there yet. An install from before the marker keeps its `ReShade.ini` on removal. `ReShadePreset.ini` is
+    still overwritten by install and deleted by `--remove`, even when the user had their own.
   - **Save helper:** it copies its two saves into every discovered profile.
   - **Cleanup scope:** detach forgets barrier tracking without removing the barriers; fighter cleanup removes
     every matching hostile or proxy in the Overworld, and hot-block cleanup can remove player-placed fire or

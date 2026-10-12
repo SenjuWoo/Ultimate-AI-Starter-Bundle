@@ -71,7 +71,7 @@ def main():
                 patch.object(scan, "is_wsl", return_value=False), patch.object(scan, "is_mac", return_value=False):
             assert scan.steam_roots() == [steam.resolve()]
 
-    wheel = ROOT / "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.5506516-py3-none-any.whl"
+    wheel = ROOT / "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.2c22014-py3-none-any.whl"
     if wheel.exists():
         with zipfile.ZipFile(wheel) as archive:
             assert archive.testzip() is None
@@ -80,7 +80,7 @@ def main():
                 assert name in archive.namelist(), name
     catalog = json.loads((ROOT / "BUNDLED-TOOLS/CATALOG.json").read_text(encoding="utf-8-sig"))
     component = next(x for x in catalog["components"] if x["id"] == "universal-modder")
-    assert component["source_commit"] == "550651675153070cce68066e07c3c8f95df86d08"
+    assert component["source_commit"] == "2c2201437ca676fb4e5f06a18fff6e8db99eef0f"
     assert not component["mcp"] and not component["auto_register"]
     for provider in component["providers"]:
         skill = ROOT / f"1-TAILORED-PROVIDER-TREES/{provider}/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder"

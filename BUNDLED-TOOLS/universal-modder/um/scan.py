@@ -363,6 +363,7 @@ LOADERS = [
     ("Hollow Knight Modding API", ("*modding api*", "*/managed/mods/*")),
     ("RE_Kenshi (Kenshi OGRE plugin)", ("re_kenshi.dll", "kenshilib.dll")),
     ("Kenshi Mod Manager", ("kenshimodtool.exe",)),
+    ("DFHack", ("dfhooks*.dll", "libdfhooks*.so")),
 ]
 
 # folders whose exes/jars belong to installers and runtimes, not the game (matched with leading "_" stripped,
@@ -400,12 +401,26 @@ KNOWN = {
     "balatro": ("Steamodded + lovely (Lua injection into the LÖVE game)", "misc-engines.md"),
     "kenshi": ("FCS .mod data mods + asset overrides in mods/<name>/ mirroring data/ (load order in the launcher or KMM); code via RE_Kenshi + KenshiLib C++ plugins (VS2010 v100 x64, GPLv3, listed in the mod's RE_Kenshi.json) - the game exe is native, no CLR", "native.md"),
     "factorio": ("official Lua modding API (mods/ folder, data.lua + control.lua)", "misc-engines.md"),
+    "mindustry": ("the built-in mod loader, no patching: mod.hjson/mod.json + content/<type>/*.hjson|json (blocks, units, items...), "
+                  "sprites/ (sprites-override/ replaces vanilla), scripts/main.js; Java mods are jars from Anuken/MindustryJavaModTemplate. "
+                  "Mods go in %APPDATA%/Mindustry/mods, ~/.local/share/Mindustry/mods, or <install>/saves/mods on Steam", "misc-engines.md"),
+    "dwarf fortress": ("raws, no exe patching (v50+): mods/<name>/ with info.txt (ID, NUMERIC_VERSION) + objects/ and graphics/ raws, in the "
+                       "user folder (Bay 12 Games/Dwarf Fortress under %APPDATA% or ~/.local/share; the install in portable mode) or the "
+                       "Workshop. Mods are picked and ordered at world creation and copied to data/installed_mods (bump NUMERIC_VERSION after "
+                       "edits); graphics replacements declare [REQUIRES_ID_AFTER_ME:vanilla_creatures_graphics]. DFHack (Lua) for scripting",
+                       "misc-engines.md"),
     "counter-strike 2": ("Workshop maps / Source 2 tools; local -insecure only. VAC: never inject on official servers", "source.md"),
     "portal 2": ("VScript (Squirrel) + Puzzle Maker/Hammer, Workshop", "source.md"),
     "half-life 2": ("Source SDK 2013 mods (C++), maps with Hammer", "source.md"),
     "doom": ("WAD/PK3 mods with a source port (GZDoom/UZDoom)", "misc-engines.md"),
     "minecraft": ("Fabric (Mixin) or NeoForge", "minecraft.md"),
 }
+
+# known games recognised by their files when the folder name doesn't say (renamed, portable or non-store installs)
+KNOWN_FILES = [
+    ("dwarf fortress", ("data/vanilla/*/info.txt", "dwarf fortress.exe", "dwarfort")),
+    ("mindustry", ("mindustry.exe", "mindustry.json", "mindustry.jar", "mindustry.app/contents/resources/desktop.jar")),
+]
 
 # save/profile folders that don't follow the game's name ({profile}, {documents}, {appdata}, {localappdata})
 KNOWN_SAVES = {
@@ -742,7 +757,8 @@ def scan(query: str) -> dict:
     moddirs = [d for d in MOD_DIRS if d in ix.dirs]
     name = (game.get("name") or root.name)
     lname = name.lower()
-    known = next((v for k, v in sorted(KNOWN.items(), key=lambda kv: -len(kv[0])) if k == lname or (k in lname and len(k) > 5)), None)
+    known = next((v for k, v in sorted(KNOWN.items(), key=lambda kv: -len(kv[0])) if k == lname or (k in lname and len(k) > 5)), None) \
+        or next((KNOWN[k] for k, pats in KNOWN_FILES if ix.has(*pats)), None)
     online = online_only(name)
     routes = []
     if known:

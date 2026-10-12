@@ -14,7 +14,7 @@ agents:
 - Claude Code subagents (Sonnet 5.5)
 humans: ["@theartur2000"]
 date: '2026-10-07'
-links: []
+links: ["https://github.com/theartur2000/bannerlord-editor-free-sdk/tree/v1.4.8.119303"]
 tags: [bannerlord, tpac, rdc, runtimedatacache, packing, load-time, hang, ik, skeleton, ragdoll, animation, clip, action-set, project-mbproj, bone-limit, hit-capsule, minidump, asset-pipeline, total-conversion, custom-race, quadruped]
 ---
 # Editor-free assets for Mount & Blade II: Bannerlord: writing .tpac packages, skeletons and animation clips offline
@@ -322,13 +322,16 @@ One asset per package is what the editor writes, and it does not scale: the game
   write to a loose set kept outside `Assets` (the game never reads it) and then repack only the groups whose
   members changed (usually one to three groups), verify, and copy over; a revert command restores the loose
   layout. The editor sees only the merged packages, so unpack first if it is ever needed again.
-- Our packer (part of the author's tooling, not published here yet) has scan, pack, verify, status, repack, unpack,
-  native-check (rebuild Native's packages from their parsed parts) and logcheck (package read time and
+- Our packer (`sdk/tpac_pack.py` in the SDK, see Build steps) has scan, pack, verify, status, install, repack,
+  unpack, native-check (rebuild Native's packages from their parsed parts) and logcheck (package read time and
   missing-asset counts from the game's logs) steps.
 
 ## Build steps
-The project's CLI, build scripts and installer are the author's own tooling and are not published here yet (the
-author may link them later). What they do, in order:
+The asset writers, validators, packer and installer are published as
+[bannerlord-editor-free-sdk](https://github.com/theartur2000/bannerlord-editor-free-sdk/tree/v1.4.8.119303)
+(the author's own repository, MIT, tagged for game v1.4.8.119303; its README lists the `sdk/install.py`
+commands). The whole-race and creature scripts in the third bullet belong to the conversion pipeline, which is
+not published. What they do, in order:
 - **Stage, never write into the module directly.** Textures (the usage, albedo / normalmap / specularmap /
   heightmap, picked from a `_d` / `_n` / `_s` / `_h` file suffix), materials (diffuse and normal slots, static or
   skinned), meshes (skinned when the FBX has a skin), animations (one take per FBX file), skeletons (at most 64
@@ -497,12 +500,13 @@ Each is symptom, cause, fix. Addresses are for the client build pinned in Setup.
     agents had not helped, which is how it was shown to be data and not culling.
 15. **A skeleton whose root bone has no ragdoll capsule.** Read from the death path: once an agent ragdolls the
     code calls bone 0's ragdoll body with no null check. Fix: always a ragdoll capsule on the root, and a ragdoll
-    body on every bone the monster's `ragdoll_*` fields name. Evidence: this note reasoned it from the code and
-    did not reproduce it as a crash. Gotcha 11 of
-    [`bannerlord-native-crashes-and-hangs.md`](bannerlord-native-crashes-and-hangs.md) reports a crash seen in
-    the game at `+0x616dab` about 3 s after a custom boss died and names both causes (`ragdoll_*` monster bones
-    without a ragdoll body, and the root's missing body); its crash table labels that offset as the ragdoll
-    stationary check on `ragdoll_*` bones. Which of the two that crash confirmed is not recorded.
+    body on every bone the monster's `ragdoll_*` fields name. Evidence: the two halves differ. The `ragdoll_*`
+    half was seen in game: gotcha 11 of
+    [`bannerlord-native-crashes-and-hangs.md`](bannerlord-native-crashes-and-hangs.md) is a crash at `+0x616dab`
+    about 3 s after a custom boss died, whose `ragdoll_stationary_check_bone_*` and `ragdoll_fall_sound_bone_*`
+    fields named arm and leg bones while only the spine, neck and head had ragdoll bodies. That skeleton's root
+    had a body, so the root half is still reasoned from the death path only; a root without a body was never
+    seen to crash here.
 16. **Holstered items on the wrong bone, human-index UI code reading past the bone array, hit chain
     misaligned.** Cause: engine and managed code resolve holsters, item bones and melee hit bones by
     **human biped index** and apply that index to the agent's own skeleton. Fix: bones 0..27 in human biped
@@ -649,8 +653,8 @@ Each is symptom, cause, fix. Addresses are for the client build pinned in Setup.
 - Can the engine's hit-IK helper be disabled or given a safe default for bones without IK joints (a data flag),
   instead of remapping the bone in managed code?
 - Which engine function computes the missile start point (measured to be the eye position, not traced)?
-- Gotcha 15: did the `+0x616dab` boss-death crash confirm the `ragdoll_*` monster bones, the root's missing ragdoll
-  body, or both?
+- Gotcha 15: does a root bone without a ragdoll body crash in practice? It is read from the death path; the
+  `+0x616dab` boss crash was the `ragdoll_*` bones.
 - Is the side-channel design for more than 64 bones (frame pool reservation plus mesh windows) workable, and
   would an agent with an attached part skeleton animate it in step from C#?
 - Packing: what is the cold-cache start-up time now, and do smaller groups than 256 MB load faster?

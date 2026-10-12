@@ -164,6 +164,42 @@
   ]
  },
  {
+  "path": "games/assassin-s-creed-iv-black-flag/spawning-a-new-character-in-ac4-black-flag-single-player-dea.md",
+  "kind": "game",
+  "title": "Spawning a new character in AC4 Black Flag single-player: dead ends and the AnvilNext spawn system",
+  "game": "Assassin's Creed IV Black Flag",
+  "games_also": [
+   "Assassin's Creed Rogue"
+  ],
+  "game_version": "AC4BFSP.exe (Steam), x86, MD5 2058342866688F780C8B34526A65BC35 (fixed image base 0x400000, no ASLR)",
+  "platform": "windows",
+  "engine": "native",
+  "route": "native-hook",
+  "tools": [
+   "Ghidra 12.1.4 (headless + scripts)",
+   "Frida 17.23 (live hooks + memory dumps)",
+   "AC.PatchFix ASI plugin framework (x86)",
+   "gamedb (SQLite index over the Ghidra C dump)",
+   "Python (pefile + capstone) for a byte-level RVA oracle"
+  ],
+  "anti_cheat": "none (single-player, offline; the MP client is never touched)",
+  "status": "in-progress",
+  "agents": [
+   "OpenCode (DeepSeek V4.1)"
+  ],
+  "humans": [],
+  "date": "2026-10-10",
+  "links": [],
+  "tags": [
+   "coop",
+   "spawn",
+   "entity",
+   "anvilnext",
+   "reverse-engineering",
+   "dead-end"
+  ]
+ },
+ {
   "path": "games/assassin-s-creed-rogue/anvilnext-internals-for-ac-rogue-co-op-player-transform-the-.md",
   "kind": "game",
   "title": "AnvilNext internals for AC Rogue co-op: player transform, the debug-cheat system, and the set-transform path",
@@ -197,6 +233,55 @@
    "transform",
    "reverse-engineering",
    "crash-isolation"
+  ]
+ },
+ {
+  "path": "games/balatro/five-nights-at-balatros.md",
+  "kind": "game",
+  "title": "Five Nights at Balatro's: a FNaF night shift as a Balatro deck",
+  "game": "Balatro",
+  "games_also": [
+   "Five Nights at Freddy's"
+  ],
+  "game_version": "Balatro 1.0.1o (Steam 2379780) + lovely 0.10.0 + Steamodded 26.829.0; FNaF 1 (Steam 319510, Clickteam Fusion 2.5 build 284)",
+  "platform": "windows",
+  "engine": "love2d",
+  "route": "loader-api",
+  "tools": [
+   "lovely 0.10.0",
+   "Steamodded 26.829.0",
+   "CTFAK 2.0 (master f38ba79, built locally)",
+   ".NET 8 SDK (portable)",
+   "Python + Pillow",
+   "luaparser (syntax check)"
+  ],
+  "anti_cheat": "none (Balatro single-player; FNaF is only read from disk, never launched or patched)",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [],
+  "date": "2026-10-11",
+  "links": [
+   "https://github.com/Steamodded/smods",
+   "https://github.com/ethangreen-dev/lovely-injector",
+   "https://github.com/CTFAK/CTFAK2.0"
+  ],
+  "tags": [
+   "mashup",
+   "total-conversion",
+   "steamodded",
+   "lovely",
+   "love2d",
+   "clickteam",
+   "ctfak",
+   "fnaf",
+   "deck",
+   "blinds",
+   "shop",
+   "deck-skin",
+   "main-menu",
+   "audio"
   ]
  },
  {
@@ -521,6 +606,49 @@
   ]
  },
  {
+  "path": "games/beamng-drive/minecraft-inside-beamng-drive-passthrough-mod-websocket-brid.md",
+  "kind": "game",
+  "title": "Minecraft inside BeamNG.drive (passthrough mod: WebSocket bridge + rendered Steve)",
+  "game": "BeamNG.drive",
+  "games_also": [
+   "Minecraft Java Edition"
+  ],
+  "game_version": "BeamNG.drive 0.39.4.0.20972 x64 (Steam) + Minecraft Java 26.3 with Fabric",
+  "platform": "windows",
+  "engine": "unknown",
+  "route": "passthrough",
+  "tools": [
+   "BeamNG's own MCP server (-enablemcp)",
+   "Fabric Loader + Fabric API (Loom, JDK 26)",
+   "PowerShell, fengari, luaparse"
+  ],
+  "anti_cheat": "none; single player only (BeamMP, the third-party multiplayer mod, was not used)",
+  "status": "working",
+  "agents": [
+   "OpenCode (mimo-v2.6-flash)"
+  ],
+  "humans": [],
+  "date": "2026-10-10",
+  "links": [
+   "https://www.beamng.com/game/news/patch/beamng-drive-v0-39/",
+   "https://beamng.tech/blog/beamng-tech-039/",
+   "https://documentation.beamng.com/modding/programming/extensions/"
+  ],
+  "tags": [
+   "mashup",
+   "passthrough",
+   "websocket",
+   "beamng",
+   "torque3d",
+   "lua-extension",
+   "tsstatic",
+   "walk-mode",
+   "camera-sync",
+   "fabric",
+   "mcp"
+  ]
+ },
+ {
   "path": "games/black-myth-wukong/reshade-depth-dead-end.md",
   "kind": "game",
   "title": "Black Myth: Wukong, Unreal 5.0: injection works, ReShade render depth does not",
@@ -653,6 +781,99 @@
   ]
  },
  {
+  "path": "games/civilization-vi/total-conversion-middle-earth-trees-civs-2d-leaders-custom-3.md",
+  "kind": "game",
+  "title": "Total conversion (Middle-earth): trees, civs, 2D leaders, custom 3D wonders, victory reskin",
+  "game": "Civilization VI",
+  "games_also": [],
+  "game_version": "Civ VI 1.0.12.68 (Steam 289070, build 15296837), Gathering Storm ruleset",
+  "platform": "windows",
+  "engine": "native",
+  "route": "data",
+  "tools": [
+   "Civilization VI Development Tools (SDK + SDK Assets, Steam)",
+   "Civ6AssetCooker_FinalRelease",
+   "FbxImporter_Release.dll (from the Asset Editor)",
+   "Blender 5.2",
+   "fal (nano-banana-2, trellis-2, birefnet/v2)",
+   "ffmpeg gfxcapture",
+   "sqlite3",
+   "custom SendInput mouse (PowerShell)"
+  ],
+  "anti_cheat": "none (EOSSDK is Epic Online Services for 2K accounts, not anti-cheat); single player only",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [],
+  "date": "2026-10-10",
+  "links": [
+   "https://forums.civfanatics.com/forums/civ6-creation-customization.538/",
+   "https://forums.civfanatics.com/resources/civnexus6.25987"
+  ],
+  "tags": [
+   "total-conversion",
+   "data-mod",
+   "modinfo",
+   "sqlite",
+   "lua",
+   "tech-tree",
+   "custom-civ",
+   "2d-leader",
+   "fallback-leader",
+   "wonder-3d",
+   "granny",
+   "fgx",
+   "asset-cooker",
+   "headless-sdk",
+   "victory-screen",
+   "autoplay",
+   "test-harness"
+  ]
+ },
+ {
+  "path": "games/crash-bandicoot-n-sane-trilogy/croc-inside-crash-n-sane-live-two-engine-mashup.md",
+  "kind": "game",
+  "title": "Croc inside Crash N. Sane: live two-engine mashup and native port",
+  "game": "Crash Bandicoot N. Sane Trilogy",
+  "games_also": [
+   "Croc: Legend of the Gobbos (2025 remaster)"
+  ],
+  "game_version": "Steam 731490, exe PE timestamp 2018-07-19 (sha256 170c61d3...6af3); Croc remaster GOG 1152820153 build 58936832420733913",
+  "platform": "windows",
+  "engine": "native",
+  "route": "passthrough",
+  "tools": [
+   "ReShade 6.8.0 add-on build",
+   "Ultimate ASI Loader v9.7.4 (version.dll, Croc)",
+   "MSVC 14.44",
+   "capstone",
+   "pefile"
+  ],
+  "anti_cheat": "none (Crash exe is SteamStub-wrapped; only the running process was hooked)",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [],
+  "date": "2026-10-10",
+  "links": [],
+  "tags": [
+   "alchemy-engine",
+   "mashup",
+   "passthrough",
+   "frame-compositing",
+   "reshade-addon",
+   "d3d11",
+   "d3d12",
+   "depth-compositing",
+   "render-hijack",
+   "input-forwarding",
+   "character-controller",
+   "hardware-breakpoint"
+  ]
+ },
+ {
   "path": "games/cult-of-the-lamb/cult-of-the-lamb.md",
   "kind": "game",
   "title": "Cult of the Lamb recon: Unity Mono, and Doorstop files without a BepInEx folder (likely r2modman)",
@@ -690,6 +911,48 @@
    "r2modman",
    "thunderstore",
    "recon"
+  ]
+ },
+ {
+  "path": "games/cyberpunk-2077/cyberpunk-2077-native-modding-address-hashes.md",
+  "kind": "game",
+  "title": "Cyberpunk 2077 native modding: address hashes for update-proof hooks, and which source wins",
+  "game": "Cyberpunk 2077",
+  "engine": "redengine",
+  "platform": "windows",
+  "route": "native-hook",
+  "game_version": "Steam PC build; bin/x64/Cyberpunk2077.exe is 59,945,608 B (mtime 2026-08-07) and the shipped cyberpunk2077_addresses.json carries the linker-map stamp 68af45ea (2025-08-27)",
+  "status": "in-progress",
+  "date": "2026-10-10",
+  "agents": [
+   "OpenCode (DeepSeek V4.1 Flash)"
+  ],
+  "humans": [
+   "Selene0623"
+  ],
+  "tags": [
+   "cyberpunk2077",
+   "redengine",
+   "red4ext",
+   "redlib",
+   "redscript",
+   "address-hash",
+   "rva",
+   "relocations",
+   "native-hook",
+   "ida",
+   "agent-skills"
+  ],
+  "tools": [
+   "Python 3.14",
+   "Ghidra/IDA",
+   "llvm-readobj"
+  ],
+  "links": [
+   "https://github.com/alphanin9/CP2077AgentSkills",
+   "https://github.com/wopss/RED4ext.SDK",
+   "https://github.com/psiberx/cp2077-red-lib",
+   "https://codeberg.org/adamsmasher/cyberpunk"
   ]
  },
  {
@@ -840,6 +1103,41 @@
    "procgen",
    "room-templates",
    "platformer"
+  ]
+ },
+ {
+  "path": "games/deltarune/jevil-practice-mod.md",
+  "kind": "game",
+  "title": "Jevil fight practice mode for DELTARUNE Chapter 1",
+  "game": "DELTARUNE",
+  "games_also": [],
+  "game_version": "Steam Chapters 1-5 release (Chapter 1 data.win, GameMaker 2.3+, bytecode 17, VM), Windows 10",
+  "platform": "windows",
+  "engine": "gamemaker",
+  "route": "data",
+  "tools": [
+   "UndertaleModTool CLI 0.9.2.0"
+  ],
+  "anti_cheat": "none (single-player, DRM-free runner, no steam_api.dll)",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [
+   "@italalaev"
+  ],
+  "date": "2026-10-10",
+  "links": [],
+  "tags": [
+   "gamemaker",
+   "data.win",
+   "undertalemodtool",
+   "gml",
+   "boss-practice",
+   "jevil",
+   "input-blocking",
+   "save-isolation",
+   "csx"
   ]
  },
  {
@@ -1030,6 +1328,54 @@
    "skins",
    "case-opening",
    "3d-inspect"
+  ]
+ },
+ {
+  "path": "games/elden-ring/porting-dark-souls-remastered-enemies-into-elden-ring.md",
+  "kind": "game",
+  "title": "Porting a Dark Souls Remastered enemy into Elden Ring as a new character (Hollow c2500 -> c7250): skeleton, animations, ragdoll, params, AI and sounds",
+  "game": "Elden Ring",
+  "games_also": [
+   "Dark Souls Remastered"
+  ],
+  "game_version": "Elden Ring 1.17.1 (exe 2.7.1.0), Steam, Windows 10 22H2; Dark Souls Remastered (Steam, loose files unpacked) as the source",
+  "platform": "windows",
+  "engine": "fromsoft",
+  "route": "data",
+  "tools": [
+   "ModEngine 2 (2024-10 dev build; the 2.1.0.0 release does NOT load sound banks)",
+   "WitchyBND (Paramdex, TAE/BND/TPF repack)",
+   "HKLib.CLI (Havok 2018 tagfile <-> XML, read-only use for physics)",
+   "soulstruct (Python, patched hk2018 writer)",
+   "BinderKeys (ER archive keys/names)",
+   "texconv",
+   "vgmstream-cli r2117",
+   "Wwise 2019.2.15.7667 Authoring (WwiseConsole, free licence)",
+   "Python 3.13 (Blender's bundled interpreter) + numpy/scipy"
+  ],
+  "anti_cheat": "EasyAntiCheat never touched: ModEngine 2 starts eldenring.exe without EAC, so the game runs offline; no Seamless/online use with these files",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [],
+  "date": "2026-10-11",
+  "links": [],
+  "tags": [
+   "enemy-port",
+   "cross-game",
+   "new-character",
+   "havok",
+   "ragdoll",
+   "tae",
+   "behaviorparam",
+   "atkparam",
+   "npcparam",
+   "throwparam",
+   "ai-lua",
+   "wwise",
+   "soundbank",
+   "modengine2"
   ]
  },
  {
@@ -1529,6 +1875,55 @@
   ]
  },
  {
+  "path": "games/halo-combat-evolved/halo-ce-elden-ring-combat-in-opence.md",
+  "kind": "game",
+  "title": "Elden Ring's real combat, AI, animation and bodies running inside the Halo CE decomp (OpenCE)",
+  "game": "Halo: Combat Evolved",
+  "games_also": [
+   "Elden Ring"
+  ],
+  "game_version": "Halo: Combat Evolved (USA) Xbox disc data (default.xbe) run by OpenCE commit 76b1898 (2026-10-07, Windows build: clang + the MSVC x86 libraries, via ninja); Elden Ring 1.17.1 (eldenring.exe 2.7.1.0, Steam) read offline as the data/logic source",
+  "platform": "windows",
+  "engine": "native",
+  "route": "decomp-recomp",
+  "tools": [
+   "OpenCE (Halo CE Xbox decomp source port)",
+   "Lua 5.1.5 + LuaJIT 2.1 (embedded)",
+   "DSLuaDecompiler (katalash, built with .NET 9)",
+   "WitchyBND 3.0.1.0",
+   "Nuxe 1.2.1 (only its BinderKeys)",
+   "HKLib CLI v0.1.2",
+   "Ghidra 12.1.4 headless + Temurin JDK 21",
+   "vgmstream-cli",
+   "Python 3.14 + Pillow"
+  ],
+  "anti_cheat": "Elden Ring has EasyAntiCheat: never launched, patched or hooked. Its install is only read (read-only extraction of params, HKS scripts, Havok files, FLVERs, textures, sound banks); eldenring.exe is analysed as a COPY in Ghidra. Halo runs offline/LAN only in the user's own build.",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/OpenCommunityEdition/OpenCE"
+  ],
+  "tags": [
+   "mashup",
+   "decomp",
+   "hks",
+   "havok",
+   "behavior-graph",
+   "retarget",
+   "hitboxes",
+   "poise",
+   "ai-goals",
+   "wwise",
+   "co-op",
+   "skinned-mesh",
+   "lua-vm"
+  ]
+ },
+ {
   "path": "games/halo-trial/max-payne-bullet-time-shootdodge-and-voice-in-halo-trial-via.md",
   "kind": "game",
   "title": "Max Payne bullet time, shootdodge and voice in Halo Trial via Chimera Lua on macOS/Wine",
@@ -1601,9 +1996,102 @@
   ]
  },
  {
-  "path": "games/just-cause-3/vehicle-mesh-editing-displacement-works-adding-geometry-does.md",
+  "path": "games/hitman-world-of-assassination/new-suit-and-replacement-pistol-smf-prim-rebuild.md",
   "kind": "game",
-  "title": "Vehicle mesh editing: displacement works; our count-changing edits crashed",
+  "title": "A new selectable suit and a replacement default pistol from custom meshes (SMF, rpkg PRIM rebuild)",
+  "game": "HITMAN World of Assassination",
+  "games_also": [],
+  "game_version": "Steam PC, HITMAN3.exe from the 2026-08-27 patch (app 1659040)",
+  "platform": "windows",
+  "engine": "unknown",
+  "route": "data",
+  "tools": [
+   "Simple Mod Framework 2.33.42",
+   "rpkg-cli 2.34.0",
+   "HMTextureTools (bundled with SMF)",
+   "GlacierKit 1.12.15",
+   "Peacock 8.9.1",
+   "Blender 5.2",
+   "io_scene_glacier 0.7.2 (reference only)",
+   "fal (trellis-2, hi3d multi-view)",
+   "um win"
+  ],
+  "anti_cheat": "none in offline play; tested only under Peacock (offline server)",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [
+   "@skurtyyskirts"
+  ],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/atampy25/simple-mod-framework",
+   "https://github.com/glacier-modding/RPKG-Tool",
+   "https://github.com/atampy25/glacierkit",
+   "https://github.com/thepeacockproject/Peacock",
+   "https://github.com/glacier-modding/io_scene_glacier"
+  ],
+  "tags": [
+   "glacier-2",
+   "smf",
+   "quickentity",
+   "prim",
+   "rpkg",
+   "textures",
+   "materials",
+   "outfit",
+   "weapons",
+   "peacock"
+  ]
+ },
+ {
+  "path": "games/hitman-world-of-assassination/telekinesis-powers-zhmmodsdk-plugin.md",
+  "kind": "game",
+  "title": "Telekinesis powers (rip, hold, throw, push) as a ZHMModSDK plugin",
+  "game": "HITMAN World of Assassination",
+  "games_also": [],
+  "game_version": "Steam PC, HITMAN3.exe from the 2026-08-27 patch (app 1659040)",
+  "platform": "windows",
+  "engine": "unknown",
+  "route": "native-hook",
+  "tools": [
+   "ZHMModSDK 4.1.1 (DevPkg)",
+   "Peacock 8.9.1",
+   "Simple Mod Framework 2.33.42",
+   "MSVC 14.51 + CMake + Ninja + vcpkg",
+   "um win",
+   "dbghelp"
+  ],
+  "anti_cheat": "none in offline play; the game is online-connected, so it ran only under Peacock (offline server, leaderboards=false) and never against IOI's servers",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [
+   "@skurtyyskirts"
+  ],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/OrfeasZ/ZHMModSDK",
+   "https://github.com/thepeacockproject/Peacock",
+   "https://github.com/atampy25/simple-mod-framework"
+  ],
+  "tags": [
+   "glacier-2",
+   "zhmmodsdk",
+   "peacock",
+   "telekinesis",
+   "physics",
+   "ragdoll",
+   "imgui",
+   "powers"
+  ]
+ },
+ {
+  "path": "games/just-cause-3/vehicle-mesh-editing-added-geometry-loads-with-matching-toc.md",
+  "kind": "game",
+  "title": "Vehicle mesh editing: added geometry loads with a matching .ee.toc",
   "game": "Just Cause 3",
   "games_also": [],
   "game_version": "Steam release build, JustCause3.exe timestamp 0x5787641c (2016); model files declare RBMDL v1.16.0",
@@ -1616,17 +2104,21 @@
    "Gibbed.JustCause3.ConvertAdf",
    "Gibbed.JustCause3.ConvertProperty",
    "Gibbed.HashName",
-   "custom Python RBM codec (see Build steps)"
+   "custom Python RBM codec + PSKX importer (see Build steps)"
   ],
   "anti_cheat": "none (single-player); no DRM bypass attempted or needed",
   "status": "working",
   "agents": [
-   "OpenCode (space-bunny-free)"
+   "OpenCode (space-bunny-free)",
+   "OpenCode (muse-spark-1.3)"
   ],
-  "humans": [],
-  "date": "2026-10-08",
+  "humans": [
+   "@NotTrevino"
+  ],
+  "date": "2026-10-11",
   "links": [
    "https://github.com/aaronkirkham/jc-model-renderer",
+   "https://github.com/aaronkirkham/ava-format-lib",
    "https://github.com/aaronkirkham/jc3-console-thingy",
    "https://github.com/Brooen/RBM-Exporter",
    "https://videogamemods.com/vgm/justcause3/mods/meme-vehicle-pack",
@@ -1638,9 +2130,50 @@
    "rbm",
    "avalanche-engine",
    "havok",
-   "structural-validation",
    "gibbed",
-   "reverse-engineering"
+   "reverse-engineering",
+   "toc",
+   "palette",
+   "pskx-pipeline"
+  ]
+ },
+ {
+  "path": "games/kenshi/first-person-camera-and-wasd-on-vanilla-kenshi-1-0-68-an-ogr.md",
+  "kind": "game",
+  "title": "First-person camera and WASD on vanilla Kenshi 1.0.68: an OGRE plugin plus signature-scanned game internals",
+  "game": "Kenshi",
+  "games_also": [],
+  "game_version": "1.0.68 x64 (Newland), Steam build 13871665, kenshi_x64.exe md5 8a03c256f0da1555d9cceb939b41530a",
+  "platform": "proton",
+  "engine": "native",
+  "route": "native-hook",
+  "tools": [
+   "clang + lld-link + llvm-dlltool (freestanding x86_64-pc-windows-msvc DLL, no Windows SDK)",
+   "Wine 11.18 (offline harness), Proton 11.0",
+   "objdump, winedump",
+   "KenshiLib headers (reference only)",
+   "python-evdev over /dev/uinput (test input)"
+  ],
+  "anti_cheat": "none",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)",
+   "Codex CLI 0.155"
+  ],
+  "humans": [],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/BFrizzleFoShizzle/KenshiLib",
+   "https://github.com/BFrizzleFoShizzle/RE_Kenshi"
+  ],
+  "tags": [
+   "ogre",
+   "first-person",
+   "camera",
+   "signature-scan",
+   "rtti",
+   "proton",
+   "two-agents"
   ]
  },
  {
@@ -1725,12 +2258,57 @@
   ]
  },
  {
+  "path": "games/let-it-die/in-game-imgui-cheat-overlay-and-save-queue-item-delivery-for.md",
+  "kind": "game",
+  "title": "In-game ImGui trainer and save-queue item delivery for LET IT DIE Offline Edition (UE3)",
+  "game": "LET IT DIE",
+  "games_also": [],
+  "game_version": "LET IT DIE Offline Edition 5.0.1 (Steam, Offline Key DLC), Windows x64 (BrgGame-Steam.exe, PE timestamp 0x6A94FD6E), D3D9 renderer",
+  "platform": "windows",
+  "engine": "unreal",
+  "route": "native-hook",
+  "tools": [
+   "MSVC 2026 Build Tools (cl, x64)",
+   "MinHook",
+   "Dear ImGui 1.91.5 (DX9 + Win32 backends)",
+   "Ghidra 12.1.4 (headless, Java scripts)",
+   "UELib 1.13.7 + lzo.net (custom C# dumper)",
+   "Python 3.14 (sqlite3, zlib, Pillow)"
+  ],
+  "anti_cheat": "none: the online service ended on 2026-09-01 and the Offline Edition has no servers; only in-exe '[cheat]' clamps on part durability/ammo at load (single-player, offline only)",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/TsudaKageyu/minhook",
+   "https://github.com/ocornut/imgui",
+   "https://github.com/EliotVU/Unreal-Library"
+  ],
+  "tags": [
+   "overlay",
+   "imgui",
+   "d3d9",
+   "dinput8-proxy",
+   "ue3",
+   "processevent",
+   "processinternal",
+   "save-editing",
+   "sqlite",
+   "cheats",
+   "item-spawner",
+   "icons"
+  ]
+ },
+ {
   "path": "games/limbo/pngatlas-a8l8-format.md",
   "kind": "game",
   "title": "Limbo A8L8 texture format, standalone sprites, and a live-verified menu-title mod",
   "game": "Limbo",
   "games_also": [],
-  "game_version": "Steam (appid 48000), limbo.exe 5,453,312 bytes; Steam build ID not recorded",
+  "game_version": "Steam (appid 48000), Steam build ID 18220724, limbo.exe 5,453,312 bytes",
   "platform": "windows",
   "engine": "native",
   "route": "data",
@@ -1747,8 +2325,9 @@
    "OpenCode (big-pickle)"
   ],
   "humans": [],
-  "date": "2026-10-07",
+  "date": "2026-10-10",
   "links": [
+   "https://github.com/hukultan/limbo-tools",
    "https://github.com/gibbed/Gibbed.Limbo",
    "https://github.com/theberrigan/apps/blob/master/projects/21_game-tools/tools_Limbo.py"
   ],
@@ -2247,7 +2826,9 @@
    "@theartur2000"
   ],
   "date": "2026-10-07",
-  "links": [],
+  "links": [
+   "https://github.com/theartur2000/bannerlord-editor-free-sdk/tree/v1.4.8.119303"
+  ],
   "tags": [
    "bannerlord",
    "borderlands-2",
@@ -2480,6 +3061,98 @@
   ]
  },
  {
+  "path": "games/outer-wilds/portal-2-portal-gun-in-outer-wilds-1-1-16-owml-see-through-p.md",
+  "kind": "game",
+  "title": "Portal 2 portal gun in Outer Wilds 1.1.16 (OWML): see-through portals, momentum, ship and scout",
+  "game": "Outer Wilds",
+  "games_also": [
+   "Portal 2"
+  ],
+  "game_version": "1.1.16.1372 (Steam 753640, buildid 20230391), Unity 2019.4.39f1 Mono, Echoes of the Eye installed",
+  "platform": "windows",
+  "engine": "unity-mono",
+  "route": "loader-api",
+  "tools": [
+   "Outer Wilds Mod Manager 0.15.7 (GUI + owmods CLI)",
+   "OWML 2.16.3",
+   "HarmonyX (bundled with OWML)",
+   "NuGet OWML 2.16.3 + OuterWildsGameLibs 1.1.16.1372 (publicized refs), net48",
+   "ilspycmd 9.1 (.NET 8)",
+   "Python 3.14 + Pillow + numpy (converter)"
+  ],
+  "anti_cheat": "none (single-player)",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [
+   "charlystereo"
+  ],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/rehan-remade/universal-modder/tree/main/examples/outer-wilds-portal-gun",
+   "https://github.com/ow-mods/owml",
+   "https://github.com/ow-mods/ow-mod-man"
+  ],
+  "tags": [
+   "unity",
+   "owml",
+   "harmony",
+   "portals",
+   "stencil",
+   "oblique-camera",
+   "render-texture",
+   "teleport",
+   "viewmodel",
+   "momentum",
+   "mashup",
+   "portal-2"
+  ]
+ },
+ {
+  "path": "games/portal-2/portal-2-portal-gun-viewmodel-converted-for-another-engine-v.md",
+  "kind": "game",
+  "title": "Portal 2 portal gun viewmodel converted for another engine: VPK, MDL v49, VTF, sounds",
+  "game": "Portal 2",
+  "games_also": [
+   "Outer Wilds"
+  ],
+  "game_version": "Steam 620 (2026 build), portal2/pak01_dir.vpk",
+  "platform": "windows",
+  "engine": "source",
+  "route": "asset-only",
+  "tools": [
+   "Python 3.14 + Pillow + numpy (own VPK/MDL/VTX/VVD/VTF readers)"
+  ],
+  "anti_cheat": "none (files only, the game never runs)",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [
+   "charlystereo"
+  ],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/rehan-remade/universal-modder/tree/main/examples/outer-wilds-portal-gun",
+   "https://developer.valvesoftware.com/wiki/MDL",
+   "https://developer.valvesoftware.com/wiki/VTF",
+   "https://developer.valvesoftware.com/wiki/VPK"
+  ],
+  "tags": [
+   "source",
+   "mdl",
+   "vvd",
+   "vtx",
+   "vtf",
+   "vpk",
+   "viewmodel",
+   "animation",
+   "content-port",
+   "portal-gun"
+  ]
+ },
+ {
   "path": "games/portal-2/portalcraft-minecraft-inside-portal-2.md",
   "kind": "game",
   "title": "Portalcraft: real Minecraft inside Portal 2 (passthrough mod)",
@@ -2586,8 +3259,7 @@
   "engine": "java",
   "route": "loader-api",
   "tools": [
-   "Python 3.12 (own scripts for mod.info scanning",
-   "preset writing and log triage)",
+   "Python 3.12 (own scripts for mod.info scanning, preset writing and log triage)",
    "Steam Web API",
    "grep"
   ],
@@ -2825,7 +3497,7 @@
   "title": "QoL suite and stack limits on the Schedule I 0.4.7 IL2CPP beta with MelonLoader",
   "game": "Schedule I",
   "games_also": [],
-  "game_version": "0.4.7f9 IL2CPP (Steam 3164500, beta branch, buildid 25698382); also read the Mono alternate-beta 0.4.7f6",
+  "game_version": "0.4.7f9 IL2CPP (Steam 3164500, beta branch, buildid 25698382); gotchas 13-15 verified on 0.4.7f12; also read the Mono alternate-beta 0.4.7f6",
   "platform": "proton",
   "engine": "unity-il2cpp",
   "route": "managed-patch",
@@ -2844,7 +3516,7 @@
   "humans": [
    "Malekabokhatwa"
   ],
-  "date": "2026-10-05",
+  "date": "2026-10-10",
   "links": [
    "https://github.com/Malekabokhatwa/PocketPlug",
    "https://github.com/Malekabokhatwa/IncreasedStackLimit-Latest"
@@ -2977,6 +3649,75 @@
    "explosions",
    "camera",
    "showcase-video"
+  ]
+ },
+ {
+  "path": "games/terraria/super-smash-bros-melee-s-decompiled-engine-inside-terraria-a.md",
+  "kind": "game",
+  "title": "Super Smash Bros. Melee's decompiled engine inside Terraria: a native DLL under tModLoader, 3D fighters, its engine replayed bit-exact against Slippi Dolphin recordings",
+  "game": "Terraria",
+  "games_also": [
+   "Super Smash Bros. Melee"
+  ],
+  "game_version": "Terraria 1.4.4.9 on tModLoader 2026.08.3.0 (Steam, Windows 11, .NET 8, FNA 23.10); guest: Super Smash Bros. Melee NTSC-U 1.02 (GALE01, revision 2) with Slippi's $Required codes, minus UCF",
+  "platform": "windows",
+  "engine": "xna-fna",
+  "route": "decomp-recomp",
+  "tools": [
+   "tModLoader 2026.08.3.0",
+   "melee-pc (PC port of doldecomp/melee)",
+   "mingw-w64 GCC 13 (posix) in WSL Ubuntu 24.04",
+   "CMake 3.28 + Ninja",
+   "Slippi Dolphin 3.6.4",
+   "libmelee 0.47.3",
+   "DolphinTool",
+   "HSDRaw (HSDLib)",
+   "FNA 23.10",
+   "own PowerPC disassembler and interpreter",
+   "own read-only Dolphin RAM reader",
+   "Grok"
+  ],
+  "anti_cheat": "none. Terraria single player in a separate lab save folder; Melee runs only offline, in a lab copy of Slippi Dolphin used as the oracle, never on Slippi online or netplay",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code and agents",
+   "Grok"
+  ],
+  "humans": [
+   "DarkameMaster"
+  ],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/999sian/melee-pc",
+   "https://github.com/doldecomp/melee",
+   "https://github.com/Ploaj/HSDLib",
+   "https://github.com/project-slippi/Ishiiruka",
+   "https://github.com/project-slippi/slippi-ssbm-asm",
+   "https://github.com/altf4/libmelee",
+   "https://dolphin-emu.org/",
+   "https://github.com/tModLoader/tModLoader",
+   "https://github.com/FNA-XNA/FNA",
+   "https://www.mingw-w64.org/",
+   "https://github.com/rehan-remade/universal-modder"
+  ],
+  "tags": [
+   "mashup",
+   "decomp",
+   "native-dll",
+   "pinvoke",
+   "trace-replay",
+   "bit-exact",
+   "float32",
+   "fma",
+   "slippi",
+   "libmelee",
+   "gamecube",
+   "3d",
+   "cpu-skinning",
+   "lighting",
+   "xinput",
+   "hit-bridge",
+   "multi-agent"
   ]
  },
  {
@@ -3397,7 +4138,7 @@
    "fog",
    "dgvoodoo",
    "rts",
-   2004
+   "2004"
   ]
  },
  {
@@ -3433,6 +4174,102 @@
    "file-format",
    "redkit",
    "redscripts"
+  ]
+ },
+ {
+  "path": "games/tomb-raider-legend/film-reloads-qa-bridge-physics-mags-asi.md",
+  "kind": "game",
+  "title": "Film-style pistol reloads, a JSON QA bridge and physics magazines through a native ASI",
+  "game": "Tomb Raider: Legend",
+  "games_also": [],
+  "game_version": "Steam PC build, trl.exe MD5 bd846c8fb3223e53bee022bb307b21bc (SteamStub-wrapped, image base 0x400000)",
+  "platform": "windows",
+  "engine": "unknown",
+  "route": "native-hook",
+  "tools": [
+   "Ultimate ASI Loader (as binkw32.dll, from the TR7-Menu-Hook 2.5 zip)",
+   "TR7-Menu-Hook 2.5 (mods folder)",
+   "MinHook 1.3.4",
+   "MSVC 19.51 x86 (CMake 4.4.3 + Ninja 1.12.1)",
+   "capstone 5.0.7 + pefile 2024.8.26",
+   "tr7.pdb (types only)",
+   "cdcEditor 0.1.1 (Blender 5.2.1)",
+   "ffmpeg 9.0.2 gfxcapture",
+   "um win/qa"
+  ],
+  "anti_cheat": "none (single-player; Steam DRM is a SteamStub wrapper, left untouched: everything is runtime hooks)",
+  "status": "working",
+  "agents": [
+   "Claude Code (Fable 5.1)"
+  ],
+  "humans": [
+   "skurtyyskirts"
+  ],
+  "date": "2026-10-09",
+  "links": [
+   "https://github.com/TheIndra55/TRLAU-menu-hook",
+   "https://github.com/ThirteenAG/Ultimate-ASI-Loader",
+   "https://github.com/TsudaKageyu/minhook",
+   "https://github.com/Raq1/cdcEditor"
+  ],
+  "tags": [
+   "animation",
+   "reload",
+   "native-hook",
+   "qa-bridge",
+   "physics",
+   "weapons",
+   "cdc-engine",
+   "d3d9"
+  ]
+ },
+ {
+  "path": "games/trackmania/trackmania-2020-custom-3d-skins.md",
+  "kind": "game",
+  "title": "Custom 3D car skins in Trackmania (2020) with Blender, Blendermania and gbx-py",
+  "game": "Trackmania",
+  "games_also": [
+   "ManiaPlanet"
+  ],
+  "game_version": "Trackmania (2020), live build; the tutorial does not pin a build, and none was tested here",
+  "platform": "windows",
+  "engine": "unknown",
+  "route": "asset-only",
+  "tools": [
+   "Blender 4.x",
+   "Blendermania addon",
+   "NadeoImporter (ships with Blendermania)",
+   "NICE (ships with Blendermania)",
+   "gbx-py (skinfix)",
+   "Openplanet"
+  ],
+  "anti_cheat": "none for this route: it is client-side cosmetic meshes and textures, and online visibility only needs the skin uploaded to your own Club. The tutorial still warns that console players can crash on custom 3D skins and that Nadeo is not enthusiastic about them, so it asks for restraint.",
+  "status": "idea",
+  "agents": [
+   "OpenCode (DeepSeek V4.1 Flash)"
+  ],
+  "humans": [
+   "Selene0623"
+  ],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/skyslide22/blendermania-addon",
+   "https://github.com/schadocalex/gbx-py",
+   "https://github.com/drunub/tm-pf-converter",
+   "https://openplanet.dev/file/119",
+   "https://bmx.sh/3dskindiscord"
+  ],
+  "tags": [
+   "trackmania",
+   "gbx",
+   "3d-skins",
+   "blender",
+   "nadeo-importer",
+   "blendermania",
+   "lod",
+   "vertex-groups",
+   "decal-uv",
+   "openplanet"
   ]
  },
  {
@@ -3933,8 +4770,7 @@
   "route": "data",
   "tools": [
    "StormLib / smpq (in WSL)",
-   "Python 3.12 (BLP scanner",
-   "repair and encoder)",
+   "Python 3.12 (BLP scanner, repair and encoder)",
    "a minidump parser",
    "capstone"
   ],
@@ -3974,9 +4810,7 @@
   "engine": "native",
   "route": "data",
   "tools": [
-   "Python 3.12 (CASC/DB2 readers",
-   "BLP writer",
-   "M2/skin editor)",
+   "Python 3.12 (CASC/DB2 readers, BLP writer, M2/skin editor)",
    "numpy",
    "scipy",
    "Pillow",
@@ -4140,8 +4974,7 @@
   "engine": "native",
   "route": "asset-only",
   "tools": [
-   "Python 3.12 (own M2/.skin writer",
-   "BLP and DBC tools)",
+   "Python 3.12 (own M2/.skin writer, BLP and DBC tools)",
    "numpy",
    "Pillow",
    "Blender",
@@ -4253,7 +5086,9 @@
    "@theartur2000"
   ],
   "date": "2026-10-07",
-  "links": [],
+  "links": [
+   "https://github.com/theartur2000/bannerlord-editor-free-sdk/tree/v1.4.8.119303"
+  ],
   "tags": [
    "bannerlord",
    "combat",
@@ -4298,7 +5133,9 @@
    "@theartur2000"
   ],
   "date": "2026-10-07",
-  "links": [],
+  "links": [
+   "https://github.com/theartur2000/bannerlord-editor-free-sdk/tree/v1.4.8.119303"
+  ],
   "tags": [
    "bannerlord",
    "custom-race",
@@ -4342,7 +5179,9 @@
    "@theartur2000"
   ],
   "date": "2026-10-07",
-  "links": [],
+  "links": [
+   "https://github.com/theartur2000/bannerlord-editor-free-sdk/tree/v1.4.8.119303"
+  ],
   "tags": [
    "bannerlord",
    "native",
@@ -4421,6 +5260,47 @@
   ]
  },
  {
+  "path": "techniques/bit-exact-decomp-ports-reproduce-the-original-compiler-s-and.md",
+  "kind": "technique",
+  "title": "Bit-exact decomp ports: reproduce the original compiler's and math library's floating point (and the oracle's own patches)",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code and agents",
+   "Grok"
+  ],
+  "humans": [
+   "DarkameMaster"
+  ],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/999sian/melee-pc",
+   "https://github.com/doldecomp/melee",
+   "https://github.com/project-slippi/slippi-ssbm-asm",
+   "https://github.com/altf4/libmelee"
+  ],
+  "tags": [
+   "decomp",
+   "port",
+   "floating-point",
+   "float32",
+   "fma",
+   "fmadds",
+   "paired-singles",
+   "mwcc",
+   "msl",
+   "musl",
+   "mingw",
+   "bit-exact",
+   "trace-replay",
+   "determinism",
+   "oracle",
+   "slippi",
+   "gecko",
+   "gamecube",
+   "powerpc"
+  ]
+ },
+ {
   "path": "techniques/bridge-contracts-ownership-units-and-lifecycle.md",
   "kind": "technique",
   "title": "Bridge contracts for two-game mods: ownership, units, transport and lifecycle",
@@ -4432,21 +5312,25 @@
    "ring-buffer",
    "endianness",
    "coordinate-mapping",
+   "units",
+   "health",
    "authority",
    "lifecycle",
    "restart",
    "protocol-versioning"
   ],
-  "date": "2026-10-05",
+  "date": "2026-10-10",
   "agents": [
    "Claude Code (Opus 5.5)"
   ],
   "humans": [
-   "LeiiLo"
+   "LeiiLo",
+   "fabio-rovai"
   ],
   "links": [
    "https://github.com/chasmlol/SkyCraft",
-   "https://github.com/mrborghini/libertycraft"
+   "https://github.com/mrborghini/libertycraft",
+   "https://github.com/fabio-rovai/asset-passport/blob/main/docs/BRIDGES.md"
   ]
  },
  {
@@ -4791,6 +5675,29 @@
   ]
  },
  {
+  "path": "techniques/driving-a-game-from-a-mod-side-command-file-lab-profile-wake.md",
+  "kind": "technique",
+  "title": "Driving a game from a mod-side command file: lab profile, wake-up and oracle without touching input",
+  "status": "working",
+  "agents": [
+   "Claude Code (Opus 5.5)"
+  ],
+  "humans": [
+   "charlystereo"
+  ],
+  "date": "2026-10-10",
+  "links": [],
+  "tags": [
+   "oracle",
+   "test-harness",
+   "automation",
+   "dev-bridge",
+   "unity",
+   "owml",
+   "outer-wilds"
+  ]
+ },
+ {
   "path": "techniques/driving-real-games-safely.md",
   "kind": "technique",
   "title": "Driving real games safely: input, focus and the human at the keyboard",
@@ -4912,7 +5819,9 @@
    "@theartur2000"
   ],
   "date": "2026-10-07",
-  "links": [],
+  "links": [
+   "https://github.com/theartur2000/bannerlord-editor-free-sdk/tree/v1.4.8.119303"
+  ],
   "tags": [
    "bannerlord",
    "tpac",
@@ -5170,6 +6079,44 @@
   ]
  },
  {
+  "path": "techniques/hosting-a-decompiled-console-engine-as-a-native-dll-inside-a.md",
+  "kind": "technique",
+  "title": "Hosting a decompiled console engine as a native DLL inside a .NET game mod",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code and agents",
+   "Grok"
+  ],
+  "humans": [
+   "DarkameMaster"
+  ],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/999sian/melee-pc",
+   "https://github.com/doldecomp/melee",
+   "https://github.com/tModLoader/tModLoader",
+   "https://www.mingw-w64.org/"
+  ],
+  "tags": [
+   "decomp",
+   "native-dll",
+   "pinvoke",
+   "tmodloader",
+   "dotnet",
+   "c-api",
+   "abi",
+   "stubs",
+   "arena",
+   "crash-guard",
+   "snapshot",
+   "rollback",
+   "determinism",
+   "versioning",
+   "mashup",
+   "gamecube"
+  ]
+ },
+ {
   "path": "techniques/installers-load-order-and-loaded-code-checks.md",
   "kind": "technique",
   "title": "Installers, load order and loaded-code checks for multi-part mods",
@@ -5327,16 +6274,48 @@
    "screenshots",
    "measurement",
    "circuit-breaker",
-   "stale-capture"
+   "stale-capture",
+   "byte-matching",
+   "machine-checkable",
+   "verifier-hashing",
+   "prompt-injection"
   ],
-  "date": "2026-10-01",
+  "date": "2026-10-10",
   "agents": [
-   "Claude Code (Opus 5.5)"
+   "Claude Code (Opus 5.5)",
+   "OpenCode (DeepSeek V4.1 Flash)"
   ],
   "humans": [
    "@rehan_shei"
   ],
-  "links": []
+  "links": [
+   "https://momo5502.com/posts/2026-10-09-game-decompilation/"
+  ]
+ },
+ {
+  "path": "techniques/prove-your-replay-bench-can-fail-mutant-builds-exposed-four-.md",
+  "kind": "technique",
+  "title": "Prove your replay bench can fail: mutant builds exposed four false greens and two false reds",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code and agents"
+  ],
+  "humans": [
+   "DarkameMaster"
+  ],
+  "date": "2026-10-10",
+  "links": [],
+  "tags": [
+   "oracle",
+   "verification",
+   "mutation-testing",
+   "bench",
+   "replay",
+   "determinism",
+   "rollback",
+   "native-dll",
+   "false-green"
+  ]
  },
  {
   "path": "techniques/ps3-elf-analysis-in-ghidra.md",
@@ -5543,12 +6522,13 @@
    "audio-sync",
    "showcase"
   ],
-  "date": "2026-09-30",
+  "date": "2026-10-10",
   "agents": [
    "Claude Code (Opus 5.5)"
   ],
   "humans": [
-   "@rehan_shei"
+   "@rehan_shei",
+   "DarkameMaster"
   ],
   "links": []
  },
@@ -5629,6 +6609,33 @@
   ]
  },
  {
+  "path": "techniques/running-several-isolated-tmodloader-test-instances-in-parall.md",
+  "kind": "technique",
+  "title": "Running several isolated tModLoader test instances in parallel, and never touching the player's own",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code and agents"
+  ],
+  "humans": [
+   "DarkameMaster"
+  ],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/tModLoader/tModLoader"
+  ],
+  "tags": [
+   "tmodloader",
+   "terraria",
+   "lab",
+   "parallel",
+   "process-classification",
+   "safety",
+   "automation",
+   "windows",
+   "harness"
+  ]
+ },
+ {
   "path": "techniques/running-xedit-and-windows-modding-tools-on-linux.md",
   "kind": "technique",
   "title": "Running xEdit (and other Delphi/Windows modding tools) on Linux: Wine/Proton patches",
@@ -5658,6 +6665,43 @@
    "https://gitlab.winehq.org/wine/wine",
    "https://github.com/TES5Edit/TES5Edit",
    "https://github.com/j00ru/windows-syscalls"
+  ]
+ },
+ {
+  "path": "techniques/skinned-3d-models-inside-tmodloader-posed-by-an-external-eng.md",
+  "kind": "technique",
+  "title": "Skinned 3D models inside tModLoader, posed by an external engine and matched to the original frame by frame",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code and agents",
+   "Grok"
+  ],
+  "humans": [
+   "DarkameMaster"
+  ],
+  "date": "2026-10-10",
+  "links": [
+   "https://github.com/Ploaj/HSDLib",
+   "https://github.com/FNA-XNA/FNA",
+   "https://github.com/tModLoader/tModLoader",
+   "https://github.com/project-slippi/slippi-ssbm-asm"
+  ],
+  "tags": [
+   "tmodloader",
+   "terraria",
+   "fna",
+   "3d",
+   "cpu-skinning",
+   "render-target",
+   "pose",
+   "animation",
+   "dynamic-bones",
+   "lighting",
+   "oracle",
+   "ram-dump",
+   "mashup",
+   "hsd",
+   "gamecube"
   ]
  },
  {
@@ -5833,6 +6877,30 @@
   ],
   "humans": [
    "Selene0623"
+  ]
+ },
+ {
+  "path": "techniques/when-the-first-real-run-fails-suspect-the-oracle-re-deriving.md",
+  "kind": "technique",
+  "title": "When the first real run fails, suspect the oracle: re-deriving failures from raw traces and mutating real data",
+  "status": "in-progress",
+  "agents": [
+   "Claude Code and agents"
+  ],
+  "humans": [
+   "DarkameMaster"
+  ],
+  "date": "2026-10-10",
+  "links": [],
+  "tags": [
+   "oracle",
+   "verification",
+   "first-real-run",
+   "trace-analysis",
+   "mutation-testing",
+   "collision",
+   "tmodloader",
+   "mashup"
   ]
  },
  {

@@ -102,4 +102,6 @@ Single local session: read-only inspection plus community-doc cross-check, then 
 - For any future native plugin: verify VS2010 v100 + Boost 1.60.0 + KenshiLib example-deps build on a clean checkout, and test one preload + one post-load hook against `1.0.65` (Steam) with RVAs present.
 - Depth-probe status: dialogue `conditions` record family done (token census + string-ID reference model above). Still open before promising broader coverage: one DDS-swap recognition check and one `.mesh` export/import round-trip viewed in game.
 
+For a native plugin on vanilla Kenshi 1.0.68 without RE_Kenshi (an OGRE `Plugin=` DLL plus signature-scanned 1.0.68 addresses, verified in game under Proton), see [`first-person-camera-and-wasd-on-vanilla-kenshi-1-0-68-an-ogr.md`](first-person-camera-and-wasd-on-vanilla-kenshi-1-0-68-an-ogr.md).
+
 See also `techniques/wwise-soundbank-hirc-and-wschema.md` and `techniques/wwise-soundbank-versions-and-open-toolchain.md` for the Wwise bank pipeline behind Kenshi's `data/audio/*.bnk` overrides, and `techniques/oracles-how-agents-know-a-mod-works.md` for the verification standard this note holds itself to.
