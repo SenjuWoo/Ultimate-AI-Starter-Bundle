@@ -1,8 +1,22 @@
-# v8.9.0 validation
+# v8.11.1 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are
 separate proofs. This file records the checked boundary, not a claim of perfect
 one-shot game/mod output.
+
+## Current audit
+
+Nine executable regressions cover index-only scope application, preflight,
+native failure propagation, dry-run, Unicode custom rules, exact snapshot
+selection, manifest file scope, Unicode privacy scanning and Codex output
+accounting. Universal Modder's reviewed `fe505d8` snapshot passes 103 upstream
+tests; four skips are the unshipped OpenCode adapter/session hooks. One upstream
+Pillow deprecation warning remains. Existing Windows/offline/privacy patches
+are retained. Full source, installed-state, CI and release gates remain separate.
+
+The measurements below are historical checks of the named versions, not
+current-version transport or billing claims. Current pins live in CATALOG.json;
+release identities and archive proof live in GitHub checks and asset records.
 
 ## Executable regression gates
 

@@ -91,7 +91,9 @@ def codex() -> list[Session]:
                     s["fails"] += 1
         if usage:
             s["inp"], s["cache"] = usage.get("input_tokens", 0), usage.get("cached_input_tokens", 0)
-            s["out"] = usage.get("output_tokens", 0) + usage.get("reasoning_output_tokens", 0)
+            # Codex reports reasoning as a detail within output_tokens, not an
+            # additional charge. See TokenUsage::blended_total in its protocol.
+            s["out"] = usage.get("output_tokens", 0)
         s["user"] = list(dict.fromkeys(s["user"]))
         out.append(s)
     return out

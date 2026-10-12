@@ -43,10 +43,10 @@ REQUIRED_IGNORES = ("/LOCAL-ONLY/", "conversations*.json", "users.json", "login_
 
 def tracked_files() -> list[str]:
     out = subprocess.run(
-        ["git", "-C", str(ROOT), "ls-files"],
-        capture_output=True, text=True, check=True,
+        ["git", "-C", str(ROOT), "ls-files", "-z"],
+        capture_output=True, check=True,
     )
-    return out.stdout.splitlines()
+    return out.stdout.decode("utf-8").split("\0")[:-1]
 
 
 def main() -> int:

@@ -81,4 +81,4 @@ image tools when they fit. Only use fal when the user requests that service and
 has arranged their own authentication and spending authorization.
 
 Credits/license: upstream MIT, commit
-`2c2201437ca676fb4e5f06a18fff6e8db99eef0f`; included fonts are SIL OFL.
+`fe505d8918363671783df527d1ccf5dd1f99618f`; included fonts are SIL OFL.

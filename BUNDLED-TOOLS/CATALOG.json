@@ -11,9 +11,10 @@
         "owner": "rehan-remade",
         "repo": "universal-modder"
       },
-      "source_commit": "2c2201437ca676fb4e5f06a18fff6e8db99eef0f",
+      "source_commit": "fe505d8918363671783df527d1ccf5dd1f99618f",
+      "source_archive_sha256": "f1e825a4da0992043fdeafb1daa9b60e438c75c5682f35b47289a7c512db5b3e",
       "source_dir": "BUNDLED-TOOLS/universal-modder",
-      "offline_asset": "universal_modder-0.2.0+uabs.2c22014-py3-none-any.whl",
+      "offline_asset": "universal_modder-0.2.0+uabs.fe505d8-py3-none-any.whl",
       "cli": "um",
       "cli_env": "UNIVERSAL_MODDER_CMD",
       "python": "3.13",
@@ -31,7 +32,7 @@
         "sprite-processing",
         "gameplay-showcase-video"
       ],
-      "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to eleven upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (185 notes), discovers native Windows Steam roots from the registry and never echoes matched credentials; the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. Upstream now adds local ComfyUI generation (no key, 127.0.0.1:8188), SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification."
+      "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to eleven upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (193 indexed notes), discovers native Windows Steam roots from the registry and never echoes matched credentials; the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. The audited refresh adds quoted multi-word knowledge search, ranked hits and broken-link diagnostics while retaining local ComfyUI generation, SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification."
     },
     {
       "github": {
@@ -938,7 +939,7 @@
       "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
     }
   ],
-  "pack_version": "8.11.0",
+  "pack_version": "8.11.1",
   "updated_utc": "2026-10-02",
   "providers": {
     "Grok": {
@@ -1017,7 +1018,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.11.0",
-  "updated": "2026-10-11",
+  "catalog_version": "8.11.1",
+  "updated": "2026-10-12",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

@@ -71,6 +71,8 @@ def run(cmd: list[str], check: bool = True, capture: bool = True, timeout: float
         return subprocess.run(cmd, check=check, capture_output=capture, text=True, timeout=timeout, **kw)
     except FileNotFoundError:
         die(f"not found: {cmd[0]}")
+    except subprocess.TimeoutExpired:
+        die(f"{' '.join(map(str, cmd[:3]))}... timed out after {timeout}s")
     except subprocess.CalledProcessError as e:
         die(f"{' '.join(map(str, cmd[:3]))}... failed ({e.returncode}):\n{(e.stderr or e.stdout or '').strip()[-2000:]}")
 

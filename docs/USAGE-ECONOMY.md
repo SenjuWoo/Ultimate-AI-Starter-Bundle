@@ -11,11 +11,17 @@ this PC and prints aggregates only (sessions, tool calls, failed commands, token
 totals, overhead shares, costliest workspaces, phrases you retype). Nothing is
 uploaded or written.
 
+Codex output includes its reasoning detail; the report counts that output only
+once. The historical shares below used the older calculation and are not
+revalidated billing measurements. Run the current report for a fresh estimate.
+Provider output accounting is defined by the
+[Codex protocol](https://github.com/openai/codex/blob/main/codex-rs/protocol/src/protocol.rs).
+
 ## Measured on the maintainer machine (2026-10-10, ~1,100 sessions)
 
 | What | Value | Why it matters |
 | --- | --- | --- |
-| Median context per Codex tool call (working sessions) | ~124k tokens | Every call re-sends the whole context; anything always loaded is paid on every call. |
+| Median per-session cumulative input / tool calls (historical working sessions) | ~124k tokens | A coarse ratio, not individual request sizes or uncached charges; caching and compaction matter. |
 | Codex approval-review sessions | 356, ~23% of Codex weight | Each escalated command starts a reviewer that re-reads the transcript. |
 | Forked subagent sessions | 95, ~12% of Codex weight | A forked subagent re-reads the parent's history. |
 | Sessions resumed after a usage limit | 71 | Without a current STATE.md, each resume re-investigates. |

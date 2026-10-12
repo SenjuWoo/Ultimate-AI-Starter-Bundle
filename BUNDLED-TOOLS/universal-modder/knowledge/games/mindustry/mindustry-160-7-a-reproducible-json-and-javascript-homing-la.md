@@ -17,6 +17,7 @@ links:
   - https://mindustrygame.github.io/wiki/modding/1-modding/
   - https://github.com/Anuken/Mindustry/tree/v160.7
   - https://github.com/liubrain39/modlab-homing-lab
+  - https://github.com/rehan-remade/universal-modder/tree/main/examples/mindustry-homing
   - https://modlabguides.online/workshop/mindustry-homing
 tags: [mindustry, java, json, javascript, homing, macos, verification, backups]
 ---
@@ -74,8 +75,10 @@ and source supplied the route. Scan output is a hypothesis to check, not proof t
 ## Build and install steps
 
 1. Back up existing game data. For a first test, use a clean profile rather than an existing campaign.
-2. Use the [released source and tested ZIP](https://github.com/liubrain39/modlab-homing-lab/releases/tag/v0.1.0).
-   The ZIP root must contain `mod.json`, with `content/`, `scripts/` and `sprites/` beside it.
+2. Use the [released source and tested ZIP](https://github.com/liubrain39/modlab-homing-lab/releases/tag/v0.1.0),
+   or build the ZIP from this repo's worked example, [`examples/mindustry-homing`](../../../examples/mindustry-homing).
+   Its six engine-loaded files are byte-identical to the release. The ZIP root must contain `mod.json`, with
+   `content/`, `scripts/` and `sprites/` beside it.
 3. In the game choose **Mods → Open Folder**, quit, copy the ZIP into that folder, keep it zipped, and restart.
 4. From the main menu select **ModLab Homing Lab [F8]**. Let the 30-second comparison finish. Record both
    launch and damage-event counts; the script writes `modlab-last-run.json` in the game-data directory.

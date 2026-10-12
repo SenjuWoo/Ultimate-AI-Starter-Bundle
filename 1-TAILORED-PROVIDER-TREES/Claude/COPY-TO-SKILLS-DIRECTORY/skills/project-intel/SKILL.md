@@ -16,11 +16,10 @@ class.
    below. Never load all cards.
 2. Treat every card line as evidence with a date, not eternal truth. Cards state
    what was observed, when, and how strongly.
-3. **Era rule.** Only findings produced with frontier-era models count as
-   current evidence. The operator's working cast as of 2026-10: GPT Astral,
-   GPT Sol 6 / 6.1, Claude Opus 5.5. Older-model conversation data is
-   historical context, never proof. Model, price, and tool facts rot fastest —
-   live-search before advising on them, even when a card has a line.
+3. **Freshness rule.** Judge evidence by its date, version, reproducibility and
+   relevance, not the model that wrote it. Old tool output can still prove a
+   stable invariant; a new model's assertion is not runtime proof. Model,
+   price and tool facts rot fastest: verify live before advising on them.
 4. When new work proves or disproves something durable, append a dated line to
    the matching card. One line, with the date and the strength of evidence.
 5. These cards ship in a public repository. Never write personal data, real

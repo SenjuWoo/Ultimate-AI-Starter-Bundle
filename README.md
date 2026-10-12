@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.11.0 -->
+<!-- Ultimate AI Starter Bundle v8.11.1 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.11.0
+# Ultimate AI Starter Bundle v8.11.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -35,7 +35,7 @@ Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
   <img src="assets/hero.svg" alt="Installed is not enabled: five providers, parked optional MCPs" width="100%">
 </p>
 
-**Current source:** one-click setup, 123 general skills plus a 49-skill Skyrim
+**Current source:** one-click setup, 124 general skills plus a 49-skill Skyrim
 pack that installs only where Skyrim is, a small MCP core and project-specific
 tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest),
 [the changelog](CHANGELOG.md) and [evaluated component pins](BUNDLED-TOOLS/CATALOG.json).
@@ -160,6 +160,11 @@ and backup-first; `-SkipPreamble` opts out. Full map:
 `3-PREAMBLES/README.md`.
 
 ## Quick start
+
+Starting a task or resuming after a usage limit? Copy one of the
+[short cross-provider prompts](PROMPTS/START-AND-RESUME.md), then add your task.
+They emphasize relevant tools, preserved edits and verified completion without
+repeating the installed contract or loading every MCP.
 
 **Fresh machine, nothing installed - one command:**
 
@@ -821,6 +826,12 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.11.1** - 2026-10-12. Index lifecycle, Unicode privacy scanning and usage
+accounting repairs, manifest-scoped pack audits, reviewed Universal Modder
+refresh and concise new-chat/resume prompts. Existing model choices and
+verified local skill overrides remain user-owned.
+[Changes](docs/history/V8.11.1-CHANGELOG.md).
 
 **v8.11.0** - 2026-10-12. Codebase-memory lifecycle: the index setup tool gains
 `-Index` (apply ignores, index every project in scope, per-project table, exit

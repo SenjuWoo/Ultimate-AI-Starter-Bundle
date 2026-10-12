@@ -1,12 +1,11 @@
 # AI models and harness routing — settled results
 
-## The era rule (most important line on this card)
+## Evidence freshness
 
-Only findings produced with frontier-era models count as current evidence. The
-operator's working cast as of **2026-10: GPT Astral, GPT Sol 6 / 6.1, Claude
-Opus 5.5**. Anything older is historical context, never proof. Model names,
-tiers, prices, and context windows rot in weeks — live-search before advising,
-even when a line below exists. This pack deliberately ships **no model
+Check the date, tool version, actual output and reproducibility of a finding.
+The model's identity does not certify it or invalidate a reproducible older
+result. Model names, tiers, prices and context windows change: verify primary
+sources before advising, even when a line below exists. This pack ships **no model
 ranking tables**: old rankings were removed from the bundle rather than
 relabelled, because they were never controlled benchmarks.
 

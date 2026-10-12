@@ -2,6 +2,7 @@
 
     uv run --with pytest pytest -q
 """
+import io
 import json
 import os
 import shutil
@@ -156,6 +157,21 @@ def test_unicode_output_on_cp1252_console(tmp_path):
     r = subprocess.run([sys.executable, "-m", "um", "kb", "show", "n.md"],
                        capture_output=True, encoding="utf-8", env=env)
     assert r.returncode == 0 and "LÖVE →" in r.stdout
+
+
+def test_cli_prints_text_a_legacy_console_cannot_encode(tmp_path, monkeypatch):
+    # a Windows console defaults to cp1252, which has no "≥" or "→"; a note can hold anything
+    root = tmp_path / "knowledge" / "games" / "x"
+    root.mkdir(parents=True)
+    (root / "a.md").write_text("---\nkind: game\ntitle: Boon\ngame: X\n---\n# Boon\n\nThe boon pool ≥ 3 → cached\n",
+                               encoding="utf-8")
+    raw = io.BytesIO()
+    console = io.TextIOWrapper(raw, encoding="cp1252")
+    monkeypatch.setattr(sys, "stdout", console)
+    from um import cli
+    cli.main(["kb", "search", "boon", "--root", str(tmp_path / "knowledge")])
+    console.flush()
+    assert "The boon pool ≥ 3 → cached" in raw.getvalue().decode("utf-8")
 
 
 def test_tool_exe_does_not_set_dotnet_engine(tmp_path):
@@ -528,7 +544,6 @@ def test_publish_check(tmp_path, capsys):
     (tmp_path / "mod" / "copied.bin").write_bytes(b"x" * 4096)
     assert publish.check(str(tmp_path / "mod"), str(tmp_path / "game")) == 1
     out = capsys.readouterr().out
-    # UABS: report the finding without naming or echoing the matched secret
     assert "game file copied verbatim" in out and "possible credential material" in out and "Ghidra auto-name" in out
     assert fake_key not in out and "abcdefghijklmnopqrstuvwxyz0123" not in out
     normalized = out.replace("\\", "/")
@@ -562,6 +577,18 @@ def test_secret_patterns_catch_current_key_formats(label, key):
 def test_secret_patterns_ignore_ordinary_text():
     text = "sk-learn-style-kebab-case-identifiers-are-not-keys and github_pat_ alone"
     assert not [label for label, rx in publish.SECRET_PATTERNS if rx.search(text)]
+
+
+def test_video_theme_font_override(tmp_path):
+    # Space Grotesk is Latin-only: an EDL theme's title_font replaces it, e.g. for Cyrillic titles
+    video.FONT_OVERRIDES[video.TITLE_FONT] = str(video.MONO_FONT)
+    try:
+        assert video._font(video.TITLE_FONT, 20).path == str(video.MONO_FONT)
+        video.hook_text("Привет, мир", 640, 360, {}, tmp_path / "hook.png")
+        assert (tmp_path / "hook.png").exists()
+    finally:
+        video.FONT_OVERRIDES.clear()
+    assert video._font(video.TITLE_FONT, 20).path == str(video.TITLE_FONT)
 
 
 # --------------------------------------------------------------------------- video
@@ -655,6 +682,30 @@ def test_kb_search_matches_word_starts(tmp_path):
     assert [r["title"] for r in kb.search(tmp_path / "knowledge", [".esp"])] == ["Patching plugin.esp"]   # punctuation-led terms match anywhere
 
 
+def test_kb_check_warns_on_links_to_missing_notes(tmp_path):
+    root = tmp_path / "knowledge"
+    (root / "techniques").mkdir(parents=True)
+    (root / "games" / "x").mkdir(parents=True)
+    (root / "games" / "x" / "real.md").write_text("---\nkind: game\ntitle: Real\ngame: X\n---\n# Real\n", encoding="utf-8")
+    note = root / "techniques" / "t.md"
+    head = "---\nkind: technique\ntitle: t\ntags: [x]\ndate: 2026-10-10\nagents: [a]\n---\n# t\n"
+    note.write_text(head + "See [real](../games/x/real.md), [its setup](../games/x/real.md#setup), "
+                    "[a doc](https://example.com/docs/gone.md), `games/x/real.md` and `knowledge/games/x/real.md`.\n",
+                    encoding="utf-8")
+    _, warns = kb.check_note(note, root)
+    assert not [w for w in warns if "does not exist" in w]
+    note.write_text(head + "See [gone](../games/x/gone.md), [gone too](../games/x/gone.md#setup), "
+                    "[root-relative](games/x/real.md) and `techniques/missing.md`.\n", encoding="utf-8")
+    _, warns = kb.check_note(note, root)
+    assert sum("does not exist" in w for w in warns) == 4
+    # a note linking to the note next to it
+    sib = root / "games" / "x" / "sib.md"
+    sib.write_text(head + "Next to [real](real.md) and [gone](./gone.md).\n", encoding="utf-8")
+    _, warns = kb.check_note(sib, root)
+    assert [w for w in warns if "does not exist" in w] == [
+        "link to a note that does not exist: ./gone.md (links are relative to this note's folder)"]
+
+
 def test_kb_check_rejects_secrets_and_dumps(tmp_path):
     note = tmp_path / "n.md"
     code = "\n".join(f"int x{i} = {i};" for i in range(160))
@@ -663,6 +714,16 @@ def test_kb_check_rejects_secrets_and_dumps(tmp_path):
     fails, _ = kb.check_note(note)
     assert any("code block" in f for f in fails) and any("possible credential material" in f for f in fails)
     assert "abcdefghijklmnopqrstuvwxyz0123" not in " ".join(fails)
+
+
+def test_kb_without_pyyaml_says_what_to_install(tmp_path, monkeypatch, capsys):
+    # run from a clone without `pip install -e .`: a hint, not a ModuleNotFoundError traceback
+    note = tmp_path / "n.md"
+    note.write_text("---\ntitle: t\n---\n# t\n", encoding="utf-8")
+    monkeypatch.setitem(sys.modules, "yaml", None)
+    with pytest.raises(SystemExit):
+        kb.parse(note)
+    assert "pip install pyyaml" in capsys.readouterr().err
 
 
 def test_kb_impossible_date_is_reported_not_raised(tmp_path):
@@ -723,6 +784,14 @@ def test_ps_exe_falls_back_to_full_path(tmp_path, monkeypatch):
     assert common.ps_exe() == str(exe)
     monkeypatch.setattr(common.shutil, "which", lambda name: "/on/path/" + name)
     assert common.ps_exe() == "/on/path/powershell"
+
+
+def test_run_timeout_exits_with_a_message(capsys):
+    # a command that outlives timeout= ends in die(), like a failed one, not a TimeoutExpired traceback
+    from um import common
+    with pytest.raises(SystemExit):
+        common.run([sys.executable, "-c", "import time; time.sleep(10)"], timeout=0.2)
+    assert "timed out after 0.2s" in capsys.readouterr().err
 
 
 # --------------------------------------------------------------------------- backup

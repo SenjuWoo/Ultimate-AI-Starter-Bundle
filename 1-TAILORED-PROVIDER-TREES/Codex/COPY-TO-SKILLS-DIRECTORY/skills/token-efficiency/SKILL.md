@@ -15,9 +15,11 @@ Measured from one heavy user's local logs (2026-10-10, ~1,100 sessions across
 Codex, Claude Code, Hermes and Grok). Run `python TOOLS/usage_report.py` for
 your own numbers before changing anything.
 
-- Every tool call re-sends the whole context. In long Codex sessions the median
-  was ~124k tokens per call, so what is always loaded (instruction files, skill
-  index, MCP schemas) and every large tool output is paid again on each call.
+- Requests can include substantial prior context. In one historical Codex log
+  sample, cumulative input divided by tool-call count was ~124k; this is not a
+  measured median request size or an uncached charge. Stable instructions,
+  skill indexes, MCP schemas and large outputs can affect subsequent requests;
+  caching, deferred loading and compaction determine their actual cost.
   Keep those small; end a phase by updating STATE.md and continue in a fresh
   session instead of one marathon thread.
 - Codex approval reviews were ~23% of Codex usage: each escalated command

@@ -9,7 +9,7 @@
 
 EDL (edit decision list) - every key but "segments" is optional:
   {"size": [1920, 1080], "fps": 30, "bpm": 128,
-   "theme": {"accent": "#B6FF3B", "text": "#FFFFFF", "chip": "#0A0D12E0"},
+   "theme": {"accent": "#B6FF3B", "text": "#FFFFFF", "chip": "#0A0D12E0"},   # + "title_font"/"body_font"/"mono_font": .ttf paths
    "transition": {"type": "fade", "duration": 0.3},        # any ffmpeg xfade type, or "cut"
    "clip_volume": 0.6, "music": {"path": "track.mp3", "volume": 0.8, "start": 0, "fade_in": 0.2},
    "watermark": {"path": "logo.png", "height": 54, "corner": "br", "opacity": 0.9},
@@ -23,6 +23,7 @@ EDL (edit decision list) - every key but "segments" is optional:
   "dur" is seconds, or give "beats" with a top-level "bpm" (+ "beat_lock" so cuts land on the grid despite transitions).
   "fill": blur | crop | pad for clips that aren't 16:9. "watermark": false on a segment hides the logo there.
   Titles are one line, bottom-left, sliding in after the transition; "credit" sits on the same line.
+  Space Grotesk has Latin glyphs only: for Cyrillic, Greek or CJK titles set the theme's *_font to a font that has them.
 
 Style that works on X: open on the strongest moment (<= 2-3 s before real gameplay), one-line titles,
 3-5 s per clip, credit every creator whose footage you use, end on the name/URL, fade out.
@@ -43,6 +44,7 @@ FONTS = Path(__file__).parent / "fonts"
 TITLE_FONT = FONTS / "SpaceGrotesk-Bold.ttf"
 BODY_FONT = FONTS / "SpaceGrotesk-Medium.ttf"
 MONO_FONT = FONTS / "JetBrainsMono-Bold.ttf"
+FONT_OVERRIDES: dict[Path, str] = {}   # set per EDL from the theme's title_font / body_font / mono_font
 
 
 def ff(*args, quiet=True):
@@ -172,7 +174,7 @@ def beats(path) -> dict:
 
 def mux(video, raw_audio, meta_json, out, offset=None):
     """Recorder output (video .mkv + game-only f32le audio + QPC timing json) -> mp4 with synced sound."""
-    meta = json.loads(Path(meta_json).read_text())
+    meta = json.loads(Path(meta_json).read_text(encoding="utf-8"))
     dur = probe(video)["duration"]
     start = offset if offset is not None else meta.get("audio_offset_s", 0.0)
     ff("-i", video, "-f", meta.get("format", "f32le"), "-ar", meta.get("rate", 48000), "-ac", meta.get("channels", 2), "-ss", f"{max(0.0, start):.3f}", "-i", raw_audio,
@@ -191,7 +193,7 @@ def _rgba(hexs, default="#FFFFFF"):
 
 def _font(path, size):
     from PIL import ImageFont
-    return ImageFont.truetype(str(path), size)
+    return ImageFont.truetype(str(FONT_OVERRIDES.get(path, path)), size)
 
 
 def title_chip(text, credit, W, H, theme, out):
@@ -410,11 +412,16 @@ def render_segment(i, seg, edl, work: Path, W, H, fps, dur, t_in, t_out, total_n
 
 def compile_edl(edl_path, out, preview=False, keep=False):
     edl_path = Path(edl_path)
-    edl = json.loads(edl_path.read_text())
+    edl = json.loads(edl_path.read_text(encoding="utf-8"))   # not the locale encoding: titles can be any script
     base = edl_path.parent
 
     def rel(p):
         return str((base / p).resolve()) if p and not Path(p).is_absolute() else p
+
+    FONT_OVERRIDES.clear()
+    for key, default in (("title_font", TITLE_FONT), ("body_font", BODY_FONT), ("mono_font", MONO_FONT)):
+        if edl.get("theme", {}).get(key):
+            FONT_OVERRIDES[default] = rel(edl["theme"][key])
 
     for seg in edl["segments"]:
         if "clip" in seg:

@@ -1,3 +1,14 @@
+## 8.11.1
+
+- Fix index-only setup, missing-indexer preflight, native failure reporting,
+  exact active-version selection and UTF-8 custom ignore preservation.
+- Audit shipped manifest files instead of ignored old builds; scan Unicode
+  tracked filenames in the privacy gate and stop double-counting Codex reasoning.
+- Refresh Universal Modder to reviewed source `fe505d8`, retaining Windows,
+  offline knowledge and credential-no-echo patches. Add short start/resume prompts.
+- Judge project-history evidence by reproducibility and freshness, not model
+  identity. Keep personal overrides, model choices and optional MCP scope intact.
+
 ## 8.11.0
 
 - `Setup-CodebaseMemory-Index.ps1` now runs the whole lifecycle: `-Apply` writes/refreshes every `.cbmignore`, `-Index` then indexes every project in scope (per-project nodes/edges/excluded table, exit code = failures), and `-ExtraIgnore 'a/','b.json'` adds project rules that persist. Custom rule lines now survive re-runs (kept under a `# --- custom rules ...` header) - previously a re-run reset hand-tuned ignores, which is how vendored trees crept back into graphs. Base rules extended with `bin/`, `Bin/`, `src/SKSE/`, `SKSEMenuFramework.h`, `zAssets/`, `zOlder/`.

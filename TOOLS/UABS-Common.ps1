@@ -1742,6 +1742,20 @@ function Update-UabsComponentLedger {
 # scan_on_install config fix, and a style-preserving marketplace.json edit.
 # ---------------------------------------------------------------------------
 
+function Get-UabsManifestFiles {
+  # Source and extracted-archive gates audit the same shipped files. Never walk
+  # ignored artifact/cache trees, which can contain old releases and huge logs.
+  param([Parameter(Mandatory=$true)][string]$PackRoot)
+  $manifest = [IO.File]::ReadAllText((Join-Path $PackRoot 'MANIFEST.json')) | ConvertFrom-Json
+  $entries = @(if ($manifest.PSObject.Properties['files']) { $manifest.files } else { $manifest })
+  if (-not $entries.Count) { throw 'Manifest has no files to audit.' }
+  foreach ($entry in $entries) {
+    $path = Join-Path $PackRoot ([string]$entry.path)
+    if (-not (Test-UabsPathWithin -Path $path -Root $PackRoot)) { throw 'Manifest path escapes pack root.' }
+    if (Test-Path -LiteralPath $path -PathType Leaf) { Get-Item -LiteralPath $path }
+  }
+}
+
 function Get-UabsNativeOutput {
   <#
   Run a native command and return its combined output as one string, without

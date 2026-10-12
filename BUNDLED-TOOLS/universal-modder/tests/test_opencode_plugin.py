@@ -8,10 +8,12 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+import pytest
 
 from um.cli import GROUPS
 
 PLUGIN = Path(__file__).resolve().parents[1] / "plugins" / "opencode" / "index.ts"
+pytestmark = pytest.mark.skipif(not PLUGIN.is_file(), reason="UABS ships no OpenCode adapter")
 
 # rows of the `GROUPS` array: { name: "scan", blurb: "..." },
 _ROW = re.compile(r'\{\s*name:\s*"([a-z0-9]+)"')

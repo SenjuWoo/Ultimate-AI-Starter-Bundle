@@ -72,6 +72,9 @@ if (-not $py) {
 }
 
 if ($py) {
+    & $py.Source (Join-Path $PackRoot 'TESTS\test_audit_regressions.py')
+    if ($LASTEXITCODE -ne 0) { Bad 'Index lifecycle, Unicode privacy and usage-accounting regressions failed' }
+    else { Good 'Index lifecycle, Unicode privacy and usage-accounting regressions' }
     & $py.Source (Join-Path $PackRoot 'TESTS\test_universal_modder.py')
     if ($LASTEXITCODE -ne 0) { Bad 'Universal Modder offline CLI and routing check failed' }
     else { Good 'Universal Modder offline CLI and all-provider routing' }
@@ -103,8 +106,9 @@ if ($LASTEXITCODE -eq 0 -and $profileOut -match 'USER PROFILE GATE: PASS') { Goo
 else { Bad ('User profile gate failed:' + [Environment]::NewLine + $profileOut) }
 
 Section '2. PowerShell parses (excluding BUNDLED-TOOLS)'
+$shippedFiles = @(Get-UabsManifestFiles -PackRoot $PackRoot)
 $n = 0; $bad = 0
-Get-ChildItem -Path $PackRoot -Recurse -Include *.ps1, *.psm1 -File |
+$shippedFiles | Where-Object { $_.Extension -in @('.ps1','.psm1') } |
     Where-Object { $_.FullName -notlike '*BUNDLED-TOOLS*' } |
     ForEach-Object {
         $n++
@@ -112,11 +116,12 @@ Get-ChildItem -Path $PackRoot -Recurse -Include *.ps1, *.psm1 -File |
         $null = [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$null, [ref]$err)
         if ($err.Count) { $bad++; Bad "$($_.Name) : $($err[0].Message)" }
     }
-if ($bad -eq 0) { Good "$n scripts parsed" }
+if ($n -eq 0) { Bad 'No shipped PowerShell scripts were scanned' }
+elseif ($bad -eq 0) { Good "$n scripts parsed" }
 
 Section '3. BOM-less scripts containing non-ASCII (PS 5.1 will mis-decode)'
 $risk = 0
-Get-ChildItem -Path $PackRoot -Recurse -Include *.ps1, *.psm1, *.bat, *.cmd -File |
+$shippedFiles | Where-Object { $_.Extension -in @('.ps1','.psm1','.bat','.cmd') } |
     Where-Object { $_.FullName -notlike '*BUNDLED-TOOLS*' } |
     ForEach-Object {
         $bytes = [System.IO.File]::ReadAllBytes($_.FullName)
@@ -167,7 +172,7 @@ if ($deployRisk -eq 0) { Good 'every deployed artifact is pure ASCII' }
 # these sequences because they detect them; everything else is a bug.
 $mojiAllow = @('audit_skills.py', 'build_canonical_skills.py', 'Test-Pack.ps1', 'test_release_contract.py')
 $mojiRisk = 0
-Get-ChildItem -Path $PackRoot -Recurse -Include *.md, *.txt, *.ps1, *.psm1, *.json, *.yaml, *.yml -File |
+$shippedFiles | Where-Object { $_.Extension -in @('.md','.txt','.ps1','.psm1','.json','.yaml','.yml') } |
     Where-Object { $_.FullName -notlike '*BUNDLED-TOOLS*' -and $_.FullName -notlike '*\.git\*' -and
                    $_.FullName -notlike '*docs\history*' -and $_.Name -ne 'README.md' -and
                    $mojiAllow -notcontains $_.Name } |

@@ -1,12 +1,13 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.11.0",
+  "version": "8.11.1",
   "generated": "2026-10-12",
-  "release_tag": "v8.11.0",
+  "release_tag": "v8.11.1",
   "canonical_skills": 173,
   "provider_trees": 5,
   "registry_entries": 173,
   "gates": [
+    "TESTS/test_audit_regressions.py",
     "TESTS/Test-Pack.ps1",
     "TESTS/Test-PreamblePreservation.ps1",
     "TESTS/Test-GrokHookRepair.ps1",
@@ -39,6 +40,6 @@
     "TESTS/Test-UserProfile.ps1",
     "TOOLS/generate_preamble_history.py --check"
   ],
-  "runtime_status": "v8.11.0: codebase-memory lifecycle lands in the bundle - the index setup tool gains -Index (write ignores, index every project in scope, per-project table, exit code = failures), -ExtraIgnore, and custom-rule preservation so hand-tuned .cbmignore files survive re-runs. The codebase-memory skill documents the v0.11.0 cli maintenance surface (list/delete/index without an MCP client), the purge discipline anchored to the operator's registry, and per-provider auto-routing via Set-McpProfile. Measured on the operator's machine: 45 projects, 63,544 nodes, six bloat rebuilds (worst 90,546 -> 2,852 nodes), store verified clean by a whole-store outlier sweep. 173 canonical skills total.",
+  "runtime_status": "v8.11.1: executable regressions cover explicit index scope, native failure propagation, Unicode custom rules and tracked-file privacy, exact snapshot selection, shipped-file gate coverage and Codex usage accounting. Universal Modder source fe505d8 passes 103 tests with four explicit adapter/session-hook skips; no game runtime or paid inference is exercised. Historical usage and graph measurements are not new billing, quality or runtime proof. 173 canonical skills; provider overrides and model choices are preserved.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }
