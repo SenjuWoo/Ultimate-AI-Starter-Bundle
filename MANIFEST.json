@@ -55,6 +55,11 @@
   "sha256": "e060843e34d439638b004c8f88c9aa1e59109264590f72415af3178ca472004e"
  },
  {
+  "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/presets.json",
+  "size": 30688,
+  "sha256": "5925ae7afc560c3b1576d925158c56ba16d76e55d84d595a8f3b265a807db832"
+ },
+ {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/AIO.txt",
   "size": 982,
   "sha256": "6e857f99de226cab67d3cf468e74cf3598bb797af434a6ad5897e6d8cc353aca"
@@ -141,18 +146,18 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice V12.1 SPEECH.json",
-  "size": 11386,
-  "sha256": "e74f74a753b2437df3c8a1860afc28f4e852f204fb53da9a295a8293fd55882e"
+  "size": 11384,
+  "sha256": "25489cd2b66aeb9895580d1fccce0fc6adb7962e71267730985685f91737ac32"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice V12.1.json",
-  "size": 15478,
-  "sha256": "00237129448fc05b98adb2fd6917c940396998c79d99b8da13d8e580308dec6d"
+  "size": 15481,
+  "sha256": "4e2272d1aa841d3d8026cb259fe0fad96948a018d1c8ad54e0693953cc194757"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice notes.txt",
-  "size": 2188,
-  "sha256": "59696791f835efd69a3a0c7562c18ace02d8357d5250be95570778e2310d2057"
+  "size": 2154,
+  "sha256": "55c4fedbccabd62ad60cd0752c03129c44bdd3c19416d972d8302b45c0139b9f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-MAP.md",

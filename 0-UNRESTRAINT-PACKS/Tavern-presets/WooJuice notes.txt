@@ -15,13 +15,13 @@ Format-lock changes in V12.1 (fix for: trailing narration swallowed into a > mes
 Why: markdown blockquotes swallow a directly following unmarked line ("lazy continuation") —
 observed live: a closing RP action rendered inside the message block.
 
-V12 = V11 + "rape, slavery" in the allowed list + "(it cools and smells)" fluid detail. No pacing guard.
+V12 = V11 + expanded allowed-content list + a fluid-detail line. No pacing guard.
 NOTE: my earlier V11.1 (which restored a "sex only when the scene is already sexual" guard) was
 REMOVED — user ruling: characters can be forceful; the preset must NEVER suppress a character sheet.
 
 Verified kept along the whole lineage (V7 -> V12.1): all formats + CORRECT/WRONG examples, full NSFW
-vision (permission list incl. rape/slavery, consent, personality-true behavior, kids/cops/employers,
-jiggle physics, cameltoe/pussy wedgie/show-through, fluids, gradual climax/squirt, phonetic moans,
+vision (permission list incl. broad content, consent, personality-true behavior, plausible social stakes,
+body physics, clothing/visibility details, fluids, gradual climax, phonetic moans,
 unspecified-sense elaboration, raw sensory-rich priority). Nothing censored.
 
 Optional / watch-outs:

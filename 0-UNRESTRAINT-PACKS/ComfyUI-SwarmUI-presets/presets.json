@@ -1,0 +1,727 @@
+{
+    "FLUX2 Dev - MAX Quality": {
+        "author": "local",
+        "title": "FLUX2 Dev - MAX Quality",
+        "description": "Official BFL full-quality path: 50 steps and guidance 4. Use for final renders when latency does not matter.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "50",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "flux2",
+            "fluxguidancescale": "4",
+            "vae": "Flux/flux2-vae"
+        }
+    },
+    "FLUX2 Dev - Balanced": {
+        "author": "local",
+        "title": "FLUX2 Dev - Balanced",
+        "description": "Official BFL quality/speed trade-off: 28 steps with guidance 4. Same native Flux.2 schedule, much cheaper than 50-step finals.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "28",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "flux2",
+            "fluxguidancescale": "4",
+            "vae": "Flux/flux2-vae"
+        }
+    },
+    "FLUX1 Dev - Quality": {
+        "author": "local",
+        "title": "FLUX1 Dev - Quality",
+        "description": "Clean FLUX.1 Dev quality baseline using the native-style Euler + Simple path and guidance 3.5.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "28",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "simple",
+            "fluxguidancescale": "3.5",
+            "vae": "Flux/ae"
+        }
+    },
+    "Z-Image Turbo - Quality": {
+        "author": "local",
+        "title": "Z-Image Turbo - Quality",
+        "description": "Official-Comfy-style Z-Image Turbo baseline: Res MultiStep + Simple, 8 steps, CFG 1. Sigma shift 3.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "res_multistep",
+            "scheduler": "simple",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 Turbo - Native": {
+        "author": "local",
+        "title": "Krea 2 Turbo - Native",
+        "description": "Primary Krea 2 Turbo preset. Native/reference-style Euler + Simple at 8 steps with no CFG pressure.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "simple",
+            "sigmashift": "1.15",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 Turbo - Alt Detail": {
+        "author": "local",
+        "title": "Krea 2 Turbo - Alt Detail",
+        "description": "Experimental A/B alternative retained because it is genuinely different: Exp Heun 2 x0 + SGM Uniform. Not assumed universally better than Native.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "exp_heun_2_x0",
+            "scheduler": "sgm_uniform",
+            "sigmashift": "1.15",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 RAW - MAX Quality": {
+        "author": "local",
+        "title": "Krea 2 RAW - MAX Quality",
+        "description": "Full Krea 2 RAW quality preset rather than the distilled Turbo path: 52 steps, CFG 3.5, Euler + Simple.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "52",
+            "cfgscale": "3.5",
+            "sampler": "euler",
+            "scheduler": "simple",
+            "sigmashift": "1.15",
+            "vae": "Automatic"
+        }
+    },
+    "Anima Detailed v3 - MAX Quality": {
+        "author": "local",
+        "title": "Anima Detailed v3 - MAX Quality",
+        "description": "Primary full Anima quality preset. ER-SDE is the neutral/sharp official favorite; 50 steps, CFG 4.5, Simple scheduler, sigma shift 3.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, lowres, score_1, score_2, score_3, blurry, jpeg artifacts, chromatic aberration, watermark, signature, artist name, text",
+            "steps": "50",
+            "cfgscale": "4.5",
+            "sampler": "er_sde",
+            "scheduler": "simple",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "Anima Detailed v3 - Creative": {
+        "author": "local",
+        "title": "Anima Detailed v3 - Creative",
+        "description": "Full-quality Anima alternative using DPM++ 2M SDE GPU for more creative/detail variation while keeping the native-friendly Simple schedule.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, lowres, score_1, score_2, score_3, blurry, jpeg artifacts, chromatic aberration, watermark, signature, artist name, text",
+            "steps": "50",
+            "cfgscale": "4.5",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "simple",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "Anima Detailed v3 - KL Alt": {
+        "author": "local",
+        "title": "Anima Detailed v3 - KL Alt",
+        "description": "KL Optimal retained deliberately as an A/B alternate because it can win on particular prompts/seeds. Experimental, not the default baseline.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, lowres, score_1, score_2, score_3, blurry, jpeg artifacts, chromatic aberration, watermark, signature, artist name, text",
+            "steps": "40",
+            "cfgscale": "4",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "kl_optimal",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "Anima Turbo - Fast": {
+        "author": "local",
+        "title": "Anima Turbo - Fast",
+        "description": "For Anima Turbo checkpoints only: distilled fast path at 10 steps, CFG 1, Euler + Simple, sigma shift 3.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "10",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "simple",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "SDXL Illustrious - Quality": {
+        "author": "local",
+        "title": "SDXL Illustrious - Quality",
+        "description": "Primary WooMix/Illustrious quality preset. DPM++ 2M SDE GPU + Karras, 30 steps, CFG 5.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, bad quality, lowres, blurry, jpeg artifacts, watermark, signature, artist name, text",
+            "model": "SDXL/Anime/Illustrious/woomixIllustrious_v2I2",
+            "steps": "30",
+            "cfgscale": "5",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "karras",
+            "vae": "SDXL/purecolorVAE_v10"
+        }
+    },
+    "SDXL Illustrious - KL Alt": {
+        "author": "local",
+        "title": "SDXL Illustrious - KL Alt",
+        "description": "KL Optimal retained as a deliberate WooMix/Illustrious A/B alternate using the Heun GPU sampler from the old preset.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, bad quality, lowres, blurry, jpeg artifacts, watermark, signature, artist name, text",
+            "model": "SDXL/Anime/Illustrious/woomixIllustrious_v2I2",
+            "steps": "40",
+            "cfgscale": "5",
+            "sampler": "dpmpp_2m_sde_heun_gpu",
+            "scheduler": "kl_optimal",
+            "vae": "SDXL/purecolorVAE_v10"
+        }
+    },
+    "SDXL Base - Realism Quality": {
+        "author": "local",
+        "title": "SDXL Base - Realism Quality",
+        "description": "Conventional full-SDXL quality baseline, replacing the under-stepped 10-step CFG 1.5 test preset.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "32",
+            "cfgscale": "6",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "karras",
+            "vae": "Automatic"
+        }
+    },
+    "SDXL Inpainting - Quality": {
+        "author": "local",
+        "title": "SDXL Inpainting - Quality",
+        "description": "Quality-focused SDXL inpainting preset. Original inpaint behavior retained; sampling moved to DPM++ 2M SDE GPU + Karras.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "prompt": "{value}, uncensored",
+            "negativeprompt": "censored, worst quality, bad quality",
+            "steps": "40",
+            "cfgscale": "5",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "karras",
+            "initimagecreativity": "0.75",
+            "maskblur": "64",
+            "initimagerecompositemask": "false",
+            "vae": "SDXL/purecolorVAE_v10"
+        }
+    },
+    "FLUX1 Dev - MAX Quality": {
+        "author": "local",
+        "title": "FLUX1 Dev - MAX Quality",
+        "description": "BFL reference-quality FLUX.1 Dev setup: 50 Euler steps with distilled guidance 3.5.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "50",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "simple",
+            "fluxguidancescale": "3.5",
+            "vae": "Flux/ae"
+        }
+    },
+    "FLUX1 Dev - Balanced": {
+        "author": "local",
+        "title": "FLUX1 Dev - Balanced",
+        "description": "Practical FLUX.1 Dev daily preset: 28 Euler steps, guidance 3.5.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "28",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "simple",
+            "fluxguidancescale": "3.5",
+            "vae": "Flux/ae"
+        }
+    },
+    "Z-Image Turbo - Official Native": {
+        "author": "local",
+        "title": "Z-Image Turbo - Official Native",
+        "description": "Official ComfyUI workflow values: Res MultiStep + Simple, 8 steps, CFG 1, AuraFlow shift 3. Highest-confidence baseline.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "res_multistep",
+            "scheduler": "simple",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "Z-Image Turbo - Photoreal Detail Alt": {
+        "author": "local",
+        "title": "Z-Image Turbo - Photoreal Detail Alt",
+        "description": "Community-tested photoreal alternative after RES4LYF: Euler + beta57. Keep Native as the control because sampler preference is subject/style dependent.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "9",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "beta57",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "Z-Image Turbo - Anime RES Alt": {
+        "author": "local",
+        "title": "Z-Image Turbo - Anime RES Alt",
+        "description": "RES4LYF alternate aimed at cleaner illustrated/anime structure: res_2m + Simple at 9 steps. Experimental, not an official Z-Image default.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "9",
+            "cfgscale": "1",
+            "sampler": "res_2m",
+            "scheduler": "simple",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 Turbo - Photoreal 2MP Balance": {
+        "author": "local",
+        "title": "Krea 2 Turbo - Photoreal 2MP Balance",
+        "description": "Strong 2MP realism/quality-speed choice from the same broad benchmark: Euler + Beta. Use for 1536-2048 class outputs.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "beta",
+            "sigmashift": "1.15",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 Turbo - Skin + LoRA MAX": {
+        "author": "local",
+        "title": "Krea 2 Turbo - Skin + LoRA MAX",
+        "description": "Benchmark favorite for natural skin, anatomy, hands and LoRA-heavy character work: EXP Heun 2 x0 + SGM Uniform.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "exp_heun_2_x0",
+            "scheduler": "sgm_uniform",
+            "sigmashift": "1.15",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 Turbo - Official Native": {
+        "author": "local",
+        "title": "Krea 2 Turbo - Official Native",
+        "description": "Official Krea/Comfy baseline: distilled Turbo at 8 steps with CFG effectively disabled, Euler integration, Simple schedule, fixed shift 1.15.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "simple",
+            "sigmashift": "1.15",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 Turbo - MAX Photoreal 1MP": {
+        "author": "local",
+        "title": "Krea 2 Turbo - MAX Photoreal 1MP",
+        "description": "Independent 396-combination Krea 2 Turbo benchmark winner around native 1MP: Heun++2 + Simple. Slower than Euler, intended for final realism renders.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "heunpp2",
+            "scheduler": "simple",
+            "sigmashift": "1.15",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 Turbo - Clean Identity": {
+        "author": "local",
+        "title": "Krea 2 Turbo - Clean Identity",
+        "description": "Cleaner/stabler alternate for faces and identity-sensitive work: DPM++ SDE GPU + Simple. Community-derived, so compare against Official Native per checkpoint/LoRA.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "dpmpp_sde_gpu",
+            "scheduler": "simple",
+            "sigmashift": "1.15",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 Turbo - RES4LYF Fidelity Test": {
+        "author": "local",
+        "title": "Krea 2 Turbo - RES4LYF Fidelity Test",
+        "description": "Recent RES4LYF-oriented quality/identity experiment: res_2s + bong_tangent. High compute/experimental path, kept separate from evidence-backed native presets.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "res_2s",
+            "scheduler": "bong_tangent",
+            "sigmashift": "1.15",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 Turbo - RES MultiStep Balance": {
+        "author": "local",
+        "title": "Krea 2 Turbo - RES MultiStep Balance",
+        "description": "Modern RES-style alternate: Res MultiStep + Simple at the native 8-step Turbo budget. Useful A/B against Euler without changing model guidance.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "8",
+            "cfgscale": "1",
+            "sampler": "res_multistep",
+            "scheduler": "simple",
+            "sigmashift": "1.15",
+            "vae": "Automatic"
+        }
+    },
+    "Krea 2 RAW - Official Core (Swarm)": {
+        "author": "local",
+        "title": "Krea 2 RAW - Official Core (Swarm)",
+        "description": "Matches official RAW core settings: 52 steps, CFG 3.5, Euler. Caveat: official Krea RAW uses a resolution-aware 0.5→1.15 timestep shift; current plain Swarm/Comfy Krea2 sampling defaults to fixed 1.15, so exact native RAW scheduling requires a dedicated sigma workflow.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "52",
+            "cfgscale": "3.5",
+            "sampler": "euler",
+            "scheduler": "simple",
+            "vae": "Automatic"
+        }
+    },
+    "WooMix Anima - BEST Overall": {
+        "author": "local",
+        "title": "WooMix Anima - BEST Overall",
+        "description": "Highest-confidence general WooMix/Anima preset: ER-SDE neutral/sharp behavior plus beta57 low-noise detail, 40 steps, CFG 4.5, shift 3.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, score_1, score_2, score_3, artist name",
+            "steps": "40",
+            "cfgscale": "4.5",
+            "sampler": "er_sde",
+            "scheduler": "beta57",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "WooMix Anima - RK Beta57 Candidate": {
+        "author": "local",
+        "title": "WooMix Anima - RK Beta57 Candidate",
+        "description": "Your promising test combo. rk_beta + beta57 for WooMix/Anima when you want a serious quality challenger to ER-SDE. Good direct A/B against BEST Overall.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, score_1, score_2, score_3, artist name",
+            "steps": "40",
+            "cfgscale": "4.5",
+            "sampler": "rk_beta",
+            "scheduler": "beta57",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "WooMix Anima - Clean Native Baseline": {
+        "author": "local",
+        "title": "WooMix Anima - Clean Native Baseline",
+        "description": "Conservative control preset: ER-SDE + Simple, 40 steps, CFG 4.5, shift 3. Closest to Swarm/base-Anima default behavior.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, score_1, score_2, score_3, artist name",
+            "steps": "40",
+            "cfgscale": "4.5",
+            "sampler": "er_sde",
+            "scheduler": "simple",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "WooMix Anima - Dense Creative": {
+        "author": "local",
+        "title": "WooMix Anima - Dense Creative",
+        "description": "Creative/detail-dense alternative: DPM++ 2M SDE GPU + SGM Uniform. Good when ER-SDE feels too restrained.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, score_1, score_2, score_3, artist name",
+            "steps": "40",
+            "cfgscale": "4.5",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "sgm_uniform",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "WooMix Anima - RES4LYF res_2s Detail": {
+        "author": "local",
+        "title": "WooMix Anima - RES4LYF res_2s Detail",
+        "description": "RES4LYF Anima experiment with growing community use: res_2s + beta57. Use as a detail/anatomy A/B, not a replacement for the clean control.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, score_1, score_2, score_3, artist name",
+            "steps": "35",
+            "cfgscale": "4.5",
+            "sampler": "res_2s",
+            "scheduler": "beta57",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "WooMix Anima - Cosmos Composition": {
+        "author": "local",
+        "title": "WooMix Anima - Cosmos Composition",
+        "description": "Composition-oriented Cosmos-derived experiment: native Res MultiStep + Linear Quadratic. Stronger direct evidence exists on Anima-2.9B than base WooMix, so it remains a specialized preset.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, score_1, score_2, score_3, artist name",
+            "steps": "45",
+            "cfgscale": "4.5",
+            "sampler": "res_multistep",
+            "scheduler": "linear_quadratic",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "WooMix Anima - KL Detail Lottery": {
+        "author": "local",
+        "title": "WooMix Anima - KL Detail Lottery",
+        "description": "High-variance detail alternate. KL Optimal can produce exceptional local detail on some seeds but is less consistently clean than beta57/Simple.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, score_1, score_2, score_3, artist name",
+            "steps": "40",
+            "cfgscale": "4.0",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "kl_optimal",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "WooMix Anima - Bong Tangent Experiment": {
+        "author": "local",
+        "title": "WooMix Anima - Bong Tangent Experiment",
+        "description": "RES4LYF exploratory path: res_2s + bong_tangent. Useful for texture/information-density tests; weaker WooMix-specific evidence than beta57.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, score_1, score_2, score_3, artist name",
+            "steps": "30",
+            "cfgscale": "4.5",
+            "sampler": "res_2s",
+            "scheduler": "bong_tangent",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "Anima Turbo - Native Fast": {
+        "author": "local",
+        "title": "Anima Turbo - Native Fast",
+        "description": "Fast distilled Anima-family baseline. Keep isolated from full WooMix presets because Turbo distillation changes the valid step/CFG regime.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, score_1, score_2, score_3, artist name",
+            "steps": "10",
+            "cfgscale": "1",
+            "sampler": "euler",
+            "scheduler": "simple",
+            "sigmashift": "3",
+            "vae": "Automatic"
+        }
+    },
+    "SDXL Illustrious - Anime Clean": {
+        "author": "local",
+        "title": "SDXL Illustrious - Anime Clean",
+        "description": "Clean Illustrious-family anime baseline: Euler A + SGM Uniform, 28 steps, CFG 4.5. Favors linework and prompt responsiveness.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, bad quality",
+            "model": "SDXL/Anime/Illustrious/woomixIllustrious_v2I2",
+            "steps": "28",
+            "cfgscale": "4.5",
+            "sampler": "euler_ancestral",
+            "scheduler": "sgm_uniform",
+            "vae": "SDXL/purecolorVAE_v10"
+        }
+    },
+    "SDXL Illustrious - Dense DPM++": {
+        "author": "local",
+        "title": "SDXL Illustrious - Dense DPM++",
+        "description": "Denser/steadier Illustrious alternate: DPM++ 2M SDE GPU + SGM Uniform at 30 steps.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, bad quality",
+            "model": "SDXL/Anime/Illustrious/woomixIllustrious_v2I2",
+            "steps": "30",
+            "cfgscale": "4.5",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "sgm_uniform",
+            "vae": "SDXL/purecolorVAE_v10"
+        }
+    },
+    "SDXL Base - Realism Balanced": {
+        "author": "local",
+        "title": "SDXL Base - Realism Balanced",
+        "description": "General SDXL photoreal baseline: DPM++ 2M SDE GPU + Karras, 30 steps, CFG 6.5. Good quality/cost control for realism checkpoints.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "30",
+            "cfgscale": "6.5",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "karras",
+            "vae": "Automatic"
+        }
+    },
+    "SDXL Base - Realism MAX": {
+        "author": "local",
+        "title": "SDXL Base - Realism MAX",
+        "description": "Slow SDXL photoreal final-render alternate: DPM++ 3M SDE GPU + Karras, 36 steps, CFG 6.5. Use only if your checkpoint benefits from extra convergence.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "36",
+            "cfgscale": "6.5",
+            "sampler": "dpmpp_3m_sde_gpu",
+            "scheduler": "karras",
+            "vae": "Automatic"
+        }
+    },
+    "SDXL Base - Creative Explore": {
+        "author": "local",
+        "title": "SDXL Base - Creative Explore",
+        "description": "Faster, more exploratory SDXL seed-search preset: Euler + Normal, 24 steps, CFG 6. Useful for composition hunting before a DPM++ final.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "steps": "24",
+            "cfgscale": "6",
+            "sampler": "euler",
+            "scheduler": "normal",
+            "vae": "Automatic"
+        }
+    },
+    "SDXL Inpainting - Tight Detail": {
+        "author": "local",
+        "title": "SDXL Inpainting - Tight Detail",
+        "description": "General-purpose SDXL inpaint for small/local repairs. Mask blur 4 is SwarmUI default-scale behavior; lower denoise preserves surrounding structure.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "prompt": "{value}",
+            "negativeprompt": "worst quality, bad quality",
+            "steps": "32",
+            "cfgscale": "5",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "karras",
+            "initimagecreativity": "0.65",
+            "maskblur": "4",
+            "initimagerecompositemask": "false",
+            "vae": "SDXL/purecolorVAE_v10"
+        }
+    },
+    "SDXL Inpainting - Seamless Blend": {
+        "author": "local",
+        "title": "SDXL Inpainting - Seamless Blend",
+        "description": "Broader SDXL replacement/blending preset. Mask blur 8 softens seams without the old extreme 64-pixel blur; creativity 0.75 allows stronger regeneration.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "prompt": "{value}",
+            "negativeprompt": "worst quality, bad quality",
+            "steps": "32",
+            "cfgscale": "5",
+            "sampler": "dpmpp_2m_sde_gpu",
+            "scheduler": "karras",
+            "initimagecreativity": "0.75",
+            "maskblur": "8",
+            "initimagerecompositemask": "false",
+            "vae": "SDXL/purecolorVAE_v10"
+        }
+    },
+    "z T-Pose": {
+        "author": "local",
+        "title": "z T-Pose",
+        "description": "",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "prompt": "T-pose, white background, simple background, full body, standing, spread arms, outstretched arms, legs apart, facing viewer, looking at viewer, {value}"
+        }
+    },
+    "WooMix Anima - RK Beta57 Candidate (2)": {
+        "author": "local",
+        "title": "WooMix Anima - RK Beta57 Candidate (2)",
+        "description": "Your promising test combo. rk_beta + beta57 for WooMix/Anima when you want a serious quality challenger to ER-SDE. Good direct A/B against BEST Overall. Crank steps to 40 once you have a good baseline.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, lowres, score_1, score_2, score_3, blurry, jpeg artifacts, chromatic aberration, bad hands, missing fingers, extra fingers, watermark, username, artist name, text, monochrome, greyscale, koma, 4koma, unfinished, sketch, line art",
+            "steps": "20",
+            "cfgscale": "3",
+            "sampler": "rk_beta",
+            "scheduler": "beta57",
+            "vae": "Automatic",
+            "sigmashift": "3"
+        }
+    },
+    "WooMix Anima - RK Beta57 Real pictures": {
+        "author": "local",
+        "title": "WooMix Anima - RK Beta57 Real pictures",
+        "description": "Your promising test combo. rk_beta + beta57 for WooMix/Anima when you want a serious quality challenger to ER-SDE. Good direct A/B against BEST Overall.",
+        "preview_image": "imgs/model_placeholder.jpg",
+        "is_starred": false,
+        "param_map": {
+            "negativeprompt": "worst quality, low quality, lowres, score_1, score_2, score_3, blurry, jpeg artifacts, chromatic aberration, bad hands, missing fingers, extra fingers, watermark, username, artist name, text, monochrome, greyscale, koma, 4koma, unfinished, sketch, line art",
+            "steps": "40",
+            "cfgscale": "4",
+            "sampler": "rk_beta",
+            "scheduler": "kl_optimal",
+            "vae": "Automatic",
+            "sigmashift": "3"
+        }
+    }
+}
