@@ -36026,8 +36026,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 190367,
-  "sha256": "7647ebf3786377c176b43c81c47522d18f82b0822991d896344bc831760ee0d2"
+  "size": 190436,
+  "sha256": "dcd52592a78f037e853cd58cf1555d842152df9dc2e84283d9fe4360f325b96f"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -36176,8 +36176,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 1920,
-  "sha256": "9e8f853081d1a35602048c63173245806942f1d075f24799dcd49ce2ec68f187"
+  "size": 1663,
+  "sha256": "d4aef94bcf725ab2f2c3253fafa2c3736a60f4a68e30d069e821f1dc9ffd4eb7"
  },
  {
   "path": "TESTS/Test-BundleSelfUpdate.ps1",
@@ -43638,6 +43638,11 @@
   "path": "docs/history/V8.11.1-CHANGELOG.md",
   "size": 3546,
   "sha256": "54860d45a2deb185f4f299c51d1cffe2cc19b3da179b04e06d516b8df10c7704"
+ },
+ {
+  "path": "docs/history/V8.12.0-CHANGELOG.md",
+  "size": 3126,
+  "sha256": "86a59ba45406a467b99c506783129603ec7db7b18cd7c5877849cbbc27ac7f81"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",
