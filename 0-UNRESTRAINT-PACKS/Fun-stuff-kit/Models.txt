@@ -17,7 +17,7 @@ google/gemini-3.5-flash           Fast, yes-man. Caption only if Perceptron/Civi
 nvidia/nemotron-3-nano-omni-...   Free-ish VLM when it exists. Endpoints vanish. Verify before relying.
 
 HOW TO CAST THIS WEEK
-Tavern daily: MiniMax M3, WooJuice V9, reasoning off or low.
+Tavern daily: MiniMax M3, WooJuice V12.1, reasoning off or low.
 Sheet / lore / "did this break continuity": DeepSeek V4 Pro 0813, high reason.
 Caption for a sheet: Civitai tagger (free, under LoRA dropdown) then Vision.txt SHORT.
 Caption when you need confidence: Vision.txt FULL + Perceptron Mk1 or Gemini flash.

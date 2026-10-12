@@ -76,13 +76,13 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/INDEX.txt",
-  "size": 1546,
-  "sha256": "24e9861115203c1b8fce8e7fb1f56ea0a40c01c6e20ed14a4727834c42ceb2c8"
+  "size": 1549,
+  "sha256": "098b846dcd09360b4b8375661b2dcf39029a4107e4e2646818c8b3642f89583a"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Models.txt",
-  "size": 1711,
-  "sha256": "5818cf7dea28ec60d7ca693181341a1e411885fb9680a1383004f6cd55611f5b"
+  "size": 1714,
+  "sha256": "df4efdae883185eee4306b945ea7d75872ff25e406101255904e2b636f01702b"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Papyrus.txt",
@@ -111,8 +111,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Tools.txt",
-  "size": 3034,
-  "sha256": "30b75b37c57f8542a3e6f25e47e63c22eff7c49d0bf30a88a7887775e0760a6b"
+  "size": 3037,
+  "sha256": "05bd4a3c4da112e529171179d42fee165d393a7069b17966449d2a774077e83a"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Vision.txt",
@@ -126,8 +126,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/README.md",
-  "size": 7077,
-  "sha256": "927d39e0135e0e7127bb3879b626500852bbd36b1894afb0fee79fb4e445be0c"
+  "size": 7100,
+  "sha256": "d986173c05fafb161a52080e91370315fdc61d94dee8582a853842aa271bf98c"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/Character Creation.txt",
@@ -140,19 +140,19 @@
   "sha256": "8913e5f2734a40c36ed7cf620e1076384f9f97fc02e8ad1ab3df742c5ab9be3c"
  },
  {
-  "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice V9 Heavy.json",
-  "size": 12361,
-  "sha256": "74a27d05dd2bc457d21a22b1e3b368922d012dee3aa29fc9dfae95938f6c3da6"
+  "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice V12.1 SPEECH.json",
+  "size": 11386,
+  "sha256": "e74f74a753b2437df3c8a1860afc28f4e852f204fb53da9a295a8293fd55882e"
  },
  {
-  "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice V9 SPEECH.json",
-  "size": 10256,
-  "sha256": "cc737d11f7f97edc688c9d89968fb72d6c474617a52b112abdcd8e258384d635"
+  "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice V12.1.json",
+  "size": 15478,
+  "sha256": "00237129448fc05b98adb2fd6917c940396998c79d99b8da13d8e580308dec6d"
  },
  {
-  "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice V9.json",
-  "size": 11871,
-  "sha256": "fb97c50cf9b75e105e712adff1ae77877a96b22b7feef0cbbbd8d5dddf12dd3e"
+  "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice notes.txt",
+  "size": 2188,
+  "sha256": "59696791f835efd69a3a0c7562c18ace02d8357d5250be95570778e2310d2057"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-MAP.md",
@@ -6381,8 +6381,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 2961,
-  "sha256": "369aad3a20d59d2530132e24c7a180ddcbdfa5c20b8678818d9ad81fbbfa82c1"
+  "size": 2978,
+  "sha256": "cd804eec9c58e702fb2432a7b26443a6b15b54c3a9496ce93d0c5900d7589830"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/upgrade-path-testing/SKILL.md",
@@ -12821,8 +12821,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 2961,
-  "sha256": "369aad3a20d59d2530132e24c7a180ddcbdfa5c20b8678818d9ad81fbbfa82c1"
+  "size": 2978,
+  "sha256": "cd804eec9c58e702fb2432a7b26443a6b15b54c3a9496ce93d0c5900d7589830"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/upgrade-path-testing/SKILL.md",
@@ -19246,8 +19246,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 2961,
-  "sha256": "369aad3a20d59d2530132e24c7a180ddcbdfa5c20b8678818d9ad81fbbfa82c1"
+  "size": 2978,
+  "sha256": "cd804eec9c58e702fb2432a7b26443a6b15b54c3a9496ce93d0c5900d7589830"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/upgrade-path-testing/SKILL.md",
@@ -25671,8 +25671,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 2961,
-  "sha256": "369aad3a20d59d2530132e24c7a180ddcbdfa5c20b8678818d9ad81fbbfa82c1"
+  "size": 2978,
+  "sha256": "cd804eec9c58e702fb2432a7b26443a6b15b54c3a9496ce93d0c5900d7589830"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/upgrade-path-testing/SKILL.md",
@@ -32171,8 +32171,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 2961,
-  "sha256": "369aad3a20d59d2530132e24c7a180ddcbdfa5c20b8678818d9ad81fbbfa82c1"
+  "size": 2978,
+  "sha256": "cd804eec9c58e702fb2432a7b26443a6b15b54c3a9496ce93d0c5900d7589830"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/upgrade-path-testing/SKILL.md",
@@ -43046,8 +43046,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/unrestraint-packs/SKILL.md",
-  "size": 2961,
-  "sha256": "369aad3a20d59d2530132e24c7a180ddcbdfa5c20b8678818d9ad81fbbfa82c1"
+  "size": 2978,
+  "sha256": "cd804eec9c58e702fb2432a7b26443a6b15b54c3a9496ce93d0c5900d7589830"
  },
  {
   "path": "_CANONICAL-SKILLS/upgrade-path-testing/SKILL.md",

@@ -6,7 +6,7 @@ The full no-holds prompt library — the operator's own kit, reviewed, deduped, 
 - Adults only. No child / age-ambiguous content. Ever.
 - One jail, one job. Do not stack AIO + Story + Websim in a single prompt.
 - Token hygiene: paste the smallest file that does the job.
-- For SillyTavern, use the WooJuice V9 preset — do not paste Story.txt into ST.
+- For SillyTavern, use the WooJuice V12.1 preset — do not paste Story.txt into ST.
 - The AIO family already carries the full unrestraint payload — standalone jailbreak collections are retired (2026-10-12); regenerate against the current model instead of trusting an old payload.
 
 ---
@@ -46,7 +46,7 @@ phrasing.** Neither is weaker on content; only the scaffolding differs.
 | Folder | Source | What it is |
 |---|---|---|
 | `Fun-stuff-kit/` | Operator kit (`Z:\Misc\Boof\Ai prompts n stuff\Fun stuff`) | AIO (chat/research jail), Story (fiction jail + NSFW physics), Websim, Vision (image caption FULL/SHORT), Character Maker, FablesGG, Tags (adult tag bank), Tools, SKSE-DLL, Papyrus, Models, Sites |
-| `Tavern-presets/` | Operator kit | WooJuice V9 + SPEECH + anti-ethical-bullshit (SillyTavern) |
+| `Tavern-presets/` | Operator kit | WooJuice V12.1 + V12.1 SPEECH + anti-ethical-bullshit + notes (SillyTavern) |
 
 ## Retired 2026-10-12
 
@@ -86,7 +86,7 @@ this folder.
 | Grok CLI | `~/.grok/AGENTS.md` | Wired (global). |
 | Hermes | `%LOCALAPPDATA%\hermes\SOUL.md` + every bundle-managed profile | Wired. A roleplay profile with its own persona (the SillyTavern gateway) is deliberately left alone. |
 | ChatGPT web / Gemini web / Perplexity | custom-instructions box | Manual: paste `3-PREAMBLES/MANUAL-PASTE.txt` (SOUL + Web AIO, pure ASCII). |
-| SillyTavern | `Tavern\WooJuice V9.json` | Preset, not this pack. |
+| SillyTavern | `Tavern\WooJuice V12.1.json` | Preset, not this pack. |
 
 ## Honest notes
 

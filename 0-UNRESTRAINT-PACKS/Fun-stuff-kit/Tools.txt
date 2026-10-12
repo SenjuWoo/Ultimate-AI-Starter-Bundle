@@ -5,7 +5,7 @@ Functional scraps. Paste one. Do not stack with Story.txt inside SillyTavern.
 2. Drop both into Character Maker.txt. Fill I WANT last.
 3. Model: deepseek/deepseek-v4-pro-0813, high reason.
 4. Split the sheet into ST fields: Description / Personality / Scenario / First Message / Examples.
-5. Import. Play on WooJuice V9 + MiniMax M3.
+5. Import. Play on WooJuice V12.1 + MiniMax M3.
 
 ========== 2. ST FIELD SPLIT ==========
 Take the sheet below and emit only:

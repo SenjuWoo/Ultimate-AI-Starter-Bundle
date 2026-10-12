@@ -32,7 +32,7 @@ The operator's no-holds prompt library (Ultimate-AI-Starter-Bundle).
 | `AIO-INSTRUCTION — Web Light.md` | Strict paste budgets (small custom-instruction boxes) |
 | `AIO-INSTRUCTION — Compact.md` | Halfway size; keeps every load-bearing part |
 | `Fun-stuff-kit/` | AIO, Story (fiction jail + NSFW physics), Websim, Vision (image caption FULL/SHORT), Character Maker, FablesGG, Tags, Tools, SKSE-DLL, Papyrus, Models, Sites |
-| `Tavern-presets/` | WooJuice V9 + SPEECH + anti-ethical-bullshit (SillyTavern) |
+| `Tavern-presets/` | WooJuice V12.1 + V12.1 SPEECH + anti-ethical-bullshit + notes (SillyTavern) |
 
 ## Use
 

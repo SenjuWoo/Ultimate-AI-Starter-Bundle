@@ -16,8 +16,8 @@ USE THIS
   Sites.txt            Live-checked sites + performer aliases
 
 TAVERN
-  ..\Tavern\WooJuice V9.json         Daily RP preset
-  ..\Tavern\WooJuice V9 SPEECH.json  Voice-call only
+  ..\Tavern\WooJuice V12.1.json      Daily RP preset
+  ..\Tavern\WooJuice V12.1 SPEECH.json  Voice-call only
   ..\Tavern\Character Maker.txt      Same sheet template, ST-sized
 
 RULES
