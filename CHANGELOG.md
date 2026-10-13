@@ -13,6 +13,13 @@
   NTFS links without touching targets. Restore Codex ownership with verified backups.
 - Model choices, MCP scope, verified local overrides and roleplay personas remain
   unchanged. Start/resume prompts from the previous audit are retained.
+- Build-hygiene reinforcement: the AIO contract (full and Compact) now also tells
+  every provider to comment code in plain language per file and section and to
+  keep a `STATE.md` recovery note for anything it builds, next to the existing
+  debug-log rule. Detail lives in `coding-discipline`, `state-resumption`
+  (handoff template) and `observability-first` (switchable, capped log). The
+  ASCII `AIO-INSTRUCTION.txt` mirror is regenerated and the outgoing contract is
+  archived in `3-PREAMBLES/history/` so installed machines converge.
 
 ## 8.12.0
 

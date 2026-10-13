@@ -35,5 +35,17 @@ changes":
    smallest safe action.
 4. Reconnect tools the work needs (MCP servers, editors) before relying on them.
 
+## Handoff for what you build
+
+Every project you create or change keeps a `STATE.md` in its owner folder, written at each milestone, not only at the end. Facts, not narrative:
+
+- Goal and acceptance criteria; what is done (with the proof: command, test, hash).
+- Next smallest safe action and its exact command; known blockers and dead ends.
+- Last good version and where its copy lives; changelog location.
+- Where the debug log is and how to toggle it; build/run/test commands.
+- Files you touched this session and anything left half-done.
+
+Another model or a fresh session must be able to continue from this file plus `git status` alone. Never put secrets or personal data in it.
+
 ## Compression discipline
 Before context compaction or handoff, update the ledger with facts, not narrative. Keep volatile logs out; preserve only commands, outcomes, hashes, decisions, and blockers needed to continue deterministically.

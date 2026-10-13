@@ -36,6 +36,19 @@ when_to_use: Use for operating contract for changing code, scripts, configuratio
 - Stop when a required fact cannot be verified. Do not hide uncertainty behind confident prose.
 - Checkpoint after each phase so a failed attempt can be reverted cleanly.
 
+## Comment what you write
+
+Comments are non-executable text the language ignores (`//` or `/* */`, `#`, `;`
+in Papyrus/INI, `--` in Lua/SQL, `<!-- -->` in XML/HTML, `'`/`Rem` in batch/VB). Use them so a person who does not code can still follow the file:
+
+- Top of every file: 2-4 lines on what it is for, what it needs, and where its log goes.
+- Above each section or function: one plain-language line on what it does and why it exists, not a restatement of the code.
+- At each non-obvious choice: the reason, the limit, or the thing that breaks if changed.
+- Never comment out dead code and leave it; delete it (git keeps it). JSON has no comments; put the explanation in the README or a sibling `.md`.
+- Keep comments true: when you change a section, change its comment in the same edit.
+
+Anything you build also gets a toggleable debug log (`observability-first`) and a `STATE.md` recovery note (`state-resumption`, "Handoff for what you build").
+
 ## Validation
 
 - Review the diff, not only the final files.

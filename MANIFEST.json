@@ -36,8 +36,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Compact.md",
-  "size": 6919,
-  "sha256": "f710b5736415408501b6b5a4d752ea172aabce65f22b3a1b944909deb0cbf337"
+  "size": 7130,
+  "sha256": "f750249ca3629da3f0b1e24a92d777600f41bcfcb9749e2cb950ae555fd9aba5"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web Light.md",
@@ -51,8 +51,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 10990,
-  "sha256": "e060843e34d439638b004c8f88c9aa1e59109264590f72415af3178ca472004e"
+  "size": 11419,
+  "sha256": "6f594378f23469d823772f0b52a2249f15fa11e9b7b9fac5b6c87412b9dfe26d"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
@@ -691,8 +691,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
-  "size": 4456,
-  "sha256": "358037299050cddd474d583e36c7716020f9eb2b7322714f85553419995736cd"
+  "size": 5408,
+  "sha256": "4dd4cf58cae754a2be78dce315b00629fc752729921826c893a14348af0bb34f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/compatibility-matrix/SKILL.md",
@@ -3966,8 +3966,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/observability-first/SKILL.md",
-  "size": 2702,
-  "sha256": "436e552b4c24629bad42b35709094b6663feb84fe3cf59a0bf69ae4af4de5477"
+  "size": 2945,
+  "sha256": "8e45efdf179af09a3683a4bc95fd8766e95df651340d3670095e08b3c9d21656"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/observability-first/references/game-mod-logging.md",
@@ -6006,8 +6006,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 1826,
-  "sha256": "ece42b30d785fb5cd7ac8a8f04622ca8184e03cacdb099f895a0ca6426e473e6"
+  "size": 2510,
+  "sha256": "b85d95c1ee2f095f7b9b200a1bddb938283da3a93cea657a6f2c4fea3b7b28b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -7131,8 +7131,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
-  "size": 4455,
-  "sha256": "dda56ccd31fa89081e196a89e60c929f9215bc386e169c9b49e70acb2129b44e"
+  "size": 5407,
+  "sha256": "3f86dcf1ce1f18fe517b7037f80bae686cce2c737428413d5d67740e9590ef5a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/compatibility-matrix/SKILL.md",
@@ -10406,8 +10406,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/observability-first/SKILL.md",
-  "size": 2702,
-  "sha256": "436e552b4c24629bad42b35709094b6663feb84fe3cf59a0bf69ae4af4de5477"
+  "size": 2945,
+  "sha256": "8e45efdf179af09a3683a4bc95fd8766e95df651340d3670095e08b3c9d21656"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/observability-first/references/game-mod-logging.md",
@@ -12446,8 +12446,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 1826,
-  "sha256": "ece42b30d785fb5cd7ac8a8f04622ca8184e03cacdb099f895a0ca6426e473e6"
+  "size": 2510,
+  "sha256": "b85d95c1ee2f095f7b9b200a1bddb938283da3a93cea657a6f2c4fea3b7b28b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -13556,8 +13556,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
-  "size": 4454,
-  "sha256": "8141e9140ebebad7db66cd4a01e80182f70f81ed5061c2a06f7159288ec66419"
+  "size": 5406,
+  "sha256": "c2343121997103eb2eb9ea6bf5fc64e346223bf362da4143e3805ec8c9bbc93a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/compatibility-matrix/SKILL.md",
@@ -16831,8 +16831,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/observability-first/SKILL.md",
-  "size": 2702,
-  "sha256": "436e552b4c24629bad42b35709094b6663feb84fe3cf59a0bf69ae4af4de5477"
+  "size": 2945,
+  "sha256": "8e45efdf179af09a3683a4bc95fd8766e95df651340d3670095e08b3c9d21656"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/observability-first/references/game-mod-logging.md",
@@ -18871,8 +18871,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 1826,
-  "sha256": "ece42b30d785fb5cd7ac8a8f04622ca8184e03cacdb099f895a0ca6426e473e6"
+  "size": 2510,
+  "sha256": "b85d95c1ee2f095f7b9b200a1bddb938283da3a93cea657a6f2c4fea3b7b28b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -19981,8 +19981,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
-  "size": 4456,
-  "sha256": "6d4e6403bc6c7a118981413db336c141c4634497cdf8fe52aca1ef96e2a7867a"
+  "size": 5408,
+  "sha256": "ee11c2bc5342ac642165237fca07139c9dd219037ed08dd073f99964bc8527be"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/compatibility-matrix/SKILL.md",
@@ -23256,8 +23256,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/observability-first/SKILL.md",
-  "size": 2702,
-  "sha256": "436e552b4c24629bad42b35709094b6663feb84fe3cf59a0bf69ae4af4de5477"
+  "size": 2945,
+  "sha256": "8e45efdf179af09a3683a4bc95fd8766e95df651340d3670095e08b3c9d21656"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/observability-first/references/game-mod-logging.md",
@@ -25296,8 +25296,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 1826,
-  "sha256": "ece42b30d785fb5cd7ac8a8f04622ca8184e03cacdb099f895a0ca6426e473e6"
+  "size": 2510,
+  "sha256": "b85d95c1ee2f095f7b9b200a1bddb938283da3a93cea657a6f2c4fea3b7b28b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -26481,8 +26481,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
-  "size": 4454,
-  "sha256": "405b480b125587abe30c2cc3b421de77f9db11eb250b0d400729971d33d7d9ab"
+  "size": 5406,
+  "sha256": "787d3ef9af54ddc5b84e80c3da10903dc9f25d1682fb936a3e04bf79c7daa83e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/compatibility-matrix/SKILL.md",
@@ -29756,8 +29756,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/observability-first/SKILL.md",
-  "size": 2702,
-  "sha256": "436e552b4c24629bad42b35709094b6663feb84fe3cf59a0bf69ae4af4de5477"
+  "size": 2945,
+  "sha256": "8e45efdf179af09a3683a4bc95fd8766e95df651340d3670095e08b3c9d21656"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/observability-first/references/game-mod-logging.md",
@@ -31796,8 +31796,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 1826,
-  "sha256": "ece42b30d785fb5cd7ac8a8f04622ca8184e03cacdb099f895a0ca6426e473e6"
+  "size": 2510,
+  "sha256": "b85d95c1ee2f095f7b9b200a1bddb938283da3a93cea657a6f2c4fea3b7b28b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -32418,6 +32418,11 @@
   "path": "3-PREAMBLES/history/.gitkeep",
   "size": 0,
   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+ },
+ {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-032958e64a2a.md",
+  "size": 10990,
+  "sha256": "e060843e34d439638b004c8f88c9aa1e59109264590f72415af3178ca472004e"
  },
  {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-047c551c105f.md",
@@ -36036,8 +36041,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 191654,
-  "sha256": "53d8a24e17f900028edc934edd870db10a038e7a455205bd5ebb69d59c5c8bbc"
+  "size": 192195,
+  "sha256": "7c93b6205ad6567144d6531543447c42a82e28d6137393eedf404ceaad5d3040"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -36046,8 +36051,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 10941,
-  "sha256": "4c5d81f78cdecfed87e01642164bb4aa8ab39a72dbce911105f8c320682e47a8"
+  "size": 11397,
+  "sha256": "8c130f6ad93f122bd9b8958c5fedf78a44f971876cdfb8b1428726038e4b1849"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
@@ -36497,7 +36502,7 @@
  {
   "path": "TESTS/test_release_contract.py",
   "size": 309815,
-  "sha256": "64f6dfee2d228b59ac8d83e538ed3f1ae054f2be1fec4dad21dfa7f4642f1b5b"
+  "sha256": "5acea99cf2f6c126cb50ce9887836b5e9e0998e075b3bf710935f8bea7a31f7e"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -37356,8 +37361,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/coding-discipline/SKILL.md",
-  "size": 4456,
-  "sha256": "358037299050cddd474d583e36c7716020f9eb2b7322714f85553419995736cd"
+  "size": 5408,
+  "sha256": "4dd4cf58cae754a2be78dce315b00629fc752729921826c893a14348af0bb34f"
  },
  {
   "path": "_CANONICAL-SKILLS/compatibility-matrix/SKILL.md",
@@ -40631,8 +40636,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/observability-first/SKILL.md",
-  "size": 2702,
-  "sha256": "436e552b4c24629bad42b35709094b6663feb84fe3cf59a0bf69ae4af4de5477"
+  "size": 2945,
+  "sha256": "8e45efdf179af09a3683a4bc95fd8766e95df651340d3670095e08b3c9d21656"
  },
  {
   "path": "_CANONICAL-SKILLS/observability-first/references/game-mod-logging.md",
@@ -42671,8 +42676,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/state-resumption/SKILL.md",
-  "size": 1826,
-  "sha256": "ece42b30d785fb5cd7ac8a8f04622ca8184e03cacdb099f895a0ca6426e473e6"
+  "size": 2510,
+  "sha256": "b85d95c1ee2f095f7b9b200a1bddb938283da3a93cea657a6f2c4fea3b7b28b6"
  },
  {
   "path": "_CANONICAL-SKILLS/subagent-driven-development/SKILL.md",

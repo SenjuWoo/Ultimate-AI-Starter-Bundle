@@ -25,6 +25,8 @@ Scale to the project. A ten-line utility needs no logging framework; a multi-sta
 
 Baseline worth emitting: startup with version/build, the configuration actually resolved, each external dependency that failed and why, an actionable message rather than a bare exception class, a stack trace for the unexpected, child-process exits, clean shutdown, and the exit code. Where a durable log is written, print its path.
 
+Make the log switchable (a `--debug` flag, env var, INI key or in-game toggle), quiet by default in releases, size-capped or rotated, and written to the platform's standard log location. Put the path in the README and the first startup line.
+
 What not to emit: whole payloads, request bodies, file contents, per-iteration chatter, or anything from `secret-hygiene`. A field that cannot help reproduce, localise or explain a failure is cost with no return.
 
 Games and mods: ship a toggleable debug log in the first build, quiet by default, and tell the user where it lands. Engine APIs and log locations (Papyrus, SKSE, BepInEx, MelonLoader, Unity, Unreal, Godot, Minecraft, RimWorld, Roblox, web): `references/game-mod-logging.md`.
