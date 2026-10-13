@@ -1,9 +1,9 @@
 WooJuice notes — current line: V12.1 (2026-10-12)
 =================================================
-LIVE: WooJuice V12.1.json (main RP) + WooJuice V12 SPEECH.json (voice-only). Import those.
+LIVE: WooJuice V12.1.json (main RP) + WooJuice V12.1 SPEECH.json (voice-only). Import those.
 
 V12.1 = V12 + format-lock clarity fix ONLY (jailbreak block; +528 chars ~ +130 tokens).
-V12 kept unchanged next to it.
+The V12 parent is historical; it is not a separate file in this bundle.
 
 Format-lock changes in V12.1 (fix for: trailing narration swallowed into a > message block):
 1. New master placement line after the FORMAT LOCK preamble:
@@ -27,7 +27,8 @@ unspecified-sense elaboration, raw sensory-rich priority). Nothing censored.
 Optional / watch-outs:
 - "never euphemisms, unless specified" qualifier — strip if unwanted.
 - Settings: squash_system_messages true (merges the top consecutive system blocks; the post-history
-  lock is unaffected), reasoning_effort min, max_tokens 40000 — flip if not intended.
+  lock is unaffected), reasoning_effort low for main / min for SPEECH,
+  max_tokens 40000 — flip if not intended.
 - V7 SPEECH once used bias preset "New-light-anti-ai-ethical-bullshit"; now "Default" (logit_bias
   needs a provider that supports it).
 - SPEECH preset untouched since V11; nothing lost vs V9/V7 versions.

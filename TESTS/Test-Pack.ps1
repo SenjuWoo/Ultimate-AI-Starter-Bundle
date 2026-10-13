@@ -73,8 +73,8 @@ if (-not $py) {
 
 if ($py) {
     & $py.Source (Join-Path $PackRoot 'TESTS\test_audit_regressions.py')
-    if ($LASTEXITCODE -ne 0) { Bad 'Index lifecycle, Unicode privacy and usage-accounting regressions failed' }
-    else { Good 'Index lifecycle, Unicode privacy and usage-accounting regressions' }
+    if ($LASTEXITCODE -ne 0) { Bad 'Index/junction safety, Unicode privacy and usage-accounting regressions failed' }
+    else { Good 'Index/junction safety, Unicode privacy and usage-accounting regressions' }
     & $py.Source (Join-Path $PackRoot 'TESTS\test_universal_modder.py')
     if ($LASTEXITCODE -ne 0) { Bad 'Universal Modder offline CLI and routing check failed' }
     else { Good 'Universal Modder offline CLI and all-provider routing' }

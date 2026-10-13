@@ -436,7 +436,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.12.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.12.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -1413,6 +1413,7 @@ if (-not $ToolsOnly) {
   $tailoredHome = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES'
   $soulMark = (([IO.File]::ReadAllText((Join-Path $PackRoot '3-PREAMBLES\SOUL.md'))).Trim() -split '\r?\n')[0]
   $profileText = ''
+  $profileReady = $false
   if (-not $SkipProfile) {
     # Personal profile: the user's own PROFILE.md plus a generated map of this
     # PC's game, mod-manager and tool folders. Never part of any repository.
@@ -1425,7 +1426,8 @@ if (-not $ToolsOnly) {
       else { New-Item -ItemType Directory -Force -Path $profileDir | Out-Null; Copy-Item -LiteralPath $tpl -Destination $mine; Write-UabsOk ('profile seeded from ' + $ProfileTemplate + ': ' + $mine) }
     }
     try { & (Join-Path $PackRoot 'TOOLS\Build-MachineMap.ps1') -ProfileRoot $profileDir -PackRoot $PackRoot } catch { Write-UabsWarn ('machine map: ' + $_.Exception.Message) }
-    try { $profileText = Get-UabsProfileText -Root $profileDir } catch { Write-UabsWarn $_.Exception.Message; $profileText = '' }
+    try { $profileText = Get-UabsProfileText -Root $profileDir; $profileReady = $true }
+    catch { Write-UabsWarn ($_.Exception.Message + ' Existing profile blocks were preserved.') }
   }
   foreach ($prov in $Providers) {
     $provHome = Get-UabsProviderHome -Provider $prov -Catalog $catalog
@@ -1452,7 +1454,7 @@ if (-not $ToolsOnly) {
         if (Update-UabsInstructionPacks -Path $t -PackRoot $PackRoot -Enabled $packsHere -GeneralTemplate $general) {
           Write-UabsOk ("{0}: pack instructions updated ({1}) -> {2}" -f $prov, $(if ($packsHere.Count) { $packsHere -join ', ' } else { 'none' }), $t)
         }
-        if (-not $SkipProfile -and (Update-UabsInstructionProfile -Path $t -Text $profileText)) {
+        if (-not $SkipProfile -and $profileReady -and (Update-UabsInstructionProfile -Path $t -Text $profileText)) {
           Write-UabsOk ("{0}: personal profile {1} -> {2}" -f $prov, $(if ($profileText) { 'updated' } else { 'removed' }), $t)
         }
       } catch { Write-UabsWarn ("$prov instructions: " + $_.Exception.Message) }
@@ -2339,7 +2341,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.12.0'
+version = '8.12.1'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

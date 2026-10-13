@@ -26,6 +26,7 @@ MARKERS = [
     (re.compile(r"[A-Za-z]:[\\/]{1,2}Users[\\/]{1,2}karlo", re.I), "machine home path"),
     (re.compile(r"[\w.+-]+@(?:gmail|outlook|hotmail|yahoo|icloud)\.[a-z]{2,}", re.I), "personal e-mail address"),
     (re.compile(r"\bMoncton\b", re.I), "maintainer locality"),
+    (re.compile(r"\bZ:[\\/]{1,2}Backup[\\/]{1,2}(?:Ai[ _-]+(?:Documentation|Games)|!Skyrim AE)", re.I), "maintainer workspace path"),
 ]
 ALLOW_FILES = {
     "TESTS/test_privacy_boundary.py",   # this file defines the markers

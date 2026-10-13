@@ -71,6 +71,35 @@ try {
   $second = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TOOLS\Build-MachineMap.ps1') -PackRoot $PackRoot -ProfileRoot $root | Out-String
   Assert ($second -match 'unchanged' -and [IO.File]::ReadAllText((Join-Path $root 'MACHINE-MAP.md')) -ceq $first) 'Machine map rewrote itself without a change.'
 
+  # Run the actual installer's instruction section, not a reimplementation.
+  # An invalid oversized input must not mean "the user deleted the profile".
+  & {
+    $savedClaude = $env:CLAUDE_CONFIG_DIR
+    try {
+      $env:CLAUDE_CONFIG_DIR = Join-Path $fx 'isolated Claude home'
+      New-Item -ItemType Directory -Force -Path $env:CLAUDE_CONFIG_DIR | Out-Null
+      $target = Join-Path $env:CLAUDE_CONFIG_DIR 'CLAUDE.md'
+      $original = "My rules`n`n<!-- UABS-PROFILE -->`nKeep my existing preferences`n<!-- /UABS-PROFILE -->`n"
+      [IO.File]::WriteAllText($target, $original)
+      $ProfileRoot = Join-Path $fx 'oversized profile'
+      New-Item -ItemType Directory -Force -Path $ProfileRoot | Out-Null
+      [IO.File]::WriteAllText((Join-Path $ProfileRoot 'PROFILE.md'), ('x' * 6100))
+      $catalog = Get-UabsCatalog
+      $Providers = @('Claude'); $ToolsOnly = $false; $SkipProfile = $false
+      $ProfileTemplate = ''; $packSel = @{ Enabled = @() }
+      $parseErrors = $null
+      $ast = [Management.Automation.Language.Parser]::ParseFile((Join-Path $PackRoot 'INSTALL-AIO.ps1'), [ref]$null, [ref]$parseErrors)
+      $sections = @($ast.FindAll({ param($node)
+        $node -is [Management.Automation.Language.IfStatementAst] -and
+        $node.Extent.Text -match '^if \(-not \$ToolsOnly\) \{\s+\$tailoredHome = Join-Path \$PackRoot'
+      }, $true))
+      Assert ($sections.Count -eq 1 -and -not $parseErrors.Count) 'Installer profile section was not uniquely located.'
+      & ([scriptblock]::Create($sections[0].Extent.Text)) | Out-Null
+      Assert ([IO.File]::ReadAllText($target) -ceq $original) 'Oversized profile removed or changed existing preferences.'
+      Assert (@(Get-ChildItem -LiteralPath $env:CLAUDE_CONFIG_DIR -Filter '*.before-profile-*.bak').Count -eq 0) 'Invalid profile input unexpectedly rewrote the live block.'
+    } finally { $env:CLAUDE_CONFIG_DIR = $savedClaude }
+  }
+
   Write-Host 'USER PROFILE GATE: PASS'
 } finally {
   if (Test-UabsPathWithin -Path $fx -Root ([IO.Path]::GetTempPath())) { Remove-Item -LiteralPath $fx -Recurse -Force -ErrorAction SilentlyContinue }

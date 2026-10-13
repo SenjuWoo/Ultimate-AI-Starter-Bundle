@@ -6,8 +6,8 @@ description: Windows workspace plumbing - directory junctions, paths containing 
 # Windows workspace ops (git-bash / Hermes terminal)
 
 Plumbing layer for Windows workspaces: project paths may contain `!` on any
-drive (examples: `D:\!Projects\!!!Workspace\...`,
-`Z:\Backup\!Skyrim AE\!!!SkyrimAEaiWorkspace`). Never treat one drive root
+drive (for example, a verified `<workspace>/!game/!!!project` folder).
+Never treat one drive root
 as the only `!` path. Single-quote every path containing `!`. Projects are
 snapshot-heavy (version folders), and CommonLibSSE-style
 junctions break on every folder move/copy. These are the exact, verified

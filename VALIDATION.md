@@ -1,4 +1,4 @@
-# v8.12.0 validation
+# v8.12.1 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are
 separate proofs. This file records the checked boundary, not a claim of perfect
@@ -6,13 +6,18 @@ one-shot game/mod output.
 
 ## Current audit
 
-Nine executable regressions cover index-only scope application, preflight,
+Twelve executable regressions cover safe junction cleanup, private workspace paths, index-only scope application, preflight,
 native failure propagation, dry-run, Unicode custom rules, exact snapshot
 selection, manifest file scope, Unicode privacy scanning and Codex output
 accounting. Universal Modder's reviewed `fe505d8` snapshot passes 103 upstream
 tests; four skips are the unshipped OpenCode adapter/session hooks. One upstream
 Pillow deprecation warning remains. Existing Windows/offline/privacy patches
 are retained. Full source, installed-state, CI and release gates remain separate.
+
+The user-profile gate executes the actual installer instruction section in an
+isolated provider home. Oversized private input must preserve the existing block
+byte-for-byte without generating a rewrite backup. This was observed failing
+before the v8.12.1 repair and passing after it.
 
 The measurements below are historical checks of the named versions, not
 current-version transport or billing claims. Current pins live in CATALOG.json;

@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.12.0 -->
+<!-- Ultimate AI Starter Bundle v8.12.1 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.12.0
+# Ultimate AI Starter Bundle v8.12.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -231,6 +231,9 @@ Nothing there is ever part of a repository. Start from the shipped template with
 `-ProfileTemplate autonomous-builder`; turn it off with `-SkipProfile`. To see
 where your own usage goes, run `python TOOLS\usage_report.py`
 ([what it found here](docs/USAGE-ECONOMY.md)).
+
+See [private preferences versus public defaults](docs/OPERATOR-PROFILES.md)
+for evidence-based tuning without leaking machine paths or bloating context.
 
 | Mode | Behavior |
 |------|----------|
@@ -826,6 +829,12 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.12.1** - 2026-10-12. Preserve installed private profiles when new input
+is invalid, separate personal tuning from public defaults, and remove
+maintainer workspace paths from shipped skills. The privacy gate now checks
+those paths; stale preset notes are corrected. No model choices or MCP scope
+are changed. [Changes](docs/history/V8.12.1-CHANGELOG.md).
 
 **v8.12.0** - 2026-10-12. Unrestraint-family hygiene: four retired upstream
 jailbreak collections removed after review (~3.6 MB, nothing durable lost —

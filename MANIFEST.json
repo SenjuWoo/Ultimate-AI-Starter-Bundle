@@ -55,6 +55,11 @@
   "sha256": "e060843e34d439638b004c8f88c9aa1e59109264590f72415af3178ca472004e"
  },
  {
+  "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
+  "size": 644,
+  "sha256": "6721f487ea28436c02c6fa2346f7d81416c386faf6614dada4cfea2c57725d37"
+ },
+ {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/presets.json",
   "size": 30688,
   "sha256": "5925ae7afc560c3b1576d925158c56ba16d76e55d84d595a8f3b265a807db832"
@@ -151,13 +156,13 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice V12.1.json",
-  "size": 15481,
-  "sha256": "4e2272d1aa841d3d8026cb259fe0fad96948a018d1c8ad54e0693953cc194757"
+  "size": 15690,
+  "sha256": "87cd287c1bae0cde0096c7e96cbabdab65bbca132de6a733092e05ee4d9a6543"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/WooJuice notes.txt",
-  "size": 2154,
-  "sha256": "55c4fedbccabd62ad60cd0752c03129c44bdd3c19416d972d8302b45c0139b9f"
+  "size": 2225,
+  "sha256": "665ad15944f47b3724c6b9ef0dd968eb3c654aabc43c49349a6eacd3d092fd09"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-MAP.md",
@@ -401,8 +406,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/references/native-c-game-harness-notes.md",
-  "size": 2897,
-  "sha256": "75e51569f8e9e1bc14a16fbe889d5d6b47be4e7e814a8c9afa8b86f99ffbde51"
+  "size": 2987,
+  "sha256": "ace54b210ed91c736f662f192dcc979b1c29a69ad6ae377a34d1e7215b6f4ea2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
@@ -6386,8 +6391,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3111,
-  "sha256": "e04a9f5e2255b5748dd24e96ebce2092416dabe65b8a5e0351c5c1c014273240"
+  "size": 3282,
+  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/upgrade-path-testing/SKILL.md",
@@ -6466,8 +6471,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/SKILL.md",
-  "size": 4661,
-  "sha256": "07d04cf1dd0f5ca439903523f1590e17262e8c1e7152239b2fa242cd0a67ca9c"
+  "size": 4634,
+  "sha256": "7537751031108c0dbc39a8d405987978c0c78464bf7ef60d6b92a5046bc00e4c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/references/bat-and-powershell-tooling.md",
@@ -6486,8 +6491,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/scripts/create_junction.py",
-  "size": 2825,
-  "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+  "size": 2903,
+  "sha256": "4a63a94527d3347b97868dce8d3f02813fd92f37319a62257468d7f749c18103"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
@@ -6841,8 +6846,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/references/native-c-game-harness-notes.md",
-  "size": 2897,
-  "sha256": "75e51569f8e9e1bc14a16fbe889d5d6b47be4e7e814a8c9afa8b86f99ffbde51"
+  "size": 2987,
+  "sha256": "ace54b210ed91c736f662f192dcc979b1c29a69ad6ae377a34d1e7215b6f4ea2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
@@ -12826,8 +12831,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3111,
-  "sha256": "e04a9f5e2255b5748dd24e96ebce2092416dabe65b8a5e0351c5c1c014273240"
+  "size": 3282,
+  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/upgrade-path-testing/SKILL.md",
@@ -12906,8 +12911,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/SKILL.md",
-  "size": 4661,
-  "sha256": "07d04cf1dd0f5ca439903523f1590e17262e8c1e7152239b2fa242cd0a67ca9c"
+  "size": 4634,
+  "sha256": "7537751031108c0dbc39a8d405987978c0c78464bf7ef60d6b92a5046bc00e4c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/references/bat-and-powershell-tooling.md",
@@ -12926,8 +12931,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/scripts/create_junction.py",
-  "size": 2825,
-  "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+  "size": 2903,
+  "sha256": "4a63a94527d3347b97868dce8d3f02813fd92f37319a62257468d7f749c18103"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
@@ -13266,8 +13271,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/references/native-c-game-harness-notes.md",
-  "size": 2897,
-  "sha256": "75e51569f8e9e1bc14a16fbe889d5d6b47be4e7e814a8c9afa8b86f99ffbde51"
+  "size": 2987,
+  "sha256": "ace54b210ed91c736f662f192dcc979b1c29a69ad6ae377a34d1e7215b6f4ea2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
@@ -19251,8 +19256,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3111,
-  "sha256": "e04a9f5e2255b5748dd24e96ebce2092416dabe65b8a5e0351c5c1c014273240"
+  "size": 3282,
+  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/upgrade-path-testing/SKILL.md",
@@ -19331,8 +19336,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/SKILL.md",
-  "size": 4661,
-  "sha256": "07d04cf1dd0f5ca439903523f1590e17262e8c1e7152239b2fa242cd0a67ca9c"
+  "size": 4634,
+  "sha256": "7537751031108c0dbc39a8d405987978c0c78464bf7ef60d6b92a5046bc00e4c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/references/bat-and-powershell-tooling.md",
@@ -19351,8 +19356,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/scripts/create_junction.py",
-  "size": 2825,
-  "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+  "size": 2903,
+  "sha256": "4a63a94527d3347b97868dce8d3f02813fd92f37319a62257468d7f749c18103"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
@@ -19691,8 +19696,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/references/native-c-game-harness-notes.md",
-  "size": 2897,
-  "sha256": "75e51569f8e9e1bc14a16fbe889d5d6b47be4e7e814a8c9afa8b86f99ffbde51"
+  "size": 2987,
+  "sha256": "ace54b210ed91c736f662f192dcc979b1c29a69ad6ae377a34d1e7215b6f4ea2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
@@ -25676,8 +25681,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3111,
-  "sha256": "e04a9f5e2255b5748dd24e96ebce2092416dabe65b8a5e0351c5c1c014273240"
+  "size": 3282,
+  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/upgrade-path-testing/SKILL.md",
@@ -25756,8 +25761,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/SKILL.md",
-  "size": 4661,
-  "sha256": "07d04cf1dd0f5ca439903523f1590e17262e8c1e7152239b2fa242cd0a67ca9c"
+  "size": 4634,
+  "sha256": "7537751031108c0dbc39a8d405987978c0c78464bf7ef60d6b92a5046bc00e4c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/references/bat-and-powershell-tooling.md",
@@ -25776,8 +25781,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/scripts/create_junction.py",
-  "size": 2825,
-  "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+  "size": 2903,
+  "sha256": "4a63a94527d3347b97868dce8d3f02813fd92f37319a62257468d7f749c18103"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
@@ -26191,8 +26196,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/references/native-c-game-harness-notes.md",
-  "size": 2897,
-  "sha256": "75e51569f8e9e1bc14a16fbe889d5d6b47be4e7e814a8c9afa8b86f99ffbde51"
+  "size": 2987,
+  "sha256": "ace54b210ed91c736f662f192dcc979b1c29a69ad6ae377a34d1e7215b6f4ea2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
@@ -32176,8 +32181,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3111,
-  "sha256": "e04a9f5e2255b5748dd24e96ebce2092416dabe65b8a5e0351c5c1c014273240"
+  "size": 3282,
+  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/upgrade-path-testing/SKILL.md",
@@ -32256,8 +32261,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/SKILL.md",
-  "size": 4661,
-  "sha256": "07d04cf1dd0f5ca439903523f1590e17262e8c1e7152239b2fa242cd0a67ca9c"
+  "size": 4634,
+  "sha256": "7537751031108c0dbc39a8d405987978c0c78464bf7ef60d6b92a5046bc00e4c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/references/bat-and-powershell-tooling.md",
@@ -32276,8 +32281,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/windows-workspace-ops/scripts/create_junction.py",
-  "size": 2825,
-  "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+  "size": 2903,
+  "sha256": "4a63a94527d3347b97868dce8d3f02813fd92f37319a62257468d7f749c18103"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
@@ -32401,8 +32406,8 @@
  },
  {
   "path": "3-PREAMBLES/README.md",
-  "size": 6192,
-  "sha256": "9c97968cf33d03ca198c642fc96ee9f593913ae0fbb7f4176b07a03a291095c5"
+  "size": 6364,
+  "sha256": "03600f2749cbe46d1c287073d961baa53adcf83fd723d0b3cfea50aa7d8dba42"
  },
  {
   "path": "3-PREAMBLES/SOUL.md",
@@ -32507,12 +32512,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 54567,
-  "sha256": "d81e9f6137a4cb046e92207b04e1db752021c7233ee923b78efe82f2f8d19a3c"
+  "sha256": "c41b4d53fa8a152d4df931ad8fb564e4743eaab1c5f4547628945c49eccbd8d0"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1458,
-  "sha256": "0ace509c19707fc6d5dc4771fd8bd99ec513d244af90856813adb4ee0b86c573"
+  "sha256": "cbce229433502915145388ee6becf507b3d390afff8d513627aed384a3f3e079"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -32522,7 +32527,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 32028,
-  "sha256": "498396c8d7ddc94e12044c88acb21fb3326609af763a608717479e42ed0766c1"
+  "sha256": "f1ed5aea4f19e245696b878336a019b84cc31b56909b0b27777387f049c10081"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -32646,8 +32651,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/optional-profiles/autonomous-builder.md",
-  "size": 1739,
-  "sha256": "27bf0dd6baa1b8643e229d60de9b0a4bac0f8990bbbfa4ffbabeb219d4f3ab0c"
+  "size": 2272,
+  "sha256": "7b336c03f8de7ebd4061a9e1d68e927d5230d2ecf1b60d0376992db211e7c054"
  },
  {
   "path": "BUNDLED-TOOLS/optional-skills/melty-mashups/SKILL.md",
@@ -36031,8 +36036,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 190659,
-  "sha256": "cf9a884b250d6c5f15bb4e02ad70bff20e1174954b5e6448af6b981714748cfe"
+  "size": 191654,
+  "sha256": "53d8a24e17f900028edc934edd870db10a038e7a455205bd5ebb69d59c5c8bbc"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -36106,8 +36111,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 151264,
-  "sha256": "c7af2784399cba23b7b9d0f29c83f5c21079286fae7aa62dbb5a99fb2a3c02d1"
+  "size": 151363,
+  "sha256": "63fc873714437f4983ffc3ac9f9b7b93252341dfd33ffd7bb4451cf06df6a1f5"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -36161,8 +36166,8 @@
  },
  {
   "path": "README.md",
-  "size": 51484,
-  "sha256": "d9627e522e1dafba8ca67994e454ea6f9e85454bdce53bbb29592c163d98ea44"
+  "size": 51998,
+  "sha256": "17bb5befb341a8723e8216e42a0bc23f7db35abc9a0fa9297b5854119c2abc48"
  },
  {
   "path": "SECURITY.md",
@@ -36172,17 +36177,17 @@
  {
   "path": "START-HERE.bat",
   "size": 881,
-  "sha256": "a2a39b6f38ea04ec4ce12ae76c9d512c17c306119510b2f58f03ae7d48c36031"
+  "sha256": "19075d1a446d5c8e221f61cd14410a41d6fa7bcd18554a17e6f61241cdf49c1b"
  },
  {
   "path": "START-HERE.txt",
   "size": 11252,
-  "sha256": "84b9917370705a689a1468dc8ef34e22dfc2b54e73fcea5b9e7538baf93bd3bb"
+  "sha256": "d78d3c747dca87ce89d2944b1ea42e135cc4b4e671452f2e5cccab7d95d50527"
  },
  {
   "path": "STATE.md",
-  "size": 1892,
-  "sha256": "34fdae29b50f7c80ab04016ede8c62983230318840d7fa3f99115c423d5c1d83"
+  "size": 4389,
+  "sha256": "3288ce34c8cf6aa111b853afc5d8075c9ccaca205eeb3c600f6039a08ceb1592"
  },
  {
   "path": "TESTS/Test-BundleSelfUpdate.ps1",
@@ -36251,8 +36256,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 59604,
-  "sha256": "494ea0a9d6aa3687cc135db117a4453dcef4f133071de89b138e4153c19ea28c"
+  "size": 59616,
+  "sha256": "5fc163b13d09ec687b249df2ed988ab39a6d0eeaa33fb543a326a562d470365c"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -36296,8 +36301,8 @@
  },
  {
   "path": "TESTS/Test-UserProfile.ps1",
-  "size": 5719,
-  "sha256": "aa2a345f1d60ea3328efea35334075f874c483f41f01bd3ce152a5763ad47093"
+  "size": 7627,
+  "sha256": "e11166ce1282ed2652becbb2740f464cf9fa1ce636ef95e1584480af5cbd02bb"
  },
  {
   "path": "TESTS/Test-WaitExternal.ps1",
@@ -36466,8 +36471,8 @@
  },
  {
   "path": "TESTS/test_audit_regressions.py",
-  "size": 7439,
-  "sha256": "a92c79e8d85c42d9152902666f73a3e6768b0965288244febac8aa10cda9aaaa"
+  "size": 10551,
+  "sha256": "83d15df31318230cf2c97e74dc35a800185846d2e0f2fe9331431dfa5cdab5a7"
  },
  {
   "path": "TESTS/test_codex_native_profiles.py",
@@ -36486,8 +36491,8 @@
  },
  {
   "path": "TESTS/test_privacy_boundary.py",
-  "size": 3620,
-  "sha256": "34c0363e80accc85b01909b88b0a03a45b8b412ca2df54adbca293766e037aa2"
+  "size": 3754,
+  "sha256": "33da350f229b19472a0909a88416744517c2d6ce6b1155b98fd4188f2319b061"
  },
  {
   "path": "TESTS/test_release_contract.py",
@@ -36816,18 +36821,18 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2433,
-  "sha256": "56802823f73f274c8352aafa80f1c4ba7de34d98aa307cdb9562a6e186859e49"
+  "size": 2422,
+  "sha256": "5fe38e073123ecea901df36c871eacf490a312e8979eaa8b924ca23ebfedada3"
  },
  {
   "path": "VALIDATION.md",
-  "size": 5739,
-  "sha256": "288558e722741d9b8946fd85739c8d3768c21f7745df4a49ecae2f420c702431"
+  "size": 6074,
+  "sha256": "34beebb57357018df4ffd9161a592019c4caf27d242ffb305ba8060aa9c9cf4a"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "52af4d01b9cd192df0ae6ab4d6e666da9a43443cfa4fca6c7ebfc1d98362fab4"
+  "sha256": "15fb3ce4fe06e828a292d35ed8a3032282d2a426b7894c3a45c69afd658d7c35"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -37066,8 +37071,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/c-game-regression-testing/references/native-c-game-harness-notes.md",
-  "size": 2897,
-  "sha256": "75e51569f8e9e1bc14a16fbe889d5d6b47be4e7e814a8c9afa8b86f99ffbde51"
+  "size": 2987,
+  "sha256": "ace54b210ed91c736f662f192dcc979b1c29a69ad6ae377a34d1e7215b6f4ea2"
  },
  {
   "path": "_CANONICAL-SKILLS/capability-profiles/SKILL.md",
@@ -43051,8 +43056,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/unrestraint-packs/SKILL.md",
-  "size": 3111,
-  "sha256": "e04a9f5e2255b5748dd24e96ebce2092416dabe65b8a5e0351c5c1c014273240"
+  "size": 3282,
+  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
  },
  {
   "path": "_CANONICAL-SKILLS/upgrade-path-testing/SKILL.md",
@@ -43131,8 +43136,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/windows-workspace-ops/SKILL.md",
-  "size": 4661,
-  "sha256": "07d04cf1dd0f5ca439903523f1590e17262e8c1e7152239b2fa242cd0a67ca9c"
+  "size": 4634,
+  "sha256": "7537751031108c0dbc39a8d405987978c0c78464bf7ef60d6b92a5046bc00e4c"
  },
  {
   "path": "_CANONICAL-SKILLS/windows-workspace-ops/references/bat-and-powershell-tooling.md",
@@ -43151,8 +43156,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/windows-workspace-ops/scripts/create_junction.py",
-  "size": 2825,
-  "sha256": "f14daa75bb81f60f7fdbcecdd4d9ecf16e01b9fce356c0e21dc228ca60ec5939"
+  "size": 2903,
+  "sha256": "4a63a94527d3347b97868dce8d3f02813fd92f37319a62257468d7f749c18103"
  },
  {
   "path": "_CANONICAL-SKILLS/workspace-organization/SKILL.md",
@@ -43213,6 +43218,11 @@
   "path": "docs/HERMES-MODELS.md",
   "size": 3883,
   "sha256": "7f9441fad0a036acfcdac38f7d9c6fce1525f27ab41c8dc4fd56c1550635ab6a"
+ },
+ {
+  "path": "docs/OPERATOR-PROFILES.md",
+  "size": 2756,
+  "sha256": "25c40b267c6af90aa43265f43057350e8f35312bee035cde6c75d468d3c42d07"
  },
  {
   "path": "docs/TASK-ROUTING.md",
@@ -43648,6 +43658,11 @@
   "path": "docs/history/V8.12.0-CHANGELOG.md",
   "size": 3437,
   "sha256": "7bcf45d90a670e5f3d6d0f2d23a6a646f025a7a36f800952840a5c84f2034717"
+ },
+ {
+  "path": "docs/history/V8.12.1-CHANGELOG.md",
+  "size": 2159,
+  "sha256": "4128e7588d531e08634b568be38bb02e49eba31dc98bf13aea95a7489c7fce35"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",

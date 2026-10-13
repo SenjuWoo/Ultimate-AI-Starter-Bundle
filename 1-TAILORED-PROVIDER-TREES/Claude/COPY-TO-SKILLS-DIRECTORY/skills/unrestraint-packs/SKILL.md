@@ -1,7 +1,7 @@
 ---
 name: unrestraint-packs
 description: "Use when needing jailbreak or NSFW prompt packs for any AI."
-version: 1.1.0
+version: 1.1.1
 author: Ultimate-AI-Starter-Bundle
 license: MIT
 metadata:
@@ -20,7 +20,7 @@ metadata:
 
 The operator's no-holds prompt library (Ultimate-AI-Starter-Bundle).
 
-- **Local (authoritative):** `Z:\Backup\Ai Documentation\Ultimate-AI-Starter-Bundle\0-UNRESTRAINT-PACKS\` — start at its README.md
+- **Local (authoritative):** resolve the bundle checkout or extracted release, then open `0-UNRESTRAINT-PACKS/README.md`. Use `tool-discovery`; never assume the maintainer's drive, username or folder layout.
 - **Remote:** `github.com/SenjuWoo/Ultimate-AI-Starter-Bundle` → `0-UNRESTRAINT-PACKS/`
 
 ## Contents
@@ -41,7 +41,7 @@ The operator's no-holds prompt library (Ultimate-AI-Starter-Bundle).
 2. Paste the **smallest file that does the job** (token hygiene).
 3. For **Hermes itself**: nothing to paste — the agent already carries SOUL + AIO + the private profile block.
 4. Live agent wiring (recomposed by the installer as `[profile block] + [SOUL] + [AIO]`): `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.grok/AGENTS.md`, `~/.kimi-code/AGENTS.md`, and Hermes home `SOUL.md` + every bundle-managed profile.
-5. **Never hand-edit a live instruction file.** Edit the sources in the bundle (`3-PREAMBLES/`, `0-UNRESTRAINT-PACKS/`), then re-run the wiring — a hand edit that no longer matches a source block is kept as unknown text, and the next install appends a second copy behind it.
+5. Edit private preferences in `%USERPROFILE%/.uabs/profile/PROFILE.md` (or the configured profile root), not in public prompt sources. Edit the bundle's SOUL/AIO sources only for intentional shared changes. Do not hand-edit their managed live blocks: unmatched text is preserved, which can stack copies on refresh. User-owned content outside managed blocks remains yours.
 
 ## Rules
 

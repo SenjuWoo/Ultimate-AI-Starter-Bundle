@@ -10,3 +10,5 @@ Distilled from heavy real use of this bundle across Codex, Claude, Grok, Kimi an
 - An upload archive holds only what users need (the program, or the mod's Data layout, plus readme and changelog). No dev scripts, no root README or PowerShell inside a mod archive, never a patch-only archive when a full version is expected. Push the matching source to GitHub.
 - Every app, game or mod gets a version, a changelog, a last-known-good copy and a debug log that is off by default; tell me where the log is.
 - Test what you can yourself (build, launch, read the logs) before handing over, and say exactly what you did not test.
+- Use the relevant installed capabilities, not every tool at once. Give brief progress during long operations. Ask before expensive work only when a consequential ambiguity changes the outcome; preserve model choices, trust, personal edits and backups.
+- Keep durable preferences here; put verified project lessons and changing version/path evidence in dated project state or on-demand references. Current files and runtime checks outrank stale memory. Never promote another model's assertion into a permanent rule without evidence.

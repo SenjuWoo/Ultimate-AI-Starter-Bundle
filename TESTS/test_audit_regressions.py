@@ -111,7 +111,62 @@ class IndexLifecycle(unittest.TestCase):
         self.assertEqual(result.stdout.strip(), "shipped.ps1", result.stderr)
 
 
+@unittest.skipUnless(os.name == "nt", "NTFS junction runtime contract")
+class JunctionCleanup(unittest.TestCase):
+    def clean(self, link):
+        import sys
+        return subprocess.run([sys.executable, str(ROOT / "_CANONICAL-SKILLS/windows-workspace-ops/scripts/create_junction.py"),
+                               "--clean", str(link)], capture_output=True, text=True, timeout=15)
+
+    def test_clean_keeps_ordinary_directories(self):
+        with tempfile.TemporaryDirectory(prefix="uabs junction ") as tmp:
+            ordinary = Path(tmp) / "ordinary directory"
+            ordinary.mkdir()
+            result = self.clean(ordinary)
+            self.assertNotEqual(result.returncode, 0, "--clean deleted an ordinary directory")
+            self.assertTrue(ordinary.is_dir())
+
+    def test_clean_removes_only_live_or_dangling_junction(self):
+        import _winapi
+        with tempfile.TemporaryDirectory(prefix="uabs junction ") as tmp:
+            for dangling in (False, True):
+                with self.subTest(dangling=dangling):
+                    target = Path(tmp) / ("target " + str(dangling))
+                    target.mkdir()
+                    marker = target / "keep.txt"
+                    marker.write_text("keep", encoding="ascii")
+                    link = Path(tmp) / ("link " + str(dangling))
+                    _winapi.CreateJunction(str(target), str(link))
+                    self.assertTrue(os.path.isjunction(link))
+                    if dangling:
+                        marker.unlink()
+                        target.rmdir()
+                    result = self.clean(link)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertFalse(os.path.lexists(link))
+                    if not dangling:
+                        self.assertEqual(marker.read_text(encoding="ascii"), "keep")
+
+
 class PrivacyCoverage(unittest.TestCase):
+    def test_maintainer_workspace_is_private_without_a_username(self):
+        guard = load_tool("workspace_privacy_guard", ROOT / "TESTS/test_privacy_boundary.py")
+        with tempfile.TemporaryDirectory(prefix="uabs path privacy ") as tmp:
+            guard.ROOT = Path(tmp)
+            subprocess.run(["git", "init", "-q", tmp], check=True)
+            (guard.ROOT / ".gitignore").write_text("\n".join(guard.REQUIRED_IGNORES), encoding="utf-8")
+            page = guard.ROOT / "skill.md"
+            page.write_text("0-UNRESTRAINT-PACKS/README.md", encoding="utf-8")
+            subprocess.run(["git", "-C", tmp, "add", ".gitignore", "skill.md"], check=True)
+            cases = [("portable relative path", "0-UNRESTRAINT-PACKS/README.md", 0),
+                     ("private workspace", "Z:" + "\\Backup\\Ai Documentation\\bundle", 1),
+                     ("private workspace forward slashes", "Z:" + "/Backup/Ai Documentation/bundle", 1)]
+            for label, content, expected in cases:
+                with self.subTest(label=label):
+                    page.write_text(content, encoding="utf-8")
+                    with contextlib.redirect_stdout(io.StringIO()):
+                        self.assertEqual(guard.main(), expected)
+
     def test_unicode_tracked_filename_is_actually_scanned(self):
         guard = load_tool("privacy_guard", ROOT / "TESTS/test_privacy_boundary.py")
         with tempfile.TemporaryDirectory(prefix="uabs privacy ") as tmp:

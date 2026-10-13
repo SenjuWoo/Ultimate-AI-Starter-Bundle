@@ -9,9 +9,10 @@ Usage:
     python create_junction.py <target> <link>
     python create_junction.py --clean <link>        # remove stray/mangled junction
 
-Examples:
-    python create_junction.py "Z:\\Backup\\!Skyrim AE\\...\\NPC Pathing NG 2.4.0\\extern\\CommonLibSSE" ^
-                              "Z:\\Backup\\!Skyrim AE\\...\\NPC Pathing NG 2.5.0\\extern\\CommonLibSSE"
+Substitute verified absolute paths:
+    python create_junction.py "<library-target>" "<project-link>"
+
+Junction cleanup requires Windows Python 3.12+.
 
 Verifies the link resolves to the target afterwards (checks the target exists
 via a marker probe). Exit code 0 = created and verified.
@@ -31,8 +32,11 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.clean:
-        if not os.path.isdir(args.clean):
-            print(f"nothing to clean: {args.clean} is not a directory/junction", file=sys.stderr)
+        if not hasattr(os.path, "isjunction"):
+            print("junction cleanup requires Windows Python 3.12+", file=sys.stderr)
+            return 2
+        if not os.path.isjunction(args.clean):
+            print(f"refusing: {args.clean} is not an NTFS junction", file=sys.stderr)
             return 1
         os.rmdir(args.clean)  # works on junctions without admin
         print(f"removed junction: {args.clean}")

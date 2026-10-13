@@ -1,7 +1,7 @@
 # Native C Game Harness Notes — Aeons Echo line
 
 ## Project roots
-- Dev tree: `Z:\Backup\Ai games\AEONS_ECHO_NULL_CITADEL_v2.2.0_DEV` (was v2.1.0_DEV; GOLD folder mirrors it).
+- Historical fixture: the Aeons Echo v2.2.0 dev tree (following v2.1.0; GOLD mirrored it). Resolve the current owner/version from the selected project's state; no maintainer-machine path is portable.
 - Release gates inherited from v2.0.4/v2.1.0: strict clang `-Werror` build, full gcc test
   suite, Python asset audits, double-build determinism, clean-room rebuild, SHA-256 log.
 - Test runner: `source/run_all_tests.sh` — globs `*_test.c`, compiles each ALONE with

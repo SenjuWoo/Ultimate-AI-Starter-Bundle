@@ -75,11 +75,13 @@ Every wired file ends up as, in order:
 
 - The profile block is refreshed from `%USERPROFILE%\.uabs\profile\`
   (`PROFILE.md` + `MACHINE-MAP.md`) and is never part of any repository.
-- **Never hand-edit the live files.** A hand-edited copy no longer matches the
+- **Do not hand-edit managed SOUL/AIO blocks.** A hand-edited copy no longer matches the
   sources byte-for-byte, so wiring keeps it (unknown text is never erased) and
   appends the canonical block behind it — that is exactly how a file ends up
-  carrying two soul editions. Edit `SOUL.md` / `AIO-INSTRUCTION.md` here and
-  re-run the wiring instead; `history/` converges installed machines.
+  carrying two soul editions. Private preferences belong in your profile's
+  `PROFILE.md`, not the public sources. Edit `SOUL.md` / `AIO-INSTRUCTION.md`
+  here only for intentional shared changes, then re-run wiring; `history/`
+  converges installed machines. Custom text outside managed blocks is preserved.
 
 ## Manual install (no installer)
 

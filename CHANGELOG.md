@@ -1,3 +1,19 @@
+## 8.12.1
+
+- Preserve installed personal profiles when replacement input is unreadable or
+  oversized; an actual installer-section regression reproduces the old deletion.
+- Separate private operator tuning from portable public defaults; keep changing
+  project lessons on demand instead of bloating every prompt. Personal profile
+  templates never overwrite existing preferences.
+- Remove maintainer workspace paths from three canonical skills/references and
+  add path-privacy regression coverage. Include the latest operator-provided
+  main Tavern preset unchanged and fix notes naming missing files.
+- Sync the five generated provider trees; 173 canonical skills total.
+- Refuse ordinary-directory deletion in the junction helper; clean live/dangling
+  NTFS links without touching targets. Restore Codex ownership with verified backups.
+- Model choices, MCP scope, verified local overrides and roleplay personas remain
+  unchanged. Start/resume prompts from the previous audit are retained.
+
 ## 8.12.0
 
 - Unrestraint-family hygiene: four retired upstream jailbreak collections
