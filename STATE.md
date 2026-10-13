@@ -35,6 +35,20 @@
   Release proof is recorded locally under ignored `artifacts/`; private profile
   contents and logs remain outside the payload. Never publish from a pending SHA.
 
+## Publication (v8.12.1)
+
+- Recovered from the Codex thread after chat loss: v8.12.1 was pushed (`dc05b1b`)
+  with CI green but untagged. Added the build-hygiene rules (code comments +
+  `STATE.md` recovery note in the AIO full/Compact, detail in `coding-discipline`,
+  `state-resumption`, `observability-first`); pinned preamble digest updated,
+  outgoing AIO archived in `3-PREAMBLES/history/`.
+- Released 2026-10-13 from commit `4763fc0` (CI + CodeQL green on that SHA; flags
+  clean). Tag `v8.12.1` -> `4763fc0`. Core 46,663,920 B `a4f9dad2...`,
+  Full-Offline 203,100,613 B `4a709d72...`; downloaded assets byte-equal to the build.
+- Local sync: `INSTALL-AIO.ps1 -SkillsOnly -SkipSelfUpdate -Mode BundledOnly`;
+  installed-state doctor PASS; one copy of the new rule in all five provider files.
+- Not certified: no paid inference, host-editor interaction or game runtime.
+
 ## Previous baseline: v8.12.0
 
 - Trimmed the preamble family: deleted the orphaned `GPT-WEB-AIO-BACKUP.md`,

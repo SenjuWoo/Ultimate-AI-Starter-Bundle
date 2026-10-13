@@ -36191,8 +36191,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 4389,
-  "sha256": "3288ce34c8cf6aa111b853afc5d8075c9ccaca205eeb3c600f6039a08ceb1592"
+  "size": 5267,
+  "sha256": "7f90a570cad1dd42e86951ea3b5eae35c0c3aa3834d3dd2aca234fa40d5a455d"
  },
  {
   "path": "TESTS/Test-BundleSelfUpdate.ps1",
