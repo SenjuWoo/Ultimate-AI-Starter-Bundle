@@ -36396,8 +36396,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 8725,
-  "sha256": "6533c16e8780fa606944b40dba89fb0f8931d03afda205997434a6f50f73af7f"
+  "size": 9763,
+  "sha256": "968ba4a0ebd3fc4c9794499b62eff2d24c8f6778b7f5491ce7248fb6d3c49b5c"
  },
  {
   "path": "TESTS/Test-BundleSelfUpdate.ps1",

@@ -1,5 +1,22 @@
 # Bundle audit state
 
+## Publication checkpoint (v8.13.0)
+
+- Immutable release tag: `v8.13.0` at
+  `7b7ae62d00506ac6d8287ca2cbee6d2896b06ae2`. All eight exact-commit checks,
+  including CodeQL and clean Windows installation, passed; GitHub flags clean.
+- Source Windows pack/live-install gates PASS, 143 release contracts and
+  15 executable regressions PASS. Local installed-state doctor PASS at 8.13.0;
+  all 173 skills accounted for on every provider, including verified overrides.
+- Authoritative publication/download state:
+  [GitHub v8.13.0](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.13.0).
+  Local-only build and downloaded-byte receipts are
+  `artifacts/release-v8.13.0/build-proof.json` and `published-proof.json`.
+  Verify those against the tag/assets on resumption; do not recreate a release
+  from older pending-work notes. A matching published receipt closes that work.
+- Main may include this documentation-only checkpoint after the release tag;
+  archives are built from the exact green tag, never an unrecorded dirty tree.
+
 ## v8.13.0 audit: on-demand reverse engineering and usage discipline
 
 - Baseline is published v8.12.1 at `4763fc0`; main also records publication.
@@ -28,8 +45,8 @@
   preserving personal/global-policy variants and dry-run bytes. Native profile
   gate failed before the fix and passed after it. Installed Serena 2.0.0 uses
   the normal user tool home, not the isolated probe prefix.
-- Next: final ownership-aware local sync, exact-commit CI/security, tag/build,
-  both extracted-archive gates and published downloaded-byte verification.
+- Resume publication from the checkpoint and receipts above; the audit notes
+  below are dated evidence, not a separate unfinished release plan.
 - Final refresh: 22 current components, seven explicit holds. Firecrawl
   3.29.1 and candidate 3.30.0 have known high-severity dependency findings;
   suggested 3.24.0 fallback is not clean either. Block new installation and
