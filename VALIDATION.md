@@ -1,10 +1,24 @@
-# v8.12.1 validation
+# v8.13.0 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are
 separate proofs. This file records the checked boundary, not a claim of perfect
 one-shot game/mod output.
 
-## Current audit
+## Current audit (v8.13.0)
+
+The strict skill-audit CLI regressions reject missing/empty trees and malformed
+UTF-8. Grok's legacy Impeccable retirement checks preserve custom handlers and
+backups. REA 6.4.0 passed an execution-free JavaScript fixture; its complete
+170-tool MCP catalog is measured, not enabled. Context7 4.4.1 and Serena 2.0.0
+passed isolated Windows MCP transport probes; all three supported Serena client
+contexts were tested with Python 3.13 and the dashboard disabled.
+
+RTK 1.0.0 OSS passed the exact status fixture, four fixed corpus rows and
+allowlisted rewrite protocol. Ponytail's refreshed source passed 136 root and
+31 pi-extension tests with real Python/Git Bash. Universal Modder source and
+offline wheel verification remain separate from live game/asset operation.
+
+## Previous audit (v8.12.1)
 
 Twelve executable regressions cover safe junction cleanup, private workspace paths, index-only scope application, preflight,
 native failure propagation, dry-run, Unicode custom rules, exact snapshot

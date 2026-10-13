@@ -204,5 +204,42 @@ class UsageAccounting(unittest.TestCase):
             self.assertEqual(sessions[0].weight(), 164)
 
 
+class SkillAudit(unittest.TestCase):
+    """The real CLI must not certify missing input or silently repaired bytes."""
+
+    def run_audit(self, root):
+        import sys
+        return subprocess.run([sys.executable, str(ROOT / "TOOLS/audit_skills.py"), str(root)],
+                              capture_output=True, text=True, timeout=15)
+
+    def test_missing_or_empty_tree_fails(self):
+        with tempfile.TemporaryDirectory(prefix="uabs skill audit ") as tmp:
+            for root in (Path(tmp) / "missing", Path(tmp)):
+                with self.subTest(root=root.name):
+                    result = self.run_audit(root)
+                    self.assertNotEqual(result.returncode, 0, result.stdout)
+                    self.assertNotIn("RESULT: PASS", result.stdout)
+
+    def test_invalid_utf8_cannot_pass_as_replacement_characters(self):
+        with tempfile.TemporaryDirectory(prefix="uabs skill audit ") as tmp:
+            skill = Path(tmp) / "sample"
+            skill.mkdir()
+            (skill / "SKILL.md").write_bytes(
+                b"---\nname: sample\ndescription: Inspect a sample\n---\nBroken \xff text\n")
+            result = self.run_audit(tmp)
+            self.assertNotEqual(result.returncode, 0, result.stdout)
+            self.assertIn("UTF-8", result.stdout)
+
+    def test_valid_unicode_skill_passes(self):
+        with tempfile.TemporaryDirectory(prefix="uabs skill audit ") as tmp:
+            skill = Path(tmp) / "sample"
+            skill.mkdir()
+            (skill / "SKILL.md").write_text(
+                "---\nname: sample\ndescription: Inspect a sample\n---\nValid café text\n", encoding="utf-8")
+            result = self.run_audit(tmp)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            self.assertIn("RESULT: PASS", result.stdout)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -71,6 +71,25 @@ try {
   $second = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TOOLS\Build-MachineMap.ps1') -PackRoot $PackRoot -ProfileRoot $root | Out-String
   Assert ($second -match 'unchanged' -and [IO.File]::ReadAllText((Join-Path $root 'MACHINE-MAP.md')) -ceq $first) 'Machine map rewrote itself without a change.'
 
+  # A legacy unmarked copy with the pack's orphan closing tag must not double
+  # the always-loaded profile when a marked copy is added on upgrade.
+  $legacyFile = Join-Path $fx 'home\legacy-profile.md'
+  $privateText = "## Operator profile (private; this PC only)`n- Preserve my model choice`n## Machine map`n- resolved tool`n"
+  $plain = $privateText.Trim().Replace('## Operator profile','Operator profile')
+  $legacyOriginal = "<!-- UABS-PROFILE -->`n$($privateText.Trim())`n<!-- /UABS-PROFILE -->`n`n$plain`n<!-- /UABS-PROFILE -->`n`nMy distinct custom rule`n"
+  [IO.File]::WriteAllText($legacyFile, $legacyOriginal)
+  [void](Update-UabsInstructionProfile -Path $legacyFile -Text $privateText)
+  $cleaned = [IO.File]::ReadAllText($legacyFile)
+  Assert (([regex]::Matches($cleaned, 'Preserve my model choice')).Count -eq 1) 'Identical legacy profile still doubles context.'
+  Assert (([regex]::Matches($cleaned, '<!-- /UABS-PROFILE -->')).Count -eq 1 -and $cleaned.Contains('My distinct custom rule')) 'Legacy repair removed custom text or kept a stray profile tag.'
+  $legacyBackup = @(Get-ChildItem -LiteralPath (Split-Path -Parent $legacyFile) -Filter 'legacy-profile.md.before-profile-*.bak')
+  Assert ($legacyBackup.Count -eq 1 -and [IO.File]::ReadAllText($legacyBackup[0].FullName) -ceq $legacyOriginal) 'Legacy profile original was not backed up exactly.'
+  Assert (-not (Update-UabsInstructionProfile -Path $legacyFile -Text $privateText)) 'Legacy profile cleanup is not idempotent.'
+  $different = $legacyOriginal.Replace("`n`n$plain`n<!-- /UABS-PROFILE -->", "`n`n$($plain.Replace('Preserve my model choice','Keep a different personal choice'))`n<!-- /UABS-PROFILE -->")
+  [IO.File]::WriteAllText($legacyFile, $different)
+  [void](Update-UabsInstructionProfile -Path $legacyFile -Text $privateText)
+  Assert ([IO.File]::ReadAllText($legacyFile).Contains('Keep a different personal choice')) 'A differing personal profile copy was deleted.'
+
   # Run the actual installer's instruction section, not a reimplementation.
   # An invalid oversized input must not mean "the user deleted the profile".
   & {

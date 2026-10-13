@@ -2,7 +2,7 @@
 name: tool-discovery
 description: Resolve optional Skyrim and AI tooling on the current machine without assuming drive letters or usernames. Use at session start, when a tool path is unknown, or before recommending install.
 metadata:
-  version: 5.0.0
+  version: 5.1.0
 ---
 
 # Tool discovery (portable)
@@ -13,6 +13,10 @@ or a second skill-directory writer.
 
 For local image/video workflows, discover ComfyUI first and consult the
 optional [ComfyUI CLI](references/comfy-cli.md). It adds no standing MCP schemas.
+
+For binary/app analysis or unfamiliar-game reverse engineering, use
+[the RE routes](references/reverse-engineering.md): Universal Modder for recon,
+the existing Reverse THIS! bench for tools, REA CLI for structured evidence.
 
 Never hardcode `C:\Users\<name>`, `S:\Apps`, or `Z:\Backup` as authority. Those may appear only as **example** paths on the pack author's machine.
 
@@ -52,10 +56,11 @@ THEN:    restart the AI app - a running session does not pick up a new MCP serve
 ```
 
 Profiles worth naming: `game-skyrim-load-order` (houseCARL), `game-skyrim`
-(Skyrim Forge), `code-intel` (codebase-memory + serena), `web` (Playwright,
-Chrome DevTools). `-List` marks each server `REGISTERED for the project above`
+(Skyrim Forge), `code-intel` (codebase-memory + serena), `web`
+(Chrome DevTools/shadcn when relevant; Playwright CLI is separate). `-List` marks each server `REGISTERED for the project above`
 or `ready, but NOT registered`; the second one is always one command away, on
-Claude, Codex, Grok, Kimi and Hermes alike.
+on providers with project scope. Kimi needs explicit global opt-in; Hermes
+uses native named profiles. See `capability-profiles` for supported activation.
 
 ### Missing-tool response template
 

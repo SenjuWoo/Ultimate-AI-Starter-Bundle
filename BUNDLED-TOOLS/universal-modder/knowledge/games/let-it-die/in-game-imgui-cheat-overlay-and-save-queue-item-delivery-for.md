@@ -9,11 +9,11 @@ engine: unreal
 route: native-hook
 tools: ["MSVC 2026 Build Tools (cl, x64)", "MinHook", "Dear ImGui 1.91.5 (DX9 + Win32 backends)", "Ghidra 12.1.4 (headless, Java scripts)", "UELib 1.13.7 + lzo.net (custom C# dumper)", "Python 3.14 (sqlite3, zlib, Pillow)"]
 anti_cheat: "none: the online service ended on 2026-09-01 and the Offline Edition has no servers; only in-exe '[cheat]' clamps on part durability/ammo at load (single-player, offline only)"
-status: in-progress
+status: working
 agents:
 - Claude Code (Opus 5.5)
 humans: []
-date: '2026-10-10'
+date: '2026-10-11'
 links: ["https://github.com/TsudaKageyu/minhook", "https://github.com/ocornut/imgui", "https://github.com/EliotVU/Unreal-Library"]
 tags: [overlay, imgui, d3d9, dinput8-proxy, ue3, processevent, processinternal, save-editing, sqlite, cheats, item-spawner, icons]
 ---
@@ -22,10 +22,10 @@ tags: [overlay, imgui, d3d9, dinput8-proxy, ue3, processevent, processinternal, 
 > A `dinput8.dll` proxy that hooks D3D9 `EndScene` and draws an ImGui mod menu inside LET IT DIE Offline Edition, the
 > paid single-player release that replaced the online game (custom Unreal Engine 3, "BrgEngine"). It has infinite
 > durability, ammo and stamina (done by skipping specific UnrealScript functions in `ProcessInternal`), currency
-> buttons (calling script through `ProcessEvent`), an icon item picker, and permanent item and fighter-stat delivery. Delivery works through a save-edit queue that a
-> helper process applies after the game exits. The overlay, currency, locker delivery of gear and the fighter-stat edit
-> are verified in the real game. The newest pieces (reworked cheats, DirectInput blocking, materials) were built and
-> code-reviewed but are not yet play-tested.
+> buttons (calling script through `ProcessEvent`), an icon item picker, and permanent item and fighter-stat
+> delivery. Delivery works through a save-edit queue that a helper process applies after the game exits. All of it
+> is verified in the real game (play-tested 2026-10-11), except that one delivered part, Demon Gun 1, never shows
+> up in the locker (Gotcha 17).
 
 ## Setup
 - Game: LET IT DIE **Offline Edition 5.0.1**, Windows 11 x64.
@@ -68,7 +68,10 @@ tags: [overlay, imgui, d3d9, dinput8-proxy, ue3, processevent, processinternal, 
   - **No checksum or signature.** It round-trips byte-exact apart from float formatting (`0.0000` vs `0.0`), which the
     game accepts.
 - **Save JSON landmarks:**
-  - `soul.free_money` / `soul.spirit`: Kill Coins and SPLithium, capped at 500,000 by the game.
+  - `soul.free_money` / `soul.spirit`: Kill Coins in the Buffalo Bank and SPLithium in the SPLithium Tank. Their caps
+    come from `master_safe_level.limit` / `master_spirit_tank_level.limit` for the current `soul.safe_level` /
+    `spirit_tank_level` (500,000 at level 1). What a fighter carries is in `soul.chr.chrs[...].money/spirit`.
+  - `soul.bloodnium_point` (account Bloodnium, max 999,999) and `soul.tdm_point` (TDM points).
   - `part.pts["1"]`: owned parts. Each record is
     `{uid, eid(GUID), gettime, owner USER|COIN_LOCKER, created, modified, ptid, rest, spare, grade, dur, lvl}`.
   - `item.items`: materials and consumables, `{eid, gettime, itemid, owner}`.
@@ -104,7 +107,10 @@ tags: [overlay, imgui, d3d9, dinput8-proxy, ue3, processevent, processinternal, 
   - Ammo: `BrgWeapon_*.BulletConsumption` (9 overrides). The owner is `BrgWeapon_Base.mOwnerPawn`.
   - Stamina: `BrgPawn_CustomCharaPlayer.StaminaConsumption`.
   - Repairs use the separate `PartDurabilityRecovery*` functions.
-- **Currency:** `BrgUserData.AddMoney/AddSpirit(int amount, int cindex=-1)` through ProcessEvent.
+- **Currency:** `BrgUserData` natives through ProcessEvent: `Get/AddMoney` and `Get/AddSpirit(..., cindex=-1)`
+  (carried by the current fighter), `Get/SetSafeMoney` + `GetSafeLimit` (Bank), `Get/SetSafeSpirit` +
+  `GetSpiritTankLimit` (Tank), `Get/SetUserBloodnium` + `GetBloodniumLimit`, `Get/SetTdmPoint`. Read, clamp to the
+  game's limit (never lowering a balance already above it), then set. Bloodnium needs one more step (see Gotchas).
   The live objects are `PlayerController.WorldInfo.Game` (the GameInfo) and its `.mUserData`.
 - **Icons:**
   - Every item has its own package `CookedPCConsole\UI_Icon_<id>_SF.upk`, holding one inline Texture2D (108x132, mostly
@@ -144,18 +150,15 @@ tags: [overlay, imgui, d3d9, dinput8-proxy, ue3, processevent, processinternal, 
   - A file-based RPC in the DLL (command/result text files) to drive scans and calls from the agent.
 - **Verified in game:**
   - The overlay and Insert toggle.
-  - `AddMoney`/`AddSpirit`.
+  - Currency adds through the `BrgUserData` natives.
   - The live `DebugPartEquip` preview.
   - Locker delivery of six gear parts through the queue (shown in the locker after relaunch).
   - Fighter stat max (level 1 → 25).
   - Recovery from a launch crash caused by a stale RPC command.
-- **Tested on a scratch copy of the save:** the queue helper, including the lock file, stale-lock takeover, structured
-  retry and material (`item`) delivery.
-- **NOT yet verified in game:**
-  - The `ProcessInternal` cheats in their final form (the first version had a wrong owner check; see Gotchas).
-  - DirectInput input blocking.
-  - R&D material delivery.
-  - Infinite stamina.
+  - Play-tested 2026-10-11: the `ProcessInternal` cheats in their final form (durability, ammo, stamina), input
+    blocking while the menu is open, and R&D material delivery to the Coin Locker.
+- **Also tested on a scratch copy of the save:** the queue helper, including the lock file, stale-lock takeover,
+  structured retry, one bad entry not blocking the rest, and material (`item`) delivery.
 
 ## Gotchas
 1. **Edited `masters.db` but nothing changed in game.** **Cause:** owned items keep the values stored in the save; the DB
@@ -186,9 +189,13 @@ tags: [overlay, imgui, d3d9, dinput8-proxy, ue3, processevent, processinternal, 
 10. **Mouse invisible in the overlay.** **Cause:** the game hides the OS cursor, and `SetCursor` from the render thread
     doesn't apply. **Fix:** `io.MouseDrawCursor = true` plus `ImGuiConfigFlags_NoMouseCursorChange`.
 11. **Mouse still turned the camera with the menu open.** **Cause:** the game reads input through DirectInput, not
-    window messages. **Fix:** hook `GetDeviceState`/`GetDeviceData` in the proxy and blank mouse (16/20-byte) and
-    keyboard (256-byte) state while the menu is open. Leave joystick state alone, because zeroed axes read as full
-    deflection.
+    window messages. Counters in the hooks showed it uses **buffered** `GetDeviceData` only (about 100k calls, zero
+    `GetDeviceState`, zero `SetCursorPos`). A first filter that kept "releases" by offset (`dwOfs >= DIMOFS_BUTTON0`)
+    let mouse motion through, because UE3 sets its own mouse data format whose axis offsets are not the standard
+    `DIMOFS_*`. **Fix:** classify each device once with `GetDeviceInfo` (vtable 15; mouse/keyboard only, never
+    joysticks, whose zeroed axes read as full deflection). While the menu is open, keep only buffered events whose
+    value says "released": `dwData == 0` for the mouse, `(dwData & 0x80) == 0` for the keyboard. Nothing stays stuck
+    down after the menu closes.
 12. **Threading hazards** (code review). `EndScene` runs on UE3's render thread, not the window thread:
     - ImGui input must be queued from the WndProc. Capture Ctrl/Shift/Alt there, because `GetKeyState` is per-thread.
     - `SetWindowPos` for borderless must run on a separate worker thread; on the render thread it can deadlock against
@@ -199,7 +206,19 @@ tags: [overlay, imgui, d3d9, dinput8-proxy, ue3, processevent, processinternal, 
 14. **`DebugPartEquip` side effects.** It sets `GameInfo.mbDeadInfoOutputCancel` (a debug flag affecting death
     bookkeeping), adds to the Death Bag, and treats unknown slot names as Head ("All" wipes the inventory). **Fix:**
     whitelist the slot names and restore the flag's DWORD after the call.
-15. **Demon Gun 1 (`PT_ARM_WP017_0A1`) injected into the locker never showed** while GLIDER 2 (`PT_ARM_WP025_0K3`) did.
+15. **Adding Bloodnium, then levelling up, crashed** (`body_lvl distribute failed! ... bloodnium=0,
+    nec_bloodnium=13`). **Cause:** the stat screen shows `GetUserBloodnium() + GetBloodnium()` from `BrgUserData`, but
+    the native stat-distribute check (`FUN_141366480` → `FUN_14133f7c0`) takes its pool from the native save-store soul
+    record (static object at `DAT_14f89ef80`, Bloodnium at +0xB4) plus the current chara record (+0x5C), and spends
+    from those. `SetUserBloodnium` updates only the script-side copy, so the UI allowed an upgrade the native check
+    rejected with an assert. Adding to the per-fighter pool through `AddBloodnium(cindex)` has the same problem.
+    **Fix:** after the `BrgUserData` add, also write the new total into soul+0xB4. Verify first: the right exe build
+    (PE timestamp), the field equal to what the game reports, and the neighbouring replica cap (+0xB8) being -1 or not
+    below it. Undo the UI-side add if the native write fails. Same lesson as Gotcha 2: anything spent through a native
+    check must be written to the native store.
+16. **Death Metals.** The Offline Edition replaced them with Kill Coins, so `Get/SetMedal` still exists but does nothing
+    useful; leave it out.
+17. **Demon Gun 1 (`PT_ARM_WP017_0A1`) injected into the locker never showed** while GLIDER 2 (`PT_ARM_WP025_0K3`) did.
     Both have no icon package. Unresolved; see Open questions.
 
 ## Assets

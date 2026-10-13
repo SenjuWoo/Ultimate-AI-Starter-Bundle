@@ -71,21 +71,21 @@ def main():
                 patch.object(scan, "is_wsl", return_value=False), patch.object(scan, "is_mac", return_value=False):
             assert scan.steam_roots() == [steam.resolve()]
 
-    wheel = ROOT / "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.fe505d8-py3-none-any.whl"
+    catalog = json.loads((ROOT / "BUNDLED-TOOLS/CATALOG.json").read_text(encoding="utf-8-sig"))
+    component = next(x for x in catalog["components"] if x["id"] == "universal-modder")
+    wheel = ROOT / "BUNDLED-TOOLS/offline" / component["offline_asset"]
     if wheel.exists():
         with zipfile.ZipFile(wheel) as archive:
             assert archive.testzip() is None
             for name in ("um/knowledge/TEMPLATE.md", "um/knowledge/INDEX.md", "um/ps1/WinDrive.ps1",
                          "um/fonts/OFL-SpaceGrotesk.txt", "um/fonts/OFL-JetBrainsMono.txt"):
                 assert name in archive.namelist(), name
-    catalog = json.loads((ROOT / "BUNDLED-TOOLS/CATALOG.json").read_text(encoding="utf-8-sig"))
-    component = next(x for x in catalog["components"] if x["id"] == "universal-modder")
-    assert component["source_commit"] == "fe505d8918363671783df527d1ccf5dd1f99618f"
+    assert component["source_commit"] == "5ba8150e27b4f1bf17ae19dcecdb2341e467885a"
     assert not component["mcp"] and not component["auto_register"]
     for provider in component["providers"]:
         skill = ROOT / f"1-TAILORED-PROVIDER-TREES/{provider}/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder"
         assert (skill / "SKILL.md").exists(), provider
-        assert len(list((skill / "references/upstream").glob("*/GUIDE.md"))) == 11
+        assert len(list((skill / "references/upstream").glob("*/GUIDE.md"))) == 12
         assert len(list(skill.rglob("SKILL.md"))) == 1, "reference guides must not enlarge discovery"
     print("Universal Modder offline CLI, recon, wheel and all-provider routing PASS")
 

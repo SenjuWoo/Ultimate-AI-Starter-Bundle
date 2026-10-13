@@ -436,7 +436,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.12.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.13.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -1540,6 +1540,13 @@ if (-not $SkillsOnly) {
     if (-not $comp) { Write-UabsWarn "skip unknown $id"; continue }
     Write-UabsStep "Component: $($comp.name) [$id]"
 
+    # A known security hold must not be bypassed by extras or an explicit selection.
+    if ($comp.security_hold) {
+      Write-UabsWarn ("${id}: NOT installed or registered: " + $comp.security_hold)
+      $installed[$id] = @{ status='security-held'; note=$comp.security_hold }
+      continue
+    }
+
     switch ($comp.install) {
       'manual-user-product' {
         Write-UabsWarn $comp.note
@@ -2341,7 +2348,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.12.1'
+version = '8.13.0'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

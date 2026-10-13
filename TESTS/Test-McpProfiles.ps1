@@ -560,6 +560,34 @@ function Test-UabsBoxProjectServer($Box, [string]$Key, [string]$Id) {
 }
 
 # ---- a clean install enables nothing ---------------------------------------
+# Execute the installer's actual security gate, without an install or credentials.
+$installerAst = [Management.Automation.Language.Parser]::ParseFile((Join-Path $PackRoot 'INSTALL-AIO.ps1'), [ref]$null, [ref]$null)
+$holdGuard = $installerAst.Find({ param($node) $node -is [Management.Automation.Language.IfStatementAst] -and $node.Extent.Text.StartsWith('if ($comp.security_hold)') }, $true)
+if (-not $holdGuard) { Bad 'installer has no security-hold gate' }
+else {
+  & {
+    $comp = @{ security_hold = 'Fixture advisory'; mcp = $true }; $installed = @{}
+    function Write-UabsWarn($Message) { }
+    $script = 'foreach ($id in @("held-fixture")) { ' + $holdGuard.Extent.Text + '; throw "Held component reached installation" }'
+    & ([scriptblock]::Create($script))
+    Is $installed['held-fixture'].status 'security-held' 'security hold refuses registration even when explicitly selected'
+  }
+}
+$doctorAst = [Management.Automation.Language.Parser]::ParseFile((Join-Path $PackRoot 'TOOLS\Test-Installed-State.ps1'), [ref]$null, [ref]$null)
+$doctorGuard = $doctorAst.Find({ param($node) $node -is [Management.Automation.Language.IfStatementAst] -and $node.Extent.Text.StartsWith('if ($comp.security_hold)') }, $true)
+if (-not $doctorGuard) { Bad 'doctor has no security-hold check' }
+else {
+  & {
+    $comp = @{ security_hold = 'Fixture advisory' }; $cid = 'held-fixture'; $script:heldErrors = @()
+    function Err($Message) { $script:heldErrors += $Message }
+    $capState = @{ registered_for = @('Claude'); scoped_for = @() }
+    & ([scriptblock]::Create($doctorGuard.Extent.Text))
+    Is $script:heldErrors.Count 1 'doctor rejects an existing registration under security hold'
+    $script:heldErrors = @(); $capState.registered_for = @()
+    & ([scriptblock]::Create($doctorGuard.Extent.Text))
+    Is $script:heldErrors.Count 0 'unregistered held component is not an installation failure'
+  }
+}
 $box = New-UabsTestBox
 $out = Invoke-UabsProfile -Box $box -Arguments @('-List')
 if ($out -match 'code-intel') { Good '-List names the renamed profile' } else { Bad "-List does not name code-intel: $out" }
@@ -567,6 +595,31 @@ if ($out -notmatch 'code-deep') { Good '-List does not name the old id' } else {
 $claude = Get-UabsBoxClaude $box
 if ($claude.mcpServers.PSObject.Properties.Name -notcontains 'serena') { Good 'a clean install leaves Serena unregistered machine-wide' }
 else { Bad 'Serena is registered machine-wide on a clean install' }
+
+# A converted ownership ledger can still leave its old project-bound Grok
+# table in the global file. Repair must move only that exact duplicate.
+$leakBox = New-UabsTestBox
+[void](Invoke-UabsProfile -Box $leakBox -Arguments @('-Enable','code-intel','-Path',$leakBox.Proj) -ProviderList 'Grok')
+$projectConfig = Join-Path $leakBox.Proj '.grok\config.toml'
+$globalConfig = Join-Path $leakBox.Home '.grok\config.toml'
+$projectText = [IO.File]::ReadAllText($projectConfig)
+$serenaBlock = [regex]::Match($projectText, '(?ms)^\[mcp_servers\.serena\].*?(?=^\[|\z)').Value
+$originalGlobal = [IO.File]::ReadAllText($globalConfig) + "`r`n" + ($serenaBlock -replace '(?m)(args\s*=\s*\[[^\r\n]*)(\])', '$1,$2')
+Set-Utf8NoBom -Path $globalConfig -Text $originalGlobal
+[void](Invoke-UabsProfile -Box $leakBox -Arguments @('-Repair','-CheckOnly') -ProviderList 'Grok')
+Is ([IO.File]::ReadAllText($globalConfig)) $originalGlobal 'dry-run leaves a stale global duplicate unchanged'
+[void](Invoke-UabsProfile -Box $leakBox -Arguments @('-Repair') -ProviderList 'Grok')
+if ([IO.File]::ReadAllText($globalConfig) -notmatch '\[mcp_servers\.serena\]' -and
+    [IO.File]::ReadAllText($projectConfig) -match '\[mcp_servers\.serena\]') { Good 'repair removes the recorded global duplicate only after project registration' }
+else { Bad 'repair kept a project-bound Serena globally or removed its project registration' }
+$personal = $originalGlobal.Replace('start-mcp-server','personal-command')
+Set-Utf8NoBom -Path $globalConfig -Text $personal
+[void](Invoke-UabsProfile -Box $leakBox -Arguments @('-Repair') -ProviderList 'Grok')
+Is ([IO.File]::ReadAllText($globalConfig)) $personal 'a differing personal global server is untouched'
+$spaced = $originalGlobal.Replace('code-project','code- project')
+Set-Utf8NoBom -Path $globalConfig -Text $spaced
+[void](Invoke-UabsProfile -Box $leakBox -Arguments @('-Repair') -ProviderList 'Grok')
+Is ([IO.File]::ReadAllText($globalConfig)) $spaced 'quoted path whitespace is significant to global ownership'
 
 # ---- -CheckOnly writes nothing ---------------------------------------------
 $before = @{}

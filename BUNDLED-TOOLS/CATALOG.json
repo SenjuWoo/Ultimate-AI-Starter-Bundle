@@ -1,6 +1,40 @@
 {
   "components": [
     {
+      "id": "rea",
+      "name": "REA (Reverse Engineer Anything)",
+      "kind": "cli-optional",
+      "install": "npx-or-npm",
+      "version": "6.4.0",
+      "license": "MIT",
+      "github": {
+        "owner": "morluto",
+        "repo": "rea"
+      },
+      "npm_spec": "rea-agents@6.4.0",
+      "npm_integrity": "sha512-Vj1zWfSlna5bphGoaoI/TcVBuYvze9u+OyPC3Shz8YkBqaCTqB4COnnRoX7XDwMpwI24ZlFEel2yEj0k8LTWEQ==",
+      "npm_args": [
+        "--ignore-scripts"
+      ],
+      "mcp": false,
+      "auto_register": false,
+      "offline_asset": null,
+      "providers": [
+        "Claude",
+        "Codex",
+        "Grok",
+        "Kimi",
+        "Hermes"
+      ],
+      "runtimes": [
+        "node22"
+      ],
+      "required_for": [
+        "reverse-engineering-evidence"
+      ],
+      "scope_note": "Optional CLI only; not part of default Components or MCP profiles. 2026-10-13 isolated Windows npm integrity-bound install with lifecycle scripts disabled: help and execution-free JavaScript fixture analysis PASS, zero known production npm audit findings. Stdio transport probe exposed 170 tools and 1,954,683 compact UTF-8 schema bytes, not loaded or billed tokens. No native Ghidra/runtime/GUI actions certified. Reuse Reverse THIS! shims and Universal Modder recon. No upstream setup/update or duplicate skill collection. See tool-discovery/references/reverse-engineering.md."
+    },
+    {
       "id": "universal-modder",
       "name": "Universal Modder",
       "kind": "python-cli",
@@ -11,10 +45,10 @@
         "owner": "rehan-remade",
         "repo": "universal-modder"
       },
-      "source_commit": "fe505d8918363671783df527d1ccf5dd1f99618f",
-      "source_archive_sha256": "f1e825a4da0992043fdeafb1daa9b60e438c75c5682f35b47289a7c512db5b3e",
+      "source_commit": "5ba8150e27b4f1bf17ae19dcecdb2341e467885a",
+      "source_archive_sha256": "8f8820dd7e4f4fde2a71aa7dd545bd610e2238de7689e3e03e58ad5bad16fb4e",
       "source_dir": "BUNDLED-TOOLS/universal-modder",
-      "offline_asset": "universal_modder-0.2.0+uabs.fe505d8-py3-none-any.whl",
+      "offline_asset": "universal_modder-0.2.0+uabs.5ba8150-py3-none-any.whl",
       "cli": "um",
       "cli_env": "UNIVERSAL_MODDER_CMD",
       "python": "3.13",
@@ -32,7 +66,7 @@
         "sprite-processing",
         "gameplay-showcase-video"
       ],
-      "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to eleven upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (193 indexed notes), discovers native Windows Steam roots from the registry and never echoes matched credentials; the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. The audited refresh adds quoted multi-word knowledge search, ranked hits and broken-link diagnostics while retaining local ComfyUI generation, SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification."
+      "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to twelve upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (the indexed knowledge snapshot), discovers native Windows Steam roots from the registry and never echoes matched credentials; the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. The audited refresh adds quoted multi-word knowledge search, ranked hits and broken-link diagnostics while retaining local ComfyUI generation, SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification. 2026-10-13 source refresh adds Bannerlord, MT Framework, Hedgehog and Black Rock discovery plus a mod-porting reference; preserves UABS dependency pins, native Steam discovery and credential-safe output."
     },
     {
       "github": {
@@ -255,8 +289,8 @@
         "minimal-diff"
       ],
       "bundled_skills": true,
-      "version": "5.1.0",
-      "release_tag": "v5.1.0"
+      "version": "5.2.0",
+      "release_tag": "v5.2.0"
     },
     {
       "install": "npx-or-npm",
@@ -467,6 +501,8 @@
     {
       "id": "firecrawl-mcp",
       "name": "Firecrawl MCP",
+      "security_hold": "2026-10-13: isolated production npm audit reports three high-severity package findings for both 3.29.1 and candidate 3.30.0 via firecrawl's pinned Axios 1.18.0. The suggested 3.24.0 downgrade also has known findings; do not install, register, or auto-downgrade. Native web/search and Playwright remain available. Existing personal registrations require review; the doctor reports them, never deletes unknown configuration. Recheck after upstream updates the dependency and an isolated audit plus transport test pass. Advisory: https://github.com/advisories/GHSA-vh66-26gq-q6x8",
+      "compatibility_hold": "Security hold: current and candidate Firecrawl MCP production dependencies have known audit findings. Await a clean upstream dependency refresh; no automatic downgrade or registration.",
       "kind": "mcp-npx",
       "install": "mcp-npx",
       "mcp": true,
@@ -550,7 +586,7 @@
       "kind": "mcp-npx",
       "mcp": true,
       "license": "MIT",
-      "version": "4.3.0",
+      "version": "4.4.1",
       "github": {
         "owner": "upstash",
         "repo": "context7"
@@ -559,7 +595,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "@upstash/context7-mcp@4.3.0"
+        "@upstash/context7-mcp@4.4.1"
       ],
       "auto_register": true,
       "api_key_env": "CONTEXT7_API_KEY",
@@ -582,7 +618,7 @@
         "library-documentation",
         "framework-api-lookup"
       ],
-      "scope_note": "Current third-party library documentation, distinct from codebase-memory's local repository graph. Small always-on core; advertised schema bytes are not per-turn bills. The capability record names its measured version; remeasure after changing the package. 2026-10-10: 4.3.0 Windows initialize/tools-list PASS; 2 advertised tools, 5,231 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised."
+      "scope_note": "Current third-party library documentation, distinct from codebase-memory's local repository graph. Small always-on core; advertised schema bytes are not per-turn bills. The capability record names its measured version; remeasure after changing the package. 2026-10-10: 4.3.0 Windows initialize/tools-list PASS; 2 advertised tools, 5,231 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. 2026-10-13: 4.4.1 isolated Windows initialize/tools-list PASS: 2 tools, 5,221 compact UTF-8 schema bytes; production npm audit zero known findings. No credentialed query or inference tested."
     },
     {
       "id": "github-mcp-server",
@@ -623,13 +659,13 @@
       "kind": "mcp-python",
       "mcp": true,
       "license": "MIT",
-      "version": "1.7.0",
+      "version": "2.0.0",
       "github": {
         "owner": "oraios",
         "repo": "serena"
       },
       "install": "uv-tool",
-      "install_command": "uv tool install -p 3.13 serena-agent",
+      "install_command": "uv tool install -p 3.13 serena-agent==2.0.0",
       "exe_rel": "%USERPROFILE%\\.local\\bin\\serena.exe",
       "profile": "code-intel",
       "auto_register": false,
@@ -638,7 +674,7 @@
         "symbol-navigation",
         "symbol-level-edits"
       ],
-      "scope_note": "Language-server-backed symbol search and editing. NOT registered globally and NOT registered machine-wide: TOOLS\\Set-McpProfile.ps1 wires it for the one project that shows source-tree markers, to keep optional capability in relevant projects. Claude Code takes it in projects[\"<abs path>\"].mcpServers, Grok in the project's .grok\\config.toml and Codex in trusted-project .codex\\config.toml. Kimi is skipped unless -Global is passed. Hermes uses its separate native code profile for codebase-memory without adding Serena to default. Registered with a per-client --context so the tool set is trimmed to what the client does not already provide -- Serena 1.7.0 ships one for claude-code, codex and grok, and Kimi falls back to the generic 'agent' context -- and with --project <path> so it activates the project it was written for. Overlaps codebase-memory-mcp deliberately: that answers 'where is this in the graph', this answers 'what does this symbol resolve to, and rewrite its body'."
+      "scope_note": "Language-server-backed symbol search and editing. NOT registered globally and NOT registered machine-wide: TOOLS\\Set-McpProfile.ps1 wires it for the one project that shows source-tree markers, to keep optional capability in relevant projects. Claude Code takes it in projects[\"<abs path>\"].mcpServers, Grok in the project's .grok\\config.toml and Codex in trusted-project .codex\\config.toml. Kimi is skipped unless -Global is passed. Hermes uses its separate native code profile for codebase-memory without adding Serena to default. Registered with a per-client --context so the tool set is trimmed to what the client does not already provide -- Serena 1.7.0 ships one for claude-code, codex and grok, and Kimi falls back to the generic 'agent' context -- and with --project <path> so it activates the project it was written for. Overlaps codebase-memory-mcp deliberately: that answers 'where is this in the graph', this answers 'what does this symbol resolve to, and rewrite its body'. 2026-10-13: 2.0.0 Windows/Python 3.13 initialize/tools-list PASS in claude-code, codex and grok contexts (23 tools; 26,312 / 30,038 / 29,440 compact schema bytes). Browser/dashboard explicitly disabled during probes. CLI version now pinned rather than silently installing latest. No real language-server edit or inference certified."
     },
     {
       "id": "chrome-devtools-mcp",
@@ -772,15 +808,15 @@
       "name": "RTK (Rust Token Killer)",
       "kind": "cli-optional",
       "license": "Apache-2.0",
-      "version": "0.51.0",
+      "version": "1.0.0",
       "github": {
         "owner": "rtk-ai",
         "repo": "rtk"
       },
       "install": "zip-extract",
-      "offline_asset": "rtk-x86_64-pc-windows-msvc.zip",
+      "offline_asset": "rtk-oss-x86_64-pc-windows-msvc.zip",
       "asset_match": [
-        "rtk-x86_64-pc-windows-msvc.zip"
+        "rtk-oss-x86_64-pc-windows-msvc.zip"
       ],
       "target_dir": "%USERPROFILE%\\.local\\bin",
       "exe_rel": "rtk.exe",
@@ -812,7 +848,7 @@
         ],
         "broad_upstream_hook": false
       },
-      "scope_note": "CLI output filter with zero standing schema tokens. GIT CORPUS, measured on this repo AT rtk 0.51.0 against pinned refs: git diff v8.6.1..v8.6.5 430,285 -> 55,870 bytes (87%), git log v8.6.1..v8.6.5 14,250 -> 1,660 (88%), git diff v8.6.4..v8.6.5 33,453 -> 26,820 (20%), and git log --stat -20 v8.6.5 102,301 -> 102,301 (0%). Those are summaries, not lossless replacements: on the larger diff RTK retained 341 of 5,856 changed lines and omitted 5,515. Exact short status is different: a fixture covering staged, unstaged, deleted, renamed, Unicode and untracked paths was line-identical 5/5. NON-GIT CORPUS measured at 0.46.0 on 2026-08-27: rtk test kept the failure at about 93% saved; excluding truncating rows, the aggregate was 7.4% against git's 85.2%. TRUNCATION IS NOT SAVING: rtk json returned one of 5,425 array rows plus `... +5424 more`. rtk find works with a simple -name but breaks on compound predicates; rtk-ai/rtk#3410 reports its unconditional rewrite also intercepts find -delete/-exec. Archive correction: rtk test writes a complete tee for the measured 5.4 KB run and prints its path, but RTK documents a 1 MB raw tee cap. WINDOWS INTEGRATION, re-probed at 0.47.0 on 2026-09-02: upstream rewrite still catches lossy diff/log/show, broken find, cat/read, grep, curl, gh, and mutating git add/commit/push. Therefore broad upstream init and Hermes rtk-rewrite stay off. The bundle installs RTK by default and wires its own allowlist: exact standalone git status plus standalone human-facing pytest, cargo test and go test. Machine-readable output, pipes/redirection, all mutating Git, diff/show/log/find/search/read/curl/gh stay raw. Claude, Grok and Hermes receive the executable hook; Codex and Kimi receive the same narrow instruction because no trusted command-mutation hook is established there. Telemetry remains opt-in. Remeasured 2026-10-02 with TESTS/test_rtk_candidate.py: all four pinned corpus rows; allowlisted rewrite protocol exit 3 PASS; --short/-s preserved staged, unstaged, deleted, renamed, Unicode and untracked status lines (status comparison is line-wise). Broad hooks remain disabled; these are byte savings, not measured billed tokens."
+      "scope_note": "CLI output filter with zero standing schema tokens. GIT CORPUS, measured on this repo AT rtk 1.0.0 against pinned refs: git diff v8.6.1..v8.6.5 430,285 -> 55,870 bytes (87%), git log v8.6.1..v8.6.5 14,250 -> 1,660 (88%), git diff v8.6.4..v8.6.5 33,453 -> 26,820 (20%), and git log --stat -20 v8.6.5 102,301 -> 102,301 (0%). Those are summaries, not lossless replacements: on the larger diff RTK retained 341 of 5,856 changed lines and omitted 5,515. Exact short status is different: a fixture covering staged, unstaged, deleted, renamed, Unicode and untracked paths was line-identical 5/5. NON-GIT CORPUS measured at 0.46.0 on 2026-08-27: rtk test kept the failure at about 93% saved; excluding truncating rows, the aggregate was 7.4% against git's 85.2%. TRUNCATION IS NOT SAVING: rtk json returned one of 5,425 array rows plus `... +5424 more`. rtk find works with a simple -name but breaks on compound predicates; rtk-ai/rtk#3410 reports its unconditional rewrite also intercepts find -delete/-exec. Archive correction: rtk test writes a complete tee for the measured 5.4 KB run and prints its path, but RTK documents a 1 MB raw tee cap. WINDOWS INTEGRATION, re-probed at 0.47.0 on 2026-09-02: upstream rewrite still catches lossy diff/log/show, broken find, cat/read, grep, curl, gh, and mutating git add/commit/push. Therefore broad upstream init and Hermes rtk-rewrite stay off. The bundle installs RTK by default and wires its own allowlist: exact standalone git status plus standalone human-facing pytest, cargo test and go test. Machine-readable output, pipes/redirection, all mutating Git, diff/show/log/find/search/read/curl/gh stay raw. Claude, Grok and Hermes receive the executable hook; Codex and Kimi receive the same narrow instruction because no trusted command-mutation hook is established there. Telemetry remains opt-in. Remeasured 2026-10-02 with TESTS/test_rtk_candidate.py: all four pinned corpus rows; allowlisted rewrite protocol exit 3 PASS; --short/-s preserved staged, unstaged, deleted, renamed, Unicode and untracked status lines (status comparison is line-wise). Broad hooks remain disabled; these are byte savings, not measured billed tokens. 2026-10-13: Apache-2.0 OSS edition selected explicitly; upstream's default binary now uses different licensing. Official Windows OSS archive SHA-256 verified, all four fixed corpus rows unchanged, exact short-status fixture PASS and allowlisted rewrite exit-3 protocol PASS. No pipelines, daemon or upstream broad hook enabled."
     },
     {
       "id": "omni",
@@ -939,8 +975,8 @@
       "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
     }
   ],
-  "pack_version": "8.12.1",
-  "updated_utc": "2026-10-12",
+  "pack_version": "8.13.0",
+  "updated_utc": "2026-10-13",
   "providers": {
     "Grok": {
       "skills": "skills",
@@ -1018,7 +1054,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.12.1",
-  "updated": "2026-10-12",
+  "catalog_version": "8.13.0",
+  "updated": "2026-10-13",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

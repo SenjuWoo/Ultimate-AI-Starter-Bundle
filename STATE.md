@@ -1,5 +1,53 @@
 # Bundle audit state
 
+## v8.13.0 audit: on-demand reverse engineering and usage discipline
+
+- Baseline is published v8.12.1 at `4763fc0`; main also records publication.
+  Do not recreate that release or trust superseded pending-release notes.
+- Canonical and live provider skill parsing sweep found no failures. The
+  auditor accepted missing/empty trees and invalid UTF-8; three real CLI
+  regressions reproduced the bugs, then passed after repair. Index sizes are
+  estimates, not actual loaded or billed tokens.
+- REA 6.4.0 isolated install (lifecycle scripts disabled) and help PASS;
+  production dependency audit reports zero known vulnerabilities. MCP transport
+  exposes 170 tools / 1,954,683 compact UTF-8 schema bytes. No global registration,
+  upstream setup, target execution or native-engine certification. CLI-first.
+- Accepted tested updates: Universal Modder `5ba8150`, Ponytail 5.2.0,
+  Context7 4.4.1, Serena 2.0.0 and RTK 1.0.0's Apache-licensed OSS build.
+  Preserved Windows/privacy/security patches; upstream global RE setup and
+  the unbounded UE3 fallback are not shipped. No new indexed skill entry.
+- Native Windows pack gate PASS; strict PyYAML frontmatter sweep PASS for
+  canonical and all five installed trees. Ponytail 136 + 31 tests PASS;
+  Universal Modder 133 PASS / one deliberately unshipped session-hook skip.
+  Smaller executable regressions, fixed RTK corpus/rewrites and three Serena
+  client-context transport probes passed. No inference/billing/runtime claim.
+- Source/release contracts PASS (143/0); source manifest verifies 8,843 entries.
+  Removed the intentionally excluded helper from generated trees/index.
+- Reproduced a migrated Grok ledger retaining project-bound Serena globally.
+  Repair now retires only a matching recorded duplicate after scoped wiring,
+  preserving personal/global-policy variants and dry-run bytes. Native profile
+  gate failed before the fix and passed after it. Installed Serena 2.0.0 uses
+  the normal user tool home, not the isolated probe prefix.
+- Next: final ownership-aware local sync, exact-commit CI/security, tag/build,
+  both extracted-archive gates and published downloaded-byte verification.
+- Final refresh: 22 current components, seven explicit holds. Firecrawl
+  3.29.1 and candidate 3.30.0 have known high-severity dependency findings;
+  suggested 3.24.0 fallback is not clean either. Block new installation and
+  registration; doctor reports active held entries without deleting personal
+  configs. This machine has no registered Firecrawl server. No credentials or
+  remote scraping calls were used. Recheck upstream before lifting the hold.
+- Local v8.13.0 selected-component install and final installed-state doctor
+  PASS; all 15 core provider/server handshakes passed. Bounded leftover plan
+  found nothing to remove. Grok's recorded duplicate global Serena is removed
+  after the project copy is verified; matching parsed arguments differed only
+  by a valid trailing array comma. Quoted whitespace remains significant.
+- Removed one complete matching orphan-tagged private-profile duplicate from
+  the live Codex instruction file, with an exact backup (4,828 bytes less).
+  Differing personal text stays; the actual writer fixtures cover both cases.
+- Source reports: ignored `artifacts/audit-20261013-*`. Never publish private
+  provider configs, local paths or conversation exports. Default-sandbox pack
+  test hit NTFS junction access restrictions; needs a real Windows rerun.
+
 ## v8.12.1: private-profile review and safe refresh
 
 - Resumed against the clean v8.12.0 tree, not the superseded v8.11.1 plan.

@@ -4726,6 +4726,14 @@ def test_always_on_mcp_pins_come_from_the_catalog() -> None:
             int(x) for x in declared.split(".")
         ), "Hermes carries an unmeasured Context7 fallback newer than the catalog"
 
+    # Task bootstrap must not bypass the catalog pin with a bare uv install.
+    serena = next(c for c in catalog["components"] if c.get("id") == "serena")
+    spec = "serena-agent==" + serena["version"]
+    profiles = json.loads(read(ROOT / "BUNDLED-TOOLS" / "PROFILES.json"))
+    server = next(s for p in profiles["profiles"] for s in p.get("servers", []) if s["id"] == "serena")
+    assert spec in serena["install_command"], "catalog installs an unpinned Serena"
+    assert spec in server["auto_install"]["steps"][0]["args"], "profile bootstrap bypasses the tested Serena pin"
+
 def test_manifest_covers_every_tracked_file() -> None:
     """``verify_manifest.py`` proves every RECORDED file exists. Nothing proved
     every existing file is recorded, and the difference hid two bugs.

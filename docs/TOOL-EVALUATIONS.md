@@ -1,5 +1,42 @@
 # Tool evaluations
 
+## 2026-10-13 — scoped RE and current candidates
+
+Firecrawl: do not adopt 3.30.0. Isolated, lifecycle-script-disabled production
+npm audits report three high-severity package findings for both 3.29.1 and
+3.30.0 through the SDK's pinned Axios. The audit-suggested 3.24.0 fallback is
+also not clean (one high/two moderate package findings). No credentialed calls
+or exploitability claim. Block new installs/registration; report existing
+registrations without deleting unknown private configuration. Recheck a clean
+upstream dependency refresh plus transport test before lifting the hold.
+One underlying advisory: [Axios prototype-pollution gadget](https://github.com/advisories/GHSA-vh66-26gq-q6x8).
+
+REA 6.4.0: integrity-bound npm install with lifecycle scripts disabled, Windows
+CLI/help and a throw-on-execution JavaScript fixture passed static analysis.
+The fixture graph has seven nodes and no integrity contradictions. Production
+npm audit reported no known findings; this is not antivirus certification.
+Full stdio discovery: 170 tools / 1,954,683 compact UTF-8 schema bytes.
+Adopt optional CLI/task routing, not a global MCP or a duplicate skill collection.
+Reuse Reverse THIS! specialist tools and Universal Modder game recon.
+Native Ghidra, GUI, runtime capture and paid inference were not exercised.
+
+Context7 4.4.1: two tools / 5,221 bytes; production npm audit clean. Serena
+2.0.0/Python 3.13: claude-code, codex and grok contexts all connected with the
+dashboard disabled (23 tools; 26,312 / 30,038 / 29,440 bytes respectively).
+RTK 1.0.0 Apache-2.0 OSS asset: verified official SHA-256, exact short status,
+rewrite exit-3 protocol and unchanged four-row pinned corpus. No broad hook,
+pipeline rewrite or daemon. Ponytail 5.2.0: 136 root + 31 pi-extension tests
+passed in a real Windows Python/Git Bash environment, retaining local security
+fixtures. Universal Modder snapshot `5ba8150` updates fingerprints, knowledge
+and a mod-porting guide while preserving the bundle's Windows/privacy patches.
+
+The supplied screenshots are CodeBurn 0.9.27 advice, not Firecrawl. Its cap
+recommendation estimates from cap differences, and its MCP-coverage explanation
+does not model every host's deferred tool loading. Do not automatically apply
+removal commands, 4:1 read quotas or global output clipping. The on-demand
+[decision guide](../_CANONICAL-SKILLS/codeburn/references/recommendations.md)
+records all eight recommendations. No usage/billing/quality saving is certified.
+
 ## 2026-10-10 full MCP remeasurement (v8.7.40)
 
 Every shipped or routed MCP that can start without a user credential, editor

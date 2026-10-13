@@ -734,8 +734,16 @@ function Get-UabsTomlTableFingerprint([string]$Text) {
   <# Comments, whitespace, `enabled = true` and literal-vs-basic string quoting
      do not change what a table means. #>
   $t = $Text -replace '(?m)^[ \t]*#.*$', '' -replace '(?m)^[ \t]*enabled\s*=\s*true[ \t]*\r?$', ''
-  $t = [regex]::Replace($t, "'([^'\r\n]*)'", { param($m) '"' + ($m.Groups[1].Value -replace '\\', '\\') + '"' })
-  return ($t -replace '\s+', '')
+  # Whitespace inside quoted paths/arguments is data, not TOML formatting.
+  $strings = @([regex]::Matches($t, '"(?:\\.|[^"\\])*"|''[^'']*''') | ForEach-Object {
+    $value = $_.Value
+    if ($value.StartsWith("'")) { $value = $value.Substring(1, $value.Length - 2) }
+    else { try { $value = $value | ConvertFrom-Json } catch { } }
+    ConvertTo-Json -InputObject ([string]$value) -Compress
+  })
+  # Compare syntax separately from string data; TOML arrays allow a trailing comma.
+  $shape = [regex]::Replace($t, '"(?:\\.|[^"\\])*"|''[^'']*''', 'STRING') -replace '\s+', ''
+  return (($shape -replace ',\]', ']') + '|' + ($strings -join '|'))
 }
 
 function Add-UabsMcpToml {

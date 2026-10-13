@@ -20,6 +20,10 @@ legal advice. When a game's EULA or mod policy matters, read it (search "<publis
   - tamper with DRM (Denuvo, Steam stub) or ownership checks.
 
   If a loader needs the game's EXE patched past DRM, stop.
+
+  Reading a protected EXE to understand it is different: analysing your own copy, in live memory or as a
+  private dump kept outside any repo, is fine. Never write an unpacked EXE into the game folder, run it, or
+  share it, and keep unpacking steps out of notes (CONTRIBUTING.md).
 - VAC (Valve) bans for modified clients on VAC-secured servers. Run local tests with `-insecure` and never
   join public servers while anything is injected.
 - Tools running next to a protected game (debuggers, Cheat Engine, overlays that inject) can trip its

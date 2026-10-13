@@ -94,7 +94,7 @@ $ghExe = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\github-mcp-serv
 #
 # Falls back to the previous literal if the catalog cannot be read, so a
 # damaged catalog degrades to "one release behind" rather than "unpinned".
-$context7Args = @('-y', '@upstash/context7-mcp@4.3.0')
+$context7Args = @('-y', '@upstash/context7-mcp@4.4.1')
 try {
   $catalogPath = Join-Path (Split-Path -Parent $PSScriptRoot) 'BUNDLED-TOOLS\CATALOG.json'
   if (Test-Path -LiteralPath $catalogPath -PathType Leaf) {

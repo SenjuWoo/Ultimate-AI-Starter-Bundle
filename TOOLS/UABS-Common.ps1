@@ -1048,9 +1048,23 @@ function Update-UabsInstructionProfile {
   $bom = $false
   if ($exists) { $b = [IO.File]::ReadAllBytes($Path); $bom = ($b.Length -ge 3 -and $b[0] -eq 0xEF -and $b[1] -eq 0xBB -and $b[2] -eq 0xBF) }
   $nl = if ($pre -match "`r`n") { "`r`n" } else { "`n" }
+  $knownProfiles = @()
+  if ($Text) { $knownProfiles += $Text.Trim() }
+  foreach ($m in [regex]::Matches($pre, '(?ms)^<!--[ \t]*UABS-PROFILE[ \t]*-->\r?\n(?<text>.*?)^<!--[ \t]*/UABS-PROFILE[ \t]*-->')) {
+    $knownProfiles += $m.Groups['text'].Value.Trim()
+  }
   # Take the blank line that separated the block with it, so removal restores
   # the surrounding text exactly.
   $body = [regex]::Replace($pre, '(?ms)(?:\r?\n)?^[ \t]*<!-- UABS-PROFILE -->[ \t]*\r?\n.*?^[ \t]*<!-- /UABS-PROFILE -->[ \t]*(?:\r?\n|$)', '').Trim("`r", "`n")
+  # Retire only a complete known copy carrying the pack's orphan closing tag.
+  # Older manual copies sometimes omitted the heading's Markdown prefix.
+  foreach ($known in $knownProfiles) {
+    foreach ($candidate in @($known, ($known -replace '^## (?=Operator profile \(private; this PC only\))', ''))) {
+      $literalLines = @($candidate -split '\r?\n' | ForEach-Object { [regex]::Escape($_) })
+      $duplicate = '(?m)^' + ($literalLines -join '\r?\n') + '\r?\n[ \t]*<!-- /UABS-PROFILE -->[ \t]*(?:\r?\n|$)'
+      $body = [regex]::Replace($body, $duplicate, '').Trim("`r", "`n")
+    }
+  }
   $new = $body
   if ($Text) {
     $block = '<!-- UABS-PROFILE -->' + $nl + ($Text.Trim() -replace '\r?\n', $nl) + $nl + '<!-- /UABS-PROFILE -->'
@@ -1392,14 +1406,32 @@ function Repair-UabsGrokImpeccableHook([string]$Path) {
   if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { return }
   if ((Get-Item -LiteralPath $Path).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Refusing a redirected Grok hook file.' }
   $before = [IO.File]::ReadAllText($Path)
-  $null = $before | ConvertFrom-Json
+  $doc = $before | ConvertFrom-Json
   $old = '[ ! -f ".grok/skills/impeccable/scripts/impeccable" ] || ".grok/skills/impeccable/scripts/impeccable" hook'
-  # Preserve the original project-relative guard: no new global engine startup.
+  # Both known global wrappers target a removed executable. Keep custom hooks;
+  # current project-local Impeccable hook.mjs integrations have a different path.
   $new = 'if (Test-Path -LiteralPath ".grok/skills/impeccable/scripts/impeccable.cmd" -PathType Leaf) { & ".grok/skills/impeccable/scripts/impeccable.cmd" hook }'
-  $pattern = '("command"\s*:\s*)' + [regex]::Escape(($old | ConvertTo-Json -Compress))
-  $encoded = $new | ConvertTo-Json -Compress
-  $after = [regex]::Replace($before, $pattern, [System.Text.RegularExpressions.MatchEvaluator]{ param($m) $m.Groups[1].Value + $encoded })
-  if ($after -ceq $before) { return }
+  $changed = $false
+  if (-not $doc.hooks) { return }
+  foreach ($event in @('PostToolUse','Stop')) {
+    $property = $doc.hooks.PSObject.Properties[$event]
+    if (-not $property) { continue }
+    $groups = @()
+    foreach ($group in @($property.Value)) {
+      $handlers = $group.PSObject.Properties['hooks']
+      if (-not $handlers) { $groups += $group; continue }
+      $keep = @(); $removed = $false
+      foreach ($handler in @($handlers.Value)) {
+        if ($handler.command -ceq $old -or $handler.command -ceq $new) {
+          $removed = $true; $changed = $true
+        } else { $keep += $handler }
+      }
+      if ($keep.Count -or -not $removed) { $handlers.Value = @($keep); $groups += $group }
+    }
+    $property.Value = @($groups)
+  }
+  if (-not $changed) { return }
+  $after = ($doc | ConvertTo-Json -Depth 100) + [Environment]::NewLine
   $null = $after | ConvertFrom-Json
   $bytes = [IO.File]::ReadAllBytes($Path)
   $bom = $bytes.Length -ge 3 -and $bytes[0] -eq 239 -and $bytes[1] -eq 187 -and $bytes[2] -eq 191
@@ -1412,7 +1444,7 @@ function Repair-UabsGrokImpeccableHook([string]$Path) {
       Copy-Item -LiteralPath $backup -Destination $Path -Force
       throw 'Grok hook verification failed; original restored.'
     }
-    Write-UabsOk 'Grok: repaired legacy Impeccable Bash hooks for PowerShell; original backed up'
+    Write-UabsOk 'Grok: retired obsolete global Impeccable launchers; original backed up'
   } finally { if (Test-Path -LiteralPath $temp) { Remove-Item -LiteralPath $temp -Force } }
 }
 

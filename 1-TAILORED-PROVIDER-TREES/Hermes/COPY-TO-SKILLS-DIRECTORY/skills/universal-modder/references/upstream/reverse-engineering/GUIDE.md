@@ -62,8 +62,8 @@ Use the community tool first:
 - Unity: UABEA, AssetRipper
 - Unreal: FModel, UAssetGUI
   - **Fully compressed UE3 `.upk`** (UELib shows `Exports=0`): unpack a copy with Gildor's `decompress`
-    (from UE Viewer), or, for LZO packages, with
-    [`unpack_upk.py`](references/ue3-packages/README.md).
+    (from UE Viewer); see the
+    [compressed-package route](references/ue3-packages/README.md). The unbounded upstream fallback is not shipped.
 - Bethesda: xEdit, BSArch
 - GameMaker: UndertaleModTool
 - Genie: genieutils

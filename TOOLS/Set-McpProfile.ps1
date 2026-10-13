@@ -546,6 +546,37 @@ function Invoke-UabsProfileWrite {
       else { Write-Skip ("{0,-7} no change" -f $prov) }
     }
 
+    # A converted ledger can leave an old Grok global table behind. Retire only
+    # an exact recorded, project-bound duplicate after its scoped copy exists.
+    if ($prov -eq 'Grok' -and -not $Machine -and $ProjectPath -and
+        (Test-UabsPath -LiteralPath $machineTarget.Path -PathType Leaf) -and
+        (Test-UabsPath -LiteralPath $target.Path -PathType Leaf)) {
+      foreach ($server in $write) {
+        $projectOwned = $false; $globalOwned = $false
+        foreach ($record in $state['profiles'].Values) {
+          $pr = if ($record['projects'] -and $record['projects'].Contains($ProjectPath)) { $record['projects'][$ProjectPath] } else { $null }
+          if ($pr -and @($pr['providers']) -contains $prov -and @($pr['servers']) -contains $server['id']) { $projectOwned = $true }
+          $gr = $record['global']
+          if ($gr -and @($gr['providers']) -contains $prov -and @($gr['servers']) -contains $server['id']) { $globalOwned = $true }
+        }
+        if (-not $projectOwned -or $globalOwned) { continue }
+        $name = [regex]::Escape([string]$server['id'])
+        $globalText = [IO.File]::ReadAllText($machineTarget.Path)
+        if ($globalText -match ('(?m)^\[mcp_servers\.' + $name + '\.')) { continue }
+        $pattern = '(?ms)^\[mcp_servers\.' + $name + '\].*?(?=^\[|\z)'
+        $old = [regex]::Match($globalText, $pattern).Value
+        $scoped = [regex]::Match([IO.File]::ReadAllText($target.Path), $pattern).Value
+        if (-not $old -or -not $scoped -or -not $old.Contains('--project')) { continue }
+        # The writer's default startup timeout is not a personal policy.
+        $old = $old -replace '(?m)^startup_timeout_sec\s*=\s*90\s*\r?$', ''
+        $scoped = $scoped -replace '(?m)^startup_timeout_sec\s*=\s*90\s*\r?$', ''
+        if ((Get-UabsTomlTableFingerprint $old) -ceq (Get-UabsTomlTableFingerprint $scoped)) {
+          [void](Remove-UabsMcpToml -Path $machineTarget.Path -Section 'mcp_servers' -Ids @($server['id']) -CheckOnly:$CheckOnly)
+          Write-Ok ("Grok    retired duplicate global {0}; project copy retained" -f $server['id'])
+        }
+      }
+    }
+
     if ($prov -eq 'Codex' -and -not $Machine) {
       Write-Host '          configured, not activation proof: Codex loads project config only after you trust the project. Restart, then verify with codex mcp list from this folder. Trust was not changed.' -ForegroundColor Yellow
     }

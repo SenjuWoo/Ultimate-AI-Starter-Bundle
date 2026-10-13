@@ -70,11 +70,8 @@ try {
   Repair-UabsGrokImpeccableHook -Path $hookPath
   $repaired = [IO.File]::ReadAllText($hookPath)
   $parsed = $repaired | ConvertFrom-Json
-  Assert ($parsed.personal -eq 'keep' -and $parsed.hooks.Stop[0].hooks[0].timeout -eq 30) 'Hook repair changed unrelated settings.'
-  $fixed = $parsed.hooks.PostToolUse[0].hooks[0].command
-  Assert ($fixed -eq $parsed.hooks.Stop[0].hooks[0].command -and $fixed -ne $bash) 'Both legacy commands were not repaired.'
-  $inspection.hooks[0].target = $fixed
-  Assert (@(Get-UabsGrokHookIssues -Inspection $inspection).Count -eq 0) 'Repaired Impeccable is not valid PowerShell.'
+  Assert ($parsed.personal -eq 'keep') 'Hook retirement changed unrelated settings.'
+  Assert (@($parsed.hooks.PostToolUse).Count -eq 0 -and @($parsed.hooks.Stop).Count -eq 0) 'Obsolete global launchers remain registered.'
   Repair-UabsGrokImpeccableHook -Path $hookPath
   Assert ([IO.File]::ReadAllText($hookPath) -ceq $repaired) 'Hook repair is not idempotent.'
   $backups = @(Get-ChildItem -LiteralPath $fixtureRoot -Filter 'impeccable.json.before-powershell-*.bak')
@@ -83,19 +80,14 @@ try {
   [IO.File]::WriteAllText($hookPath, $custom, $utf8)
   Repair-UabsGrokImpeccableHook -Path $hookPath
   Assert ([IO.File]::ReadAllText($hookPath) -ceq $custom) 'Unknown custom hook was overwritten.'
-  $project = Join-Path $fixtureRoot ('project ! ' + [char]0x00E9)
-  New-Item -ItemType Directory -Path $project | Out-Null
-  Push-Location -LiteralPath $project
-  try {
-    $global:LASTEXITCODE = 0
-    & ([scriptblock]::Create($fixed))
-    Assert ($LASTEXITCODE -eq 0) 'Absent project launcher was not a silent no-op.'
-    $scripts = Join-Path $project '.grok\skills\impeccable\scripts'
-    New-Item -ItemType Directory -Force -Path $scripts | Out-Null
-    [IO.File]::WriteAllText((Join-Path $scripts 'impeccable.cmd'), "@echo off`r`nif not `"%1`"==`"hook`" exit /b 8`r`necho called>proof.txt`r`nexit /b 0`r`n", $utf8)
-    & ([scriptblock]::Create($fixed))
-    Assert ($LASTEXITCODE -eq 0 -and (Test-Path -LiteralPath (Join-Path $project 'proof.txt'))) 'Project launcher did not receive hook in a spaces/Unicode/! path.'
-  } finally { Pop-Location }
+  # The previous repair produced a valid PowerShell command for a removed CLI.
+  $fixed = 'if (Test-Path -LiteralPath ".grok/skills/impeccable/scripts/impeccable.cmd" -PathType Leaf) { & ".grok/skills/impeccable/scripts/impeccable.cmd" hook }'
+  $hookDoc.hooks.Stop[0].hooks = @(@{command=$fixed;timeout=30}, @{command='Write-Output personal';timeout=7})
+  $hookDoc.hooks.PostToolUse = @()
+  [IO.File]::WriteAllText($hookPath, ($hookDoc | ConvertTo-Json -Depth 10), $utf8)
+  Repair-UabsGrokImpeccableHook -Path $hookPath
+  $parsed = [IO.File]::ReadAllText($hookPath) | ConvertFrom-Json
+  Assert (@($parsed.hooks.Stop[0].hooks).Count -eq 1 -and $parsed.hooks.Stop[0].hooks[0].command -eq 'Write-Output personal' -and $parsed.hooks.Stop[0].hooks[0].timeout -eq 7) 'PowerShell legacy hook was kept or a personal handler was lost.'
   $inspection.externalCompat.cells = @()
   $refused = $false
   try { Get-UabsGrokHookIssues -Inspection $inspection | Out-Null } catch { $refused = $true }

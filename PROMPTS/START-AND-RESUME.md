@@ -1,44 +1,41 @@
 # Start or resume a task
 
-Use one prompt, then describe the actual task. These work across providers;
-the installed instructions already carry the detailed operating rules.
+Use one prompt once per chat. These are recommended defaults across providers,
+not text the installer prepends to every message. Installed instructions already
+carry the detailed rules. Put the changing task after the stable instructions;
+actual cache reuse still depends on the provider.
 More emphatic text does not grant tools, permissions or extra capability.
 
 ## New chat
 
 ```text
-Task: [what you want done, project/files, and what a successful result looks like].
+Inspect the current project and instructions. Use relevant available skills,
+plugins, MCPs and CLIs, inside or outside the workspace; keep unrelated tools
+unloaded. Ask before expensive work only when ambiguity changes the outcome or
+risk; otherwise proceed with sensible assumptions. Preserve personal edits and
+settings. Complete implementation, tests, docs and handoff. Save usage through
+focused output, batching and evidence reuse unless a better way is discovered, never weaker validation or quality.
+Keep STATE.md current; report verified results and exact remaining gaps.
 
-Inspect the current project and relevant instructions first. Use the available
-skills, plugins, MCPs and CLIs that materially improve this task; keep unrelated
-capabilities unloaded. Before expensive work, ask a concise question if an
-unresolved ambiguity would materially change the result. Otherwise make
-reasonable assumptions and proceed.
-
-Complete the work and its relevant tests, docs and handoff. Preserve personal
-edits and settings. Save tokens by reusing verified evidence, batching independent
-checks and keeping output focused, not by skipping validation or lowering quality.
-Keep STATE.md current for handoffs. Finish with verified results and any remaining
-blockers; never claim an unperformed check passed.
+Task: [goal, project/files, and what success looks like].
 ```
 
 ## After a usage limit
 
 ```text
-My usage limit has reset. Resume the unfinished task from this chat. Read the
-project's STATE.md and current Git status/diff first, if available; verify the
-previous agent's claims against the files and recorded results. Preserve newer
-edits and continue from the first unfinished step without repeating completed
-research or passing checks whose inputs have not changed.
-
-Use only the relevant available skills, plugins, MCPs and CLIs. Ask a concise
-question only if missing context or a consequential ambiguity prevents correct
-work. Otherwise finish the task, its validation and handoff; keep STATE.md current.
-Save tokens through focused output and evidence reuse, not reduced quality.
-Report verified results and exact remaining gaps.
+My usage limit has reset. Resume the unfinished task. Read STATE.md and current
+Git status/diff first, where available. Verify the handoff against files and
+recorded evidence; preserve newer edits. Continue from the first unfinished step
+without repeating research or checks whose inputs and environment are unchanged.
+Use relevant available skills, plugins, MCPs and CLIs; keep unrelated tools
+unloaded. Ask only when missing context or consequential ambiguity prevents
+correct work. Finish implementation, validation and handoff; keep STATE.md
+current. Save usage through focused output and evidence reuse, never weaker
+quality. Report verified results and exact gaps.
 ```
 
 If this is a different chat with no prior context, also provide the project
 location, original goal and handoff file. A resume prompt cannot reconstruct a
-missing conversation. Neither prompt overrides provider permissions or supplies
-authorization for destructive actions, costs or public publication.
+missing conversation. Neither prompt grants tools or permissions, or by itself
+authorizes destructive actions, costs or public publication. Keep detailed private
+history out of the prefix: use dated project evidence on demand instead.

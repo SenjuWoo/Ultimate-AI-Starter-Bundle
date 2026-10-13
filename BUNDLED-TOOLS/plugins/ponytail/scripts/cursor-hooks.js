@@ -15,8 +15,8 @@ const { isShellSafe } = require('../hooks/ponytail-config');
 
 const ROOT = path.join(__dirname, '..');
 const TEMPLATE = path.join(ROOT, 'hooks', 'cursor-hooks.json');
-// A word/hyphen run gets only one candidate start, avoiding quadratic retries.
-const PONYTAIL_HOOK = /(?<![\w-])ponytail-[\w-]+\.js/;
+// Match the hooks directory, not similarly named personal scripts; fixed prefix avoids quadratic retries.
+const PONYTAIL_HOOK = /[\\/]hooks[\\/]ponytail-[\w-]+\.js(?=["'\s]|$)/;
 
 function isPonytailHook(entry) {
   return Boolean(entry && typeof entry.command === 'string' && PONYTAIL_HOOK.test(entry.command));
@@ -37,8 +37,18 @@ function readConfig(file) {
   } catch (e) {
     if (e.code !== 'ENOENT') throw e;
   }
-  if (!config || typeof config !== 'object' || Array.isArray(config)) config = {};
-  if (!config.hooks || typeof config.hooks !== 'object' || Array.isArray(config.hooks)) config.hooks = {};
+  if (!config || typeof config !== 'object' || Array.isArray(config)) {
+    throw new Error(file + ' must contain a JSON object; nothing was changed');
+  }
+  if (config.hooks === undefined) config.hooks = {};
+  if (!config.hooks || typeof config.hooks !== 'object' || Array.isArray(config.hooks)) {
+    throw new Error(file + ': hooks must be an object; nothing was changed');
+  }
+  for (const [event, entries] of Object.entries(config.hooks)) {
+    if (!Array.isArray(entries)) {
+      throw new Error(file + ': hooks.' + event + ' must be an array; nothing was changed');
+    }
+  }
   return config;
 }
 

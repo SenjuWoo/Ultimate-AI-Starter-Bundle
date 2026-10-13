@@ -1,5 +1,6 @@
 ﻿# Example MCP snippets for Uabs tools
 # Copy only what you installed. Replace paths. Restart the AI app after edits.
+# Prefer Set-McpProfile.ps1 task/project routing over machine-wide manual entries.
 
 # ---------- Grok Build: %USERPROFILE%\.grok\config.toml ----------
 
@@ -10,20 +11,15 @@
 # startup_timeout_sec = 90
 # tool_timeout_sec = 6000
 
-# [mcp_servers.firecrawl-mcp]
-# command = "npx"
-# args = ["-y", "firecrawl-mcp@3.24.0"]   # PIN IT: unpinned npx cold-resolves the latest
-# enabled = true                            # package; a cold start can exceed the 30s
-# startup_timeout_sec = 120                 # startup timeout and the server reports
-#                                           # "unavailable" having printed nothing.
+# Firecrawl is security-held in CATALOG.json; do not copy an older npx snippet.
+# Native web/search and the scoped Playwright profile remain available.
 
 # GitHub is the official versioned binary installed by this bundle, not an npx
 # reference server. Let TOOLS\Add-Reasoning-MCPs.ps1 discover its exact path and
 # write: args = ["stdio", "--toolsets", "context,repos,pull_requests,actions,issues"]
 
-# Rule: PIN EVERY npx MCP server. Versioned pins that have been field-verified:
-#   firecrawl-mcp@3.24.0  @upstash/context7-mcp@4.0.4
-#   @modelcontextprotocol/server-sequential-thinking@2026.7.4
+# Rule: use the measured pins and holds in BUNDLED-TOOLS/CATALOG.json, not a
+# second version list here. Unpinned npx can change tools on the next cold start.
 # Grok-specific notes: see GROK-MCP-TROUBLESHOOTING.md. The Claude-compat MCP
 # import is OFF by default ([compat.claude] mcps = false): grok-cli 1.0.4 charged ~65s to
 # the first turn of every session and attached ZERO tools (tool_count stayed at

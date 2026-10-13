@@ -41,6 +41,12 @@ tags:
 > and mission spawners, from builders the loader filled), so this is where our attempts stopped, not a
 > proven engine limit. This note records the engine internals, where each attempt stopped, and the dead
 > ends, so nobody repeats them.
+>
+> A working route was found afterwards, and it is the "builder the loader filled" idea from Open
+> questions: build the body from the builder the game caches for the local player (`PlayerProgression`).
+> It's Kamzik123's [AC4Coop](https://github.com/Kamzik123/AC4Coop) method, written up in the
+> [spawn-route note](spawning-a-real-second-player-in-ac4-black-flag-the-working-.md). It gives another
+> Edward; spawning a *different*, chosen character from a plugin is still open.
 
 ## Setup
 
@@ -81,11 +87,13 @@ Useful ids: `Entity` `0x0984415E` (size 0x100), `EntityBuilder` `0x971A842E` (0x
 
 **Where a character's appearance comes from — the load, not the code.** A character is a node
 (`Entity`, vtable `0x1E4CE90`, 0x100 bytes) whose child/model list lives at `node+0x60` (pointer) and
-`node+0x66` (u16 count). The **only** function that fills that list is the descriptor-driven fill used by
-the loader: it copies the child ids from a serialized descriptor (`+0x10` array, `+0x16` count) one by
-one. We found nothing else that populates it. So a node created by the runtime factories we tried has an
-**empty** list and never renders — the "appearance-less shell". This one fact explains every failed spawn
-attempt.
+`node+0x66` (u16 count). The function that fills that list from data is the descriptor-driven fill used
+by the loader: it copies the child ids from a serialized descriptor (`+0x10` array, `+0x16` count) one by
+one. So a node created by the runtime factories we tried has an **empty** list and never renders — the
+"appearance-less shell". That explains the factory attempts below. The
+[spawn-route note](spawning-a-real-second-player-in-ac4-black-flag-the-working-.md) adds two facts found
+later: `Entity::addVisual` (VA `0x528300`) also appends to this list, and a node renders only with a
+render record at `+0xB0`, which a memory clone of the player lacks even though it copies the list.
 
 **The spawner data chain.** An entity can carry a `SpawningSpecification` → `SpawnNPCParams` →
 `DynamicReference` (the file-id of the character to build) plus a `ProgressionCharacterSelector`. The
@@ -103,6 +111,8 @@ rendered as its default. Two sub-cases are now explained:
 **empty shell** (a ref-counted handle to a zeroed object), not a populated builder. Instantiating that
 shell faults inside the builder's member-list binary search (it reads `[builder+0x60]` while the count is
 non-zero → null dereference). A populated builder only comes out of the **deserializer** during load.
+The local player's own builder stays cached in `PlayerProgression` after the player spawns, and that is
+what the [spawn-route note](spawning-a-real-second-player-in-ac4-black-flag-the-working-.md) builds from.
 
 **The debug/cheat spawn system is compiled in, and we found no consumer in SP.** The retail exe still
 ships the developer cheat strings (`Spawn Follow/Fight/Still/RedBall/Ship Dude`, `Change Debug Dude Type`,
@@ -126,7 +136,8 @@ array** with an active-index (`-1` = none): append, remove, and get-by-index hel
 constructor builds **ten** embedded player slots. The camera attaches to whichever index is active. A
 live Frida probe confirmed the append fires at load and the count briefly reaches 2 during
 registration. So "a second player" is a real concept in the engine — but the second player object still
-has to be a fully **rendered** character, i.e. it hits the same appearance wall.
+has to be a fully **rendered** character, i.e. it hits the same appearance wall (the cached-builder
+route in the spawn-route note gets past it).
 
 **Setting a real world transform.** The engine's own "Teleport Character" cheat gets a transform
 **interface** from a character's component holder (interface id `0xD`), then calls, in order: a
@@ -167,8 +178,9 @@ instead (next paragraph). The Rogue note documents the same interface-`0xD` path
   produced **no body** — consistent with no listener registered under the event's type id.
 - **Not verified:** that a *different* build (e.g. the MP client) has the Dude consumer; xrefs to the
   `NavigationDudeEvent` descriptor (a listener that reads the id at runtime); firing a mission/domino
-  spawner, or the crowd system's own spawn call, from a plugin. No runtime spawn of a rendered character
-  worked, but those routes weren't tried, so whether SP can do it from a plugin is open.
+  spawner, or the crowd system's own spawn call, from a plugin. None of the spawns in this note rendered
+  a character. Building from the player's cached builder does (spawn-route note); the spawner routes
+  weren't tried.
 
 ## Gotchas
 
@@ -177,8 +189,9 @@ instead (next paragraph). The Rogue note documents the same interface-`0xD` path
    address against the PE with an oracle before installing a hook; keep one convention and test it once.
 2. **A spawned/edited NPC is invisible.** **Cause:** the node's model/child list (`+0x60`) is filled only
    by the **loader** from a streamed descriptor; the nodes we created at runtime had an empty list.
-   **Fix:** none found at runtime. Use an existing (already streamed) character (the ghost-avatar route),
-   or see Open questions for getting a builder the loader has filled.
+   **Fix:** build from a builder the loader has filled: the local player's cached one (see the
+   [spawn-route note](spawning-a-real-second-player-in-ac4-black-flag-the-working-.md)), or use an
+   existing, already streamed character (the ghost-avatar route).
 3. **The loader reads your edited spawner character id but nothing changes.** **Cause:** crowd-life hosts
    take their model from the **crowd system**, which overrides the record's `DynamicReference` /
    `ProgressionCharacterSelector`. **Fix:** don't retarget crowd hosts; of the spawners we looked at,
@@ -190,7 +203,7 @@ instead (next paragraph). The Rogue note documents the same interface-`0xD` path
 5. **A "find-or-create" of a character id faults when you instantiate it.** **Cause:** it returns an
    **empty template**, not a populated builder; instantiating it null-dereferences in the builder's
    member-list search. **Fix:** don't instantiate it; the only populated builders we saw came from the
-   deserializer at load.
+   deserializer at load, and the player's one stays cached in `PlayerProgression` (spawn-route note).
 6. **The debug/cheat "Spawn Dude" cheats appear to do nothing.** **Cause:** they post an event that
    nothing in the SP build is known to listen for (the type id appears once, in its own descriptor).
    **Fix:** none found; don't build an avatar on them. Check xrefs to the event's descriptor before
@@ -213,10 +226,12 @@ valuable artifact is the class-descriptor table and the RVA oracle.
 
 - Spawning the way the engine does: fire a mission/domino spawner, or the crowd system's own spawn call,
   from a plugin, with a builder the loader has already filled (for example in a mission cell whose
-  dependency table declares the character). This is the untried route to a rendered second character.
+  dependency table declares the character). The player's cached builder (spawn-route note) already
+  gives a rendered second Edward; a spawner is still the untried route to a *different*, chosen character.
 - Xrefs to the `NavigationDudeEvent` descriptor, to rule out a listener that reads the type id at runtime.
 - Whether the MP client (`AC4BFMP.exe`) contains the Dude-event consumer; if so, it documents the intended
   path (studied statically only, never run or injected).
 - True model swap for the ghost body: [coop-ghost-avatar.md](coop-ghost-avatar.md) records the remaining
-  work (an engine skin/morph path). That is the shortest route to an *assassin-looking* second character,
-  on top of the working driven body.
+  work (an engine skin/morph path). The cached-builder spawn already gives a second Edward, so this
+  matters only for a hijacked crowd body.
+

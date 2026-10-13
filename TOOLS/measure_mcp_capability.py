@@ -31,7 +31,10 @@ upstream does not silently turn into a false verdict.
 
 Usage
 -----
-    python TOOLS/measure_mcp_capability.py "npx -y firecrawl-mcp@3.24.0" firecrawl-mcp
+    python TOOLS/measure_mcp_capability.py "<verified-server-command>" <component-id>
+
+Read CATALOG.json pins/security holds before probing. The Firecrawl findings
+above are historical evidence, not a recommendation to execute its old pin.
 
 Writes BUNDLED-TOOLS/capability-records/<id>.json.
 """

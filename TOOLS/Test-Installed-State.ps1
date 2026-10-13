@@ -534,6 +534,12 @@ if ($capCatalog) {
       $capState.not_registered_because = [string]$comp.keyless_skip_reason
     }
 
+    if ($comp.security_hold) {
+      $capState.not_registered_because = 'SECURITY HOLD: ' + [string]$comp.security_hold
+      if ($capState.registered_for.Count -or $capState.scoped_for.Count) {
+        Err ("$cid is registered despite a security hold. Review/remove its owned registration; personal configurations were not deleted. " + $comp.security_hold)
+      }
+    }
     $capabilityStates += $capState
   }
 }

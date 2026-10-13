@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "catalog_version": "8.12.1",
-  "pack_version": "8.12.1",
+  "catalog_version": "8.13.0",
+  "pack_version": "8.13.0",
   "updated_utc": "2026-10-12",
   "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
   "reads": "TOOLS/Set-McpProfile.ps1",
@@ -88,9 +88,9 @@
           "requires": {
             "command": "%USERPROFILE%\\.local\\bin\\serena.exe"
           },
-          "install_hint": "uv tool install -p 3.13 serena-agent && serena init",
+      "install_hint": "uv tool install -p 3.13 serena-agent==2.0.0 && serena init",
           "upstream_setup": "serena setup {claude-code|codex|grok} registers Serena machine-wide for that client. This pack deliberately does not call it: a machine-wide registration is the cost this file exists to avoid.",
-          "context_note": "--context trims the tool set to what the client does not already have. Serena 1.7.0 ships named contexts for claude-code, codex and grok; Kimi and Hermes have none, so they get the generic 'agent' context. --project pins the registration to the project it was written for; --project-from-cwd is used instead for a -Global registration, since one baked path would activate the wrong project everywhere else. --enable-web-dashboard false keeps Serena from opening a browser window and from leaving an HTTP listener on the machine. Upstream recommends leaving the dashboard on and setting --open-web-dashboard false instead; this pack does not start a local web server a user did not ask for, and uses TOOLS/Test-McpHandshake.ps1 for diagnosis.",
+          "context_note": "--context trims the tool set to what the client does not already have. Serena 2.0.0 ships named contexts for claude-code, codex and grok; Kimi and Hermes have none, so they get the generic 'agent' context. --project pins the registration to the project it was written for; --project-from-cwd is used instead for a -Global registration, since one baked path would activate the wrong project everywhere else. --enable-web-dashboard false keeps Serena from opening a browser window and from leaving an HTTP listener on the machine. Upstream recommends leaving the dashboard on and setting --open-web-dashboard false instead; this pack does not start a local web server a user did not ask for, and uses TOOLS/Test-McpHandshake.ps1 for diagnosis.",
           "auto_install": {
             "requires_command": "uv",
             "why": "Serena is a Python tool, not an npx package, so it has to exist on disk before a config can point at it. uv installs it into an isolated environment with its own interpreter.",
@@ -102,7 +102,7 @@
                   "install",
                   "-p",
                   "3.13",
-                  "serena-agent"
+              "serena-agent==2.0.0"
                 ]
               },
               {

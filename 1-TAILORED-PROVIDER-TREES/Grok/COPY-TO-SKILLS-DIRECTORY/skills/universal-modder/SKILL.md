@@ -15,7 +15,7 @@ relevant command's `--help`. If missing, run the pack's `INSTALL-AIO.ps1
 -Components universal-modder -CoreOnly -ToolsOnly` from its root.
 
 The pack supplies one skill entry to Claude, Codex, Grok, Kimi and Hermes.
-The upstream guides below are references, not eleven extra indexed skills.
+The upstream guides below are references, not twelve extra indexed skills.
 Use existing `game-modding` and engine-specific skills for implementation;
 Skyrim still routes through `skyrim-tool-router` and Forge.
 
@@ -25,6 +25,7 @@ Skyrim still routes through `skyrim-tool-router` and Forge.
 |---|---|
 | Game/engine discovery and choosing a loader | `references/upstream/game-recon/GUIDE.md` |
 | A complete unfamiliar-game modding loop | `references/upstream/mod-any-game/GUIDE.md` |
+| Port a mod to a verified newer game/loader release | `references/upstream/port-a-mod/GUIDE.md` |
 | File formats, decompilation and native/managed analysis | `references/upstream/reverse-engineering/GUIDE.md` |
 | Cutout, palettes, sprite sheets and camera-correct renders | `references/upstream/asset-pipeline/GUIDE.md` |
 | Window capture, game input and recordings | `references/upstream/game-automation/GUIDE.md` |

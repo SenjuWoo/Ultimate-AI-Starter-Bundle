@@ -41,6 +41,8 @@ of every dependency. Preserve all included licences and attribution.
 | `super-mcp-router` | [Super MCP Router](https://github.com/mindstone/Super-MCP) | Apache-2.0 |
 | `playwright-cli` | [Playwright CLI](https://github.com/microsoft/playwright-cli) | Apache-2.0 |
 | `comfy-cli` | [ComfyUI CLI](https://github.com/Comfy-Org/comfy-cli) | GPL-3.0 |
+| `rea` | [REA](https://github.com/morluto/rea) | MIT; optional CLI, not a bundled tool suite |
+| Reverse THIS! integration | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | MIT kit; each discovered tool retains its licence |
 
 Skyrim Forge is maintained by the bundle author at
 [SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge); its release

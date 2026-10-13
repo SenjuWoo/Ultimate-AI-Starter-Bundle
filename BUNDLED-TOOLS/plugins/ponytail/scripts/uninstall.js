@@ -9,7 +9,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const { getConfigPath, getClaudeDir } = require('../hooks/ponytail-config');
+const { getConfigPath, getClaudeDir, getQoderDir } = require('../hooks/ponytail-config');
 const cursorHooks = require('./cursor-hooks');
 
 const STATUSLINE_SCRIPT = /(?:^|[\s"'\\/])ponytail-statusline\.(?:sh|ps1)(?=$|[\s"'])/;
@@ -26,7 +26,7 @@ function removeIfExists(filePath, label) {
 removeIfExists(path.join(getClaudeDir(), '.ponytail-active'), 'mode flag');
 removeIfExists(path.join(getClaudeDir(), '.ponytail-statusline-nudged'), 'statusline nudge flag');
 removeIfExists(path.join(os.homedir(), '.cursor', '.ponytail-active'), 'Cursor mode flag');
-removeIfExists(path.join(os.homedir(), '.qoder', '.ponytail-active'), 'Qoder mode flag');
+removeIfExists(path.join(getQoderDir(), '.ponytail-active'), 'Qoder mode flag');
 for (const dir of [path.join(getClaudeDir(), 'ponytail-modes'), path.join(os.homedir(), '.cursor', 'ponytail-modes'), path.join(process.env.CODEBUDDY_CONFIG_DIR || path.join(os.homedir(), '.codebuddy'), 'ponytail-modes')]) {
   if (fs.existsSync(dir)) {
     fs.rmSync(dir, { recursive: true });
@@ -34,6 +34,7 @@ for (const dir of [path.join(getClaudeDir(), 'ponytail-modes'), path.join(os.hom
   }
 }
 removeIfExists(path.join(process.env.CODEBUDDY_CONFIG_DIR || path.join(os.homedir(), '.codebuddy'), '.ponytail-active'), 'CodeBuddy mode flag');
+removeIfExists(path.join(process.env.XDG_CONFIG_HOME || path.join(os.homedir(), '.config'), 'opencode', '.ponytail-active'), 'OpenCode mode flag');
 removeIfExists(getConfigPath(), 'config file');
 // Statusline script copies the activate hook keeps in the config dir (#1032).
 for (const name of ['ponytail-statusline.sh', 'ponytail-statusline.ps1']) {

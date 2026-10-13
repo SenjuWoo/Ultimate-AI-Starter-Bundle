@@ -11,10 +11,10 @@ FAIL conditions (these break the agent, silently):
 
 WARN conditions (these cost context, not correctness):
   * SKILL.md body over the Agent Skills tier-2 budget (~5k tokens / 500 lines)
-  * a description so long it is expensive on every single request
+  * a description large enough to make the discovery index unnecessarily heavy
 
-Budget model (Agent Skills progressive disclosure):
-  tier 1  name + description, in context ALWAYS, for every skill
+Size model (rough character counts, not provider usage or billing):
+  tier 1  name + description, candidate discovery index; host loading varies
   tier 2  the SKILL.md body, loaded on activation
   tier 3  reference files, loaded only on demand
 
@@ -70,7 +70,7 @@ def yaml_error(fm):
 def audit(root):
     fails, warns, rows = [], [], []
     if not os.path.isdir(root):
-        print('  (missing: %s)' % root)
+        fails.append('skills directory is missing or not a directory')
         return fails, warns, rows
 
     for sk in sorted(os.listdir(root)):
@@ -83,7 +83,11 @@ def audit(root):
             fails.append('%s: UTF-8 BOM before frontmatter -- description will not load' % sk)
             raw = raw[3:]
 
-        txt = raw.decode('utf-8', errors='replace')
+        try:
+            txt = raw.decode('utf-8')
+        except UnicodeDecodeError:
+            fails.append('%s: invalid UTF-8 -- skill bytes cannot be trusted' % sk)
+            continue
         m = re.match(r'^---\s*\n(.*?)\n---\s*\n(.*)$', txt, re.S)
         if not m:
             fails.append('%s: frontmatter block does not open' % sk)
@@ -105,8 +109,10 @@ def audit(root):
             warns.append('%s: body ~%.0f tok / %d lines (budget %d/%d) -- move detail to '
                          'reference files' % (sk, bt, bl, BODY_TOKENS, BODY_LINES))
         if dt > DESC_TOKENS:
-            warns.append('%s: description ~%.0f tok -- paid on every request' % (sk, dt))
+            warns.append('%s: description ~%.0f token-equivalents -- large discovery entry' % (sk, dt))
         rows.append((sk, dt, bt, bl))
+    if not rows and not fails:
+        fails.append('no SKILL.md files found; nothing was audited')
     return fails, warns, rows
 
 
@@ -124,7 +130,7 @@ def main():
         fails, warns, rows = audit(root)
         if rows:
             t1 = sum(d + 12 for _, d, _, _ in rows)
-            print('  %d skills | tier-1 always-on ~%.0f tokens | tier-2 total ~%.0f tokens'
+            print('  %d skills | tier-1 index ~%.0f token-equivalents | tier-2 total ~%.0f token-equivalents (characters/4, not usage)'
                   % (len(rows), t1, sum(b for _, _, b, _ in rows)))
         for w in warns:
             print('  WARN  ' + w)

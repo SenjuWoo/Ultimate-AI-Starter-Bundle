@@ -1,3 +1,19 @@
+## 8.13.0
+
+- Add optional pinned REA CLI and an all-provider reverse-engineering recipe;
+  reuse Universal Modder recon and existing Reverse THIS! shims on demand.
+  No global RE MCP, second tool suite or extra indexed skill collection.
+- Refresh tested Context7 4.4.1, Serena 2.0.0, Ponytail 5.2.0 and Universal
+  Modder source/knowledge/guides; preserve local Windows/security patches.
+- Select RTK 1.0.0's Apache-licensed OSS build explicitly. Preserve the narrow
+  hook; status fixtures, rewrite protocol and pinned corpus rechecked.
+- Retire Grok's obsolete global Impeccable launchers with exact backups;
+  preserve personal hooks and project-local integrations.
+- Fail skill auditing on missing/empty trees or invalid UTF-8. Correct schema
+  and output-cap claims: estimates are not loaded/billed tokens or savings.
+- Shorten start/resume templates. Evaluate CodeBurn advice rather than blindly
+  deleting capabilities; keep dated history evidence scoped and private.
+
 ## 8.12.1
 
 - Preserve installed personal profiles when replacement input is unreadable or

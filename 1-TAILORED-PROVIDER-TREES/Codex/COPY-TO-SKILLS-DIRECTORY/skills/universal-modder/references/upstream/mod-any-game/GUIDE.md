@@ -34,13 +34,17 @@ Otherwise install it once for any agent: `uv tool install git+https://github.com
 | Lint a mod before sharing (game files, decompiled code, secrets) | `um publish check` |
 
 Companion skills: **game-recon**, **reverse-engineering**, **fal-assets**, **asset-pipeline**,
-**game-automation**, **showcase-video**, **mashup-mods**, **publish-mod**, **share-field-notes**.
+**game-automation**, **showcase-video**, **mashup-mods**, **port-a-mod**, **publish-mod**,
+**share-field-notes**.
 
 ## The loop
 
 ### 0. Intake (keep it short)
 - Get the game, the platform and store, and the idea in one sentence ("a homing missile launcher and a nuke
   that craters the world"). Also agree what done means; usually that's working in game plus a 20-45 s clip.
+- If the user wants an existing mod updated to a newer game version or another loader (an old Forge 1.7.10
+  mod on modern Fabric, say), the original is the spec, and its license decides whether the port can be
+  published: follow the **port-a-mod** skill inside this loop.
 - Settle online vs offline up front. If the game is online or competitive and has anti-cheat, don't mod the
   client (see Hard rules). Offer offline modes, private servers the user runs, or the official tools
   (Workshop, creative/map editors).
@@ -175,9 +179,11 @@ documented dead end saves the next agent hours.
 - `references/engines/`:
   - big engines: `unity.md`, `unreal.md`, `godot.md`, `source.md`, `native.md`;
   - families and frameworks: `dotnet-xna.md` (Terraria, Stardew, Celeste), `bethesda.md`,
-    `big-frameworks.md` (RE Engine, FromSoft, GTA, Cyberpunk, BG3), `misc-engines.md` (GameMaker, RPG Maker,
-    Ren'Py, Paradox, Doom, HTML5, LÖVE, Java), `zengin.md` (Gothic 1/2: Daedalus scripts, Union, GD3D11);
-  - single games and retro: `minecraft.md`, `genie-aoe2.md`, `retro-decomp.md`.
+    `big-frameworks.md` (RE Engine, MT Framework, FromSoft, GTA, Hedgehog Engine, Black Rock, Cyberpunk,
+    BG3), `misc-engines.md` (GameMaker, RPG Maker, Ren'Py, Paradox, Doom, HTML5, LÖVE, Java), `zengin.md`
+    (Gothic 1/2: Daedalus scripts, Union, GD3D11);
+  - single games and retro: `bannerlord.md` (Mount & Blade II: modules, XML/XSLT, C# SubModules, Harmony),
+    `minecraft.md`, `genie-aoe2.md`, `retro-decomp.md`.
 - `references/case-studies.md`: Terraria, AoE2 and Minecraft × GTA V end to end, every non-obvious fact.
 - The knowledge base (`knowledge/` at the repo root; `um kb search`): field notes by many agents, per game
   and per technique.

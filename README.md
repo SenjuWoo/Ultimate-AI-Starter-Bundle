@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.12.1 -->
+<!-- Ultimate AI Starter Bundle v8.13.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.12.1
+# Ultimate AI Starter Bundle v8.13.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -42,7 +42,17 @@ tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-
 
 ### Universal Modder without extra background servers
 
-The default installer provides `um` plus the same `universal-modder` skill to all five providers. Its eleven upstream guides are on-demand references, not eleven additional skill-index entries. `um comfy` adds key-free local ComfyUI image generation. Use `um --version`, `um scan "<verified game folder>" --json`, or the relevant subcommand's `--help`. The packaged knowledge base works offline; its examples must be rechecked against your actual game. Existing engine/Skyrim skills remain the implementation specialists.
+Optional reverse-engineering analysis uses the
+[REA / Reverse THIS! guide](_CANONICAL-SKILLS/tool-discovery/references/reverse-engineering.md)
+and the `reverse-engineering` task recipe. REA is CLI-first, not another global
+170-tool MCP or duplicate tool-suite installer. Existing modding specialists
+and your discovered Reverse THIS! shims remain the implementation tools.
+
+Use the [start/resume prompts](PROMPTS/START-AND-RESUME.md) once per chat.
+[CodeBurn recommendations](_CANONICAL-SKILLS/codeburn/references/recommendations.md)
+are evidence candidates, not automatic deletion or guaranteed usage savings.
+
+The default installer provides `um` plus the same `universal-modder` skill to all five providers. Its twelve upstream guides are on-demand references, not twelve additional skill-index entries. `um comfy` adds key-free local ComfyUI image generation. Use `um --version`, `um scan "<verified game folder>" --json`, or the relevant subcommand's `--help`. The packaged knowledge base works offline; its examples must be rechecked against your actual game. Existing engine/Skyrim skills remain the implementation specialists.
 
 The bundle does not install the upstream fal MCP or its session hooks. Paid fal generation is optional and needs the user's own setup. Video requires an installed FFmpeg; 3D-to-sprite rendering requires Blender. Core carries vendored source; Full-Offline also carries the wheel. Python/runtime and dependency setup can still need network access when they are not already cached.
 
@@ -244,7 +254,7 @@ for evidence-based tuning without leaking machine paths or bloating context.
 Modes choose tool payloads, not a disconnected Windows environment. Missing
 runtimes, Python/npm dependencies and provider bootstrap can still need network.
 
-RTK is deliberately pinned to **0.51.0** in both the installer and component
+RTK OSS is deliberately pinned to **1.0.0** in both the installer and component
 updater: the narrow rewrite hook and measurements are version-specific. A
 new upstream release is not automatically treated as tested. RTK fallback
 archives must match the shipped SHA-256 manifest; a rejected replacement
@@ -478,7 +488,7 @@ OpenRouter fallback, vision and compression settings are not local-only.
 Installed by default with a **bundle-owned narrow hook**; RTK's broad upstream
 hook remains disabled. [RTK](https://github.com/rtk-ai/rtk) (Apache-2.0, single
 Rust binary) filters noisy dev commands. Measured here
-**at rtk 0.51.0** against **pinned tag ranges**, so the corpus cannot drift:
+**at rtk 1.0.0** (Apache-2.0 OSS edition) against **pinned tag ranges**, so the corpus cannot drift:
 
 | Command | Raw | Through rtk | Saved |
 |---|---|---|---|
@@ -493,13 +503,15 @@ this tool is not honest -- an earlier version of this table quoted 97% from
 
 **Pin the tool version too, not just the corpus.** That last row used to read
 **95%**, measured at rtk 0.45.0. Upgrading to 0.46.0 dropped it to zero, and
-0.51.0 still passes `--stat` straight through. All four rows were remeasured
-on 2026-10-02; these are output bytes, not billed token savings. The old `git log --stat -20`
+1.0.0 still passes `--stat` straight through. All four rows were remeasured
+on 2026-10-13; these are output bytes, not billed token savings. The old `git log --stat -20`
 row also moved with HEAD despite the rest of the table being pinned; it now
 ends at `v8.6.5`. Pinning only the corpus or only the tool is insufficient.
 
-It is a CLI, so it costs **zero standing tokens** -- the same reason this pack
-prefers Forge's CLI over Forge's MCP.
+It is a CLI, so it adds no standing MCP schema. Instructions and command output
+still consume context. The bundle selects the Apache-2.0 OSS build explicitly;
+upstream's default 1.0 binary has different licensing. Pipelines, proxy daemons
+and broad upstream rewrite hooks remain off.
 
 #### Off git, it is a different tool
 
@@ -706,7 +718,7 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | `obsidian-skills` | [Obsidian Skills](https://github.com/kepano/obsidian-skills) | Vendored canonical skills; no duplicate plugin needed |
 | `claude-mem` | [claude-mem](https://github.com/thedotmack/claude-mem) | Explicit -WithClaudeMem only |
 | `playwright-mcp` | [Playwright MCP](https://github.com/microsoft/playwright-mcp) | Scoped browser MCP |
-| `firecrawl-mcp` | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server) | Credential-gated MCP |
+| `firecrawl-mcp` | [Firecrawl MCP](https://github.com/firecrawl/firecrawl-mcp-server) | Security-held; not installed/registered |
 | `perplexity-mcp` | [Perplexity MCP](https://github.com/perplexityai/modelcontextprotocol) | Credential-gated MCP |
 | `context7` | [Context7](https://github.com/upstash/context7) | Core documentation MCP |
 | `github-mcp-server` | [GitHub MCP Server](https://github.com/github/github-mcp-server) | Official offline binary; core MCP |
@@ -722,6 +734,8 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | `super-mcp-router` | [Super MCP Router](https://github.com/mindstone/Super-MCP) | Evaluated catalog entry; no default router wiring |
 | `playwright-cli` | [Playwright CLI](https://github.com/microsoft/playwright-cli) | Default CLI; browser installation separate |
 | `comfy-cli` | [ComfyUI CLI](https://github.com/Comfy-Org/comfy-cli) | Optional user-managed tool; not installed by default |
+| `rea` | [REA](https://github.com/morluto/rea) | Optional pinned CLI; no global MCP or setup writes |
+| Reverse THIS! | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | Reuses an existing discovered tool bench; no duplicate installation |
 
 Additional canonical payloads without separate tool-catalog entries:
 
@@ -829,6 +843,10 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.13.0** - 2026-10-13. On-demand reverse engineering, strict skill auditing,
+Grok legacy hook retirement, tested component updates and shorter start/resume
+prompts. [Changes](docs/history/V8.13.0-CHANGELOG.md).
 
 **v8.12.1** - 2026-10-12. Preserve installed private profiles when new input
 is invalid, separate personal tuning from public defaults, and remove

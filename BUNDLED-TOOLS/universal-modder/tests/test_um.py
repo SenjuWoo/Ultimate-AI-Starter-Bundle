@@ -88,12 +88,189 @@ def test_managed_pe(tmp_path):
     assert scan.pe_info(p) == {"arch": "x86", "managed": True}
 
 
+@pytest.mark.parametrize("bin_dir", ["Win64_Shipping_Client", "Gaming.Desktop.x64_Shipping_Client"])
+@pytest.mark.parametrize("name", ["Mount & Blade II Bannerlord", "RenamedGame"])
+def test_bannerlord_route_and_live_version(tmp_path, bin_dir, name):
+    # Identify the module layout even when the folder is renamed; don't send it to generic .NET/native loaders.
+    r = _named_game(tmp_path, name, {
+        f"bin/{bin_dir}/Bannerlord.exe": _pe(arch=0x8664),
+        f"bin/{bin_dir}/TaleWorlds.MountAndBlade.dll": _pe(arch=0x8664),
+        f"bin/{bin_dir}/Version.xml": '<Version><Singleplayer Value="v1.4.8"/></Version>',
+        "Modules/Native/SubModule.xml": '<Module><Id value="Native"/></Module>',
+    })
+    assert r["engine"]["key"] == "bannerlord" and r["engine"]["version"] == "v1.4.8"
+    assert r["engine"]["version_file"] == f"bin/{bin_dir.lower()}/version.xml"
+    assert r["routes"][0]["route"] == scan.BANNERLORD_ROUTE
+    assert r["playbook"].endswith("bannerlord.md") and "modules" in r["mod_folders"]
+    assert all(rt["playbook"] == "bannerlord.md" for rt in r["routes"])
+
+
+@pytest.mark.parametrize("version_xml", [
+    None, "<Version>", "<Version><Singleplayer/></Version>",
+    '<?xml version="1.0" encoding="not-real"?><Version><Singleplayer Value="v1.4.8"/></Version>',
+    '<?xml version="1.0" encoding="UTF-32"?><Version><Singleplayer Value="v1.4.8"/></Version>',
+])
+def test_bannerlord_missing_or_invalid_version(tmp_path, version_xml):
+    files = {
+        "bin/Win64_Shipping_Client/TaleWorlds.MountAndBlade.dll": _pe(arch=0x8664),
+        "Modules/Native/SubModule.xml": "<Module/>",
+    }
+    if version_xml is not None:
+        files["bin/Win64_Shipping_Client/Version.xml"] = version_xml
+    key, det = engine_of(tmp_path, files)
+    assert key == "bannerlord" and not det.get("version")
+
+
+@pytest.mark.parametrize("bin_dir", ["Win64_Shipping_Client", "Gaming.Desktop.x64_Shipping_Client"])
+def test_bannerlord_prefers_client_version_over_editor(tmp_path, bin_dir):
+    key, det = engine_of(tmp_path, {
+        f"bin/{bin_dir}/TaleWorlds.MountAndBlade.dll": _pe(),
+        f"bin/{bin_dir}/Version.xml": '<Version><Singleplayer Value="v1.5.4"/></Version>',
+        "bin/Win64_Shipping_wEditor/TaleWorlds.MountAndBlade.dll": _pe(),
+        "bin/Win64_Shipping_wEditor/Version.xml": '<Version><Singleplayer Value="v1.4.8"/></Version>',
+        "Modules/Native/SubModule.xml": "<Module/>",
+    })
+    assert key == "bannerlord" and det["version"] == "v1.5.4"
+
+
+@pytest.mark.parametrize("bin_dir", ["Win64_Shipping_Client", "Gaming.Desktop.x64_Shipping_Client"])
+def test_bannerlord_ignores_backup_binaries(tmp_path, bin_dir):
+    key, det = engine_of(tmp_path, {
+        f"bin/{bin_dir}/TaleWorlds.MountAndBlade.dll": _pe(),
+        f"bin/{bin_dir}/Version.xml": '<Version><Singleplayer Value="v1.4.8"/></Version>',
+        "bin/backup/Win64_Shipping_Client/TaleWorlds.MountAndBlade.dll": _pe(),
+        "bin/backup/Win64_Shipping_Client/Version.xml": '<Version><Singleplayer Value="v1.0.0"/></Version>',
+        "bin/backup/TaleWorlds.MountAndBlade.dll": _pe(),
+        "bin/backup/Version.xml": '<Version><Singleplayer Value="v1.0.0"/></Version>',
+        "bin/backup_Win64_Shipping_Client/TaleWorlds.MountAndBlade.dll": _pe(),
+        "bin/backup_Win64_Shipping_Client/Version.xml": '<Version><Singleplayer Value="v1.0.0"/></Version>',
+        "Modules/Native/SubModule.xml": "<Module/>",
+    })
+    assert key == "bannerlord" and det["version"] == "v1.4.8"
+    assert det["version_file"] == f"bin/{bin_dir.lower()}/version.xml"
+
+
+def test_copied_taleworlds_dll_is_not_a_bannerlord_install(tmp_path):
+    key, _ = engine_of(tmp_path, {
+        "Game.exe": _pe(),
+        "bin/Win64_Shipping_Client/TaleWorlds.MountAndBlade.dll": _pe(),
+    })
+    assert key == "dotnet"
+
+
+@pytest.mark.parametrize("bin_dir", ["backup", "backup_Win64_Shipping_Client", "Debug", "random"])
+def test_bannerlord_copies_do_not_override_another_engine(tmp_path, bin_dir):
+    key, _ = engine_of(tmp_path, {
+        "UnityPlayer.dll": _pe(False),
+        "Game_Data/Managed/Assembly-CSharp.dll": _pe(),
+        f"bin/{bin_dir}/TaleWorlds.MountAndBlade.dll": _pe(),
+        "Modules/Native/SubModule.xml": "<Module/>",
+    })
+    assert key == "unity-mono"
+
+
+def test_bannerlord_utf16_version(tmp_path):
+    key, det = engine_of(tmp_path, {
+        "bin/Win64_Shipping_Client/TaleWorlds.MountAndBlade.dll": _pe(),
+        "bin/Win64_Shipping_Client/Version.xml":
+            '<?xml version="1.0" encoding="UTF-16"?><Version><Singleplayer Value="v1.4.8"/></Version>'.encode("utf-16"),
+        "Modules/Native/SubModule.xml": "<Module/>",
+    })
+    assert key == "bannerlord" and det["version"] == "v1.4.8"
+
+
+def test_bannerlord_version_on_the_root_element(tmp_path):
+    # the other Version.xml shape builds have shipped: the Value sits on the root element
+    key, det = engine_of(tmp_path, {
+        "bin/Win64_Shipping_Client/TaleWorlds.MountAndBlade.dll": _pe(),
+        "bin/Win64_Shipping_Client/Version.xml": '<Version Value="v1.2.12"/>',
+        "Modules/Native/SubModule.xml": "<Module/>",
+    })
+    assert key == "bannerlord" and det["version"] == "v1.2.12"
+
+
+@pytest.mark.parametrize("name", ["Mount & Blade II: Bannerlord", "Mount & Blade II Bannerlord", "RenamedGame"])
+def test_bannerlord_save_folder_with_its_actual_name(tmp_path, monkeypatch, name):
+    # Steam uses '&', while the real Documents folder uses 'and'; a renamed install needs the same hint.
+    docs = tmp_path / "Documents"
+    saves = docs / "Mount and Blade II Bannerlord" / "Game Saves"
+    saves.mkdir(parents=True)
+    monkeypatch.setattr(scan, "win_folders", lambda: {"documents": str(docs)})
+    root = tmp_path / "install"
+    # A store title can contain ':' on Windows; keep it in metadata rather than the folder name.
+    monkeypatch.setattr(scan, "resolve_game", lambda query: dict(name=name, path=str(root)))
+    make(root, {
+        "bin/Win64_Shipping_Client/TaleWorlds.MountAndBlade.dll": _pe(),
+        "Modules/Native/SubModule.xml": "<Module/>",
+    })
+    r = scan.scan(str(root))
+    assert str(saves.parent) in r["saves"]
+
+
+def test_other_engines_do_not_report_a_generic_modules_folder_as_mods(tmp_path, monkeypatch):
+    monkeypatch.setattr(scan, "all_games", lambda: [])
+    r = _named_game(tmp_path, "OtherGame", {
+        "UnityPlayer.dll": _pe(False),
+        "Game_Data/Managed/Assembly-CSharp.dll": _pe(),
+        "Modules/Tool/helper.dll": _pe(),
+    })
+    assert "modules" not in r["mod_folders"]
+
+
 def test_zengin_detected(tmp_path):
     key, _ = engine_of(tmp_path, {"system/Gothic2.exe": _pe(False), "Data/Textures.vdf": b"x"})
     assert key == "zengin"
     # volume layout alone (vdfs loader + Data/*.vdf) is enough
     key, _ = engine_of(tmp_path / "b", {"system/vdfs32g.dll": _pe(False), "Data/Worlds.vdf": b"x"})
     assert key == "zengin"
+
+
+@pytest.mark.parametrize("files", [
+    {"DDDA.exe": _pe(False), "nativePC/rom/game_main.arc": b"ARC\x00"},              # Dragon's Dogma: Dark Arisen
+    {"RE5DX9.exe": _pe(False), "nativePC_MT/Image/Archive/s506.arc": b"ARC\x00"},    # Resident Evil 5
+    {"DevilMayCry4SpecialEdition.exe": _pe(False), "nativeDX10/rom/player/costume.arc": b"ARC\x00"},
+    {"DeadRising.exe": _pe(False, arch=0x8664), "nativeWin64/rom/ui.arc": b"ARC\x00"},
+])
+def test_mt_framework_detected(tmp_path, files):
+    # the native* folder is named per port; the .arc archives under it are the signature
+    key, _ = engine_of(tmp_path, files)
+    assert key == "mt-framework"
+
+
+def test_re_engine_natives_is_not_mt_framework(tmp_path):
+    make(tmp_path, {"re2.exe": _pe(False, arch=0x8664), "re_chunk_000.pak": b"KPKA",
+                    "natives/STM/streaming/x.tex.10": b"x"})
+    hits, _ = scan.detect(scan.Index(tmp_path))
+    assert hits[0][0] == "re-engine" and all(k != "mt-framework" for k, *_ in hits)
+
+
+@pytest.mark.parametrize("files", [
+    # Unleashed Recompiled: the installer copies the raw Xbox 360 files into game/ (split .ar + .arl lists)
+    {"UnleashedRecomp.exe": _pe(False, arch=0x8664), "game/#ActD_Africa.ar.00": b"x", "game/#ActD_Africa.arl": b"x",
+     "update/default.xexp": b"x", "patched/default.xex": b"x"},
+    # Sonic Generations (Steam): the .ar archives live inside CRI .cpk packfiles, so only the exe tells
+    {"SonicGenerations.exe": _pe(False), "disk/bb.cpk": b"CPK "},
+    # Sonic Forces (HE2): the exe sits deep under build/
+    {"build/main/projects/exec/Sonic Forces.exe": _pe(False, arch=0x8664)},
+])
+def test_hedgehog_detected(tmp_path, files):
+    key, _ = engine_of(tmp_path, files)
+    assert key == "hedgehog"
+
+
+def test_lone_ar_archive_is_not_hedgehog(tmp_path):
+    make(tmp_path, {"Game.exe": _pe(False), "lib/libgame.ar": b"!<arch>\n"})
+    hits, _ = scan.detect(scan.Index(tmp_path))
+    assert all(k != "hedgehog" for k, *_ in hits)
+
+
+def test_blackrock_detected(tmp_path):
+    # Split/Second layout: .shaderinst + .model assets, .ark level packs
+    key, _ = engine_of(tmp_path, {"SplitSecond.exe": _pe(False),
+                                  "data/docks.ark": b"x",
+                                  "data/ve/car.model": b"x",
+                                  "data/ve/car.shaderinst": b"x"})
+    assert key == "blackrock"
 
 
 def test_nested_exe_fingerprinted(tmp_path):
@@ -419,7 +596,7 @@ def test_cutout_keeps_interior_white():
 def test_fit_and_hard_alpha():
     f = sprite.fit(sprite.cutout(sprite_on_white()), 10, 10, anchor="bottom")
     assert f.size == (10, 10) and f.getbbox()[3] == 10
-    assert set(sprite.hard_alpha(f).getchannel("A").getdata()) <= {0, 255}
+    assert set(sprite.hard_alpha(f).getchannel("A").get_flattened_data()) <= {0, 255}
 
 
 def test_sheet_slice_roundtrip():
@@ -544,8 +721,8 @@ def test_publish_check(tmp_path, capsys):
     (tmp_path / "mod" / "copied.bin").write_bytes(b"x" * 4096)
     assert publish.check(str(tmp_path / "mod"), str(tmp_path / "game")) == 1
     out = capsys.readouterr().out
-    assert "game file copied verbatim" in out and "possible credential material" in out and "Ghidra auto-name" in out
-    assert fake_key not in out and "abcdefghijklmnopqrstuvwxyz0123" not in out
+    assert "game file copied verbatim" in out and "possible credential material in config.txt" in out and "Ghidra auto-name" in out
+    assert "FAL_KEY" not in out  # UABS redacts matched credential material.
     normalized = out.replace("\\", "/")
     assert "decompiler header x1 in src/Mod.cs" in normalized and "README.md" not in normalized.split("decompiler header")[-1].split("\n")[0]
 
@@ -712,8 +889,8 @@ def test_kb_check_rejects_secrets_and_dumps(tmp_path):
     note.write_text("---\nkind: technique\ntitle: t\ntags: [x]\ndate: 2026-09-30\nagents: [a]\n---\n# t\n"
                     f"```c\n{code}\n```\n" + "FAL" + "_KEY=abcdefghijklmnopqrstuvwxyz0123\n")
     fails, _ = kb.check_note(note)
-    assert any("code block" in f for f in fails) and any("possible credential material" in f for f in fails)
-    assert "abcdefghijklmnopqrstuvwxyz0123" not in " ".join(fails)
+    assert any("code block" in f for f in fails) and any("credential" in f for f in fails)
+    assert all("FAL_KEY" not in f for f in fails)
 
 
 def test_kb_without_pyyaml_says_what_to_install(tmp_path, monkeypatch, capsys):
