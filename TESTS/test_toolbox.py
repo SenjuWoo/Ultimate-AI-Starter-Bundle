@@ -26,7 +26,8 @@ from mcp.client.stdio import StdioServerParameters, stdio_client
 ROOT = Path(__file__).resolve().parent.parent
 PKG = ROOT / "BUNDLED-TOOLS" / "uabs-toolbox"
 FAKE = PKG / "tests" / "fake_server.py"
-SECRET = "s3cr3t-fixture-value-81f2"
+# Stands in for a credential in a parked entry: it must reach the server, never output or logs.
+PARKED_MARKER = "parked-env-marker-81f2"
 
 
 def check(cond: bool, message: str) -> None:
@@ -66,7 +67,7 @@ def write_state(state: Path) -> None:
     toml_block = (f"[mcp_servers.tomlfake]\ncommand = {json.dumps(py)}\nargs = [{json.dumps(fake)}, \"--toml\"]\n")
     parked = {"schema": 1, "entries": [
         {"provider": "Claude", "id": "parkedfake", "rule": "parkedfake",
-         "definition": {"type": "stdio", "command": py, "args": [fake, "--parked"], "env": {"FIXTURE_SECRET": SECRET}}},
+         "definition": {"type": "stdio", "command": py, "args": [fake, "--parked"], "env": {"FIXTURE_PARKED_VALUE": PARKED_MARKER}}},
         # Set-McpProfile -Park stores a TOML table as its exact text under "block".
         {"provider": "Codex", "id": "tomlfake", "rule": "tomlfake", "style": "toml", "block": toml_block},
         # Same command and arguments as the profiled "fake": must not appear twice.
@@ -113,7 +114,7 @@ async def run_gate(state: Path, project: Path) -> None:
             as_string = await session.call_tool("call", {"tool": "fake.echo", "arguments": "{\"text\": \"json-string\"}"})
             check(text_of(as_string) == "json-string", "arguments given as a JSON string were not accepted")
 
-            has = await session.call_tool("call", {"tool": "parkedfake.env_has", "arguments": {"name": "FIXTURE_SECRET"}})
+            has = await session.call_tool("call", {"tool": "parkedfake.env_has", "arguments": {"name": "FIXTURE_PARKED_VALUE"}})
             check(text_of(has) == "yes", "a parked entry's env did not reach its server")
             seen_text.append(text_of(await session.call_tool("find", {"query": "parkedthing"})))
             seen_text.append(text_of(await session.call_tool("describe", {"tools": ["parkedfake.env_has"]})))
@@ -145,9 +146,9 @@ async def run_gate(state: Path, project: Path) -> None:
             check(unavailable.isError and "host application" in text_of(unavailable), "an unavailable set was started")
 
     joined = "\n".join(seen_text)
-    check(SECRET not in joined, "a parked credential value reached toolbox output")
+    check(PARKED_MARKER not in joined, "a parked credential value reached toolbox output")
     logs = "".join(p.read_text(encoding="utf-8", errors="replace") for p in (state / "logs").glob("*.log"))
-    check(SECRET not in logs, "a parked credential value reached a toolbox log")
+    check(PARKED_MARKER not in logs, "a parked credential value reached a toolbox log")
 
 
 def main() -> int:
