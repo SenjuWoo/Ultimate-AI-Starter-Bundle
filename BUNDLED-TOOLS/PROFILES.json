@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "catalog_version": "8.14.0",
-  "pack_version": "8.14.0",
+  "catalog_version": "8.15.0",
+  "pack_version": "8.15.0",
   "updated_utc": "2026-10-15",
   "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
   "reads": "TOOLS/Set-McpProfile.ps1",
@@ -12,45 +12,51 @@
       {
         "id": "rimworldforge",
         "title": "RimWorldForge",
+        "keywords": ["rimworld", "defs", "xml", "harmony", "colony"],
         "match": ["RimWorldForge"],
         "detect": { "files": ["About/About.xml"], "globs": [] },
-        "note": "RimWorld mod work. Its CLI (rwforge.exe in the tool's .venv\\Scripts) needs no restart."
+        "note": "RimWorld mod work. The toolbox starts it on demand in the current chat; its CLI (rwforge.exe in the tool's .venv\\Scripts) also works."
       },
       {
         "id": "avatarforge",
         "title": "AvatarForge",
+        "keywords": ["avatar", "vrchat", "vrm", "pmx", "mmd", "xps", "model conversion"],
         "match": ["AvatarForge"],
         "detect": { "files": ["Packages/vpm-manifest.json"], "globs": ["*.vrm", "*.pmx", "*.pmd", "*.xps"] },
-        "note": "Avatar conversion. Its CLI (run.py doctor | scan | convert in the tool folder) needs no restart."
+        "note": "Avatar conversion. The toolbox starts it on demand in the current chat; its CLI (run.py doctor | scan | convert in the tool folder) also works."
       },
       {
         "id": "robloxforge",
         "title": "RobloxForge",
+        "keywords": ["roblox", "luau", "rojo"],
         "match": ["RobloxForge"],
         "profile": "game-roblox",
-        "note": "The game-roblox profile registers it per project."
+        "note": "The toolbox starts it on demand; the game-roblox profile registers it per project."
       },
       {
         "id": "saints-row-forge",
         "title": "SaintsRowForge",
+        "keywords": ["saints row", "volition"],
         "match": ["SaintsRowForge"],
         "profile": "game-saints-row",
-        "note": "The game-saints-row profile registers it per project."
+        "note": "The toolbox starts it on demand; the game-saints-row profile registers it per project."
       },
       {
         "id": "github",
         "title": "GitHub MCP",
+        "keywords": ["github", "pull request", "issue", "actions", "ci", "release", "repository"],
         "match": ["github-mcp-server"],
         "only_if": "gh-ready",
         "profile": "github",
-        "note": "gh covers repos, PRs, Actions and releases with no tool list. Switch the MCP on for one project with -Enable github -Path <project>."
+        "note": "gh covers repos, PRs, Actions and releases with no tool list; the toolbox starts the MCP on demand for what gh cannot do."
       },
       {
         "id": "melty",
         "title": "Melty",
+        "keywords": ["melty", "mashup", "publish", "crossover", "game mod listing"],
         "match": ["melty.gg"],
         "detect": null,
-        "note": "Publishing mashups only (it is an authenticated remote server). Switch on with -Unpark melty -Path <mashup project>."
+        "note": "Publishing mashups only (an authenticated remote server). The toolbox starts it on demand from the parked entry."
       }
     ]
   },
@@ -68,6 +74,7 @@
     {
       "id": "github",
       "title": "GitHub MCP (repos, PRs, issues, Actions)",
+      "keywords": ["github", "pull request", "issue", "actions", "ci", "release", "repository", "review"],
       "scope": "project",
       "why": "Where the gh CLI is signed in it already covers repos, PRs, Actions and releases with no tool list, so the official GitHub server is not machine-wide there (see global_scope_guard). This profile switches it on for one project that wants the structured tools. Enable on request: -Enable github -Path <project>.",
       "detect": { "files": [], "globs": [] },
@@ -86,6 +93,7 @@
     {
       "id": "code-intel",
       "title": "Repository graph plus language-server-accurate navigation and editing",
+      "keywords": ["code", "symbols", "references", "refactor", "call graph", "definition", "rename", "navigate"],
       "scope": "project",
       "why": "Serena provides language-server-backed symbol navigation and editing; codebase-memory provides repository graph queries. Claude, Grok and trusted Codex projects receive them only through code-intel. Hermes uses its separate native code profile; Kimi requires explicit -Global. Keep small text-only tasks on grep. code-intel replaces the old code-deep profile id.",
       "detect": {
@@ -193,6 +201,7 @@
     {
       "id": "web",
       "title": "Live browser inspection and debugging",
+      "keywords": ["browser", "website", "web page", "frontend", "playwright", "chrome", "devtools", "console", "network", "screenshot"],
       "scope": "project",
       "why": "Chrome DevTools MCP reads a real Chrome: console messages, network requests, performance traces and the rendered DOM. That is the half playwright-mcp does not do -- playwright drives a browser, this one explains what the browser did. Enable it for front-end work; it is dead weight in a Papyrus session.",
       "detect": {
@@ -315,6 +324,7 @@
     {
       "id": "game-skyrim",
       "title": "Skyrim mod engineering (Skyrim Forge)",
+      "keywords": ["skyrim", "esp", "esm", "esl", "plugin", "papyrus", "bethesda", "bsa", "formid", "record"],
       "scope": "project",
       "why": "Skyrim Forge exposes a large typed tool surface for plugins, Papyrus, frameworks, assets, packaging and release gates. Keep the product and skill installed everywhere, but connect its MCP only inside a Skyrim mod project; providers without project-scoped MCP config use the same Forge CLI through the skyrim-forge skill.",
       "detect": {
@@ -351,6 +361,7 @@
     {
       "id": "game-skyrim-load-order",
       "title": "Skyrim installed load order (houseCARL)",
+      "keywords": ["skyrim", "load order", "mo2", "vortex", "plugins", "conflicts", "housecarl"],
       "scope": "project",
       "why": "houseCARL is useful against a real MO2 instance or the bundle's Vortex shim, not in every Skyrim source repository. Its broad load-order and patching schemas activate only when the opened directory is an actual manager instance/shim.",
       "detect": {
@@ -381,6 +392,7 @@
     {
       "id": "game-roblox",
       "title": "Roblox project engineering (Roblox Forge)",
+      "keywords": ["roblox", "luau", "rojo", "rokit"],
       "scope": "project",
       "why": "Roblox Forge's eleven tools are useful for a Roblox filesystem project and waste schema context elsewhere. The bundle discovers an existing official checkout and activates it only for Rojo, Rokit, place, or model markers.",
       "detect": {
@@ -418,6 +430,7 @@
     {
       "id": "game-saints-row",
       "title": "Saints Row mod engineering (Saints Row Forge)",
+      "keywords": ["saints row", "volition"],
       "scope": "project",
       "why": "Saints Row Forge is a game-specific local server. Its MCP activates only when project.json identifies a supported Saints Row game or when a top-level game asset marker exists; other sessions keep using zero schemas from it.",
       "detect": {
@@ -461,6 +474,7 @@
     {
       "id": "engine-blender",
       "title": "Blender scene control",
+      "keywords": ["blender", "3d", "mesh", "model", "scene", "render", "rig", "bpy"],
       "scope": "project",
       "why": "Inspect and drive a running Blender: objects, materials, modifiers, and Python execution in the live scene. Relevant to this pack because Skyrim mesh work rides on Blender.",
       "detect": {
@@ -502,6 +516,7 @@
     {
       "id": "engine-godot",
       "title": "Godot project control",
+      "keywords": ["godot", "gdscript"],
       "scope": "project",
       "why": "Run a Godot project, read its scene tree and capture runtime errors without leaving the agent loop.",
       "detect": {
@@ -536,6 +551,7 @@
     {
       "id": "engine-unity",
       "title": "Unity editor control",
+      "keywords": ["unity", "prefab", "scene", "editor", "c#"],
       "scope": "project",
       "why": "Read and drive an open Unity project -- GameObjects, components, assets, console, play mode.",
       "detect": {
@@ -565,6 +581,7 @@
     {
       "id": "reasoning",
       "title": "Explicit step-by-step decomposition (sequential-thinking)",
+      "keywords": ["think", "plan", "reasoning", "step by step"],
       "scope": "global",
       "why": "Held an always-on slot through 7.9.6 and lost it on measurement in 7.9.7: one tool, but a 4,587-byte schema -- ~1,146 schema tokens (bytes/4, not a per-turn bill), as much as context7's two tools. It is a structured scratchpad, not a capability: it fetches nothing and reaches nothing the model could not write in its own reasoning, while this pack ships decomposition skills that cost nothing until they match and every provider it targets has native reasoning. Kept as an opt-in rather than deleted, because the benefit to WEAKER models was never benchmarked -- only schema size was. Turn it on with -Enable reasoning -Global if your provider has no native reasoning and you want it everywhere.",
       "detect": {
@@ -598,6 +615,8 @@
     {
       "id": "windows",
       "title": "Windows desktop control through UI Automation (windows-mcp)",
+      "keywords": ["windows", "desktop", "click", "window", "ui automation"],
+      "toolbox": "on-request",
       "scope": "global",
       "why": "Every other optional MCP here stops at a file or browser tab. This one drives native Windows applications through UI Automation: clicking, typing, shortcuts, PowerShell, the registry, the filesystem, windows and processes. It is useful when a host has no native desktop control, or when UI Automation can expose controls more cheaply than repeated screenshots. Its full advertised schema is ~5,522 estimated tokens (bytes/4, not measured billing) (20 tools, 22,088 bytes, measured 2026-08-27), and provider-native computer-use availability is not uniform. That surface size and its machine-mutating scope make it a poor default for ordinary coding, research and modding sessions. It stays installed and off by default; -Enable windows -Global is the one-command fallback for a host that actually needs it.",
       "detect": {

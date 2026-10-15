@@ -1,6 +1,6 @@
 # SkyrimForge audit & verification (live install vs repo)
 
-Repo: github.com/ShugokiFable/SkyrimForge. The live install folder
+Repo: github.com/SenjuWoo/SkyrimForge. The live install folder
 (e.g. `S:\Apps\Skyrim Tools\Skyrim-Forge-5.1.6`) is the **extracted product —
 NOT a git repo**. The repo is source of truth.
 

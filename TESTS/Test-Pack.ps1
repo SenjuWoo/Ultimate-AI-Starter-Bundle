@@ -78,6 +78,15 @@ if ($py) {
     & $py.Source (Join-Path $PackRoot 'TESTS\test_universal_modder.py')
     if ($LASTEXITCODE -ne 0) { Bad 'Universal Modder offline CLI and routing check failed' }
     else { Good 'Universal Modder offline CLI and all-provider routing' }
+    # The toolbox gate drives the real server over stdio, so it needs the MCP SDK
+    # (CI installs the version the wheel pins).
+    $mcpSdk = (& $py.Source -c "from importlib.metadata import version; print(version('mcp'))" 2>$null | Out-String).Trim()
+    if (-not $mcpSdk) { Bad 'toolbox gate needs the MCP SDK in this Python: python -m pip install mcp==1.30.0' }
+    else {
+        $tbOut = & $py.Source (Join-Path $PackRoot 'TESTS\test_toolbox.py') 2>&1 | Out-String
+        if ($LASTEXITCODE -ne 0) { Bad ('toolbox gate failed (mcp ' + $mcpSdk + '):' + [Environment]::NewLine + $tbOut.Trim()) }
+        else { Good ('On-demand toolbox: find/describe/call, parked entries, project sets, crash restart (mcp ' + $mcpSdk + ')') }
+    }
 }
 
 $stderrGate = Join-Path $PackRoot 'TESTS\Test-HermesNativeStderr.ps1'

@@ -12,6 +12,7 @@ of every dependency. Preserve all included licences and attribution.
 | Component ID | Project / upstream | Licence |
 | --- | --- | --- |
 | `universal-modder` | [Universal Modder](https://github.com/rehan-remade/universal-modder) | MIT; fonts SIL OFL |
+| `uabs-toolbox` | [UABS Toolbox](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle) | MIT (this bundle); depends on the MIT `mcp` SDK |
 | `housecarl` | [houseCARL](https://github.com/Avick3110/houseCARL) | GPL-3.0-only |
 | `spooky` | [Spooky's AutoMod Toolkit](https://github.com/SpookyPirate/spookys-automod-toolkit) | See upstream terms |
 | `codebase-memory` | [codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) | MIT |

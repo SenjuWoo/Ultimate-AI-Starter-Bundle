@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.14.0 -->
+<!-- Ultimate AI Starter Bundle v8.15.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.14.0
+# Ultimate AI Starter Bundle v8.15.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -83,9 +83,9 @@ The 124 general **skills** (plus 49 with the Skyrim pack) use a compact discover
 
 ### What's ON after install
 
-The always-on core is `context7` (library docs) and `headroom` (context compression). The official `github` server joins them only where the `gh` CLI is not signed in: `gh` covers repos, PRs, Actions and releases with no tool list, so the server would sit unused in every chat (switch it on for one project with `-Enable github -Path <project>`). Everything task-specific stays parked until a project needs it, **including servers a tool's own installer registered machine-wide** (RimWorldForge, AvatarForge, Melty): the installer saves an exact copy, removes the machine-wide entry, and `-Auto` writes it back for the one project whose files match. Keep one machine-wide on purpose with `UABS_KEEP_GLOBAL_MCP=<id>`. Other independently configured servers are preserved. Schema bytes are not per-turn bills: filtering, deferred discovery, caching and tool calls determine actual usage.
+The always-on core is `context7` (library docs), `headroom` (context compression) and the bundle's `toolbox` (three small tools: `find`, `describe`, `call`). The official `github` server joins them only where the `gh` CLI is not signed in: `gh` covers repos, PRs, Actions and releases with no tool list, so the server would sit unused in every chat. Everything task-specific stays out of every chat until a task needs it, **including servers a tool's own installer registered machine-wide** (RimWorldForge, AvatarForge, Melty): the installer saves an exact copy and removes the machine-wide entry. Keep one machine-wide on purpose with `UABS_KEEP_GLOBAL_MCP=<id>`. Other independently configured servers are preserved. Schema bytes are not per-turn bills: filtering, deferred discovery, caching and tool calls determine actual usage.
 
-You do not flip any of this by hand: the agent runs `Set-McpProfile.ps1 -Auto -Path <project>` when a task needs a parked tool, and works through the tool's CLI meanwhile; the server itself appears in the next chat opened in that project.
+**You do not switch anything on.** When a task needs a project tool (Skyrim Forge, houseCARL, RimWorldForge, Blender, Unity, Godot, a browser, the GitHub API ...), your AI asks the toolbox, which starts that server in the same chat: no restart, no command, no config edit. The tool's own CLI keeps working too. For a project you use daily, the agent can also wire it natively with `Set-McpProfile.ps1 -Auto -Path <project>`; that copy loads in the next chat opened there.
 
 When the matching local tool is installed, Hermes also gets native named profiles without loading them into default: `code` adds codebase-memory, `roblox` adds the official Roblox Studio MCP, and `skyrim` connects houseCARL while Skyrim Forge and Spooky's AutoMod remain available through their routed skills/CLIs. Forge MCP compatibility is explicit.
 
@@ -726,6 +726,7 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | Catalog ID | Upstream project | Integration |
 |---|---|---|
 | `universal-modder` | [Universal Modder](https://github.com/rehan-remade/universal-modder) | Vendored CLI/source and routed guides; default install |
+| `uabs-toolbox` | [UABS Toolbox](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle) | Bundle-owned; always-on find/describe/call, starts project tools on demand |
 | `housecarl` | [houseCARL](https://github.com/Avick3110/houseCARL) | Offline payload; game/profile scope |
 | `spooky` | [Spooky's AutoMod Toolkit](https://github.com/SpookyPirate/spookys-automod-toolkit) | Offline CLI payload |
 | `codebase-memory` | [codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) | Offline payload; code profile |
@@ -863,6 +864,12 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.15.0** - 2026-10-15. One click, nothing to type: overlapping installs no
+longer break the final check, the console shows one line per step (full output
+in a details log), and the new always-on toolbox lets your AI start any project
+tool in the same chat when a task needs it, so task servers no longer load in
+every chat. [Changes](docs/history/V8.15.0-CHANGELOG.md).
 
 **v8.14.0** - 2026-10-15. Task-specific MCP servers are parked per project (the
 doctor now fails while one is machine-wide), the GitHub server is skipped where

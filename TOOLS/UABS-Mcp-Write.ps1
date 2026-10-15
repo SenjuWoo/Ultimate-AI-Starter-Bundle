@@ -769,6 +769,10 @@ function Add-UabsMcpToml {
     $argList = ($argv | ForEach-Object { '"' + ($_ -replace '\\', '\\') + '"' }) -join ', '
     $block = "`r`n# $($s['note'])`r`n$header`r`ncommand = `"$cmdToml`"`r`nargs = [$argList]`r`n"
     if ($GrokTimeout) { $block += "startup_timeout_sec = 90`r`n" }
+    # A server that passes long calls through (the toolbox) declares its own limit;
+    # Codex and Grok read the same key.
+    $toolTimeout = if ($s.Contains('tool_timeout_sec') -and $s['tool_timeout_sec']) { [string][int]$s['tool_timeout_sec'] } else { '' }
+    if ($toolTimeout) { $block += "tool_timeout_sec = $toolTimeout`r`n" }
     $envBlock = Resolve-UabsServerEnv -Server $s
     if ($envBlock.Count) {
       $block += "[$Section.$($s['id']).env]`r`n"
@@ -790,7 +794,8 @@ function Add-UabsMcpToml {
         # `enabled = true` is Codex's own default (its app writes it), not a
         # policy; treating it as one froze context7 at 4.0.4 for months.
         $policy = @([regex]::Matches($existing.Value, '(?m)^[ \t]*(enabled_tools|disabled_tools|enabled|default_tools_approval_mode|required|tool_timeout_sec)\s*=\s*(.*?)\s*$|^\[mcp_servers\.[^.\]]+\.tools\.') |
-          Where-Object { -not ($_.Groups[1].Value -eq 'enabled' -and $_.Groups[2].Value -eq 'true') })
+          Where-Object { -not ($_.Groups[1].Value -eq 'enabled' -and $_.Groups[2].Value -eq 'true') } |
+          Where-Object { -not ($toolTimeout -and $_.Groups[1].Value -eq 'tool_timeout_sec' -and $_.Groups[2].Value -eq $toolTimeout) })
         if ($policy.Count) {
           # Still move a pinned npm package to the catalog version, in place.
           $updated = $existing.Value
@@ -911,6 +916,9 @@ entry = {
 env = json.loads(os.environ.get("UABS_HERMES_MCP_ENV_JSON") or "{}")
 if env:
     entry["env"] = env
+# Tool-call limit for a server that passes long calls through (the toolbox).
+if os.environ.get("UABS_HERMES_MCP_TIMEOUT"):
+    entry["timeout"] = int(os.environ["UABS_HERMES_MCP_TIMEOUT"])
 servers[os.environ["UABS_HERMES_MCP_ID"]] = entry
 save_config(cfg)
 '@
@@ -942,6 +950,7 @@ function Add-UabsMcpHermes {
       UABS_HERMES_MCP_COMMAND   = (Expand-UabsTemplate -Text $s['command'] -ProjectPath $ProjectPath)
       UABS_HERMES_MCP_ARGS_JSON = (ConvertTo-Json -InputObject (Resolve-UabsServerArgs -Server $s -Provider 'Hermes' -ProjectPath $ProjectPath -Scope $Scope) -Compress)
       UABS_HERMES_MCP_ENV_JSON  = ((Resolve-UabsServerEnv -Server $s) | ConvertTo-Json -Compress)
+      UABS_HERMES_MCP_TIMEOUT   = $(if ($s.Contains('tool_timeout_sec') -and $s['tool_timeout_sec']) { [string][int]$s['tool_timeout_sec'] } else { '' })
     }
     $added += $s['id']
   }

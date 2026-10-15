@@ -47,6 +47,12 @@ jobs:
             throw "Expected Windows PowerShell (Desktop edition); got $($PSVersionTable.PSEdition)."
           }
 
+      - name: Toolbox gate dependency (the MCP SDK version the wheel pins)
+        shell: powershell
+        run: |
+          python -m pip install --disable-pip-version-check mcp==1.30.0
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
       - name: Pack gate
         shell: powershell
         run: |

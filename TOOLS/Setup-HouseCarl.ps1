@@ -62,14 +62,17 @@ param(
   [bool]$WireGrok = $true,
   [bool]$WireCodex = $true,
   [switch]$RefreshOnly,
-  [switch]$SkipDotNetCheck
+  [switch]$SkipDotNetCheck,
+  # Run by the installer: progress lines and the closing guide stay off the
+  # console (the installer prints one line); warnings and errors still show.
+  [switch]$Quiet
 )
 
 $ErrorActionPreference = 'Stop'
 $script:Report = [ordered]@{}
 
-function Write-Step($msg) { Write-Host "==> $msg" -ForegroundColor Cyan }
-function Write-Ok($msg)   { Write-Host "  OK  $msg" -ForegroundColor Green }
+function Write-Step($msg) { if (-not $Quiet) { Write-Host "==> $msg" -ForegroundColor Cyan } }
+function Write-Ok($msg)   { if (-not $Quiet) { Write-Host "  OK  $msg" -ForegroundColor Green } }
 function Write-Warn2($msg){ Write-Host "  !!  $msg" -ForegroundColor Yellow }
 function Write-Bad($msg)  { Write-Host "  XX  $msg" -ForegroundColor Red }
 
@@ -493,9 +496,11 @@ function Write-CodexHint([string]$McpExe,[string]$InstanceDir) {
 }
 
 # ---------------- main ----------------
-Write-Host ""
-Write-Host "houseCARL Uabs automatic setup (MO2 + Vortex shim)" -ForegroundColor Magenta
-Write-Host ""
+if (-not $Quiet) {
+  Write-Host ""
+  Write-Host "houseCARL Uabs automatic setup (MO2 + Vortex shim)" -ForegroundColor Magenta
+  Write-Host ""
+}
 
 if (-not $ShimRoot) { $ShimRoot = Join-Path $env:LOCALAPPDATA 'houseCARL-Shim' }
 
@@ -563,9 +568,11 @@ if ($VortexStaging) {
 }
 
 Write-Step "Manager detection"
-Write-Host "  MO2 instances found: $($mo2List.Count)"
-foreach ($m in $mo2List) { Write-Host "    - $m" }
-Write-Host "  Vortex staging: $(if($staging){$staging}else{'not found'})"
+if (-not $Quiet) {
+  Write-Host "  MO2 instances found: $($mo2List.Count)"
+  foreach ($m in $mo2List) { Write-Host "    - $m" }
+  Write-Host "  Vortex staging: $(if($staging){$staging}else{'not found'})"
+}
 
 $mode = $Manager
 $instanceDir = $null
@@ -664,28 +671,30 @@ $statePath = Write-StateFile @{
   )
 }
 
-Write-Host ""
-Write-Host "========== SETUP COMPLETE ==========" -ForegroundColor Green
-Write-Host "Mode:     $mode"
-Write-Host "Instance: $instanceDir"
-Write-Host "MCP:      $mcp"
-Write-Host "State:    $statePath"
-Write-Host ""
-Write-Host "NEXT:" -ForegroundColor Yellow
-Write-Host "  1. FULLY restart your AI app (Grok / Claude / Codex)."
-Write-Host "  2. Confirm houseCARL MCP tools are visible."
-Write-Host "  3. Ask: what does my Skyrim load order look like?"
-Write-Host "  4. Claude plugin users: set MO2 instance folder to:"
-Write-Host "       $instanceDir"
-Write-Host "  5. Vortex users: after load-order changes run:"
-Write-Host "       .\Setup-HouseCarl.ps1 -RefreshOnly"
-Write-Host ""
-if ($mode -eq 'Vortex') {
-  Write-Host "Vortex patch hand-off: houseCARL writes mods under staging as 'houseCARL - <name>'." -ForegroundColor Yellow
-  Write-Host "Drag that folder into Vortex Mods (or zip + Install From File), enable, Deploy." -ForegroundColor Yellow
+if (-not $Quiet) {
+  Write-Host ""
+  Write-Host "========== SETUP COMPLETE ==========" -ForegroundColor Green
+  Write-Host "Mode:     $mode"
+  Write-Host "Instance: $instanceDir"
+  Write-Host "MCP:      $mcp"
+  Write-Host "State:    $statePath"
+  Write-Host ""
+  Write-Host "NEXT:" -ForegroundColor Yellow
+  Write-Host "  1. FULLY restart your AI app (Grok / Claude / Codex)."
+  Write-Host "  2. Confirm houseCARL MCP tools are visible."
+  Write-Host "  3. Ask: what does my Skyrim load order look like?"
+  Write-Host "  4. Claude plugin users: set MO2 instance folder to:"
+  Write-Host "       $instanceDir"
+  Write-Host "  5. Vortex users: after load-order changes run:"
+  Write-Host "       .\Setup-HouseCarl.ps1 -RefreshOnly"
+  Write-Host ""
+  if ($mode -eq 'Vortex') {
+    Write-Host "Vortex patch hand-off: houseCARL writes mods under staging as 'houseCARL - <name>'." -ForegroundColor Yellow
+    Write-Host "Drag that folder into Vortex Mods (or zip + Install From File), enable, Deploy." -ForegroundColor Yellow
+  }
+  Write-Host "Reference PDF: TOOLS\housecarl\houseCARL-Vortex-shim-setup.pdf"
+  Write-Host ""
 }
-Write-Host "Reference PDF: TOOLS\housecarl\houseCARL-Vortex-shim-setup.pdf"
-Write-Host ""
 
 # exit non-zero if critical runtimes missing (still wrote shim)
 if (-not $SkipDotNetCheck -and (-not $script:Report['dotnet9'] -or -not $script:Report['aspnet9'])) {

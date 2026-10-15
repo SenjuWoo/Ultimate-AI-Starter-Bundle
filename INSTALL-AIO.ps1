@@ -73,7 +73,7 @@ param(
   [switch]$AllProviders,
   [ValidateSet('BundledFirst','OnlineLatest','BundledOnly')]
   [string]$Mode = 'OnlineLatest',
-  [string[]]$Components = @('housecarl','spooky','codebase-memory','headroom','superpowers','ponytail','codeburn','impeccable','playwright-cli','github-mcp-server','rtk','universal-modder'),
+  [string[]]$Components = @('housecarl','spooky','codebase-memory','headroom','superpowers','ponytail','codeburn','impeccable','playwright-cli','github-mcp-server','rtk','universal-modder','uabs-toolbox'),
   [string]$WorkspaceRoot = '',
   # The directory Skyrim Forge is installed INTO, not the folder that
   # contains it: -ForgeRoot 'S:\Apps\Skyrim Tools\Skyrim-Forge' keeps Forge
@@ -211,6 +211,9 @@ New-Item -ItemType Directory -Force -Path $installLogRoot | Out-Null
 $installLogPath = Join-Path $installLogRoot ('install-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.log')
 $installLastPath = Join-Path $installLogRoot 'INSTALL-LAST.log'
 $installFailedPath = Join-Path $installLogRoot 'INSTALL-FAILED.txt'
+# Every tool's own output (npm, uv, plugin CLIs, child scripts) goes here; the
+# console and transcript keep one line per step.
+$script:UabsDetailsLog = $installLogPath -replace '\.log$', '-details.log'
 $script:UabsTranscriptStarted = $false
 $script:UabsHermesGatewayWasRunning = $false
 try {
@@ -219,6 +222,9 @@ try {
 } catch {
   # Logging must never become the reason installation fails.
 }
+# Claude, Hermes and npm print UTF-8; decode it as UTF-8 so a check mark is not
+# shown as three junk characters in the window and the log.
+try { [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false) } catch { }
 
 trap {
   $failure = $_
@@ -228,6 +234,8 @@ trap {
   Write-Host (' ' + $failure.Exception.Message) -ForegroundColor Red
   Write-Host (' Diagnostics: ' + $installFailedPath) -ForegroundColor Yellow
   Write-Host (' Transcript:  ' + $installLogPath) -ForegroundColor Yellow
+  Write-Host (' Tool output: ' + $script:UabsDetailsLog) -ForegroundColor Yellow
+  Write-Host ' Running START-HERE.bat again is safe.' -ForegroundColor Yellow
   Write-Host '=====================================================' -ForegroundColor Red
   $summary = @(
     'Ultimate AI Starter Bundle installation failed.'
@@ -238,6 +246,7 @@ trap {
     ('Target: ' + $failure.TargetObject)
     ('ScriptStackTrace: ' + $failure.ScriptStackTrace)
     ('Transcript: ' + $installLogPath)
+    ('Tool output: ' + $script:UabsDetailsLog)
   ) -join [Environment]::NewLine
   try {
     $enc = New-Object System.Text.UTF8Encoding($false)
@@ -259,12 +268,57 @@ if (-not (Test-Path (Join-Path $PackRoot 'BUNDLED-TOOLS\CATALOG.json'))) {
 . (Join-Path $PackRoot 'TOOLS\UABS-Mcp-Park.ps1')
 $script:UabsPackRoot = $PackRoot
 
+# ---------- Quiet console, complete details log ----------
+function Add-UabsDetails {
+  <# Append a step's full output to the details log beside the transcript. #>
+  param([string]$Title, [string[]]$Lines)
+  if (-not $script:UabsDetailsLog) { return }
+  $text = '==== ' + $Title + ' (' + (Get-Date -Format 'HH:mm:ss') + ")`r`n" + ((@($Lines) | ForEach-Object { [string]$_ }) -join "`r`n") + "`r`n"
+  try { [IO.File]::AppendAllText($script:UabsDetailsLog, $text, (New-Object System.Text.UTF8Encoding($false))) } catch { }
+}
+
+function Show-UabsTail {
+  param([string[]]$Lines, [int]$Count = 20)
+  foreach ($line in @(@($Lines) | Select-Object -Last $Count)) { Write-Host ('     ' + $line) -ForegroundColor DarkGray }
+}
+
+function Invoke-UabsChildScript {
+  <# Run a bundle script in its own powershell.exe. Its output goes to the details
+     log; the console shows its tail only when it fails. Returns the exit code
+     (the output stays in $script:UabsLastChildOutput for a caller that needs it). #>
+  param([string]$Title, [string]$File, [string[]]$ArgList = @(), [switch]$NoTail)
+  $psExe = (Get-Command powershell.exe -ErrorAction Stop).Source
+  $prevEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  try { $lines = @(& $psExe -NoProfile -ExecutionPolicy Bypass -File $File @ArgList 2>&1 | ForEach-Object { [string]$_ }) }
+  finally { $ErrorActionPreference = $prevEap }
+  $code = $LASTEXITCODE
+  Add-UabsDetails -Title $Title -Lines $lines
+  if ($code -ne 0 -and -not $NoTail) { Show-UabsTail -Lines $lines }
+  $script:UabsLastChildOutput = $lines
+  return $code
+}
+
 if (-not $SkipSelfUpdate -and $Mode -ne 'BundledOnly' -and $env:UABS_NO_SELF_UPDATE -ne '1') {
   $handoff = Invoke-UabsBundleSelfUpdate -PackRoot $PackRoot -Bound $PSBoundParameters
   if ($null -ne $handoff) {
     if ($script:UabsTranscriptStarted) { try { Stop-Transcript | Out-Null } catch {} }
     exit $handoff
   }
+}
+
+# One install at a time. Two overlapping runs (a second double-click, or an
+# agent's sync during the user's own run) interleaved the skill sync with the
+# native-plugin dedupe: the second run found nothing left to dedupe, recorded
+# no ownership and failed its doctor. Taken after the self-update handoff, so a
+# handed-off installer never waits on this one. Windows releases the mutex
+# when the process exits; a crashed holder surfaces as AbandonedMutexException.
+$script:UabsInstallMutex = New-Object System.Threading.Mutex($false, 'Local\UltimateAIStarterBundle-Install')
+$haveInstallLock = $false
+try { $haveInstallLock = $script:UabsInstallMutex.WaitOne(0) } catch [System.Threading.AbandonedMutexException] { $haveInstallLock = $true }
+if (-not $haveInstallLock) {
+  Write-Host '  ..  Another bundle install is still running - waiting for it to finish...' -ForegroundColor Yellow
+  try { $haveInstallLock = $script:UabsInstallMutex.WaitOne([TimeSpan]::FromMinutes(30)) } catch [System.Threading.AbandonedMutexException] { $haveInstallLock = $true }
+  if (-not $haveInstallLock) { throw 'Another bundle install has been running for 30 minutes. Close its window, then run START-HERE.bat again.' }
 }
 
 # ---------- Which providers this run touches ----------
@@ -305,7 +359,8 @@ $packSel = Resolve-UabsPackSelection -PackRoot $PackRoot -Requested $Packs -Excl
 foreach ($packName in @($packSel.Reasons.Keys)) {
   $packMeta = $packSel.Catalog.packs.$packName
   if ($packSel.Enabled -contains $packName) {
-    Write-UabsOk ("Pack '{0}' ON: {1}  (turn off: {2})" -f $packName, $packSel.Reasons[$packName], $packMeta.disable)
+    Write-UabsOk ("Pack '{0}' on: {1}" -f $packName, $packSel.Reasons[$packName])
+    Add-UabsDetails -Title "pack $packName" -Lines @("turn off: " + $packMeta.disable)
   } else {
     Write-Host ("  ..  Pack '{0}' off: {1}  (turn on: {2})" -f $packName, $packSel.Reasons[$packName], $packMeta.enable) -ForegroundColor DarkGray
   }
@@ -336,9 +391,26 @@ function Invoke-UabsNative {
   $prevEap = $ErrorActionPreference
   $ErrorActionPreference = 'Continue'
   try {
-    & $Exe @ArgList 2>&1 | ForEach-Object { Write-Host ("  " + $_) }
+    $lines = @(& $Exe @ArgList 2>&1 | ForEach-Object { [string]$_ })
   } finally { $ErrorActionPreference = $prevEap }
-  return ($null -eq $LASTEXITCODE) -or ($LASTEXITCODE -eq 0)
+  $ok = ($null -eq $LASTEXITCODE) -or ($LASTEXITCODE -eq 0)
+  # npm/uv/plugin CLIs print pages of progress and JSON. Keep it in the details
+  # log; the console gets the tail only when the command failed.
+  Add-UabsDetails -Title ((Split-Path -Leaf $Exe) + ' ' + (@($ArgList) -join ' ')) -Lines $lines
+  if (-not $ok) { Show-UabsTail -Lines $lines }
+  return $ok
+}
+
+function Get-UabsNpmGlobalVersion {
+  <# Version of a pinned package in the ACTIVE npm global root, or $null. #>
+  param([string]$Npm, [string]$Spec)
+  $packageName = Get-UabsNpxPackageBase -Arguments @($Spec)
+  if (-not $packageName) { return $null }
+  $root = [string](@(Get-UabsNativeStdout -Exe $Npm -CmdArgs @('root', '-g')) | Select-Object -Last 1)
+  if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($root)) { return $null }
+  $json = Join-Path (Join-Path $root.Trim() $packageName) 'package.json'
+  if (-not (Test-Path -LiteralPath $json -PathType Leaf)) { return $null }
+  try { return [string](([IO.File]::ReadAllText($json) | ConvertFrom-Json).version) } catch { return $null }
 }
 
 function Remove-UabsOutdatedHermesNpmDuplicate {
@@ -467,7 +539,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.14.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.15.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -513,8 +585,11 @@ if (-not $SkipRuntimes -and -not $SkillsOnly) {
 if (-not $ToolsOnly -and -not $SkipProviderBootstrap) {
   $providerBootstrap = Join-Path $PackRoot 'TOOLS\Ensure-Provider-CLIs.ps1'
   if (-not (Test-Path -LiteralPath $providerBootstrap -PathType Leaf)) { throw 'Provider bootstrap script missing.' }
-  & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $providerBootstrap -Providers ($Providers -join ',')
-  if ($LASTEXITCODE -ne 0) { throw "Provider bootstrap failed with exit code $LASTEXITCODE." }
+  Write-UabsStep 'Checking your AI apps (a missing one is installed from its vendor)'
+  $bootCode = Invoke-UabsChildScript -Title 'AI app check' -File $providerBootstrap -ArgList @('-Providers', ($Providers -join ','))
+  if ($bootCode -ne 0) { throw "Provider bootstrap failed with exit code $bootCode." }
+  $appsFound = @($script:UabsLastChildOutput | ForEach-Object { if ($_ -match 'OK\s+(\w+) executable verified') { $Matches[1] } })
+  Write-UabsOk ('AI apps ready: ' + $(if ($appsFound.Count) { $appsFound -join ', ' } else { $Providers -join ', ' }))
 }
 
 function Get-ComponentAssetPath {
@@ -775,6 +850,10 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
     }
     $expectedRoot = Join-Path $tailored "$Provider\COPY-TO-SKILLS-DIRECTORY\skills"
     $res = Remove-UabsPluginOwnedSkillCopies -Provider $Provider -SkillsDir $SkillsDir -Names $names -ExpectedRoot $expectedRoot -BackupRoot $backupRoot -Log $log
+    # owned = every skill the native plugin provides; deduped = copies removed by
+    # THIS run. A re-run whose copies were already gone used to record nothing,
+    # and the doctor then failed every one of them as missing.
+    $StateEntry.owned = @($names)
     $StateEntry.deduped = @($res.removed)
     $StateEntry.skipped_modified = @($res.skipped_modified)
     $StateEntry.skipped_kept = @($res.skipped)
@@ -1406,6 +1485,7 @@ if (-not $ToolsOnly -and $SkipNativePlugins) {
       $expectedRoot = Join-Path $tailored "$prov\COPY-TO-SKILLS-DIRECTORY\skills"
       $res = Remove-UabsPluginOwnedSkillCopies -Provider $prov -SkillsDir $skillsDir `
                -Names $names -ExpectedRoot $expectedRoot -BackupRoot $backupRoot -Log $log
+      $entry.owned = @($names)
       $entry.deduped = @($res.removed)
       $entry.skipped_modified = @($res.skipped_modified)
       $entry.skipped_kept = @($res.skipped)
@@ -1575,7 +1655,9 @@ if (-not $SkillsOnly) {
 
     # A known security hold must not be bypassed by extras or an explicit selection.
     if ($comp.security_hold) {
-      Write-UabsWarn ("${id}: NOT installed or registered: " + $comp.security_hold)
+      # On hold is a decision, not a fault: one quiet line, the reason in the details log.
+      Write-UabsInfo ("${id}: on security hold, not installed (reason in CATALOG.json)")
+      Add-UabsDetails -Title "$id security hold" -Lines @($comp.security_hold)
       $installed[$id] = @{ status='security-held'; note=$comp.security_hold }
       continue
     }
@@ -1589,7 +1671,10 @@ if (-not $SkillsOnly) {
         $npm = Get-Command npm -EA SilentlyContinue
         if ($npm) {
           try {
-            if ($comp.npm_integrity) {
+            # Already at the pinned version in the active global root: leave it.
+            # A reinstall rewrote ~160 packages every run for no change.
+            $npmCurrent = [string]$comp.version -and ((Get-UabsNpmGlobalVersion -Npm $npm.Source -Spec $comp.npm_spec) -ceq [string]$comp.version)
+            if (-not $npmCurrent -and $comp.npm_integrity) {
               $reported = (& $npm.Source view $comp.npm_spec dist.integrity --json 2>$null | Out-String).Trim()
               if ($LASTEXITCODE -ne 0 -or -not $reported) { throw "INTEGRITY: npm could not verify $($comp.npm_spec)" }
               $actualIntegrity = [string]($reported | ConvertFrom-Json)
@@ -1600,9 +1685,10 @@ if (-not $SkillsOnly) {
             $npmArgs = @('install', '-g')
             if ($comp.npm_args) { $npmArgs += @($comp.npm_args) }
             $npmArgs += $comp.npm_spec
-            if (Invoke-UabsNative $npm.Source $npmArgs) {
+            if ($npmCurrent -or (Invoke-UabsNative $npm.Source $npmArgs)) {
               $installed[$id] = @{ status='npm-global'; spec=$comp.npm_spec; integrity=$comp.npm_integrity; args=@($comp.npm_args) }
-              Write-UabsOk "npm -g $($comp.npm_spec)"
+              if ($npmCurrent) { Write-UabsOk "$($comp.name) $($comp.version) is already installed" }
+              else { Write-UabsOk "npm -g $($comp.npm_spec)" }
               Remove-UabsOutdatedHermesNpmDuplicate -Component $comp -ActiveNpm $npm.Source
             } else { throw "npm exited with code $LASTEXITCODE" }
           } catch {
@@ -1634,12 +1720,15 @@ if (-not $SkillsOnly) {
               foreach ($c in @('python', 'py', 'python3')) {
                 if (Get-Command $c -EA SilentlyContinue) {
                   $probe = if ($c -eq 'py') { @('-3', '-m', 'pip', '--version') } else { @('-m', 'pip', '--version') }
-                  try { & $c @probe *> $null; if ($LASTEXITCODE -ne 0) { continue } } catch { continue }
+                  # Stdout-only probe: the Store python stub's stderr no longer
+                  # lands in the install log as a TerminatingError.
+                  $null = Get-UabsNativeStdout -Exe $c -CmdArgs $probe
+                  if ($LASTEXITCODE -ne 0) { continue }
                   # A venv interpreter cannot --user install (user site-packages
                   # are invisible inside a virtualenv), and shells whose PATH
                   # puts a venv first used to fail the whole component here.
-                  $kind = ''
-                  try { $kind = (& $c -c "import sys; print('venv' if sys.prefix != sys.base_prefix else 'base')").Trim() } catch { }
+                  $kindArgs = if ($c -eq 'py') { @('-3', '-c', "import sys; print('venv' if sys.prefix != sys.base_prefix else 'base')") } else { @('-c', "import sys; print('venv' if sys.prefix != sys.base_prefix else 'base')") }
+                  $kind = (@(Get-UabsNativeStdout -Exe $c -CmdArgs $kindArgs) -join '').Trim()
                   if ($kind -eq 'base' -or $c -eq 'py') { $py = $c; break }
                 }
               }
@@ -1657,10 +1746,32 @@ if (-not $SkillsOnly) {
               $hrInstalled = $null
               $installMethod = 'pip'
               if ($uv) {
+                # Already at this exact version and it runs: leave it. Reinstalling
+                # every run re-downloaded its dependencies and killed the copy each
+                # open chat was using (headroom, the toolbox).
+                $uvCurrent = $null; $uvWanted = $null; $uvName = $null
+                $wheelName = if ($asset -and $asset.EndsWith('.whl')) { Split-Path -Leaf $asset } else { [string]$comp.offline_asset }
+                if ($wheelName -match '^(?<n>[^-]+)-(?<v>[^-]+)-') { $uvName = $Matches['n'].Replace('_', '-').ToLowerInvariant(); $uvWanted = $Matches['v'] }
+                if ($uvName) {
+                  foreach ($toolLine in @(Get-UabsNativeStdout -Exe $uv.Source -CmdArgs @('tool', 'list'))) {
+                    if ($toolLine -match ('^' + [regex]::Escape($uvName) + ' v(?<v>\S+)\s*$')) { $uvCurrent = $Matches['v'] }
+                  }
+                }
+                $activeHeadroom = Get-Command $cliName -ErrorAction SilentlyContinue
+                $uvSkip = $false
+                if ($uvCurrent -and $uvCurrent -ceq $uvWanted -and $activeHeadroom -and $activeHeadroom.Source) {
+                  $null = Get-UabsNativeStdout -Exe $activeHeadroom.Source -CmdArgs @('--version')
+                  $uvSkip = ($LASTEXITCODE -eq 0)
+                }
+                if ($uvSkip) {
+                  $ok = $true; $installMethod = 'uv-tool'; $hrInstalled = $activeHeadroom.Source
+                  Write-UabsOk "$($comp.name) $uvCurrent is already installed"
+                }
+              }
+              if ($uv -and -not $uvSkip) {
                 # Prefer uv's isolated tool environment. A pip --user install
                 # can succeed into a Scripts directory that is not on PATH,
                 # leaving an older ~/.local/bin/headroom.exe active.
-                $activeHeadroom = Get-Command $cliName -ErrorAction SilentlyContinue
                 if ($activeHeadroom -and $activeHeadroom.Source) {
                   [void](Stop-UabsProcessUsingExecutable $activeHeadroom.Source)
                 }
@@ -1926,7 +2037,7 @@ if (-not $SkillsOnly) {
           $skipped = @($pairs | Where-Object { $ownedByCanonical -contains $_.name } | ForEach-Object { $_.name })
           $pairs = @($pairs | Where-Object { $ownedByCanonical -notcontains $_.name })
           if ($skipped.Count) {
-            Write-UabsWarn ("{0}: already vendored by this pack, not overwritten: {1}" -f $id, ($skipped -join ', '))
+            Write-UabsInfo ("{0}: already vendored by this pack, not overwritten: {1}" -f $id, ($skipped -join ', '))
           }
           if (-not $pairs.Count) {
             Write-UabsOk ("${id}: every skill it provides is already vendored; nothing to copy")
@@ -1941,7 +2052,7 @@ if (-not $SkillsOnly) {
             }
             $installed[$id] = @{ status='installed'; skills=@($pairs.name); vendored=@($skipped); providers=$wanted }
           }
-          if ($comp.scope_note) { Write-UabsWarn ("scope: " + $comp.scope_note) }
+          if ($comp.scope_note) { Add-UabsDetails -Title "$id scope" -Lines @($comp.scope_note) }
         } catch {
           Write-UabsBad ("$id failed: " + $_.Exception.Message)
           $installed[$id] = @{ status='failed'; error=$_.Exception.Message }
@@ -1988,7 +2099,7 @@ if (-not $SkillsOnly) {
           }
           $installed[$id] = @{ status='installed'; via='npx' }
           Write-UabsOk "$id installed (restart Claude Code to load the plugin)"
-          if ($comp.scope_note) { Write-UabsWarn ("scope: " + $comp.scope_note) }
+          if ($comp.scope_note) { Add-UabsDetails -Title "$id scope" -Lines @($comp.scope_note) }
         } catch {
           Write-UabsWarn ("$id via npx failed. In Claude Code run: /plugin marketplace add $($comp.marketplace[0])  then  /plugin install $($comp.marketplace[1])")
           $installed[$id] = @{ status='manual'; error=$_.Exception.Message }
@@ -2041,7 +2152,8 @@ if (-not $SkillsOnly) {
           } elseif ($comp.api_key_optional) {
             Write-UabsWarn "${id}: no $keyName - registering anyway ($($comp.keyless_note))"
           } else {
-            Write-UabsWarn "${id}: no $keyName set. Get a key, run: setx $keyName ""<key>"" then re-run the installer"
+            # Optional extra that needs the user's own paid key: nothing to fix.
+            Write-UabsInfo "${id}: optional, needs your own $keyName - skipped"
             $aliases = @($id, ($id -replace '-mcp$', '')) | Select-Object -Unique
             $cleaned = @(Remove-UabsGlobalMcpRegistration -Ids $aliases -FromProviders $wanted)
             $installed[$id] = @{ status='skipped-no-key'; needs=$keyName; cleaned_global=$cleaned }
@@ -2147,7 +2259,7 @@ if (-not $SkillsOnly) {
         }
         $installed[$id] = @{ status='registered'; providers=$regs; key=$keyName }
         Write-UabsOk ("$id registered for: " + ($regs -join ', '))
-        if ($comp.scope_note) { Write-UabsWarn ("scope: " + $comp.scope_note) }
+        if ($comp.scope_note) { Add-UabsDetails -Title "$id scope" -Lines @($comp.scope_note) }
       }
 
       default { Write-UabsWarn "No installer for $($comp.install)" }
@@ -2157,9 +2269,10 @@ if (-not $SkillsOnly) {
   # Never print an upstream init command here: it enables the broad rewrite
   # table. The bundle-owned hook installed below has a measured allowlist.
   if ($installed['rtk']) {
-    Write-UabsStep 'rtk is installed - safe routing covers status + standalone pytest/cargo/go tests'
-    Write-Host '     Broad upstream hooks remain off; diff/log/show/find/read/search and mutating Git stay raw.' -ForegroundColor Yellow
-    Write-Host '     Use rtk explicitly for other noisy output, then verify savings with `rtk gain`.' -ForegroundColor DarkGray
+    Add-UabsDetails -Title 'rtk routing' -Lines @(
+      'rtk is installed - safe routing covers status + standalone pytest/cargo/go tests.',
+      'Broad upstream hooks remain off; diff/log/show/find/read/search and mutating Git stay raw.',
+      'Use rtk explicitly for other noisy output, then verify savings with `rtk gain`.')
   }
 }
 
@@ -2226,11 +2339,11 @@ if (-not $SkillsOnly -and ($Providers -contains 'Grok')) {
   if (Test-Path $hrEnsure) {
     Write-UabsStep "Headroom Grok MCP registration (auth aware; repairs a v5.0 inference wrap)"
     try {
-      $hrArgs = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $hrEnsure)
+      $hrArgs = @()
       if ($SkipMcpWire) { $hrArgs += '-SkipMcp' }
-      & (Get-Command powershell.exe -ErrorAction Stop).Source @hrArgs
-      if ($LASTEXITCODE -ne 0 -and $null -ne $LASTEXITCODE) {
-        Write-UabsWarn ("Ensure-Headroom-Grok exited " + $LASTEXITCODE)
+      $hrCode = Invoke-UabsChildScript -Title 'Headroom for Grok' -File $hrEnsure -ArgList $hrArgs
+      if ($hrCode -ne 0 -and $null -ne $hrCode) {
+        Write-UabsWarn ("Ensure-Headroom-Grok exited " + $hrCode)
       } else {
         Write-UabsOk 'Headroom registered for Grok as MCP (inference left on the native endpoint)'
         $installed['headroom-grok-mcp'] = @{ status = 'mcp-only' }
@@ -2249,7 +2362,10 @@ if (-not $SkipHouseCarlSetup -and -not $SkillsOnly -and $skyrimPackOn) {
   if (Test-Path $setup) {
     Write-UabsStep "houseCARL MO2/Vortex setup"
     try {
-      & $setup -WireGrok:$false -WireCodex:$false
+      # In-process: later steps read the env vars it sets in this process.
+      & $setup -WireGrok:$false -WireCodex:$false -Quiet
+      if ($LASTEXITCODE -and $LASTEXITCODE -ne 0) { Write-UabsWarn "houseCARL setup finished with code $LASTEXITCODE (see the lines above)" }
+      else { Write-UabsOk 'houseCARL load-order access is set up (your AI refreshes it after Vortex changes)' }
       $installed['housecarl-setup'] = @{ status='ran' }
     } catch {
       Write-UabsWarn "Setup-HouseCarl: $($_.Exception.Message)"
@@ -2274,10 +2390,12 @@ if (-not $ToolsOnly -and -not $SkillsOnly -and $skyrimPackOn) {
   if (-not (Test-Path -LiteralPath $forgeInstaller -PathType Leaf)) { throw 'TOOLS\Install-SkyrimForge.ps1 missing from pack.' }
   $forgeEntry = @($catalog.components | Where-Object { $_.id -eq 'skyrim-forge' }) | Select-Object -First 1
   $forgeSourceVersion = if ($forgeEntry) { [string]$forgeEntry.version } else { 'unknown' }
-  $forgeArgs = @('-NoProfile','-ExecutionPolicy','Bypass','-File',$forgeInstaller,'-PackRoot',$PackRoot,'-Providers',($Providers -join ','),'-BundleOwnsProviderSkills')
+  $forgeArgs = @('-PackRoot',$PackRoot,'-Providers',($Providers -join ','),'-BundleOwnsProviderSkills')
   if ($ForgeRoot) { $forgeArgs += @('-ForgeRoot', $ForgeRoot) }
-  & (Get-Command powershell.exe -ErrorAction Stop).Source @forgeArgs
-  if ($LASTEXITCODE -ne 0) { throw "Skyrim Forge installation failed with exit code $LASTEXITCODE." }
+  Write-UabsStep 'Skyrim Forge'
+  $forgeCode = Invoke-UabsChildScript -Title 'Skyrim Forge install' -File $forgeInstaller -ArgList $forgeArgs
+  if ($forgeCode -ne 0) { throw "Skyrim Forge installation failed with exit code $forgeCode." }
+  Write-UabsOk ("Skyrim Forge $forgeSourceVersion ready")
   $installed['skyrim-forge'] = @{ status='installed'; version=$forgeSourceVersion; root=$env:SKYRIM_FORGE_ROOT }
 
   # Earlier bundles owned these machine-wide entries. Keep the tools and
@@ -2322,12 +2440,26 @@ $installed['saints-row-forge-discovery'] = @{ status=$(if($saintsForge){'found'}
 if (-not $SkipMcpWire -and -not $SkillsOnly) {
   $mcpProfile = Join-Path $PackRoot 'TOOLS\Set-McpProfile.ps1'
   if (Test-Path -LiteralPath $mcpProfile) {
-    & $mcpProfile -Repair -Providers $Providers -PackRoot $PackRoot
-    # Tool installers register their MCP server machine-wide, which loads its tool
-    # list in every chat. Park those entries; -Auto brings one back per project.
-    & $mcpProfile -Park -Providers $Providers -PackRoot $PackRoot
+    Write-UabsStep 'Project tools'
+    $providerList = $Providers -join ','
+    $profileSteps = @(
+      @{ Title = 'Set-McpProfile -Repair'; Args = @('-Repair', '-Providers', $providerList, '-PackRoot', $PackRoot) },
+      # Tool installers register their MCP server machine-wide, which loads its tool
+      # list in every chat. Park those entries; the toolbox starts them on demand.
+      @{ Title = 'Set-McpProfile -Park'; Args = @('-Park', '-Providers', $providerList, '-PackRoot', $PackRoot) }
+    )
     if ($WorkspaceRoot) {
-      & $mcpProfile -Auto -Path $WorkspaceRoot -Providers $Providers -PackRoot $PackRoot
+      $profileSteps += @{ Title = 'Set-McpProfile -Auto'; Args = @('-Auto', '-Path', $WorkspaceRoot, '-Providers', $providerList, '-PackRoot', $PackRoot) }
+    }
+    $profileFailed = $false
+    foreach ($ps in $profileSteps) {
+      if ((Invoke-UabsChildScript -Title $ps.Title -File $mcpProfile -ArgList $ps.Args) -ne 0) {
+        $profileFailed = $true
+        Write-UabsWarn ($ps.Title + ' did not finish (its output is above)')
+      }
+    }
+    if (-not $profileFailed) {
+      Write-UabsOk 'Task tools stay out of every chat; the toolbox starts the one a task needs'
     }
   }
 }
@@ -2336,11 +2468,17 @@ if (-not $SkipMcpWire -and -not $SkillsOnly) {
 Write-UabsStep "Post-install discovery"
 $disc = Join-Path $PackRoot 'TOOLS\discover_tools.ps1'
 if (Test-Path $disc) {
-  & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -File $disc | Tee-Object -Variable discOut | Out-Host
+  # The table goes to the details log; TOOLBELT.md is the readable inventory.
+  if ((Invoke-UabsChildScript -Title 'discover_tools' -File $disc) -eq 0) { Write-UabsOk 'Installed tools located' }
 }
 
 $stateDir = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle'
 New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
+# The toolbox reads the bundle's server catalog from here, so it keeps working
+# when this pack folder moves or an update replaces it.
+try {
+  Copy-Item -LiteralPath (Join-Path $PackRoot 'BUNDLED-TOOLS\PROFILES.json') -Destination (Join-Path $stateDir 'toolbox-profiles.json') -Force
+} catch { Write-UabsWarn ('Toolbox catalog copy failed: ' + $_.Exception.Message) }
 
 # A partial run must update what it touched without forgetting everything else.
 # native_plugins is always provider-scoped; components are carried forward only
@@ -2384,7 +2522,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.14.0'
+version = '8.15.0'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode
@@ -2400,26 +2538,22 @@ $log | Set-Content (Join-Path $stateDir 'install-log.txt') -Encoding UTF8
 # provider's prose already says 'be thorough' and 'do not assume'; the first
 # two can actually refuse, while RTK only modifies commands on its allowlist.
 if (-not $ToolsOnly) {
+  Write-UabsStep 'Connecting everything to your AI apps'
   $gateInstaller = Join-Path $PackRoot 'TOOLS\Install-Completeness-Gate.ps1'
+  $providerList = $Providers -join ','
   if (Test-Path -LiteralPath $gateInstaller) {
-    try {
-      & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $gateInstaller -Providers ($Providers -join ',')
-      L 'completeness + assumption gates and safe RTK routing installed'
-    } catch {
-      Write-UabsWarn ('Gates: ' + $_.Exception.Message)
-    }
+    if ((Invoke-UabsChildScript -Title 'Completeness gates' -File $gateInstaller -ArgList @('-Providers', $providerList)) -eq 0) {
+      Write-UabsOk 'Completeness + assumption gates and safe RTK routing installed'
+    } else { Write-UabsWarn 'Gates: the gate installer reported an error (Tool output log)' }
   } else {
     Write-UabsWarn 'TOOLS\Install-Completeness-Gate.ps1 missing from pack'
   }
 
   $mcpReason = Join-Path $PackRoot 'TOOLS\Add-Reasoning-MCPs.ps1'
   if (-not $SkillsOnly -and -not $SkipMcpWire -and (Test-Path -LiteralPath $mcpReason)) {
-    try {
-      & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $mcpReason -Providers ($Providers -join ',') -Refresh
-      L 'reasoning MCP servers wired'
-    } catch {
-      Write-UabsWarn ('Reasoning MCPs: ' + $_.Exception.Message)
-    }
+    if ((Invoke-UabsChildScript -Title 'Always-on MCP servers' -File $mcpReason -ArgList @('-Providers', $providerList, '-Refresh', '-Quiet')) -eq 0) {
+      Write-UabsOk 'Always-on MCP servers wired (context7, headroom, toolbox)'
+    } else { Write-UabsWarn 'Always-on MCP servers: the registrar reported an error (Tool output log)' }
   }
 
   $hermesProfiles = Join-Path $PackRoot 'TOOLS\Migrate-HermesProfiles.ps1'
@@ -2455,14 +2589,14 @@ if (-not $ToolsOnly) {
         $hermesUp | Stop-Process -Force -ErrorAction SilentlyContinue
         Start-Sleep -Milliseconds 500
       }
-      $profileArgs = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $hermesProfiles, '-Apply')
+      $profileArgs = @('-Apply')
       if ($SkyrimToolset) { $profileArgs += @('-SkyrimToolset', $SkyrimToolset) }
-      & (Get-Command powershell.exe -ErrorAction Stop).Source @profileArgs
-      if ($LASTEXITCODE -ne 0) { throw "Hermes profile migrator failed with exit code $LASTEXITCODE" }
+      $migrateCode = Invoke-UabsChildScript -Title 'Hermes profile migration' -File $hermesProfiles -ArgList $profileArgs
+      if ($migrateCode -ne 0) { throw "Hermes profile migrator failed with exit code $migrateCode" }
       $profileHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }
       $evaluatedProfiles = @('default') + @(Get-ChildItem -LiteralPath (Join-Path $profileHome 'profiles') -Directory -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name)
       $installed['hermes-native-profiles'] = @{ status='evaluated'; profiles=$evaluatedProfiles; skyrim_toolset=$(if ($SkyrimToolset) { $SkyrimToolset } else { 'default (Lean)' }) }
-      L 'Hermes native profiles evaluated'
+      Write-UabsOk ('Hermes profiles ready ({0}): task tools start on demand through the toolbox' -f $evaluatedProfiles.Count)
     } catch {
       Write-UabsWarn ('Hermes native profiles: ' + $_.Exception.Message)
     }
@@ -2470,12 +2604,10 @@ if (-not $ToolsOnly) {
 
   $sillyGateway = Join-Path $PackRoot 'TOOLS\Install-SillyTavernGateway.ps1'
   if (($Providers -contains 'Hermes') -and (Test-Path -LiteralPath $sillyGateway)) {
-    try {
-      & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $sillyGateway -PackRoot $PackRoot
-      L 'SillyTavern Hermes gateway profile installed'
-    } catch {
-      Write-UabsWarn ('SillyTavern gateway: ' + $_.Exception.Message)
-    }
+    if ((Invoke-UabsChildScript -Title 'SillyTavern gateway' -File $sillyGateway -ArgList @('-PackRoot', $PackRoot)) -eq 0) {
+      $stLine = @($script:UabsLastChildOutput | Where-Object { $_ -match 'SillyTavern gateway' }) | Select-Object -Last 1
+      Write-UabsOk $(if ($stLine) { $stLine } else { 'SillyTavern gateway checked' })
+    } else { Write-UabsWarn 'SillyTavern gateway: the profile writer reported an error (Tool output log)' }
   }
 
   # After every provider config has been written, repoint any MCP command that
@@ -2484,34 +2616,25 @@ if (-not $ToolsOnly) {
   # missed just stops connecting silently.
   $mcpRepair = Join-Path $PackRoot 'TOOLS\Repair-McpPaths.ps1'
   if (Test-Path -LiteralPath $mcpRepair) {
-    try {
-      & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $mcpRepair -Apply -Quiet
-      L 'dead MCP command paths repaired'
-    } catch {
-      Write-UabsWarn ('MCP path repair: ' + $_.Exception.Message)
-    }
+    if ((Invoke-UabsChildScript -Title 'MCP path repair' -File $mcpRepair -ArgList @('-Apply', '-Quiet')) -eq 0) {
+      Write-UabsOk 'MCP command paths checked'
+    } else { Write-UabsWarn 'MCP path repair reported an error (Tool output log)' }
   }
 
   $toolbelt = Join-Path $PackRoot 'TOOLS\Build-Toolbelt.ps1'
   if (Test-Path -LiteralPath $toolbelt) {
-    try {
-      & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $toolbelt
-      L 'toolbelt inventory written'
-    } catch {
-      Write-UabsWarn ('Toolbelt: ' + $_.Exception.Message)
-    }
+    if ((Invoke-UabsChildScript -Title 'Toolbelt inventory' -File $toolbelt) -eq 0) {
+      Write-UabsOk 'Toolbelt inventory written'
+    } else { Write-UabsWarn 'Toolbelt inventory reported an error (Tool output log)' }
   }
 
   # Chat transcripts: copied to the user's history folder when one is configured
   # (UABS_HISTORY_DIR or HISTORY-DIR.txt in the profile folder); a no-op otherwise.
   $historyBackup = Join-Path $PackRoot 'TOOLS\Backup-AiHistory.ps1'
   if (Test-Path -LiteralPath $historyBackup -PathType Leaf) {
-    try {
-      & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $historyBackup -Quiet
-      L 'AI chat history backup checked'
-    } catch {
-      Write-UabsWarn ('History backup: ' + $_.Exception.Message)
-    }
+    if ((Invoke-UabsChildScript -Title 'AI chat history backup' -File $historyBackup -ArgList @('-Quiet')) -eq 0) {
+      Write-UabsOk 'AI chat history backup checked'
+    } else { Write-UabsWarn 'History backup reported an error (Tool output log)' }
   }
 
   if (-not $SkillsOnly -and -not $SkipMcpWire -and -not $SkipMcpHandshake) {
@@ -2525,18 +2648,22 @@ if (-not $ToolsOnly) {
     $hrCheck = [Environment]::GetEnvironmentVariable('HEADROOM_CMD','User')
     if (-not $hrCheck) { try { $hrCheck = (Get-Command headroom -ErrorAction SilentlyContinue).Source } catch { } }
     if ($hrCheck -and (Test-Path -LiteralPath $hrCheck -PathType Leaf)) { $coreMcp += 'headroom' }
+    # Same resolution as the registrar (Add-Reasoning-MCPs) and the Hermes migrator.
+    $tbCheck = [Environment]::GetEnvironmentVariable('UABS_TOOLBOX_CMD','User')
+    if (-not $tbCheck) { try { $tbCheck = (Get-Command uabs-toolbox -ErrorAction SilentlyContinue).Source } catch { } }
+    if ($tbCheck -and (Test-Path -LiteralPath $tbCheck -PathType Leaf)) { $coreMcp += 'toolbox' }
     foreach ($prov in $Providers) {
       if ($prov -eq 'Grok' -and $SkipGrokMcp) { continue }
       foreach ($serverName in $coreMcp) {
         $handshakeOk = $false
         foreach ($attempt in 1..2) {
-          Write-UabsStep ("MCP handshake: {0}/{1} (attempt {2}/2)" -f $prov, $serverName, $attempt)
-          & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $probe -Provider $prov -Name $serverName -TimeoutSeconds 90 -RequireMatch
-          if ($LASTEXITCODE -eq 0) { $handshakeOk = $true; break }
-          if ($attempt -eq 1) { Write-UabsWarn 'Handshake failed once; retrying the already-resolved server command' }
+          # A first failure is retried silently; only the final one shows its output.
+          $hsCode = Invoke-UabsChildScript -Title ("MCP handshake {0}/{1} attempt {2}" -f $prov, $serverName, $attempt) -File $probe -ArgList @('-Provider', $prov, '-Name', $serverName, '-TimeoutSeconds', '90', '-RequireMatch') -NoTail:($attempt -eq 1)
+          if ($hsCode -eq 0) { $handshakeOk = $true; break }
         }
         if (-not $handshakeOk) { throw "MCP handshake failed: $prov/$serverName after 2 attempts" }
       }
+      if ($coreMcp.Count) { Write-UabsOk ('{0}: always-on tools answer ({1})' -f $prov, ($coreMcp -join ', ')) }
     }
   }
 }
@@ -2552,11 +2679,18 @@ elseif ($SkillsOnly) { $doctorArgs += '-SkipForge' }
 # Start-Transcript does not reliably capture output written directly by a child
 # powershell.exe process, which previously left INSTALL-LAST.log with only the
 # generic exit code and hid the actual failing doctor check.
+Write-UabsStep 'Final check of everything installed'
 $prevEap=$ErrorActionPreference; $ErrorActionPreference='Continue'
 $doctorOutput = @(& (Get-Command powershell.exe -ErrorAction Stop).Source @doctorArgs 2>&1)
 $ErrorActionPreference=$prevEap
 $doctorExitCode = $LASTEXITCODE
-foreach ($doctorLine in $doctorOutput) { Write-Host ([string]$doctorLine) }
+# Full report to the details log; the console gets only problems and the verdict.
+Add-UabsDetails -Title 'Installed-state doctor' -Lines @($doctorOutput | ForEach-Object { [string]$_ })
+foreach ($doctorLine in $doctorOutput) {
+  $text = [string]$doctorLine
+  if ($text -match '^\s*(XX|!!)\s') { Write-Host $text -ForegroundColor $(if ($text -match '^\s*XX') { 'Red' } else { 'Yellow' }) }
+  elseif ($text -match 'Installed-state doctor (PASS|FAIL)') { Write-Host $text -ForegroundColor $(if ($doctorExitCode -eq 0) { 'Green' } else { 'Red' }) }
+}
 if ($doctorExitCode -ne 0) {
   $doctorTail = (@($doctorOutput | Select-Object -Last 12 | ForEach-Object { [string]$_ }) -join ' | ')
   throw "Final installed-state doctor failed with exit code $doctorExitCode. Doctor tail: $doctorTail"
@@ -2568,9 +2702,11 @@ if (-not $SkipCleanup -and -not $ToolsOnly) {
   $cleanTool = Join-Path $PackRoot 'TOOLS\Clean-StaleState.ps1'
   if (Test-Path -LiteralPath $cleanTool -PathType Leaf) {
     try {
-      $cleanArgs = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $cleanTool, '-Apply', '-PackRoot', $PackRoot)
+      $cleanArgs = @('-Apply', '-PackRoot', $PackRoot)
       if ($SkillsOnly) { $cleanArgs += '-SkipSkills' }
-      & (Get-Command powershell.exe -ErrorAction Stop).Source @cleanArgs
+      $cleanCode = Invoke-UabsChildScript -Title 'Leftover cleanup' -File $cleanTool -ArgList $cleanArgs
+      if ($cleanCode -ne 0) { throw "cleanup exited with code $cleanCode" }
+      Write-UabsOk 'Old bundle leftovers cleaned (newest backups kept)'
       $installed['stale-state-cleanup'] = @{ status = 'applied' }
     } catch {
       # Never fail an otherwise-good install over housekeeping.
@@ -2608,85 +2744,34 @@ if ($script:UabsHermesDesktopExe) {
   $script:UabsHermesDesktopExe = $null
 }
 
-Write-Host ""
-Write-Host "=====================================================" -ForegroundColor Green
-Write-Host " INSTALL COMPLETE" -ForegroundColor Green
-Write-Host " State: $stateDir\install-state.json" -ForegroundColor Green
-Write-Host "=====================================================" -ForegroundColor Green
-Write-Host ""
-Write-Host 'NEXT STEPS:' -ForegroundColor Yellow
-Write-Host '  1. FULLY restart every AI app you use (Grok / Claude / Codex / ...).'
-Write-Host '  2. Run /mcp and confirm the always-on core: context7, headroom (github too, where the gh CLI is not signed in).'
-Write-Host '  3. Claude houseCARL plugin: set MO2 instance to SKYRIM_MO2_INSTANCE path.'
-Write-Host '  4. Vortex users after LO changes: TOOLS\Setup-HouseCarl.ps1 -RefreshOnly'
-Write-Host '  5. Update tools later: TOOLS\Update-From-GitHub.ps1'
-if (-not $SkillsOnly -and -not $SkipMcpWire -and -not $SkipMcpHandshake) {
-  Write-Host '  6. Core MCP handshakes passed during install. Re-check any provider with:'
-} else {
-  Write-Host '  6. Core MCP handshakes were not run in this install mode. Check any provider with:'
+# One click, nothing to type: the closing text names no command. The toolbox
+# count comes from the installed toolbox itself, so it reflects this machine.
+$toolboxReady = $null
+$tbExe = [Environment]::GetEnvironmentVariable('UABS_TOOLBOX_CMD', 'User')
+if (-not $tbExe) { try { $tbExe = (Get-Command uabs-toolbox -ErrorAction SilentlyContinue).Source } catch { } }
+if ($tbExe -and (Test-Path -LiteralPath $tbExe -PathType Leaf)) {
+  $prevEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  try { $tbLines = @(& $tbExe --list 2>&1 | ForEach-Object { [string]$_ }) } catch { $tbLines = @() }
+  finally { $ErrorActionPreference = $prevEap }
+  $toolboxReady = @($tbLines | Where-Object { ($_ -split "`t")[1] -match '^(ready|needs a project folder)' }).Count
 }
-Write-Host '     TOOLS\Test-McpHandshake.ps1 -Provider Claude'
-Write-Host '     Capability profiles (code memory, games, browser, Serena, Blender, Godot, Unity, reasoning) are off'
-Write-Host '     until a project needs them, and are then wired for THAT project only:'
-Write-Host '     TOOLS\Set-McpProfile.ps1 -List | -Auto -Path <project> | -Disable <id>'
-# Say, concretely, whether ANY project profile is enabled. -Auto only runs
-# above when -WorkspaceRoot was passed, and START-HERE.bat never passes it --
-# so on a default install this detection has never run and nothing said so.
-# The symptom is an agent whose houseCARL / Forge / codebase-memory tool calls
-# return nothing, with no hint that the fix is one command rather than an
-# install. Reported here because guessing a project directory and enabling
-# servers for it would be worse than saying nothing.
-$profileStateFile = Join-Path $stateDir 'mcp-profiles.json'
-$enabledProfiles = @()
-if (Test-Path -LiteralPath $profileStateFile -PathType Leaf) {
-  try {
-    $ps = [IO.File]::ReadAllText($profileStateFile) | ConvertFrom-Json
-    if ($ps.profiles) {
-      foreach ($pr in $ps.profiles.PSObject.Properties) {
-        $projs = @()
-        try {
-          $projs = @($pr.Value.projects.PSObject.Properties.Name |
-            Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) })
-        } catch { $projs = @() }
-        if ($projs.Count) { $enabledProfiles += ('{0} -> {1}' -f $pr.Name, ($projs -join '; ')) }
-        if ($pr.Value.global) { $enabledProfiles += ('{0} -> (global)' -f $pr.Name) }
-      }
-    }
-  } catch { }
-}
-if ($enabledProfiles.Count) {
-  Write-Host '     Currently enabled:' -ForegroundColor DarkGray
-  foreach ($ep in $enabledProfiles) { Write-Host ('       ' + $ep) -ForegroundColor DarkGray }
-} else {
-  Write-Host '     NONE are enabled for any project yet. Until you enable one, houseCARL,' -ForegroundColor Yellow
-  Write-Host '     Skyrim Forge, codebase-memory and Serena tools will NOT appear in any AI' -ForegroundColor Yellow
-  Write-Host '     app, and an agent asked to use them will simply find nothing. That is a' -ForegroundColor Yellow
-  Write-Host '     one-command fix, not an install problem:' -ForegroundColor Yellow
-  Write-Host '       TOOLS\Set-McpProfile.ps1 -Detect -Path "<your project>"   # what applies' -ForegroundColor Yellow
-  Write-Host '       TOOLS\Set-McpProfile.ps1 -Auto   -Path "<your project>"   # enable it' -ForegroundColor Yellow
-  Write-Host '     Project scope is supported by Claude and Grok. Hermes uses the native code profile below.' -ForegroundColor Yellow
-}
-if (-not $ToolsOnly -and -not $SkipPreamble) {
-  Write-Host '  7. Preamble: SOUL + AIO were wired into your agent files automatically.'
-} else {
-  Write-Host '  7. Preamble: existing agent instructions were left unchanged.'
-}
-Write-Host '     Web UIs (ChatGPT/Gemini) have no instruction file - paste 3-PREAMBLES\MANUAL-PASTE.txt.'
-Write-Host '  8. Hermes: run hermes --accept-hooks once if it asks for hook trust.'
-if (-not $SkipCleanup -and -not $ToolsOnly) {
-  Write-Host '  9. Bundle-owned leftovers were checked by the cleanup pass.'
-} else {
-  Write-Host '  9. General leftover cleanup was skipped in this install mode.'
-}
-Write-Host '     See what would go without deleting: TOOLS\Clean-StaleState.ps1'
-Write-Host '     Native MCP profiles when installed: hermes (core), code (codebase-memory), roblox (official Studio MCP), skyrim (houseCARL), creative (Blender + Unity).'
-Write-Host '     Narrow phases when available: blender, unity, godot, web. Task routing: TOOLS\Set-McpProfile.ps1 -ListTasks or -Task <ids> -Path <project> -Plan.'
-Write-Host '     Audit/migrate: TOOLS\Migrate-HermesProfiles.ps1 [-Apply]'
-Write-Host '     houseCARL full schema: ~41,768 estimated tokens (bytes/4), not a per-turn bill.'
-Write-Host '     Lean: ~31,369 schema estimate (-25%); ReadOnly: ~17,604 (-58%). Actual usage is unmeasured.'
 Write-Host ''
-Write-Host 'AI usage: describe the outcome; capability-profiles pairs task skills, installed CLIs and scoped MCPs. Skyrim tasks additionally use skyrim-memory + skyrim-tool-router.'
-Write-Host 'Missing tools: run TOOLS\Ensure-Tools.ps1 or INSTALL-AIO.ps1 - do not invent paths.'
+Write-Host '=====================================================' -ForegroundColor Green
+Write-Host (' INSTALL COMPLETE  (v' + $state.version + ')') -ForegroundColor Green
+Write-Host '=====================================================' -ForegroundColor Green
+Write-Host ''
+Write-Host '  1. Close and reopen your AI apps once (Claude, Codex, Hermes, Grok...).' -ForegroundColor Yellow
+Write-Host '  2. Then just tell your AI what you want to build or mod. It switches on'
+Write-Host '     the project tools a task needs by itself - nothing to type or set up.'
+if ($null -ne $toolboxReady) {
+  Write-Host ('     Project tools your AI can start on this PC: {0}' -f $toolboxReady) -ForegroundColor DarkGray
+} elseif (-not $SkillsOnly -and -not $ToolsOnly) {
+  Write-Host '     The on-demand toolbox is missing, so project tools stay off. Run START-HERE.bat again.' -ForegroundColor Yellow
+}
+Write-Host ''
+Write-Host '  To update later, run START-HERE.bat again.' -ForegroundColor DarkGray
+Write-Host ('  Log: ' + $installLogPath) -ForegroundColor DarkGray
+Write-Host ('  Tool output: ' + $script:UabsDetailsLog) -ForegroundColor DarkGray
 Write-Host ''
 
 # Close the durable transcript only after the success banner/next steps have

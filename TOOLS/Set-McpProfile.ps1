@@ -851,7 +851,7 @@ if ($PSCmdlet.ParameterSetName -eq 'Park') {
   $hermesSeen = @()
   if ($Providers -contains 'Hermes') { $hermesSeen = @(Find-UabsGlobalScopeLeaks -PackRoot $PackRoot -Providers @('Hermes')) }
   foreach ($h in $hermesSeen) {
-    Write-Skip ("Hermes/{0} ({1}) is in Hermes' default profile; reported, not moved. Hermes profiles are native: use Migrate-HermesProfiles.ps1 or edit it in Hermes." -f $h.Id, $h.Rule.title)
+    Write-Skip ("Hermes/{0} ({1}) is in Hermes' default profile; the Hermes migration parks it (Hermes must be closed), and the toolbox then starts it on demand." -f $h.Id, $h.Rule.title)
   }
   if (-not $parked.Count) { Write-Ok 'none: nothing task-specific is registered machine-wide in a file this script may edit'; return }
   foreach ($leak in $parked) {

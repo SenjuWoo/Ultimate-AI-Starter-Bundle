@@ -1,5 +1,40 @@
 # Bundle audit state
 
+## v8.15.0: one-click, quiet, toolbox (2026-10-15)
+
+- Owner report: install failed (doctor 63 errors), console full of noise and
+  typed-command advice; wants task MCPs toggled by the AI, nothing to type.
+- Root cause: two overlapping installers; the second found plugin skills already
+  deduped and recorded no ownership. Fixed: install mutex
+  `Local\UltimateAIStarterBundle-Install`, `owned` record, doctor unions the
+  bundled plugin tree.
+- `BUNDLED-TOOLS/uabs-toolbox` 1.0.0 (mcp==1.30.0; find/describe/call; lazy
+  children; parked JSON + TOML entries; crash restart; profiles marked
+  `"toolbox": "on-request"` (windows-mcp) are listed, never auto-started).
+  Wheel byte-reproducible (built twice, equal): from the source folder
+  `SOURCE_DATE_EPOCH=1792022400 uv build --wheel --out-dir <abs offline dir>`,
+  then delete uv's `.gitignore` there; 14,442 B, sha256 051d7c77...64d2.
+  Scratch helper used: rebuild_wheel.py (builds twice, updates manifest row).
+- Installer: every child step via `Invoke-UabsChildScript` (details log
+  `logs\install-<stamp>-details.log`), one line per step, banner names no
+  command; START-HERE.bat closing text updated. Hermes core = context7,
+  headroom, toolbox (+github only when gh not ready); default-profile task
+  servers parked. Skills toolbox-first; fanout regenerated. Other handle replaced
+  by SenjuWoo (LICENSE, 3 skill refs, one history line).
+- Real START-HERE run (UABS_NO_PAUSE=1, UABS_NO_SELF_UPDATE=1): 243 console
+  lines, INSTALL COMPLETE, no TerminatingError/pipeline-stopped line in the
+  transcript, handshakes context7/headroom/toolbox on all 5 providers, doctor
+  0 errors 0 warnings. Hermes: toolbox in default + 8 managed profiles, github
+  gone, AvatarForge parked (Hermes record in parked-mcp.json). Live client test
+  of the installed toolbox: 2,079 schema bytes, 18 sets (16 startable),
+  github-mcp started (47 tools), get_me via call OK, windows-mcp not started.
+- Gates: contracts 146/0 (new: toolbox wheel = gated source), privacy PASS,
+  Hermes bootstrap PASS, versions agree, toolbox gate PASS (mcp 1.30.0 venv and
+  1.29.1). Test-McpProfiles needed stubs for the new writer calls (fixed, PASS).
+- Next: full Test-Pack rerun, regenerate MANIFEST, commit, push, CI + CodeQL on
+  that SHA, flags query, build Core/Full-Offline twice, publish v8.15.0, verify
+  downloaded bytes, receipts under artifacts/release-v8.15.0.
+
 ## v8.14.0: parked task servers, history, shadowing launchers (2026-10-15)
 
 - Resumed after Claude's session store was wiped by BleachBits (2026-10-13; the

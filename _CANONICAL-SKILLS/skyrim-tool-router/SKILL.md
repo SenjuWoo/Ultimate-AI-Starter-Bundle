@@ -82,16 +82,20 @@ Optional process overlays (not Skyrim-specific): `using-superpowers`, `systemati
 
   | Symptom | Meaning | What to tell the user |
   |---|---|---|
-  | MCP tool search returns **0 results**, or a `housecarl_*` / `skyrim_forge_*` tool is not callable | If installed, it may be **not enabled for this project**, untrusted, filtered or disconnected. A failed search alone does not identify the cause | Verify discovery and handshake; if scope is missing, give the exact command below. **Do not tell them to install it.** |
+  | MCP tool search returns **0 results**, or a `housecarl_*` / `skyrim_forge_*` tool is not callable | If installed, it may be **not enabled for this project**, untrusted, filtered or disconnected. A failed search alone does not identify the cause | Use the toolbox (`find` "skyrim load order" or "skyrim forge" with the project, then `call`); it starts the server in this chat. **Do not tell them to install it.** |
   | The binary/CLI itself is absent from disk | Genuinely not installed | Load `tool-discovery` and **recommend install** |
 
   Never fake results for either one.
 
 ### houseCARL or Forge tools not there? Say this
 
-Do not stop at "MCP is disconnected". Name the fix, with the project path filled
-in. Claude/Grok use project scope, Codex requires project trust, Kimi needs
-explicit global scope, and Hermes uses its native `skyrim` profile:
+Do not stop at "MCP is disconnected". First use the always-on `toolbox`: `find`
+"skyrim load order" (houseCARL) or "skyrim forge" with `project` set, `describe`
+the tools you need, then `call` them. That works in the current chat and needs
+nothing from the user. Only when no toolbox is connected, run the native wiring
+yourself, with the project path filled in. Claude/Grok use project scope, Codex
+requires project trust, Kimi needs explicit global scope, and Hermes uses its
+native `skyrim` profile:
 
 ```powershell
 # see which profiles this project qualifies for
@@ -105,8 +109,9 @@ TOOLS\Set-McpProfile.ps1 -Enable game-skyrim-load-order -Path "<project>"   # ho
 TOOLS\Set-McpProfile.ps1 -Enable game-skyrim            -Path "<project>"   # Skyrim Forge
 ```
 
-Then **restart that AI app** — a running session does not pick up a newly
-registered MCP server.
+Native wiring needs **a restart of that AI app** — a running session does not
+pick up a newly registered MCP server — so keep working through the toolbox or
+the Forge CLI meanwhile.
 
 `-List` shows what is enabled where, and distinguishes `REGISTERED for the
 project above` from `ready, but NOT registered`. If a profile reads

@@ -521,11 +521,16 @@ def test_hermes_native_profile_migration_contract() -> None:
         "the retirement sweep no longer matches the dead model exactly"
     )
 
-    assert "default = @('context7', 'github', 'headroom')" in body
-    assert "code = @('context7', 'github', 'headroom', 'codebase-memory-mcp')" in body
-    assert "roblox = @('context7', 'github', 'headroom', 'Roblox_Studio')" in body
-    assert "skyrim = @('context7', 'github', 'headroom', 'housecarl')" in body
-    assert "creative = @('context7', 'github', 'headroom', 'blender', 'unity')" in body
+    # v8.15.0: the core is context7 + headroom + the on-demand toolbox, and
+    # GitHub only where gh is not signed in (the registrar's own rule).
+    assert "@{ Id = 'context7'; Spec = $context7" in body and "@{ Id = 'headroom'; Spec = $headroom" in body
+    assert "$githubInCore = -not (Test-UabsGithubMcpParked)" in body
+    assert "@{ Id = 'toolbox'; Spec = $toolbox" in body
+    assert "default = @($coreIds)" in body
+    assert "code = @($coreIds) + @('codebase-memory-mcp')" in body
+    assert "roblox = @($coreIds) + @('Roblox_Studio')" in body
+    assert "skyrim = @($coreIds) + @('housecarl')" in body
+    assert "creative = @($coreIds) + @('blender', 'unity')" in body
     assert "foreach ($profile in @('code', 'roblox', 'skyrim', 'creative'))" in body
     assert "Remove-UabsServer $profile $maps[$profile] $id 'codebase-memory'" in body, (
         "Hermes codebase-memory can leak back into default/game profiles"
@@ -545,13 +550,13 @@ def test_hermes_native_profile_migration_contract() -> None:
         "the codebase-memory doctor cost no longer matches the measured 0.10.8 tools/list surface"
     )
     assert "Migrate-HermesProfiles.ps1" in installer, "the installer no longer runs the profile migration"
-    assert "'-File', $hermesProfiles, '-Apply'" in installer, (
+    assert "$profileArgs = @('-Apply')" in installer and "-File $hermesProfiles -ArgList $profileArgs" in installer, (
         "the installer no longer applies the migration; a dry run writes nothing "
         "and the profile topology never lands"
     )
-    profile_call = installer[installer.index("& (Get-Command powershell.exe -ErrorAction Stop).Source @profileArgs"):]
+    profile_call = installer[installer.index("Invoke-UabsChildScript -Title 'Hermes profile migration'"):]
     profile_call = profile_call[:profile_call.index("$installed['hermes-native-profiles']")]
-    assert "$LASTEXITCODE -ne 0" in profile_call and "throw" in profile_call, (
+    assert "$migrateCode -ne 0" in profile_call and "throw" in profile_call, (
         "the installer records Hermes profiles as evaluated even when the child migrator exits nonzero"
     )
     # The migrator refuses while Hermes.exe is up. The install closes the
@@ -559,7 +564,7 @@ def test_hermes_native_profile_migration_contract() -> None:
     # the migration call site has to close it too or the topology silently
     # never lands on those runs.
     call_site = installer[installer.index("$hermesProfiles = Join-Path"):]
-    call_site = call_site[:call_site.index("'-File', $hermesProfiles, '-Apply'")]
+    call_site = call_site[:call_site.index("-File $hermesProfiles -ArgList $profileArgs")]
     assert "Get-Process -Name 'Hermes'" in call_site, (
         "the Hermes profile migration no longer closes a running desktop app; "
         "it will degrade to a warning whenever the plugin block is skipped"
@@ -2765,6 +2770,7 @@ def main() -> int:
         test_installed_state_doctor_keeps_provider_probes_local,
         test_public_skyrim_workflow_requires_product_and_presentation_quality,
         test_portable_skill_routing_does_not_require_superpowers_prefix,
+        test_toolbox_wheel_is_the_shipped_source,
     ]
     failed = []
     for fn in tests:
@@ -4922,29 +4928,23 @@ def test_an_unenabled_profile_is_never_reported_as_a_missing_tool() -> None:
             "like it did not work" % name
         )
 
-    # 3: the installer must report the actual state, not just mention a command.
-    assert "NONE are enabled for any project yet" in aio, (
-        "INSTALL-AIO no longer says when zero project profiles are enabled. "
-        "-Auto only runs when -WorkspaceRoot is passed and START-HERE.bat never "
-        "passes it, so silence here means the user is never told these servers "
-        "exist, let alone that they are off"
+    # 3: the installer must report the actual state from the installed toolbox.
+    # 2026-10-15 (v8.15.0): zero enabled profiles is the normal state now -- the
+    # toolbox starts a task's server in the same chat -- and the owner asked for
+    # a finish that hands them no command to type.
+    finish = aio[aio.index("$toolboxReady = $null"):]
+    finish = finish[:finish.index("Write-Host ('  Tool output: '")]
+    assert "--list" in finish and "UABS_TOOLBOX_CMD" in finish, (
+        "the closing text no longer reads the installed toolbox, so it cannot "
+        "say whether project tools are reachable on this machine"
     )
-    assert "one-command fix, not an install problem" in aio, (
-        "the installer notice no longer distinguishes this from an install "
-        "failure, which is the entire confusion it exists to prevent"
+    assert "INSTALL COMPLETE" in finish and "toolbox is missing" in finish, (
+        "the installer no longer says when the on-demand toolbox is absent, which "
+        "is the one state in which project tools really are unreachable"
     )
-    assert "Currently enabled:" in aio, (
-        "the installer no longer lists which profiles ARE enabled, so a user "
-        "cannot tell a working setup from an empty one"
-    )
-    assert "$pr.Value.global" in aio and "(global)" in aio, (
-        "machine-wide profiles are rendered as a blank project path"
-    )
-    # It must read real state rather than printing a fixed sentence.
-    assert "mcp-profiles.json" in aio, (
-        "the installer prints profile guidance without reading mcp-profiles.json, "
-        "so the message cannot reflect what is actually enabled"
-    )
+    for typed in ("TOOLS\\", ".ps1", "setx ", "/mcp"):
+        assert typed not in finish, f"the closing text asks the user to type {typed!r}"
+
 
 def test_every_canonical_skill_reached_every_provider_tree() -> None:
     """Editing a canonical skill and shipping are two different acts.
@@ -5385,8 +5385,8 @@ def test_profile_repair_and_frontend_detection_are_default() -> None:
     writer = ps_code(ROOT / "TOOLS" / "Set-McpProfile.ps1")
     web = next(p for p in profiles["profiles"] if p["id"] == "web")
 
-    assert "& $mcpProfile -Repair" in installer
-    assert installer.index("& $mcpProfile -Repair") < installer.index("& $mcpProfile -Auto")
+    assert "@('-Repair', '-Providers'" in installer
+    assert installer.index("@('-Repair', '-Providers'") < installer.index("@('-Auto', '-Path'")
     assert "ParameterSetName = 'Repair'" in writer and "& $PSCommandPath @invoke" in writer
     assert "Providers = @($job.Providers)" in writer
     assert "Test-UabsServerDeclared -Path $target.Path" in writer
@@ -5395,9 +5395,6 @@ def test_profile_repair_and_frontend_detection_are_default() -> None:
     names = {name for probe in probes for name in probe.get("names", [])}
     assert {"vite", "react", "vue", "svelte"} <= names
     assert "json_has_any" in writer
-    assert "IsNullOrWhiteSpace([string]$_)" in installer, (
-        "a global-only profile prints a fake blank project in the install summary"
-    )
 
 
 def test_new_creative_skills_are_pinned_and_single_writer() -> None:
@@ -5465,7 +5462,7 @@ def test_outdated_hermes_npm_duplicates_are_removed_only_after_current_install()
     assert "'uninstall', '-g', $packageName" in repair
 
     branch = installer.split("'npx-or-npm'", 1)[1].split("'pip-or-wheel'", 1)[0]
-    installed = branch.index("if (Invoke-UabsNative $npm.Source $npmArgs)")
+    installed = branch.index("if ($npmCurrent -or (Invoke-UabsNative $npm.Source $npmArgs))")
     cleanup = branch.index("Remove-UabsOutdatedHermesNpmDuplicate")
     assert installed < cleanup, "legacy cleanup runs before the exact current package exists"
 
@@ -5493,7 +5490,7 @@ def test_global_scope_guard_is_safe_and_wired() -> None:
         assert rule.get("only_if") in (None, "gh-ready"), f"{rule['id']}: unknown condition"
 
     installer = ps_code(ROOT / "INSTALL-AIO.ps1")
-    assert "-Park -Providers $Providers" in installer, "the installer never parks leaked servers"
+    assert "@('-Park', '-Providers', $providerList" in installer, "the installer never parks leaked servers"
     doctor = read(ROOT / "TOOLS" / "Test-Installed-State.ps1")
     assert "Find-UabsGlobalScopeLeaks" in doctor, "the doctor cannot see a leaked server"
     reasoning = read(ROOT / "TOOLS" / "Add-Reasoning-MCPs.ps1")
@@ -5899,7 +5896,8 @@ def test_current_documentation_links_and_upstream_coverage() -> None:
         for component in catalog["components"]:
             if component["id"] == "skyrim-forge":
                 continue
-            upstream = component["github"]
+            # A bundle-owned component (no upstream of its own) links to this repository.
+            upstream = component.get("github") or {"owner": "SenjuWoo", "repo": "Ultimate-AI-Starter-Bundle"}
             row = next((line for line in text.splitlines() if line.startswith(f"| `{component['id']}` |")), "")
             assert f"https://github.com/{upstream['owner']}/{upstream['repo']}" in row, component["id"]
     starter = read(ROOT / "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml")
@@ -5907,6 +5905,37 @@ def test_current_documentation_links_and_upstream_coverage() -> None:
     guidance = read(paths[2])
     for alias, model in re.findall(r"(?m)^    ([\w.-]+):\s+openrouter/(\S+)", aliases):
         assert f"| `{alias}` | `{model}` |" in guidance, alias
+
+
+def test_toolbox_wheel_is_the_shipped_source() -> None:
+    """The offline toolbox wheel installs exactly the source the toolbox gate ran.
+
+    2026-10-15 (v8.15.0): the wheel is built from BUNDLED-TOOLS/uabs-toolbox and is
+    byte-reproducible there with
+    ``SOURCE_DATE_EPOCH=1792022400 uv build --wheel --out-dir ../offline``
+    (delete the ``.gitignore`` uv drops into the out dir). A wheel left over from an
+    older checkout would install code no gate ever ran.
+    """
+    catalog = json.loads(read(ROOT / "BUNDLED-TOOLS/CATALOG.json"))
+    comp = next(c for c in catalog["components"] if c["id"] == "uabs-toolbox")
+    src = ROOT / comp["source_dir"]
+    wheel = ROOT / "BUNDLED-TOOLS/offline" / comp["offline_asset"]
+    assert f'version = "{comp["version"]}"' in read(src / "pyproject.toml")
+    assert f'__version__ = "{comp["version"]}"' in read(src / "uabs_toolbox/__init__.py")
+    assert not (ROOT / "BUNDLED-TOOLS/offline/.gitignore").exists(), "uv's out-dir .gitignore hides the wheel from git"
+    with zipfile.ZipFile(wheel) as z:
+        members = {n for n in z.namelist() if n.startswith("uabs_toolbox/")}
+        sources = {"uabs_toolbox/" + f.name for f in (src / "uabs_toolbox").glob("*.py")}
+        assert members == sources, f"wheel and source differ in files: {sorted(members ^ sources)}"
+        for name in sorted(sources):
+            assert z.read(name) == (src / name).read_bytes(), f"{name} in the wheel is stale; rebuild it"
+        meta = z.read(f"uabs_toolbox-{comp['version']}.dist-info/METADATA").decode("utf-8")
+        assert "Requires-Dist: mcp==" in meta, "the toolbox no longer pins its MCP SDK"
+    data = wheel.read_bytes()
+    manifest = json.loads(read(ROOT / "BUNDLED-TOOLS/OFFLINE-MANIFEST.json"))
+    row = next(a for a in manifest["assets"] if a["file"] == comp["offline_asset"])
+    assert row["size"] == len(data) and row["sha256"] == hashlib.sha256(data).hexdigest(), "manifest row is stale"
+    assert "test_toolbox.py" in read(ROOT / "TESTS/Test-Pack.ps1"), "Test-Pack does not run the toolbox gate"
 
 
 if __name__ == "__main__":

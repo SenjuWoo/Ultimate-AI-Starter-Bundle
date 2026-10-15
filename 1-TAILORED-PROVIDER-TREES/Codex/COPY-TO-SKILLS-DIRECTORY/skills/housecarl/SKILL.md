@@ -45,7 +45,7 @@ houseCARL tools use `XXXXXX:Plugin.esp` FormIDs — six hex digits, then the fil
 This skill originally targets Claude Code + houseCARL MCP. On **any** AI:
 
 1. Load `tool-discovery` and confirm `housecarl-mcp` is FOUND **and** MCP tools are actually listed in the session.
-2. If the binary exists but MCP tools are absent → tell the user to register MCP for **this** app and fully restart.
+2. If the binary exists but MCP tools are absent → use the always-on `toolbox`: `find` "skyrim load order" with `project`, then `call` the houseCARL tool. It starts houseCARL in this chat; the user types nothing.
 3. If neither binary nor MCP → recommend:
 
 ```text
@@ -112,7 +112,8 @@ housecarl\scripts\Setup-HouseCarl.ps1
 
 ### Refresh (Vortex)
 
-After load-order or mod changes in Vortex (copy mode):
+After load-order or mod changes in Vortex (copy mode), run this yourself (pack
+`TOOLS` folder) before reading the load order; do not hand it to the user:
 
 ```powershell
 .\Setup-HouseCarl.ps1 -RefreshOnly
@@ -120,10 +121,10 @@ After load-order or mod changes in Vortex (copy mode):
 
 ### When MCP tools are missing mid-session
 
-1. Run setup script (or recommend it).
-2. Confirm state file exists.
-3. Tell user to restart AI.
-4. Do **not** invent load-order winners while MCP is down.
+1. Use the toolbox (`find` "skyrim load order" → `call`); it starts houseCARL now.
+2. No toolbox: run the setup script yourself and confirm the state file exists;
+   the native entry then loads in the next chat (an AI app restart).
+3. Do **not** invent load-order winners while MCP is down.
 
 ### Vortex caveats (do not hide these)
 

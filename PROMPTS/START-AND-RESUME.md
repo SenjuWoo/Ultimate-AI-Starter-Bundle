@@ -11,7 +11,7 @@ More emphatic text does not grant tools, permissions or extra capability.
 ```text
 Inspect the current project and instructions. Use relevant available skills,
 plugins, MCPs and CLIs, inside or outside the workspace; keep unrelated tools
-unloaded, and switch on a parked task tool for this project yourself. Tools such
+unloaded, and start a task tool you need through the toolbox yourself. Tools such
 as Python are installed and on PATH: use them or any other tool you need. If you
 cannot find one, tell me so we can fix it properly instead of taking shortcuts
 that cost more tokens to repair later. Ask before expensive work only when
@@ -32,8 +32,8 @@ Git status/diff first, where available. Verify the handoff against files and
 recorded evidence; preserve newer edits after checking they are sound. Continue
 from the first unfinished step without repeating research or checks whose inputs
 and environment are unchanged. Use relevant available skills, plugins, MCPs and
-CLIs; keep unrelated tools unloaded, and switch on a parked task tool for this
-project yourself. Tools such as Python are installed and on PATH: use them or any
+CLIs; keep unrelated tools unloaded, and start a task tool you need through the
+toolbox yourself. Tools such as Python are installed and on PATH: use them or any
 other tool you need. If you cannot find one, tell me so we can fix it properly
 instead of taking shortcuts that cost more tokens to repair later. Ask only when
 missing context or consequential ambiguity prevents correct work. Finish

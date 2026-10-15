@@ -69,6 +69,32 @@
       "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to twelve upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (the indexed knowledge snapshot), discovers native Windows Steam roots from the registry and never echoes matched credentials; the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. The audited refresh adds quoted multi-word knowledge search, ranked hits and broken-link diagnostics while retaining local ComfyUI generation, SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification. 2026-10-13 source refresh adds Bannerlord, MT Framework, Hedgehog and Black Rock discovery plus a mod-porting reference; preserves UABS dependency pins, native Steam discovery and credential-safe output."
     },
     {
+      "id": "uabs-toolbox",
+      "name": "UABS Toolbox (project tools on demand)",
+      "kind": "mcp-python",
+      "install": "pip-or-wheel",
+      "version": "1.0.0",
+      "license": "MIT",
+      "source_dir": "BUNDLED-TOOLS/uabs-toolbox",
+      "offline_asset": "uabs_toolbox-1.0.0-py3-none-any.whl",
+      "cli": "uabs-toolbox",
+      "cli_env": "UABS_TOOLBOX_CMD",
+      "python": "3.13",
+      "mcp": true,
+      "auto_register": true,
+      "providers": [
+        "Claude",
+        "Codex",
+        "Grok",
+        "Kimi",
+        "Hermes"
+      ],
+      "required_for": [
+        "on-demand-project-tools"
+      ],
+      "scope_note": "Bundle-owned, always-on MCP server with three tools (find, describe, call). Task servers stay out of every chat; the toolbox starts the one a task needs on first use, in the same chat, from the bundle's own catalog (toolbox-profiles.json, a copy of PROFILES.json) and the exact entries Set-McpProfile.ps1 -Park saved (parked-mcp.json). Nothing is written to any provider config at call time. Credentials in a parked entry start its server and are never printed. Gate: TESTS/test_toolbox.py (fixture child server; find/describe/call, env pass-through without secret output, project-bound sets, crash restart, TOML parked entries, duplicate suppression)."
+    },
+    {
       "github": {
         "repo": "houseCARL",
         "owner": "Avick3110"
@@ -975,7 +1001,7 @@
       "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
     }
   ],
-  "pack_version": "8.14.0",
+  "pack_version": "8.15.0",
   "updated_utc": "2026-10-15",
   "providers": {
     "Grok": {
@@ -1054,7 +1080,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.14.0",
+  "catalog_version": "8.15.0",
   "updated": "2026-10-15",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

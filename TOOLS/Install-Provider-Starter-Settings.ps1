@@ -146,8 +146,9 @@ function Merge-UabsHermesEfficiencyDefaults {
   # Fill only absent keys through Hermes' own config API. This repairs an
   # upstream reset without replacing the user's model, credentials, plugins,
   # MCP entries, or deliberate values.
+  # agent.verbose left this list in 8.15.0: current Hermes reports it as
+  # "not a recognized config key", so filling it did nothing.
   $defaults = [ordered]@{
-    'agent.verbose'                           = 'false'
     'compression.enabled'                     = 'true'
     'compression.threshold_tokens'            = '160000'
     'compression.target_ratio'                = '0.20'
@@ -172,6 +173,8 @@ function Merge-UabsHermesEfficiencyDefaults {
     try { $probe = (& $exe config get $key --json 2>&1 | Out-String); $code = $LASTEXITCODE }
     finally { $ErrorActionPreference = $prevEap }
     if ($code -eq 0) { continue }
+    # A key this Hermes version no longer knows is not a failed read; skip it.
+    if ($probe -match 'not a recognized config key') { continue }
     if ($probe -notmatch 'Config key not set') {
       Write-UabsWarn ("Hermes config read failed for {0}; preserved as-is" -f $key)
       continue

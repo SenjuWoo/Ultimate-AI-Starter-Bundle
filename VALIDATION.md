@@ -1,10 +1,37 @@
-# v8.14.0 validation
+# v8.15.0 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are
 separate proofs. This file records the checked boundary, not a claim of perfect
 one-shot game/mod output.
 
-## Current audit (v8.14.0)
+## Current audit (v8.15.0)
+
+The owner's failed install (final doctor, 63 errors) was reproduced in cause, not
+re-run: two overlapping installers, the second recording no plugin ownership. After
+the mutex, the `owned` record and the doctor's plugin-tree union, the doctor passes.
+
+`TESTS/test_toolbox.py` drives the real toolbox over stdio against a fixture child
+(tool surface, ranking, duplicate suppression, missing-app and project-bound status,
+JSON-string arguments, parked env and TOML entries, desktop-control sets that `find`
+never starts, crash restart, no secret in output or logs). It passes under the pinned
+`mcp==1.30.0`. The offline wheel builds byte-identically twice; a release contract
+checks it carries exactly the gated source and matches its manifest row.
+
+On the maintainer machine (2026-10-15) a real `START-HERE.bat` run (no pause,
+self-update off) printed 243 console lines, ended `INSTALL COMPLETE`, and its
+transcript has no `TerminatingError` or "pipeline has been stopped" line. The
+always-on handshake passed for context7, headroom and the toolbox on all five
+providers; the doctor reported 0 errors and 0 warnings. Hermes: the toolbox is in
+the default and all eight managed named profiles, the bundle GitHub entry left them
+(`gh` signed in). Driven like a client, the installed toolbox advertises 2,079
+schema bytes for its three tools, lists 18 tool sets (16 startable here), starts the
+parked GitHub server on a `find` (47 tools) and returns a real `get_me` result
+through `call`, and lists but does not start windows-mcp.
+
+Not certified: provider inference choosing the toolbox unprompted, editor/game
+runtime through started servers, billed-token savings.
+
+## Previous audit (v8.14.0)
 
 `TESTS/Test-McpPark.ps1` runs the real `Set-McpProfile.ps1` against a disposable
 home: task servers leave the machine-wide Claude and Codex configs, personal and
@@ -25,7 +52,7 @@ task servers and the shadowing CodeBurn launcher; after `-Park` and the npm repa
 the remaining notes are two Hermes default-profile entries, which are reported and
 never edited. No inference, editor, game runtime or billed saving is certified.
 
-## Previous audit (v8.13.0)
+## Earlier audit (v8.13.0)
 
 The strict skill-audit CLI regressions reject missing/empty trees and malformed
 UTF-8. Grok's legacy Impeccable retirement checks preserve custom handlers and

@@ -153,9 +153,11 @@ if(-not $SkipSkills){
     }
 
     # Native-plugin installs intentionally remove exact duplicate skill copies
-    # from a provider's ~/skills tree. Account for only the names the installer
-    # itself recorded as deduped after a successful native plugin install. This
-    # keeps duplicate definitions out while making unexplained omissions fatal.
+    # from a provider's ~/skills tree. A missing copy is accounted for only by a
+    # plugin the installer recorded as natively installed, and only for a skill
+    # that plugin provides (its bundled tree, plus the recorded owned/deduped
+    # lists). "Deduped by this run" alone failed every re-run whose copies an
+    # earlier run had already removed. Unexplained omissions stay fatal.
     $nativeDeduped=New-Object System.Collections.Generic.HashSet[string] ([StringComparer]::OrdinalIgnoreCase)
     if($state -and $state.native_plugins){
       $providerState=$state.native_plugins.PSObject.Properties[$provider]
@@ -163,7 +165,8 @@ if(-not $SkipSkills){
         foreach($pluginProp in $providerState.Value.plugins.PSObject.Properties){
           $pluginState=$pluginProp.Value
           if($pluginState.native -eq $true){
-            foreach($name in @($pluginState.deduped)){
+            $ownedNames=@($pluginState.owned)+@($pluginState.deduped)+@(Get-UabsPluginOwnedSkillNames -PluginRoot (Join-Path $PackRoot ('BUNDLED-TOOLS\plugins\'+$pluginProp.Name)))
+            foreach($name in $ownedNames){
               if($name){[void]$nativeDeduped.Add([string]$name)}
             }
           }
@@ -586,10 +589,10 @@ try {
   $guarded = @($Providers | Where-Object { $_ -in @('Claude','Codex','Grok','Kimi','Hermes') })
   $leaks = @(Find-UabsGlobalScopeLeaks -PackRoot $PackRoot -Providers $guarded)
   foreach ($leak in @($leaks | Where-Object { $_.Entry.Style -eq 'yaml' })) {
-    Warn ("Hermes: {0} ({1}) is in Hermes' default profile, so every default Hermes chat loads its tools. Hermes profiles are native, so it is reported, not moved: use Migrate-HermesProfiles.ps1 or edit it in Hermes." -f $leak.Id, $leak.Rule.title)
+    Warn ("Hermes: {0} ({1}) is in Hermes' default profile, so every default Hermes chat loads its tools. The next START-HERE.bat run parks it while Hermes is closed; the toolbox then starts it on demand." -f $leak.Id, $leak.Rule.title)
   }
   foreach ($leak in @($leaks | Where-Object { $_.Entry.Style -ne 'yaml' })) {
-    Err ("{0}: {1} ({2}) is registered machine-wide, so every chat loads its tools. Run TOOLS\Set-McpProfile.ps1 -Park; it comes back per project with -Auto -Path <project>." -f $leak.Provider, $leak.Id, $leak.Rule.title)
+    Err ("{0}: {1} ({2}) is registered machine-wide, so every chat loads its tools. START-HERE.bat parks it (the toolbox then starts it on demand), or run TOOLS\Set-McpProfile.ps1 -Park; it comes back per project with -Auto -Path <project>." -f $leak.Provider, $leak.Id, $leak.Rule.title)
   }
   if (-not $leaks.Count) { Write-UabsOk 'no task-specific MCP server is registered machine-wide' }
   elseif (-not @($leaks | Where-Object { $_.Entry.Style -ne 'yaml' }).Count) { Write-UabsOk 'no editable provider config registers a task-specific MCP server machine-wide' }

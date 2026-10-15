@@ -568,6 +568,8 @@ else {
   & {
     $comp = @{ security_hold = 'Fixture advisory'; mcp = $true }; $installed = @{}
     function Write-UabsWarn($Message) { }
+    function Write-UabsInfo($Message) { }
+    function Add-UabsDetails($Title, $Lines) { }
     $script = 'foreach ($id in @("held-fixture")) { ' + $holdGuard.Extent.Text + '; throw "Held component reached installation" }'
     & ([scriptblock]::Create($script))
     Is $installed['held-fixture'].status 'security-held' 'security hold refuses registration even when explicitly selected'

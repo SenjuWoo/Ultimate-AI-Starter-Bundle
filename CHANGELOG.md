@@ -1,3 +1,39 @@
+## 8.15.0
+
+- Fix: the one-click install could fail its final check with 63 errors when two
+  installs overlapped (a second START-HERE.bat, or an agent's sync during the
+  user's run). The second run found the plugin skills already deduplicated,
+  recorded no ownership and reported each one missing. Installs now run one at a
+  time (a later one waits), ownership is recorded on every run, and the doctor
+  also accounts for the bundled plugin tree.
+- New `uabs-toolbox`: a bundle-owned MCP server, always on, with three small tools
+  (`find`, `describe`, `call`). Task servers (Skyrim Forge, houseCARL,
+  RimWorldForge, AvatarForge, Melty, Blender, Unity, Godot, Playwright, the code
+  graph, GitHub where `gh` is signed in ...) stay out of every chat; the AI starts
+  the one a task needs in the same chat, with no restart, command or config
+  change. It reads the bundle catalog and the exact parked entries; a parked
+  entry's credentials reach its server and are never printed. Desktop control
+  (windows-mcp) is listed but starts only on an explicit call.
+- Hermes: every profile's core is context7, headroom and the toolbox (GitHub only
+  where `gh` is not signed in). Task servers another installer put in the default
+  profile are parked with an exact copy instead of reported; named profiles keep
+  their tools.
+- Quiet installer: one line per step; full tool output goes to
+  `install-<stamp>-details.log` beside the transcript, and a step's tail is shown
+  only when it fails. The closing text names no command. Optional extras without
+  a key and security holds are one info line. Already-current npm and uv tools
+  are not reinstalled.
+- Fix: Windows PowerShell 5.1 transcripts logged the Store `python.exe` stub as a
+  terminating error on every probe; probes now read stdout only, and child output
+  is decoded as UTF-8.
+- houseCARL setup runs quietly inside the install; skills tell the AI to refresh a
+  Vortex load order itself and to use the toolbox before any restart advice.
+- Codex entries carry `tool_timeout_sec` when a server needs more than the 60 s
+  default (the toolbox: 600 s); Hermes entries carry `timeout`.
+- Hermes starter settings no longer fill `agent.verbose` (current Hermes rejects
+  it as an unknown key).
+- Public metadata names only SenjuWoo.
+
 ## 8.14.0
 
 - Park task-specific MCP servers that a tool's own installer registered

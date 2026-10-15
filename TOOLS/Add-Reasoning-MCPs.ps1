@@ -31,11 +31,16 @@
   headroom      Context inspection/compression tools. Registered for every
                 provider when the installed command is available.
 
-  context7 and headroom are always on because they apply to every task. Everything else
-  this pack can wire is a capability profile in BUNDLED-TOOLS/PROFILES.json,
-  registered by TOOLS\Set-McpProfile.ps1 only when a project needs it -- MCP
-  tool schemas are not lazy, and a server that is connected costs context on
-  every turn whether or not the task is related.
+  toolbox       Three tools (find, describe, call) that reach every switched-off
+                project server -- game forges, AvatarForge, Melty, Blender, Unity,
+                Godot, browser, code graph, GitHub -- and start the one a task
+                needs on first use, in the same chat. Nothing else has to be on
+                in every chat for the AI to have it.
+
+  context7, headroom and toolbox are always on because they apply to every task.
+  Everything else this pack can wire is a capability profile in
+  BUNDLED-TOOLS/PROFILES.json, reachable through the toolbox and registered
+  directly for a project by TOOLS\Set-McpProfile.ps1 only when asked.
 
   context7 is npx-based. GitHub's official MCP server
   ships Windows binaries rather than an npm package, so it is installed from the
@@ -56,12 +61,16 @@
   Rewrite an existing entry so pins and timeouts stay current. Without this,
   a server that is already declared is left alone - which is how a broken
   unpinned npx cache survived an upgrade.
+
+.PARAMETER Quiet
+  Leave out the closing guidance (the installer prints its own summary).
 #>
 [CmdletBinding()]
 param(
   [string[]]$Providers = @('Claude', 'Grok', 'Codex', 'Kimi', 'Hermes'),
   [switch]$CheckOnly,
-  [switch]$Refresh
+  [switch]$Refresh,
+  [switch]$Quiet
 )
 
 $ErrorActionPreference = 'Stop'
@@ -173,6 +182,22 @@ if ($headroom -and (Test-Path -LiteralPath $headroom -PathType Leaf)) {
     args    = @('mcp','serve')
     note    = 'context inspection and compression'
     key     = $null
+  }
+}
+
+# The toolbox (uabs-toolbox, a uv tool installed from the pack's own wheel).
+# tool_timeout_sec: a call it passes through can be a long build or upload, and
+# Codex's default per-call limit is 60 seconds.
+$toolboxCmd = [Environment]::GetEnvironmentVariable('UABS_TOOLBOX_CMD', 'User')
+if (-not $toolboxCmd) { try { $toolboxCmd = (Get-Command uabs-toolbox -ErrorAction SilentlyContinue).Source } catch { } }
+if ($toolboxCmd -and (Test-Path -LiteralPath $toolboxCmd -PathType Leaf)) {
+  $servers += @{
+    id               = 'toolbox'
+    command          = $toolboxCmd
+    args             = @()
+    note             = 'switched-off project tools on demand (find, describe, call)'
+    key              = $null
+    tool_timeout_sec = 600
   }
 }
 
@@ -300,6 +325,7 @@ foreach ($p in $Providers) {
   else { Write-Host ("{0,-7} nothing to add" -f $p) }
 }
 
+if ($Quiet) { exit 0 }
 Write-Host ''
 Write-Host 'Optional credentials:'
 Write-Host '  setx CONTEXT7_API_KEY "<key>"                 https://context7.com'
@@ -309,7 +335,8 @@ Write-Host 'Restart each AI app, then check /mcp.'
 Write-Host ''
 Show-UabsSequentialThinkingNotice
 Write-Host ''
-Write-Host 'Capability profiles (browser, Serena, Blender, Godot, Unity, reasoning) are'
-Write-Host 'off by default and wired for one project. See what applies to a project:'
+Write-Host 'Capability profiles (browser, Serena, Blender, Godot, Unity, reasoning) stay'
+Write-Host 'off in every chat; the toolbox starts the one a task needs. To wire one'
+Write-Host 'directly into a project instead:'
 Write-Host '  TOOLS\Set-McpProfile.ps1 -List'
 Write-Host '  TOOLS\Set-McpProfile.ps1 -Auto -Path <your project>'

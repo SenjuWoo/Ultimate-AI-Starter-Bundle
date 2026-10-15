@@ -1,6 +1,6 @@
 # srforge project state
 
-Repo: `S:\Apps\Saints Row Tools\SaintsRowForge` · public: github.com/ShugokiFable/SaintsRowForge (MIT)
+Repo: `S:\Apps\Saints Row Tools\SaintsRowForge` · public: github.com/SenjuWoo/SaintsRowForge (MIT)
 Installed copy: `%LOCALAPPDATA%\SaintsRowForge` — run from there; refresh with
 `powershell -File Update.ps1` from repo root (robocopy /MIR).
 Releases v0.1.0 + v0.2.0 with source-zip assets; CI runs the test suite on every push.

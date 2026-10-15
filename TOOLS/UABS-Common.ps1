@@ -210,12 +210,16 @@ function Get-UabsPythonExecutable {
   }
   $launcher = Get-Command py -ErrorAction SilentlyContinue
   if ($launcher) { $candidates += [pscustomobject]@{ Source = $launcher.Source; Prefix = @('-3') } }
-  foreach ($path in @(
-    (Get-ChildItem -Path (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python*\python.exe') -File -ErrorAction SilentlyContinue |
-      Sort-Object FullName -Descending | ForEach-Object FullName),
-    (Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\python.exe')
-  )) {
-    if ($path) { $candidates += [pscustomobject]@{ Source = $path; Prefix = @() } }
+  # Flattened with +=: two installed versions used to land as ONE array element.
+  $knownPaths = @()
+  $knownPaths += @(Get-ChildItem -Path (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python*\python.exe') -File -ErrorAction SilentlyContinue |
+    Sort-Object FullName -Descending | ForEach-Object FullName)
+  # The Python install manager (python.org's default since 3.14) keeps runtimes here.
+  $knownPaths += @(Get-ChildItem -Path (Join-Path $env:LOCALAPPDATA 'Python\pythoncore-*\python.exe') -File -ErrorAction SilentlyContinue |
+    Sort-Object FullName -Descending | ForEach-Object FullName)
+  $knownPaths += (Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\python.exe')
+  foreach ($path in $knownPaths) {
+    if ($path) { $candidates += [pscustomobject]@{ Source = [string]$path; Prefix = @() } }
   }
 
   $seen = @{}
@@ -225,9 +229,8 @@ function Get-UabsPythonExecutable {
     if ($seen.ContainsKey($key)) { continue }
     $seen[$key] = $true
     try {
-      $prefix = @($candidate.Prefix)
-      $resolved = @(& $candidate.Source @prefix -c "import importlib,os,sys;[importlib.import_module(n) for n in sys.argv[1:]];print(os.path.abspath(sys.executable))" @RequiredModules 2>$null |
-        Where-Object { $_ } | Select-Object -Last 1)
+      $probeArgs = @($candidate.Prefix) + @('-c', 'import importlib,os,sys;[importlib.import_module(n) for n in sys.argv[1:]];print(os.path.abspath(sys.executable))') + @($RequiredModules)
+      $resolved = @(Get-UabsNativeStdout -Exe $candidate.Source -CmdArgs $probeArgs | Where-Object { $_ } | Select-Object -Last 1)
       if ($LASTEXITCODE -eq 0 -and $resolved.Count -and (Test-Path -LiteralPath $resolved[0] -PathType Leaf)) {
         # An installer run from inside an AI app inherits that app's private
         # runtime first on PATH; hooks wired to it break when the app updates.
@@ -263,6 +266,9 @@ function Test-UabsPathWithin([string]$Path, [string]$Root) {
 function Write-UabsStep([string]$m) { Write-Host ("==> " + $m) -ForegroundColor Cyan }
 function Write-UabsOk([string]$m)   { Write-Host ("  OK  " + $m) -ForegroundColor Green }
 function Write-UabsWarn([string]$m) { Write-Host ("  !!  " + $m) -ForegroundColor Yellow }
+# A normal condition worth one line (skipped by design, optional, already done):
+# not a warning, so it does not look like something for the user to fix.
+function Write-UabsInfo([string]$m) { Write-Host ("  ..  " + $m) -ForegroundColor DarkGray }
 function Write-UabsBad([string]$m)  { Write-Host ("  XX  " + $m) -ForegroundColor Red }
 
 function Set-UabsUserEnv([string]$Name, [string]$Value) {
@@ -327,13 +333,10 @@ function Get-UabsGitCheckoutState {
   $git = Get-Command git -ErrorAction SilentlyContinue
   if (-not $git) { return $state }
   $state.is_git = $true
-  $previous = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
-  try {
-    $porcelain = @(& $git.Source -C $Root status --porcelain 2>$null)
-    $state.clean = ($LASTEXITCODE -eq 0 -and -not $porcelain.Count)
-    $null = & $git.Source -C $Root rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>$null
-    $state.tracks = ($LASTEXITCODE -eq 0)
-  } finally { $ErrorActionPreference = $previous }
+  $porcelain = @(Get-UabsNativeStdout -Exe $git.Source -CmdArgs @('-C', $Root, 'status', '--porcelain'))
+  $state.clean = ($LASTEXITCODE -eq 0 -and -not $porcelain.Count)
+  $null = Get-UabsNativeStdout -Exe $git.Source -CmdArgs @('-C', $Root, 'rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{u}')
+  $state.tracks = ($LASTEXITCODE -eq 0)
   return $state
 }
 
@@ -1801,6 +1804,22 @@ function Get-UabsNativeOutput {
   try { return (& $Exe @CmdArgs 2>&1 | Out-String) } finally { $ErrorActionPreference = $prevEap }
 }
 
+function Get-UabsNativeStdout {
+  <#
+  Stdout lines only. Stderr is dropped inside the pipeline, so it never reaches
+  the host or the install transcript: Windows PowerShell 5.1 logs even `2>$null`
+  stderr there, which is how the Store python stub's "Python was not found" and
+  git's "no upstream configured" landed in every install log. $LASTEXITCODE is
+  the command's own.
+  #>
+  param([string]$Exe, [string[]]$CmdArgs)
+  $prevEap = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try {
+    return @(& $Exe @CmdArgs 2>&1 | Where-Object { $_ -isnot [System.Management.Automation.ErrorRecord] } | ForEach-Object { [string]$_ })
+  } finally { $ErrorActionPreference = $prevEap }
+}
+
 function Get-UabsGrokPluginList {
   <#
   Parse `grok plugin list --json`. Returns an array of plugin objects with
@@ -2380,7 +2399,7 @@ function Set-UabsHermesPluginScanOff {
     $enc = New-Object System.Text.UTF8Encoding($false)
     [IO.File]::WriteAllText($ConfigPath, ($out -join $nl), $enc)
     $state = if ($changedTrue) { 'changed-true' } elseif ($pluginsFound) { 'inserted' } else { 'appended-section' }
-    Write-UabsWarn 'Hermes config: plugin scanning temporarily disabled for the two bundled, pinned plugins'
+    Write-UabsInfo 'Hermes config: plugin scanning paused while the two bundled, pinned plugins install'
     return $state
   } catch {
     Write-UabsWarn ('Hermes scan_on_install override failed: ' + $_.Exception.Message)

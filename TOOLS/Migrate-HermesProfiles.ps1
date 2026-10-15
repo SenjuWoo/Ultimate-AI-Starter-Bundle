@@ -4,7 +4,8 @@
   An existing externally installed rimworld profile also receives core updates.
 
 .DESCRIPTION
-  Default:  context7, github, headroom
+  Default:  context7, headroom, toolbox (the toolbox starts every other task
+            server on demand); github too where the gh CLI is not signed in
   Code:     default + codebase-memory-mcp
   Roblox:   default + Roblox Studio's official MCP
   Skyrim:   default + houseCARL
@@ -43,7 +44,10 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'UABS-Common.ps1')
 . (Join-Path $PSScriptRoot 'UABS-Mcp-Write.ps1')
+# The GitHub-vs-gh rule and the park store are shared with Set-McpProfile.ps1.
+. ([IO.Path]::Combine($PSScriptRoot, 'UABS-Mcp-Park.ps1'))
 
 if (-not $HermesHome) {
   $HermesHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }
@@ -160,8 +164,38 @@ function Test-UabsServerFamily($Entry, [string]$Family) {
     'godot' { return $text.Contains('@coding-solo/godot-mcp') }
     'playwright' { return $text.Contains('@playwright/mcp') }
     'chrome-devtools' { return $text.Contains('chrome-devtools-mcp') }
+    'toolbox' { return $text.Contains('uabs-toolbox') -or $text.Contains('uabs_toolbox') }
   }
   return $false
+}
+
+function Save-UabsHermesParked([object[]]$Items) {
+  <# Exact copies of the default profile's task servers go to the shared park
+     store (the toolbox starts them on demand from there) and are re-read and
+     compared BEFORE the profile is rewritten without them. #>
+  $store = Read-UabsParkStore
+  $entries = @($store['entries'] | Where-Object {
+    $old = $_
+    -not (@($Items | Where-Object { $old['provider'] -eq 'Hermes' -and $old['id'] -eq $_.Id }).Count)
+  })
+  foreach ($item in $Items) {
+    $rec = New-Object 'System.Collections.Generic.Dictionary[string,object]'
+    $rec['provider'] = 'Hermes'; $rec['id'] = $item.Id; $rec['rule'] = $item.Rule
+    $rec['style'] = 'hermes'; $rec['source'] = (Join-Path $HermesHome 'config.yaml')
+    $rec['parked_utc'] = [DateTime]::UtcNow.ToString('o')
+    $rec['definition'] = $item.Entry
+    $rec['projects'] = @()
+    $entries += $rec
+  }
+  $store['entries'] = $entries
+  Save-UabsParkStore -Store $store
+  $check = Read-UabsParkStore
+  foreach ($item in $Items) {
+    $saved = @($check['entries'] | Where-Object { $_['provider'] -eq 'Hermes' -and $_['id'] -eq $item.Id })
+    if ($saved.Count -ne 1 -or (ConvertTo-UabsJsonText $saved[0]['definition'] -Compress) -cne (ConvertTo-UabsJsonText $item.Entry -Compress)) {
+      throw "the saved copy of Hermes/$($item.Id) did not verify; nothing was removed"
+    }
+  }
 }
 
 function Ensure-UabsServer([string]$Profile, [hashtable]$Map, [string]$Id, [hashtable]$Desired, [string]$Family) {
@@ -848,16 +882,57 @@ try {
     env = @{ SKYRIM_MO2_INSTANCE = $mo2; HouseCarl__Mo2InstanceDir = $mo2 }
   }
 
+  # The toolbox starts every other task server on demand, so a profile needs
+  # nothing else always on to reach it. Present only once uabs-toolbox is installed.
+  $toolboxCommand = [Environment]::GetEnvironmentVariable('UABS_TOOLBOX_CMD', 'Process')
+  if (-not $toolboxCommand) { $toolboxCommand = [Environment]::GetEnvironmentVariable('UABS_TOOLBOX_CMD', 'User') }
+  if (-not $toolboxCommand) { $toolboxCommand = (Get-Command uabs-toolbox -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1).Source }
   $core = @(
     @{ Id = 'context7'; Spec = $context7; Aliases = @('context-7'); Family = 'context7' },
-    @{ Id = 'github'; Spec = $github; Aliases = @('github-mcp-server'); Family = 'github' },
     @{ Id = 'headroom'; Spec = $headroom; Aliases = @('headroom-mcp'); Family = 'headroom' }
   )
+  # gh signed in: the GitHub server only repeats it, and every profile (blender,
+  # creative ...) paid for its tool list. Same rule as the registrar; the toolbox
+  # still reaches it. UABS_KEEP_GLOBAL_MCP=github keeps it in the core.
+  $githubInCore = -not (Test-UabsGithubMcpParked)
+  if ($githubInCore) {
+    $core += @{ Id = 'github'; Spec = $github; Aliases = @('github-mcp-server'); Family = 'github' }
+  }
+  if ($toolboxCommand -and (Test-Path -LiteralPath $toolboxCommand -PathType Leaf)) {
+    $toolbox = Get-UabsCoreSpec $maps['default'] 'toolbox' @() @{
+      command = $toolboxCommand; args = @(); enabled = $true; connect_timeout = 30; timeout = 600
+    } 'toolbox'
+    $core += @{ Id = 'toolbox'; Spec = $toolbox; Aliases = @(); Family = 'toolbox' }
+  }
+  $coreIds = @($core | ForEach-Object { $_.Id })
   foreach ($profile in $managedProfiles) {
     foreach ($item in $core) {
       Ensure-UabsServer $profile $maps[$profile] $item.Id $item.Spec $item.Family
       Normalize-UabsAliases $profile $maps[$profile] $item.Id $item.Aliases $item.Family
     }
+    if (-not $githubInCore) {
+      # Only the bundle's own server (family match); a personal GitHub entry stays.
+      foreach ($id in @('github', 'github-mcp-server')) { Remove-UabsServer $profile $maps[$profile] $id 'github' }
+    }
+  }
+
+  # Task servers another installer put in the DEFAULT profile load in every
+  # default Hermes chat. Park each exact entry (the toolbox starts it from the
+  # park store) and drop it from default only; a named profile keeps its tools.
+  $hermesParked = @()
+  $keepIds = @(Get-UabsKeepGlobalIds)
+  $parkRules = @(Get-UabsParkRules -PackRoot (Split-Path -Parent $PSScriptRoot) | Where-Object { $_.id -ne 'github' -and $keepIds -notcontains $_.id })
+  foreach ($id in @($maps['default'].Keys)) {
+    if ($coreIds -contains $id) { continue }
+    $entry = $maps['default'][$id]
+    if ($entry -is [System.Collections.IDictionary] -and $entry.Contains('enabled') -and $entry['enabled'] -eq $false) { continue }
+    $text = ConvertTo-Json -InputObject $entry -Depth 20 -Compress
+    $rule = @($parkRules | Where-Object { $r = $_; @($r.match | Where-Object { $text.IndexOf($_, [StringComparison]::OrdinalIgnoreCase) -ge 0 }).Count }) | Select-Object -First 1
+    if (-not $rule) { continue }
+    $hermesParked += @{ Id = $id; Rule = $rule.id; Entry = (Copy-UabsValue $entry) }
+    Add-UabsPlan -Kind 'RemoveEntry' -Profile 'default' -Id $id -Key "mcp_servers.$id" -Value $null -Detail ("park {0}: the toolbox starts it on demand" -f $rule.title)
+    [void]$maps['default'].Remove($id)
+    Add-UabsLedger 'removed' "default MCP '$id' (parked for the toolbox)"
   }
 
   if ($codeAvailable) {
@@ -991,20 +1066,20 @@ try {
   }
 
   $expected = @{
-    default = @('context7', 'github', 'headroom')
-    code = @('context7', 'github', 'headroom', 'codebase-memory-mcp')
-    roblox = @('context7', 'github', 'headroom', 'Roblox_Studio')
-    skyrim = @('context7', 'github', 'headroom', 'housecarl')
-    creative = @('context7', 'github', 'headroom', 'blender', 'unity')
-    rimworld = @('context7', 'github', 'headroom')
+    default = @($coreIds)
+    code = @($coreIds) + @('codebase-memory-mcp')
+    roblox = @($coreIds) + @('Roblox_Studio')
+    skyrim = @($coreIds) + @('housecarl')
+    creative = @($coreIds) + @('blender', 'unity')
+    rimworld = @($coreIds)
   }
   foreach ($profile in $taskServers.Keys) {
-    $expected[$profile] = @('context7', 'github', 'headroom') + @($taskServers[$profile] | ForEach-Object { $_.Id })
+    $expected[$profile] = @($coreIds) + @($taskServers[$profile] | ForEach-Object { $_.Id })
   }
   if ($forgeCompatRoblox) { $expected.roblox += 'robloxforge' }
   if ($forgeCompatSkyrim) { $expected.skyrim += 'skyrim-forge' }
   $expectedFamilies = @{
-    context7 = 'context7'; github = 'github'; headroom = 'headroom'
+    context7 = 'context7'; github = 'github'; headroom = 'headroom'; toolbox = 'toolbox'
     'codebase-memory-mcp' = 'codebase-memory'
     Roblox_Studio = 'roblox'; housecarl = 'housecarl'
     robloxforge = 'robloxforge'; 'skyrim-forge' = 'skyrim-forge'
@@ -1052,6 +1127,8 @@ try {
 
   $backup = New-UabsBackup $existingProfiles
   try {
+    # The exact copy is saved and verified before any profile loses the entry.
+    if ($hermesParked.Count) { Save-UabsHermesParked $hermesParked }
     foreach ($item in $script:Plan | Where-Object { $_.Kind -eq 'CreateProfile' }) {
       $description = switch ($item.Profile) {
         'code' { 'Code exploration with project graph memory.' }

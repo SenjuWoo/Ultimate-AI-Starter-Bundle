@@ -74,7 +74,7 @@ Details + struct layouts: `references/formats.md`. Headlines:
 ## srforge workbench (this machine)
 
 **Run from the installed copy**: `%LOCALAPPDATA%\SaintsRowForge` — source
-repo `S:\Apps\Saints Row Tools\SaintsRowForge` (GitHub: ShugokiFable/SaintsRowForge,
+repo `S:\Apps\Saints Row Tools\SaintsRowForge` (GitHub: SenjuWoo/SaintsRowForge,
 releases v0.1/v0.2, CI-protected). After changing repo code refresh the
 install: `powershell -File Update.ps1` from repo root (robocopy /MIR).
 

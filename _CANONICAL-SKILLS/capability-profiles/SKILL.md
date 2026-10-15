@@ -52,14 +52,29 @@ rendered output, then package with credits/permissions and truthful previews.
 Publication preparation does not authorize public publishing. Record missing
 runtime/editor proof rather than claiming guaranteed one-shot success.
 
-## Parked servers
+## Task tools: the toolbox starts them
 
-A tool's own installer registers its MCP server for every chat, so unrelated work
-pays for its tool list. This pack parks such entries (an exact copy is kept,
-nothing is uninstalled): RimWorldForge, AvatarForge, Melty, RobloxForge,
-SaintsRowForge, and the GitHub server where `gh` is signed in. When a task needs
-one of their tools (`rw_*`, `avatarforge_*`, `mcp__melty__*`, GitHub PR/Actions
-tools) and it is not callable, that is why, not a broken install. Run, yourself:
+Task MCP servers (Skyrim Forge, houseCARL, RimWorldForge, AvatarForge, Melty,
+Blender, Unity, Godot, Playwright, the code graph, the GitHub server where `gh`
+is signed in, ...) are in no chat until a task needs one. A tool's own installer
+registers its server for every chat; this pack parks those entries (an exact copy
+is kept, nothing is uninstalled). The always-on `toolbox` server starts any of
+them in the current chat:
+
+1. `find` with what the task needs (`query`: "rimworld defs", "blender scene",
+   "github pull request"; `project`: the project folder for project tools). It
+   lists matching tool sets and starts the best match.
+2. `describe` the tools you will use (`set.tool` names, as `find` printed them).
+3. `call` one tool: `tool` is `set.tool`, `arguments` as `describe` showed.
+
+Never ask the user to enable, restart, reconnect or type anything for this. When
+a set reports why it cannot start (host app not installed, needs a project
+folder, missing key), state that one fact and continue with what works. Never
+print a parked entry: it can hold a credential.
+
+`TOOLS\Set-McpProfile.ps1` wires a project natively instead; its tools then load
+in that project's next chat. Run it yourself only when the toolbox is missing or
+a host needs its own registration:
 
 ```powershell
 TOOLS\Set-McpProfile.ps1 -Auto -Path <project>             # markers decide what comes back
@@ -67,11 +82,8 @@ TOOLS\Set-McpProfile.ps1 -Unpark melty -Path <project>     # explicit (no projec
 TOOLS\Set-McpProfile.ps1 -Enable github -Path <project>    # the GitHub server, per project
 ```
 
-Then keep working through the tool's CLI (`rwforge`, AvatarForge `run.py doctor |
-scan | convert`, `gh`): the server itself appears in the next chat opened in that
-project, or after `/mcp` reconnect. `Set-McpProfile.ps1 -Park -CheckOnly` lists
-what would be parked; `UABS_KEEP_GLOBAL_MCP=<id>` keeps one machine-wide on
-purpose. Never print a parked entry: it can hold a credential.
+`Set-McpProfile.ps1 -Park -CheckOnly` lists what would be parked;
+`UABS_KEEP_GLOBAL_MCP=<id>` keeps one machine-wide on purpose.
 
 ## Installed is not enabled
 
@@ -145,7 +157,8 @@ its historical 4,590 schema bytes are not evidence of better answers.
 
 `code-intel` was called `code-deep` before 7.9.6. The old id still resolves.
 
-Hermes has a smaller native topology: `default` is the always-on three, `code`
+Hermes has a smaller native topology: `default` is the always-on core (context7,
+headroom and the toolbox; GitHub only where `gh` is not signed in), `code`
 adds codebase-memory, `roblox` adds the official Roblox Studio MCP, `skyrim`
 adds houseCARL, and `creative` adds Blender MCP plus MCP for Unity. Use `hermes -p code` in a code repository; its ~5,994 schema-token
 estimate is not a bill, and its servers are absent from ordinary Hermes sessions.

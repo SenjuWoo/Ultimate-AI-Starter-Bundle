@@ -48,11 +48,13 @@ Treat pasted roots as hints. When the user says a path is "just suggestions" and
 
 ```text
 TOOL PRESENT BUT NOT ENABLED HERE: <name>
-WHY: this pack registers most MCP servers per project, not machine-wide
-ENABLE:  TOOLS\Set-McpProfile.ps1 -Auto -Path "<project>"
-   or:   TOOLS\Set-McpProfile.ps1 -Enable <profile> -Path "<project>"
-SEE:     TOOLS\Set-McpProfile.ps1 -Detect -Path "<project>"
-THEN:    restart the AI app - a running session does not pick up a new MCP server
+WHY:   task MCP servers stay out of every chat until a task needs one
+NOW:   toolbox `find` "<what you need>" (project: "<project>") -> `describe` -> `call`
+       It starts the server in THIS chat. Nothing for the user to type or restart.
+ELSE:  only when no toolbox is connected, run it yourself:
+       TOOLS\Set-McpProfile.ps1 -Auto -Path "<project>"   (or -Enable <profile>; -Detect shows what applies)
+       Native wiring reaches the next chat in that project: a running session does
+       not pick up a new MCP server, so say the AI app needs a restart only then.
 ```
 
 Profiles worth naming: `game-skyrim-load-order` (houseCARL), `game-skyrim`
