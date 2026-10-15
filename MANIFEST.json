@@ -36686,8 +36686,8 @@
  },
  {
   "path": "TESTS/evidence-scenarios/check_fixtures.py",
-  "size": 3607,
-  "sha256": "6c2dfc159211275076ec444897a82b033445f3482e6a2ee8ed06bade76bc1d46"
+  "size": 3841,
+  "sha256": "3bb5210be4ead97d10684b299dd3be0e6100a1a1492df43caebeecea03fb882a"
  },
  {
   "path": "TESTS/impeccable-security-regressions.mjs",
@@ -36791,8 +36791,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 316184,
-  "sha256": "1b1b8e719fcf159a0f6c852141096d6749ad059ccbf4d2ea4aa72ced3005ed21"
+  "size": 316596,
+  "sha256": "db0d9116d1d68259a75fc477441562a78607ca9a10679945dd07fde18084f379"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -44021,8 +44021,8 @@
  },
  {
   "path": "docs/history/V8.15.0-CHANGELOG.md",
-  "size": 6144,
-  "sha256": "1ca7cbdaafeaf00786c44333a4f33dfc5c4a4192ee85951df514ae6913bae28c"
+  "size": 6375,
+  "sha256": "b6840128c6c0c5ddb9b7175da96fc27bd92c979aa9a903bc49e5c6c46f681c52"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",

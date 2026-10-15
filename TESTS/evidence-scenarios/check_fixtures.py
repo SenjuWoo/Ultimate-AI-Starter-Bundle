@@ -58,7 +58,12 @@ for scen, wants_log in (("C-crash-with-log", True), ("D-crash-no-log", False)):
           "exit %d -- the fixture no longer reproduces" % proc.returncode)
     log = os.path.join(d, "app.log")
     if wants_log:
-        has = os.path.exists(log) and "max_attempts" in read(scen, "app.log")
+        # The fixture writes its log in the locale codepage (its own path included,
+        # which can hold any letter); the marker is ASCII, so test the raw bytes.
+        has = False
+        if os.path.exists(log):
+            with io.open(log, "rb") as fh:
+                has = b"max_attempts" in fh.read()
         check("C log still names the cause", has, "the log stopped explaining it")
     else:
         combined = (proc.stdout + proc.stderr)

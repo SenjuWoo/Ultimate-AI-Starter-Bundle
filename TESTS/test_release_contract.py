@@ -5923,6 +5923,13 @@ def test_toolbox_wheel_is_the_shipped_source() -> None:
     assert f'version = "{comp["version"]}"' in read(src / "pyproject.toml")
     assert f'__version__ = "{comp["version"]}"' in read(src / "uabs_toolbox/__init__.py")
     assert not (ROOT / "BUNDLED-TOOLS/offline/.gitignore").exists(), "uv's out-dir .gitignore hides the wheel from git"
+    assert "$packageSpec = if ($comp.source_dir)" in read(ROOT / "INSTALL-AIO.ps1"), (
+        "without its wheel (Core) the installer no longer builds the toolbox from source_dir")
+    manifest = json.loads(read(ROOT / "BUNDLED-TOOLS/OFFLINE-MANIFEST.json"))
+    if manifest.get("variant") == "Core":
+        # Core ships no offline payloads; the installer builds the toolbox from source_dir.
+        assert not wheel.exists() and (src / "uabs_toolbox/server.py").is_file()
+        return
     with zipfile.ZipFile(wheel) as z:
         members = {n for n in z.namelist() if n.startswith("uabs_toolbox/")}
         sources = {"uabs_toolbox/" + f.name for f in (src / "uabs_toolbox").glob("*.py")}
@@ -5932,7 +5939,6 @@ def test_toolbox_wheel_is_the_shipped_source() -> None:
         meta = z.read(f"uabs_toolbox-{comp['version']}.dist-info/METADATA").decode("utf-8")
         assert "Requires-Dist: mcp==" in meta, "the toolbox no longer pins its MCP SDK"
     data = wheel.read_bytes()
-    manifest = json.loads(read(ROOT / "BUNDLED-TOOLS/OFFLINE-MANIFEST.json"))
     row = next(a for a in manifest["assets"] if a["file"] == comp["offline_asset"])
     assert row["size"] == len(data) and row["sha256"] == hashlib.sha256(data).hexdigest(), "manifest row is stale"
     assert "test_toolbox.py" in read(ROOT / "TESTS/Test-Pack.ps1"), "Test-Pack does not run the toolbox gate"
