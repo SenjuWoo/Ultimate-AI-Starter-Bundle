@@ -32,9 +32,27 @@
   Hermes default entries reported only, Desktop Commander is a Claude Desktop
   extension the pack does not own. Git Bash `python` is the Store stub: the
   durable fix is the owner's (App execution aliases off).
-- Next: commit, push, exact-SHA CI + flags, build/publish v8.14.0 from that
-  SHA, byte-verify assets, local sync (`INSTALL-AIO.ps1 -SkillsOnly
-  -SkipSelfUpdate -Mode BundledOnly`), installed-state doctor.
+- Gates on the final tree: Test-Pack PASS, contracts 145/0, privacy/audit/
+  Hermes bootstrap PASS.
+
+## Publication checkpoint (v8.14.0)
+
+- Tag `v8.14.0` -> `7ed2704b4b4ea0da27563a5e98be478eee222ced`. CI (pack gate,
+  Forge end-to-end, versions, manifest) and CodeQL success on that SHA; GitHub
+  flags clean before and after publishing.
+- Archives built twice, byte-identical: Core 47,008,073 B `d0dade94...a59e`,
+  Full-Offline 204,646,057 B `7174bea0...3f3a`. Each extracted under a
+  space+Unicode path: Test-Pack PASS, contracts 145/0. Published assets
+  downloaded and equal to the build (size, SHA-256, GitHub digest); latest =
+  v8.14.0. Receipts: ignored `artifacts/release-v8.14.0/build-proof.json`,
+  `published-proof.json`.
+- Local sync `INSTALL-AIO.ps1 -SkillsOnly -SkipSelfUpdate -Mode BundledOnly`:
+  installed-state doctor PASS (Hermes default avatarforge/github remain
+  warnings). Claude retention 365 merged; machine map names the real Python;
+  first history copy 1.7 GB to the owner's history folder (HISTORY-DIR.txt).
+- Not certified: provider inference, editor/game runtime, billed savings.
+- Next: owner's call on the decisions above; Hermes default-profile parking
+  needs a Hermes-native design (closed app, named-profile restore).
 
 ## Publication checkpoint (v8.13.0)
 
