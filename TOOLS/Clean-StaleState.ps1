@@ -260,6 +260,21 @@ if (Test-Path -LiteralPath $backupsRoot -PathType Container) {
   }
 }
 
+# The npm duplicate cleanup keeps a verified copy of the older package it removed
+# (npm-rollback\<package>-<version>-<stamp>). Like the dedupe snapshots, only the
+# newest per package is worth keeping.
+$npmRollback = Join-Path $uabsRoot 'npm-rollback'
+if (Test-Path -LiteralPath $npmRollback -PathType Container) {
+  $copies = @(Get-ChildItem -LiteralPath $npmRollback -Directory -ErrorAction SilentlyContinue)
+  foreach ($group in ($copies | Group-Object { $_.Name -replace '-\d+\.\d+.*$', '' })) {
+    $ordered = @($group.Group | Sort-Object Name -Descending)
+    if ($ordered.Count -le $KeepBackups) { continue }
+    foreach ($old in $ordered[$KeepBackups..($ordered.Count - 1)]) {
+      Add-CleanTarget -Kind 'backup' -Path $old.FullName -Why "older than the $KeepBackups most recent $($group.Name) npm recovery copies"
+    }
+  }
+}
+
 # ------------------------------------------------------------ autostarts ----
 # Boot-time launchers for AI tooling are REPORTED, never planned for deletion.
 # The rule at the top of this file is that deletion is limited to what this

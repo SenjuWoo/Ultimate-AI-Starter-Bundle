@@ -31,6 +31,15 @@ Provider output accounting is defined by the
 "Weight" is uncached input + 0.1 x cached input + 5 x output: a relative cost,
 not a bill. Plans and providers price these differently.
 
+## Measured on the maintainer machine (2026-10-15, CodeBurn + transcripts)
+
+| What | Value | Why it matters |
+| --- | --- | --- |
+| One ~27 h Claude Code thread (4 compactions, ~2,500 assistant messages) | 28.8M effective input vs 0.78M output (CodeBurn, measured) | Every turn re-reads the cached history: cost follows thread length. Four such sessions were $4.70 measured. |
+| Unused MCP tool names left machine-wide (six servers, 0 calls) | ~110.7k tokens over six sessions, ~$0.02 (CodeBurn, estimated) | Real but small, because tool search defers the schemas. They are parked anyway: less noise for tool choice, and providers without deferral pay in full. |
+| "Edits more than reads" flag (153 reads / 139 edits) | One session | It counts Read/Edit calls only. The same kind of transcript had 914 shell calls doing the reading and 1 failed Edit in 81. A prompt to look, not a verdict. |
+| Native computer-use "0 of 27 tools used" | 2 permission requests, no actions | True, and not removable: it is a host built-in, and the owner had denied input automation. |
+
 ## What the bundle does
 
 - **Smaller always-on text.** Skyrim content installs only with the Skyrim
@@ -40,6 +49,13 @@ not a bill. Plans and providers price these differently.
   per PC, never shipped.
 - **Resumable work.** `state-resumption` and the provider templates make
   "continue" a short read of STATE.md and `git status`.
+- **Parked task servers.** A tool's own installer registers its MCP server for
+  every chat. `Set-McpProfile.ps1 -Park` moves such entries out (exact copy kept)
+  and `-Auto` puts one back for the project whose files match; the GitHub server is
+  skipped where `gh` is signed in. The doctor fails while one is still
+  machine-wide.
+- **Chat history that survives.** `Backup-AiHistory.ps1` copies transcripts to a
+  folder cleaners never touch, and Claude's retention is raised from 30 days to 365.
 - **Release ritual.** `release-checklist` ends with the paste-ready changelog
   and payload-only archive, so a release is not a second conversation.
 

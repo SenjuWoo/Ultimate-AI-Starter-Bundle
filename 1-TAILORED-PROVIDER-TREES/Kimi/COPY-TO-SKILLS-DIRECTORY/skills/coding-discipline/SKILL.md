@@ -24,7 +24,14 @@ when_to_use: Use for operating contract for changing code, scripts, configuratio
 3. Inspect the smallest relevant file set before proposing architecture.
 4. Write a plan first when the change is broad, risky, cross-file, or poorly specified.
 5. Define a measurable completion condition and the commands that will prove it.
-6. For creating or finishing a GitHub repository, load `github-fleet-maintenance` for CI, security, documentation and artifact requirements; use `release-checklist` for the release handoff. A created repository or pushed code is not the complete deliverable.
+6. Read a file before editing it, and before changing a function, signature or
+   config key search for every caller or reader and open the ones that matter. The
+   Edit tool enforces read-first; `Write` and shell redirects do not, so re-read
+   a file you did not create this session before rewriting it.
+7. Read the error before the next attempt. Never retry a failed or blocked command
+   unchanged; a blocked deletion means giving it its own command with only its
+   explicit target.
+8. For creating or finishing a GitHub repository, load `github-fleet-maintenance` for CI, security, documentation and artifact requirements; use `release-checklist` for the release handoff. A created repository or pushed code is not the complete deliverable.
 
 ## During implementation
 

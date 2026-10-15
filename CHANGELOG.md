@@ -1,3 +1,32 @@
+## 8.14.0
+
+- Park task-specific MCP servers that a tool's own installer registered
+  machine-wide (RimWorldForge, AvatarForge, Melty, the Roblox and Saints Row
+  forges): `Set-McpProfile.ps1 -Park` saves an exact copy (credentials stay in
+  the bundle state file, never printed), removes the machine-wide entry and
+  `-Auto` / `-Unpark` writes it back for one project. Only what an entry launches
+  is matched; entries already switched off and personal servers are untouched;
+  `UABS_KEEP_GLOBAL_MCP=<id>` opts out. The installer runs it, and the doctor now
+  fails while one is still machine-wide (Hermes is reported, not edited).
+- The official GitHub server is no longer always-on where the `gh` CLI is signed
+  in (46 tools, nothing the CLI does not already do). Parked with the same
+  mechanism; `-Enable github -Path <project>` brings it back per project.
+- Fix: an older npm copy of a pinned package (CodeBurn 0.9.23) in the user npm
+  prefix shadowed the 0.9.27 the pack installed in another prefix. Either known
+  prefix is now cleaned, after a verified recovery copy; the doctor judges the
+  launcher that actually runs first on PATH.
+- A Store-stub `python.exe` (stock Windows 11) no longer counts as Python: the
+  installer's runtime check and `Build-Release.ps1` run the candidate, and the
+  machine map names the real interpreter when the stub comes first on PATH.
+- Chat history: `Backup-AiHistory.ps1` (copy-only) and Claude retention raised to
+  365 days in the starter settings, after BleachBits wiped a provider session
+  folder and the 30-day default would have removed the rest.
+- New project-intel card for Melty mashups and cross-engine character swaps, and
+  a measured, workflow-scoped efficiency section; lessons are now recorded as
+  workflow -> tried -> result -> cause -> what worked -> recheck, never as a bare
+  "does not work". `coding-discipline` gains read-first/search-callers and
+  no-unchanged-retry rules. Start/resume prompts: grammar fixed, parked-tool line added.
+
 ## 8.13.0
 
 - Add optional pinned REA CLI and an all-provider reverse-engineering recipe;

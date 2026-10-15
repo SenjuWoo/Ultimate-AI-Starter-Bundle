@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-12",
-  "pack_version": "8.13.0",
+  "generated": "2026-10-15",
+  "pack_version": "8.14.0",
   "assets": [
     {
       "file": "codebase-memory-mcp-windows-amd64.zip",
@@ -43,5 +43,5 @@
       "sha256": "fb06bf56dc6dea091cc8d6363a288dca26f346163e74b0cb3274be284f216254"
     }
   ],
-  "updated": "2026-10-13"
+  "updated": "2026-10-15"
 }

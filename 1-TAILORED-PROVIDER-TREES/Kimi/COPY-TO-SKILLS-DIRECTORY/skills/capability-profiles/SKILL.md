@@ -52,6 +52,27 @@ rendered output, then package with credits/permissions and truthful previews.
 Publication preparation does not authorize public publishing. Record missing
 runtime/editor proof rather than claiming guaranteed one-shot success.
 
+## Parked servers
+
+A tool's own installer registers its MCP server for every chat, so unrelated work
+pays for its tool list. This pack parks such entries (an exact copy is kept,
+nothing is uninstalled): RimWorldForge, AvatarForge, Melty, RobloxForge,
+SaintsRowForge, and the GitHub server where `gh` is signed in. When a task needs
+one of their tools (`rw_*`, `avatarforge_*`, `mcp__melty__*`, GitHub PR/Actions
+tools) and it is not callable, that is why, not a broken install. Run, yourself:
+
+```powershell
+TOOLS\Set-McpProfile.ps1 -Auto -Path <project>             # markers decide what comes back
+TOOLS\Set-McpProfile.ps1 -Unpark melty -Path <project>     # explicit (no project markers)
+TOOLS\Set-McpProfile.ps1 -Enable github -Path <project>    # the GitHub server, per project
+```
+
+Then keep working through the tool's CLI (`rwforge`, AvatarForge `run.py doctor |
+scan | convert`, `gh`): the server itself appears in the next chat opened in that
+project, or after `/mcp` reconnect. `Set-McpProfile.ps1 -Park -CheckOnly` lists
+what would be parked; `UABS_KEEP_GLOBAL_MCP=<id>` keeps one machine-wide on
+purpose. Never print a parked entry: it can hold a credential.
+
 ## Installed is not enabled
 
 Installed means files exist on disk. Configured means a provider entry exists.

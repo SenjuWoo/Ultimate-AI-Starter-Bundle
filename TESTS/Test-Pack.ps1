@@ -104,6 +104,15 @@ else { Bad ('Packs gate failed:' + [Environment]::NewLine + $packsOut) }
 $profileOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-UserProfile.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $profileOut -match 'USER PROFILE GATE: PASS') { Good 'Personal profile: seed, machine map, size cap, injection and removal' }
 else { Bad ('User profile gate failed:' + [Environment]::NewLine + $profileOut) }
+$npmDupOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-NpmDuplicate.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $npmDupOut -match 'NPM DUPLICATE GATE: PASS') { Good 'An older npm copy of a pinned package is removed from either known prefix, after a verified recovery copy' }
+else { Bad ('npm duplicate gate failed:' + [Environment]::NewLine + $npmDupOut) }
+$historyOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-AiHistoryBackup.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $historyOut -match 'AI HISTORY BACKUP GATE: PASS') { Good 'Chat history backup: copies new and changed transcripts, never deletes or overwrites a newer copy' }
+else { Bad ('History backup gate failed:' + [Environment]::NewLine + $historyOut) }
+$parkOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-McpPark.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $parkOut -match 'MCP PARK GATE: PASS') { Good 'Task-specific MCP servers: park, exact per-project restore, marker detection, no credential printed' }
+else { Bad ('MCP park gate failed:' + [Environment]::NewLine + $parkOut) }
 
 Section '2. PowerShell parses (excluding BUNDLED-TOOLS)'
 $shippedFiles = @(Get-UabsManifestFiles -PackRoot $PackRoot)

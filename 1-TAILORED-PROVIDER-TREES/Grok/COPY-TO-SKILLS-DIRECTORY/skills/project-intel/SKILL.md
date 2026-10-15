@@ -22,6 +22,11 @@ class.
    price and tool facts rot fastest: verify live before advising on them.
 4. When new work proves or disproves something durable, append a dated line to
    the matching card. One line, with the date and the strength of evidence.
+   **Write a workflow-scoped lesson, never a bare verdict:** workflow/build ->
+   what was tried -> result -> cause -> what worked instead -> evidence (strength,
+   scope) -> recheck when. "X does not work" is not a lesson; "in workflow W, X
+   failed because C, and Y worked" is. A failure seen in one workflow must not be
+   generalized to another, and a dead end is only dead until its recheck trigger.
 5. These cards ship in a public repository. Never write personal data, real
    names, machine-specific absolute paths, credentials, or private account
    details into them. Machine-private detail belongs in a local-only folder
@@ -35,6 +40,7 @@ class.
 | Nexus pages, releases, permissions, archive downloads | `references/skyrim-release.md` |
 | BDO, Helldivers 2, Saints Row, GTA/FiveM, RimWorld, Sims 4, Minecraft, Warframe | `references/game-modding-other.md` |
 | Model choice, harness routing, MCP wiring, agent cost control | `references/ai-models-harness.md` |
+| Game mashups, cross-engine character/asset swaps, Melty, UE4SS, ReShade add-ons, skeleton retargeting | `references/game-mashup-melty.md` |
 | Native Windows apps, browser extensions, installers, packaging | `references/apps-native-windows.md` |
 | Reverse engineering, cracking, exploits, malware false positives | `references/security-re.md` |
 

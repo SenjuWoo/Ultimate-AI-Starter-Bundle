@@ -22,12 +22,16 @@
 
   github        Official GitHub server: repos, PRs, issues, releases, CI status,
                 Dependabot and security findings. Turns "push and hope" into
-                something the agent can verify it actually did.
+                something the agent can verify it actually did. Skipped where the
+                gh CLI is already signed in: gh does the same with no tool list, and
+                the server's tools would sit in every chat unused. Per project:
+                Set-McpProfile.ps1 -Enable github -Path <project>; machine-wide
+                anyway: UABS_KEEP_GLOBAL_MCP=github.
 
   headroom      Context inspection/compression tools. Registered for every
                 provider when the installed command is available.
 
-  These two are always on because they apply to every task. Everything else
+  context7 and headroom are always on because they apply to every task. Everything else
   this pack can wire is a capability profile in BUNDLED-TOOLS/PROFILES.json,
   registered by TOOLS\Set-McpProfile.ps1 only when a project needs it -- MCP
   tool schemas are not lazy, and a server that is connected costs context on
@@ -70,6 +74,7 @@ if ($Providers.Count -eq 1 -and $Providers[0] -match ',') {
   $Providers = $Providers[0] -split ','
 }
 
+. ([IO.Path]::Combine($PSScriptRoot, 'UABS-Mcp-Park.ps1'))
 $hasNpx = [bool](Get-Command npx -ErrorAction SilentlyContinue)
 if (-not $hasNpx) {
   Write-Host 'NOTE: Node/npx not found - skipping the two npx servers. Install Node 18+ and re-run for those.' -ForegroundColor Yellow
@@ -169,6 +174,16 @@ if ($headroom -and (Test-Path -LiteralPath $headroom -PathType Leaf)) {
     note    = 'context inspection and compression'
     key     = $null
   }
+}
+
+# The GitHub server duplicates a signed-in gh CLI. Same rule global_scope_guard
+# applies to an entry that is already registered (-Park), so a refresh never
+# re-adds what the guard just moved out of every chat.
+if (Test-UabsGithubMcpParked) {
+  if (@($servers | Where-Object { $_['id'] -eq 'github' }).Count) {
+    Write-Host 'SKIP github: the gh CLI is signed in, so this server would only add its tool list to every chat. Per project: TOOLS\Set-McpProfile.ps1 -Enable github -Path <project>; machine-wide: UABS_KEEP_GLOBAL_MCP=github.' -ForegroundColor DarkGray
+  }
+  $servers = @($servers | Where-Object { $_['id'] -ne 'github' })
 }
 
 # A server whose command cannot run is worse than an absent one: the provider

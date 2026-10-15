@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.13.0 -->
+<!-- Ultimate AI Starter Bundle v8.14.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.13.0
+# Ultimate AI Starter Bundle v8.14.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -83,7 +83,9 @@ The 124 general **skills** (plus 49 with the Skyrim pack) use a compact discover
 
 ### What's ON after install
 
-The bundle's default core is `context7` (library docs), `github` (repo access), and `headroom` (context compression). Optional MCPs stay parked until needed; independently configured servers are preserved. Schema bytes are not per-turn bills: filtering, deferred discovery, caching and tool calls determine actual usage.
+The always-on core is `context7` (library docs) and `headroom` (context compression). The official `github` server joins them only where the `gh` CLI is not signed in: `gh` covers repos, PRs, Actions and releases with no tool list, so the server would sit unused in every chat (switch it on for one project with `-Enable github -Path <project>`). Everything task-specific stays parked until a project needs it, **including servers a tool's own installer registered machine-wide** (RimWorldForge, AvatarForge, Melty): the installer saves an exact copy, removes the machine-wide entry, and `-Auto` writes it back for the one project whose files match. Keep one machine-wide on purpose with `UABS_KEEP_GLOBAL_MCP=<id>`. Other independently configured servers are preserved. Schema bytes are not per-turn bills: filtering, deferred discovery, caching and tool calls determine actual usage.
+
+You do not flip any of this by hand: the agent runs `Set-McpProfile.ps1 -Auto -Path <project>` when a task needs a parked tool, and works through the tool's CLI meanwhile; the server itself appears in the next chat opened in that project.
 
 When the matching local tool is installed, Hermes also gets native named profiles without loading them into default: `code` adds codebase-memory, `roblox` adds the official Roblox Studio MCP, and `skyrim` connects houseCARL while Skyrim Forge and Spooky's AutoMod remain available through their routed skills/CLIs. Forge MCP compatibility is explicit.
 
@@ -99,6 +101,8 @@ measured per-turn bill.
 .\TOOLS\Set-McpProfile.ps1 -Detect -Path "<project folder>"
 .\TOOLS\Set-McpProfile.ps1 -Auto -Path "<project folder>"
 .\TOOLS\Set-McpProfile.ps1 -Disable code-intel -Path "<project folder>"
+.\TOOLS\Set-McpProfile.ps1 -Park -CheckOnly      # task servers registered machine-wide, nothing written
+.\TOOLS\Set-McpProfile.ps1 -Unpark melty -Path "<project folder>"
 hermes -p code       # specialist graph-memory profile
 hermes -p default    # return to the small core
 ```
@@ -109,6 +113,22 @@ servers. The [profile catalog](BUNDLED-TOOLS/PROFILES.json) and
 [Hermes policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md) describe
 requirements. The agent must explain missing prerequisites and restart/trust
 requirements instead of pretending an installed server is callable.
+
+### Chat history survives cleaners and the 30-day limit
+
+Claude Code deletes transcripts after 30 days (`cleanupPeriodDays`; the starter
+settings raise it to 365 and never use 0, which disables persistence), and disk
+cleaners such as BleachBits wipe provider session folders.
+`TOOLS\Backup-AiHistory.ps1` copies, and never deletes, Claude, Codex, Grok and
+Hermes transcripts to a folder you choose; the installer runs it when one is set.
+
+```powershell
+setx UABS_HISTORY_DIR "D:\AI-History"     # or one line in %USERPROFILE%\.uabs\profile\HISTORY-DIR.txt
+.\TOOLS\Backup-AiHistory.ps1 -CheckOnly   # what would be copied
+```
+
+Transcripts hold whatever you pasted, keys included: keep that folder private and
+exclude the provider folders from cleaners.
 
 ---
 
@@ -634,7 +654,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 - **Provider skills** — 124 general skills per AI (Claude, Codex, Grok, Kimi, Hermes), plus 49 with the Skyrim pack, all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
-- **MCP servers** — context7, official GitHub, and Headroom are the verified always-on core. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
+- **MCP servers** — context7 and Headroom are the always-on core (the official GitHub server too, where `gh` is not signed in); servers a tool's own installer registers machine-wide are parked per project. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup (Skyrim pack)
 - **Spooky's AutoMod Toolkit** (Skyrim pack)
 - **codebase-memory-mcp** — installed but enabled only by Claude/Grok/trusted Codex project-scoped `code-intel` or Hermes' native `code` profile; `.cbmignore` + `TOOLS/Setup-CodebaseMemory-Index.ps1` keep the graph on source, not asset trees
@@ -844,9 +864,11 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.13.0** - 2026-10-13. On-demand reverse engineering, strict skill auditing,
-Grok legacy hook retirement, tested component updates and shorter start/resume
-prompts. [Changes](docs/history/V8.13.0-CHANGELOG.md).
+**v8.14.0** - 2026-10-15. Task-specific MCP servers are parked per project (the
+doctor now fails while one is machine-wide), the GitHub server is skipped where
+`gh` is signed in, npm launcher shadowing is fixed, chat history gets a copy-only
+backup and longer Claude retention, and project-intel lessons are recorded per
+workflow. [Changes](docs/history/V8.14.0-CHANGELOG.md).
 
 **v8.12.1** - 2026-10-12. Preserve installed private profiles when new input
 is invalid, separate personal tuning from public defaults, and remove

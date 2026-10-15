@@ -1,11 +1,59 @@
 {
   "schema": 1,
-  "catalog_version": "8.13.0",
-  "pack_version": "8.13.0",
-  "updated_utc": "2026-10-12",
+  "catalog_version": "8.14.0",
+  "pack_version": "8.14.0",
+  "updated_utc": "2026-10-15",
   "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
   "reads": "TOOLS/Set-McpProfile.ps1",
-  "always_on_note": "The always-on core is context7, github, and headroom, in TOOLS/Add-Reasoning-MCPs.ps1, not here. They earn permanent slots for current documentation, verified repository state, and context inspection/compression. sequential-thinking is the opt-in reasoning profile after measurement showed its permanent schema cost. Playwright is in the web profile; Firecrawl and Perplexity register only when their keys exist.",
+  "always_on_note": "The always-on core is context7 and headroom (github too, where the gh CLI is not signed in; see global_scope_guard), in TOOLS/Add-Reasoning-MCPs.ps1, not here. They earn permanent slots for current documentation and context inspection/compression. sequential-thinking is the opt-in reasoning profile after measurement showed its permanent schema cost. Playwright is in the web profile; Firecrawl and Perplexity register only when their keys exist.",
+  "global_scope_guard": {
+    "why": "A connected MCP server puts its tool list in every chat of a provider, used or not. Tool installers register themselves machine-wide, so unrelated chats pay for tools they never use. -Park saves an exact copy of such an entry and removes it from the machine-wide config; -Auto (or -Unpark) writes the same entry back for one project. Nothing is uninstalled and credentials are never printed. Matching is on what the entry launches, not its name. Opt out per server with UABS_KEEP_GLOBAL_MCP=id1,id2.",
+    "rules": [
+      {
+        "id": "rimworldforge",
+        "title": "RimWorldForge",
+        "match": ["RimWorldForge"],
+        "detect": { "files": ["About/About.xml"], "globs": [] },
+        "note": "RimWorld mod work. Its CLI (rwforge.exe in the tool's .venv\\Scripts) needs no restart."
+      },
+      {
+        "id": "avatarforge",
+        "title": "AvatarForge",
+        "match": ["AvatarForge"],
+        "detect": { "files": ["Packages/vpm-manifest.json"], "globs": ["*.vrm", "*.pmx", "*.pmd", "*.xps"] },
+        "note": "Avatar conversion. Its CLI (run.py doctor | scan | convert in the tool folder) needs no restart."
+      },
+      {
+        "id": "robloxforge",
+        "title": "RobloxForge",
+        "match": ["RobloxForge"],
+        "profile": "game-roblox",
+        "note": "The game-roblox profile registers it per project."
+      },
+      {
+        "id": "saints-row-forge",
+        "title": "SaintsRowForge",
+        "match": ["SaintsRowForge"],
+        "profile": "game-saints-row",
+        "note": "The game-saints-row profile registers it per project."
+      },
+      {
+        "id": "github",
+        "title": "GitHub MCP",
+        "match": ["github-mcp-server"],
+        "only_if": "gh-ready",
+        "profile": "github",
+        "note": "gh covers repos, PRs, Actions and releases with no tool list. Switch the MCP on for one project with -Enable github -Path <project>."
+      },
+      {
+        "id": "melty",
+        "title": "Melty",
+        "match": ["melty.gg"],
+        "detect": null,
+        "note": "Publishing mashups only (it is an authenticated remote server). Switch on with -Unpark melty -Path <mashup project>."
+      }
+    ]
+  },
   "requires_forms": {
     "command": "A command that must resolve on PATH, or an absolute path that must exist as a file.",
     "any_path": "At least one of these paths must exist. Entries may contain environment variables and a single '*' wildcard per segment.",
@@ -17,6 +65,24 @@
     "env_static": "Literal non-secret environment values enforced for this server, such as a supported telemetry opt-out. Credentials belong in 'key' or 'env_passthrough' and are never stored here."
   },
   "profiles": [
+    {
+      "id": "github",
+      "title": "GitHub MCP (repos, PRs, issues, Actions)",
+      "scope": "project",
+      "why": "Where the gh CLI is signed in it already covers repos, PRs, Actions and releases with no tool list, so the official GitHub server is not machine-wide there (see global_scope_guard). This profile switches it on for one project that wants the structured tools. Enable on request: -Enable github -Path <project>.",
+      "detect": { "files": [], "globs": [] },
+      "detect_note": "No markers on purpose: a .git folder is not a reason to load 46 tool names. -Auto never enables it.",
+      "servers": [
+        {
+          "id": "github-mcp",
+          "command": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\github-mcp-server\\github-mcp-server.exe",
+          "args": ["stdio", "--toolsets", "context,repos,pull_requests,actions,issues"],
+          "note": "official GitHub server, scoped toolsets; OAuth in the browser on the first authenticated call",
+          "key": null,
+          "requires": { "command": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\github-mcp-server\\github-mcp-server.exe" }
+        }
+      ]
+    },
     {
       "id": "code-intel",
       "title": "Repository graph plus language-server-accurate navigation and editing",

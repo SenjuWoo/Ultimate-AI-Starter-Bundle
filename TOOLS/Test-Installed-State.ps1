@@ -576,6 +576,55 @@ if ($capabilityStates.Count) {
   }
 }
 
+# ---- Task-specific MCP servers must not be machine-wide ----------------------
+# A tool installer registers its server for every chat of a provider, so its tool
+# list is loaded whether or not the task has anything to do with it. -Park moves
+# the entry to the projects that need it; UABS_KEEP_GLOBAL_MCP=<id> keeps one on
+# purpose. Only what the entry launches is matched, never a name alone.
+try {
+  . (Join-Path $PackRoot 'TOOLS\UABS-Mcp-Park.ps1')
+  $guarded = @($Providers | Where-Object { $_ -in @('Claude','Codex','Grok','Kimi','Hermes') })
+  $leaks = @(Find-UabsGlobalScopeLeaks -PackRoot $PackRoot -Providers $guarded)
+  foreach ($leak in @($leaks | Where-Object { $_.Entry.Style -eq 'yaml' })) {
+    Warn ("Hermes: {0} ({1}) is in Hermes' default profile, so every default Hermes chat loads its tools. Hermes profiles are native, so it is reported, not moved: use Migrate-HermesProfiles.ps1 or edit it in Hermes." -f $leak.Id, $leak.Rule.title)
+  }
+  foreach ($leak in @($leaks | Where-Object { $_.Entry.Style -ne 'yaml' })) {
+    Err ("{0}: {1} ({2}) is registered machine-wide, so every chat loads its tools. Run TOOLS\Set-McpProfile.ps1 -Park; it comes back per project with -Auto -Path <project>." -f $leak.Provider, $leak.Id, $leak.Rule.title)
+  }
+  if (-not $leaks.Count) { Write-UabsOk 'no task-specific MCP server is registered machine-wide' }
+  elseif (-not @($leaks | Where-Object { $_.Entry.Style -ne 'yaml' }).Count) { Write-UabsOk 'no editable provider config registers a task-specific MCP server machine-wide' }
+} catch { Warn ('MCP scope check could not run: ' + $_.Exception.Message) }
+
+# ---- npm launchers: the first one on PATH is the one that runs ----------------
+# CodeBurn 0.9.23 in the user npm prefix shadowed the 0.9.27 this pack installed
+# in another prefix, and nothing here looked at launchers. Judge what actually
+# runs: read the package next to each launcher, in PATH order.
+foreach ($npmComp in @($catalog.components | Where-Object { $_.npm_spec -and $_.install -eq 'npx-or-npm' -and $_.version })) {
+  try {
+    $npmPkg = Get-UabsNpxPackageBase -Arguments @([string]$npmComp.npm_spec)
+    $launchers = @()
+    foreach ($cmd in @(Get-Command ([string]$npmComp.id) -All -CommandType Application -ErrorAction SilentlyContinue)) {
+      $dir = Split-Path -Parent $cmd.Source
+      $pkgJson = Join-Path $dir ('node_modules\' + $npmPkg + '\package.json')
+      if (-not (Test-Path -LiteralPath $pkgJson -PathType Leaf)) { continue }
+      if (@($launchers | Where-Object { $_.Dir -ieq $dir }).Count) { continue }
+      $launchers += [pscustomobject]@{ Dir = $dir; Version = [string](([IO.File]::ReadAllText($pkgJson) | ConvertFrom-Json).version) }
+    }
+    if (-not $launchers.Count) { continue }
+    $want = [string]$npmComp.version
+    $first = $launchers[0]
+    if ($first.Version -ne $want) {
+      $older = $false
+      try { $older = ([version]$first.Version) -lt ([version]$want) } catch { }
+      $msg = "$($npmComp.id): the launcher that runs first on PATH ($($first.Dir)) is $($first.Version); this pack installs $want."
+      if ($older) { Err ($msg + ' Re-run START-HERE.bat: it removes the older copy after taking a verified recovery copy.') } else { Warn ($msg + ' Left alone: it is not older.') }
+    }
+    foreach ($other in @($launchers | Select-Object -Skip 1 | Where-Object { $_.Version -ne $want })) {
+      Warn "$($npmComp.id) $($other.Version) is also on PATH in $($other.Dir) (shadowed by the first launcher)."
+    }
+  } catch { Warn ("npm launcher check for $($npmComp.id) could not run: " + $_.Exception.Message) }
+}
+
 # ---- Hermes profile tool budgets -------------------------------------------
 # Hermes filters MCP servers at the individual-TOOL level (tools.include /
 # tools.exclude, enforced at registration). Codex has native filters too.

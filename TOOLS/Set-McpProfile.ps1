@@ -35,6 +35,12 @@
   cannot spawn a server just shows no tools and says nothing about why, which is
   the single most expensive failure mode this pack has.
 
+  Servers a tool's own installer registered machine-wide (RimWorldForge,
+  AvatarForge, Melty ...) put their tool list in every chat. -Park saves an exact
+  copy and removes the machine-wide entry; -Auto (markers match) or -Unpark puts
+  the same entry back for ONE project. Nothing is uninstalled; credentials in a
+  parked entry are never printed.
+
 .EXAMPLE
   Set-McpProfile.ps1 -List
   Set-McpProfile.ps1 -Detect  -Path C:\code\my-app
@@ -42,6 +48,9 @@
   Set-McpProfile.ps1 -Enable  code-intel -Path C:\code\my-app
   Set-McpProfile.ps1 -Enable  code-intel -Global
   Set-McpProfile.ps1 -Disable code-intel
+  Set-McpProfile.ps1 -Park -CheckOnly
+  Set-McpProfile.ps1 -Park
+  Set-McpProfile.ps1 -Unpark rimworldforge -Path C:\mods\MyRimWorldMod
 #>
 [CmdletBinding(DefaultParameterSetName = 'List')]
 param(
@@ -49,6 +58,8 @@ param(
   [Parameter(ParameterSetName = 'Detect')][switch]$Detect,
   [Parameter(ParameterSetName = 'Auto')][switch]$Auto,
   [Parameter(ParameterSetName = 'Repair')][switch]$Repair,
+  [Parameter(ParameterSetName = 'Park', Mandatory = $true)][switch]$Park,
+  [Parameter(ParameterSetName = 'Unpark', Mandatory = $true)][string[]]$Unpark,
   [Parameter(ParameterSetName = 'Task', Mandatory = $true)][string[]]$Task,
   [Parameter(ParameterSetName = 'Task')][switch]$Plan,
   [Parameter(ParameterSetName = 'TaskList')][switch]$ListTasks,
@@ -69,6 +80,7 @@ if (-not $PackRoot) { $PackRoot = Split-Path -Parent $PSScriptRoot }
 # replaces the smaller path helpers below, while keeping Get-UabsPythonExecutable.
 . ([IO.Path]::Combine($PSScriptRoot, 'UABS-Common.ps1'))
 . (Join-Path $PSScriptRoot 'UABS-Mcp-Write.ps1')
+. ([IO.Path]::Combine($PSScriptRoot, 'UABS-Mcp-Park.ps1'))
 
 # Accept both -Providers Claude,Codex (one comma string, which is what
 # powershell.exe -File produces) and -Providers @('Claude','Codex').
@@ -801,7 +813,7 @@ if ($PSCmdlet.ParameterSetName -eq 'List') {
 # answer "turn this off": -Disable with no -Path means every project the profile
 # was enabled for, and defaulting to the cwd there swept a directory nobody
 # asked about while leaving the real registrations in place.
-if (-not $Path -and -not $Global -and $PSCmdlet.ParameterSetName -notin @('Disable', 'Repair')) {
+if (-not $Path -and -not $Global -and $PSCmdlet.ParameterSetName -notin @('Disable', 'Repair', 'Park')) {
   $Path = (Get-Location).Path
 }
 if ($Path) {
@@ -821,7 +833,50 @@ if ($PSCmdlet.ParameterSetName -eq 'Detect') {
       if ($req.Ok) { Write-Ok $s['id'] } else { Write-Skip ("{0}: {1}" -f $s['id'], $req.Reason) }
     }
   }
+  foreach ($r in @(Get-UabsParkRules -PackRoot $PackRoot | Where-Object { -not $_.profile -and (Test-UabsProfileDetected -ProfileDef $_ -ProjectPath $Path) })) {
+    $any = $true
+    Write-Host ("  {0,-14} parked server: {1} (-Auto switches it on for this project)" -f $r.id, $r.title)
+  }
   if (-not $any) { Write-Host '  no profile markers found; the always-on core is all this project needs' }
+  return
+}
+
+# ---- park / unpark ---------------------------------------------------------
+
+if ($PSCmdlet.ParameterSetName -eq 'Park') {
+  Write-Head 'Task-specific MCP servers registered machine-wide'
+  $guarded = @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Grok', 'Kimi') })
+  $parked = @(Invoke-UabsParkGlobalMcp -PackRoot $PackRoot -Providers $guarded -CheckOnly:$CheckOnly)
+  # Hermes profiles are native and its app rewrites config.yaml from memory: report, never edit.
+  $hermesSeen = @()
+  if ($Providers -contains 'Hermes') { $hermesSeen = @(Find-UabsGlobalScopeLeaks -PackRoot $PackRoot -Providers @('Hermes')) }
+  foreach ($h in $hermesSeen) {
+    Write-Skip ("Hermes/{0} ({1}) is in Hermes' default profile; reported, not moved. Hermes profiles are native: use Migrate-HermesProfiles.ps1 or edit it in Hermes." -f $h.Id, $h.Rule.title)
+  }
+  if (-not $parked.Count) { Write-Ok 'none: nothing task-specific is registered machine-wide in a file this script may edit'; return }
+  foreach ($leak in $parked) {
+    $how = if ($leak.Rule.profile) { 'the ' + $leak.Rule.profile + ' profile switches it on per project' }
+           elseif ($leak.Rule.detect) { 'switches on per project when its markers match' }
+           else { 'switch it on per project with -Unpark ' + $leak.Id + ' -Path <project>' }
+    Write-Ok ("{0} {1}/{2} ({3}): {4}" -f $(if ($CheckOnly) { 'would park' } else { 'parked' }), $leak.Provider, $leak.Id, $leak.Rule.title, $how)
+    if ($leak.Rule.note) { Write-Host ('      ' + $leak.Rule.note) -ForegroundColor DarkGray }
+  }
+  if (-not $CheckOnly) {
+    Write-Host '  Exact copies are in the bundle state folder (parked-mcp.json); nothing was uninstalled.' -ForegroundColor DarkGray
+    Write-Host '  Switch one on for a project: Set-McpProfile.ps1 -Auto -Path <project>   or   -Unpark <id> -Path <project>' -ForegroundColor DarkGray
+    Write-Host '  Keep one machine-wide instead: set UABS_KEEP_GLOBAL_MCP=<id>[,<id>]' -ForegroundColor DarkGray
+    Write-Host 'Restart each AI app for the change to take effect.' -ForegroundColor Yellow
+  }
+  return
+}
+
+if ($PSCmdlet.ParameterSetName -eq 'Unpark') {
+  Write-Head ("Switching parked servers on for {0}" -f $Path)
+  $unparkable = @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Grok', 'Kimi') })
+  $wrote = @(Invoke-UabsUnparkMcp -Ids $Unpark -ProjectPath $Path -Providers $unparkable -CheckOnly:$CheckOnly)
+  if (-not $wrote.Count) { Write-Skip ('nothing to switch on: no parked copy of {0}, or already present here' -f ($Unpark -join ', ')); return }
+  foreach ($w in $wrote) { Write-Ok ("{0} -> {1}" -f $w, $Path) }
+  Write-Host 'Takes effect in the next chat opened in that project (or /mcp -> reconnect).' -ForegroundColor Yellow
   return
 }
 
@@ -929,6 +984,14 @@ if ($PSCmdlet.ParameterSetName -eq 'Task') {
   $wanted = @($Enable | ForEach-Object { (Get-UabsProfile $_)['id'] } | Select-Object -Unique)
 } else {
   Write-Head ("Auto-detecting capability profiles for {0}" -f $Path)
+  # A parked task-specific server whose project markers match comes back for this
+  # project only.
+  $parkedHere = @(Get-UabsParkRules -PackRoot $PackRoot | Where-Object { -not $_.profile -and (Test-UabsProfileDetected -ProfileDef $_ -ProjectPath $Path) } | ForEach-Object { $_.id })
+  if ($parkedHere.Count) {
+    $back = @(Invoke-UabsUnparkMcp -Ids $parkedHere -ProjectPath $Path -Providers @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Grok', 'Kimi') }) -CheckOnly:$CheckOnly)
+    foreach ($w in $back) { Write-Ok ("parked server switched on for this project: {0}" -f $w) }
+    if ($back.Count) { Write-Host 'Takes effect in the next chat opened in that project (or /mcp -> reconnect).' -ForegroundColor Yellow }
+  }
   $wanted = @($allProfiles | Where-Object { Test-UabsProfileDetected -ProfileDef $_ -ProjectPath $Path } | ForEach-Object { $_['id'] })
   if (-not $wanted.Count) {
     Write-Host '  no profile markers found; nothing to wire beyond the always-on core'

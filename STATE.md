@@ -1,5 +1,41 @@
 # Bundle audit state
 
+## v8.14.0: parked task servers, history, shadowing launchers (2026-10-15)
+
+- Resumed after Claude's session store was wiped by BleachBits (2026-10-13; the
+  owner's own report in the Codex thread). Surviving record: Codex thread
+  01a0461a (Claude summaries imported). Private digests (user messages,
+  assistant turns) live in the owner's AI history folder, never in this repo.
+- Measured leak: Claude user scope held github, rimworldforge, avatarforge,
+  melty; Codex avatarforge, melty, github; Grok and Kimi github; Hermes default
+  avatarforge, github. The old doctor knew only catalog components.
+- Built: `global_scope_guard` (PROFILES.json), `TOOLS/UABS-Mcp-Park.ps1`,
+  `Set-McpProfile.ps1 -Park/-Unpark` and parked restore in `-Auto`, installer
+  park step, doctor leak check (Hermes = warning only), GitHub skipped where gh
+  is signed in (`Test-UabsGithubMcpParked`, shared with the install handshake),
+  `github` project profile. npm duplicate cleaner covers both prefixes with a
+  verified recovery copy; doctor checks the PATH-first launcher. Copy-only
+  `Backup-AiHistory.ps1`, Claude `cleanupPeriodDays` 365. Store-stub python no
+  longer counts as Python (installer runtime check, Build-Release); machine map
+  names the real interpreter. project-intel mashup card + workflow-scoped
+  lessons; coding-discipline read-first/no-unchanged-retry; prompts polished.
+- Gates: release contracts 145/0, Test-Pack PASS (before the Python-resolver
+  and machine-map edits; rerun on the final tree), McpPark/NpmDuplicate/
+  AiHistoryBackup gates PASS, privacy + audit regressions PASS.
+- Live machine: parked Claude rimworldforge/avatarforge/melty/github, Codex
+  avatarforge/melty/github, Grok and Kimi github (exact copies in
+  %LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\parked-mcp.json); all other
+  ~/.claude.json content hash-identical before/after. CodeBurn 0.9.23 removed
+  from the user npm prefix (recovery copy in npm-rollback); 0.9.27 now first.
+- Owner decisions to confirm: GitHub server parking (undo:
+  UABS_KEEP_GLOBAL_MCP=github), Melty parked (unpark per mashup project),
+  Hermes default entries reported only, Desktop Commander is a Claude Desktop
+  extension the pack does not own. Git Bash `python` is the Store stub: the
+  durable fix is the owner's (App execution aliases off).
+- Next: commit, push, exact-SHA CI + flags, build/publish v8.14.0 from that
+  SHA, byte-verify assets, local sync (`INSTALL-AIO.ps1 -SkillsOnly
+  -SkipSelfUpdate -Mode BundledOnly`), installed-state doctor.
+
 ## Publication checkpoint (v8.13.0)
 
 - Immutable release tag: `v8.13.0` at

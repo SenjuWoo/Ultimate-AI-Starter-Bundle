@@ -1,10 +1,31 @@
-# v8.13.0 validation
+# v8.14.0 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are
 separate proofs. This file records the checked boundary, not a claim of perfect
 one-shot game/mod output.
 
-## Current audit (v8.13.0)
+## Current audit (v8.14.0)
+
+`TESTS/Test-McpPark.ps1` runs the real `Set-McpProfile.ps1` against a disposable
+home: task servers leave the machine-wide Claude and Codex configs, personal and
+switched-off entries stay, `UABS_KEEP_GLOBAL_MCP` is honoured, a second park is
+byte-for-byte a no-op, no credential reaches the output, the saved copy restores
+exactly per project, markers decide where a server comes back, and the GitHub
+profile writes only project scope. `TESTS/Test-NpmDuplicate.ps1` failed against
+the v8.13.0 cleaner (an older copy in the user npm prefix stayed first on PATH)
+and passes after the repair, in both prefix directions, with a byte-checked
+recovery copy and an untouched newer personal version.
+`TESTS/Test-AiHistoryBackup.ps1` proves copy-only behaviour: changed transcripts
+update, deleted sources keep their archive copy, a newer archive copy is never
+overwritten, the live Codex SQLite database is skipped and a destination inside a
+provider folder is refused.
+
+On the maintainer machine the new doctor check first reported five machine-wide
+task servers and the shadowing CodeBurn launcher; after `-Park` and the npm repair
+the remaining notes are two Hermes default-profile entries, which are reported and
+never edited. No inference, editor, game runtime or billed saving is certified.
+
+## Previous audit (v8.13.0)
 
 The strict skill-audit CLI regressions reject missing/empty trees and malformed
 UTF-8. Grok's legacy Impeccable retirement checks preserve custom handlers and
@@ -18,7 +39,7 @@ allowlisted rewrite protocol. Ponytail's refreshed source passed 136 root and
 31 pi-extension tests with real Python/Git Bash. Universal Modder source and
 offline wheel verification remain separate from live game/asset operation.
 
-## Previous audit (v8.12.1)
+## Earlier audit (v8.12.1)
 
 Twelve executable regressions cover safe junction cleanup, private workspace paths, index-only scope application, preflight,
 native failure propagation, dry-run, Unicode custom rules, exact snapshot

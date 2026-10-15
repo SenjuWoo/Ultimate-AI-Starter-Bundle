@@ -256,6 +256,7 @@ if (-not (Test-Path (Join-Path $PackRoot 'BUNDLED-TOOLS\CATALOG.json'))) {
 }
 . (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1')
 . (Join-Path $PackRoot 'TOOLS\UABS-Mcp-Write.ps1')
+. (Join-Path $PackRoot 'TOOLS\UABS-Mcp-Park.ps1')
 $script:UabsPackRoot = $PackRoot
 
 if (-not $SkipSelfUpdate -and $Mode -ne 'BundledOnly' -and $env:UABS_NO_SELF_UPDATE -ne '1') {
@@ -342,11 +343,15 @@ function Invoke-UabsNative {
 
 function Remove-UabsOutdatedHermesNpmDuplicate {
   <#
-  Older pack releases could install CodeBurn/Impeccable through Hermes' private
-  Node prefix. Once normal npm became first on PATH, updates landed elsewhere
-  and left the old package plus every dependency behind. Remove only that one
-  proven shape: this run installed the exact catalog version in the active
-  global root, its command resolves there, and Hermes carries a lower version.
+  npm installs a global package into whichever prefix is active (the first npm
+  on PATH). Older pack releases installed CodeBurn/Impeccable through Hermes'
+  private Node prefix, and the user's own npm prefix can hold an older copy too.
+  Either one can sit earlier on PATH than the fresh install and silently win
+  (CodeBurn 0.9.23 shadowed 0.9.27 that way). Remove only that proven shape:
+  this run installed the exact catalog version in the active global root and a
+  DIFFERENT known prefix carries a lower version of the same package. An equal
+  or newer copy is somebody's own install and stays. A verified recovery copy of
+  the old package is taken before anything is uninstalled.
   #>
   param([object]$Component, [string]$ActiveNpm)
   try {
@@ -355,37 +360,63 @@ function Remove-UabsOutdatedHermesNpmDuplicate {
     if (-not $expectedVersion -or -not $spec.EndsWith('@' + $expectedVersion)) { return }
     $packageName = Get-UabsNpxPackageBase -Arguments @($spec)
     if (-not $packageName) { return }
-    $legacyPrefix = Join-Path $env:LOCALAPPDATA 'hermes\node'
-    $legacyNpm = Join-Path $legacyPrefix 'npm.cmd'
-    $legacyRoot = Join-Path $legacyPrefix 'node_modules'
-    $legacyJson = Join-Path (Join-Path $legacyRoot $packageName) 'package.json'
-    if (-not (Test-Path -LiteralPath $legacyNpm -PathType Leaf) -or
-        -not (Test-Path -LiteralPath $legacyJson -PathType Leaf)) { return }
 
     $activeRootText = [string](& $ActiveNpm root -g | Select-Object -Last 1)
     if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($activeRootText)) { return }
     $activeRoot = [IO.Path]::GetFullPath($activeRootText.Trim()).TrimEnd('\')
-    $legacyRootFull = [IO.Path]::GetFullPath($legacyRoot).TrimEnd('\')
-    if ([string]::Equals($activeRoot, $legacyRootFull, [StringComparison]::OrdinalIgnoreCase)) { return }
     $activeJson = Join-Path (Join-Path $activeRoot $packageName) 'package.json'
     if (-not (Test-Path -LiteralPath $activeJson -PathType Leaf)) { return }
-
     $activeVersion = [string](([IO.File]::ReadAllText($activeJson) | ConvertFrom-Json).version)
-    $legacyVersion = [string](([IO.File]::ReadAllText($legacyJson) | ConvertFrom-Json).version)
-    if ($activeVersion -ne $expectedVersion -or
-        ([version]$legacyVersion) -ge ([version]$activeVersion)) { return }
+    if ($activeVersion -ne $expectedVersion) { return }
 
-    if (Invoke-UabsNative $legacyNpm @('--prefix', $legacyPrefix, 'uninstall', '-g', $packageName)) {
-      if (Test-Path -LiteralPath $legacyJson -PathType Leaf) {
-        Write-UabsWarn "$packageName $legacyVersion remains in Hermes' private Node prefix after npm uninstall"
-      } else {
-        Write-UabsOk "removed obsolete Hermes-private $packageName $legacyVersion (active: $activeVersion)"
+    $others = @(
+      @{ Name = "Hermes' private Node prefix"; Prefix = (Join-Path $env:LOCALAPPDATA 'hermes\node') },
+      @{ Name = 'the user npm prefix';         Prefix = (Join-Path $env:APPDATA 'npm') }
+    )
+    foreach ($other in $others) {
+      try {
+        $legacyPrefix = [string]$other.Prefix
+        $legacyRoot = Join-Path $legacyPrefix 'node_modules'
+        $legacyJson = Join-Path (Join-Path $legacyRoot $packageName) 'package.json'
+        if (-not (Test-Path -LiteralPath $legacyJson -PathType Leaf)) { continue }
+        $legacyRootFull = [IO.Path]::GetFullPath($legacyRoot).TrimEnd('\')
+        if ([string]::Equals($activeRoot, $legacyRootFull, [StringComparison]::OrdinalIgnoreCase)) { continue }
+        $legacyVersion = [string](([IO.File]::ReadAllText($legacyJson) | ConvertFrom-Json).version)
+        if (([version]$legacyVersion) -ge ([version]$activeVersion)) { continue }
+
+        # Recovery copy first; an unverified copy means the old package stays.
+        $packageDir = Split-Path -Parent $legacyJson
+        $safeName = $packageName -replace '[^\w.-]', '_'
+        $backup = Join-Path (Join-Path (Get-UabsStateRoot) 'npm-rollback') ('{0}-{1}-{2}' -f $safeName, $legacyVersion, (Get-Date -Format 'yyyyMMddHHmmssfff'))
+        New-Item -ItemType Directory -Force -Path $backup | Out-Null
+        Copy-Item -Path (Join-Path $packageDir '*') -Destination $backup -Recurse -Force
+        $want = @(Get-ChildItem -LiteralPath $packageDir -Recurse -File -Force)
+        $have = @(Get-ChildItem -LiteralPath $backup -Recurse -File -Force)
+        $wantBytes = ($want | Measure-Object -Property Length -Sum).Sum
+        $haveBytes = ($have | Measure-Object -Property Length -Sum).Sum
+        if ($want.Count -ne $have.Count -or $wantBytes -ne $haveBytes) {
+          Write-UabsWarn "$packageName $legacyVersion in $($other.Name) left alone: its recovery copy did not verify"
+          continue
+        }
+
+        # The old prefix's own npm when it has one, else the active npm with --prefix.
+        $legacyNpm = Join-Path $legacyPrefix 'npm.cmd'
+        if (-not (Test-Path -LiteralPath $legacyNpm -PathType Leaf)) { $legacyNpm = $ActiveNpm }
+        if (Invoke-UabsNative $legacyNpm @('--prefix', $legacyPrefix, 'uninstall', '-g', $packageName)) {
+          if (Test-Path -LiteralPath $legacyJson -PathType Leaf) {
+            Write-UabsWarn "$packageName $legacyVersion remains in $($other.Name) after npm uninstall"
+          } else {
+            Write-UabsOk "removed obsolete $packageName $legacyVersion from $($other.Name) (active: $activeVersion; recovery copy: $backup)"
+          }
+        } else {
+          Write-UabsWarn "could not remove obsolete $packageName $legacyVersion from $($other.Name); active $activeVersion is still correct"
+        }
+      } catch {
+        Write-UabsWarn ("left npm duplicate in $($other.Name) alone: " + $_.Exception.Message)
       }
-    } else {
-      Write-UabsWarn "could not remove obsolete Hermes-private $packageName $legacyVersion; active $activeVersion is still correct"
     }
   } catch {
-    Write-UabsWarn ("left Hermes-private npm duplicate alone: " + $_.Exception.Message)
+    Write-UabsWarn ("left npm duplicates alone: " + $_.Exception.Message)
   }
 }
 
@@ -436,7 +467,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.13.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.14.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -453,7 +484,9 @@ if (-not $SkipRuntimes -and -not $SkillsOnly) {
   if ($needNet9 -and -not (Install-UabsWinget @('Microsoft.DotNet.Runtime.9'))) { throw '.NET 9 runtime installation failed.' } elseif (-not $needNet9) { Write-UabsOk '.NET 9 runtime' }
   if ($needAsp9 -and -not (Install-UabsWinget @('Microsoft.DotNet.AspNetCore.9'))) { throw 'ASP.NET Core 9 installation failed.' } elseif (-not $needAsp9) { Write-UabsOk 'ASP.NET Core 9' }
   if ($needSdk8 -and -not (Install-UabsWinget @('Microsoft.DotNet.SDK.8'))) { throw '.NET 8 SDK installation failed.' } elseif (-not $needSdk8) { Write-UabsOk '.NET 8 SDK' }
-  if (-not (Get-Command python -EA SilentlyContinue) -and -not (Get-Command py -EA SilentlyContinue)) {
+  # Run the candidate, do not trust PATH: stock Windows 11 ships a python.exe alias
+  # that only opens the Microsoft Store, and it counted as "Python present".
+  if (-not (Get-UabsPythonExecutable)) {
     Write-UabsWarn 'Python not found (needed for Headroom/Forge) - attempting winget'
     if (-not (Install-UabsWinget @('Python.Python.3.12'))) { throw 'Python 3.12 installation failed.' }
   } else { Write-UabsOk 'Python present' }
@@ -2290,6 +2323,9 @@ if (-not $SkipMcpWire -and -not $SkillsOnly) {
   $mcpProfile = Join-Path $PackRoot 'TOOLS\Set-McpProfile.ps1'
   if (Test-Path -LiteralPath $mcpProfile) {
     & $mcpProfile -Repair -Providers $Providers -PackRoot $PackRoot
+    # Tool installers register their MCP server machine-wide, which loads its tool
+    # list in every chat. Park those entries; -Auto brings one back per project.
+    & $mcpProfile -Park -Providers $Providers -PackRoot $PackRoot
     if ($WorkspaceRoot) {
       & $mcpProfile -Auto -Path $WorkspaceRoot -Providers $Providers -PackRoot $PackRoot
     }
@@ -2348,7 +2384,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.13.0'
+version = '8.14.0'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode
@@ -2466,12 +2502,26 @@ if (-not $ToolsOnly) {
     }
   }
 
+  # Chat transcripts: copied to the user's history folder when one is configured
+  # (UABS_HISTORY_DIR or HISTORY-DIR.txt in the profile folder); a no-op otherwise.
+  $historyBackup = Join-Path $PackRoot 'TOOLS\Backup-AiHistory.ps1'
+  if (Test-Path -LiteralPath $historyBackup -PathType Leaf) {
+    try {
+      & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $historyBackup -Quiet
+      L 'AI chat history backup checked'
+    } catch {
+      Write-UabsWarn ('History backup: ' + $_.Exception.Message)
+    }
+  }
+
   if (-not $SkillsOnly -and -not $SkipMcpWire -and -not $SkipMcpHandshake) {
     $probe = Join-Path $PackRoot 'TOOLS\Test-McpHandshake.ps1'
     if (-not (Test-Path -LiteralPath $probe -PathType Leaf)) { throw 'MCP handshake probe missing.' }
     $coreMcp = @()
     if (Get-Command npx -ErrorAction SilentlyContinue) { $coreMcp += 'context7' }
-    if (Test-Path -LiteralPath (Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\github-mcp-server\github-mcp-server.exe') -PathType Leaf) { $coreMcp += 'github' }
+    # The registrar leaves the GitHub server out where gh is signed in; expecting it here
+    # would fail the install on exactly the machines that chose the cheaper setup.
+    if ((Test-Path -LiteralPath (Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\github-mcp-server\github-mcp-server.exe') -PathType Leaf) -and -not (Test-UabsGithubMcpParked)) { $coreMcp += 'github' }
     $hrCheck = [Environment]::GetEnvironmentVariable('HEADROOM_CMD','User')
     if (-not $hrCheck) { try { $hrCheck = (Get-Command headroom -ErrorAction SilentlyContinue).Source } catch { } }
     if ($hrCheck -and (Test-Path -LiteralPath $hrCheck -PathType Leaf)) { $coreMcp += 'headroom' }
@@ -2566,7 +2616,7 @@ Write-Host "=====================================================" -ForegroundCo
 Write-Host ""
 Write-Host 'NEXT STEPS:' -ForegroundColor Yellow
 Write-Host '  1. FULLY restart every AI app you use (Grok / Claude / Codex / ...).'
-Write-Host '  2. Run /mcp and confirm the always-on core: context7, github, headroom.'
+Write-Host '  2. Run /mcp and confirm the always-on core: context7, headroom (github too, where the gh CLI is not signed in).'
 Write-Host '  3. Claude houseCARL plugin: set MO2 instance to SKYRIM_MO2_INSTANCE path.'
 Write-Host '  4. Vortex users after LO changes: TOOLS\Setup-HouseCarl.ps1 -RefreshOnly'
 Write-Host '  5. Update tools later: TOOLS\Update-From-GitHub.ps1'

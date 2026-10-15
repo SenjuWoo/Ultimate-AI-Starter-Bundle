@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.13.0",
-  "generated": "2026-10-13",
-  "release_tag": "v8.13.0",
+  "version": "8.14.0",
+  "generated": "2026-10-15",
+  "release_tag": "v8.14.0",
   "canonical_skills": 173,
   "provider_trees": 5,
   "registry_entries": 173,
@@ -38,8 +38,11 @@
     "TESTS/Test-JsonCaseKeys.ps1",
     "TESTS/Test-Packs.ps1",
     "TESTS/Test-UserProfile.ps1",
-    "TOOLS/generate_preamble_history.py --check"
+    "TOOLS/generate_preamble_history.py --check",
+    "TESTS/Test-McpPark.ps1",
+    "TESTS/Test-NpmDuplicate.ps1",
+    "TESTS/Test-AiHistoryBackup.ps1"
   ],
-  "runtime_status": "v8.13.0: strict skill-audit regressions, obsolete Grok hook retirement, isolated REA static analysis, tested Context7/Serena/Ponytail/Universal Modder updates and RTK Apache-licensed OSS compatibility. User overrides, models and private history preserved. Native RE, GUI/gameplay, inference quality and billed savings remain unverified.",
+  "runtime_status": "v8.14.0: task-specific MCP servers parked per project with an exact-copy store, doctor fails on machine-wide leaks and on a shadowing npm launcher, GitHub server skipped where gh is signed in, copy-only chat-history backup, workflow-scoped project-intel lessons. No provider inference, host-editor interaction, game runtime or billed-token saving is certified.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for the three always-on MCP servers. Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

@@ -18,10 +18,10 @@ if (-not $OutDir) { $OutDir = Join-Path $PackRoot 'dist' }
 if ($SkipCore -or $SkipOffline) {
   throw 'Selective release builds are disabled: build_release.py always proves Core and Full-Offline together.'
 }
-$py = Get-Command python -ErrorAction SilentlyContinue
-if (-not $py) { $py = Get-Command py -ErrorAction SilentlyContinue }
+# A runnable interpreter, not the first python.exe on PATH (often the Store stub).
+. (Join-Path $PSScriptRoot 'UABS-Common.ps1')
+$py = Get-UabsPythonExecutable
 if (-not $py) { throw 'Python 3 is required to build release artifacts.' }
-$args = @((Join-Path $PSScriptRoot 'build_release.py'),'--root',$PackRoot,'--outdir',$OutDir)
-if ($py.Name -eq 'py.exe' -or $py.Name -eq 'py') { $args = @('-3') + $args }
-& $py.Source @args
+$buildArgs = @((Join-Path $PSScriptRoot 'build_release.py'),'--root',$PackRoot,'--outdir',$OutDir)
+& $py @buildArgs
 if ($LASTEXITCODE -ne 0) { throw "build_release.py failed with exit code $LASTEXITCODE" }

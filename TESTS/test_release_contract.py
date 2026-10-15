@@ -1848,7 +1848,7 @@ def test_every_v5_helper_called_actually_exists() -> None:
     # Two shared modules now, not one. Naming a single file here meant a call
     # into the other read as undefined, and a script that sources only the other
     # was never scanned at all.
-    modules = ["UABS-Common.ps1", "UABS-Mcp-Write.ps1"]
+    modules = ["UABS-Common.ps1", "UABS-Mcp-Write.ps1", "UABS-Mcp-Park.ps1"]
     defined: set = set()
     for module in modules:
         body = read(ROOT / "TOOLS" / module)
@@ -2757,6 +2757,8 @@ def main() -> int:
         test_new_creative_skills_are_pinned_and_single_writer,
         test_skill_discovery_is_search_only,
         test_outdated_hermes_npm_duplicates_are_removed_only_after_current_install,
+        test_global_scope_guard_is_safe_and_wired,
+        test_history_backup_never_deletes_and_retention_is_raised,
         test_local_security_boundaries_stay_hardened,
         test_catalog_freshness_auditor_self_checks,
         test_release_assets_are_digest_checked_before_cache_reuse,
@@ -5466,6 +5468,56 @@ def test_outdated_hermes_npm_duplicates_are_removed_only_after_current_install()
     installed = branch.index("if (Invoke-UabsNative $npm.Source $npmArgs)")
     cleanup = branch.index("Remove-UabsOutdatedHermesNpmDuplicate")
     assert installed < cleanup, "legacy cleanup runs before the exact current package exists"
+
+
+def test_global_scope_guard_is_safe_and_wired() -> None:
+    """A tool's installer registers its MCP server machine-wide, so every chat loads it.
+
+    2026-10-15: RimWorldForge, AvatarForge and Melty sat in every Claude chat and
+    the doctor, which only knew catalog components, said nothing. The guard parks
+    by what an entry LAUNCHES (never a name alone), never touches the always-on
+    core, and the installer, the doctor and the profile CLI share the same rules.
+    """
+    profiles = json.loads(read(ROOT / "BUNDLED-TOOLS" / "PROFILES.json"))
+    guard = profiles["global_scope_guard"]
+    ids = [rule["id"] for rule in guard["rules"]]
+    assert len(ids) == len(set(ids)), "duplicate guard rule ids"
+    profile_ids = {p["id"] for p in profiles["profiles"]}
+    for rule in guard["rules"]:
+        assert rule["id"] not in {"context7", "headroom"}, f"{rule['id']} is always-on core and must never be parked"
+        assert rule["match"] and all(len(m) >= 6 for m in rule["match"]), (
+            f"{rule['id']}: a short match literal would park unrelated servers"
+        )
+        if rule.get("profile"):
+            assert rule["profile"] in profile_ids, f"{rule['id']} names a profile that does not exist"
+        assert rule.get("only_if") in (None, "gh-ready"), f"{rule['id']}: unknown condition"
+
+    installer = ps_code(ROOT / "INSTALL-AIO.ps1")
+    assert "-Park -Providers $Providers" in installer, "the installer never parks leaked servers"
+    doctor = read(ROOT / "TOOLS" / "Test-Installed-State.ps1")
+    assert "Find-UabsGlobalScopeLeaks" in doctor, "the doctor cannot see a leaked server"
+    reasoning = read(ROOT / "TOOLS" / "Add-Reasoning-MCPs.ps1")
+    assert "Test-UabsGithubMcpParked" in reasoning, "a refresh would re-add the GitHub server the guard parks"
+    # The handshake step throws when an expected always-on server is not registered, so it
+    # must use the same answer as the registrar or the install fails on gh-ready machines.
+    handshake = installer.split("$coreMcp = @()", 1)[1].split("foreach ($prov in $Providers)", 1)[0]
+    assert "Test-UabsGithubMcpParked" in handshake, "the install handshake expects a GitHub server the registrar skips"
+    pack = read(ROOT / "TESTS" / "Test-Pack.ps1")
+    for gate in ("Test-McpPark.ps1", "Test-NpmDuplicate.ps1", "Test-AiHistoryBackup.ps1"):
+        assert gate in pack, f"Test-Pack does not run {gate}"
+
+
+def test_history_backup_never_deletes_and_retention_is_raised() -> None:
+    """BleachBits wiped a provider session folder; Claude Code also deletes after 30 days."""
+    script = ps_code(ROOT / "TOOLS" / "Backup-AiHistory.ps1")
+    for forbidden in ("/MIR", "/PURGE", "/MOV", "Remove-Item", "Move-Item"):
+        assert forbidden not in script, f"the history backup can delete or move files: {forbidden}"
+    assert "/XO" in script, "an older source file could replace a newer archived copy"
+    settings = json.loads(read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Claude" / "COPY-TO-PROVIDER-HOME" / "settings.json"))
+    days = settings.get("cleanupPeriodDays")
+    # 0 would disable transcript persistence altogether; the 30-day default lost this project's history.
+    assert isinstance(days, int) and days >= 90, f"Claude transcript retention is {days!r}"
+    assert "Backup-AiHistory.ps1" in ps_code(ROOT / "INSTALL-AIO.ps1"), "the installer never runs the history backup"
 
 
 def test_batch_launchers_drop_incompatible_powershell_module_roots() -> None:
