@@ -31,9 +31,31 @@
 - Gates: contracts 146/0 (new: toolbox wheel = gated source), privacy PASS,
   Hermes bootstrap PASS, versions agree, toolbox gate PASS (mcp 1.30.0 venv and
   1.29.1). Test-McpProfiles needed stubs for the new writer calls (fixed, PASS).
-- Next: full Test-Pack rerun, regenerate MANIFEST, commit, push, CI + CodeQL on
-  that SHA, flags query, build Core/Full-Offline twice, publish v8.15.0, verify
-  downloaded bytes, receipts under artifacts/release-v8.15.0.
+- Release fixes found on the way: CodeQL py/clear-text-storage flagged the
+  toolbox gate's fixture constant by name (renamed to a marker; alert closed);
+  extracted-pack gates found the evidence-scenario check crashing under a
+  non-ASCII folder name (pre-existing; reads the ASCII marker from raw bytes
+  now) and the wheel contract assuming Core ships the wheel (Core builds the
+  toolbox from source_dir; contract now variant-aware).
+
+## Publication checkpoint (v8.15.0)
+
+- Tag `v8.15.0` -> `02ebc8c950fd7d72c52da8447053bf21e43d3201`. CI (pack gate,
+  Forge end-to-end, versions, manifest) and CodeQL (actions, js/ts, python)
+  success on that SHA; GitHub flags clean before and after publishing.
+- Archives built twice, byte-identical: Core 47,045,696 B `f3d515b5...dafa`,
+  Full-Offline 204,697,710 B `c1eda4bc...50c9`. Each extracted under a
+  space+Unicode path: Test-Pack PASS, contracts 146/0. Published assets
+  downloaded and equal to the build (size, SHA-256, GitHub digest); latest =
+  v8.15.0. Receipts: ignored `artifacts/release-v8.15.0/build-proof.json`,
+  `published-proof.json`.
+- Live machine: installed from the pre-release tree (toolbox wheel identical to
+  the release; later commits changed tests only). Doctor PASS, 0 warnings.
+- Not certified: a model choosing the toolbox unprompted in each app, editor/
+  game runtime through started servers, billed-token savings.
+- Next: owner restarts AI apps once; watch whether each app's model uses
+  `find` on its own for a task tool (if one ignores it, tighten that provider's
+  preamble line).
 
 ## v8.14.0: parked task servers, history, shadowing launchers (2026-10-15)
 
