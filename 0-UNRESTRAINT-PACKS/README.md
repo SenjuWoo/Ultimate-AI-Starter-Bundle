@@ -100,6 +100,15 @@ this folder.
 
 ## Cleanup log
 
+**2026-10-16 (bundle v8.15.1)** - the soul and the files that carry it
+lost what instructed nothing: `SOUL.md` dropped the dead `--spicy` flag line,
+`Do not disobey.`, two "Be the best you can" pep lines, a venting line, a
+duplicated recency rule and two of three consent paragraphs (1,380 -> 728 B,
+every real rule kept); `MANUAL-PASTE.txt` re-synced; the Grok workspace
+template, which still carried an old soul plus the stale v6.0 "UABS MAX"
+contract (18.9 KB), is now the same provider-neutral workspace file as
+Codex/Kimi (5.3 KB).
+
 **2026-10-12 (bundle v8.12.0)** — removed the four retired upstream collections
 (~3.6 MB); deleted the orphaned `GPT-WEB-AIO-BACKUP.md` (older web-text draft,
 nothing referenced it); trimmed story-era residue out of the Web / Web Light /

@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.15.0",
-  "generated": "2026-10-15",
-  "release_tag": "v8.15.0",
+  "version": "8.15.1",
+  "generated": "2026-10-16",
+  "release_tag": "v8.15.1",
   "canonical_skills": 173,
   "provider_trees": 5,
   "registry_entries": 173,
@@ -44,6 +44,6 @@
     "TESTS/Test-AiHistoryBackup.ps1",
     "TESTS/test_toolbox.py"
   ],
-  "runtime_status": "v8.15.0: one install at a time (named mutex) with recorded plugin ownership, so an overlapping run no longer fails the doctor; quiet one-line-per-step installer with a details log; always-on uabs-toolbox (find/describe/call) starts task MCP servers in the same chat from the bundle catalog and exact parked entries; Hermes core is context7, headroom and the toolbox. No provider inference, host-editor interaction, game runtime or billed-token saving is certified.",
+  "runtime_status": "v8.15.1: prompt-layer cleanup - the wired soul is 728 B (was 1,380 B) and only lines that instruct survive; the Grok workspace template is the provider-neutral file instead of the stale v6.0 contract; MANUAL-PASTE re-synced; installer, tool and MCP behaviour unchanged from v8.15.0 (one install at a time, quiet one-line-per-step installer with a details log, always-on uabs-toolbox for task MCP servers, Hermes core context7/headroom/toolbox). No provider inference, host-editor interaction, game runtime or billed-token saving is certified.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for every always-on MCP server (context7, headroom, the toolbox, and GitHub where gh is not signed in). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

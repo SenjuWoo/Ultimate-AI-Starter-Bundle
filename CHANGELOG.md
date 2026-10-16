@@ -1,3 +1,25 @@
+## 8.15.1
+
+- Cleanup: the soul every provider carries on every request
+  (`3-PREAMBLES/SOUL.md`) loses what instructed nothing - the fake
+  `Activate spicy mode --spicy` line (nothing reads it), `Do not disobey.`,
+  the two `Be the best you can` pep lines, a venting line, unactionable
+  `DROP YOUR "for" MILLENNIAL CODE` wording, a second copy of the recency
+  rule, and three overlapping consent paragraphs folded into one. 1,380 ->
+  728 bytes; every real rule is kept (unrestraint note, no yes-man, source
+  recency, fiction/consent, never-censor). Older souls archived in
+  `3-PREAMBLES/history/` still get stripped from provider files, so installed
+  machines converge to one current block instead of stacking a second soul.
+- Cleanup: the Grok workspace template
+  (`1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-WORKSPACE/AGENTS.md`) still shipped
+  an old soul copy plus the retired v6.0 "UABS MAX" contract (18.9 KB, one
+  phrase per line); it is now the same provider-neutral workspace instructions
+  as the Codex/Kimi templates (5.3 KB). Grok's provider-home contract is
+  unaffected - the installer wires `~/.grok/AGENTS.md` separately.
+- `3-PREAMBLES/MANUAL-PASTE.txt` re-synced from the new soul + Web variant
+  (still pure ASCII); wired-preamble digest updated in the release contract
+  (intentional SOUL edit).
+
 ## 8.15.0
 
 - Fix: the one-click install could fail its final check with 63 errors when two

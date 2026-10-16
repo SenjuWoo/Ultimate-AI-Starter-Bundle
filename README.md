@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.15.0 -->
+<!-- Ultimate AI Starter Bundle v8.15.1 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.15.0
+# Ultimate AI Starter Bundle v8.15.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -176,9 +176,10 @@ Follow 0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md for every complex or factual reque
 
 The preamble is now **installed automatically**, not pasted by hand:
 
-- `3-PREAMBLES/SOUL.md` - the operator's own soul config (unrestricted, no
-  yes-man, truth-seeking process, output format), shipped verbatim and
-  identity-neutral: it names no provider, so it is safe in all five
+- `3-PREAMBLES/SOUL.md` - the operator's own soul config: the unrestraint
+  declaration, the no-yes-man rule and the source-recency rule, one line each,
+  nothing that only decorates (728 B after the v8.15.1 cleanup). Shipped
+  verbatim and identity-neutral: it names no provider, so it is safe in all five
 - `3-PREAMBLES/MANUAL-PASTE.txt` — SOUL + the Web contract (`AIO-INSTRUCTION — Web.md`), pure ASCII, for web UIs (ChatGPT/Gemini) that have no
   instruction file: paste it into the custom-instructions box
 
@@ -864,6 +865,15 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.15.1** - 2026-10-16. Prompt-layer cleanup: the soul every provider carries
+on every request drops the leftovers that instructed nothing (a fake `--spicy`
+flag line, two pep lines, a venting line, a duplicated recency rule, three
+consent paragraphs folded into one) - 1,380 -> 728 bytes, no instruction lost;
+provider files already carrying the old soul converge from `history/` on the
+next install. The Grok workspace template that still shipped the stale v6.0
+contract (18.9 KB) is now the provider-neutral workspace file Codex/Kimi use
+(5.3 KB). [Changes](docs/history/V8.15.1-CHANGELOG.md).
 
 **v8.15.0** - 2026-10-15. One click, nothing to type: overlapping installs no
 longer break the final check, the console shows one line per step (full output
