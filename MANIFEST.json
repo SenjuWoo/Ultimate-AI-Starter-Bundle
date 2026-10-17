@@ -36551,8 +36551,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 11397,
-  "sha256": "8c130f6ad93f122bd9b8958c5fedf78a44f971876cdfb8b1428726038e4b1849"
+  "size": 9083,
+  "sha256": "649d8d278fe4b9d19d9932ace976039d0ad5fda663f93bd497f9557164d731de"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
