@@ -36681,8 +36681,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 24253,
-  "sha256": "830dd9eeeffee2d5956f665db73411a355d816d33795361bfed863f4ea6e3808"
+  "size": 25623,
+  "sha256": "481a54a2dc8e885d3a7ad77ea2eeefef750ae51d976e9fff7037705e0d8055b9"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -44256,8 +44256,8 @@
  },
  {
   "path": "docs/history/V8.15.2-CHANGELOG.md",
-  "size": 6792,
-  "sha256": "8c267d3e8b0059334d266992d775d8f4b0c88c4c3a5da66ac8d7a8292a36d73e"
+  "size": 7697,
+  "sha256": "d0447e7bbcd65839d4532a1846a75f646d829405539148dc9d856b39339d7eab"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",

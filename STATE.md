@@ -46,6 +46,29 @@
   test PASS, manifest 8,902 files verified. Skill fanout re-run (6,395 files).
   Note: the machine's installed skill copies update on the next installer run.
 
+## Publication checkpoint (v8.15.2)
+
+- Tag `v8.15.2` -> `cb75a694e56353f46d9624ca20e250ba49355193`. CI (pack gate
+  including the extracted-archive run, manifest, versions, Forge end to end)
+  success on that SHA; Dependabot / code-scanning / secret-scanning alerts 0
+  before and after publishing. Two earlier pushes were rejected, both in code,
+  both fixed rather than dismissed: the privacy gate on the new bench map
+  naming the maintainer drive root, and CodeQL on `um fal key status` printing
+  the first/last key characters - then on the sha256 fingerprint that replaced
+  them. The vendored tree and the refresh patch now print `<hidden, N chars>`
+  and both alerts closed; the tag was moved to the fixed SHA before any release
+  existed.
+- Archives built twice, byte-identical: Core 47,472,962 B `9eda774c...3eaf1`,
+  Full-Offline 205,481,567 B `72d82dbe...42ec5`. Published assets downloaded and
+  equal to the build (size, sha256, sidecar and GitHub digest); latest =
+  v8.15.2. Receipts: ignored `artifacts/release-v8.15.2/build-proof.json` and
+  `published-proof.json`.
+- Not certified: provider inference, host-editor interaction, game runtime and
+  billed-token savings.
+- Next: this machine's live skill copies and installed `um` still carry the
+  pre-v8.15.2 content. Run `START-HERE.bat` from a normal window (not from
+  inside a chat) to sync them.
+
 ## v8.15.1: dead preamble text out, install-from-inside-a-session fixed (2026-10-16)
 
 - Owner report: the wired soul still carried leftovers that instruct nothing
