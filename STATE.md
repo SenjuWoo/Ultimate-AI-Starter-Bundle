@@ -458,3 +458,14 @@ Detailed machine-specific reports remain under ignored `artifacts/`.
 - Next: skill-level sweep of the remaining 173 skills for capability-negative
   rules (only the always-loaded surface and the six named skills were audited),
   then provider-tree dedupe if approved.
+
+### Release v8.16.1 (2026-10-17)
+
+- Tag `v8.16.1` -> `2be0be3` (CI + CodeQL green); assets built twice
+  byte-identical and re-hashed after download:
+  Core 47,582,474 B `3191c28bf14317ddabbccfd91d1cfa1212e4d3620f71d5eaa90e69ed2b427528`,
+  Full-Offline 214,188,571 B `e174d7af6097dee8c82d852671de599cb17cc63ee32e551e53500b86afab621f`.
+- Why a patch release: v8.16.0's archives still carried the old 11,397 B
+  `COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt`; the mirror is now generated from
+  the live contract (9,083 B) and the release ships the tree the notes describe.
+- Supersedes v8.16.0 as the download of record.
