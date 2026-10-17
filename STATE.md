@@ -469,3 +469,23 @@ Detailed machine-specific reports remain under ignored `artifacts/`.
   `COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt`; the mirror is now generated from
   the live contract (9,083 B) and the release ships the tree the notes describe.
 - Supersedes v8.16.0 as the download of record.
+
+### Release v8.17.0 (2026-10-17)
+
+- Tag `v8.17.0` -> `5b97407` (CI + CodeQL green); assets built twice
+  byte-identical and re-hashed after download:
+  Core 47,588,817 B `7c3d3ce78d4e5b16a7d7dcec5e2819ac27f0f968fe87502c306a7b5976ac504b`,
+  Full-Offline 214,194,916 B `42cba75ff0584427ef739cf5e1a1d5eb14de0f0de36c699766ccfb1babe9783f`.
+- External installs are version-aware (houseCARL, Spooky, codebase-memory):
+  refresh an older copy in place after a backup, keep a newer one, never
+  downgrade, and always print both versions. Verified on this box:
+  houseCARL installed 2.0.5 vs bundled 1.9.0 -> "keep (newer than bundle)";
+  codebase-memory 0.12.1 vs 0.12.1 -> current.
+- Hermes ponytail gets `.hermes-plugin/plugin.yaml` (native install used to die
+  on "unsupported or missing Agent Plugins schema"). Claude's
+  `known_marketplaces.json` is repaired when a recorded path went stale.
+- Skyrim pack: verify-first wording, no blanket GUI ban, and an "Ownership of
+  Skyrim tooling" section naming `S:\Apps\Skyrim Tools` as pack/Forge property.
+- Open decisions: the houseCARL 2.x hold stays until skills/profiles are migrated
+  together (the user's own install already runs 2.0.5); the SPID validator
+  slash-trait rows stay a documented non-defect (filters.md section 4).
