@@ -36616,8 +36616,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 170615,
-  "sha256": "dde06dec90583be57ba5090b85422e51ebd001093f6b6c99051e93c0b78f9d91"
+  "size": 170609,
+  "sha256": "aa74e0ab5ac8f0bbd9e7dc56319a83693b41cb2077b7ee2d97669d6873e20280"
  },
  {
   "path": "INSTALL-REMOTE.bat",

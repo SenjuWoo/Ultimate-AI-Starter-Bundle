@@ -801,7 +801,7 @@ if (-not $ToolsOnly -and -not $SkipStarterSettings) {
 $claudeKm = Join-Path $env:USERPROFILE '.claude\plugins\known_marketplaces.json'
 if (Test-Path -LiteralPath $claudeKm -PathType Leaf) {
   try {
-    $km = Get-Content -LiteralPath $claudeKm -Raw | ConvertFrom-Json
+    $km = [IO.File]::ReadAllText($claudeKm) | ConvertFrom-Json
     $kmChanged = $false
     foreach ($prop in @($km.PSObject.Properties)) {
       $entry = $prop.Value
