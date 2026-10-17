@@ -11,6 +11,15 @@
   installers *before* concluding a tool is missing, then state what was
   verified. The block points at `~/.uabs/profile/MACHINE-MAP.md` instead of
   guessing drives.
+- **Capability audit, second pass.** Every action-blocking rule in the text a
+  model loads by default was reviewed and rewritten where it cost ability:
+  "never invent a tool, path or record" now reads "verify it from the project,
+  the tool's own docs or the live MCP schema, then use it"; the workspace files
+  no longer ban SSEEdit/xEdit/Creation Kit outright (prefer the CLI/MCP route,
+  open a GUI only when the CLI genuinely cannot do the job); `tool-discovery`
+  installs a missing tool with the pack's installer instead of handing the user
+  a homework note; and `using-superpowers` keeps "load the skill that applies"
+  without the "you do not have a choice" coercion.
 - Variants follow the same cut: Compact 7,093 -> 3,200 B, Web 3,966 -> 1,397 B,
   Web Light 2,731 -> 635 B, and `MANUAL-PASTE.txt` is regenerated from
   SOUL + Web (2,134 B).

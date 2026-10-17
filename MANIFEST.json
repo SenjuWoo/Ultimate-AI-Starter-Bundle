@@ -6141,8 +6141,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10111,
-  "sha256": "4d245da55e2d2c369eeb0958e53974fa242c091441d9f2d5b25df0a685edfcc0"
+  "size": 10217,
+  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -6446,8 +6446,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/using-superpowers/SKILL.md",
-  "size": 3409,
-  "sha256": "7ce964dc3d0b03fd1829dfd08e26fa816362d555bd83251999f6c36f45ae279d"
+  "size": 3444,
+  "sha256": "2972b148c43f00943549afbcc8b8adb9c0077f3299e2c85f6405574631357b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/using-superpowers/references/antigravity-tools.md",
@@ -6586,8 +6586,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-WORKSPACE/CLAUDE.md",
-  "size": 5269,
-  "sha256": "4d5178ce55032dd09e7327e104ee010fad05c8c297884d2da92a129996ad8388"
+  "size": 5387,
+  "sha256": "5bf33da4c9ebda9f3740dd27cce7414213bcd339bd78dc21dfed389c4fa860e2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/OPTIONAL-PROJECT-TEMPLATE/CHANGELOG.txt",
@@ -12616,8 +12616,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10111,
-  "sha256": "4d245da55e2d2c369eeb0958e53974fa242c091441d9f2d5b25df0a685edfcc0"
+  "size": 10217,
+  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -12921,8 +12921,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/using-superpowers/SKILL.md",
-  "size": 3409,
-  "sha256": "7ce964dc3d0b03fd1829dfd08e26fa816362d555bd83251999f6c36f45ae279d"
+  "size": 3444,
+  "sha256": "2972b148c43f00943549afbcc8b8adb9c0077f3299e2c85f6405574631357b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/using-superpowers/references/antigravity-tools.md",
@@ -13051,8 +13051,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-WORKSPACE/AGENTS.md",
-  "size": 5255,
-  "sha256": "91c5c9758e3c7f470ece122a6ca03a7c9cfeafb4ddf456de2b1a2a3d8725b5a2"
+  "size": 5373,
+  "sha256": "e0463bccf8003e09a722cf7f8d4e25b6dd8d330784c71c40e4c5af1f1f65518b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/OPTIONAL-PROJECT-TEMPLATE/CHANGELOG.txt",
@@ -19076,8 +19076,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10111,
-  "sha256": "4d245da55e2d2c369eeb0958e53974fa242c091441d9f2d5b25df0a685edfcc0"
+  "size": 10217,
+  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -19381,8 +19381,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/using-superpowers/SKILL.md",
-  "size": 3409,
-  "sha256": "7ce964dc3d0b03fd1829dfd08e26fa816362d555bd83251999f6c36f45ae279d"
+  "size": 3444,
+  "sha256": "2972b148c43f00943549afbcc8b8adb9c0077f3299e2c85f6405574631357b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/using-superpowers/references/antigravity-tools.md",
@@ -19511,8 +19511,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-WORKSPACE/AGENTS.md",
-  "size": 5255,
-  "sha256": "91c5c9758e3c7f470ece122a6ca03a7c9cfeafb4ddf456de2b1a2a3d8725b5a2"
+  "size": 5373,
+  "sha256": "e0463bccf8003e09a722cf7f8d4e25b6dd8d330784c71c40e4c5af1f1f65518b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/OPTIONAL-PROJECT-TEMPLATE/CHANGELOG.txt",
@@ -25536,8 +25536,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10111,
-  "sha256": "4d245da55e2d2c369eeb0958e53974fa242c091441d9f2d5b25df0a685edfcc0"
+  "size": 10217,
+  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -25841,8 +25841,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/using-superpowers/SKILL.md",
-  "size": 3409,
-  "sha256": "7ce964dc3d0b03fd1829dfd08e26fa816362d555bd83251999f6c36f45ae279d"
+  "size": 3444,
+  "sha256": "2972b148c43f00943549afbcc8b8adb9c0077f3299e2c85f6405574631357b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/using-superpowers/references/antigravity-tools.md",
@@ -25971,8 +25971,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-WORKSPACE/AGENTS.md",
-  "size": 6316,
-  "sha256": "985b0315c9522df3c17d769457adbb7ca5f45d6554bd7206388bd602e341169b"
+  "size": 6432,
+  "sha256": "6b1de3d882b7768e36a738fde62fea6c3c149f11a73493e76ceb135b209b85df"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/OPTIONAL-PROJECT-TEMPLATE/CHANGELOG.txt",
@@ -32071,8 +32071,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10111,
-  "sha256": "4d245da55e2d2c369eeb0958e53974fa242c091441d9f2d5b25df0a685edfcc0"
+  "size": 10217,
+  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -32376,8 +32376,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/using-superpowers/SKILL.md",
-  "size": 3409,
-  "sha256": "7ce964dc3d0b03fd1829dfd08e26fa816362d555bd83251999f6c36f45ae279d"
+  "size": 3444,
+  "sha256": "2972b148c43f00943549afbcc8b8adb9c0077f3299e2c85f6405574631357b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/using-superpowers/references/antigravity-tools.md",
@@ -32506,8 +32506,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-WORKSPACE/AGENTS.md",
-  "size": 5255,
-  "sha256": "91c5c9758e3c7f470ece122a6ca03a7c9cfeafb4ddf456de2b1a2a3d8725b5a2"
+  "size": 5373,
+  "sha256": "e0463bccf8003e09a722cf7f8d4e25b6dd8d330784c71c40e4c5af1f1f65518b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/OPTIONAL-PROJECT-TEMPLATE/CHANGELOG.txt",
@@ -36541,13 +36541,13 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 205840,
-  "sha256": "9dec3ee173075316d9ce38c62383b9bb9c17f4a1419ba20d29b5283f7886b834"
+  "size": 206519,
+  "sha256": "d02e27fec231cc342a90b8520c89115fd981763ba7c1a90a016fb144959876d7"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
-  "size": 4120,
-  "sha256": "1d8dfc41890986660dfeea6f5317e7f7cb1d335cc34eeef79cd7882dd8553a51"
+  "size": 4253,
+  "sha256": "27a4b6f9ddd120d7b79ea8b4509fcf94a56e4a9b83ee495943e8f7ecd3ef1477"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
@@ -36556,8 +36556,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
-  "size": 4134,
-  "sha256": "e4937d813c598c07c54f7f969abf0714f4efce8bd458c431bdfd8851a23a3d6a"
+  "size": 4267,
+  "sha256": "84947324b8301016c81f37dedc5890062571cac123df1488ac651630a175baa1"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/.cbmignore",
@@ -43351,8 +43351,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/SKILL.md",
-  "size": 10111,
-  "sha256": "4d245da55e2d2c369eeb0958e53974fa242c091441d9f2d5b25df0a685edfcc0"
+  "size": 10217,
+  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/browser-cli.md",
@@ -43656,8 +43656,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/using-superpowers/SKILL.md",
-  "size": 3409,
-  "sha256": "7ce964dc3d0b03fd1829dfd08e26fa816362d555bd83251999f6c36f45ae279d"
+  "size": 3444,
+  "sha256": "2972b148c43f00943549afbcc8b8adb9c0077f3299e2c85f6405574631357b19"
  },
  {
   "path": "_CANONICAL-SKILLS/using-superpowers/references/antigravity-tools.md",
@@ -44266,8 +44266,8 @@
  },
  {
   "path": "docs/history/V8.16.0-CHANGELOG.md",
-  "size": 2582,
-  "sha256": "374ffcd6bc32b8cb2b42fc786550e759870d1c6957587350794b02b834acd8b1"
+  "size": 3261,
+  "sha256": "b7862db89cb83778e8e6fe508a3a39e341ed14560b694d0095ba40b57e6aecc8"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",

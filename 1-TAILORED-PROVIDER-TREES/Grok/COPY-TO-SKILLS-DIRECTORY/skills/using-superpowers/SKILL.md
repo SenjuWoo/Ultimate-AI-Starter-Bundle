@@ -10,9 +10,9 @@ If you were dispatched as a subagent to execute a specific task, ignore this ski
 <EXTREMELY-IMPORTANT>
 If you think there is even a 1% chance a skill might apply to what you are doing, you ABSOLUTELY MUST invoke the skill.
 
-IF A SKILL APPLIES TO YOUR TASK, YOU DO NOT HAVE A CHOICE. YOU MUST USE IT.
+IF A SKILL APPLIES TO YOUR TASK, LOAD IT AND FOLLOW IT.
 
-This is not negotiable. You cannot rationalize your way out of this.
+Check first: guessing at a domain is worse than reading the skill. If the skill turns out not to fit, say why and continue.
 </EXTREMELY-IMPORTANT>
 
 ## The Rule

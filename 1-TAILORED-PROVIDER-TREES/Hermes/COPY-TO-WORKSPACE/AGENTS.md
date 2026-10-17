@@ -19,14 +19,14 @@ another application's tailored skill library into this workspace.
 ## Universal safety
 
 - The workspace root is whichever project directory the user opened or supplied.
-- Never assume a drive letter, folder name, username, or provider-specific workspace.
+- Resolve a drive, folder or username from the project itself (env vars, .git, config), never from an assumption.
 - Switching AI applications does not change project ownership.
 - One mod has one authoritative owner root and one active semantic-version snapshot.
 - Game `Data`, active mod-manager staging, saves, profiles, installed tools, and reference vaults are read-only.
-- Never invent framework syntax, FormIDs, EditorIDs, records, VMAD, hooks, offsets, APIs, conditions, schemas, or paths.
+- Verify before you write: read the record, schema, API or path from the project, the tool's own docs or the live MCP schema, then use it. Never present a guessed one as real.
 - Prefer typed plugin tooling and exact installed-version evidence.
 - Preserve the last known-good release, installer choices, optional variants, dependencies, and gameplay intent.
-- Never launch SSEEdit, xEdit, or Creation Kit GUI.
+- Prefer the CLI/MCP route for xEdit/SSEEdit/Creation Kit; open a GUI only when the user asks or the CLI genuinely cannot do the job.
 - Structural validation is not runtime confirmation.
 - After a new game-load crash, stop, roll back, and isolate the smallest change.
 - Preserve explicit fictional adult-only technical content and identifiers.
@@ -79,7 +79,7 @@ UNRESOLVED: none | exact remaining risks
 - **CodeBurn**: optional local AI cost analytics (`npx codeburn`).
 - Before patching from load-order winners, load `tool-output-awareness` (DynDOLOD, ParallaxGen, Reqtificator, Synthesis, …).
 - Prefer exact authoring skills (`spid-authoring`, `kid-authoring`, `skypatcher-authoring`, …) over invented framework tokens.
-- Still never launch SSEEdit, xEdit, or Creation Kit GUI from the agent.
+- Still prefer the CLI/MCP route: open a GUI only when the user asks or the CLI genuinely cannot do the job.
 - Terminal and code execution are an escape hatch, not a first choice. Before writing a crawler, scraper, parser, or tool wrapper, load `capability-routing`: use the cheapest capability that already owns the hard part, and escalate the tool CLASS after two failures of the same shape rather than retrying a weaker one.
 - Web work has a ladder, and `terminal` is not on it. `web_search` / `web_extract` are native here and keyless — verified on a clean install, all five ring vendors serving with no credentials, and extract genuinely renders (3.1x more content than a plain fetch on a JS-heavy page). So: **native extract first**; if the result is a challenge page, an empty JS shell, or visibly missing content, escalate to a rendered/browser capability; if the page needs clicks, scrolling or a login, escalate to browser interaction. Writing a fetch-and-regex crawler is not a rung on that ladder — it is below the first one.
 - Read a web failure before switching. `Unauthorized` means credentials, a daily/hourly cap means the allowance is spent (both leave the tool class correct), and only a challenge page or empty shell means the class was wrong. Hermes 0.20.4 mis-classifies Tavily's `hourly_cap_reached` as permanent and stops failing over, so a keyless web call can fail while four other vendors answer — retry once through the ring before concluding anything.

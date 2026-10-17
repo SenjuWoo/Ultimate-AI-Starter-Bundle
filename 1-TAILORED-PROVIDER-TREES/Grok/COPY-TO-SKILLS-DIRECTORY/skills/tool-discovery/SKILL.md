@@ -2,7 +2,7 @@
 name: tool-discovery
 description: Resolve optional Skyrim and AI tooling on the current machine without assuming drive letters or usernames. Use at session start, when a tool path is unknown, or before recommending install.
 metadata:
-  version: 5.2.0
+  version: 5.3.0
 ---
 
 # Tool discovery (portable)
@@ -39,8 +39,9 @@ Treat pasted roots as hints. When the user says a path is "just suggestions" and
    real handshake first. Most MCP servers here are registered per project, so
    "installed" and "enabled here" are different states. Recommending an install
    here tells the user to install something they already have.
-7. Only if the binary is genuinely absent from disk → **recommend install**
-   (do not invent a fake install).
+7. Only if the binary is genuinely absent from disk → **install it with the
+   pack's installer** (a fake or assumed install is still forbidden), then run
+   it. Only when no supported install exists, say so plainly.
 
 ## Two different failures, two different answers
 
