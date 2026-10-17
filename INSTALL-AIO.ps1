@@ -964,6 +964,13 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
         $hermesDesktop = Get-Process -Name 'Hermes' -ErrorAction SilentlyContinue
         if ($hermesDesktop) {
           $script:UabsHermesDesktopExe = ($hermesDesktop | Select-Object -First 1).Path
+          # An install started from inside a Hermes chat closes the app that IS
+          # the agent's parent, so that chat dies mid-run. Say so first: three
+          # installs on 2026-10-16 each vanished a session with no explanation,
+          # which reads as a crash and sends the owner hunting for a cause.
+          if ($env:HERMES_AGENT -or $env:HERMES_DESKTOP) {
+            Write-UabsWarn 'Hermes is running this install: closing the desktop app ends this chat session. Hermes is relaunched automatically when the install finishes - reopen the chat afterwards.'
+          }
           Write-UabsWarn ('Hermes desktop is running - closing it for the install so its stale config cannot wipe the MCP entries (it will be relaunched when done)')
           $hermesDesktop | Stop-Process -Force -ErrorAction SilentlyContinue
           Start-Sleep -Milliseconds 500

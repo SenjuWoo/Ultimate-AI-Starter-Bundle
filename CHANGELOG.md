@@ -19,6 +19,33 @@
 - `3-PREAMBLES/MANUAL-PASTE.txt` re-synced from the new soul + Web variant
   (still pure ASCII); wired-preamble digest updated in the release contract
   (intentional SOUL edit).
+- Fix: an install or agent run started from inside an AI session inherited
+  Hermes' profile-scoped `HERMES_HOME` (`...\hermes\profiles\<name>`) and treated
+  that one profile as the whole Hermes home - the real home `SOUL.md` was never
+  wired, and profile subfolders landed inside the profile (measured
+  2026-10-16: a nested `profiles\code\profiles\sillytavern`). A profile-scoped
+  home now resolves to the real home (`Get-UabsHermesHomeRoot`, shared by the
+  installer, the SillyTavern gateway and the doctor), with a regression case in
+  the gateway test. Verifying it surfaced four more defects, all fixed: a
+  local named `$home` in the shared resolver died on PowerShell's read-only
+  `$HOME` ("Cannot overwrite variable HOME", first install after the fix, no
+  static gate would have caught it - one now scans every shipped script), the
+  SillyTavern gateway built its shared-helper path from a `$here` that is only
+  set when `-PackRoot` is omitted (parameter-binding error on every install
+  that passes it), and an install launched from inside a Hermes chat closed the
+  desktop app that is the chat's own parent process with no explanation; it now
+  says so before the session ends.
+- Fix: the interpreter resolver accepted Hermes's own agent venv
+  (`%LOCALAPPDATA%\hermes\hermes-agent\venvenv\Scripts\python.exe`) as the pack's
+  Python whenever a Hermes session put it first on PATH - a 3.11 runtime whose
+  site-packages lack `os.path.isjunction` and `mcp`, i.e. exactly what broke the
+  pack's own gates here. It is now treated as a private app runtime like Codex's
+  and Claude's, with a case in the hook-prerequisites gate; a machine whose only
+  interpreter is a private one still falls back to it.
+- Fix: the release contracts' Unicode-console self-test failed on an
+  interpreter that pins UTF-8 stdout and ignores `PYTHONIOENCODING` (Hermes'
+  own venv). The child now forces its own ascii stdout, so the gate tests the
+  runner's escaping instead of the interpreter's environment.
 
 ## 8.15.0
 

@@ -35,6 +35,19 @@ try {
   $backups = @(Get-ChildItem -LiteralPath (Split-Path $config) -Filter 'config.yaml.bak-*')
   Check ($r.Code -eq 0 -and @($backups | Where-Object { [IO.File]::ReadAllText($_.FullName) -ceq $before }).Count -ge 1) 'forced reset backs up original config'
 
+  # Measured 2026-10-16: inside an AI session HERMES_HOME points at the ACTIVE
+  # PROFILE, and the installer created the gateway two levels down
+  # (...\profiles\code\profiles\sillytavern) instead of next to the real home.
+  $scoped = Join-Path $scratch 'scoped-home'
+  New-Item -ItemType Directory -Force -Path (Join-Path $scoped 'profiles/code') | Out-Null
+  [IO.File]::WriteAllText((Join-Path $scoped 'config.yaml'), "profile: default`n")
+  $env:HERMES_HOME = Join-Path $scoped 'profiles/code'
+  $r = Run ($prefix + "& '$installer'")
+  Check ($r.Code -eq 0 -and
+         (Test-Path (Join-Path $scoped 'profiles/sillytavern/config.yaml')) -and
+         -not (Test-Path (Join-Path $scoped 'profiles/code/profiles'))) 'profile-scoped HERMES_HOME resolves to the real home'
+  $env:HERMES_HOME = $fixture
+
   # Only external boundaries are stubbed: no GPU, credentials, or real gateway.
   $env:HERMES_HOME = $fixture
   $fake = Join-Path $scratch 'hermes.cmd'

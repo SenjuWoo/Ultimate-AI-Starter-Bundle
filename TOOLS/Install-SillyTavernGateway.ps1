@@ -23,6 +23,15 @@ if (-not $PackRoot) {
 if (-not $HermesHome) {
   $HermesHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }
 }
+# HERMES_HOME points at the ACTIVE PROFILE inside an AI session, and the home is
+# what this script writes into. Shared rule lives in UABS-Common.ps1.
+# $here is only filled in the no-PackRoot branch above, so resolve the tool dir
+# here instead of reusing it: Join-Path on a null path is a parameter-binding
+# error (measured 2026-10-16, when the AIO passes -PackRoot).
+$toolDir = $PSScriptRoot
+if (-not $toolDir) { $toolDir = Split-Path -Parent $MyInvocation.MyCommand.Path }
+. (Join-Path $toolDir 'UABS-Common.ps1')
+$HermesHome = Get-UabsHermesHomeRoot $HermesHome
 if (-not (Test-Path -LiteralPath $HermesHome -PathType Container)) {
   Write-Host ('Hermes home not found, SillyTavern gateway skipped: ' + $HermesHome)
   exit 0

@@ -36321,8 +36321,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 198786,
-  "sha256": "bbb02b2c3ee5422b072e6d6959a78abd3ea1f4c84aca391073f45fd8ed8d52cf"
+  "size": 200793,
+  "sha256": "972e863377a73b910aae95951cab8d5005ad96d51a88164dbbd6ceb22d34ebdf"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -36396,8 +36396,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 161798,
-  "sha256": "9540e8a2d25b803b2105c5e4cf75c96bebc9f7e0bf4942abc1728eaf4f950a29"
+  "size": 162384,
+  "sha256": "3acff9e8653488c2a3fe7fbbf2f54e6e7d0b6179fb28040344f1a75156def4e8"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -36451,8 +36451,8 @@
  },
  {
   "path": "README.md",
-  "size": 56710,
-  "sha256": "e87118ba441cc1bfc76677b9ad55d9576bffa41c2b8c2bdc7c9bdaa94df12355"
+  "size": 57001,
+  "sha256": "ffedc94c43bd97260f9778b963521be0822ce401289f14d6f0176bcbae43d085"
  },
  {
   "path": "SECURITY.md",
@@ -36466,8 +36466,8 @@
  },
  {
   "path": "START-HERE.txt",
-  "size": 11252,
-  "sha256": "fada9edf96a8f68a336ff5c8c779a19b72286bbbdb67cdf1d4284afe74cf9928"
+  "size": 11406,
+  "sha256": "003d8eeb3e90490a48b2ee22c80189a064214cafed0c454e7bf70d5123d5587d"
  },
  {
   "path": "STATE.md",
@@ -36531,8 +36531,8 @@
  },
  {
   "path": "TESTS/Test-HookPrerequisites.ps1",
-  "size": 5758,
-  "sha256": "410557443eb48105e10fcb899359a9a9a6fd710e4793cec93d153ca5f613941e"
+  "size": 6143,
+  "sha256": "7e7970c07b85896878170db4917d95a5be125c289ae1fe4fdbe86a90afe22fe5"
  },
  {
   "path": "TESTS/Test-JsonCaseKeys.ps1",
@@ -36591,8 +36591,8 @@
  },
  {
   "path": "TESTS/Test-SillyTavernGateway.ps1",
-  "size": 5286,
-  "sha256": "b2bbb3baa148df13282396152178f6a3c9c35c95d5a76d6721aaf5ee6e4305a4"
+  "size": 6092,
+  "sha256": "214519f2d93eeff55de4041b8bee234c20fd86518f2d19b82dd6e9f9d7eea4bd"
  },
  {
   "path": "TESTS/Test-TaskRecipes.ps1",
@@ -36796,8 +36796,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 316596,
-  "sha256": "f17a7b540a12a2aea26ffd5051eb0f48a28ba04bbc844bf4ea3cb6d591a45408"
+  "size": 319763,
+  "sha256": "9a67a40d02cf23471a78ea0a664a57bd6dcef53c2d7229df7a7a8e866b2d1dcd"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -36881,8 +36881,8 @@
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
-  "size": 3763,
-  "sha256": "dd1a905aa73b5830826f3542b6f24fd45b41a6153fd1c6b2b42fa3cb94d6bbce"
+  "size": 4331,
+  "sha256": "7b010f63451ef5b3ed01df796fcabeb612a8ac5e6ecff2c4845548f833b1c56d"
  },
  {
   "path": "TOOLS/Install-SkyrimForge.ps1",
@@ -36946,8 +36946,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 134477,
-  "sha256": "df7cbc6a7f71224cdea4fa29c6d86d32ef49a3c99808d3faaabc05ed4f27c13b"
+  "size": 136597,
+  "sha256": "62087eea62ca2fc40dfbd76fda418e8fc925c4a237cff063dc2945c2e8d86712"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
@@ -37136,8 +37136,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2654,
-  "sha256": "4ce53daffa17b503b6f4de66d0fc20b4d775fe683e1d30e44ed036c55e79a90c"
+  "size": 2990,
+  "sha256": "357ca8d861ad5934f6159f40e3c80a7f20e048a82d57cdfa15731ff9bd463045"
  },
  {
   "path": "VALIDATION.md",
@@ -44031,8 +44031,8 @@
  },
  {
   "path": "docs/history/V8.15.1-CHANGELOG.md",
-  "size": 3147,
-  "sha256": "f8178d7d0e36f79a6720a3236919bf11265ecdc5e062baeaa35155c9c48ed20e"
+  "size": 6275,
+  "sha256": "edf9ccbf49eaa9e636357c07c0309d3d3e4ec7eea1ba9b8a19e69f92730342b6"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",

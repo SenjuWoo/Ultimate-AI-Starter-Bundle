@@ -51,6 +51,10 @@ try {
   # Hooks must not be wired to an AI app's private Python (inherited first on
   # PATH when the installer runs inside Codex); it moves on every app update.
   Assert (Test-UabsPrivateRuntimePath 'C:\Users\u\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe') 'Codex private runtime not recognized.'
+  # A Hermes session puts its own agent venv first on PATH; that 3.11 runtime
+  # must not become the pack's Python (measured 2026-10-16: missing
+  # os.path.isjunction and missing mcp broke the pack's own gates).
+  Assert (Test-UabsPrivateRuntimePath 'C:\Users\u\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe') 'The Hermes agent venv is not treated as a private runtime.'
   Assert (-not (Test-UabsPrivateRuntimePath 'C:\Users\u\AppData\Local\Programs\Python\Python312\python.exe')) 'A user Python was treated as private.'
   $realPy = Get-UabsPythonExecutable
   if ($realPy) {

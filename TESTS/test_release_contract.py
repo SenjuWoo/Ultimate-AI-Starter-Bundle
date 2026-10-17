@@ -2161,6 +2161,50 @@ def test_hermes_receives_the_combined_soul_and_aio_contract() -> None:
     assert "-Path $pSoul -SoulFile $soulF" not in installer, "every profile SOUL.md is wired, persona profiles included"
 
 
+def test_a_profile_scoped_hermes_home_resolves_to_the_real_home() -> None:
+    """Hermes desktop points HERMES_HOME at the ACTIVE PROFILE for its children.
+
+    Measured 2026-10-16: an install or agent run started from inside an AI
+    session inherited `...\hermes\profiles\<name>`, treated one profile as the
+    whole home, never wired the real home SOUL.md and created a second profiles
+    tree inside the profile (`profiles\code\profiles\sillytavern`).
+    """
+    common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
+    assert "function Get-UabsHermesHomeRoot" in common, "the Hermes home normaliser is gone"
+    assert "if ($Provider -eq 'Hermes') { $resolvedHome = Get-UabsHermesHomeRoot $resolvedHome }" in common, (
+        "Get-UabsProviderHome accepts a profile-scoped HERMES_HOME as the whole home again"
+    )
+    gateway = read(ROOT / "TOOLS" / "Install-SillyTavernGateway.ps1")
+    assert "$HermesHome = Get-UabsHermesHomeRoot $HermesHome" in gateway, (
+        "the SillyTavern gateway writes into whatever HERMES_HOME names"
+    )
+    runtime = read(ROOT / "TESTS" / "Test-SillyTavernGateway.ps1")
+    assert "profile-scoped HERMES_HOME resolves to the real home" in runtime, (
+        "the profile-scoped home case is no longer executed by the gateway test"
+    )
+    # PowerShell's $HOME is read-only. A plain `$home = ...` (or a parameter
+    # called $Home) compiles fine and dies at run time with "Cannot overwrite
+    # variable HOME" - measured 2026-10-16, on the first install after the
+    # normaliser landed, because a static check and the pack gate both passed.
+    offenders = []
+    for path in ROOT.rglob("*.ps1*"):
+        if ".git" in path.parts:
+            continue
+        if re.search(r"\$home\s*=[^=]", read(path), re.I):
+            offenders.append(path.relative_to(ROOT).as_posix())
+    assert not offenders, "these shipped scripts assign to the read-only $HOME: %s" % offenders
+    # An install launched from inside a Hermes chat closes the desktop app, so
+    # the chat dies mid-run; the installer must say that before the window goes.
+    installer = read(ROOT / "INSTALL-AIO.ps1")
+    assert "closing the desktop app ends this chat session" in installer, (
+        "an install started from a Hermes session no longer explains why the session ends"
+    )
+    gateway = read(ROOT / "TOOLS" / "Install-SillyTavernGateway.ps1")
+    assert "$toolDir = $PSScriptRoot" in gateway, (
+        "the gateway installer reuses a possibly-null $here for its shared-helper path"
+    )
+
+
 def test_preamble_is_plain_text_without_markers() -> None:
     """The preamble rides on every request. Comment markers around it are paid
     for by every provider and instruct nothing, so v8.7.23 removed them; the
@@ -2708,6 +2752,7 @@ def main() -> int:
         test_hermes_stale_session_provider_migration,
         test_hermes_openrouter_picker_uses_the_live_tool_catalog,
         test_hermes_receives_the_combined_soul_and_aio_contract,
+        test_a_profile_scoped_hermes_home_resolves_to_the_real_home,
         test_preamble_is_plain_text_without_markers,
         test_wired_preamble_prefix_is_stable,
         test_free_model_routing_stays_off,
@@ -5820,9 +5865,18 @@ def test_compression_retirement_preserves_custom_preferences() -> None:
 
 
 def test_release_runner_reports_unicode_failures() -> None:
+    """A gate that fails on a Unicode path must still report the path.
+
+    PYTHONIOENCODING alone cannot prove that: an interpreter can ignore it
+    (measured 2026-10-16 — Hermes' own venv python pins UTF-8 stdout, so the
+    ASCII environment silently did nothing and this gate failed for the wrong
+    reason), so the child re-points sys.stdout at an ascii writer itself. The
+    runner's own reconfigure(errors='backslashreplace') is what has to save it.
+    """
     import os
     code = """
-import runpy, sys
+import runpy, sys, io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='ascii', errors='strict', line_buffering=True)
 ns = runpy.run_path(sys.argv[1])['main'].__globals__
 for name in list(ns):
     if name.startswith('test_'):

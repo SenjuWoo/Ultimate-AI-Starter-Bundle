@@ -248,9 +248,14 @@ function Get-UabsPythonExecutable {
 function Test-UabsPrivateRuntimePath([string]$Path) {
   <# True for interpreters an AI desktop app ships for itself (Codex keeps one
      under ~\.cache\codex-runtimes and %LOCALAPPDATA%\OpenAI\Codex\runtimes).
-     The app replaces or removes them on update/uninstall without notice. #>
+     The app replaces or removes them on update/uninstall without notice.
+     Hermes's own agent venv is the same class, and a Hermes session puts it
+     first on PATH: measured 2026-10-16, the pack resolved that 3.11 runtime,
+     whose site-packages lack what the bundle's own gates need
+     (os.path.isjunction, mcp) and whose hooks break on the next app update. #>
   if (-not $Path) { return $false }
-  return $Path -match '(?i)[\\/](\.cache[\\/]codex-runtimes|OpenAI[\\/]Codex[\\/]runtimes|AnthropicClaude[\\/]app-[^\\/]+)[\\/]'
+  return $Path -match '(?i)[\\/](\.cache[\\/]codex-runtimes|OpenAI[\\/]Codex[\\/]runtimes|AnthropicClaude[\\/]app-[^\\/]+)[\\/]' -or
+         $Path -match '(?i)[\\/]hermes-agent[\\/]venv[\\/]Scripts[\\/]python[0-9.]*\.exe$'
 }
 
 function Test-UabsPathWithin([string]$Path, [string]$Root) {
@@ -276,6 +281,28 @@ function Set-UabsUserEnv([string]$Name, [string]$Value) {
   Set-Item -Path ("Env:" + $Name) -Value $Value
 }
 
+# Parameter is $Candidate, never $Home: PowerShell's $HOME is read-only, and a
+# parameter of that name fails at call time ("Cannot overwrite variable Home").
+function Get-UabsHermesHomeRoot([string]$Candidate) {
+  <# A Hermes home contains config.yaml and a profiles\<name> tree.
+     HERMES_HOME tells Hermes itself where to run, and Hermes desktop sets it to
+     the ACTIVE PROFILE for everything it launches. An installer or agent run
+     from inside an AI session therefore inherits `...\hermes\profiles\<name>`
+     and treats one profile as the whole home: the real home SOUL.md is never
+     wired and profile subfolders land inside that profile (measured
+     2026-10-16: a nested `profiles\code\profiles\sillytavern`). When the path
+     is profile-scoped and its parent is a real home, return the home. #>
+  if (-not $Candidate) { return $Candidate }
+  $profilesDir = Split-Path -Path $Candidate -Parent
+  if (-not $profilesDir) { return $Candidate }
+  if ((Split-Path -Path $profilesDir -Leaf) -ne 'profiles') { return $Candidate }
+  $root = Split-Path -Path $profilesDir -Parent
+  if ($root -and (Test-Path -LiteralPath (Join-Path $root 'config.yaml') -PathType Leaf)) { return $root }
+  # shortcut: a home without config.yaml yet keeps the given path; the installer
+  # writes one on a real install, so this only affects hand-made empty fixtures.
+  return $Candidate
+}
+
 function Get-UabsProviderHome([string]$Provider, $Catalog) {
   $p = $Catalog.providers.$Provider
   if (-not $p) { throw ("Unknown provider " + $Provider) }
@@ -289,8 +316,12 @@ function Get-UabsProviderHome([string]$Provider, $Catalog) {
   # why "installer PASS" was never evidence about fresh installs.
   $fromEnv = [Environment]::GetEnvironmentVariable($envName, 'Process')
   if (-not $fromEnv) { $fromEnv = [Environment]::GetEnvironmentVariable($envName, 'User') }
-  if ($fromEnv) { return $fromEnv }
-  return (Expand-UabsEnvPath $p.home_default)
+  # Never a variable named $home/$Home: PowerShell's built-in $HOME is
+  # read-only, and assigning to that name fails with "Cannot overwrite variable
+  # HOME" (measured 2026-10-16, on the first install after the normaliser).
+  $resolvedHome = if ($fromEnv) { $fromEnv } else { Expand-UabsEnvPath $p.home_default }
+  if ($Provider -eq 'Hermes') { $resolvedHome = Get-UabsHermesHomeRoot $resolvedHome }
+  return $resolvedHome
 }
 
 function Get-UabsProviderSkillsDir([string]$Provider, $Catalog) {

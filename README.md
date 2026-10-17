@@ -213,6 +213,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create
 
 Or double-click `INSTALL-REMOTE.bat`. Re-running reuses the matching release
 folder and runs the installer again; newer releases refresh that folder.
+
+Run it from a normal window, not from inside an AI chat: the installer stops
+and relaunches Hermes desktop (the running app would otherwise rewrite
+`config.yaml` from its stale in-memory copy), so a chat that launched the
+install ends with the app. The installer says so before it happens.
 `-Force` refreshes the same release.
 
 **Windows (bundle already on disk)**

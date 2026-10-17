@@ -27,6 +27,9 @@ Or from PowerShell in this folder:
 
 Then FULLY restart your AI app(s).
 
+Run these from a normal window, not from inside an AI chat: the installer
+closes and relaunches Hermes desktop, so a chat that launched it ends with it.
+
 THE TWO .BAT FILES
 ------------------
     START-HERE.bat      you already have this folder - double-click it.
