@@ -1,3 +1,10 @@
+## 8.16.1
+
+- `COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt` is regenerated from the 8.16.0
+  contract (11,397 -> 9,083 B). The v8.16.0 archives still carried the old
+  mirror, so this patch release exists to ship the tree that matches the
+  release notes - no rule changes.
+
 ## 8.16.0
 
 - **Preamble rewritten around capability, not prohibition.** `3-PREAMBLES/SOUL.md`
