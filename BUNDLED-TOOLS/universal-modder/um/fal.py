@@ -27,7 +27,6 @@ from __future__ import annotations
 
 import base64
 import getpass
-import hashlib
 import json
 import mimetypes
 import os
@@ -98,11 +97,11 @@ def key_file() -> Path:
 
 
 def mask(k: str) -> str:
-    # UABS: a fingerprint, not key characters. The upstream version printed the
-    # first six and last four characters of the key in `um fal key status`,
-    # which lands key material in terminal scrollback, logs and screenshots.
-    return ("sha256:" + hashlib.sha256(k.encode("utf-8")).hexdigest()[:12]
-            + " (%d chars)" % len(k))
+    # UABS: never echo key material, and no hash of it either. `um fal key
+    # status` answers "which source is active", not "which key is this"; the
+    # upstream version printed the first six and last four characters, which
+    # lands key material in terminal scrollback, logs and screenshots.
+    return "<hidden, %d chars>" % len(k)
 
 
 def _secret_tool(*args: str, value: str | None = None) -> subprocess.CompletedProcess | None:

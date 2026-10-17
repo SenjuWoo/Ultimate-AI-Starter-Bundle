@@ -32702,7 +32702,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1659,
-  "sha256": "d2a9ca5958b7ba0acb7214f2bb728a37dc1e81d47460c22eee36012569c1eb8d"
+  "sha256": "30d114d6140537d29bb4818f0620e8a9b8149af9288a436682971869a41d79f7"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -32836,8 +32836,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.23902ef-py3-none-any.whl",
-  "size": 1999701,
-  "sha256": "3eca8d0f16bab5cb278e37ffab540699100fb485355969138ed36ee7c3fd1d82"
+  "size": 1999693,
+  "sha256": "d29081df08cad316a48fb084caa5148d54b6068fcf1302975b8326c3343a4103"
  },
  {
   "path": "BUNDLED-TOOLS/optional-profiles/autonomous-builder.md",
@@ -36456,8 +36456,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/fal.py",
-  "size": 34361,
-  "sha256": "c3559fc25cadfb07cafc4f4e8f8124485b7d1309b4fa5d441e875220727c7a0d"
+  "size": 34341,
+  "sha256": "f9577d2b021746be81a054acfcd16326a63885cbe9dfd01eefc1d5953ef4e120"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/fonts/JetBrainsMono-Bold.ttf",
@@ -36531,8 +36531,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 203100,
-  "sha256": "3e1c9817bb68e963628d75b9f0f46f11d238bf80399fc32ed3d53bd5af0cd93b"
+  "size": 203257,
+  "sha256": "a1aca02ec68e0b06563fb0c79fffaa7ddf735a1c338da7a5fbe912a6289088d8"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -36681,8 +36681,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 24072,
-  "sha256": "bdf7ab0bd2869f38bd7a3f7b0d43932ac73482c83bebcee885e9a75a72798542"
+  "size": 24253,
+  "sha256": "830dd9eeeffee2d5956f665db73411a355d816d33795361bfed863f4ea6e3808"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -37021,8 +37021,8 @@
  },
  {
   "path": "TESTS/test_universal_modder.py",
-  "size": 5331,
-  "sha256": "fc1ceabfa09fb97ea6d4d2d630ab115e63d87cdf36561c0419b5143e57380994"
+  "size": 5379,
+  "sha256": "78af3753d9c102e28de3cf653ba394db8f2fd640baa8775f9e972f717ec6e220"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
@@ -37316,8 +37316,8 @@
  },
  {
   "path": "TOOLS/refresh_universal_modder.py",
-  "size": 18160,
-  "sha256": "f40aaada01df2c36107dedaf75326c978d7813946d3005f92abd52b514035da7"
+  "size": 18182,
+  "sha256": "9ee788c8e2cd881605b60340ff53bd8e86e1f3c1a5efffdff5818e9768ddbbce"
  },
  {
   "path": "TOOLS/registry-additions.json",
@@ -44256,8 +44256,8 @@
  },
  {
   "path": "docs/history/V8.15.2-CHANGELOG.md",
-  "size": 6600,
-  "sha256": "77261ff61ce8b7b47423a74300e99e602ce14f9cddcb5a12135700d56651c047"
+  "size": 6792,
+  "sha256": "8c267d3e8b0059334d266992d775d8f4b0c88c4c3a5da66ac8d7a8292a36d73e"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",

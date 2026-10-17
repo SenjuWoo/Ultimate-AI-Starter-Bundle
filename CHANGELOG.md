@@ -2,10 +2,13 @@
 
 - Universal Modder refreshed `5ba8150` -> `23902ef` (38 upstream commits): the
   knowledge snapshot grows to 248 files, `um fal` reads keys from the desktop
-  keyring with a masked `um fal key status`, tool output is read as UTF-8 on
+  keyring with `um fal key status` printing a length marker instead of key
+  material (CodeQL flagged upstream's first/last-character display, then a
+  fingerprint of the key - both are patched away), tool output is read as UTF-8
+  on
   Windows, and odd video preview sizes are refused up front. The offline wheel
   is rebuilt from that source
-  (`universal_modder-0.2.0+uabs.23902ef`, sha256 `730801d3...4de62e5`), so an
+  (`universal_modder-0.2.0+uabs.23902ef`, sha256 `d29081df...3a4103`), so an
   offline install gets exactly the audited tree.
 - `TOOLS/refresh_universal_modder.py` now re-applies the bundle's deltas inside
   the mirrored skill tree (`SKILL_DROP` / `SKILL_OVERRIDES` / `SKILL_PATCHES`):

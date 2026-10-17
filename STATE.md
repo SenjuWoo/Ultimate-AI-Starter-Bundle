@@ -4,10 +4,12 @@
 
 - Universal Modder refreshed `5ba8150` -> `23902ef` (38 upstream commits, 103
   files): knowledge snapshot now 248 files in the wheel, fal keys through the
-  desktop keyring with a masked `um fal key status`, UTF-8 tool output on
-  Windows, video preview sizing fixed. Wheel rebuilt
-  (`universal_modder-0.2.0+uabs.23902ef`, 1,999,570 B, sha256
-  `730801d34536...4de62e5`); CATALOG.json, OFFLINE-MANIFEST.json and the test
+  desktop keyring with `um fal key status` printing a length marker instead of
+  key material (CodeQL flagged upstream's first/last-character display and then
+  a fingerprint of the key; both are patched away by the refresh tool), UTF-8
+  tool output on Windows, video preview sizing fixed. Wheel rebuilt
+  (`universal_modder-0.2.0+uabs.23902ef`, 1,999,693 B, sha256
+  `d29081df08ca...c3343a4103`); CATALOG.json, OFFLINE-MANIFEST.json and the test
   pin updated; the superseded wheel was deleted.
 - `TOOLS/refresh_universal_modder.py` now re-applies the pack's deltas inside the
   mirrored skill tree (`SKILL_DROP` / `SKILL_OVERRIDES` / `SKILL_PATCHES`): the
