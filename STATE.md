@@ -1,5 +1,67 @@
 # Bundle audit state
 
+## v8.15.1: dead preamble text out, install-from-inside-a-session fixed (2026-10-16)
+
+- Owner report: the wired soul still carried leftovers that instruct nothing
+  (`Activate spicy mode --spicy` and friends) - pure token cost on every
+  request. Audited the pack's always-on text layer, then removed them.
+- `SOUL.md` 1,380 -> 728 bytes: dropped the fake `--spicy` flag line (the only
+  dash-flag in the whole preamble family), `Do not disobey.`, two "Be the best
+  you can" pep lines, a venting line, a duplicated source-recency rule and two
+  of three consent paragraphs. Every real rule kept; the outgoing soul is
+  archived as `3-PREAMBLES/history/SOUL-8195833736f4.md`, so wired machines
+  converge instead of stacking a second soul. `MANUAL-PASTE.txt` re-synced
+  (pure ASCII).
+- Grok workspace template: the old soul copy plus the retired v6.0 "UABS MAX"
+  contract (18.9 KB) replaced by the provider-neutral workspace file Codex/Kimi
+  ship (5.3 KB). Grok's provider-home contract is wired separately and was
+  never affected.
+- Rest of the audit: the AIO contract itself is clean (its only dash-flags are
+  real paths and the RTK rules); no unreferenced TOOLS/TESTS/.github files; no
+  duplicate shipped files outside the by-design provider mirrors; the history
+  and legacy archives are load-bearing (they are how old blocks get stripped).
+- Install-from-inside-an-AI-session fixes, found while verifying the above:
+  a profile-scoped `HERMES_HOME` now resolves to the real home
+  (`Get-UabsHermesHomeRoot`, shared by installer, gateway and doctor) - before,
+  the real home `SOUL.md` was never wired and the SillyTavern profile landed in
+  `profiles\code\profiles\sillytavern`; a local named `$home` died on
+  PowerShell's read-only `$HOME` (a contract check now scans every shipped
+  script for that); the gateway installer built its helper path from a `$here`
+  that is only set without `-PackRoot`; the interpreter resolver no longer
+  accepts Hermes's own agent venv (3.11, no `os.path.isjunction`, no `mcp`) as
+  the pack's Python; the Unicode-console self-test forces its own ascii stdout
+  instead of trusting `PYTHONIOENCODING`.
+- Crash cause for the owner (three sessions lost on 2026-10-16): the installer
+  stops and relaunches Hermes desktop by design, because a running app rewrites
+  `config.yaml` from stale memory and wipes the MCP entries. Running it from a
+  chat therefore kills that chat. It now says so before the window disappears,
+  and START-HERE/README say to run it from a normal window.
+- Machine state repaired: the stale `Hermes/impeccable` entry removed from
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\skill-overrides.json` (the live
+  copy is byte-identical to the shipped skill, digest `AAB71FCD...`; backup
+  kept beside it) and the stray nested `profiles\code\profiles\sillytavern`
+  deleted. Local sync ran to completion: all six live instruction files carry
+  one current block with no `spicy`.
+- Gates on this tree: Test-Pack PASS (including the extracted-archive run in
+  CI), release contracts 147/0, manifest 8,868 files verified, versions agree,
+  privacy PASS, Hermes bootstrap PASS, preamble history clean.
+
+## Publication checkpoint (v8.15.1)
+
+- Tag `v8.15.1` -> `1d1c4f01a3761b88f8f472a87995d77b6d358bdd`. CI (pack gate,
+  manifest, versions, Forge end to end) success on that SHA; CodeQL analyses
+  (actions, python, js/ts) ran on it; Dependabot, code-scanning and
+  secret-scanning open alerts 0 before and after publishing.
+- Archives built twice, byte-identical: Core 47,049,365 B `73c14209...`,
+  Full-Offline 204,701,366 B `f9288205...`. Published assets downloaded and
+  equal to the build (size, sha256, GitHub digest); latest = v8.15.1. Receipts:
+  ignored `artifacts/release-v8.15.1/build-proof.json` and
+  `published-proof.json`.
+- Not certified: provider inference, host-editor interaction, game runtime and
+  billed-token savings - the size cut is bytes, not a measured billing delta.
+- Next: owner restarts the AI apps once; then watch whether any provider's
+  model needs the pack-context line tightened.
+
 ## v8.15.0: one-click, quiet, toolbox (2026-10-15)
 
 - Owner report: install failed (doctor 63 errors), console full of noise and
