@@ -21,7 +21,7 @@ The folder named sandbox is **not** process isolation.
 
 ## REA CLI
 
-The optional `rea` catalog component pins `rea-agents@6.4.0` and npm integrity;
+The optional `rea` catalog component pins `rea-agents@6.5.0` and npm integrity;
 Node 22.19+/24.11+/26+ is required. If needed for the current authorized task,
 install it through the bundle rather than upstream's provider-writing setup:
 

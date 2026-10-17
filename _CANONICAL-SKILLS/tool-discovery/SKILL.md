@@ -2,7 +2,7 @@
 name: tool-discovery
 description: Resolve optional Skyrim and AI tooling on the current machine without assuming drive letters or usernames. Use at session start, when a tool path is unknown, or before recommending install.
 metadata:
-  version: 5.1.0
+  version: 5.2.0
 ---
 
 # Tool discovery (portable)
@@ -17,6 +17,11 @@ optional [ComfyUI CLI](references/comfy-cli.md). It adds no standing MCP schemas
 For binary/app analysis or unfamiliar-game reverse engineering, use
 [the RE routes](references/reverse-engineering.md): Universal Modder for recon,
 the existing Reverse THIS! bench for tools, REA CLI for structured evidence.
+
+For game modding on the owner's bench, use the
+[local modding bench map](references/modding-bench.md): which engine route each
+installed tool serves, and the rules that keep the game install and the bench
+untouched.
 
 Never hardcode `C:\Users\<name>`, `S:\Apps`, or `Z:\Backup` as authority. Those may appear only as **example** paths on the pack author's machine.
 

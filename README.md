@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.15.1 -->
+<!-- Ultimate AI Starter Bundle v8.15.2 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.15.1
+# Ultimate AI Starter Bundle v8.15.2
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -763,6 +763,9 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | `comfy-cli` | [ComfyUI CLI](https://github.com/Comfy-Org/comfy-cli) | Optional user-managed tool; not installed by default |
 | `rea` | [REA](https://github.com/morluto/rea) | Optional pinned CLI; no global MCP or setup writes |
 | Reverse THIS! | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | Reuses an existing discovered tool bench; no duplicate installation |
+| CLI-Anything | [HKUDS/CLI-Anything](https://github.com/HKUDS/CLI-Anything) | Companion hub of per-app agent CLIs (Blender, FreeCAD, GIMP, Audacity, Godot, ComfyUI, browsers...). `pip install cli-anything-hub`, install the harnesses you need. Apache-2.0; v0.4.0 checked 2026-10-16. Not redistributed or installed by the pack. |
+| anti-slop | [miqdadbadjuber/anti-slop](https://github.com/miqdadbadjuber/anti-slop) | MIT rules filter against generic AI UI, filler copy and AI-shaped code (`rules/antislop.md` plus a CLI). Overlaps the bundled `impeccable` and `humanizer` skills; use it as an extra filter. v3.2.21 checked 2026-10-16. |
+| jevgrep | [dzhng/jevgrep](https://github.com/dzhng/jevgrep) | Hosted code-search CLI (`jg`) that answers repo questions through Jev and returns files plus verbatim excerpts; needs its own account. The bundled `codebase-memory-mcp` already answers that class of question locally. 0.8.0 checked 2026-10-16. |
 
 Additional canonical payloads without separate tool-catalog entries:
 
@@ -870,6 +873,14 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.15.2** - 2026-10-16. Tool refresh and companion review: Universal
+Modder is re-vendored from upstream `23902ef` with a rebuilt offline wheel, its
+bundle patches now re-apply during every refresh (including the rule that keeps
+the unbounded UE3 `unpack_upk.py` fallback out), REA moves to 6.5.0 with a fresh
+integrity-bound probe, a new `modding-bench` map documents the local game-modding
+tool bench by engine route, and CLI-Anything, anti-slop and jevgrep are documented
+as checked companions. [Changes](docs/history/V8.15.2-CHANGELOG.md).
 
 **v8.15.1** - 2026-10-16. Prompt-layer cleanup: the soul every provider carries
 on every request drops the leftovers that instructed nothing (a fake `--spicy`

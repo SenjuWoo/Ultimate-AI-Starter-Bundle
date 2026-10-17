@@ -80,7 +80,7 @@ def main():
             for name in ("um/knowledge/TEMPLATE.md", "um/knowledge/INDEX.md", "um/ps1/WinDrive.ps1",
                          "um/fonts/OFL-SpaceGrotesk.txt", "um/fonts/OFL-JetBrainsMono.txt"):
                 assert name in archive.namelist(), name
-    assert component["source_commit"] == "5ba8150e27b4f1bf17ae19dcecdb2341e467885a"
+    assert component["source_commit"] == "23902ef42e8ea9b077bfbbf6911eb8ea0348e55a"
     assert not component["mcp"] and not component["auto_register"]
     for provider in component["providers"]:
         skill = ROOT / f"1-TAILORED-PROVIDER-TREES/{provider}/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder"

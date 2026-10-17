@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.15.1",
+  "version": "8.15.2",
   "generated": "2026-10-16",
-  "release_tag": "v8.15.1",
+  "release_tag": "v8.15.2",
   "canonical_skills": 173,
   "provider_trees": 5,
   "registry_entries": 173,
@@ -44,6 +44,6 @@
     "TESTS/Test-AiHistoryBackup.ps1",
     "TESTS/test_toolbox.py"
   ],
-  "runtime_status": "v8.15.1: prompt-layer cleanup - the wired soul is 728 B (was 1,380 B) and only lines that instruct survive; the Grok workspace template is the provider-neutral file instead of the stale v6.0 contract; MANUAL-PASTE re-synced; an install or agent run from inside an AI session no longer mistakes the active Hermes profile for the whole home (profile-scoped HERMES_HOME resolves to the real home, so the home SOUL.md is wired and profile folders land beside the other profiles, and an install started from a Hermes chat now says that closing the desktop app ends that chat); tool and MCP behaviour unchanged from v8.15.0 (one install at a time, quiet one-line-per-step installer with a details log, always-on uabs-toolbox for task MCP servers, Hermes core context7/headroom/toolbox). No provider inference, host-editor interaction, game runtime or billed-token saving is certified.",
+  "runtime_status": "v8.15.2: upstream refreshes and companion review - Universal Modder re-vendored from upstream 23902ef with the wheel rebuilt from that source and its bundle patches re-applied by rule (the unbounded UE3 unpack_upk.py fallback stays out); REA 6.5.0 is integrity-pinned and re-probed (help, static JS fixture, clean production audit, 207 tools / 3,087,942 transport schema bytes) and remains an optional CLI; the new tool-discovery reference modding-bench.md maps the local modding bench by engine route; CLI-Anything, anti-slop and jevgrep are documented as checked companions, not shipped. Tool and MCP behaviour is otherwise unchanged from v8.15.1. No provider inference, host-editor interaction, game runtime or billed-token saving is certified.",
   "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for every always-on MCP server (context7, headroom, the toolbox, and GitHub where gh is not signed in). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

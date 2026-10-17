@@ -1,5 +1,48 @@
 # Bundle audit state
 
+## v8.15.2: companion tool review + upstream refreshes (2026-10-16)
+
+- Universal Modder refreshed `5ba8150` -> `23902ef` (38 upstream commits, 103
+  files): knowledge snapshot now 248 files in the wheel, fal keys through the
+  desktop keyring with a masked `um fal key status`, UTF-8 tool output on
+  Windows, video preview sizing fixed. Wheel rebuilt
+  (`universal_modder-0.2.0+uabs.23902ef`, 1,999,570 B, sha256
+  `730801d34536...4de62e5`); CATALOG.json, OFFLINE-MANIFEST.json and the test
+  pin updated; the superseded wheel was deleted.
+- `TOOLS/refresh_universal_modder.py` now re-applies the pack's deltas inside the
+  mirrored skill tree (`SKILL_DROP` / `SKILL_OVERRIDES` / `SKILL_PATCHES`): the
+  unbounded UE3 `unpack_upk.py` fallback is dropped by rule every refresh, and
+  the pack's wording for the two files documenting it is restored - a hand
+  refresh used to be the only thing keeping that policy. Dry run and apply both
+  exit non-zero when a patch or delta no longer matches.
+- REA 6.4.0 -> 6.5.0: tarball sha512 matches the recorded pin; isolated Windows
+  install with lifecycle scripts disabled; `rea --help` and the
+  execution-free JavaScript fixture PASS (7-node graph, no integrity
+  contradictions); production npm audit clean across 147 prod deps; stdio probe
+  207 tools / 3,087,942 compact UTF-8 schema bytes (170 / 1,954,683 on 6.4.0).
+  Catalog, evaluations doc and the RE reference updated; the machine's global
+  install moved to 6.5.0. Receipts: `artifacts/audit-20261016-rea-*`.
+- New `tool-discovery` reference `references/modding-bench.md` (skill metadata
+  5.1.0 -> 5.2.0): maps `Z:\Backup\Ai Documentation\Modding` by engine route
+  (native RE, Unreal, Unity, Godot, MUGEN family, Frostbite, per-game) with the
+  rules that keep the game install and the bench untouched. Fanned out to all
+  five provider trees.
+- Documented as companions, not shipped: CLI-Anything 0.4.0 (Apache-2.0),
+  anti-slop 3.2.21 (MIT), jevgrep 0.8.0 (MIT, hosted - local equivalent is
+  `codebase-memory-mcp`). README third-party table + a dated
+  `docs/TOOL-EVALUATIONS.md` section record what was checked (repo, release,
+  license) and what was not executed.
+- Currency: Reverse THIS! v1.2.1 = upstream head `2f3ccca`, no change needed.
+- Leftovers from the interrupted session, reviewed before keeping: the working
+  edit to `3-PREAMBLES/MANUAL-PASTE.txt` was reverted (it dropped SOUL's first
+  three paragraphs, breaking the documented SOUL+Web invariant the installer and
+  README both rely on), and `PROMPTS/START-AND-RESUME.md` keeps the owner's
+  wording with the typos and unwrapped lines cleaned and the trailing newline
+  restored.
+- Gates on this tree: Test-Pack PASS, release contracts 147/0, Universal Modder
+  test PASS, manifest 8,902 files verified. Skill fanout re-run (6,395 files).
+  Note: the machine's installed skill copies update on the next installer run.
+
 ## v8.15.1: dead preamble text out, install-from-inside-a-session fixed (2026-10-16)
 
 - Owner report: the wired soul still carried leftovers that instruct nothing

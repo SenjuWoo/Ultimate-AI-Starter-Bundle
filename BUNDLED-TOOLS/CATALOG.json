@@ -5,14 +5,14 @@
       "name": "REA (Reverse Engineer Anything)",
       "kind": "cli-optional",
       "install": "npx-or-npm",
-      "version": "6.4.0",
+      "version": "6.5.0",
       "license": "MIT",
       "github": {
         "owner": "morluto",
         "repo": "rea"
       },
-      "npm_spec": "rea-agents@6.4.0",
-      "npm_integrity": "sha512-Vj1zWfSlna5bphGoaoI/TcVBuYvze9u+OyPC3Shz8YkBqaCTqB4COnnRoX7XDwMpwI24ZlFEel2yEj0k8LTWEQ==",
+      "npm_spec": "rea-agents@6.5.0",
+      "npm_integrity": "sha512-C6BG7LyrAdR74mSjertM6PrxJkcNZ2bfQNOJornPo9erDEp2tyPRVYPnV5Yodr+1RqewCQla68WulXlVnveD+A==",
       "npm_args": [
         "--ignore-scripts"
       ],
@@ -32,7 +32,7 @@
       "required_for": [
         "reverse-engineering-evidence"
       ],
-      "scope_note": "Optional CLI only; not part of default Components or MCP profiles. 2026-10-13 isolated Windows npm integrity-bound install with lifecycle scripts disabled: help and execution-free JavaScript fixture analysis PASS, zero known production npm audit findings. Stdio transport probe exposed 170 tools and 1,954,683 compact UTF-8 schema bytes, not loaded or billed tokens. No native Ghidra/runtime/GUI actions certified. Reuse Reverse THIS! shims and Universal Modder recon. No upstream setup/update or duplicate skill collection. See tool-discovery/references/reverse-engineering.md."
+      "scope_note": "Optional CLI only; not part of default Components or MCP profiles. 2026-10-16 isolated Windows npm integrity-bound install of 6.5.0 with lifecycle scripts disabled (the 6.5.0 tarball sha512 matches the recorded pin) and a 2026-10-13 baseline of the same procedure on 6.4.0: help and execution-free JavaScript fixture analysis PASS (7-node fixture graph, no integrity contradictions), zero known production npm audit findings across 147 prod dependencies. Stdio transport probe exposed 207 tools and 3,087,942 compact UTF-8 schema bytes (170 tools / 1,954,683 bytes on 6.4.0), not loaded or billed tokens. No native Ghidra/runtime/GUI actions certified. Reuse Reverse THIS! shims and Universal Modder recon. No upstream setup/update or duplicate skill collection. See tool-discovery/references/reverse-engineering.md."
     },
     {
       "id": "universal-modder",
@@ -45,10 +45,10 @@
         "owner": "rehan-remade",
         "repo": "universal-modder"
       },
-      "source_commit": "5ba8150e27b4f1bf17ae19dcecdb2341e467885a",
-      "source_archive_sha256": "8f8820dd7e4f4fde2a71aa7dd545bd610e2238de7689e3e03e58ad5bad16fb4e",
+      "source_commit": "23902ef42e8ea9b077bfbbf6911eb8ea0348e55a",
+      "source_archive_sha256": "037196f80d4522de60afbb25e0914234998ad5a867551a9380309b01e43859fc",
       "source_dir": "BUNDLED-TOOLS/universal-modder",
-      "offline_asset": "universal_modder-0.2.0+uabs.5ba8150-py3-none-any.whl",
+      "offline_asset": "universal_modder-0.2.0+uabs.23902ef-py3-none-any.whl",
       "cli": "um",
       "cli_env": "UNIVERSAL_MODDER_CMD",
       "python": "3.13",
@@ -66,7 +66,7 @@
         "sprite-processing",
         "gameplay-showcase-video"
       ],
-      "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to twelve upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (the indexed knowledge snapshot), discovers native Windows Steam roots from the registry and never echoes matched credentials; the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. The audited refresh adds quoted multi-word knowledge search, ranked hits and broken-link diagnostics while retaining local ComfyUI generation, SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification. 2026-10-13 source refresh adds Bannerlord, MT Framework, Hedgehog and Black Rock discovery plus a mod-porting reference; preserves UABS dependency pins, native Steam discovery and credential-safe output."
+      "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to twelve upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (the indexed knowledge snapshot), discovers native Windows Steam roots from the registry and never echoes matched credentials; the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. The audited refresh adds quoted multi-word knowledge search, ranked hits and broken-link diagnostics while retaining local ComfyUI generation, SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification. 2026-10-13 source refresh adds Bannerlord, MT Framework, Hedgehog and Black Rock discovery plus a mod-porting reference; preserves UABS dependency pins, native Steam discovery and credential-safe output. 2026-10-16 source refresh (38 upstream commits, 23902ef) adds Isaac, Just Cause 3/Avalanche, Space Marine 2, Project Zomboid and S.T.A.L.K.E.R. 2 knowledge notes, fal keys through the desktop keyring with a masked status command, and a UTF-8 tool-output fix on Windows. Upstream's new agents/ team plus its OpenCode/session files stay unshipped, and the refresh tool now drops the unbounded UE3 unpack_upk.py fallback by rule instead of by hand."
     },
     {
       "id": "uabs-toolbox",
@@ -1001,8 +1001,8 @@
       "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
     }
   ],
-  "pack_version": "8.15.1",
-  "updated_utc": "2026-10-15",
+  "pack_version": "8.15.2",
+  "updated_utc": "2026-10-16",
   "providers": {
     "Grok": {
       "skills": "skills",
@@ -1080,7 +1080,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.15.1",
+  "catalog_version": "8.15.2",
   "updated": "2026-10-15",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

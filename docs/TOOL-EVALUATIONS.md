@@ -1,5 +1,39 @@
 # Tool evaluations
 
+## 2026-10-16 — companion tools checked (documented, not shipped)
+
+CLI-Anything 0.4.0 (HKUDS, Apache-2.0): a hub of per-app agent CLIs - Blender,
+FreeCAD, GIMP, Audacity, Godot, ComfyUI, browsers and more - installed per app
+with `pip install cli-anything-hub` and `cli-hub install <name>`; each harness
+speaks JSON and is meant to be driven by an agent. Checked 2026-10-16: upstream
+repository and README, release v0.4.0 (2026-06-25) current, license. Not
+executed here: no harness was installed or run. Adopt per app on demand; a
+harness enters this pack's install path only after the usual
+isolate-audit-pin pass.
+
+anti-slop 3.2.21 (miqdadbadjuber, MIT): a rules filter against generic UI,
+filler copy and AI-shaped code, shipped as `rules/antislop.md`, an `.mdc` for
+editor rules, a CLI and a plugin manifest. Checked 2026-10-16: upstream
+repository and README, release v3.2.21 (same day) current, license, plugin
+manifest. Not executed here. It overlaps the bundled `impeccable` (design) and
+`humanizer` (text) coverage - use it as an extra filter where a project wants
+one, not as a replacement.
+
+jevgrep 0.8.0 (dzhng, MIT): a CLI that answers "where is this in the repo"
+questions through Jev, a hosted model gateway, and returns files plus verbatim
+excerpts; `jg auth` and an account are required. Its README claims the same
+success on 8/10 SWE-bench tasks at about 30% lower cost; that was not
+reproduced here, and hosted calls cost real credits. The bundled
+`codebase-memory-mcp` answers the same class of question locally, so jevgrep is
+an optional companion for repos where the local graph is not enough - not a
+default.
+
+Currency rechecked 2026-10-16: Reverse THIS! v1.2.1 at upstream head `2f3ccca`
+(no change needed), REA bumped 6.4.0 -> 6.5.0 and re-probed, Universal Modder
+refreshed from `5ba8150` to `23902ef` with its wheel rebuilt. Only REA and
+Universal Modder ship inside the pack; CLI-Anything, anti-slop and jevgrep are
+documented companions.
+
 ## 2026-10-13 — scoped RE and current candidates
 
 Firecrawl: do not adopt 3.30.0. Isolated, lifecycle-script-disabled production
@@ -11,11 +45,14 @@ registrations without deleting unknown private configuration. Recheck a clean
 upstream dependency refresh plus transport test before lifting the hold.
 One underlying advisory: [Axios prototype-pollution gadget](https://github.com/advisories/GHSA-vh66-26gq-q6x8).
 
-REA 6.4.0: integrity-bound npm install with lifecycle scripts disabled, Windows
-CLI/help and a throw-on-execution JavaScript fixture passed static analysis.
-The fixture graph has seven nodes and no integrity contradictions. Production
-npm audit reported no known findings; this is not antivirus certification.
-Full stdio discovery: 170 tools / 1,954,683 compact UTF-8 schema bytes.
+REA 6.5.0 (2026-10-16 recheck; 6.4.0 first passed 2026-10-13): integrity-bound
+npm install with lifecycle scripts disabled - the 6.5.0 tarball's sha512 matches
+the recorded pin. Windows CLI/help and the throw-on-execution JavaScript fixture
+passed static analysis (7 nodes, no integrity contradictions). Production npm
+audit reported no known findings across 147 prod dependencies; this is not
+antivirus certification. Full stdio discovery: 207 tools / 3,087,942 compact
+UTF-8 schema bytes, up from 170 / 1,954,683 on 6.4.0 - transport measurements,
+not billed tokens.
 Adopt optional CLI/task routing, not a global MCP or a duplicate skill collection.
 Reuse Reverse THIS! specialist tools and Universal Modder game recon.
 Native Ghidra, GUI, runtime capture and paid inference were not exercised.
@@ -27,8 +64,9 @@ RTK 1.0.0 Apache-2.0 OSS asset: verified official SHA-256, exact short status,
 rewrite exit-3 protocol and unchanged four-row pinned corpus. No broad hook,
 pipeline rewrite or daemon. Ponytail 5.2.0: 136 root + 31 pi-extension tests
 passed in a real Windows Python/Git Bash environment, retaining local security
-fixtures. Universal Modder snapshot `5ba8150` updates fingerprints, knowledge
-and a mod-porting guide while preserving the bundle's Windows/privacy patches.
+fixtures. Universal Modder snapshot `23902ef` (2026-10-16 refresh, 38 upstream
+commits) updates fingerprints, 248 knowledge files and the guides while preserving the bundle's Windows/privacy
+patches; the refresh tool re-applies every UABS patch and drops the unbounded UE3 `unpack_upk.py` fallback by rule.
 
 The supplied screenshots are CodeBurn 0.9.27 advice, not Firecrawl. Its cap
 recommendation estimates from cap differences, and its MCP-coverage explanation

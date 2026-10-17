@@ -1,3 +1,38 @@
+## 8.15.2
+
+- Universal Modder refreshed `5ba8150` -> `23902ef` (38 upstream commits): the
+  knowledge snapshot grows to 248 files, `um fal` reads keys from the desktop
+  keyring with a masked `um fal key status`, tool output is read as UTF-8 on
+  Windows, and odd video preview sizes are refused up front. The offline wheel
+  is rebuilt from that source
+  (`universal_modder-0.2.0+uabs.23902ef`, sha256 `730801d3...4de62e5`), so an
+  offline install gets exactly the audited tree.
+- `TOOLS/refresh_universal_modder.py` now re-applies the bundle's deltas inside
+  the mirrored skill tree (`SKILL_DROP` / `SKILL_OVERRIDES` / `SKILL_PATCHES`):
+  the unbounded UE3 `unpack_upk.py` fallback stays out by rule, the pack's
+  wording for the files documenting it is restored, and any patch or delta that
+  no longer matches exits non-zero instead of shipping a silent regression.
+- REA 6.4.0 -> 6.5.0, same integrity-bound procedure: tarball sha512 matches the
+  recorded pin, help and the execution-free JavaScript fixture pass (7 nodes,
+  no integrity contradictions), production audit clean across 147 prod
+  dependencies, stdio surface 207 tools / 3,087,942 compact UTF-8 schema bytes.
+  Catalog, evaluations doc and the RE reference updated; REA stays optional.
+- New `tool-discovery` reference `modding-bench.md` maps the local game-modding
+  bench by engine route (native RE, Unreal, Unity, Godot, MUGEN family,
+  Frostbite, per-game) with the rules that keep game installs and the bench
+  untouched.
+- Documented companions, checked and not shipped: CLI-Anything 0.4.0
+  (Apache-2.0), anti-slop 3.2.21 (MIT), jevgrep 0.8.0 (MIT, hosted - the
+  bundled `codebase-memory-mcp` already answers that class of question locally).
+- Docs: `MANUAL-PASTE.txt` restored to the documented SOUL+Web invariant after an
+  interrupted edit dropped the soul's first three paragraphs;
+  `PROMPTS/START-AND-RESUME.md` keeps the owner's wording with the typos,
+  wrapping and missing trailing newline fixed.
+- Gates on the released commit: pack gate PASS (including the extracted-archive
+  run), release contracts 147/0, Universal Modder test PASS, manifest verified,
+  versions agree. Not certified: provider inference, host-editor interaction,
+  game runtime, billed-token savings - schema bytes are transport measurements.
+
 ## 8.15.1
 
 - Cleanup: the soul every provider carries on every request

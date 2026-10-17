@@ -437,6 +437,14 @@ def test_mindustry_route(tmp_path, name):
     assert all(rt["route"] != scan.ENGINES["java"][2] for rt in r["routes"])
 
 
+@pytest.mark.parametrize("name", ["The Binding of Isaac Rebirth", "isaac"])
+def test_isaac_route(tmp_path, name):
+    # the Steam folder has no colon, so the Lua route must come from isaac-ng.exe, ahead of the native proxy-DLL one
+    r = _named_game(tmp_path, name, {"isaac-ng.exe": _pe(False), "resources/packed/graphics.a": b"x"})
+    assert r["routes"][0]["route"] == scan.KNOWN["the binding of isaac: rebirth"][0]
+    assert r["routes"][0]["playbook"] == "isaac.md" and r["routes"][0]["why"] == "known game"
+
+
 def test_vdf():
     d = scan._vdf('"AppState" { "appid" "105600" "name" "Terraria" "installdir" "Terraria" }')
     assert d["AppState"]["installdir"] == "Terraria"
@@ -783,6 +791,22 @@ def test_compile_small_edl(tmp_path):
     video.compile_edl(tmp_path / "edl.json", str(tmp_path / "out.mp4"))
     info = video.probe(tmp_path / "out.mp4")
     assert abs(info["duration"] - (2 + 2 + 1.5)) < 0.15 and info["audio"]
+
+
+@pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="needs ffmpeg")
+def test_compile_preview_keeps_size_even(tmp_path):
+    # 4:5 portrait: half of 1080x1350 is 540x675, and libx264 refuses an odd height in yuv420p
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", "testsrc2=s=1080x1350:d=2:r=30", "-f", "lavfi", "-i", "sine=f=440:d=2",
+                    "-shortest", str(tmp_path / "c.mp4")], check=True)
+    edl = {"size": [1080, 1350], "fps": 30, "segments": [{"clip": "c.mp4", "dur": 1.0}, {"card": {"title": "The end"}, "dur": 1.0}]}
+    (tmp_path / "edl.json").write_text(json.dumps(edl))
+    video.compile_edl(tmp_path / "edl.json", str(tmp_path / "out.mp4"), preview=True)
+    info = video.probe(tmp_path / "out.mp4")
+    assert (info["width"], info["height"]) == (540, 674)
+
+    (tmp_path / "edl.json").write_text(json.dumps(dict(edl, size=[1080, 1351])))
+    with pytest.raises(SystemExit):
+        video.compile_edl(tmp_path / "edl.json", str(tmp_path / "odd.mp4"))
 
 
 @pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="needs ffmpeg")
