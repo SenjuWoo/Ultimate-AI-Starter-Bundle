@@ -442,3 +442,19 @@ Detailed machine-specific reports remain under ignored `artifacts/`.
   blind replace would lose the pack's routes.
 - Next: cut v8.16.0 (build, tag, release assets). Provider-tree dedupe (85 MB)
   is deferred until the user approves the generated-tree change.
+
+### Release v8.16.0 (2026-10-17)
+
+- Tag `v8.16.0` -> `e62146d`; CI and CodeQL green on that SHA; open
+  Dependabot / code-scanning / secret-scanning alerts: 0.
+- Assets built twice byte-identical:
+  - Core 47,582,519 B sha256 `88c5242fea72442220243999b0e79085ccdbf7814b3f1abecee65b0c5f21f094`
+  - Full-Offline 214,188,616 B sha256 `2e48d483c83671fb87c26677344fc7875b64a41ccce3ba58c514336f224073cc`
+  - Downloaded from the release and re-hashed: both match.
+- Capability audit landed after the first push: workspace files now say "verify
+  from the project / tool docs / live MCP schema, then use it" instead of
+  "never invent", prefer the CLI/MCP route over a blanket GUI ban, and
+  `tool-discovery` installs a missing tool with the pack's installer.
+- Next: skill-level sweep of the remaining 173 skills for capability-negative
+  rules (only the always-loaded surface and the six named skills were audited),
+  then provider-tree dedupe if approved.
