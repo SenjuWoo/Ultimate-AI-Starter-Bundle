@@ -2716,6 +2716,8 @@ def main() -> int:
         test_impeccable_hold_records_a_real_engine_audit,
         test_maintenance_catalog_targets_remain_scoped,
         test_review_regressions_fail_closed,
+        # v8.17.0 -- an external tool install must be version-aware, not parked.
+        test_external_tool_installs_are_version_aware,
         test_every_defined_contract_is_actually_run,
         test_hermes_native_profile_migration_contract,
         test_same_version_forge_hotfix_refreshes_shipped_content,
@@ -6004,5 +6006,42 @@ def test_toolbox_wheel_is_the_shipped_source() -> None:
     assert "test_toolbox.py" in read(ROOT / "TESTS/Test-Pack.ps1"), "Test-Pack does not run the toolbox gate"
 
 
+def test_external_tool_installs_are_version_aware() -> None:
+    """An external tool install is refreshed when stale, never silently parked.
+
+    v8.16.0 shipped "houseCARL kept external user install" and did nothing even
+    when the user's own copy was behind the bundled one. The installer must
+    compare versions, refresh an older copy in place after a backup, keep a
+    same-or-newer copy and never downgrade. It must also repair Claude's
+    recorded marketplace path after a pack rename, and stage a Hermes
+    .hermes-plugin manifest so the native ponytail install can succeed.
+    """
+    common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
+    installer = read(ROOT / "INSTALL-AIO.ps1")
+
+    assert "function Get-UabsBinaryVersion" in common
+    assert "function Compare-UabsDottedVersion" in common
+    assert "function Get-UabsPathVersion" in common
+    assert "Get-UabsBinaryVersion $existingMcp" in installer, (
+        "the houseCARL branch no longer reads the installed version"
+    )
+    assert "status='external-updated'" in installer, (
+        "no code path refreshes an older external install"
+    )
+    assert "kept external user install" not in installer, (
+        "the installer still parks an external install without checking its version"
+    )
+    assert "known_marketplaces.json" in installer, "Claude marketplace path repair is gone"
+    assert ".hermes-plugin" in installer and "plugin.yaml" in installer, (
+        "the Hermes plugin manifest staging is gone; ponytail's native install will fail again"
+    )
+
+    pack = read(ROOT / "BUNDLED-TOOLS" / "packs" / "skyrim" / "INSTRUCTIONS.md")
+    assert "Never launch SSEEdit" not in pack
+    assert "Never invent framework syntax" not in pack
+    assert "## Ownership of Skyrim tooling" in pack
+
+
 if __name__ == "__main__":
     raise SystemExit(main())
+

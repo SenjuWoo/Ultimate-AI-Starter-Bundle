@@ -539,7 +539,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.16.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.17.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -794,6 +794,45 @@ if (-not $ToolsOnly -and -not $SkipStarterSettings) {
 }
 
 # ---------- Native plugins: superpowers + ponytail ----------
+# Claude refuses to refresh a marketplace whose recorded path no longer exists
+# (the pack folder was renamed once, and every later install died on it). Point
+# recorded paths that lost their target back at the same plugin inside the
+# current pack before any provider plugin command runs.
+$claudeKm = Join-Path $env:USERPROFILE '.claude\plugins\known_marketplaces.json'
+if (Test-Path -LiteralPath $claudeKm -PathType Leaf) {
+  try {
+    $km = Get-Content -LiteralPath $claudeKm -Raw | ConvertFrom-Json
+    $kmChanged = $false
+    foreach ($prop in @($km.PSObject.Properties)) {
+      $entry = $prop.Value
+      # Claude records the marketplace twice: a directory source path and an
+      # installLocation. Both go stale when the pack folder is renamed.
+      $holders = @(
+        @{ Obj = $entry; Field = 'path' },
+        @{ Obj = $entry; Field = 'installLocation' }
+      )
+      if ($entry.source) { $holders += @{ Obj = $entry.source; Field = 'path' } }
+      foreach ($holder in $holders) {
+        $recorded = $holder.Obj.($holder.Field)
+        if (-not $recorded -or (Test-Path -LiteralPath $recorded)) { continue }
+        $leaf = Split-Path $recorded -Leaf
+        $candidate = Join-Path $PackRoot ('BUNDLED-TOOLS\plugins\' + $leaf)
+        if ($leaf -and (Test-Path -LiteralPath $candidate -PathType Container)) {
+          $holder.Obj.($holder.Field) = $candidate
+          $kmChanged = $true
+          Write-UabsOk ("Claude marketplace '{0}' repointed to this pack: {1}" -f $prop.Name, $candidate)
+        }
+      }
+    }
+    if ($kmChanged) {
+      Copy-Item -LiteralPath $claudeKm -Destination ($claudeKm + '.bak-' + (Get-Date -Format 'yyyyMMdd-HHmmss')) -Force
+      [IO.File]::WriteAllText($claudeKm, (($km | ConvertTo-Json -Depth 8) + "`n"), (New-Object Text.UTF8Encoding $false))
+    }
+  } catch {
+    Write-UabsWarn ('Claude marketplace path repair skipped: ' + $_.Exception.Message)
+  }
+}
+
 # Installs the two bundled skills-plugins NATIVE per provider where the CLI
 # has a real plugin mechanism (all mechanisms verified live on the reference
 # machine):
@@ -989,6 +1028,21 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
           $pluginStage = Join-Path $env:LOCALAPPDATA ('Ultimate-AI-Starter-Bundle\hermes-plugin-src\' + $pluginId)
           if (-not (Test-Path -LiteralPath (Join-Path $pluginStage 'skills') -PathType Container)) {
             Copy-UabsRobo -From (Join-Path $plugins $pluginId) -To $pluginStage
+          }
+          # Hermes loads a plugin from .hermes-plugin/plugin.yaml. Ponytail's
+          # upstream tree ships only a Claude-style plugin.json, which Hermes
+          # rejects with "unsupported or missing Agent Plugins schema" - so write
+          # the Hermes manifest here or the native install can never succeed.
+          $hermesManifest = Join-Path $pluginStage '.hermes-plugin\plugin.yaml'
+          if (-not (Test-Path -LiteralPath $hermesManifest -PathType Leaf)) {
+            New-Item -ItemType Directory -Force -Path (Split-Path $hermesManifest) | Out-Null
+            $pluginVersion = if ($pluginId -eq 'superpowers') { '7.0.0' } else { '5.3.0' }
+            @(
+              "name: $pluginId",
+              "version: $pluginVersion",
+              "description: Bundled $pluginId skills for Hermes Agent"
+            ) | Set-Content -LiteralPath $hermesManifest -Encoding utf8
+            Write-UabsOk ("Hermes: wrote .hermes-plugin/plugin.yaml for $pluginId")
           }
           if (-not (Test-Path -LiteralPath (Join-Path $pluginStage '.git') -PathType Container)) {
             if (-not $gitCmd) {
@@ -1864,10 +1918,35 @@ if (-not $SkillsOnly) {
             $existingMcp = $env:HOUSECARL_MCP
             if ($existingMcp -and (Test-Path $existingMcp) -and -not (Test-UabsPathWithin $existingMcp $target)) {
               $existingRoot = if ($env:HOUSECARL_ROOT -and (Test-Path $env:HOUSECARL_ROOT)) { $env:HOUSECARL_ROOT } else { Split-Path (Split-Path $existingMcp -Parent) -Parent }
-              Set-UabsUserEnv 'HOUSECARL_MCP' $existingMcp
-              Set-UabsUserEnv 'HOUSECARL_ROOT' $existingRoot
-              $installed[$id] = @{ status='kept-external'; mcp=$existingMcp; root=$existingRoot }
-              Write-UabsOk ("houseCARL kept external user install: " + $existingMcp)
+              $want = [string]$comp.version
+              $have = Get-UabsBinaryVersion $existingMcp
+              $cmp = if ($have) { Compare-UabsDottedVersion $have $want } else { $null }
+              # An external install belongs to the user, but it is still the
+              # bundle's job to keep it current: refresh it when it is behind the
+              # bundled version, leave it alone when it is level or ahead, and
+              # never downgrade a newer copy the user installed themselves.
+              if ($null -ne $cmp -and $cmp -lt 0) {
+                $backupRoot = Join-Path $env:LOCALAPPDATA ('Ultimate-AI-Starter-Bundle\backups\houseCARL-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+                New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
+                Copy-Item -LiteralPath $existingRoot -Destination $backupRoot -Recurse -Force
+                $srcMcp = Find-UabsFileUnder $rootExtract 'housecarl-mcp.exe' 8
+                if (-not $srcMcp) { throw 'housecarl-mcp.exe not in zip' }
+                $destServer = Join-Path $existingRoot 'server'
+                New-Item -ItemType Directory -Force -Path $destServer | Out-Null
+                Copy-UabsRoboSafe -From (Split-Path $srcMcp -Parent) -To $destServer -CriticalFiles @('housecarl-mcp.exe')
+                $now = Get-UabsBinaryVersion $existingMcp
+                Set-UabsUserEnv 'HOUSECARL_MCP' $existingMcp
+                Set-UabsUserEnv 'HOUSECARL_ROOT' $existingRoot
+                $installed[$id] = @{ status='external-updated'; mcp=$existingMcp; root=$existingRoot; from=$have; to=$now }
+                Write-UabsOk ("houseCARL external install updated {0} -> {1}: {2} (backup: {3})" -f $have, $now, $existingMcp, $backupRoot)
+              }
+              else {
+                Set-UabsUserEnv 'HOUSECARL_MCP' $existingMcp
+                Set-UabsUserEnv 'HOUSECARL_ROOT' $existingRoot
+                $installed[$id] = @{ status='external-current'; mcp=$existingMcp; root=$existingRoot; version=$have }
+                $label = if ($have) { "v$have" } else { 'version unknown' }
+                Write-UabsOk ("houseCARL external install kept ({0}, bundle has v{1}): {2}" -f $label, $want, $existingMcp)
+              }
             }
             else {
               $mcp = Find-UabsFileUnder $rootExtract 'housecarl-mcp.exe' 8
@@ -1893,9 +1972,31 @@ if (-not $SkillsOnly) {
           elseif ($id -eq 'codebase-memory') {
             $existing = Find-UabsCodebaseMemoryExe
             if ($existing -and -not (Test-UabsPathWithin $existing $target)) {
-              Set-UabsUserEnv 'CODEBASE_MEMORY_MCP' $existing
-              $installed[$id] = @{ status = 'kept-external'; exe = $existing }
-              Write-UabsOk ("codebase-memory kept external user install: " + $existing)
+              $want = [string]$comp.version
+              $have = Get-UabsBinaryVersion $existing
+              if (-not $have) { $have = Get-UabsProcessVersion $existing }
+              $cmp = if ($have) { Compare-UabsDottedVersion $have $want } else { $null }
+              # Same contract as houseCARL and Spooky: refresh a stale external
+              # install, keep a level-or-newer one, never downgrade.
+              if ($null -ne $cmp -and $cmp -lt 0) {
+                $backupRoot = Join-Path $env:LOCALAPPDATA ('Ultimate-AI-Starter-Bundle\backups\codebase-memory-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+                New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
+                Copy-Item -LiteralPath $existing -Destination $backupRoot -Force
+                [void](Stop-UabsProcessUsingExecutable $existing)
+                $srcExe = Find-UabsFileUnder $rootExtract 'codebase-memory-mcp.exe' 6
+                if (-not $srcExe) { throw 'codebase-memory-mcp.exe not in the bundled archive' }
+                Copy-Item -LiteralPath $srcExe -Destination $existing -Force
+                $now = Get-UabsProcessVersion $existing
+                Set-UabsUserEnv 'CODEBASE_MEMORY_MCP' $existing
+                $installed[$id] = @{ status='external-updated'; exe=$existing; from=$have; to=$now }
+                Write-UabsOk ("codebase-memory external install updated {0} -> {1}: {2} (backup: {3})" -f $have, $now, $existing, $backupRoot)
+              }
+              else {
+                Set-UabsUserEnv 'CODEBASE_MEMORY_MCP' $existing
+                $installed[$id] = @{ status='external-current'; exe=$existing; version=$have }
+                $label = if ($have) { "v$have" } else { 'version unknown' }
+                Write-UabsOk ("codebase-memory external install kept ({0}, bundle has v{1}): {2}" -f $label, $want, $existing)
+              }
             }
               else {
                 New-Item -ItemType Directory -Force -Path $target | Out-Null
@@ -1919,9 +2020,26 @@ if (-not $SkillsOnly) {
           elseif ($id -eq 'spooky') {
             $existingRoot = $env:SPOOKY_AUTOMOD_ROOT
             if ($existingRoot -and (Test-Path (Join-Path $existingRoot 'SpookysAutomod.sln')) -and -not (Test-UabsPathWithin $existingRoot $target)) {
-              Set-UabsUserEnv 'SPOOKY_AUTOMOD_ROOT' $existingRoot
-              $installed[$id] = @{ status='kept-external'; root=$existingRoot }
-              Write-UabsOk ("Spooky kept external user install: " + $existingRoot)
+              $want = [string]$comp.version
+              $have = Get-UabsPathVersion $existingRoot
+              $cmp = if ($have) { Compare-UabsDottedVersion $have $want } else { $null }
+              # Same rule as houseCARL: update an older external toolkit in
+              # place, never touch one that is level or ahead of the bundle.
+              if ($null -ne $cmp -and $cmp -lt 0) {
+                $backupRoot = Join-Path $env:LOCALAPPDATA ('Ultimate-AI-Starter-Bundle\backups\spooky-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
+                New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
+                Copy-Item -LiteralPath $existingRoot -Destination $backupRoot -Recurse -Force
+                Copy-UabsRoboSafe -From $rootExtract -To $existingRoot
+                Set-UabsUserEnv 'SPOOKY_AUTOMOD_ROOT' $existingRoot
+                $installed[$id] = @{ status='external-updated'; root=$existingRoot; from=$have; to=$want }
+                Write-UabsOk ("Spooky external install updated {0} -> {1} (backup: {2})" -f $have, $want, $backupRoot)
+              }
+              else {
+                Set-UabsUserEnv 'SPOOKY_AUTOMOD_ROOT' $existingRoot
+                $installed[$id] = @{ status='external-current'; root=$existingRoot; version=$have }
+                $label = if ($have) { "v$have" } else { 'version unknown' }
+                Write-UabsOk ("Spooky external install kept ({0}, bundle has v{1}): {2}" -f $label, $want, $existingRoot)
+              }
             }
             else {
               New-Item -ItemType Directory -Force -Path $target | Out-Null
@@ -2535,7 +2653,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.16.1'
+version = '8.17.0'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

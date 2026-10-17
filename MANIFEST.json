@@ -32707,12 +32707,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 57523,
-  "sha256": "a636d1a5012d3503ab56b56f96d747cd06323f3481865228e252aab2c5f44977"
+  "sha256": "b0b54d91defc035c4fbe31d365f56dcf55ce9e91b85f8cdfec6efa5f079e13f6"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1589,
-  "sha256": "a20d45b22a8f3093dc2582a04162e9a724c16a8acf39ec372a3bb9541f245ce2"
+  "sha256": "f7807a86f1423d852a8ddeb6963948ee6188c4868e331c7ec4073a5fb03a14ae"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -32722,7 +32722,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 35574,
-  "sha256": "6040ee40025b1788ac34e8d9dc2c9e5cbb4887a4cf7f1925b984f19660c8ea9a"
+  "sha256": "aa2f69a06211d11fdf6b2fa4c9be4fef5e93d5b583df02daabb2eab133e5281e"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -32861,8 +32861,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/packs/skyrim/INSTRUCTIONS.md",
-  "size": 1654,
-  "sha256": "264fa9db36d5a0c59b112f2430c609edfd73074cbd421a4336621a3c5e07705d"
+  "size": 2727,
+  "sha256": "b41ec6a37be7c70ef0693b760a74eb4727d8eb8bd5777da2bf9d2b5154a23674"
  },
  {
   "path": "BUNDLED-TOOLS/packs/skyrim/legacy/039b9d9c81f0.md",
@@ -36541,8 +36541,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 206792,
-  "sha256": "615c04024b090e4d5ac4fe1f0f4a0006862bc45dd50d513b34aed7545893bb74"
+  "size": 208905,
+  "sha256": "31130b18c013c92f999abd6f4b12668ee1421fd7a99a25e2d7b7460d171459b8"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -36616,8 +36616,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 162854,
-  "sha256": "c971960d7c40bb425ed1e083db24d8282230ee11c6ac864a27267c23fa362930"
+  "size": 170615,
+  "sha256": "dde06dec90583be57ba5090b85422e51ebd001093f6b6c99051e93c0b78f9d91"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -36671,8 +36671,8 @@
  },
  {
   "path": "README.md",
-  "size": 60476,
-  "sha256": "9bc04ba73a39719daff236d6c6465b4fb31f1ea024c9590cf0b73a11387d91cf"
+  "size": 61730,
+  "sha256": "eaffa697d314627e0a32ac9a92e0df88aeaba6cd0e7279ebce567cc0cc3be164"
  },
  {
   "path": "SECURITY.md",
@@ -36682,12 +36682,12 @@
  {
   "path": "START-HERE.bat",
   "size": 888,
-  "sha256": "bad11ae9f2fd7263a6ac13072036003a9f7de65887af5d4770b2495058d514f7"
+  "sha256": "d53474be744492ece0388cfeec747ef321e86c48784d97cc83410bad082c2028"
  },
  {
   "path": "START-HERE.txt",
   "size": 11406,
-  "sha256": "a095b0f05c1f6821ea4811b784f77f61370937e93e240c96320b5b63b11ec9c2"
+  "sha256": "9177a6b3231fb626b7f9d11f8980bbc0893d329a6ebed0dc215e8e228048c40f"
  },
  {
   "path": "STATE.md",
@@ -37016,8 +37016,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 320065,
-  "sha256": "d47cc7af35b89cf7ded632d9cbeb91b8b12d6d160b6944c70999a8aafd35799d"
+  "size": 321981,
+  "sha256": "fcb251bb297e4d4f898a0b31cb9705de819db3737a8921abb27e72eb19b3d7cf"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -37166,8 +37166,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 136597,
-  "sha256": "62087eea62ca2fc40dfbd76fda418e8fc925c4a237cff063dc2945c2e8d86712"
+  "size": 138921,
+  "sha256": "8316a931ca65ac70ce7494e0d2125cba00d20423436ce21c8f0fcfa9ee956b91"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
@@ -37367,7 +37367,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2825,
-  "sha256": "5f6418092a7abebb74a9b97fe3153b9051575287c5280e44a8abb467554695d4"
+  "sha256": "cd89ad957e0954d6de3de78fc7efe04eae5cc59184abf344619da652d431c77e"
  },
  {
   "path": "VALIDATION.md",
@@ -37377,7 +37377,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "beab1d1b4fc9abaebaa0c78f9b8b9c96a1892d49eb0ecb4d6602d18fbc8019db"
+  "sha256": "0958fda5beebaa616ef54225850a8f401437a8fcc63b97cd63652021d65adf19"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -44273,6 +44273,11 @@
   "path": "docs/history/V8.16.1-CHANGELOG.md",
   "size": 300,
   "sha256": "886b2e0760176c34cb5b17101a0912ff9fe32e3568068f87733627ae7f932539"
+ },
+ {
+  "path": "docs/history/V8.17.0-CHANGELOG.md",
+  "size": 2113,
+  "sha256": "bd64f565eaa8137e43f8271b15b174c68b025dc66ada621302012580c71f784c"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",

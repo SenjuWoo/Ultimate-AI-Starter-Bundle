@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.16.1 -->
+<!-- Ultimate AI Starter Bundle v8.17.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.16.1
+# Ultimate AI Starter Bundle v8.17.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -678,6 +678,8 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 **Skyrim Forge 6.0.1** is released from [SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge) and installed by this bundle only with the Skyrim pack. CATALOG.json pins the release tag, archive and SHA-256; the installer takes the Full-Offline copy or downloads it, refuses an archive whose digest differs before extracting, installs into ONE versionless root (migrating a version-stamped install, preserving `Workspaces` and the virtualenv), refreshes the provider descriptors, sets `SKYRIM_FORGE_ROOT`, and proves the result with `forge doctor`. This repository's CI installs that exact release end to end, which is the check v7.8.0 lacked when the two repositories drifted. Its 52-tool MCP is not global: `game-skyrim` activates it only for matching Claude/Grok/trusted Codex projects; Kimi/Hermes use the CLI through the skill. Choose where it lands with `-ForgeRoot`; the default is `%LOCALAPPDATA%\Skyrim-Tools\Skyrim-Forge`.
 
+**Who owns what.** The Skyrim toolchain is owned by that pack and by Skyrim Forge, not by the general bundle: houseCARL, Spooky's Automod Toolkit, xEdit/SSEEdit, LOOT, the Creation Kit, and the user's own tool root (on this machine `S:\Apps\Skyrim Tools`). When one of those already exists outside the bundle the installer is version-aware - an older copy is refreshed in place after a timestamped backup under `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups`, a same-or-newer copy is left untouched and reported with both versions, and nothing is ever downgraded. With no existing tool root the install stays inside the bundle's own folder. None of it is required for AI boost, coding, or modding other engines - leave the pack switched off and nothing Skyrim-related is installed.
+
 ## Update tools later
 
 ```powershell
@@ -875,6 +877,8 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.17.0** - 2026-10-17. External tool installs became version-aware: an older local copy of houseCARL, Spooky or codebase-memory is refreshed in place with a backup instead of being parked, and nothing is downgraded. Hermes can install ponytail natively (it now gets a `.hermes-plugin` manifest), Claude's stale marketplace paths are repaired, and the Skyrim pack gains verify-first wording plus an ownership section. [Changes](docs/history/V8.17.0-CHANGELOG.md).
 
 **v8.16.1** - 2026-10-17. Ships the regenerated workspace AIO mirror (11,397 -> 9,083 B) so the archive matches the 8.16.0 notes; no rule changes.
 

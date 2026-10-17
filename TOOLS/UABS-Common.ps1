@@ -1343,6 +1343,62 @@ function Sync-UabsProviderSkills(
   }
 }
 
+function Get-UabsBinaryVersion([string]$Path) {
+  # Reads a dotted version out of a Windows binary's version resource. Returns
+  # $null for non-.NET/Go binaries that carry no version info - callers must
+  # treat that as "unknown", never as "older".
+  if (-not $Path -or -not (Test-Path -LiteralPath $Path -PathType Leaf)) { return $null }
+  try {
+    $vi = (Get-Item -LiteralPath $Path).VersionInfo
+    foreach ($candidate in @($vi.ProductVersion, $vi.FileVersion)) {
+      if ($candidate -and ($candidate -match '^\s*(\d+(?:\.\d+){1,3})')) { return $Matches[1] }
+    }
+  } catch { }
+  return $null
+}
+
+function Get-UabsPathVersion([string]$Path) {
+  # Fallback for directory installs that stamp the version into a directory
+  # name, e.g. ...\spookys-automod-toolkit-v1.11.2\spookys-automod-toolkit.
+  # Walks a few levels up because the versioned folder is often the parent.
+  if (-not $Path) { return $null }
+  $probe = $Path
+  for ($i = 0; $i -lt 3 -and $probe; $i++) {
+    $leaf = Split-Path $probe -Leaf
+    if ($leaf -and ($leaf -match '(?i)(?:^|[-_ ])v?(\d+\.\d+\.\d+)')) { return $Matches[1] }
+    $probe = Split-Path $probe -Parent
+    if (-not $probe) { break }
+  }
+  return $null
+}
+
+function Get-UabsProcessVersion([string]$Exe) {
+  # Some binaries (Go builds, static tools) carry no version resource. Ask them
+  # instead, with a short-lived child so a hung tool cannot block the installer.
+  if (-not $Exe -or -not (Test-Path -LiteralPath $Exe -PathType Leaf)) { return $null }
+  try {
+    $out = & $Exe --version 2>&1 | Select-Object -First 1
+    if ($out -and ($out -match '(\d+\.\d+\.\d+)')) { return $Matches[1] }
+  } catch { }
+  return $null
+}
+
+function Compare-UabsDottedVersion([string]$Left, [string]$Right) {
+  # -1 / 0 / 1 like a normal version compare. Missing segments count as zero, so
+  # "2.0.5" > "1.9.0" and "1.9" == "1.9.0".
+  if (-not $Left -or -not $Right) { return $null }
+  $l = @($Left -split '\.' | ForEach-Object { [int]($_ -replace '\D', '') })
+  $r = @($Right -split '\.' | ForEach-Object { [int]($_ -replace '\D', '') })
+  $n = [Math]::Max($l.Count, $r.Count)
+  for ($i = 0; $i -lt $n; $i++) {
+    $a = if ($i -lt $l.Count) { $l[$i] } else { 0 }
+    $b = if ($i -lt $r.Count) { $r[$i] } else { 0 }
+    if ($a -gt $b) { return 1 }
+    if ($a -lt $b) { return -1 }
+  }
+  return 0
+}
+
 function Copy-UabsRoboSafe([string]$From, [string]$To, [string[]]$CriticalFiles = @()) {
   foreach ($rel in $CriticalFiles) {
     $destFile = Join-Path $To $rel
