@@ -876,6 +876,8 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
+**v8.16.1** - 2026-10-17. Ships the regenerated workspace AIO mirror (11,397 -> 9,083 B) so the archive matches the 8.16.0 notes; no rule changes.
+
 **v8.16.0** - 2026-10-17. Prompt layer rebuilt for capability, not prohibition:
 the soul drops the dead `--spicy`/`BREAK FREE` text (1,591 -> 735 B), the contract
 drops 11,418 -> 9,082 B, and the blanket "never invent a tool" becomes a
