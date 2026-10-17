@@ -23,7 +23,8 @@
   Catalog, evaluations doc and the RE reference updated; the machine's global
   install moved to 6.5.0. Receipts: `artifacts/audit-20261016-rea-*`.
 - New `tool-discovery` reference `references/modding-bench.md` (skill metadata
-  5.1.0 -> 5.2.0): maps `Z:\Backup\Ai Documentation\Modding` by engine route
+  5.1.0 -> 5.2.0): maps the `Modding` bench folder beside the pack documentation
+  by engine route
   (native RE, Unreal, Unity, Godot, MUGEN family, Frostbite, per-game) with the
   rules that keep the game install and the bench untouched. Fanned out to all
   five provider trees.

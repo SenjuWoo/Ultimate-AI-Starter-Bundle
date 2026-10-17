@@ -6156,8 +6156,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
-  "size": 3589,
-  "sha256": "53e1babad300eb0fcb0e8090d44db095b21fe94d4a68d7cccf6a24aa3c74a493"
+  "size": 3686,
+  "sha256": "12324ffa3e1cea270599b10538c081335acf9c9affaf0651ac9da21ae1b4055c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/reverse-engineering.md",
@@ -12631,8 +12631,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
-  "size": 3589,
-  "sha256": "53e1babad300eb0fcb0e8090d44db095b21fe94d4a68d7cccf6a24aa3c74a493"
+  "size": 3686,
+  "sha256": "12324ffa3e1cea270599b10538c081335acf9c9affaf0651ac9da21ae1b4055c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/reverse-engineering.md",
@@ -19091,8 +19091,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
-  "size": 3589,
-  "sha256": "53e1babad300eb0fcb0e8090d44db095b21fe94d4a68d7cccf6a24aa3c74a493"
+  "size": 3686,
+  "sha256": "12324ffa3e1cea270599b10538c081335acf9c9affaf0651ac9da21ae1b4055c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/reverse-engineering.md",
@@ -25551,8 +25551,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
-  "size": 3589,
-  "sha256": "53e1babad300eb0fcb0e8090d44db095b21fe94d4a68d7cccf6a24aa3c74a493"
+  "size": 3686,
+  "sha256": "12324ffa3e1cea270599b10538c081335acf9c9affaf0651ac9da21ae1b4055c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/reverse-engineering.md",
@@ -32086,8 +32086,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
-  "size": 3589,
-  "sha256": "53e1babad300eb0fcb0e8090d44db095b21fe94d4a68d7cccf6a24aa3c74a493"
+  "size": 3686,
+  "sha256": "12324ffa3e1cea270599b10538c081335acf9c9affaf0651ac9da21ae1b4055c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/reverse-engineering.md",
@@ -36681,8 +36681,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 24050,
-  "sha256": "e0a8c836fe0718e9dce34ec790680d4c05c0a7a78153f9a464c23408039d7723"
+  "size": 24072,
+  "sha256": "bdf7ab0bd2869f38bd7a3f7b0d43932ac73482c83bebcee885e9a75a72798542"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -43356,8 +43356,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/modding-bench.md",
-  "size": 3589,
-  "sha256": "53e1babad300eb0fcb0e8090d44db095b21fe94d4a68d7cccf6a24aa3c74a493"
+  "size": 3686,
+  "sha256": "12324ffa3e1cea270599b10538c081335acf9c9affaf0651ac9da21ae1b4055c"
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/reverse-engineering.md",
@@ -44256,8 +44256,8 @@
  },
  {
   "path": "docs/history/V8.15.2-CHANGELOG.md",
-  "size": 6580,
-  "sha256": "8dff1da4d8549ed8bf20fd1cd58fcfc9d7c8f216dfd11533ec1d086c2d27419a"
+  "size": 6600,
+  "sha256": "77261ff61ce8b7b47423a74300e99e602ce14f9cddcb5a12135700d56651c047"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",

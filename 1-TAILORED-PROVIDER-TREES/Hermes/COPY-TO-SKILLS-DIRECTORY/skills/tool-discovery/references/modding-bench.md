@@ -1,13 +1,14 @@
 # Local modding bench (agent map)
 
-The owner's machine keeps a game-modding tool bench at
-`Z:\Backup\Ai Documentation\Modding` (~5 GB, inventoried 2026-10-16). It is
-reference tooling, not part of this pack and never an install target for it:
-resolve a tool from it only when the current task needs one, and prefer the
+The owner's machine keeps a game-modding tool bench in a `Modding` folder beside
+the folder holding this bundle's documentation (~5 GB, inventoried 2026-10-16).
+It is reference tooling, not part of this pack and never an install target for
+it: resolve a tool from it only when the current task needs one, and prefer the
 route below over reinstalling anything.
 
-Hardcoding that path as authority is wrong for other machines - it is a hint
-for this one, like every path in this skill.
+Resolve the bench root from what the owner says in the current conversation.
+It is a hint for one machine, like every path in this skill - never hardcode a
+drive letter as authority.
 
 ## Which tool for which route
 
