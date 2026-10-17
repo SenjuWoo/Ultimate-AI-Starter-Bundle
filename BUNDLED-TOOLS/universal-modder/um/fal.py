@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import base64
 import getpass
+import hashlib
 import json
 import mimetypes
 import os
@@ -97,7 +98,11 @@ def key_file() -> Path:
 
 
 def mask(k: str) -> str:
-    return (k[:6] + "…" + k[-4:]) if len(k) > 14 else "…"
+    # UABS: a fingerprint, not key characters. The upstream version printed the
+    # first six and last four characters of the key in `um fal key status`,
+    # which lands key material in terminal scrollback, logs and screenshots.
+    return ("sha256:" + hashlib.sha256(k.encode("utf-8")).hexdigest()[:12]
+            + " (%d chars)" % len(k))
 
 
 def _secret_tool(*args: str, value: str | None = None) -> subprocess.CompletedProcess | None:

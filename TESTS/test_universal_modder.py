@@ -82,6 +82,12 @@ def main():
                 assert name in archive.namelist(), name
     assert component["source_commit"] == "23902ef42e8ea9b077bfbbf6911eb8ea0348e55a"
     assert not component["mcp"] and not component["auto_register"]
+    # `um fal key status` must never print key characters: the UABS patch keeps
+    # masked values to a sha256 fingerprint (upstream printed key[:6]/key[-4:],
+    # which CodeQL flags as clear-text logging of sensitive data).
+    fal_source = (VENDOR / "um/fal.py").read_text(encoding="utf-8")
+    assert "k[:6]" not in fal_source and "sha256:" in fal_source, (
+        "um/fal.py prints key characters again; re-apply the UABS fal patch")
     for provider in component["providers"]:
         skill = ROOT / f"1-TAILORED-PROVIDER-TREES/{provider}/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder"
         assert (skill / "SKILL.md").exists(), provider

@@ -32696,13 +32696,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 59863,
-  "sha256": "fcfd51fbe0847ed0e5c66fdf050f62a2ef95a75b338670b02fd942da1537d8bb"
+  "size": 60028,
+  "sha256": "f3692be8f3478b63f48b96264183f6568d84431e34facf544b827022d8fdf543"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1659,
-  "sha256": "8c904145f75ea09fd845aba9a3e5a861ad773bdcc7a9e6ed1a338ff404003e27"
+  "sha256": "d2a9ca5958b7ba0acb7214f2bb728a37dc1e81d47460c22eee36012569c1eb8d"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -32836,8 +32836,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.23902ef-py3-none-any.whl",
-  "size": 1999570,
-  "sha256": "730801d3453610b7341fc936f8d3fcc3f4aec70df8ac28ae96f5aaabd4de62e5"
+  "size": 1999701,
+  "sha256": "3eca8d0f16bab5cb278e37ffab540699100fb485355969138ed36ee7c3fd1d82"
  },
  {
   "path": "BUNDLED-TOOLS/optional-profiles/autonomous-builder.md",
@@ -36456,8 +36456,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/fal.py",
-  "size": 34062,
-  "sha256": "99e970233f74ed9dfb10b01a9bec6fbed959f0e66dfeeee40cd2e5f9e4c3be09"
+  "size": 34361,
+  "sha256": "c3559fc25cadfb07cafc4f4e8f8124485b7d1309b4fa5d441e875220727c7a0d"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/fonts/JetBrainsMono-Bold.ttf",
@@ -37021,8 +37021,8 @@
  },
  {
   "path": "TESTS/test_universal_modder.py",
-  "size": 4890,
-  "sha256": "83d23e0a31d528402d8dd8f42036bfd5f935242b296e2dd35f4aced1b58e8935"
+  "size": 5331,
+  "sha256": "fc1ceabfa09fb97ea6d4d2d630ab115e63d87cdf36561c0419b5143e57380994"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
@@ -37316,8 +37316,8 @@
  },
  {
   "path": "TOOLS/refresh_universal_modder.py",
-  "size": 17257,
-  "sha256": "647dac0d02c7558d4187cb9d511d0109c4e8139e2b183f6fbbba7484891b8f55"
+  "size": 18160,
+  "sha256": "f40aaada01df2c36107dedaf75326c978d7813946d3005f92abd52b514035da7"
  },
  {
   "path": "TOOLS/registry-additions.json",

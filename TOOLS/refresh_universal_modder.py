@@ -77,6 +77,19 @@ PATCHES: list[tuple[str, str, str]] = [
     ("um/publish.py",
      '        if not any("fal" in f.read_text(errors="replace").lower() for f in readmes):\n',
      '        if not any("fal" in f.read_text(encoding="utf-8", errors="replace").lower() for f in readmes):\n'),
+    # `um fal key status` printed the first six and last four characters of the
+    # key, which puts key material into terminal scrollback, logs and
+    # screenshots - CodeQL flagged it (py/clear-text-logging-sensitive-data).
+    # Print a sha256 fingerprint and the length instead.
+    ("um/fal.py", "import getpass\n", "import getpass\nimport hashlib\n"),
+    ("um/fal.py",
+     'def mask(k: str) -> str:\n    return (k[:6] + "…" + k[-4:]) if len(k) > 14 else "…"\n',
+     'def mask(k: str) -> str:\n'
+     '    # UABS: a fingerprint, not key characters. The upstream version printed the\n'
+     '    # first six and last four characters of the key in `um fal key status`,\n'
+     '    # which lands key material in terminal scrollback, logs and screenshots.\n'
+     '    return ("sha256:" + hashlib.sha256(k.encode("utf-8")).hexdigest()[:12]\n'
+     '            + " (%d chars)" % len(k))\n'),
     # Steam libraries through the registry: Program Files is not where Steam
     # lives on a secondary drive or a renamed folder.
     ("um/scan.py",
