@@ -36661,8 +36661,8 @@
  },
  {
   "path": "README.md",
-  "size": 58494,
-  "sha256": "5dbe4ae22dcfe952b80750b2833d24f1fed9ed5ab1338e74cc7caa9fb55b0c91"
+  "size": 59450,
+  "sha256": "2efe839bccc639fee72235935efd30d235bcbad926aecb41b074320bacff332f"
  },
  {
   "path": "SECURITY.md",
@@ -36681,8 +36681,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 25623,
-  "sha256": "481a54a2dc8e885d3a7ad77ea2eeefef750ae51d976e9fff7037705e0d8055b9"
+  "size": 27361,
+  "sha256": "e6466ef2dc4e5b332e18da83aed828097f19e93d900a502f69282bcb535f2a67"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -43801,8 +43801,8 @@
  },
  {
   "path": "docs/TOOL-EVALUATIONS.md",
-  "size": 43449,
-  "sha256": "64d4b3003458ceb529bcda6279caec6c4d0e053c84a0ebf8201208e31fd6cabc"
+  "size": 48473,
+  "sha256": "c02ae22230320fc2f93e13128092c17c49c8d12c10e06dc82de28e5c38ac6817"
  },
  {
   "path": "docs/USAGE-ECONOMY.md",

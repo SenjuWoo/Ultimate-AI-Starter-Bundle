@@ -1,5 +1,32 @@
 # Bundle audit state
 
+## Post-v8.15.2: caveman + OmniRoute evaluated, not installed (2026-10-16, docs only)
+
+- Owner asked about JuliusBrussee/caveman 4.0.1 (Apache-2.0, npm
+  `@caveman-ai/cli`) and diegosouzapw/OmniRoute 3.8.51 (MIT). Both analysed and
+  documented in the README third-party table and `docs/TOOL-EVALUATIONS.md`;
+  neither is installed or vendored.
+- Caveman conflicts structurally, not stylistically: its installer writes the
+  same provider files this pack owns (pinned `installer/install.js` names
+  hooks/`settings.json`/statusline/`SOUL.md`/`AGENTS.md`/skills heavily, and it
+  installs native Hermes skills), its routing layer repoints
+  `ANTHROPIC_BASE_URL`, and `Auto` switches models per request - the
+  `token-efficiency` invariant forbids that as a default. Against Ponytail the
+  pack already holds the head-to-head data: Ponytail's vendored benchmark
+  (5 tasks x 3 models x 10 runs) shows 39/44/51 median LOC vs caveman's
+  116/120/67, cheaper on Haiku/Sonnet, shortest latency.
+- OmniRoute conflicts by invariant: it takes over provider endpoints and keys
+  for ten targets (13 `setup-*` commands) and its economics rest on stacked
+  third-party free tiers; its own catalog marks 13 providers `tos: avoid`.
+- Evidence: static reading of both pinned installers, README/INSTALL, npm and
+  repo metadata. No installer executed, no gateway started, no credentials
+  used.
+- Plan on file (not started): a pack-owned terse-output skill adapted from
+  caveman's `say less` voice rules with Apache-2.0 attribution and no
+  hooks/routing/installer - sized for v8.15.3. OmniRoute stays an out-of-scope
+  opt-in that users run as their own layer, never as the bundle's route.
+- Docs-only change; it rides in the next release's archives.
+
 ## v8.15.2: companion tool review + upstream refreshes (2026-10-16)
 
 - Universal Modder refreshed `5ba8150` -> `23902ef` (38 upstream commits, 103

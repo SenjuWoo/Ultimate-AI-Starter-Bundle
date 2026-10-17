@@ -1,5 +1,89 @@
 # Tool evaluations
 
+## 2026-10-16 — Caveman and OmniRoute: evaluated, conflicting, not installed
+
+Both tools were analysed on request. Neither enters the bundle's install path,
+because both take over files or traffic this pack owns. What follows is what
+was checked and what the conflict is; nothing was executed beyond metadata and
+static reading of the pinned installers.
+
+**Caveman 4.0.1** (JuliusBrussee/caveman, Apache-2.0, npm `@caveman-ai/cli`
+4.0.1). A voice layer ("say less": 63 → 20 tokens for the same fix, rules built
+on ASD-STE100) plus input shrinking (claimed 33.2% fewer input tokens per
+session), an `Auto` model/effort picker, a Blocks code mode and Browse
+compression. External support: an Adobe Research paper, a JetBrains paired A/B,
+Elasticsearch Labs. Checked 2026-10-16: repository, README, INSTALL.md, npm
+metadata with its tarball integrity, and `installer/install.js` at the pinned
+`v4.0.1` tag.
+
+The conflict is structural, not stylistic:
+
+- Its installer is the same class of software as this pack's: it detects every
+  agent on the machine and runs that agent's native install path. In the pinned
+  installer, `hooks` appears 157 times, `settings.json` 27, `statusline` 23,
+  `hermes` 22, `AGENTS.md` 15, `SOUL.md` 7 - i.e. it writes the exact files
+  this bundle wires and verifies (the pack's doctor hashes provider-tailored
+  skill bytes and its contracts assume one writer per provider file).
+- Its routing layer repoints `ANTHROPIC_BASE_URL` (installer comment: "a
+  caveman route (`ANTHROPIC_BASE_URL` + `_CLAUDE_CODE_ASSUME_FIRST_PARTY_...`)"),
+  and `Auto` picks models per request. The bundled `token-efficiency` skill
+  states the opposite rule for this pack: do not change models by default, and a
+  free auto-router is not a cheaper main model.
+- Its compression and browsing layers duplicate what this bundle already ships
+  with measured evidence: RTK for tool output, the OMNI ledger (catalog-only),
+  Headroom, and the Playwright CLI browser recipe.
+- An optional `--with-mcp-shrink` MCP proxy adds one more always-on process.
+
+Against Ponytail, the overlap is partial, and the pack already has the data:
+Ponytail's own benchmark suite (vendored in the pack's cache at
+`BUNDLED-TOOLS/cache/ponytail-4.10.1-audit`) runs three arms - no skill,
+Caveman, Ponytail - over five everyday tasks on three Claude models, ten runs
+per cell. Median code produced: Caveman 116/120/67 lines vs Ponytail
+39/44/51 (Haiku/Sonnet/Opus); cost about equal, Ponytail cheaper on
+Haiku/Sonnet; latency Ponytail's. So for shaping code, Ponytail is the better
+tool and it is already bundled. Caveman's real edge is elsewhere - terse prose
+and input-side shrinking - and installing it would take over the files Ponytail
+and this pack are wired through.
+
+**OmniRoute 3.8.51** (diegosouzapw/OmniRoute, MIT). A local gateway: point each
+CLI at `http://localhost:20128/v1`, and it routes across hundreds of providers
+with quota-aware fallback ("19 routing strategies"), stacking free tiers and
+running RTK + Caveman compression inside. It ships 13 registered `setup-*`
+commands and `omniroute run` launches seven CLIs. Checked 2026-10-16:
+repository, README, release v3.8.51, npm metadata.
+
+The conflict is the pack's standing invariant:
+
+- It takes over provider endpoints and configuration for ten targets, which is
+  again the file/traffic ownership this pack's installer, doctor and release
+  contracts assume they alone hold.
+- Its economics rest on stacked third-party free tiers. The bundled
+  `token-efficiency` skill pins the opposite: "openrouter/free" selects at
+  random, a $0 account is 50 requests/day, Cloudflare's pool is neurons, and
+  neither becomes a default. The project's own README marks 13 providers
+  `tos: avoid` and notes providers may reject third-party clients.
+- It bundles RTK and Caveman compression, so on a pack machine it would layer a
+  second compression stack over the one already installed and measured.
+
+Nothing was installed or executed for either tool - no installer run, no
+gateway started, no credentials used. The verdicts rest on the pinned
+installers, published metadata and the pack's own contracts.
+
+**Plan if the owner wants these capabilities:**
+
+1. Prose terseness (the one layer this pack lacks): implement it as a
+   pack-owned skill - the rules, not the CLI. Apache-2.0 permits reuse with
+   attribution; that means a small `terse-output` skill adapted from Caveman's
+   `say less` voice, wired like every other skill, covered by a contract test,
+   with no hooks, no routing, no installer. Estimated: a v8.15.3-sized change.
+2. Input/tool-output compression: RTK already ships and is measured; add the
+   OMNI ledger only if its ~5% corpus number justifies a project-data cache on
+   the target machine.
+3. Routing and free-tier stacking: out of scope for this pack by rule. Users
+   who want OmniRoute should run it as their own separate layer, accepting that
+   the pack's doctor then reports the provider-config drift, and never as the
+   bundle's default route.
+
 ## 2026-10-16 — companion tools checked (documented, not shipped)
 
 CLI-Anything 0.4.0 (HKUDS, Apache-2.0): a hub of per-app agent CLIs - Blender,
