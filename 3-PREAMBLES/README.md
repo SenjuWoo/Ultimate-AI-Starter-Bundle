@@ -17,7 +17,7 @@ machine comes up with the same agent behaviour as the operator's own setup.
 
 | File | What it is | Where it goes |
 |---|---|---|
-| `SOUL.md` | The operator's soul config: unrestraint declaration, no-yes-man rule, source-recency rule, consent framing - one line each, no filler (728 B after the v8.15.1 cleanup). Identity-neutral - it names no provider. | Appended to Claude / Codex / Kimi / Grok instruction files, **and** copied verbatim to Hermes home |
+| `SOUL.md` | The operator's soul config: permission to write anything, no-yes-man rule, source-recency rule, consent framing - one line each, no filler (735 B after the v8.16.0 rewrite; the dead `--spicy` flag and the `BREAK FREE` theater are gone). Identity-neutral - it names no provider. | Appended to Claude / Codex / Kimi / Grok instruction files, **and** copied verbatim to Hermes home |
 | `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md` | The operating contract (`0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, unchanged). Finish-the-job, no yes-man, verify-don't-assume, adult fiction in scope. | Appended right after the SOUL block in the same files |
 | `MANUAL-PASTE.txt` | SOUL + the Web AIO variant (`0-UNRESTRAINT-PACKS/AIO-INSTRUCTION — Web.md`) concatenated, pure ASCII. For web UIs that have no instruction file. | ChatGPT / Gemini / any web chat custom-instructions box, pasted by hand |
 

@@ -2253,9 +2253,15 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "8a3616243ff6bf7404077449ed8a6f35b66d2ee744487c0f69d36a0db2983351", (
+    assert digest == "0dc744ce14a3d8bf67e857604d9dc105018ef3f298e62fce1164e11bd16d3cf5", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
+    )
+    assert "$targets = @($targets | Where-Object" in read(ROOT / "INSTALL-AIO.ps1"), (
+        "the installer can still write the private profile block into a SOUL.md"
+    )
+    assert "MACHINE-MAP.md" in block, (
+        "the preamble no longer tells the model where machine paths are recorded"
     )
     assert "<!--" not in block, "wired preamble contains an HTML comment marker"
     assert "generated" not in block.lower(), "wired preamble contains a generated token"

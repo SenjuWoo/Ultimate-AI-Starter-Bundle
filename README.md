@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.15.2 -->
+<!-- Ultimate AI Starter Bundle v8.16.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.15.2
+# Ultimate AI Starter Bundle v8.16.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -514,7 +514,7 @@ OpenRouter fallback, vision and compression settings are not local-only.
 Installed by default with a **bundle-owned narrow hook**; RTK's broad upstream
 hook remains disabled. [RTK](https://github.com/rtk-ai/rtk) (Apache-2.0, single
 Rust binary) filters noisy dev commands. Measured here
-**at rtk 1.0.0** (Apache-2.0 OSS edition) against **pinned tag ranges**, so the corpus cannot drift:
+**at rtk 1.0.1** (Apache-2.0 OSS edition) against **pinned tag ranges**, so the corpus cannot drift:
 
 | Command | Raw | Through rtk | Saved |
 |---|---|---|---|
@@ -875,6 +875,18 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.16.0** - 2026-10-17. Prompt layer rebuilt for capability, not prohibition:
+the soul drops the dead `--spicy`/`BREAK FREE` text (1,591 -> 735 B), the contract
+drops 11,418 -> 9,082 B, and the blanket "never invent a tool" becomes a
+discovery rule that tells the model to find the installer and use it. The
+private profile and machine map no longer land in any `SOUL.md` (the installer
+skips soul files), the four smaller variants lose two thirds of their weight,
+and the bundled tools move where the audit allows: codebase-memory 0.12.1,
+headroom 0.41.0, rtk 1.0.1, ponytail 5.3.2 - every offline asset re-hashed and
+the manifest rebuilt. houseCARL 1.9.0, unity-mcp 0.91.0 and impeccable 3.6.1
+stay on their documented holds rather than being bumped blind. Seven legacy
+soul copies and `docs/history/V5-CHANGELOG.md` are gone. [Changes](docs/history/V8.16.0-CHANGELOG.md).
 
 **v8.15.2** - 2026-10-16. Tool refresh and companion review: Universal
 Modder is re-vendored from upstream `23902ef` with a rebuilt offline wheel, its

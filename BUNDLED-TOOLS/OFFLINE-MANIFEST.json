@@ -1,52 +1,52 @@
 {
-  "generated": "2026-10-16",
-  "pack_version": "8.15.2",
-  "assets": [
-    {
-      "file": "codebase-memory-mcp-windows-amd64.zip",
-      "size": 39858881,
-      "sha256": "6eb6beaf261b19e419766e78baf93cbc3cf1c6338cff8fb7c0234859f96d1685"
-    },
-    {
-      "file": "github-mcp-server-2.0.2-windows-x86_64.zip",
-      "size": 9428417,
-      "sha256": "4ae64087501650752f21c9d5af5378107a5116d94ee1cf37786b22b8c4bd99df"
-    },
-    {
-      "file": "headroom_ai-0.40.0-cp310-abi3-win_amd64.whl",
-      "size": 15566384,
-      "sha256": "a803a60d90ec74806c02df1eb5d5e063af8a7aa3977c6aa7559693817490d193"
-    },
-    {
-      "file": "houseCARL-1.9.0.zip",
-      "size": 17647713,
-      "sha256": "56349058cdf6a090d2029dedf283db0aaa66a13ddd9560864bdceecced376947"
-    },
-    {
-      "file": "rtk-oss-x86_64-pc-windows-msvc.zip",
-      "size": 5709732,
-      "sha256": "47d9ce6a1cd50831ec56b1f3079424c5259b26a57a3e2d174fbc2590791ca32b"
-    },
-    {
-      "file": "Skyrim-Forge-6.0.1.zip",
-      "size": 3732625,
-      "sha256": "69e5dfbf5932d82a145d8cb6b87019cc32642f632c201df726da848d58f7fe79"
-    },
-    {
-      "file": "spookys-automod-toolkit-v1.11.2.zip",
-      "size": 68584007,
-      "sha256": "2e7848961785eedda3702851d477d878cf01e98a61710ca50fe8b0aafcb28bef"
-    },
-    {
-      "file": "universal_modder-0.2.0+uabs.23902ef-py3-none-any.whl",
-      "size": 1999693,
-      "sha256": "d29081df08cad316a48fb084caa5148d54b6068fcf1302975b8326c3343a4103"
-    },
-    {
-      "file": "uabs_toolbox-1.0.0-py3-none-any.whl",
-      "size": 14442,
-      "sha256": "051d7c77e8ae5ff5936ef3bae393812cb7af8a8e4f6db65b2161a6a8b4f964d2"
-    }
-  ],
-  "updated": "2026-10-16"
+ "generated": "2026-10-17",
+ "pack_version": "8.16.0",
+ "assets": [
+  {
+   "file": "Skyrim-Forge-6.0.1.zip",
+   "size": 3732625,
+   "sha256": "69e5dfbf5932d82a145d8cb6b87019cc32642f632c201df726da848d58f7fe79"
+  },
+  {
+   "file": "codebase-memory-mcp-windows-amd64.zip",
+   "size": 48508123,
+   "sha256": "4e4e0f16b45233af5c757a1fcbe3c3b16e9056375b1fbe2ce020b6de75dedcc0"
+  },
+  {
+   "file": "github-mcp-server-2.0.2-windows-x86_64.zip",
+   "size": 9428417,
+   "sha256": "4ae64087501650752f21c9d5af5378107a5116d94ee1cf37786b22b8c4bd99df"
+  },
+  {
+   "file": "headroom_ai-0.41.0-cp310-abi3-win_amd64.whl",
+   "size": 15589221,
+   "sha256": "18b43230c4dbbe9889fdb0863a7943059f4509fdf49ad20b19be394f2725db18"
+  },
+  {
+   "file": "houseCARL-1.9.0.zip",
+   "size": 17647713,
+   "sha256": "56349058cdf6a090d2029dedf283db0aaa66a13ddd9560864bdceecced376947"
+  },
+  {
+   "file": "rtk-oss-x86_64-pc-windows-msvc.zip",
+   "size": 5708680,
+   "sha256": "0e53e2eca471e15fbd3636e64e6bc0b182cbc278ed0339c80450a2dd03f4cd6b"
+  },
+  {
+   "file": "spookys-automod-toolkit-v1.11.2.zip",
+   "size": 68584007,
+   "sha256": "2e7848961785eedda3702851d477d878cf01e98a61710ca50fe8b0aafcb28bef"
+  },
+  {
+   "file": "uabs_toolbox-1.0.0-py3-none-any.whl",
+   "size": 14442,
+   "sha256": "051d7c77e8ae5ff5936ef3bae393812cb7af8a8e4f6db65b2161a6a8b4f964d2"
+  },
+  {
+   "file": "universal_modder-0.2.0+uabs.23902ef-py3-none-any.whl",
+   "size": 1999693,
+   "sha256": "d29081df08cad316a48fb084caa5148d54b6068fcf1302975b8326c3343a4103"
+  }
+ ],
+ "updated": "2026-10-17"
 }

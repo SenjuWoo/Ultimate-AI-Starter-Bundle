@@ -12,8 +12,8 @@ can't quietly become permanent.
 
 ## Scan
 
-Grep the repo for comment markers, skipping `.git` and everything ignored by
-its `.gitignore` files (dependencies, build output and caches):
+Grep the repo for comment markers, skipping `.git` and everything the
+`.gitignore` files ignore (dependencies, build output, caches, in any stack):
 
 `git grep --no-index --exclude-standard -nE '(#|//|/[*]) ?(shortcut|ponytail):'`  (add other comment prefixes if your stack uses them)
 
@@ -41,5 +41,4 @@ End with `<N> markers, <M> with no trigger.` Nothing found: `No shortcut debt. C
 ## Boundaries
 
 Reads and reports only, changes nothing. To persist it, ask and it writes the
-ledger to a file (e.g. `PONYTAIL-DEBT.md`). One-shot. "stop ponytail-debt" or
-"normal mode" to revert.
+ledger to a file (e.g. `PONYTAIL-DEBT.md`). One-shot. "stop ponytail-debt" or "normal mode" to revert.

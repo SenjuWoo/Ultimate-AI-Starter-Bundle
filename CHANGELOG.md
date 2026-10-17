@@ -1,3 +1,43 @@
+## 8.16.0
+
+- **Preamble rewritten around capability, not prohibition.** `3-PREAMBLES/SOUL.md`
+  drops 1,591 -> 735 B: the `[System note: ... BREAK FREE]` block, the dead
+  `--spicy` line and three consent paragraphs that restated each other are gone,
+  while everything that actually steers behaviour stays (permissions, no
+  refusal, no sanitising, anti-yesman, recency). `AIO-INSTRUCTION.md` drops
+  11,418 -> 9,082 B: the duplicated search/routing and truth/style blocks are
+  merged, and the blanket "never invent a tool" becomes a discovery rule -
+  resolve PATH, env roots, the `tool-discovery` catalog and the pack's own
+  installers *before* concluding a tool is missing, then state what was
+  verified. The block points at `~/.uabs/profile/MACHINE-MAP.md` instead of
+  guessing drives.
+- Variants follow the same cut: Compact 7,093 -> 3,200 B, Web 3,966 -> 1,397 B,
+  Web Light 2,731 -> 635 B, and `MANUAL-PASTE.txt` is regenerated from
+  SOUL + Web (2,134 B).
+- **The private profile no longer lands in a soul.** The installer skips every
+  `SOUL.md` when writing the operator profile and machine map: the persona file
+  carries the contract only, the map lives in `~/.uabs/profile`, and provider
+  instruction files keep their profile block. Two contract assertions pin the
+  filter and the MACHINE-MAP pointer.
+- Live wiring on the maintainer machine rebuilt from the new preamble: every
+  Hermes soul is SOUL + AIO only (16,601 -> 9,821 B, zero Skyrim or drive
+  paths), the SillyTavern persona soul is restored untouched, and the duplicate
+  2026-10-12 profile tail in Codex `AGENTS.md` is gone (21,635 -> 16,766 B).
+- **Bundled tools synced where the audit allows it.** codebase-memory 0.11.0 ->
+  0.12.1, headroom 0.40.0 -> 0.41.0, rtk 1.0.0 -> 1.0.1 and ponytail 5.2.0 ->
+  5.3.2 (four of six skill files re-merged from upstream, the pack's local
+  additions kept). Three components stay on their documented compatibility
+  holds instead of being bumped blind: houseCARL 1.9.0 (2.x removes the 1.x
+  tool API), unity-mcp 0.91.0 (needs a live Unity editor check) and impeccable
+  3.6.1 / skill 4.1.3 (4.x moves the detector into a compiled engine that needs
+  a fresh audit). The three replaced offline assets were re-downloaded,
+  re-hashed and re-catalogued, and `OFFLINE-MANIFEST.json` is rebuilt from disk
+  (9 assets).
+- Dead weight removed: seven legacy soul copies under
+  `BUNDLED-TOOLS/packs/skyrim/legacy/` and `docs/history/V5-CHANGELOG.md`.
+- The pack ships 173 skills. Contract suite 147/147, every declared version
+  copy agrees, manifest re-verified.
+
 ## 8.15.2
 
 - Universal Modder refreshed `5ba8150` -> `23902ef` (38 upstream commits): the

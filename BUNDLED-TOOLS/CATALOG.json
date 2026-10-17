@@ -1,1086 +1,1086 @@
 {
-  "components": [
-    {
-      "id": "rea",
-      "name": "REA (Reverse Engineer Anything)",
-      "kind": "cli-optional",
-      "install": "npx-or-npm",
-      "version": "6.5.0",
-      "license": "MIT",
-      "github": {
-        "owner": "morluto",
-        "repo": "rea"
-      },
-      "npm_spec": "rea-agents@6.5.0",
-      "npm_integrity": "sha512-C6BG7LyrAdR74mSjertM6PrxJkcNZ2bfQNOJornPo9erDEp2tyPRVYPnV5Yodr+1RqewCQla68WulXlVnveD+A==",
-      "npm_args": [
-        "--ignore-scripts"
-      ],
-      "mcp": false,
-      "auto_register": false,
-      "offline_asset": null,
-      "providers": [
-        "Claude",
-        "Codex",
-        "Grok",
-        "Kimi",
-        "Hermes"
-      ],
-      "runtimes": [
-        "node22"
-      ],
-      "required_for": [
-        "reverse-engineering-evidence"
-      ],
-      "scope_note": "Optional CLI only; not part of default Components or MCP profiles. 2026-10-16 isolated Windows npm integrity-bound install of 6.5.0 with lifecycle scripts disabled (the 6.5.0 tarball sha512 matches the recorded pin) and a 2026-10-13 baseline of the same procedure on 6.4.0: help and execution-free JavaScript fixture analysis PASS (7-node fixture graph, no integrity contradictions), zero known production npm audit findings across 147 prod dependencies. Stdio transport probe exposed 207 tools and 3,087,942 compact UTF-8 schema bytes (170 tools / 1,954,683 bytes on 6.4.0), not loaded or billed tokens. No native Ghidra/runtime/GUI actions certified. Reuse Reverse THIS! shims and Universal Modder recon. No upstream setup/update or duplicate skill collection. See tool-discovery/references/reverse-engineering.md."
-    },
-    {
-      "id": "universal-modder",
-      "name": "Universal Modder",
-      "kind": "python-cli",
-      "install": "pip-or-wheel",
-      "version": "0.2.0",
-      "license": "MIT",
-      "github": {
-        "owner": "rehan-remade",
-        "repo": "universal-modder"
-      },
-      "source_commit": "23902ef42e8ea9b077bfbbf6911eb8ea0348e55a",
-      "source_archive_sha256": "037196f80d4522de60afbb25e0914234998ad5a867551a9380309b01e43859fc",
-      "source_dir": "BUNDLED-TOOLS/universal-modder",
-      "offline_asset": "universal_modder-0.2.0+uabs.23902ef-py3-none-any.whl",
-      "cli": "um",
-      "cli_env": "UNIVERSAL_MODDER_CMD",
-      "python": "3.13",
-      "mcp": false,
-      "auto_register": false,
-      "providers": [
-        "Claude",
-        "Codex",
-        "Grok",
-        "Kimi",
-        "Hermes"
-      ],
-      "required_for": [
-        "game-recon",
-        "sprite-processing",
-        "gameplay-showcase-video"
-      ],
-      "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to twelve upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (the indexed knowledge snapshot), discovers native Windows Steam roots from the registry, never echoes matched credentials and prints a sha256 fingerprint plus key length where `um fal key status` used to print the first and last key characters (CodeQL py/clear-text-logging-sensitive-data); the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. The audited refresh adds quoted multi-word knowledge search, ranked hits and broken-link diagnostics while retaining local ComfyUI generation, SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification. 2026-10-13 source refresh adds Bannerlord, MT Framework, Hedgehog and Black Rock discovery plus a mod-porting reference; preserves UABS dependency pins, native Steam discovery and credential-safe output. 2026-10-16 source refresh (38 upstream commits, 23902ef) adds Isaac, Just Cause 3/Avalanche, Space Marine 2, Project Zomboid and S.T.A.L.K.E.R. 2 knowledge notes, fal keys through the desktop keyring with a masked status command, and a UTF-8 tool-output fix on Windows. Upstream's new agents/ team plus its OpenCode/session files stay unshipped, and the refresh tool now drops the unbounded UE3 unpack_upk.py fallback by rule instead of by hand."
-    },
-    {
-      "id": "uabs-toolbox",
-      "name": "UABS Toolbox (project tools on demand)",
-      "kind": "mcp-python",
-      "install": "pip-or-wheel",
-      "version": "1.0.0",
-      "license": "MIT",
-      "source_dir": "BUNDLED-TOOLS/uabs-toolbox",
-      "offline_asset": "uabs_toolbox-1.0.0-py3-none-any.whl",
-      "cli": "uabs-toolbox",
-      "cli_env": "UABS_TOOLBOX_CMD",
-      "python": "3.13",
-      "mcp": true,
-      "auto_register": true,
-      "providers": [
-        "Claude",
-        "Codex",
-        "Grok",
-        "Kimi",
-        "Hermes"
-      ],
-      "required_for": [
-        "on-demand-project-tools"
-      ],
-      "scope_note": "Bundle-owned, always-on MCP server with three tools (find, describe, call). Task servers stay out of every chat; the toolbox starts the one a task needs on first use, in the same chat, from the bundle's own catalog (toolbox-profiles.json, a copy of PROFILES.json) and the exact entries Set-McpProfile.ps1 -Park saved (parked-mcp.json). Nothing is written to any provider config at call time. Credentials in a parked entry start its server and are never printed. Gate: TESTS/test_toolbox.py (fixture child server; find/describe/call, env pass-through without secret output, project-bound sets, crash restart, TOML parked entries, duplicate suppression)."
-    },
-    {
-      "github": {
-        "repo": "houseCARL",
-        "owner": "Avick3110"
-      },
-      "id": "housecarl",
-      "runtimes": [
-        "dotnet9",
-        "aspnetcore9"
-      ],
-      "license": "GPL-3.0-only",
-      "target_dir": "%LOCALAPPDATA%\\houseCARL",
-      "required_for": [
-        "load-order",
-        "patch-esp",
-        "nexus-lookup"
-      ],
-      "name": "houseCARL",
-      "mcp": true,
-      "offline_asset": "houseCARL-1.9.0.zip",
-      "kind": "mcp-binary+skills",
-      "setup_after": "Setup-HouseCarl.ps1",
-      "asset_match": [
-        "houseCARL-*.zip",
-        "*houseCARL*.zip"
-      ],
-      "install": "zip-extract",
-      "exe_rel": "server\\housecarl-mcp.exe",
-      "mcp_tool_budget": {
-        "measured_utc": "2026-08-25T17:20:00Z",
-        "measured_with": "TOOLS/Measure-McpSchemaCost.ps1",
-        "mechanism": "Hermes tools.include/tools.exclude filter at tool registration; fnmatch globs are supported. Codex has native enabled_tools/disabled_tools; Claude Code supports deferred Tool Search. These sets describe Hermes selections, not a universal provider surface or a bill.",
-        "measurement_basis": "Historical sum of per-tool UTF-8 JSON bytes, excluding array framing. Legacy *_tokens_per_turn fields are bytes/4 schema estimates; saving_pct is a schema-size reduction, not measured billed savings.",
-        "all_tools": 45,
-        "all_schema_bytes": 167072,
-        "all_tokens_per_turn": 41768,
-        "sets": {
-          "Full": {
-            "include": [],
-            "tools": 45,
-            "schema_bytes": 167072,
-            "tokens_per_turn": 41768,
-            "saving_pct": 0,
-            "why": "No filter. Every tool registered. Use when authoring records in bulk and diagnosing in the same session."
-          },
-          "Lean": {
-            "exclude": [
-              "housecarl_bulk_create",
-              "housecarl_create_record",
-              "housecarl_bulk_apply"
-            ],
-            "tools": 42,
-            "schema_bytes": 125476,
-            "tokens_per_turn": 31369,
-            "saving_pct": 25,
-            "why": "Drops only the three tools whose parameter schemas carry full nested record objects: bulk_create (14,655 B), create_record (14,548 B) and bulk_apply (12,393 B) are 41,596 bytes between them -- a quarter of the server, and more than the whole of Skyrim Forge. They are dedicated bulk-authoring entry points, so a diagnosis or patch-reading session pays for them and never calls them. This is the shipped default because it costs no capability a normal session uses."
-          },
-          "ReadOnly": {
-            "include": [
-              "housecarl_resolve",
-              "housecarl_read_record",
-              "housecarl_batch_record_detail",
-              "housecarl_diff_record",
-              "housecarl_cross_plugin_query",
-              "housecarl_read_plugin_file",
-              "housecarl_load_order_status",
-              "housecarl_check_errors",
-              "housecarl_asset_status",
-              "housecarl_update_status",
-              "housecarl_validate_scripts",
-              "housecarl_validate_dialogue",
-              "housecarl_native_pairing_audit",
-              "housecarl_skse_inventory",
-              "housecarl_skse_config_audit",
-              "housecarl_skypatcher_read",
-              "housecarl_nif_inspect",
-              "housecarl_decompile_script",
-              "housecarl_bsa_list",
-              "housecarl_bsa_extract",
-              "housecarl_nexus_search",
-              "housecarl_nexus_mod",
-              "housecarl_nexus_check_updates",
-              "housecarl_nexus_identify",
-              "housecarl_nexus_graphql",
-              "housecarl_set_mo2_instance",
-              "housecarl_set_tool_path"
-            ],
-            "tools": 27,
-            "schema_bytes": 70418,
-            "tokens_per_turn": 17604,
-            "saving_pct": 58,
-            "why": "Everything that reads, diagnoses, validates or looks up, and nothing that writes. Keeps load-order truth, conflict trees, cross-plugin queries, script/dialogue validation, the SKSE audit and the whole keyless Nexus surface. Drops the 18 write tools. Use for diagnosis, load-order work and Nexus research."
-          }
-        },
-        "restore": "hermes -p skyrim mcp configure housecarl  (interactive checklist, rewrites tools.include). Re-running the migrator will not undo a hand-edited filter."
-      },
-      "version": "1.9.0",
-      "release_tag": "v1.9.0",
-      "compatibility_hold": "2026-09-13: v2.0.0 removes the 1.x tool API. Keep v1.9.0 until skills, profiles and live read-only validation are migrated together. OnlineLatest must not silently replace it."
-    },
-    {
-      "github": {
-        "repo": "spookys-automod-toolkit",
-        "owner": "SpookyPirate"
-      },
-      "id": "spooky",
-      "runtimes": [
-        "dotnet8-sdk"
-      ],
-      "license": "see-upstream",
-      "target_dir": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\spookys-automod-toolkit",
-      "required_for": [
-        "esp-cli",
-        "papyrus-cli",
-        "nif",
-        "bsa"
-      ],
-      "name": "Spooky's AutoMod Toolkit",
-      "verify": "dotnet run --project src/SpookysAutomod.Cli -- --help",
-      "offline_asset": "spookys-automod-toolkit-v1.11.2.zip",
-      "kind": "cli-toolkit",
-      "asset_match": [
-        "spookys-automod-toolkit-*.zip"
-      ],
-      "install": "zip-extract",
-      "env": "SPOOKY_AUTOMOD_ROOT",
-      "version": "1.11.2",
-      "release_tag": "v1.11.2"
-    },
-    {
-      "github": {
-        "repo": "codebase-memory-mcp",
-        "owner": "DeusData"
-      },
-      "id": "codebase-memory",
-      "env": "CODEBASE_MEMORY_MCP",
-      "license": "see-upstream",
-      "target_dir": "%LOCALAPPDATA%\\Programs\\codebase-memory-mcp",
-      "required_for": [
-        "code-graph"
-      ],
-      "name": "codebase-memory-mcp",
-      "mcp": true,
-      "offline_asset": "codebase-memory-mcp-windows-amd64.zip",
-      "kind": "mcp-binary",
-      "profile": "code-intel",
-      "auto_register": false,
-      "asset_match": [
-        "codebase-memory-mcp-windows-amd64.zip"
-      ],
-      "install": "zip-extract",
-      "exe_rel": "codebase-memory-mcp.exe",
-      "scope_note": "Installed globally but absent from global/default MCP sets. Claude, Grok and trusted Codex projects get it through code-intel; Hermes through its native code profile. Kimi needs explicit global opt-in. NEVER enable --ui / install.ps1 --ui (Windows Codebase Discovery Open-With). auto_index=false auto_watch=false default. Recorded 0.10.8: 15 tools, 23,974 schema bytes, ~5,994 schema tokens (bytes/4), not a per-turn bill.",
-      "server_id": "codebase-memory-mcp",
-      "version": "0.11.0",
-      "release_tag": "v0.11.0"
-    },
-    {
-      "install": "pip-or-wheel",
-      "id": "headroom",
-      "kind": "mcp-python",
-      "mcp": true,
-      "github": {
-        "repo": "headroom",
-        "owner": "headroomlabs-ai"
-      },
-      "runtimes": [
-        "python3"
-      ],
-      "name": "Headroom",
-      "version": "0.40.0",
-      "release_tag": "v0.40.0",
-      "pip_spec": "headroom-ai[mcp]==0.40.0",
-      "offline_asset": "headroom_ai-0.40.0-cp310-abi3-win_amd64.whl",
-      "license": "see-upstream",
-      "required_for": [
-        "context-compress"
-      ],
-      "asset_match": [
-        "headroom_ai-*-cp310-abi3-win_amd64.whl",
-        "headroom-ai-*.tgz"
-      ],
-      "scope_note": "Core MCP remains three tools. Windows initialize/tools-list measured 2026-09-28 at 0.39.1: 1,250 compact schema bytes (~313 bytes/4 estimate, not billing). No hosted inference or proxy traffic was used in this test. 2026-10-10: 0.40.0 Windows initialize/tools-list PASS; 3 advertised tools, 1,250 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised."
-    },
-    {
-      "install": "skills-copy",
-      "id": "superpowers",
-      "kind": "skills-plugin",
-      "claude_plugin": true,
-      "github": {
-        "repo": "superpowers",
-        "owner": "obra"
-      },
-      "name": "Superpowers",
-      "offline_asset": null,
-      "license": "see-upstream",
-      "required_for": [
-        "process-discipline"
-      ],
-      "bundled_skills": true,
-      "version": "7.0.0",
-      "release_tag": "v7.0.0",
-      "bundle_patch_note": "2026-10-10: reviewed upstream v7.0.0 archive SHA-256 1e95883561717c85aa90590f210674687086bf88eac919a17e8a6518e11003da. Preserve UABS browser-companion HttpOnly-cookie hardening and Hermes compaction recovery; include upstream Hermes skill descriptions. Native/skills fallbacks consume the patched vendored tree, not the unpatched official archive."
-    },
-    {
-      "install": "skills-copy",
-      "id": "ponytail",
-      "kind": "skills-plugin",
-      "claude_plugin": true,
-      "github": {
-        "repo": "ponytail",
-        "owner": "DietrichGebert"
-      },
-      "name": "Ponytail",
-      "offline_asset": null,
-      "bundle_patch_note": "2026-09-28: bundled Cursor adapter anchors Ponytail script names at a word/hyphen boundary to prevent CodeQL #228 polynomial ReDoS. Native provider rules/skills are unchanged. AIO skills-copy and native offline fallbacks consume the vendored plugin tree, not a second plugin ZIP; remove the unused unpatched upstream ZIP rather than mislabel patched bytes as an official archive. Independent upstream marketplace caches are not rewritten by this source patch. 2026-10-02: reviewed v4.10.1 source c6ce46179874ea7368da0eb9e67c1ad5c10f08bc; 16 upstream adapter tests and Cursor security regression pass; existing Cursor fix retained. 2026-10-10: refreshed to v5.1.0 from official archive SHA-256 8fa83a6a1f5f0ca980445f789d3a747ee9999959bbc4176ea6f73e4f3dbcb8bd. Cursor regex fix retained; Windows statusline test now recognizes JSON-escaped paths. Adapter tests: 126 pass, one platform skip.",
-      "license": "MIT",
-      "required_for": [
-        "minimal-diff"
-      ],
-      "bundled_skills": true,
-      "version": "5.2.0",
-      "release_tag": "v5.2.0"
-    },
-    {
-      "install": "npx-or-npm",
-      "id": "codeburn",
-      "kind": "cli-optional",
-      "runtimes": [
-        "node22"
-      ],
-      "note": "Prefer npx codeburn (no large desktop bundle). Desktop Setup exe available on GitHub if desired.",
-      "github": {
-        "repo": "codeburn",
-        "owner": "getagentseal"
-      },
-      "name": "CodeBurn",
-      "version": "0.9.27",
-      "offline_asset": null,
-      "license": "see-upstream",
-      "required_for": [
-        "ai-cost"
-      ],
-      "npm_spec": "codeburn@0.9.27",
-      "npm_integrity": "sha512-dNCy09sYCdvrijcoOun+ZVyTbp/GYGmdBbBTe8uTSLRO8rSWqS4IEOzQdRoPRhbt7twCuSqVBjTNNl+CdTNrKQ==",
-      "npm_args": [
-        "--ignore-scripts"
-      ]
-    },
-    {
-      "install": "npx-or-npm",
-      "id": "impeccable",
-      "kind": "cli-optional",
-      "runtimes": [
-        "node22"
-      ],
-      "github": {
-        "repo": "impeccable",
-        "owner": "pbakaus"
-      },
-      "name": "Impeccable",
-      "version": "3.6.1",
-      "skill_version": "4.1.3",
-      "skill_asset": "universal.zip",
-      "skill_asset_sha256": "fdcb41a24ddfb613786e3141bc7bb8466a406ffbd437a2e302f4ca70181bed9f",
-      "offline_asset": null,
-      "license": "Apache-2.0",
-      "required_for": [
-        "ui-quality",
-        "frontend-design"
-      ],
-      "npm_spec": "impeccable@3.6.1",
-      "npm_integrity": "sha512-1PbJcM9jg+OXj83E7u3ckJnalg2KuIXAvVlqSNJdwdR8Llh8npSjMcl222EgP/9GhsX+w2FW2w8vdJ7GHMghow==",
-      "npm_args": [
-        "--omit=optional",
-        "--ignore-scripts"
-      ],
-      "scope_note": "The cross-provider skill is vendored from the official skill-v4.1.3 universal.zip and bound to its published SHA-256. The executable detector is the actually published npm 3.6.1 package, pinned by npm integrity. Optional Puppeteer is omitted: Playwright/browser profiles already own live rendering, and downloading a second browser would be duplication. Lifecycle scripts are disabled. UABS removes upstream self-update/pin paths and generated hook cache so provider skill trees keep one writer. Zero MCP schemas, daemon, account or key.",
-      "compatibility_hold": "2026-09-18 audited with TOOLS/audit-impeccable-engine.py against engine 0.1.5 (the payload CLI 4.1.0 pins): the engine still leaks bodies of browser-valid malformed close tags (</script \t bogus>, </style bogus>) into text analysis - the exact gap UABS patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub whose payload is that engine: pinned via optionalDependencies, else first-use download into ~/.impeccable, and its install/link/update/check commands write skill trees. Retain audited CLI 3.6.1 / skill 4.1.3 until upstream closes the fixture or ships patchable source. Rechecked 2026-09-28 against official engine 0.1.6 (still leaking), and 2026-10-11 against engine 0.1.14 (cli-v4.5.2 pins it): well-formed/control fixtures PASS, malformed script/style fixtures still leak the tag body into analysis - hold reaffirmed; the vendored patched CLI 3.6.1 passes TESTS/impeccable-security-regressions.mjs.",
-      "skill_release_prefix": "skill-v"
-    },
-    {
-      "install": "pinned-release",
-      "id": "skyrim-forge",
-      "kind": "product-release",
-      "mcp": true,
-      "name": "Skyrim Forge",
-      "env": "SKYRIM_FORGE_ROOT",
-      "pack": "skyrim",
-      "required_for": [
-        "typed-automation",
-        "release-gates"
-      ],
-      "github": {
-        "owner": "SenjuWoo",
-        "repo": "SkyrimForge"
-      },
-      "release_tag": "v6.0.1",
-      "asset": "Skyrim-Forge-6.0.1.zip",
-      "offline_asset": "Skyrim-Forge-6.0.1.zip",
-      "sha256": "69e5dfbf5932d82a145d8cb6b87019cc32642f632c201df726da848d58f7fe79",
-      "note": "Released from github.com/SenjuWoo/SkyrimForge. Installed only with the Skyrim pack. The installer verifies the pinned SHA-256 before extracting, resolves ONE versionless install root, migrates a version-stamped install onto it, preserves Workspaces and the virtualenv, wires selected providers, then proves the result runs with `forge doctor`. CI installs this exact release end to end.",
-      "version": "6.0.1"
-    },
-    {
-      "id": "code-review-skill",
-      "name": "Code Review Skill",
-      "kind": "skills-git",
-      "install": "skills-git",
-      "github": {
-        "owner": "awesome-skills",
-        "repo": "code-review-skill"
-      },
-      "git_url": "https://github.com/awesome-skills/code-review-skill.git",
-      "skills_subdir": null,
-      "skill_folder": "code-review-skill",
-      "providers": [
-        "Claude",
-        "Codex",
-        "Grok",
-        "Kimi",
-        "Hermes"
-      ],
-      "license": "see-upstream",
-      "required_for": [
-        "generic-code-review"
-      ],
-      "offline_asset": null,
-      "scope_note": "GENERIC languages only (C++, C#, PowerShell, Python, JS...). Skyrim-specific review stays with skyrim-code-review; Papyrus performance stays with papyrus-optimization."
-    },
-    {
-      "id": "obsidian-skills",
-      "name": "Obsidian Skills (kepano)",
-      "kind": "skills-git",
-      "install": "skills-git",
-      "github": {
-        "owner": "kepano",
-        "repo": "obsidian-skills"
-      },
-      "git_url": "https://github.com/kepano/obsidian-skills.git",
-      "skills_subdir": "skills",
-      "skill_folder": null,
-      "providers": [
-        "Claude",
-        "Codex",
-        "Grok",
-        "Kimi",
-        "Hermes"
-      ],
-      "license": "see-upstream",
-      "required_for": [
-        "docs-authoring",
-        "vault-notes",
-        "web-to-markdown"
-      ],
-      "offline_asset": null,
-      "scope_note": "Markdown/vault/canvas authoring for _AI-SHARED-MEMORY and mod docs. Never used to author Skyrim records or framework INIs."
-    },
-    {
-      "id": "claude-mem",
-      "name": "claude-mem",
-      "kind": "claude-plugin",
-      "install": "claude-plugin",
-      "github": {
-        "owner": "thedotmack",
-        "repo": "claude-mem"
-      },
-      "npx_install": [
-        "claude-mem",
-        "install"
-      ],
-      "marketplace": [
-        "thedotmack/claude-mem",
-        "claude-mem"
-      ],
-      "providers": [
-        "Claude"
-      ],
-      "runtimes": [
-        "node22",
-        "bun"
-      ],
-      "license": "see-upstream",
-      "required_for": [
-        "session-memory"
-      ],
-      "offline_asset": null,
-      "scope_note": "CLAUDE CODE ONLY. Never install for Grok/Codex/Kimi/Hermes. Cross-session CONVERSATION memory (what was done, when, why) — does NOT replace codebase-memory-mcp (code structure graph) or skyrim-memory (verified Skyrim facts). Requires Bun on PATH (worker uses bun:sqlite). Worker port 37777. If red MCP errors: install Bun from https://bun.sh then restart Claude Code.",
-      "runtime_note": "Bun required for worker daemon (https://bun.sh). The AIO installs Bun when missing, disables claude-mem's default anonymous telemetry, and starts the worker before reporting success."
-    },
-    {
-      "id": "playwright-mcp",
-      "name": "Playwright MCP",
-      "kind": "mcp-npx",
-      "install": "mcp-npx",
-      "mcp": true,
-      "profile": "web",
-      "auto_register": false,
-      "github": {
-        "owner": "microsoft",
-        "repo": "playwright-mcp"
-      },
-      "npx_command": "npx",
-      "npx_args": [
-        "-y",
-        "@playwright/mcp@0.0.83"
-      ],
-      "extra_args_env": "PLAYWRIGHT_MCP_EXECUTABLE_PATH",
-      "extra_args_template": [
-        "--executable-path",
-        "{value}"
-      ],
-      "api_key_env": null,
-      "providers": [
-        "Grok",
-        "Codex",
-        "Kimi",
-        "Hermes"
-      ],
-      "version": "0.0.83",
-      "runtimes": [
-        "node22"
-      ],
-      "license": "Apache-2.0",
-      "required_for": [
-        "browser-automation"
-      ],
-      "offline_asset": null,
-      "scope_note": "Browser automation for CLIs with no built-in browser. Claude Code already ships a browser pane, so it is skipped there. Never used for Nexus lookups - houseCARL does those keylessly. Measured 2026-09-02: 24 tools, 18,502 schema bytes, ~4,626 schema tokens (bytes/4; actual usage unmeasured). BROWSER CHOICE: with no flags, playwright-mcp defaults to the Google Chrome channel and prompts you to install Chrome. To use your own browser (Opera GX, Edge, Brave, Vivaldi, ...), set user env PLAYWRIGHT_MCP_EXECUTABLE_PATH to the browser exe BEFORE running the installer - the wiring appends --executable-path automatically. Example (Opera GX): setx PLAYWRIGHT_MCP_EXECUTABLE_PATH \"%LOCALAPPDATA%\\Programs\\Opera GX\\opera.exe\". To change later, edit the args in your provider's MCP config (Grok/Codex config.toml, Kimi ~/.kimi-code/mcp.json). Pinned, not @latest: an unpinned npx server can change its tool surface mid-session, and npx will happily reuse a broken cache. Update measured 2026-09-28 at 0.0.82: initialize/tools-list PASS, 25 tools, 20,102 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 0.0.83: initialize/tools-list PASS; 25 tools, 20,286 compact UTF-8 schema bytes. Schema bytes are transport measurements, not billed-token savings."
-    },
-    {
-      "id": "firecrawl-mcp",
-      "name": "Firecrawl MCP",
-      "security_hold": "2026-10-13: isolated production npm audit reports three high-severity package findings for both 3.29.1 and candidate 3.30.0 via firecrawl's pinned Axios 1.18.0. The suggested 3.24.0 downgrade also has known findings; do not install, register, or auto-downgrade. Native web/search and Playwright remain available. Existing personal registrations require review; the doctor reports them, never deletes unknown configuration. Recheck after upstream updates the dependency and an isolated audit plus transport test pass. Advisory: https://github.com/advisories/GHSA-vh66-26gq-q6x8",
-      "compatibility_hold": "Security hold: current and candidate Firecrawl MCP production dependencies have known audit findings. Await a clean upstream dependency refresh; no automatic downgrade or registration.",
-      "kind": "mcp-npx",
-      "install": "mcp-npx",
-      "mcp": true,
-      "github": {
-        "owner": "firecrawl",
-        "repo": "firecrawl-mcp-server"
-      },
-      "npx_command": "npx",
-      "npx_args": [
-        "-y",
-        "firecrawl-mcp@3.29.1"
-      ],
-      "api_key_env": "FIRECRAWL_API_KEY",
-      "api_key_optional": true,
-      "keyless_registration": "skip",
-      "keyless_skip_reason": "Recorded keyless evaluation: 2 usable tools out of 25 (scrape, search), with 36,321 schema bytes (~9,080 tokens at bytes/4), overlapping native web tools. These historical schema estimates are not a per-turn bill; loading, filtering and caching depend on the host. Not registered without a key by default. Override with -RegisterKeylessExtras.",
-      "keyless_note": "Measured against the pinned 3.24.0 with FIRECRAWL_* scrubbed, all 25 tools called: exactly TWO work keyless - firecrawl_scrape and firecrawl_search. 21 answer 'Unauthorized: API key is required', including interact, which this note previously listed as keyless. firecrawl_extract is DEPRECATED ('deprecated and unavailable through MCP'), not key-gated. firecrawl_parse needs FIRECRAWL_API_URL pointing at a self-hosted instance, so Firecrawl's own docs saying 'Search, Scrape and Parse' are free do not hold for this server. Regenerate with TOOLS/measure_mcp_capability.py rather than editing by hand.",
-      "keyless_tools": [
-        "firecrawl_scrape",
-        "firecrawl_search"
-      ],
-      "capability_record": "BUNDLED-TOOLS/capability-records/firecrawl-mcp.json",
-      "providers": [
-        "Claude",
-        "Codex",
-        "Grok",
-        "Kimi",
-        "Hermes"
-      ],
-      "runtimes": [
-        "node22"
-      ],
-      "license": "see-upstream",
-      "required_for": [
-        "web-docs-extract"
-      ],
-      "offline_asset": null,
-      "scope_note": "Scraping general web docs (CommonLib docs, wikis, GitHub READMEs). NEVER Nexus Mods - houseCARL reads Nexus keylessly with changelogs and file lists. Update measured 2026-09-28 at 3.25.5: initialize/tools-list PASS, 27 tools, 74,789 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 3.27.3: initialize/tools-list PASS; 25 tools, 81,489 compact UTF-8 schema bytes. No credentialed scraping calls. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 3.29.1 Windows initialize/tools-list PASS; 26 advertised tools, 84,657 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised.",
-      "version": "3.29.1"
-    },
-    {
-      "id": "perplexity-mcp",
-      "name": "Perplexity MCP",
-      "kind": "mcp-npx",
-      "install": "mcp-npx",
-      "mcp": true,
-      "github": {
-        "owner": "perplexityai",
-        "repo": "modelcontextprotocol"
-      },
-      "npx_command": "npx",
-      "npx_args": [
-        "-y",
-        "@perplexity-ai/mcp-server@1.2.1"
-      ],
-      "api_key_env": "PERPLEXITY_API_KEY",
-      "api_key_optional": false,
-      "providers": [
-        "Claude",
-        "Codex",
-        "Grok",
-        "Kimi",
-        "Hermes"
-      ],
-      "runtimes": [
-        "node22"
-      ],
-      "license": "see-upstream",
-      "required_for": [
-        "web-research"
-      ],
-      "offline_asset": null,
-      "scope_note": "REQUIRES PERPLEXITY_API_KEY (paid). Not installed on a keyless machine. Current-information research (new SKSE/CommonLib releases, game patch news). Never a substitute for houseCARL on Nexus, codebase-memory on code, or skyrim-memory on verified Skyrim facts.",
-      "key_required": true,
-      "version": "1.2.1",
-      "compatibility_hold": "2026-09-28: candidate 1.3.0 refuses initialization without PERPLEXITY_API_KEY. Retain the evaluated 1.2.1 pin until a user-owned authenticated smoke test is available; do not read or invent a key."
-    },
-    {
-      "id": "context7",
-      "name": "Context7 Documentation MCP",
-      "kind": "mcp-npx",
-      "mcp": true,
-      "license": "MIT",
-      "version": "4.4.1",
-      "github": {
-        "owner": "upstash",
-        "repo": "context7"
-      },
-      "install": "mcp-npx",
-      "npx_command": "npx",
-      "npx_args": [
-        "-y",
-        "@upstash/context7-mcp@4.4.1"
-      ],
-      "auto_register": true,
-      "api_key_env": "CONTEXT7_API_KEY",
-      "api_key_optional": true,
-      "keyless_registration": "register",
-      "keyless_tools": [
-        "resolve-library-id",
-        "query-docs"
-      ],
-      "keyless_note": "Measured 2026-09-13 against pinned 4.1.0 with the credential environment scrubbed: BOTH advertised tools answered keyless, neither was rate-limited, key-gated or deprecated in this sweep. The optional key raises rate limits; no additional tool was observed. Regenerate with TOOLS/measure_mcp_capability.py.",
-      "capability_record": "BUNDLED-TOOLS/capability-records/context7.json",
-      "providers": [
-        "Claude",
-        "Codex",
-        "Grok",
-        "Kimi",
-        "Hermes"
-      ],
-      "required_for": [
-        "library-documentation",
-        "framework-api-lookup"
-      ],
-      "scope_note": "Current third-party library documentation, distinct from codebase-memory's local repository graph. Small always-on core; advertised schema bytes are not per-turn bills. The capability record names its measured version; remeasure after changing the package. 2026-10-10: 4.3.0 Windows initialize/tools-list PASS; 2 advertised tools, 5,231 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. 2026-10-13: 4.4.1 isolated Windows initialize/tools-list PASS: 2 tools, 5,221 compact UTF-8 schema bytes; production npm audit zero known findings. No credentialed query or inference tested."
-    },
-    {
-      "id": "github-mcp-server",
-      "name": "GitHub MCP Server (official)",
-      "kind": "mcp-binary",
-      "mcp": true,
-      "license": "MIT",
-      "version": "2.0.2",
-      "github": {
-        "owner": "github",
-        "repo": "github-mcp-server"
-      },
-      "install": "zip-extract",
-      "offline_asset": "github-mcp-server-2.0.2-windows-x86_64.zip",
-      "asset_match": [
-        "github-mcp-server-*-windows-x86_64.zip",
-        "*github-mcp-server*Windows_x86_64.zip"
-      ],
-      "target_dir": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\github-mcp-server",
-      "exe_rel": "github-mcp-server.exe",
-      "required_for": [
-        "repo-status",
-        "pull-requests",
-        "ci-status"
-      ],
-      "api_key_env": "GITHUB_PERSONAL_ACCESS_TOKEN",
-      "api_key_optional": true,
-      "auth_mode": "built-in-oauth-or-optional-pat",
-      "toolsets": "context,repos,pull_requests,actions,issues",
-      "scope_note": "GitHub's official server, replacing @modelcontextprotocol/server-github, which npm marks 'Package no longer supported'. Official release binaries since 1.5.0 carry GitHub's OAuth application: no PAT is required on github.com; the first authenticated tool call opens GitHub's browser authorization and keeps that token in the server process only. A GITHUB_PERSONAL_ACCESS_TOKEN is optional and takes precedence when the user deliberately configures one. initialize + tools/list proves the binary and protocol, not completion of that later browser authorization. Registered with a scoped --toolsets list, not 'all': the server exposes 20 toolset groups and enabled groups enlarge the advertised schema; actual prompt and billed usage depend on provider discovery and caching. Widen it per project, never globally. 2026-10-02 refresh: 1.14.0: official Windows ZIP SHA-256 0277e5fca965ae7fa31c7193954eae948ddc13997bc4b835858be858ac55cabe verified; scoped context,repos,pull_requests,actions,issues initialize/tools-list PASS; 47 tools, 129,567 compact UTF-8 schema bytes. OAuth completion and authenticated calls not exercised. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 2.0.2 Windows initialize/tools-list PASS; 47 advertised tools, 129,679 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. Compared with 1.14.0 using the same scoped toolsets: no tool names added or removed; upstream release digest verified.",
-      "server_id": "github",
-      "release_tag": "v2.0.2",
-      "asset_sha256": "4ae64087501650752f21c9d5af5378107a5116d94ee1cf37786b22b8c4bd99df"
-    },
-    {
-      "id": "serena",
-      "name": "Serena",
-      "kind": "mcp-python",
-      "mcp": true,
-      "license": "MIT",
-      "version": "2.0.0",
-      "github": {
-        "owner": "oraios",
-        "repo": "serena"
-      },
-      "install": "uv-tool",
-      "install_command": "uv tool install -p 3.13 serena-agent==2.0.0",
-      "exe_rel": "%USERPROFILE%\\.local\\bin\\serena.exe",
-      "profile": "code-intel",
-      "auto_register": false,
-      "api_key_env": null,
-      "required_for": [
-        "symbol-navigation",
-        "symbol-level-edits"
-      ],
-      "scope_note": "Language-server-backed symbol search and editing. NOT registered globally and NOT registered machine-wide: TOOLS\\Set-McpProfile.ps1 wires it for the one project that shows source-tree markers, to keep optional capability in relevant projects. Claude Code takes it in projects[\"<abs path>\"].mcpServers, Grok in the project's .grok\\config.toml and Codex in trusted-project .codex\\config.toml. Kimi is skipped unless -Global is passed. Hermes uses its separate native code profile for codebase-memory without adding Serena to default. Registered with a per-client --context so the tool set is trimmed to what the client does not already provide -- Serena 1.7.0 ships one for claude-code, codex and grok, and Kimi falls back to the generic 'agent' context -- and with --project <path> so it activates the project it was written for. Overlaps codebase-memory-mcp deliberately: that answers 'where is this in the graph', this answers 'what does this symbol resolve to, and rewrite its body'. 2026-10-13: 2.0.0 Windows/Python 3.13 initialize/tools-list PASS in claude-code, codex and grok contexts (23 tools; 26,312 / 30,038 / 29,440 compact schema bytes). Browser/dashboard explicitly disabled during probes. CLI version now pinned rather than silently installing latest. No real language-server edit or inference certified."
-    },
-    {
-      "id": "chrome-devtools-mcp",
-      "name": "Chrome DevTools MCP",
-      "kind": "mcp-npx",
-      "mcp": true,
-      "license": "Apache-2.0",
-      "version": "1.10.1",
-      "github": {
-        "owner": "ChromeDevTools",
-        "repo": "chrome-devtools-mcp"
-      },
-      "install": "mcp-npx",
-      "npx_command": "npx",
-      "npx_args": [
-        "-y",
-        "chrome-devtools-mcp@1.10.1",
-        "--no-usage-statistics"
-      ],
-      "profile": "web",
-      "auto_register": false,
-      "api_key_env": null,
-      "required_for": [
-        "browser-console",
-        "network-inspection",
-        "performance-traces"
-      ],
-      "scope_note": "Reads a live Chrome: console, network, performance traces, rendered DOM. The half playwright-mcp does not do -- playwright drives a browser, this explains what the browser did. Google Chrome and Chrome for Testing only; Chromium forks are not supported by this server, unlike playwright-mcp which takes PLAYWRIGHT_MCP_EXECUTABLE_PATH. --no-usage-statistics opts out of Google's telemetry, which is on by default upstream; this pack does not enable third-party telemetry on a user's machine without asking. Update measured 2026-09-28 at 1.10.1: initialize/tools-list PASS, 30 tools, 26,388 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake."
-    },
-    {
-      "id": "shadcn-mcp",
-      "name": "shadcn registry MCP",
-      "kind": "mcp-npx",
-      "mcp": true,
-      "license": "MIT",
-      "version": "4.21.4",
-      "github": {
-        "owner": "shadcn-ui",
-        "repo": "ui"
-      },
-      "install": "mcp-npx",
-      "npx_command": "npx",
-      "npx_args": [
-        "-y",
-        "shadcn@4.21.4",
-        "mcp"
-      ],
-      "profile": "web",
-      "auto_register": false,
-      "api_key_env": null,
-      "required_for": [
-        "component-registry"
-      ],
-      "scope_note": "Resolves registries from the project's components.json, so it is meaningless outside a shadcn project and is written project-scoped only. Measured 2026-09-02: 7 tools, 4,495 schema bytes, ~1,124 schema tokens (bytes/4; actual usage unmeasured). 2026-10-02 refresh: 4.21.1: initialize/tools-list PASS; 7 tools, 4,495 compact UTF-8 schema bytes. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 4.21.4 Windows initialize/tools-list PASS; 7 advertised tools, 4,495 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised."
-    },
-    {
-      "id": "blender-mcp",
-      "name": "Blender MCP",
-      "kind": "mcp-uvx",
-      "mcp": true,
-      "license": "MIT",
-      "version": "2.1.9",
-      "github": {
-        "owner": "ahujasid",
-        "repo": "mcp-for-blender"
-      },
-      "install": "mcp-uvx",
-      "npx_command": "uvx",
-      "npx_args": [
-        "mcp-for-blender@2.1.9"
-      ],
-      "profile": "engine-blender",
-      "auto_register": false,
-      "api_key_env": null,
-      "required_for": [
-        "blender-scene-control"
-      ],
-      "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender. Update measured 2026-09-28 at 2.1.1: initialize/tools-list PASS, 36 tools, 45,055 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 2.1.3: initialize/tools-list PASS; 36 tools, 45,121 compact UTF-8 schema bytes; telemetry disabled, safe mode enabled. No live editor calls. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 2.1.9 Windows initialize/tools-list PASS; 9 advertised tools, 15,597 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised."
-    },
-    {
-      "id": "godot-mcp",
-      "name": "Godot MCP",
-      "kind": "mcp-npx",
-      "mcp": true,
-      "license": "MIT",
-      "version": "0.1.1",
-      "github": {
-        "owner": "Coding-Solo",
-        "repo": "godot-mcp"
-      },
-      "install": "mcp-npx",
-      "npx_command": "npx",
-      "npx_args": [
-        "-y",
-        "@coding-solo/godot-mcp@0.1.1"
-      ],
-      "profile": "engine-godot",
-      "auto_register": false,
-      "api_key_env": null,
-      "required_for": [
-        "godot-run",
-        "godot-scene-tree"
-      ],
-      "scope_note": "Shells out to the Godot editor binary, which has no fixed install location on Windows, so the profile is gated on GODOT_PATH: setx GODOT_PATH \"C:\\path\\to\\Godot.exe\"."
-    },
-    {
-      "id": "unity-mcp",
-      "name": "Unity MCP",
-      "kind": "mcp-project-binary",
-      "mcp": true,
-      "license": "Apache-2.0",
-      "version": "0.91.0",
-      "github": {
-        "owner": "IvanMurzak",
-        "repo": "Unity-MCP"
-      },
-      "install": "unity-package",
-      "install_command": "npx -y unity-mcp-cli@0.91.0 install-plugin \"<project>\"",
-      "exe_rel": "Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe",
-      "profile": "engine-unity",
-      "auto_register": false,
-      "api_key_env": null,
-      "required_for": [
-        "unity-editor-control"
-      ],
-      "scope_note": "There is no machine-wide Unity MCP server. The executable is generated inside the project's Library folder by the Unity package, so the entry is project-scoped by construction and its command is the resolved absolute path for that one project. Until the package is installed the exe does not exist, and the profile refuses rather than writing a path that is not there.",
-      "compatibility_hold": "2026-09-28: 0.93.2 is current upstream but needs a real Unity project/editor compatibility check. Retain the evaluated 0.91.0 package pin; no Unity editor was launched or live project modified."
-    },
-    {
-      "id": "rtk",
-      "name": "RTK (Rust Token Killer)",
-      "kind": "cli-optional",
-      "license": "Apache-2.0",
-      "version": "1.0.0",
-      "github": {
-        "owner": "rtk-ai",
-        "repo": "rtk"
-      },
-      "install": "zip-extract",
-      "offline_asset": "rtk-oss-x86_64-pc-windows-msvc.zip",
-      "asset_match": [
-        "rtk-oss-x86_64-pc-windows-msvc.zip"
-      ],
-      "target_dir": "%USERPROFILE%\\.local\\bin",
-      "exe_rel": "rtk.exe",
-      "required_for": [
-        "shell-output-compression"
-      ],
-      "hook_policy": "off",
-      "discouraged_provider_plugins": {
-        "Hermes": [
-          "rtk-rewrite"
-        ]
-      },
-      "safe_hook_policy": {
-        "enabled": true,
-        "executable_providers": [
-          "Claude",
-          "Grok",
-          "Hermes"
-        ],
-        "instruction_providers": [
-          "Codex",
-          "Kimi"
-        ],
-        "allow": [
-          "git status",
-          "git status --short",
-          "git status -s",
-          "standalone human-facing pytest/cargo/go tests"
-        ],
-        "broad_upstream_hook": false
-      },
-      "scope_note": "CLI output filter with zero standing schema tokens. GIT CORPUS, measured on this repo AT rtk 1.0.0 against pinned refs: git diff v8.6.1..v8.6.5 430,285 -> 55,870 bytes (87%), git log v8.6.1..v8.6.5 14,250 -> 1,660 (88%), git diff v8.6.4..v8.6.5 33,453 -> 26,820 (20%), and git log --stat -20 v8.6.5 102,301 -> 102,301 (0%). Those are summaries, not lossless replacements: on the larger diff RTK retained 341 of 5,856 changed lines and omitted 5,515. Exact short status is different: a fixture covering staged, unstaged, deleted, renamed, Unicode and untracked paths was line-identical 5/5. NON-GIT CORPUS measured at 0.46.0 on 2026-08-27: rtk test kept the failure at about 93% saved; excluding truncating rows, the aggregate was 7.4% against git's 85.2%. TRUNCATION IS NOT SAVING: rtk json returned one of 5,425 array rows plus `... +5424 more`. rtk find works with a simple -name but breaks on compound predicates; rtk-ai/rtk#3410 reports its unconditional rewrite also intercepts find -delete/-exec. Archive correction: rtk test writes a complete tee for the measured 5.4 KB run and prints its path, but RTK documents a 1 MB raw tee cap. WINDOWS INTEGRATION, re-probed at 0.47.0 on 2026-09-02: upstream rewrite still catches lossy diff/log/show, broken find, cat/read, grep, curl, gh, and mutating git add/commit/push. Therefore broad upstream init and Hermes rtk-rewrite stay off. The bundle installs RTK by default and wires its own allowlist: exact standalone git status plus standalone human-facing pytest, cargo test and go test. Machine-readable output, pipes/redirection, all mutating Git, diff/show/log/find/search/read/curl/gh stay raw. Claude, Grok and Hermes receive the executable hook; Codex and Kimi receive the same narrow instruction because no trusted command-mutation hook is established there. Telemetry remains opt-in. Remeasured 2026-10-02 with TESTS/test_rtk_candidate.py: all four pinned corpus rows; allowlisted rewrite protocol exit 3 PASS; --short/-s preserved staged, unstaged, deleted, renamed, Unicode and untracked status lines (status comparison is line-wise). Broad hooks remain disabled; these are byte savings, not measured billed tokens. 2026-10-13: Apache-2.0 OSS edition selected explicitly; upstream's default binary now uses different licensing. Official Windows OSS archive SHA-256 verified, all four fixed corpus rows unchanged, exact short-status fixture PASS and allowlisted rewrite exit-3 protocol PASS. No pipelines, daemon or upstream broad hook enabled."
-    },
-    {
-      "id": "omni",
-      "name": "OMNI (context distillation)",
-      "kind": "cli-optional",
-      "license": "Apache-2.0",
-      "version": "0.7.9",
-      "github": {
-        "owner": "fajarhide",
-        "repo": "omni"
-      },
-      "required_for": [
-        "tool-output-deduplication"
-      ],
-      "scope_note": "CLI + host hook, zero standing tokens -- same slot as rtk, different mechanism, so they stack rather than compete: rtk filters ONE command's output, OMNI remembers output across calls and returns a handle instead of resending what the agent already saw. USE THE README'S NUMBERS, NOT THE LANDING PAGE'S. The page headlines '97.2% off a file read twice' and '~24%'; the README's own corpus of 9,478 executions says '1.4% from the filters, 5.1% with the ledger'. 97.2% is a best case for one re-read, not an expected value -- treat 5% as the number and anything above it as a bonus. Ships a real x86_64-pc-windows-msvc binary with SHA256SUMS (v0.7.8, 2026-08-25), which is why it is here and lowfat is not: lowfat v0.8.0 publishes darwin and linux-gnu only and integrates through a POSIX shell eval hook, the same native-Windows degradation this catalog already documents for rtk's non-Hermes hooks. Full host rewrite on Claude Code, Codex CLI and Gemini CLI; Hermes is supported; MCP-only fallback elsewhere. Stores a local SQLite ledger (permanent project knowledge, 30-day working data, 7-day verbatim traces) -- it is a cache of your own tool output, so treat it as project data, not a temp file. REWIND CAP, measured 2026-08-26 at 0.7.8: output above 65,536 bytes is truncated and NOT archived -- the marker says `full output not archived` and those bytes are unrecoverable, which the README's byte-for-byte guarantee does not qualify. Below the cap the guarantee holds and is self-verifying: the retrieve handle IS the content's SHA-256 prefix, and a 33,453-byte diff came back byte-identical. Head-to-head on this repo's git corpus: rtk 85.2%, OMNI 71.2% headline but only 6.4% once the truncated rows are excluded -- consistent with OMNI's own published 8.8% on git. Its value is the ledger, not the filter; see docs/TOOL-EVALUATIONS.md. Not auto-installed: a 5% saving does not justify rewriting every tool result on a machine by default.",
-      "compatibility_hold": "2026-09-28: informational evaluation pin only, not installed or enabled by the bundle. Candidate 0.7.10 has not been remeasured; the historical ledger/rewind findings must not be presented as measurements of a newer binary."
-    },
-    {
-      "id": "windows-mcp",
-      "name": "Windows MCP",
-      "kind": "mcp-uvx",
-      "mcp": true,
-      "license": "MIT",
-      "version": "0.8.8",
-      "github": {
-        "owner": "CursorTouch",
-        "repo": "Windows-MCP"
-      },
-      "install": "mcp-uvx",
-      "npx_command": "uvx",
-      "npx_args": [
-        "--python",
-        "3.14",
-        "windows-mcp@0.8.8",
-        "serve"
-      ],
-      "profile": "windows",
-      "auto_register": false,
-      "api_key_env": null,
-      "controls_machine": true,
-      "required_for": [
-        "desktop-automation"
-      ],
-      "offline_asset": null,
-      "runtimes": [
-        "python3"
-      ],
-      "scope_note": "Desktop control through UI Automation: click, type, send shortcuts, run PowerShell, read and write the registry and the filesystem, enumerate windows and processes. This is the one operating surface the pack had no way to reach -- Playwright and chrome-devtools stop at the browser. UIA also lets an agent PERCEIVE controls without spending a vision call, which is most of why it earns its schema. Measured 2026-08-27 with TOOLS\\Measure-McpSchemaCost.ps1 against `uvx windows-mcp@0.8.5 serve`: 20 tools, 22,088 bytes, ~5,522 schema tokens (bytes/4; actual usage unmeasured) -- less than firecrawl-mcp's 36,337 and about four times context7, for the whole desktop. OFF by default and never auto-detected: the `windows` profile carries no detect markers, so -Auto cannot reach it. Turn it on deliberately with TOOLS\\Set-McpProfile.ps1 -Enable windows -Global. controls_machine is why TOOLS/measure_mcp_capability.py refuses to sweep it: that sweep calls every advertised tool with arguments synthesized from the schema, which here means typing into whatever window has focus and running whatever PowerShell the sample produces. Update measured 2026-09-28 at 0.8.6: initialize/tools-list PASS, 20 tools, 22,984 compact schema bytes (~5,746 bytes/4 estimate, not billing). Python >=3.14 is now required: the uvx command explicitly selects managed Python 3.14. OFF-by-default scope is unchanged; no desktop actions were invoked. 2026-10-02 refresh: 0.8.7 with Python 3.14: initialize/tools-list PASS; 20 tools, 22,984 compact UTF-8 schema bytes. Still manually opt-in/OFF by default; no desktop actions invoked. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 0.8.8 Windows initialize/tools-list PASS; 21 advertised tools, 23,545 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised."
-    },
-    {
-      "id": "super-mcp-router",
-      "name": "Super MCP Router",
-      "kind": "mcp-npx",
-      "mcp": true,
-      "license": "MIT",
-      "version": "2.8.3",
-      "github": {
-        "owner": "mindstone",
-        "repo": "Super-MCP"
-      },
-      "install": "mcp-npx",
-      "npx_command": "npx",
-      "npx_args": [
-        "-y",
-        "super-mcp-router@2.8.3"
-      ],
-      "profile": null,
-      "auto_register": false,
-      "api_key_env": null,
-      "required_for": [
-        "mcp-schema-reduction"
-      ],
-      "offline_asset": null,
-      "runtimes": [
-        "node22"
-      ],
-      "scope_note": "A proxy MCP. It registers ONE server carrying discovery/meta-tools and puts every other server behind on-demand discovery: search_tools by intent, get_tool_details for one schema, use_tool to call it. Measured 2026-08-27: 11 tools, 11,386 bytes, ~2,846 meta-tool schema tokens (bytes/4), excluding discovered schemas, results and provider billing. The comparison that matters: houseCARL wired directly is 45 tools, 167,072 bytes, ~41,768 full-schema tokens by the same heuristic. Correction 2026-09-08: Codex has native enabled_tools/disabled_tools filters; Claude Code supports deferred Tool Search. The earlier universal all-tools-every-turn comparison was wrong; no billed saving was measured. Proven end to end against this pack's own houseCARL on 2026-08-27: search_tools('list the plugins in the active load order') -> get_tool_details (3,652 chars, ~913 tokens for that ONE schema) -> use_tool returned live data from the shim (2,999 mods, 2,995 plugins). Startup 1.2s, search 400ms, detail 200ms. NOT wired into a profile, and the reason is specific rather than cautious: the router reads its own config at %USERPROFILE%\\.super-mcp\\config.json, so enabling it means this pack writing and preserving a THIRD-PARTY tool's config file -- a second config writer with its own merge obligations, on a 24-star dependency. The measurement is what ships here; the wiring is its own release. One caveat to carry into that decision: BM25 ranking returned housecarl_merge_plugins FIRST for that read-only query, with the correct housecarl_load_order_status third. Discovery works, but the top hit is not automatically the safe one. 2026-10-02: candidate 2.8.3 initialize/tools-list PASS in a disposable home, 12 meta-tools and 12,475 compact UTF-8 schema bytes. No child-server routing/config migration was tested; remains unregistered and opt-in."
-    },
-    {
-      "id": "playwright-cli",
-      "name": "Playwright CLI",
-      "kind": "cli-optional",
-      "install": "npx-or-npm",
-      "version": "0.1.22",
-      "github": {
-        "owner": "microsoft",
-        "repo": "playwright-cli"
-      },
-      "license": "Apache-2.0",
-      "runtimes": [
-        "node22"
-      ],
-      "npm_spec": "@playwright/cli@0.1.22",
-      "npm_integrity": "sha512-6WMkQNM4VEzqMkdr/l60X9Cr7i+tI/arK87IWz2K7pB6j8I2ZJ8KN+1JfhJDLnK+SXnab6Op8xGt4adcGLsyfA==",
-      "npm_args": [
-        "--ignore-scripts"
-      ],
-      "offline_asset": null,
-      "required_for": [
-        "browser-cli"
-      ],
-      "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.20 package pins Playwright 1.64.0-alpha-2026-09-14; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving. 2026-09-28: CLI 0.1.21 pins Playwright 1.64.0-alpha-1789764292000; isolated Windows Chrome navigation, raw title evaluation and named-session close PASS. 2026-10-02 refresh: 0.1.22: isolated Windows Chrome about:blank navigation, raw document.URL evaluation and unique named-session close PASS. Schema bytes are transport measurements, not billed-token savings."
-    },
-    {
-      "id": "comfy-cli",
-      "name": "ComfyUI CLI",
-      "kind": "cli-optional",
-      "install": "manual-user-product",
-      "version": "1.22.0",
-      "pip_spec": "comfy-cli==1.22.0",
-      "license": "GPL-3.0",
-      "github": {
-        "owner": "Comfy-Org",
-        "repo": "comfy-cli"
-      },
-      "offline_asset": null,
-      "runtimes": [
-        "python3"
-      ],
-      "required_for": [
-        "local-media-workflows"
-      ],
-      "note": "Optional CLI only: COMFY_NO_TELEMETRY=1; uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local --help. Discover an existing local ComfyUI installation first; do not download models, install custom nodes, or use cloud services automatically.",
-      "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
-    }
-  ],
-  "pack_version": "8.15.2",
-  "updated_utc": "2026-10-16",
-  "providers": {
-    "Grok": {
-      "skills": "skills",
-      "home_default": "%USERPROFILE%\\.grok",
-      "instructions": null,
-      "instruction_src": "AGENTS.md",
-      "workspace_only_instructions": true,
-      "home_env": "GROK_HOME"
-    },
-    "Hermes": {
-      "skills": "skills",
-      "home_default": "%LOCALAPPDATA%\\hermes",
-      "instructions": null,
-      "instruction_src": "AGENTS.md",
-      "workspace_only_instructions": true,
-      "home_env": "HERMES_HOME"
-    },
-    "Claude": {
-      "instructions": "CLAUDE.md",
-      "instruction_src": "CLAUDE.md",
-      "home_env": "CLAUDE_CONFIG_DIR",
-      "skills": "skills",
-      "home_default": "%USERPROFILE%\\.claude"
-    },
-    "Kimi": {
-      "instructions": "AGENTS.md",
-      "instruction_src": "AGENTS.md",
-      "home_env": "KIMI_CODE_HOME",
-      "skills": "skills",
-      "home_default": "%USERPROFILE%\\.kimi-code"
-    },
-    "Codex": {
-      "instructions": "AGENTS.md",
-      "instruction_src": "AGENTS.md",
-      "home_env": "CODEX_HOME",
-      "skills": "skills",
-      "home_default": "%USERPROFILE%\\.codex"
-    }
+ "components": [
+  {
+   "id": "rea",
+   "name": "REA (Reverse Engineer Anything)",
+   "kind": "cli-optional",
+   "install": "npx-or-npm",
+   "version": "6.5.0",
+   "license": "MIT",
+   "github": {
+    "owner": "morluto",
+    "repo": "rea"
+   },
+   "npm_spec": "rea-agents@6.5.0",
+   "npm_integrity": "sha512-C6BG7LyrAdR74mSjertM6PrxJkcNZ2bfQNOJornPo9erDEp2tyPRVYPnV5Yodr+1RqewCQla68WulXlVnveD+A==",
+   "npm_args": [
+    "--ignore-scripts"
+   ],
+   "mcp": false,
+   "auto_register": false,
+   "offline_asset": null,
+   "providers": [
+    "Claude",
+    "Codex",
+    "Grok",
+    "Kimi",
+    "Hermes"
+   ],
+   "runtimes": [
+    "node22"
+   ],
+   "required_for": [
+    "reverse-engineering-evidence"
+   ],
+   "scope_note": "Optional CLI only; not part of default Components or MCP profiles. 2026-10-16 isolated Windows npm integrity-bound install of 6.5.0 with lifecycle scripts disabled (the 6.5.0 tarball sha512 matches the recorded pin) and a 2026-10-13 baseline of the same procedure on 6.4.0: help and execution-free JavaScript fixture analysis PASS (7-node fixture graph, no integrity contradictions), zero known production npm audit findings across 147 prod dependencies. Stdio transport probe exposed 207 tools and 3,087,942 compact UTF-8 schema bytes (170 tools / 1,954,683 bytes on 6.4.0), not loaded or billed tokens. No native Ghidra/runtime/GUI actions certified. Reuse Reverse THIS! shims and Universal Modder recon. No upstream setup/update or duplicate skill collection. See tool-discovery/references/reverse-engineering.md."
   },
-  "runtimes": {
-    "aspnetcore9": {
-      "winget": [
-        "Microsoft.DotNet.AspNetCore.9"
-      ],
-      "check": "dotnet --list-runtimes | findstr AspNetCore.App.9"
-    },
-    "dotnet9": {
-      "winget": [
-        "Microsoft.DotNet.Runtime.9"
-      ],
-      "check": "dotnet --list-runtimes | findstr /R \"Microsoft.NETCore.App 9\\.\""
-    },
-    "node22": {
-      "winget": [
-        "OpenJS.NodeJS.LTS"
-      ],
-      "note": "For CodeBurn and Impeccable"
-    },
-    "dotnet8-sdk": {
-      "winget": [
-        "Microsoft.DotNet.SDK.8"
-      ],
-      "note": "Needed to build/run Spooky from source"
-    },
-    "python3": {
-      "winget": [
-        "Python.Python.3.12"
-      ],
-      "note": "For Headroom pip install"
-    }
+  {
+   "id": "universal-modder",
+   "name": "Universal Modder",
+   "kind": "python-cli",
+   "install": "pip-or-wheel",
+   "version": "0.2.0",
+   "license": "MIT",
+   "github": {
+    "owner": "rehan-remade",
+    "repo": "universal-modder"
+   },
+   "source_commit": "23902ef42e8ea9b077bfbbf6911eb8ea0348e55a",
+   "source_archive_sha256": "037196f80d4522de60afbb25e0914234998ad5a867551a9380309b01e43859fc",
+   "source_dir": "BUNDLED-TOOLS/universal-modder",
+   "offline_asset": "universal_modder-0.2.0+uabs.23902ef-py3-none-any.whl",
+   "cli": "um",
+   "cli_env": "UNIVERSAL_MODDER_CMD",
+   "python": "3.13",
+   "mcp": false,
+   "auto_register": false,
+   "providers": [
+    "Claude",
+    "Codex",
+    "Grok",
+    "Kimi",
+    "Hermes"
+   ],
+   "required_for": [
+    "game-recon",
+    "sprite-processing",
+    "gameplay-showcase-video"
+   ],
+   "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to twelve upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (the indexed knowledge snapshot), discovers native Windows Steam roots from the registry, never echoes matched credentials and prints a sha256 fingerprint plus key length where `um fal key status` used to print the first and last key characters (CodeQL py/clear-text-logging-sensitive-data); the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. The audited refresh adds quoted multi-word knowledge search, ranked hits and broken-link diagnostics while retaining local ComfyUI generation, SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification. 2026-10-13 source refresh adds Bannerlord, MT Framework, Hedgehog and Black Rock discovery plus a mod-porting reference; preserves UABS dependency pins, native Steam discovery and credential-safe output. 2026-10-16 source refresh (38 upstream commits, 23902ef) adds Isaac, Just Cause 3/Avalanche, Space Marine 2, Project Zomboid and S.T.A.L.K.E.R. 2 knowledge notes, fal keys through the desktop keyring with a masked status command, and a UTF-8 tool-output fix on Windows. Upstream's new agents/ team plus its OpenCode/session files stay unshipped, and the refresh tool now drops the unbounded UE3 unpack_upk.py fallback by rule instead of by hand."
   },
-  "notes": "Multi-provider Ultimate AI Starter Bundle. Includes optional full Skyrim SE/AE modding stack; not Skyrim-only.",
-  "pack_name": "Ultimate-AI-Starter-Bundle",
-  "display_name": "Ultimate AI Starter Bundle",
-  "provider_config_schemas": {
-    "Hermes": 44
+  {
+   "id": "uabs-toolbox",
+   "name": "UABS Toolbox (project tools on demand)",
+   "kind": "mcp-python",
+   "install": "pip-or-wheel",
+   "version": "1.0.0",
+   "license": "MIT",
+   "source_dir": "BUNDLED-TOOLS/uabs-toolbox",
+   "offline_asset": "uabs_toolbox-1.0.0-py3-none-any.whl",
+   "cli": "uabs-toolbox",
+   "cli_env": "UABS_TOOLBOX_CMD",
+   "python": "3.13",
+   "mcp": true,
+   "auto_register": true,
+   "providers": [
+    "Claude",
+    "Codex",
+    "Grok",
+    "Kimi",
+    "Hermes"
+   ],
+   "required_for": [
+    "on-demand-project-tools"
+   ],
+   "scope_note": "Bundle-owned, always-on MCP server with three tools (find, describe, call). Task servers stay out of every chat; the toolbox starts the one a task needs on first use, in the same chat, from the bundle's own catalog (toolbox-profiles.json, a copy of PROFILES.json) and the exact entries Set-McpProfile.ps1 -Park saved (parked-mcp.json). Nothing is written to any provider config at call time. Credentials in a parked entry start its server and are never printed. Gate: TESTS/test_toolbox.py (fixture child server; find/describe/call, env pass-through without secret output, project-bound sets, crash restart, TOML parked entries, duplicate suppression)."
   },
-  "catalog_version": "8.15.2",
-  "updated": "2026-10-15",
-  "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
+  {
+   "github": {
+    "repo": "houseCARL",
+    "owner": "Avick3110"
+   },
+   "id": "housecarl",
+   "runtimes": [
+    "dotnet9",
+    "aspnetcore9"
+   ],
+   "license": "GPL-3.0-only",
+   "target_dir": "%LOCALAPPDATA%\\houseCARL",
+   "required_for": [
+    "load-order",
+    "patch-esp",
+    "nexus-lookup"
+   ],
+   "name": "houseCARL",
+   "mcp": true,
+   "offline_asset": "houseCARL-1.9.0.zip",
+   "kind": "mcp-binary+skills",
+   "setup_after": "Setup-HouseCarl.ps1",
+   "asset_match": [
+    "houseCARL-*.zip",
+    "*houseCARL*.zip"
+   ],
+   "install": "zip-extract",
+   "exe_rel": "server\\housecarl-mcp.exe",
+   "mcp_tool_budget": {
+    "measured_utc": "2026-08-25T17:20:00Z",
+    "measured_with": "TOOLS/Measure-McpSchemaCost.ps1",
+    "mechanism": "Hermes tools.include/tools.exclude filter at tool registration; fnmatch globs are supported. Codex has native enabled_tools/disabled_tools; Claude Code supports deferred Tool Search. These sets describe Hermes selections, not a universal provider surface or a bill.",
+    "measurement_basis": "Historical sum of per-tool UTF-8 JSON bytes, excluding array framing. Legacy *_tokens_per_turn fields are bytes/4 schema estimates; saving_pct is a schema-size reduction, not measured billed savings.",
+    "all_tools": 45,
+    "all_schema_bytes": 167072,
+    "all_tokens_per_turn": 41768,
+    "sets": {
+     "Full": {
+      "include": [],
+      "tools": 45,
+      "schema_bytes": 167072,
+      "tokens_per_turn": 41768,
+      "saving_pct": 0,
+      "why": "No filter. Every tool registered. Use when authoring records in bulk and diagnosing in the same session."
+     },
+     "Lean": {
+      "exclude": [
+       "housecarl_bulk_create",
+       "housecarl_create_record",
+       "housecarl_bulk_apply"
+      ],
+      "tools": 42,
+      "schema_bytes": 125476,
+      "tokens_per_turn": 31369,
+      "saving_pct": 25,
+      "why": "Drops only the three tools whose parameter schemas carry full nested record objects: bulk_create (14,655 B), create_record (14,548 B) and bulk_apply (12,393 B) are 41,596 bytes between them -- a quarter of the server, and more than the whole of Skyrim Forge. They are dedicated bulk-authoring entry points, so a diagnosis or patch-reading session pays for them and never calls them. This is the shipped default because it costs no capability a normal session uses."
+     },
+     "ReadOnly": {
+      "include": [
+       "housecarl_resolve",
+       "housecarl_read_record",
+       "housecarl_batch_record_detail",
+       "housecarl_diff_record",
+       "housecarl_cross_plugin_query",
+       "housecarl_read_plugin_file",
+       "housecarl_load_order_status",
+       "housecarl_check_errors",
+       "housecarl_asset_status",
+       "housecarl_update_status",
+       "housecarl_validate_scripts",
+       "housecarl_validate_dialogue",
+       "housecarl_native_pairing_audit",
+       "housecarl_skse_inventory",
+       "housecarl_skse_config_audit",
+       "housecarl_skypatcher_read",
+       "housecarl_nif_inspect",
+       "housecarl_decompile_script",
+       "housecarl_bsa_list",
+       "housecarl_bsa_extract",
+       "housecarl_nexus_search",
+       "housecarl_nexus_mod",
+       "housecarl_nexus_check_updates",
+       "housecarl_nexus_identify",
+       "housecarl_nexus_graphql",
+       "housecarl_set_mo2_instance",
+       "housecarl_set_tool_path"
+      ],
+      "tools": 27,
+      "schema_bytes": 70418,
+      "tokens_per_turn": 17604,
+      "saving_pct": 58,
+      "why": "Everything that reads, diagnoses, validates or looks up, and nothing that writes. Keeps load-order truth, conflict trees, cross-plugin queries, script/dialogue validation, the SKSE audit and the whole keyless Nexus surface. Drops the 18 write tools. Use for diagnosis, load-order work and Nexus research."
+     }
+    },
+    "restore": "hermes -p skyrim mcp configure housecarl  (interactive checklist, rewrites tools.include). Re-running the migrator will not undo a hand-edited filter."
+   },
+   "version": "1.9.0",
+   "release_tag": "v1.9.0",
+   "compatibility_hold": "2026-09-13: v2.0.0 removes the 1.x tool API. Keep v1.9.0 until skills, profiles and live read-only validation are migrated together. OnlineLatest must not silently replace it."
+  },
+  {
+   "github": {
+    "repo": "spookys-automod-toolkit",
+    "owner": "SpookyPirate"
+   },
+   "id": "spooky",
+   "runtimes": [
+    "dotnet8-sdk"
+   ],
+   "license": "see-upstream",
+   "target_dir": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\spookys-automod-toolkit",
+   "required_for": [
+    "esp-cli",
+    "papyrus-cli",
+    "nif",
+    "bsa"
+   ],
+   "name": "Spooky's AutoMod Toolkit",
+   "verify": "dotnet run --project src/SpookysAutomod.Cli -- --help",
+   "offline_asset": "spookys-automod-toolkit-v1.11.2.zip",
+   "kind": "cli-toolkit",
+   "asset_match": [
+    "spookys-automod-toolkit-*.zip"
+   ],
+   "install": "zip-extract",
+   "env": "SPOOKY_AUTOMOD_ROOT",
+   "version": "1.11.2",
+   "release_tag": "v1.11.2"
+  },
+  {
+   "github": {
+    "repo": "codebase-memory-mcp",
+    "owner": "DeusData"
+   },
+   "id": "codebase-memory",
+   "env": "CODEBASE_MEMORY_MCP",
+   "license": "see-upstream",
+   "target_dir": "%LOCALAPPDATA%\\Programs\\codebase-memory-mcp",
+   "required_for": [
+    "code-graph"
+   ],
+   "name": "codebase-memory-mcp",
+   "mcp": true,
+   "offline_asset": "codebase-memory-mcp-windows-amd64.zip",
+   "kind": "mcp-binary",
+   "profile": "code-intel",
+   "auto_register": false,
+   "asset_match": [
+    "codebase-memory-mcp-windows-amd64.zip"
+   ],
+   "install": "zip-extract",
+   "exe_rel": "codebase-memory-mcp.exe",
+   "scope_note": "Installed globally but absent from global/default MCP sets. Claude, Grok and trusted Codex projects get it through code-intel; Hermes through its native code profile. Kimi needs explicit global opt-in. NEVER enable --ui / install.ps1 --ui (Windows Codebase Discovery Open-With). auto_index=false auto_watch=false default. Recorded 0.10.8: 15 tools, 23,974 schema bytes, ~5,994 schema tokens (bytes/4), not a per-turn bill.",
+   "server_id": "codebase-memory-mcp",
+   "version": "0.12.1",
+   "release_tag": "v0.12.1"
+  },
+  {
+   "install": "pip-or-wheel",
+   "id": "headroom",
+   "kind": "mcp-python",
+   "mcp": true,
+   "github": {
+    "repo": "headroom",
+    "owner": "headroomlabs-ai"
+   },
+   "runtimes": [
+    "python3"
+   ],
+   "name": "Headroom",
+   "version": "0.41.0",
+   "release_tag": "v0.41.0",
+   "pip_spec": "headroom-ai[mcp]==0.41.0",
+   "offline_asset": "headroom_ai-0.41.0-cp310-abi3-win_amd64.whl",
+   "license": "see-upstream",
+   "required_for": [
+    "context-compress"
+   ],
+   "asset_match": [
+    "headroom_ai-*-cp310-abi3-win_amd64.whl",
+    "headroom-ai-*.tgz"
+   ],
+   "scope_note": "Core MCP remains three tools. Windows initialize/tools-list measured 2026-09-28 at 0.39.1: 1,250 compact schema bytes (~313 bytes/4 estimate, not billing). No hosted inference or proxy traffic was used in this test. 2026-10-10: 0.40.0 Windows initialize/tools-list PASS; 3 advertised tools, 1,250 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised."
+  },
+  {
+   "install": "skills-copy",
+   "id": "superpowers",
+   "kind": "skills-plugin",
+   "claude_plugin": true,
+   "github": {
+    "repo": "superpowers",
+    "owner": "obra"
+   },
+   "name": "Superpowers",
+   "offline_asset": null,
+   "license": "see-upstream",
+   "required_for": [
+    "process-discipline"
+   ],
+   "bundled_skills": true,
+   "version": "7.0.0",
+   "release_tag": "v7.0.0",
+   "bundle_patch_note": "2026-10-10: reviewed upstream v7.0.0 archive SHA-256 1e95883561717c85aa90590f210674687086bf88eac919a17e8a6518e11003da. Preserve UABS browser-companion HttpOnly-cookie hardening and Hermes compaction recovery; include upstream Hermes skill descriptions. Native/skills fallbacks consume the patched vendored tree, not the unpatched official archive."
+  },
+  {
+   "install": "skills-copy",
+   "id": "ponytail",
+   "kind": "skills-plugin",
+   "claude_plugin": true,
+   "github": {
+    "repo": "ponytail",
+    "owner": "DietrichGebert"
+   },
+   "name": "Ponytail",
+   "offline_asset": null,
+   "bundle_patch_note": "2026-09-28: bundled Cursor adapter anchors Ponytail script names at a word/hyphen boundary to prevent CodeQL #228 polynomial ReDoS. Native provider rules/skills are unchanged. AIO skills-copy and native offline fallbacks consume the vendored plugin tree, not a second plugin ZIP; remove the unused unpatched upstream ZIP rather than mislabel patched bytes as an official archive. Independent upstream marketplace caches are not rewritten by this source patch. 2026-10-02: reviewed v4.10.1 source c6ce46179874ea7368da0eb9e67c1ad5c10f08bc; 16 upstream adapter tests and Cursor security regression pass; existing Cursor fix retained. 2026-10-10: refreshed to v5.1.0 from official archive SHA-256 8fa83a6a1f5f0ca980445f789d3a747ee9999959bbc4176ea6f73e4f3dbcb8bd. Cursor regex fix retained; Windows statusline test now recognizes JSON-escaped paths. Adapter tests: 126 pass, one platform skip.",
+   "license": "MIT",
+   "required_for": [
+    "minimal-diff"
+   ],
+   "bundled_skills": true,
+   "version": "5.3.2",
+   "release_tag": "v5.3.2"
+  },
+  {
+   "install": "npx-or-npm",
+   "id": "codeburn",
+   "kind": "cli-optional",
+   "runtimes": [
+    "node22"
+   ],
+   "note": "Prefer npx codeburn (no large desktop bundle). Desktop Setup exe available on GitHub if desired.",
+   "github": {
+    "repo": "codeburn",
+    "owner": "getagentseal"
+   },
+   "name": "CodeBurn",
+   "version": "0.9.27",
+   "offline_asset": null,
+   "license": "see-upstream",
+   "required_for": [
+    "ai-cost"
+   ],
+   "npm_spec": "codeburn@0.9.27",
+   "npm_integrity": "sha512-dNCy09sYCdvrijcoOun+ZVyTbp/GYGmdBbBTe8uTSLRO8rSWqS4IEOzQdRoPRhbt7twCuSqVBjTNNl+CdTNrKQ==",
+   "npm_args": [
+    "--ignore-scripts"
+   ]
+  },
+  {
+   "install": "npx-or-npm",
+   "id": "impeccable",
+   "kind": "cli-optional",
+   "runtimes": [
+    "node22"
+   ],
+   "github": {
+    "repo": "impeccable",
+    "owner": "pbakaus"
+   },
+   "name": "Impeccable",
+   "version": "3.6.1",
+   "skill_version": "4.1.3",
+   "skill_asset": "universal.zip",
+   "skill_asset_sha256": "fdcb41a24ddfb613786e3141bc7bb8466a406ffbd437a2e302f4ca70181bed9f",
+   "offline_asset": null,
+   "license": "Apache-2.0",
+   "required_for": [
+    "ui-quality",
+    "frontend-design"
+   ],
+   "npm_spec": "impeccable@3.6.1",
+   "npm_integrity": "sha512-1PbJcM9jg+OXj83E7u3ckJnalg2KuIXAvVlqSNJdwdR8Llh8npSjMcl222EgP/9GhsX+w2FW2w8vdJ7GHMghow==",
+   "npm_args": [
+    "--omit=optional",
+    "--ignore-scripts"
+   ],
+   "scope_note": "The cross-provider skill is vendored from the official skill-v4.1.3 universal.zip and bound to its published SHA-256. The executable detector is the actually published npm 3.6.1 package, pinned by npm integrity. Optional Puppeteer is omitted: Playwright/browser profiles already own live rendering, and downloading a second browser would be duplication. Lifecycle scripts are disabled. UABS removes upstream self-update/pin paths and generated hook cache so provider skill trees keep one writer. Zero MCP schemas, daemon, account or key.",
+   "compatibility_hold": "2026-09-18 audited with TOOLS/audit-impeccable-engine.py against engine 0.1.5 (the payload CLI 4.1.0 pins): the engine still leaks bodies of browser-valid malformed close tags (</script \t bogus>, </style bogus>) into text analysis - the exact gap UABS patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub whose payload is that engine: pinned via optionalDependencies, else first-use download into ~/.impeccable, and its install/link/update/check commands write skill trees. Retain audited CLI 3.6.1 / skill 4.1.3 until upstream closes the fixture or ships patchable source. Rechecked 2026-09-28 against official engine 0.1.6 (still leaking), and 2026-10-11 against engine 0.1.14 (cli-v4.5.2 pins it): well-formed/control fixtures PASS, malformed script/style fixtures still leak the tag body into analysis - hold reaffirmed; the vendored patched CLI 3.6.1 passes TESTS/impeccable-security-regressions.mjs.",
+   "skill_release_prefix": "skill-v"
+  },
+  {
+   "install": "pinned-release",
+   "id": "skyrim-forge",
+   "kind": "product-release",
+   "mcp": true,
+   "name": "Skyrim Forge",
+   "env": "SKYRIM_FORGE_ROOT",
+   "pack": "skyrim",
+   "required_for": [
+    "typed-automation",
+    "release-gates"
+   ],
+   "github": {
+    "owner": "SenjuWoo",
+    "repo": "SkyrimForge"
+   },
+   "release_tag": "v6.0.1",
+   "asset": "Skyrim-Forge-6.0.1.zip",
+   "offline_asset": "Skyrim-Forge-6.0.1.zip",
+   "sha256": "69e5dfbf5932d82a145d8cb6b87019cc32642f632c201df726da848d58f7fe79",
+   "note": "Released from github.com/SenjuWoo/SkyrimForge. Installed only with the Skyrim pack. The installer verifies the pinned SHA-256 before extracting, resolves ONE versionless install root, migrates a version-stamped install onto it, preserves Workspaces and the virtualenv, wires selected providers, then proves the result runs with `forge doctor`. CI installs this exact release end to end.",
+   "version": "6.0.1"
+  },
+  {
+   "id": "code-review-skill",
+   "name": "Code Review Skill",
+   "kind": "skills-git",
+   "install": "skills-git",
+   "github": {
+    "owner": "awesome-skills",
+    "repo": "code-review-skill"
+   },
+   "git_url": "https://github.com/awesome-skills/code-review-skill.git",
+   "skills_subdir": null,
+   "skill_folder": "code-review-skill",
+   "providers": [
+    "Claude",
+    "Codex",
+    "Grok",
+    "Kimi",
+    "Hermes"
+   ],
+   "license": "see-upstream",
+   "required_for": [
+    "generic-code-review"
+   ],
+   "offline_asset": null,
+   "scope_note": "GENERIC languages only (C++, C#, PowerShell, Python, JS...). Skyrim-specific review stays with skyrim-code-review; Papyrus performance stays with papyrus-optimization."
+  },
+  {
+   "id": "obsidian-skills",
+   "name": "Obsidian Skills (kepano)",
+   "kind": "skills-git",
+   "install": "skills-git",
+   "github": {
+    "owner": "kepano",
+    "repo": "obsidian-skills"
+   },
+   "git_url": "https://github.com/kepano/obsidian-skills.git",
+   "skills_subdir": "skills",
+   "skill_folder": null,
+   "providers": [
+    "Claude",
+    "Codex",
+    "Grok",
+    "Kimi",
+    "Hermes"
+   ],
+   "license": "see-upstream",
+   "required_for": [
+    "docs-authoring",
+    "vault-notes",
+    "web-to-markdown"
+   ],
+   "offline_asset": null,
+   "scope_note": "Markdown/vault/canvas authoring for _AI-SHARED-MEMORY and mod docs. Never used to author Skyrim records or framework INIs."
+  },
+  {
+   "id": "claude-mem",
+   "name": "claude-mem",
+   "kind": "claude-plugin",
+   "install": "claude-plugin",
+   "github": {
+    "owner": "thedotmack",
+    "repo": "claude-mem"
+   },
+   "npx_install": [
+    "claude-mem",
+    "install"
+   ],
+   "marketplace": [
+    "thedotmack/claude-mem",
+    "claude-mem"
+   ],
+   "providers": [
+    "Claude"
+   ],
+   "runtimes": [
+    "node22",
+    "bun"
+   ],
+   "license": "see-upstream",
+   "required_for": [
+    "session-memory"
+   ],
+   "offline_asset": null,
+   "scope_note": "CLAUDE CODE ONLY. Never install for Grok/Codex/Kimi/Hermes. Cross-session CONVERSATION memory (what was done, when, why) — does NOT replace codebase-memory-mcp (code structure graph) or skyrim-memory (verified Skyrim facts). Requires Bun on PATH (worker uses bun:sqlite). Worker port 37777. If red MCP errors: install Bun from https://bun.sh then restart Claude Code.",
+   "runtime_note": "Bun required for worker daemon (https://bun.sh). The AIO installs Bun when missing, disables claude-mem's default anonymous telemetry, and starts the worker before reporting success."
+  },
+  {
+   "id": "playwright-mcp",
+   "name": "Playwright MCP",
+   "kind": "mcp-npx",
+   "install": "mcp-npx",
+   "mcp": true,
+   "profile": "web",
+   "auto_register": false,
+   "github": {
+    "owner": "microsoft",
+    "repo": "playwright-mcp"
+   },
+   "npx_command": "npx",
+   "npx_args": [
+    "-y",
+    "@playwright/mcp@0.0.83"
+   ],
+   "extra_args_env": "PLAYWRIGHT_MCP_EXECUTABLE_PATH",
+   "extra_args_template": [
+    "--executable-path",
+    "{value}"
+   ],
+   "api_key_env": null,
+   "providers": [
+    "Grok",
+    "Codex",
+    "Kimi",
+    "Hermes"
+   ],
+   "version": "0.0.83",
+   "runtimes": [
+    "node22"
+   ],
+   "license": "Apache-2.0",
+   "required_for": [
+    "browser-automation"
+   ],
+   "offline_asset": null,
+   "scope_note": "Browser automation for CLIs with no built-in browser. Claude Code already ships a browser pane, so it is skipped there. Never used for Nexus lookups - houseCARL does those keylessly. Measured 2026-09-02: 24 tools, 18,502 schema bytes, ~4,626 schema tokens (bytes/4; actual usage unmeasured). BROWSER CHOICE: with no flags, playwright-mcp defaults to the Google Chrome channel and prompts you to install Chrome. To use your own browser (Opera GX, Edge, Brave, Vivaldi, ...), set user env PLAYWRIGHT_MCP_EXECUTABLE_PATH to the browser exe BEFORE running the installer - the wiring appends --executable-path automatically. Example (Opera GX): setx PLAYWRIGHT_MCP_EXECUTABLE_PATH \"%LOCALAPPDATA%\\Programs\\Opera GX\\opera.exe\". To change later, edit the args in your provider's MCP config (Grok/Codex config.toml, Kimi ~/.kimi-code/mcp.json). Pinned, not @latest: an unpinned npx server can change its tool surface mid-session, and npx will happily reuse a broken cache. Update measured 2026-09-28 at 0.0.82: initialize/tools-list PASS, 25 tools, 20,102 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 0.0.83: initialize/tools-list PASS; 25 tools, 20,286 compact UTF-8 schema bytes. Schema bytes are transport measurements, not billed-token savings."
+  },
+  {
+   "id": "firecrawl-mcp",
+   "name": "Firecrawl MCP",
+   "security_hold": "2026-10-13: isolated production npm audit reports three high-severity package findings for both 3.29.1 and candidate 3.30.0 via firecrawl's pinned Axios 1.18.0. The suggested 3.24.0 downgrade also has known findings; do not install, register, or auto-downgrade. Native web/search and Playwright remain available. Existing personal registrations require review; the doctor reports them, never deletes unknown configuration. Recheck after upstream updates the dependency and an isolated audit plus transport test pass. Advisory: https://github.com/advisories/GHSA-vh66-26gq-q6x8",
+   "compatibility_hold": "Security hold: current and candidate Firecrawl MCP production dependencies have known audit findings. Await a clean upstream dependency refresh; no automatic downgrade or registration.",
+   "kind": "mcp-npx",
+   "install": "mcp-npx",
+   "mcp": true,
+   "github": {
+    "owner": "firecrawl",
+    "repo": "firecrawl-mcp-server"
+   },
+   "npx_command": "npx",
+   "npx_args": [
+    "-y",
+    "firecrawl-mcp@3.29.1"
+   ],
+   "api_key_env": "FIRECRAWL_API_KEY",
+   "api_key_optional": true,
+   "keyless_registration": "skip",
+   "keyless_skip_reason": "Recorded keyless evaluation: 2 usable tools out of 25 (scrape, search), with 36,321 schema bytes (~9,080 tokens at bytes/4), overlapping native web tools. These historical schema estimates are not a per-turn bill; loading, filtering and caching depend on the host. Not registered without a key by default. Override with -RegisterKeylessExtras.",
+   "keyless_note": "Measured against the pinned 3.24.0 with FIRECRAWL_* scrubbed, all 25 tools called: exactly TWO work keyless - firecrawl_scrape and firecrawl_search. 21 answer 'Unauthorized: API key is required', including interact, which this note previously listed as keyless. firecrawl_extract is DEPRECATED ('deprecated and unavailable through MCP'), not key-gated. firecrawl_parse needs FIRECRAWL_API_URL pointing at a self-hosted instance, so Firecrawl's own docs saying 'Search, Scrape and Parse' are free do not hold for this server. Regenerate with TOOLS/measure_mcp_capability.py rather than editing by hand.",
+   "keyless_tools": [
+    "firecrawl_scrape",
+    "firecrawl_search"
+   ],
+   "capability_record": "BUNDLED-TOOLS/capability-records/firecrawl-mcp.json",
+   "providers": [
+    "Claude",
+    "Codex",
+    "Grok",
+    "Kimi",
+    "Hermes"
+   ],
+   "runtimes": [
+    "node22"
+   ],
+   "license": "see-upstream",
+   "required_for": [
+    "web-docs-extract"
+   ],
+   "offline_asset": null,
+   "scope_note": "Scraping general web docs (CommonLib docs, wikis, GitHub READMEs). NEVER Nexus Mods - houseCARL reads Nexus keylessly with changelogs and file lists. Update measured 2026-09-28 at 3.25.5: initialize/tools-list PASS, 27 tools, 74,789 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 3.27.3: initialize/tools-list PASS; 25 tools, 81,489 compact UTF-8 schema bytes. No credentialed scraping calls. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 3.29.1 Windows initialize/tools-list PASS; 26 advertised tools, 84,657 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised.",
+   "version": "3.29.1"
+  },
+  {
+   "id": "perplexity-mcp",
+   "name": "Perplexity MCP",
+   "kind": "mcp-npx",
+   "install": "mcp-npx",
+   "mcp": true,
+   "github": {
+    "owner": "perplexityai",
+    "repo": "modelcontextprotocol"
+   },
+   "npx_command": "npx",
+   "npx_args": [
+    "-y",
+    "@perplexity-ai/mcp-server@1.2.1"
+   ],
+   "api_key_env": "PERPLEXITY_API_KEY",
+   "api_key_optional": false,
+   "providers": [
+    "Claude",
+    "Codex",
+    "Grok",
+    "Kimi",
+    "Hermes"
+   ],
+   "runtimes": [
+    "node22"
+   ],
+   "license": "see-upstream",
+   "required_for": [
+    "web-research"
+   ],
+   "offline_asset": null,
+   "scope_note": "REQUIRES PERPLEXITY_API_KEY (paid). Not installed on a keyless machine. Current-information research (new SKSE/CommonLib releases, game patch news). Never a substitute for houseCARL on Nexus, codebase-memory on code, or skyrim-memory on verified Skyrim facts.",
+   "key_required": true,
+   "version": "1.2.1",
+   "compatibility_hold": "2026-09-28: candidate 1.3.0 refuses initialization without PERPLEXITY_API_KEY. Retain the evaluated 1.2.1 pin until a user-owned authenticated smoke test is available; do not read or invent a key."
+  },
+  {
+   "id": "context7",
+   "name": "Context7 Documentation MCP",
+   "kind": "mcp-npx",
+   "mcp": true,
+   "license": "MIT",
+   "version": "4.4.1",
+   "github": {
+    "owner": "upstash",
+    "repo": "context7"
+   },
+   "install": "mcp-npx",
+   "npx_command": "npx",
+   "npx_args": [
+    "-y",
+    "@upstash/context7-mcp@4.4.1"
+   ],
+   "auto_register": true,
+   "api_key_env": "CONTEXT7_API_KEY",
+   "api_key_optional": true,
+   "keyless_registration": "register",
+   "keyless_tools": [
+    "resolve-library-id",
+    "query-docs"
+   ],
+   "keyless_note": "Measured 2026-09-13 against pinned 4.1.0 with the credential environment scrubbed: BOTH advertised tools answered keyless, neither was rate-limited, key-gated or deprecated in this sweep. The optional key raises rate limits; no additional tool was observed. Regenerate with TOOLS/measure_mcp_capability.py.",
+   "capability_record": "BUNDLED-TOOLS/capability-records/context7.json",
+   "providers": [
+    "Claude",
+    "Codex",
+    "Grok",
+    "Kimi",
+    "Hermes"
+   ],
+   "required_for": [
+    "library-documentation",
+    "framework-api-lookup"
+   ],
+   "scope_note": "Current third-party library documentation, distinct from codebase-memory's local repository graph. Small always-on core; advertised schema bytes are not per-turn bills. The capability record names its measured version; remeasure after changing the package. 2026-10-10: 4.3.0 Windows initialize/tools-list PASS; 2 advertised tools, 5,231 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. 2026-10-13: 4.4.1 isolated Windows initialize/tools-list PASS: 2 tools, 5,221 compact UTF-8 schema bytes; production npm audit zero known findings. No credentialed query or inference tested."
+  },
+  {
+   "id": "github-mcp-server",
+   "name": "GitHub MCP Server (official)",
+   "kind": "mcp-binary",
+   "mcp": true,
+   "license": "MIT",
+   "version": "2.0.2",
+   "github": {
+    "owner": "github",
+    "repo": "github-mcp-server"
+   },
+   "install": "zip-extract",
+   "offline_asset": "github-mcp-server-2.0.2-windows-x86_64.zip",
+   "asset_match": [
+    "github-mcp-server-*-windows-x86_64.zip",
+    "*github-mcp-server*Windows_x86_64.zip"
+   ],
+   "target_dir": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\github-mcp-server",
+   "exe_rel": "github-mcp-server.exe",
+   "required_for": [
+    "repo-status",
+    "pull-requests",
+    "ci-status"
+   ],
+   "api_key_env": "GITHUB_PERSONAL_ACCESS_TOKEN",
+   "api_key_optional": true,
+   "auth_mode": "built-in-oauth-or-optional-pat",
+   "toolsets": "context,repos,pull_requests,actions,issues",
+   "scope_note": "GitHub's official server, replacing @modelcontextprotocol/server-github, which npm marks 'Package no longer supported'. Official release binaries since 1.5.0 carry GitHub's OAuth application: no PAT is required on github.com; the first authenticated tool call opens GitHub's browser authorization and keeps that token in the server process only. A GITHUB_PERSONAL_ACCESS_TOKEN is optional and takes precedence when the user deliberately configures one. initialize + tools/list proves the binary and protocol, not completion of that later browser authorization. Registered with a scoped --toolsets list, not 'all': the server exposes 20 toolset groups and enabled groups enlarge the advertised schema; actual prompt and billed usage depend on provider discovery and caching. Widen it per project, never globally. 2026-10-02 refresh: 1.14.0: official Windows ZIP SHA-256 0277e5fca965ae7fa31c7193954eae948ddc13997bc4b835858be858ac55cabe verified; scoped context,repos,pull_requests,actions,issues initialize/tools-list PASS; 47 tools, 129,567 compact UTF-8 schema bytes. OAuth completion and authenticated calls not exercised. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 2.0.2 Windows initialize/tools-list PASS; 47 advertised tools, 129,679 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. Compared with 1.14.0 using the same scoped toolsets: no tool names added or removed; upstream release digest verified.",
+   "server_id": "github",
+   "release_tag": "v2.0.2",
+   "asset_sha256": "4ae64087501650752f21c9d5af5378107a5116d94ee1cf37786b22b8c4bd99df"
+  },
+  {
+   "id": "serena",
+   "name": "Serena",
+   "kind": "mcp-python",
+   "mcp": true,
+   "license": "MIT",
+   "version": "2.0.0",
+   "github": {
+    "owner": "oraios",
+    "repo": "serena"
+   },
+   "install": "uv-tool",
+   "install_command": "uv tool install -p 3.13 serena-agent==2.0.0",
+   "exe_rel": "%USERPROFILE%\\.local\\bin\\serena.exe",
+   "profile": "code-intel",
+   "auto_register": false,
+   "api_key_env": null,
+   "required_for": [
+    "symbol-navigation",
+    "symbol-level-edits"
+   ],
+   "scope_note": "Language-server-backed symbol search and editing. NOT registered globally and NOT registered machine-wide: TOOLS\\Set-McpProfile.ps1 wires it for the one project that shows source-tree markers, to keep optional capability in relevant projects. Claude Code takes it in projects[\"<abs path>\"].mcpServers, Grok in the project's .grok\\config.toml and Codex in trusted-project .codex\\config.toml. Kimi is skipped unless -Global is passed. Hermes uses its separate native code profile for codebase-memory without adding Serena to default. Registered with a per-client --context so the tool set is trimmed to what the client does not already provide -- Serena 1.7.0 ships one for claude-code, codex and grok, and Kimi falls back to the generic 'agent' context -- and with --project <path> so it activates the project it was written for. Overlaps codebase-memory-mcp deliberately: that answers 'where is this in the graph', this answers 'what does this symbol resolve to, and rewrite its body'. 2026-10-13: 2.0.0 Windows/Python 3.13 initialize/tools-list PASS in claude-code, codex and grok contexts (23 tools; 26,312 / 30,038 / 29,440 compact schema bytes). Browser/dashboard explicitly disabled during probes. CLI version now pinned rather than silently installing latest. No real language-server edit or inference certified."
+  },
+  {
+   "id": "chrome-devtools-mcp",
+   "name": "Chrome DevTools MCP",
+   "kind": "mcp-npx",
+   "mcp": true,
+   "license": "Apache-2.0",
+   "version": "1.10.1",
+   "github": {
+    "owner": "ChromeDevTools",
+    "repo": "chrome-devtools-mcp"
+   },
+   "install": "mcp-npx",
+   "npx_command": "npx",
+   "npx_args": [
+    "-y",
+    "chrome-devtools-mcp@1.10.1",
+    "--no-usage-statistics"
+   ],
+   "profile": "web",
+   "auto_register": false,
+   "api_key_env": null,
+   "required_for": [
+    "browser-console",
+    "network-inspection",
+    "performance-traces"
+   ],
+   "scope_note": "Reads a live Chrome: console, network, performance traces, rendered DOM. The half playwright-mcp does not do -- playwright drives a browser, this explains what the browser did. Google Chrome and Chrome for Testing only; Chromium forks are not supported by this server, unlike playwright-mcp which takes PLAYWRIGHT_MCP_EXECUTABLE_PATH. --no-usage-statistics opts out of Google's telemetry, which is on by default upstream; this pack does not enable third-party telemetry on a user's machine without asking. Update measured 2026-09-28 at 1.10.1: initialize/tools-list PASS, 30 tools, 26,388 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake."
+  },
+  {
+   "id": "shadcn-mcp",
+   "name": "shadcn registry MCP",
+   "kind": "mcp-npx",
+   "mcp": true,
+   "license": "MIT",
+   "version": "4.21.4",
+   "github": {
+    "owner": "shadcn-ui",
+    "repo": "ui"
+   },
+   "install": "mcp-npx",
+   "npx_command": "npx",
+   "npx_args": [
+    "-y",
+    "shadcn@4.21.4",
+    "mcp"
+   ],
+   "profile": "web",
+   "auto_register": false,
+   "api_key_env": null,
+   "required_for": [
+    "component-registry"
+   ],
+   "scope_note": "Resolves registries from the project's components.json, so it is meaningless outside a shadcn project and is written project-scoped only. Measured 2026-09-02: 7 tools, 4,495 schema bytes, ~1,124 schema tokens (bytes/4; actual usage unmeasured). 2026-10-02 refresh: 4.21.1: initialize/tools-list PASS; 7 tools, 4,495 compact UTF-8 schema bytes. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 4.21.4 Windows initialize/tools-list PASS; 7 advertised tools, 4,495 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised."
+  },
+  {
+   "id": "blender-mcp",
+   "name": "Blender MCP",
+   "kind": "mcp-uvx",
+   "mcp": true,
+   "license": "MIT",
+   "version": "2.1.9",
+   "github": {
+    "owner": "ahujasid",
+    "repo": "mcp-for-blender"
+   },
+   "install": "mcp-uvx",
+   "npx_command": "uvx",
+   "npx_args": [
+    "mcp-for-blender@2.1.9"
+   ],
+   "profile": "engine-blender",
+   "auto_register": false,
+   "api_key_env": null,
+   "required_for": [
+    "blender-scene-control"
+   ],
+   "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender. Update measured 2026-09-28 at 2.1.1: initialize/tools-list PASS, 36 tools, 45,055 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 2.1.3: initialize/tools-list PASS; 36 tools, 45,121 compact UTF-8 schema bytes; telemetry disabled, safe mode enabled. No live editor calls. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 2.1.9 Windows initialize/tools-list PASS; 9 advertised tools, 15,597 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised."
+  },
+  {
+   "id": "godot-mcp",
+   "name": "Godot MCP",
+   "kind": "mcp-npx",
+   "mcp": true,
+   "license": "MIT",
+   "version": "0.1.1",
+   "github": {
+    "owner": "Coding-Solo",
+    "repo": "godot-mcp"
+   },
+   "install": "mcp-npx",
+   "npx_command": "npx",
+   "npx_args": [
+    "-y",
+    "@coding-solo/godot-mcp@0.1.1"
+   ],
+   "profile": "engine-godot",
+   "auto_register": false,
+   "api_key_env": null,
+   "required_for": [
+    "godot-run",
+    "godot-scene-tree"
+   ],
+   "scope_note": "Shells out to the Godot editor binary, which has no fixed install location on Windows, so the profile is gated on GODOT_PATH: setx GODOT_PATH \"C:\\path\\to\\Godot.exe\"."
+  },
+  {
+   "id": "unity-mcp",
+   "name": "Unity MCP",
+   "kind": "mcp-project-binary",
+   "mcp": true,
+   "license": "Apache-2.0",
+   "version": "0.91.0",
+   "github": {
+    "owner": "IvanMurzak",
+    "repo": "Unity-MCP"
+   },
+   "install": "unity-package",
+   "install_command": "npx -y unity-mcp-cli@0.91.0 install-plugin \"<project>\"",
+   "exe_rel": "Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe",
+   "profile": "engine-unity",
+   "auto_register": false,
+   "api_key_env": null,
+   "required_for": [
+    "unity-editor-control"
+   ],
+   "scope_note": "There is no machine-wide Unity MCP server. The executable is generated inside the project's Library folder by the Unity package, so the entry is project-scoped by construction and its command is the resolved absolute path for that one project. Until the package is installed the exe does not exist, and the profile refuses rather than writing a path that is not there.",
+   "compatibility_hold": "2026-09-28: 0.93.2 is current upstream but needs a real Unity project/editor compatibility check. Retain the evaluated 0.91.0 package pin; no Unity editor was launched or live project modified."
+  },
+  {
+   "id": "rtk",
+   "name": "RTK (Rust Token Killer)",
+   "kind": "cli-optional",
+   "license": "Apache-2.0",
+   "version": "1.0.1",
+   "github": {
+    "owner": "rtk-ai",
+    "repo": "rtk"
+   },
+   "install": "zip-extract",
+   "offline_asset": "rtk-oss-x86_64-pc-windows-msvc.zip",
+   "asset_match": [
+    "rtk-oss-x86_64-pc-windows-msvc.zip"
+   ],
+   "target_dir": "%USERPROFILE%\\.local\\bin",
+   "exe_rel": "rtk.exe",
+   "required_for": [
+    "shell-output-compression"
+   ],
+   "hook_policy": "off",
+   "discouraged_provider_plugins": {
+    "Hermes": [
+     "rtk-rewrite"
+    ]
+   },
+   "safe_hook_policy": {
+    "enabled": true,
+    "executable_providers": [
+     "Claude",
+     "Grok",
+     "Hermes"
+    ],
+    "instruction_providers": [
+     "Codex",
+     "Kimi"
+    ],
+    "allow": [
+     "git status",
+     "git status --short",
+     "git status -s",
+     "standalone human-facing pytest/cargo/go tests"
+    ],
+    "broad_upstream_hook": false
+   },
+   "scope_note": "CLI output filter with zero standing schema tokens. GIT CORPUS, measured on this repo AT rtk 1.0.1 against pinned refs: git diff v8.6.1..v8.6.5 430,285 -> 55,870 bytes (87%), git log v8.6.1..v8.6.5 14,250 -> 1,660 (88%), git diff v8.6.4..v8.6.5 33,453 -> 26,820 (20%), and git log --stat -20 v8.6.5 102,301 -> 102,301 (0%). Those are summaries, not lossless replacements: on the larger diff RTK retained 341 of 5,856 changed lines and omitted 5,515. Exact short status is different: a fixture covering staged, unstaged, deleted, renamed, Unicode and untracked paths was line-identical 5/5. NON-GIT CORPUS measured at 0.46.0 on 2026-08-27: rtk test kept the failure at about 93% saved; excluding truncating rows, the aggregate was 7.4% against git's 85.2%. TRUNCATION IS NOT SAVING: rtk json returned one of 5,425 array rows plus `... +5424 more`. rtk find works with a simple -name but breaks on compound predicates; rtk-ai/rtk#3410 reports its unconditional rewrite also intercepts find -delete/-exec. Archive correction: rtk test writes a complete tee for the measured 5.4 KB run and prints its path, but RTK documents a 1 MB raw tee cap. WINDOWS INTEGRATION, re-probed at 0.47.0 on 2026-09-02: upstream rewrite still catches lossy diff/log/show, broken find, cat/read, grep, curl, gh, and mutating git add/commit/push. Therefore broad upstream init and Hermes rtk-rewrite stay off. The bundle installs RTK by default and wires its own allowlist: exact standalone git status plus standalone human-facing pytest, cargo test and go test. Machine-readable output, pipes/redirection, all mutating Git, diff/show/log/find/search/read/curl/gh stay raw. Claude, Grok and Hermes receive the executable hook; Codex and Kimi receive the same narrow instruction because no trusted command-mutation hook is established there. Telemetry remains opt-in. Remeasured 2026-10-02 with TESTS/test_rtk_candidate.py: all four pinned corpus rows; allowlisted rewrite protocol exit 3 PASS; --short/-s preserved staged, unstaged, deleted, renamed, Unicode and untracked status lines (status comparison is line-wise). Broad hooks remain disabled; these are byte savings, not measured billed tokens. 2026-10-13: Apache-2.0 OSS edition selected explicitly; upstream's default binary now uses different licensing. Official Windows OSS archive SHA-256 verified, all four fixed corpus rows unchanged, exact short-status fixture PASS and allowlisted rewrite exit-3 protocol PASS. No pipelines, daemon or upstream broad hook enabled."
+  },
+  {
+   "id": "omni",
+   "name": "OMNI (context distillation)",
+   "kind": "cli-optional",
+   "license": "Apache-2.0",
+   "version": "0.7.11",
+   "github": {
+    "owner": "fajarhide",
+    "repo": "omni"
+   },
+   "required_for": [
+    "tool-output-deduplication"
+   ],
+   "scope_note": "CLI + host hook, zero standing tokens -- same slot as rtk, different mechanism, so they stack rather than compete: rtk filters ONE command's output, OMNI remembers output across calls and returns a handle instead of resending what the agent already saw. USE THE README'S NUMBERS, NOT THE LANDING PAGE'S. The page headlines '97.2% off a file read twice' and '~24%'; the README's own corpus of 9,478 executions says '1.4% from the filters, 5.1% with the ledger'. 97.2% is a best case for one re-read, not an expected value -- treat 5% as the number and anything above it as a bonus. Ships a real x86_64-pc-windows-msvc binary with SHA256SUMS (v0.7.8, 2026-08-25), which is why it is here and lowfat is not: lowfat v0.8.0 publishes darwin and linux-gnu only and integrates through a POSIX shell eval hook, the same native-Windows degradation this catalog already documents for rtk's non-Hermes hooks. Full host rewrite on Claude Code, Codex CLI and Gemini CLI; Hermes is supported; MCP-only fallback elsewhere. Stores a local SQLite ledger (permanent project knowledge, 30-day working data, 7-day verbatim traces) -- it is a cache of your own tool output, so treat it as project data, not a temp file. REWIND CAP, measured 2026-08-26 at 0.7.8: output above 65,536 bytes is truncated and NOT archived -- the marker says `full output not archived` and those bytes are unrecoverable, which the README's byte-for-byte guarantee does not qualify. Below the cap the guarantee holds and is self-verifying: the retrieve handle IS the content's SHA-256 prefix, and a 33,453-byte diff came back byte-identical. Head-to-head on this repo's git corpus: rtk 85.2%, OMNI 71.2% headline but only 6.4% once the truncated rows are excluded -- consistent with OMNI's own published 8.8% on git. Its value is the ledger, not the filter; see docs/TOOL-EVALUATIONS.md. Not auto-installed: a 5% saving does not justify rewriting every tool result on a machine by default.",
+   "compatibility_hold": "2026-09-28: informational evaluation pin only, not installed or enabled by the bundle. Candidate 0.7.10 has not been remeasured; the historical ledger/rewind findings must not be presented as measurements of a newer binary."
+  },
+  {
+   "id": "windows-mcp",
+   "name": "Windows MCP",
+   "kind": "mcp-uvx",
+   "mcp": true,
+   "license": "MIT",
+   "version": "0.8.8",
+   "github": {
+    "owner": "CursorTouch",
+    "repo": "Windows-MCP"
+   },
+   "install": "mcp-uvx",
+   "npx_command": "uvx",
+   "npx_args": [
+    "--python",
+    "3.14",
+    "windows-mcp@0.8.8",
+    "serve"
+   ],
+   "profile": "windows",
+   "auto_register": false,
+   "api_key_env": null,
+   "controls_machine": true,
+   "required_for": [
+    "desktop-automation"
+   ],
+   "offline_asset": null,
+   "runtimes": [
+    "python3"
+   ],
+   "scope_note": "Desktop control through UI Automation: click, type, send shortcuts, run PowerShell, read and write the registry and the filesystem, enumerate windows and processes. This is the one operating surface the pack had no way to reach -- Playwright and chrome-devtools stop at the browser. UIA also lets an agent PERCEIVE controls without spending a vision call, which is most of why it earns its schema. Measured 2026-08-27 with TOOLS\\Measure-McpSchemaCost.ps1 against `uvx windows-mcp@0.8.5 serve`: 20 tools, 22,088 bytes, ~5,522 schema tokens (bytes/4; actual usage unmeasured) -- less than firecrawl-mcp's 36,337 and about four times context7, for the whole desktop. OFF by default and never auto-detected: the `windows` profile carries no detect markers, so -Auto cannot reach it. Turn it on deliberately with TOOLS\\Set-McpProfile.ps1 -Enable windows -Global. controls_machine is why TOOLS/measure_mcp_capability.py refuses to sweep it: that sweep calls every advertised tool with arguments synthesized from the schema, which here means typing into whatever window has focus and running whatever PowerShell the sample produces. Update measured 2026-09-28 at 0.8.6: initialize/tools-list PASS, 20 tools, 22,984 compact schema bytes (~5,746 bytes/4 estimate, not billing). Python >=3.14 is now required: the uvx command explicitly selects managed Python 3.14. OFF-by-default scope is unchanged; no desktop actions were invoked. 2026-10-02 refresh: 0.8.7 with Python 3.14: initialize/tools-list PASS; 20 tools, 22,984 compact UTF-8 schema bytes. Still manually opt-in/OFF by default; no desktop actions invoked. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 0.8.8 Windows initialize/tools-list PASS; 21 advertised tools, 23,545 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised."
+  },
+  {
+   "id": "super-mcp-router",
+   "name": "Super MCP Router",
+   "kind": "mcp-npx",
+   "mcp": true,
+   "license": "MIT",
+   "version": "2.8.3",
+   "github": {
+    "owner": "mindstone",
+    "repo": "Super-MCP"
+   },
+   "install": "mcp-npx",
+   "npx_command": "npx",
+   "npx_args": [
+    "-y",
+    "super-mcp-router@2.8.3"
+   ],
+   "profile": null,
+   "auto_register": false,
+   "api_key_env": null,
+   "required_for": [
+    "mcp-schema-reduction"
+   ],
+   "offline_asset": null,
+   "runtimes": [
+    "node22"
+   ],
+   "scope_note": "A proxy MCP. It registers ONE server carrying discovery/meta-tools and puts every other server behind on-demand discovery: search_tools by intent, get_tool_details for one schema, use_tool to call it. Measured 2026-08-27: 11 tools, 11,386 bytes, ~2,846 meta-tool schema tokens (bytes/4), excluding discovered schemas, results and provider billing. The comparison that matters: houseCARL wired directly is 45 tools, 167,072 bytes, ~41,768 full-schema tokens by the same heuristic. Correction 2026-09-08: Codex has native enabled_tools/disabled_tools filters; Claude Code supports deferred Tool Search. The earlier universal all-tools-every-turn comparison was wrong; no billed saving was measured. Proven end to end against this pack's own houseCARL on 2026-08-27: search_tools('list the plugins in the active load order') -> get_tool_details (3,652 chars, ~913 tokens for that ONE schema) -> use_tool returned live data from the shim (2,999 mods, 2,995 plugins). Startup 1.2s, search 400ms, detail 200ms. NOT wired into a profile, and the reason is specific rather than cautious: the router reads its own config at %USERPROFILE%\\.super-mcp\\config.json, so enabling it means this pack writing and preserving a THIRD-PARTY tool's config file -- a second config writer with its own merge obligations, on a 24-star dependency. The measurement is what ships here; the wiring is its own release. One caveat to carry into that decision: BM25 ranking returned housecarl_merge_plugins FIRST for that read-only query, with the correct housecarl_load_order_status third. Discovery works, but the top hit is not automatically the safe one. 2026-10-02: candidate 2.8.3 initialize/tools-list PASS in a disposable home, 12 meta-tools and 12,475 compact UTF-8 schema bytes. No child-server routing/config migration was tested; remains unregistered and opt-in."
+  },
+  {
+   "id": "playwright-cli",
+   "name": "Playwright CLI",
+   "kind": "cli-optional",
+   "install": "npx-or-npm",
+   "version": "0.1.22",
+   "github": {
+    "owner": "microsoft",
+    "repo": "playwright-cli"
+   },
+   "license": "Apache-2.0",
+   "runtimes": [
+    "node22"
+   ],
+   "npm_spec": "@playwright/cli@0.1.22",
+   "npm_integrity": "sha512-6WMkQNM4VEzqMkdr/l60X9Cr7i+tI/arK87IWz2K7pB6j8I2ZJ8KN+1JfhJDLnK+SXnab6Op8xGt4adcGLsyfA==",
+   "npm_args": [
+    "--ignore-scripts"
+   ],
+   "offline_asset": null,
+   "required_for": [
+    "browser-cli"
+   ],
+   "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.20 package pins Playwright 1.64.0-alpha-2026-09-14; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving. 2026-09-28: CLI 0.1.21 pins Playwright 1.64.0-alpha-1789764292000; isolated Windows Chrome navigation, raw title evaluation and named-session close PASS. 2026-10-02 refresh: 0.1.22: isolated Windows Chrome about:blank navigation, raw document.URL evaluation and unique named-session close PASS. Schema bytes are transport measurements, not billed-token savings."
+  },
+  {
+   "id": "comfy-cli",
+   "name": "ComfyUI CLI",
+   "kind": "cli-optional",
+   "install": "manual-user-product",
+   "version": "1.22.0",
+   "pip_spec": "comfy-cli==1.22.0",
+   "license": "GPL-3.0",
+   "github": {
+    "owner": "Comfy-Org",
+    "repo": "comfy-cli"
+   },
+   "offline_asset": null,
+   "runtimes": [
+    "python3"
+   ],
+   "required_for": [
+    "local-media-workflows"
+   ],
+   "note": "Optional CLI only: COMFY_NO_TELEMETRY=1; uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local --help. Discover an existing local ComfyUI installation first; do not download models, install custom nodes, or use cloud services automatically.",
+   "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
+  }
+ ],
+ "pack_version": "8.16.0",
+ "updated_utc": "2026-10-16",
+ "providers": {
+  "Grok": {
+   "skills": "skills",
+   "home_default": "%USERPROFILE%\\.grok",
+   "instructions": null,
+   "instruction_src": "AGENTS.md",
+   "workspace_only_instructions": true,
+   "home_env": "GROK_HOME"
+  },
+  "Hermes": {
+   "skills": "skills",
+   "home_default": "%LOCALAPPDATA%\\hermes",
+   "instructions": null,
+   "instruction_src": "AGENTS.md",
+   "workspace_only_instructions": true,
+   "home_env": "HERMES_HOME"
+  },
+  "Claude": {
+   "instructions": "CLAUDE.md",
+   "instruction_src": "CLAUDE.md",
+   "home_env": "CLAUDE_CONFIG_DIR",
+   "skills": "skills",
+   "home_default": "%USERPROFILE%\\.claude"
+  },
+  "Kimi": {
+   "instructions": "AGENTS.md",
+   "instruction_src": "AGENTS.md",
+   "home_env": "KIMI_CODE_HOME",
+   "skills": "skills",
+   "home_default": "%USERPROFILE%\\.kimi-code"
+  },
+  "Codex": {
+   "instructions": "AGENTS.md",
+   "instruction_src": "AGENTS.md",
+   "home_env": "CODEX_HOME",
+   "skills": "skills",
+   "home_default": "%USERPROFILE%\\.codex"
+  }
+ },
+ "runtimes": {
+  "aspnetcore9": {
+   "winget": [
+    "Microsoft.DotNet.AspNetCore.9"
+   ],
+   "check": "dotnet --list-runtimes | findstr AspNetCore.App.9"
+  },
+  "dotnet9": {
+   "winget": [
+    "Microsoft.DotNet.Runtime.9"
+   ],
+   "check": "dotnet --list-runtimes | findstr /R \"Microsoft.NETCore.App 9\\.\""
+  },
+  "node22": {
+   "winget": [
+    "OpenJS.NodeJS.LTS"
+   ],
+   "note": "For CodeBurn and Impeccable"
+  },
+  "dotnet8-sdk": {
+   "winget": [
+    "Microsoft.DotNet.SDK.8"
+   ],
+   "note": "Needed to build/run Spooky from source"
+  },
+  "python3": {
+   "winget": [
+    "Python.Python.3.12"
+   ],
+   "note": "For Headroom pip install"
+  }
+ },
+ "notes": "Multi-provider Ultimate AI Starter Bundle. Includes optional full Skyrim SE/AE modding stack; not Skyrim-only.",
+ "pack_name": "Ultimate-AI-Starter-Bundle",
+ "display_name": "Ultimate AI Starter Bundle",
+ "provider_config_schemas": {
+  "Hermes": 44
+ },
+ "catalog_version": "8.16.0",
+ "updated": "2026-10-15",
+ "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

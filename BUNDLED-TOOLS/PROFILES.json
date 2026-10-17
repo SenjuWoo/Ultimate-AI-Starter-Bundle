@@ -1,697 +1,853 @@
 {
-  "schema": 1,
-  "catalog_version": "8.15.2",
-  "pack_version": "8.15.2",
-  "updated_utc": "2026-10-16",
-  "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
-  "reads": "TOOLS/Set-McpProfile.ps1",
-  "always_on_note": "The always-on core is context7 and headroom (github too, where the gh CLI is not signed in; see global_scope_guard), in TOOLS/Add-Reasoning-MCPs.ps1, not here. They earn permanent slots for current documentation and context inspection/compression. sequential-thinking is the opt-in reasoning profile after measurement showed its permanent schema cost. Playwright is in the web profile; Firecrawl and Perplexity register only when their keys exist.",
-  "global_scope_guard": {
-    "why": "A connected MCP server puts its tool list in every chat of a provider, used or not. Tool installers register themselves machine-wide, so unrelated chats pay for tools they never use. -Park saves an exact copy of such an entry and removes it from the machine-wide config; -Auto (or -Unpark) writes the same entry back for one project. Nothing is uninstalled and credentials are never printed. Matching is on what the entry launches, not its name. Opt out per server with UABS_KEEP_GLOBAL_MCP=id1,id2.",
-    "rules": [
-      {
-        "id": "rimworldforge",
-        "title": "RimWorldForge",
-        "keywords": ["rimworld", "defs", "xml", "harmony", "colony"],
-        "match": ["RimWorldForge"],
-        "detect": { "files": ["About/About.xml"], "globs": [] },
-        "note": "RimWorld mod work. The toolbox starts it on demand in the current chat; its CLI (rwforge.exe in the tool's .venv\\Scripts) also works."
-      },
-      {
-        "id": "avatarforge",
-        "title": "AvatarForge",
-        "keywords": ["avatar", "vrchat", "vrm", "pmx", "mmd", "xps", "model conversion"],
-        "match": ["AvatarForge"],
-        "detect": { "files": ["Packages/vpm-manifest.json"], "globs": ["*.vrm", "*.pmx", "*.pmd", "*.xps"] },
-        "note": "Avatar conversion. The toolbox starts it on demand in the current chat; its CLI (run.py doctor | scan | convert in the tool folder) also works."
-      },
-      {
-        "id": "robloxforge",
-        "title": "RobloxForge",
-        "keywords": ["roblox", "luau", "rojo"],
-        "match": ["RobloxForge"],
-        "profile": "game-roblox",
-        "note": "The toolbox starts it on demand; the game-roblox profile registers it per project."
-      },
-      {
-        "id": "saints-row-forge",
-        "title": "SaintsRowForge",
-        "keywords": ["saints row", "volition"],
-        "match": ["SaintsRowForge"],
-        "profile": "game-saints-row",
-        "note": "The toolbox starts it on demand; the game-saints-row profile registers it per project."
-      },
-      {
-        "id": "github",
-        "title": "GitHub MCP",
-        "keywords": ["github", "pull request", "issue", "actions", "ci", "release", "repository"],
-        "match": ["github-mcp-server"],
-        "only_if": "gh-ready",
-        "profile": "github",
-        "note": "gh covers repos, PRs, Actions and releases with no tool list; the toolbox starts the MCP on demand for what gh cannot do."
-      },
-      {
-        "id": "melty",
-        "title": "Melty",
-        "keywords": ["melty", "mashup", "publish", "crossover", "game mod listing"],
-        "match": ["melty.gg"],
-        "detect": null,
-        "note": "Publishing mashups only (an authenticated remote server). The toolbox starts it on demand from the parked entry."
-      }
+ "schema": 1,
+ "catalog_version": "8.16.0",
+ "pack_version": "8.16.0",
+ "updated_utc": "2026-10-16",
+ "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
+ "reads": "TOOLS/Set-McpProfile.ps1",
+ "always_on_note": "The always-on core is context7 and headroom (github too, where the gh CLI is not signed in; see global_scope_guard), in TOOLS/Add-Reasoning-MCPs.ps1, not here. They earn permanent slots for current documentation and context inspection/compression. sequential-thinking is the opt-in reasoning profile after measurement showed its permanent schema cost. Playwright is in the web profile; Firecrawl and Perplexity register only when their keys exist.",
+ "global_scope_guard": {
+  "why": "A connected MCP server puts its tool list in every chat of a provider, used or not. Tool installers register themselves machine-wide, so unrelated chats pay for tools they never use. -Park saves an exact copy of such an entry and removes it from the machine-wide config; -Auto (or -Unpark) writes the same entry back for one project. Nothing is uninstalled and credentials are never printed. Matching is on what the entry launches, not its name. Opt out per server with UABS_KEEP_GLOBAL_MCP=id1,id2.",
+  "rules": [
+   {
+    "id": "rimworldforge",
+    "title": "RimWorldForge",
+    "keywords": [
+     "rimworld",
+     "defs",
+     "xml",
+     "harmony",
+     "colony"
+    ],
+    "match": [
+     "RimWorldForge"
+    ],
+    "detect": {
+     "files": [
+      "About/About.xml"
+     ],
+     "globs": []
+    },
+    "note": "RimWorld mod work. The toolbox starts it on demand in the current chat; its CLI (rwforge.exe in the tool's .venv\\Scripts) also works."
+   },
+   {
+    "id": "avatarforge",
+    "title": "AvatarForge",
+    "keywords": [
+     "avatar",
+     "vrchat",
+     "vrm",
+     "pmx",
+     "mmd",
+     "xps",
+     "model conversion"
+    ],
+    "match": [
+     "AvatarForge"
+    ],
+    "detect": {
+     "files": [
+      "Packages/vpm-manifest.json"
+     ],
+     "globs": [
+      "*.vrm",
+      "*.pmx",
+      "*.pmd",
+      "*.xps"
+     ]
+    },
+    "note": "Avatar conversion. The toolbox starts it on demand in the current chat; its CLI (run.py doctor | scan | convert in the tool folder) also works."
+   },
+   {
+    "id": "robloxforge",
+    "title": "RobloxForge",
+    "keywords": [
+     "roblox",
+     "luau",
+     "rojo"
+    ],
+    "match": [
+     "RobloxForge"
+    ],
+    "profile": "game-roblox",
+    "note": "The toolbox starts it on demand; the game-roblox profile registers it per project."
+   },
+   {
+    "id": "saints-row-forge",
+    "title": "SaintsRowForge",
+    "keywords": [
+     "saints row",
+     "volition"
+    ],
+    "match": [
+     "SaintsRowForge"
+    ],
+    "profile": "game-saints-row",
+    "note": "The toolbox starts it on demand; the game-saints-row profile registers it per project."
+   },
+   {
+    "id": "github",
+    "title": "GitHub MCP",
+    "keywords": [
+     "github",
+     "pull request",
+     "issue",
+     "actions",
+     "ci",
+     "release",
+     "repository"
+    ],
+    "match": [
+     "github-mcp-server"
+    ],
+    "only_if": "gh-ready",
+    "profile": "github",
+    "note": "gh covers repos, PRs, Actions and releases with no tool list; the toolbox starts the MCP on demand for what gh cannot do."
+   },
+   {
+    "id": "melty",
+    "title": "Melty",
+    "keywords": [
+     "melty",
+     "mashup",
+     "publish",
+     "crossover",
+     "game mod listing"
+    ],
+    "match": [
+     "melty.gg"
+    ],
+    "detect": null,
+    "note": "Publishing mashups only (an authenticated remote server). The toolbox starts it on demand from the parked entry."
+   }
+  ]
+ },
+ "requires_forms": {
+  "command": "A command that must resolve on PATH, or an absolute path that must exist as a file.",
+  "any_path": "At least one of these paths must exist. Entries may contain environment variables and a single '*' wildcard per segment.",
+  "env": "This environment variable must be set and non-empty. Used for servers that cannot do anything without a key.",
+  "project_rel": "A path relative to the project directory that must exist. Project-scoped servers only.",
+  "auto_install": "Steps this pack may run unattended to satisfy the requirement, when 'requires_command' resolves. Package installs only -- never something that needs a GUI, a licence acceptance, or a credential. An auto_install makes a tool INSTALLED, never ENABLED: registration is still decided per project."
+ },
+ "server_forms": {
+  "env_static": "Literal non-secret environment values enforced for this server, such as a supported telemetry opt-out. Credentials belong in 'key' or 'env_passthrough' and are never stored here."
+ },
+ "profiles": [
+  {
+   "id": "github",
+   "title": "GitHub MCP (repos, PRs, issues, Actions)",
+   "keywords": [
+    "github",
+    "pull request",
+    "issue",
+    "actions",
+    "ci",
+    "release",
+    "repository",
+    "review"
+   ],
+   "scope": "project",
+   "why": "Where the gh CLI is signed in it already covers repos, PRs, Actions and releases with no tool list, so the official GitHub server is not machine-wide there (see global_scope_guard). This profile switches it on for one project that wants the structured tools. Enable on request: -Enable github -Path <project>.",
+   "detect": {
+    "files": [],
+    "globs": []
+   },
+   "detect_note": "No markers on purpose: a .git folder is not a reason to load 46 tool names. -Auto never enables it.",
+   "servers": [
+    {
+     "id": "github-mcp",
+     "command": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\github-mcp-server\\github-mcp-server.exe",
+     "args": [
+      "stdio",
+      "--toolsets",
+      "context,repos,pull_requests,actions,issues"
+     ],
+     "note": "official GitHub server, scoped toolsets; OAuth in the browser on the first authenticated call",
+     "key": null,
+     "requires": {
+      "command": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\github-mcp-server\\github-mcp-server.exe"
+     }
+    }
+   ]
+  },
+  {
+   "id": "code-intel",
+   "title": "Repository graph plus language-server-accurate navigation and editing",
+   "keywords": [
+    "code",
+    "symbols",
+    "references",
+    "refactor",
+    "call graph",
+    "definition",
+    "rename",
+    "navigate"
+   ],
+   "scope": "project",
+   "why": "Serena provides language-server-backed symbol navigation and editing; codebase-memory provides repository graph queries. Claude, Grok and trusted Codex projects receive them only through code-intel. Hermes uses its separate native code profile; Kimi requires explicit -Global. Keep small text-only tasks on grep. code-intel replaces the old code-deep profile id.",
+   "detect": {
+    "files": [
+     "pyproject.toml",
+     "Cargo.toml",
+     "go.mod",
+     "pom.xml",
+     "build.gradle",
+     "build.gradle.kts",
+     "package.json",
+     "CMakeLists.txt"
+    ],
+    "globs": [
+     "*.sln",
+     "*.csproj"
     ]
-  },
-  "requires_forms": {
-    "command": "A command that must resolve on PATH, or an absolute path that must exist as a file.",
-    "any_path": "At least one of these paths must exist. Entries may contain environment variables and a single '*' wildcard per segment.",
-    "env": "This environment variable must be set and non-empty. Used for servers that cannot do anything without a key.",
-    "project_rel": "A path relative to the project directory that must exist. Project-scoped servers only.",
-    "auto_install": "Steps this pack may run unattended to satisfy the requirement, when 'requires_command' resolves. Package installs only -- never something that needs a GUI, a licence acceptance, or a credential. An auto_install makes a tool INSTALLED, never ENABLED: registration is still decided per project."
-  },
-  "server_forms": {
-    "env_static": "Literal non-secret environment values enforced for this server, such as a supported telemetry opt-out. Credentials belong in 'key' or 'env_passthrough' and are never stored here."
-  },
-  "profiles": [
+   },
+   "servers": [
     {
-      "id": "github",
-      "title": "GitHub MCP (repos, PRs, issues, Actions)",
-      "keywords": ["github", "pull request", "issue", "actions", "ci", "release", "repository", "review"],
-      "scope": "project",
-      "why": "Where the gh CLI is signed in it already covers repos, PRs, Actions and releases with no tool list, so the official GitHub server is not machine-wide there (see global_scope_guard). This profile switches it on for one project that wants the structured tools. Enable on request: -Enable github -Path <project>.",
-      "detect": { "files": [], "globs": [] },
-      "detect_note": "No markers on purpose: a .git folder is not a reason to load 46 tool names. -Auto never enables it.",
-      "servers": [
-        {
-          "id": "github-mcp",
-          "command": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\github-mcp-server\\github-mcp-server.exe",
-          "args": ["stdio", "--toolsets", "context,repos,pull_requests,actions,issues"],
-          "note": "official GitHub server, scoped toolsets; OAuth in the browser on the first authenticated call",
-          "key": null,
-          "requires": { "command": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\github-mcp-server\\github-mcp-server.exe" }
-        }
-      ]
+     "id": "codebase-memory-mcp",
+     "command": "%CODEBASE_MEMORY_MCP%",
+     "args": [],
+     "note": "persistent code graph for repository structure and relationships",
+     "key": null,
+     "requires": {
+      "command": "%CODEBASE_MEMORY_MCP%",
+      "env": "CODEBASE_MEMORY_MCP"
+     }
     },
     {
-      "id": "code-intel",
-      "title": "Repository graph plus language-server-accurate navigation and editing",
-      "keywords": ["code", "symbols", "references", "refactor", "call graph", "definition", "rename", "navigate"],
-      "scope": "project",
-      "why": "Serena provides language-server-backed symbol navigation and editing; codebase-memory provides repository graph queries. Claude, Grok and trusted Codex projects receive them only through code-intel. Hermes uses its separate native code profile; Kimi requires explicit -Global. Keep small text-only tasks on grep. code-intel replaces the old code-deep profile id.",
-      "detect": {
-        "files": [
-          "pyproject.toml",
-          "Cargo.toml",
-          "go.mod",
-          "pom.xml",
-          "build.gradle",
-          "build.gradle.kts",
-          "package.json",
-          "CMakeLists.txt"
-        ],
-        "globs": [
-          "*.sln",
-          "*.csproj"
+     "id": "serena",
+     "command": "%USERPROFILE%\\.local\\bin\\serena.exe",
+     "args": [
+      "start-mcp-server",
+      "--context",
+      "agent",
+      "--enable-web-dashboard",
+      "false"
+     ],
+     "args_by_provider": {
+      "Claude": [
+       "start-mcp-server",
+       "--context",
+       "claude-code",
+       "--enable-web-dashboard",
+       "false"
+      ],
+      "Codex": [
+       "start-mcp-server",
+       "--context",
+       "codex",
+       "--enable-web-dashboard",
+       "false"
+      ],
+      "Grok": [
+       "start-mcp-server",
+       "--context",
+       "grok",
+       "--enable-web-dashboard",
+       "false"
+      ]
+     },
+     "note": "LSP-accurate symbol search and symbol-level editing (Serena)",
+     "key": null,
+     "requires": {
+      "command": "%USERPROFILE%\\.local\\bin\\serena.exe"
+     },
+     "install_hint": "uv tool install -p 3.13 serena-agent==2.0.0 && serena init",
+     "upstream_setup": "serena setup {claude-code|codex|grok} registers Serena machine-wide for that client. This pack deliberately does not call it: a machine-wide registration is the cost this file exists to avoid.",
+     "context_note": "--context trims the tool set to what the client does not already have. Serena 2.0.0 ships named contexts for claude-code, codex and grok; Kimi and Hermes have none, so they get the generic 'agent' context. --project pins the registration to the project it was written for; --project-from-cwd is used instead for a -Global registration, since one baked path would activate the wrong project everywhere else. --enable-web-dashboard false keeps Serena from opening a browser window and from leaving an HTTP listener on the machine. Upstream recommends leaving the dashboard on and setting --open-web-dashboard false instead; this pack does not start a local web server a user did not ask for, and uses TOOLS/Test-McpHandshake.ps1 for diagnosis.",
+     "auto_install": {
+      "requires_command": "uv",
+      "why": "Serena is a Python tool, not an npx package, so it has to exist on disk before a config can point at it. uv installs it into an isolated environment with its own interpreter.",
+      "steps": [
+       {
+        "command": "uv",
+        "args": [
+         "tool",
+         "install",
+         "-p",
+         "3.13",
+         "serena-agent==2.0.0"
         ]
-      },
-      "servers": [
-        {
-          "id": "codebase-memory-mcp",
-          "command": "%CODEBASE_MEMORY_MCP%",
-          "args": [],
-          "note": "persistent code graph for repository structure and relationships",
-          "key": null,
-          "requires": {
-            "command": "%CODEBASE_MEMORY_MCP%",
-            "env": "CODEBASE_MEMORY_MCP"
-          }
-        },
-        {
-          "id": "serena",
-          "command": "%USERPROFILE%\\.local\\bin\\serena.exe",
-          "args": [
-            "start-mcp-server",
-            "--context",
-            "agent",
-            "--enable-web-dashboard",
-            "false"
-          ],
-          "args_by_provider": {
-            "Claude": [
-              "start-mcp-server",
-              "--context",
-              "claude-code",
-              "--enable-web-dashboard",
-              "false"
-            ],
-            "Codex": [
-              "start-mcp-server",
-              "--context",
-              "codex",
-              "--enable-web-dashboard",
-              "false"
-            ],
-            "Grok": [
-              "start-mcp-server",
-              "--context",
-              "grok",
-              "--enable-web-dashboard",
-              "false"
-            ]
-          },
-          "note": "LSP-accurate symbol search and symbol-level editing (Serena)",
-          "key": null,
-          "requires": {
-            "command": "%USERPROFILE%\\.local\\bin\\serena.exe"
-          },
-      "install_hint": "uv tool install -p 3.13 serena-agent==2.0.0 && serena init",
-          "upstream_setup": "serena setup {claude-code|codex|grok} registers Serena machine-wide for that client. This pack deliberately does not call it: a machine-wide registration is the cost this file exists to avoid.",
-          "context_note": "--context trims the tool set to what the client does not already have. Serena 2.0.0 ships named contexts for claude-code, codex and grok; Kimi and Hermes have none, so they get the generic 'agent' context. --project pins the registration to the project it was written for; --project-from-cwd is used instead for a -Global registration, since one baked path would activate the wrong project everywhere else. --enable-web-dashboard false keeps Serena from opening a browser window and from leaving an HTTP listener on the machine. Upstream recommends leaving the dashboard on and setting --open-web-dashboard false instead; this pack does not start a local web server a user did not ask for, and uses TOOLS/Test-McpHandshake.ps1 for diagnosis.",
-          "auto_install": {
-            "requires_command": "uv",
-            "why": "Serena is a Python tool, not an npx package, so it has to exist on disk before a config can point at it. uv installs it into an isolated environment with its own interpreter.",
-            "steps": [
-              {
-                "command": "uv",
-                "args": [
-                  "tool",
-                  "install",
-                  "-p",
-                  "3.13",
-              "serena-agent==2.0.0"
-                ]
-              },
-              {
-                "command": "%USERPROFILE%\\.local\\bin\\serena.exe",
-                "args": [
-                  "init"
-                ]
-              }
-            ]
-          },
-          "project_args": [
-            "--project",
-            "{project}"
-          ],
-          "global_args": [
-            "--project-from-cwd"
-          ],
-          "side_effect_note": "Activating a project makes Serena write .serena/project.yml inside it on first run. That happens only for a project the profile was explicitly enabled for."
-        }
-      ]
-    },
-    {
-      "id": "web",
-      "title": "Live browser inspection and debugging",
-      "keywords": ["browser", "website", "web page", "frontend", "playwright", "chrome", "devtools", "console", "network", "screenshot"],
-      "scope": "project",
-      "why": "Chrome DevTools MCP reads a real Chrome: console messages, network requests, performance traces and the rendered DOM. That is the half playwright-mcp does not do -- playwright drives a browser, this one explains what the browser did. Enable it for front-end work; it is dead weight in a Papyrus session.",
-      "detect": {
-        "files": [
-          "index.html",
-          "angular.json",
-          "svelte.config.js",
-          "nuxt.config.ts"
-        ],
-        "globs": [
-          "next.config.*",
-          "vite.config.*"
-        ],
-        "json_has_any": [
-          {
-            "path": "package.json",
-            "properties": [
-              "dependencies",
-              "devDependencies"
-            ],
-            "names": [
-              "@angular/core",
-              "@remix-run/react",
-              "astro",
-              "next",
-              "nuxt",
-              "react",
-              "react-dom",
-              "solid-js",
-              "svelte",
-              "vite",
-              "vue"
-            ]
-          }
+       },
+       {
+        "command": "%USERPROFILE%\\.local\\bin\\serena.exe",
+        "args": [
+         "init"
         ]
-      },
-      "servers": [
-        {
-          "id": "playwright-mcp",
-          "catalog_component": "playwright-mcp",
-          "command": "npx",
-          "args": [
-            "-y",
-            "@playwright/mcp@0.0.83"
-          ],
-          "providers": [
-            "Codex",
-            "Grok",
-            "Kimi",
-            "Hermes"
-          ],
-          "extra_args_env": "PLAYWRIGHT_MCP_EXECUTABLE_PATH",
-          "extra_args_template": [
-            "--executable-path",
-            "{value}"
-          ],
-          "note": "drive a browser for testing and automation (~4,626 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
-          "key": null,
-          "requires": {
-            "command": "npx"
-          },
-          "requires_note": "Claude is excluded because it already has a browser pane. Set PLAYWRIGHT_MCP_EXECUTABLE_PATH before enabling to use Opera GX, Edge, Brave, or Vivaldi instead of the default Chrome channel.",
-          "measured_cost": {
-            "tools": 24,
-            "schema_bytes": 18502,
-            "approx_tokens_per_turn": 4626,
-            "method": "real MCP initialize -> tools/list over stdio, tools array serialized compactly, via TOOLS/Measure-McpSchemaCost.ps1",
-            "measured_utc": "2026-09-02"
-          }
-        },
-        {
-          "id": "chrome-devtools",
-          "catalog_component": "chrome-devtools-mcp",
-          "command": "npx",
-          "args": [
-            "-y",
-            "chrome-devtools-mcp@1.10.1",
-            "--no-usage-statistics"
-          ],
-          "note": "console, network, performance traces and DOM from a live Chrome",
-          "key": null,
-          "requires": {
-            "command": "npx",
-            "any_path": [
-              "%ProgramFiles%\\Google\\Chrome\\Application\\chrome.exe",
-              "%ProgramFiles(x86)%\\Google\\Chrome\\Application\\chrome.exe",
-              "%LOCALAPPDATA%\\Google\\Chrome\\Application\\chrome.exe",
-              "%USERPROFILE%\\.cache\\puppeteer\\chrome\\*\\chrome-win64\\chrome.exe"
-            ]
-          },
-          "requires_note": "Upstream supports Google Chrome and Chrome for Testing only. Chromium forks (Edge, Brave, Opera GX, Vivaldi) are not supported by this server; playwright-mcp is the one that takes PLAYWRIGHT_MCP_EXECUTABLE_PATH.",
-          "flag_note": "--no-usage-statistics opts out of Google's telemetry for this server. It is on by default upstream, and this pack does not enable third-party telemetry on a user's machine without asking."
-        },
-        {
-          "id": "shadcn",
-          "catalog_component": "shadcn-mcp",
-          "command": "npx",
-          "args": [
-            "-y",
-            "shadcn@4.21.4",
-            "mcp"
-          ],
-          "note": "search, inspect and add components from configured shadcn registries (~1,124 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
-          "key": null,
-          "requires": {
-            "command": "npx",
-            "project_rel": "components.json"
-          },
-          "requires_note": "The server resolves registries from the project's components.json, so it is meaningless outside a shadcn project and is written project-scoped only.",
-          "measured_cost": {
-            "tools": 7,
-            "schema_bytes": 4495,
-            "approx_tokens_per_turn": 1124,
-            "method": "real MCP initialize -> tools/list over stdio, tools array serialized compactly, via TOOLS/Measure-McpSchemaCost.ps1",
-            "measured_utc": "2026-09-02"
-          }
-        }
+       }
       ]
-    },
-    {
-      "id": "game-skyrim",
-      "title": "Skyrim mod engineering (Skyrim Forge)",
-      "keywords": ["skyrim", "esp", "esm", "esl", "plugin", "papyrus", "bethesda", "bsa", "formid", "record"],
-      "scope": "project",
-      "why": "Skyrim Forge exposes a large typed tool surface for plugins, Papyrus, frameworks, assets, packaging and release gates. Keep the product and skill installed everywhere, but connect its MCP only inside a Skyrim mod project; providers without project-scoped MCP config use the same Forge CLI through the skyrim-forge skill.",
-      "detect": {
-        "files": [
-          "meta.ini",
-          "fomod/info.xml",
-          "fomod/ModuleConfig.xml"
-        ],
-        "globs": [
-          "*.esp",
-          "*.esm",
-          "*.esl",
-          "*.psc"
-        ]
-      },
-      "servers": [
-        {
-          "id": "skyrim-forge",
-          "command": "%SKYRIM_FORGE_ROOT%\\.venv\\Scripts\\python.exe",
-          "args": [
-            "-m",
-            "skyrim_forge",
-            "mcp"
-          ],
-          "note": "typed Skyrim mod engineering and release gates",
-          "key": null,
-          "requires": {
-            "command": "%SKYRIM_FORGE_ROOT%\\.venv\\Scripts\\python.exe",
-            "env": "SKYRIM_FORGE_ROOT"
-          }
-        }
-      ]
-    },
-    {
-      "id": "game-skyrim-load-order",
-      "title": "Skyrim installed load order (houseCARL)",
-      "keywords": ["skyrim", "load order", "mo2", "vortex", "plugins", "conflicts", "housecarl"],
-      "scope": "project",
-      "why": "houseCARL is useful against a real MO2 instance or the bundle's Vortex shim, not in every Skyrim source repository. Its broad load-order and patching schemas activate only when the opened directory is an actual manager instance/shim.",
-      "detect": {
-        "files": [
-          "ModOrganizer.ini",
-          "HOUSECARL-SHIM.txt"
-        ],
-        "globs": []
-      },
-      "servers": [
-        {
-          "id": "housecarl",
-          "command": "%HOUSECARL_MCP%",
-          "args": [],
-          "note": "inspect and patch the active Skyrim load order",
-          "key": null,
-          "env_passthrough": [
-            "SKYRIM_MO2_INSTANCE",
-            "HouseCarl__Mo2InstanceDir"
-          ],
-          "requires": {
-            "command": "%HOUSECARL_MCP%",
-            "env": "SKYRIM_MO2_INSTANCE"
-          }
-        }
-      ]
-    },
-    {
-      "id": "game-roblox",
-      "title": "Roblox project engineering (Roblox Forge)",
-      "keywords": ["roblox", "luau", "rojo", "rokit"],
-      "scope": "project",
-      "why": "Roblox Forge's eleven tools are useful for a Roblox filesystem project and waste schema context elsewhere. The bundle discovers an existing official checkout and activates it only for Rojo, Rokit, place, or model markers.",
-      "detect": {
-        "files": [
-          "default.project.json",
-          "rokit.toml",
-          "aftman.toml"
-        ],
-        "globs": [
-          "*.rbxl",
-          "*.rbxlx",
-          "*.rbxm",
-          "*.rbxmx"
-        ]
-      },
-      "servers": [
-        {
-          "id": "robloxforge",
-          "command": "python",
-          "args": [
-            "%ROBLOX_FORGE_ROOT%\\mcp_server\\server.py"
-          ],
-          "note": "Roblox project analysis, planning, review and receipts",
-          "key": null,
-          "requires": {
-            "command": "python",
-            "env": "ROBLOX_FORGE_ROOT",
-            "any_path": [
-              "%ROBLOX_FORGE_ROOT%\\mcp_server\\server.py"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "id": "game-saints-row",
-      "title": "Saints Row mod engineering (Saints Row Forge)",
-      "keywords": ["saints row", "volition"],
-      "scope": "project",
-      "why": "Saints Row Forge is a game-specific local server. Its MCP activates only when project.json identifies a supported Saints Row game or when a top-level game asset marker exists; other sessions keep using zero schemas from it.",
-      "detect": {
-        "files": [],
-        "globs": [
-          "*.xtbl",
-          "*.asm_pc",
-          "*.str2_pc",
-          "*.vpp_pc"
-        ],
-        "json": [
-          {
-            "path": "project.json",
-            "property": "game",
-            "equals": [
-              "srtt",
-              "sriv"
-            ]
-          }
-        ]
-      },
-      "servers": [
-        {
-          "id": "saints-row-forge",
-          "command": "python",
-          "args": [
-            "%SAINTSROW_FORGE_ROOT%\\mcp_server\\server.py"
-          ],
-          "note": "Saints Row assets, XTBL, projects, builds and dependency checks",
-          "key": null,
-          "requires": {
-            "command": "python",
-            "env": "SAINTSROW_FORGE_ROOT",
-            "any_path": [
-              "%SAINTSROW_FORGE_ROOT%\\mcp_server\\server.py"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "id": "engine-blender",
-      "title": "Blender scene control",
-      "keywords": ["blender", "3d", "mesh", "model", "scene", "render", "rig", "bpy"],
-      "scope": "project",
-      "why": "Inspect and drive a running Blender: objects, materials, modifiers, and Python execution in the live scene. Relevant to this pack because Skyrim mesh work rides on Blender.",
-      "detect": {
-        "files": [],
-        "globs": [
-          "*.blend"
-        ]
-      },
-      "servers": [
-        {
-          "id": "blender",
-          "catalog_component": "blender-mcp",
-          "command": "uvx",
-          "args": [
-            "mcp-for-blender@2.1.9"
-          ],
-          "env_static": {
-            "BLENDER_MCP_DISABLE_TELEMETRY": "true",
-            "BLENDER_MCP_SAFE_MODE": "true"
-          },
-          "note": "live Blender scene inspection and control",
-          "key": null,
-          "requires": {
-            "command": "uvx",
-            "any_path": [
-              "%APPDATA%\\Blender Foundation\\Blender\\*\\scripts\\addons",
-              "%APPDATA%\\Blender Foundation\\Blender\\*\\extensions\\user_default",
-              "%ProgramFiles%\\Blender Foundation\\*\\blender.exe",
-              "%LOCALAPPDATA%\\Programs\\Blender Foundation\\*\\blender.exe"
-            ]
-          },
-          "editor_side": "uvx mcp-for-blender@2.1.9 install-addon",
-          "editor_side_note": "The server talks to an addon inside Blender. `install-addon` copies it into the user addons folder, but ENABLING it is inside the editor process and cannot be done from outside -- so Set-McpProfile prints the command rather than pretending it ran it. 'The MCP executable starts' and 'the addon is connected' are different claims: the server answers initialize with no Blender running at all. Only a tool call that reaches the scene proves the second.",
-          "requires_note": "Discovered, never hardcoded. 7.9.6 listed a Steam path on this maintainer's own drive letter, which could not match on anybody else's machine -- the exact class of path this pack forbids elsewhere. The first two entries are what `uvx mcp-for-blender@2.0.0 addon-paths` reports: Blender creates that user directory on first run whatever the install source, Steam included.",
-          "telemetry_note": "Measured 2026-09-17: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 tokens) while BLENDER_MCP_DISABLE_TELEMETRY=true logs the supported opt-out and BLENDER_MCP_SAFE_MODE=true validates generated Python before it reaches Blender. Safe mode preserves normal scene/render/save/import-export work and blocks interpreter, process, network and persistence escape paths."
-        }
-      ]
-    },
-    {
-      "id": "engine-godot",
-      "title": "Godot project control",
-      "keywords": ["godot", "gdscript"],
-      "scope": "project",
-      "why": "Run a Godot project, read its scene tree and capture runtime errors without leaving the agent loop.",
-      "detect": {
-        "files": [
-          "project.godot"
-        ],
-        "globs": []
-      },
-      "servers": [
-        {
-          "id": "godot",
-          "catalog_component": "godot-mcp",
-          "command": "npx",
-          "args": [
-            "-y",
-            "@coding-solo/godot-mcp@0.1.1"
-          ],
-          "note": "run Godot projects, read scene trees, capture runtime errors",
-          "key": null,
-          "env_passthrough": [
-            "GODOT_PATH"
-          ],
-          "requires": {
-            "command": "npx",
-            "env": "GODOT_PATH"
-          },
-          "requires_note": "The server shells out to the Godot editor binary and cannot find it by itself on Windows, where Godot has no fixed install location. Gated on GODOT_PATH rather than registered as a server that fails on first call: setx GODOT_PATH \"C:\\path\\to\\Godot.exe\".",
-          "alternative_evaluated": "hi-godot/godot-ai, compared 2026-08-21 on capability / context cost / setup friction / reliability. It is the fresher project (last push 2026-08-21 against Coding-Solo/godot-mcp 2026-04-16) but has fewer stars (1,822 against 5,299), is not published on npm under that name, and requires installing a Godot EDITOR PLUGIN which then starts the server itself and connects over WebSocket -- plus uv as a second runtime. That is the Unity-MCP shape: an editor-side step this pack cannot automate and must print. Coding-Solo runs headless through the Godot binary via a pinned npx package and one environment variable, which is the lower-friction fit for a bundle whose Godot support is incidental. Kept. Revisit if Coding-Solo goes a year without a push, or if a user needs live editor integration rather than run-and-read-the-scene-tree."
-        }
-      ]
-    },
-    {
-      "id": "engine-unity",
-      "title": "Unity editor control",
-      "keywords": ["unity", "prefab", "scene", "editor", "c#"],
-      "scope": "project",
-      "why": "Read and drive an open Unity project -- GameObjects, components, assets, console, play mode.",
-      "detect": {
-        "files": [
-          "ProjectSettings/ProjectVersion.txt"
-        ],
-        "globs": []
-      },
-      "servers": [
-        {
-          "id": "unity",
-          "catalog_component": "unity-mcp",
-          "command": "{project}\\Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe",
-          "args": [
-            "client-transport=stdio"
-          ],
-          "note": "live Unity editor control (per-project server binary)",
-          "key": null,
-          "requires": {
-            "project_rel": "Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe"
-          },
-          "editor_side": "npx -y unity-mcp-cli@0.91.0 install-plugin \"{project}\"",
-          "requires_note": "Unity-MCP does not ship a machine-wide server. The executable is generated inside the project's Library folder by the Unity package, so there is no global registration to write -- the entry is project-scoped by construction, and the command is the resolved absolute path for that one project. Until the package is installed the exe does not exist, and the profile refuses rather than writing a path that is not there."
-        }
-      ]
-    },
-    {
-      "id": "reasoning",
-      "title": "Explicit step-by-step decomposition (sequential-thinking)",
-      "keywords": ["think", "plan", "reasoning", "step by step"],
-      "scope": "global",
-      "why": "Held an always-on slot through 7.9.6 and lost it on measurement in 7.9.7: one tool, but a 4,587-byte schema -- ~1,146 schema tokens (bytes/4, not a per-turn bill), as much as context7's two tools. It is a structured scratchpad, not a capability: it fetches nothing and reaches nothing the model could not write in its own reasoning, while this pack ships decomposition skills that cost nothing until they match and every provider it targets has native reasoning. Kept as an opt-in rather than deleted, because the benefit to WEAKER models was never benchmarked -- only schema size was. Turn it on with -Enable reasoning -Global if your provider has no native reasoning and you want it everywhere.",
-      "detect": {
-        "files": [],
-        "globs": []
-      },
-      "detect_note": "Deliberately empty. This is a way of thinking, not a property of a project, so there is no marker that could honestly imply it. -Auto will never enable it.",
-      "servers": [
-        {
-          "id": "sequential-thinking",
-          "command": "npx",
-          "args": [
-            "-y",
-            "@modelcontextprotocol/server-sequential-thinking@2026.7.4"
-          ],
-          "note": "explicit step-by-step decomposition (~1,146 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
-          "key": null,
-          "requires": {
-            "command": "npx"
-          },
-          "measured_cost": {
-            "tools": 1,
-            "schema_bytes": 4587,
-            "approx_tokens_per_turn": 1146,
-            "method": "real MCP initialize -> tools/list over stdio, tools array serialized compactly",
-            "measured_utc": "2026-08-21"
-          }
-        }
-      ]
-    },
-    {
-      "id": "windows",
-      "title": "Windows desktop control through UI Automation (windows-mcp)",
-      "keywords": ["windows", "desktop", "click", "window", "ui automation"],
-      "toolbox": "on-request",
-      "scope": "global",
-      "why": "Every other optional MCP here stops at a file or browser tab. This one drives native Windows applications through UI Automation: clicking, typing, shortcuts, PowerShell, the registry, the filesystem, windows and processes. It is useful when a host has no native desktop control, or when UI Automation can expose controls more cheaply than repeated screenshots. Its full advertised schema is ~5,522 estimated tokens (bytes/4, not measured billing) (20 tools, 22,088 bytes, measured 2026-08-27), and provider-native computer-use availability is not uniform. That surface size and its machine-mutating scope make it a poor default for ordinary coding, research and modding sessions. It stays installed and off by default; -Enable windows -Global is the one-command fallback for a host that actually needs it.",
-      "detect": {
-        "files": [],
-        "globs": []
-      },
-      "detect_note": "Deliberately empty, and for a stronger reason than `reasoning`'s. That one is empty because a way of thinking is not a property of a directory. This one is empty because the profile can click, type, run PowerShell and write the registry, and no marker on disk is evidence that an operator wants an agent doing those things. -Auto will never enable it; -Enable windows -Global is the only way in.",
-      "servers": [
-        {
-          "id": "windows-mcp",
-          "catalog_component": "windows-mcp",
-          "command": "uvx",
-          "args": [
-            "--python",
-            "3.14",
-            "windows-mcp@0.8.8",
-            "serve"
-          ],
-          "note": "desktop control: click, type, shortcuts, PowerShell, registry, filesystem, windows, processes (~5,522 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
-          "key": null,
-          "requires": {
-            "command": "uvx"
-          },
-          "measured_cost": {
-            "tools": 20,
-            "schema_bytes": 22088,
-            "approx_tokens_per_turn": 5522,
-            "method": "real MCP initialize -> tools/list over stdio, tools array serialized compactly, via TOOLS/Measure-McpSchemaCost.ps1",
-            "measured_utc": "2026-08-27"
-          }
-        }
-      ]
+     },
+     "project_args": [
+      "--project",
+      "{project}"
+     ],
+     "global_args": [
+      "--project-from-cwd"
+     ],
+     "side_effect_note": "Activating a project makes Serena write .serena/project.yml inside it on first run. That happens only for a project the profile was explicitly enabled for."
     }
-  ],
-  "evaluated_not_shipped": [
+   ]
+  },
+  {
+   "id": "web",
+   "title": "Live browser inspection and debugging",
+   "keywords": [
+    "browser",
+    "website",
+    "web page",
+    "frontend",
+    "playwright",
+    "chrome",
+    "devtools",
+    "console",
+    "network",
+    "screenshot"
+   ],
+   "scope": "project",
+   "why": "Chrome DevTools MCP reads a real Chrome: console messages, network requests, performance traces and the rendered DOM. That is the half playwright-mcp does not do -- playwright drives a browser, this one explains what the browser did. Enable it for front-end work; it is dead weight in a Papyrus session.",
+   "detect": {
+    "files": [
+     "index.html",
+     "angular.json",
+     "svelte.config.js",
+     "nuxt.config.ts"
+    ],
+    "globs": [
+     "next.config.*",
+     "vite.config.*"
+    ],
+    "json_has_any": [
+     {
+      "path": "package.json",
+      "properties": [
+       "dependencies",
+       "devDependencies"
+      ],
+      "names": [
+       "@angular/core",
+       "@remix-run/react",
+       "astro",
+       "next",
+       "nuxt",
+       "react",
+       "react-dom",
+       "solid-js",
+       "svelte",
+       "vite",
+       "vue"
+      ]
+     }
+    ]
+   },
+   "servers": [
     {
-      "id": "unreal-mcp",
-      "source": "runreal/unreal-mcp",
-      "reason": "Last upstream commit 2025-06-06 and 113 stars at evaluation time. A bridge into a running editor is exactly the kind of component that breaks on an engine point release, and this pack pins exact versions precisely so it can tell when upstream has moved. Vendoring a bridge nobody is maintaining would ship that risk under a version number that implies otherwise."
+     "id": "playwright-mcp",
+     "catalog_component": "playwright-mcp",
+     "command": "npx",
+     "args": [
+      "-y",
+      "@playwright/mcp@0.0.83"
+     ],
+     "providers": [
+      "Codex",
+      "Grok",
+      "Kimi",
+      "Hermes"
+     ],
+     "extra_args_env": "PLAYWRIGHT_MCP_EXECUTABLE_PATH",
+     "extra_args_template": [
+      "--executable-path",
+      "{value}"
+     ],
+     "note": "drive a browser for testing and automation (~4,626 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
+     "key": null,
+     "requires": {
+      "command": "npx"
+     },
+     "requires_note": "Claude is excluded because it already has a browser pane. Set PLAYWRIGHT_MCP_EXECUTABLE_PATH before enabling to use Opera GX, Edge, Brave, or Vivaldi instead of the default Chrome channel.",
+     "measured_cost": {
+      "tools": 24,
+      "schema_bytes": 18502,
+      "approx_tokens_per_turn": 4626,
+      "method": "real MCP initialize -> tools/list over stdio, tools array serialized compactly, via TOOLS/Measure-McpSchemaCost.ps1",
+      "measured_utc": "2026-09-02"
+     }
     },
     {
-      "id": "storybook-mcp",
-      "reason": "No first-party server from the Storybook project at evaluation time. Community servers exist; none had provenance this pack would accept for an install it performs on a user's machine unattended."
+     "id": "chrome-devtools",
+     "catalog_component": "chrome-devtools-mcp",
+     "command": "npx",
+     "args": [
+      "-y",
+      "chrome-devtools-mcp@1.10.1",
+      "--no-usage-statistics"
+     ],
+     "note": "console, network, performance traces and DOM from a live Chrome",
+     "key": null,
+     "requires": {
+      "command": "npx",
+      "any_path": [
+       "%ProgramFiles%\\Google\\Chrome\\Application\\chrome.exe",
+       "%ProgramFiles(x86)%\\Google\\Chrome\\Application\\chrome.exe",
+       "%LOCALAPPDATA%\\Google\\Chrome\\Application\\chrome.exe",
+       "%USERPROFILE%\\.cache\\puppeteer\\chrome\\*\\chrome-win64\\chrome.exe"
+      ]
+     },
+     "requires_note": "Upstream supports Google Chrome and Chrome for Testing only. Chromium forks (Edge, Brave, Opera GX, Vivaldi) are not supported by this server; playwright-mcp is the one that takes PLAYWRIGHT_MCP_EXECUTABLE_PATH.",
+     "flag_note": "--no-usage-statistics opts out of Google's telemetry for this server. It is on by default upstream, and this pack does not enable third-party telemetry on a user's machine without asking."
     },
     {
-      "id": "supabase-mcp",
-      "reason": "Shipped as the 'cloud' profile in 7.9.5 and 7.9.6; removed in 7.9.7 at the owner's decision. It was also the only profile here that required an account and a personal access token, against this pack's default of free, local, keyless and no signup. Deliberately not replaced with another account-dependent backend MCP. Anyone who wants it can register @supabase/mcp-server-supabase themselves; the migration removes only entries this pack created and leaves an independently configured one alone."
-    },
-    {
-      "id": "kitesurf",
-      "source": "Cloudflare Browser Run (hosted, not a repository)",
-      "reason": "A browser built for agents, running on Cloudflare Workers. The headline figure is real -- Cloudflare's own numbers are 3.1-3.8x less CPU and 4.7-7x less memory than Chromium -- but the same measurement says tasks take 1.7-1.8x LONGER, which the recommendation that reached this pack had dropped. It is also account-gated, and an account requirement is the one thing test_bundle_stays_free_and_accountless exists to refuse: that contract was written when Supabase was withdrawn in 7.9.7 and it forbids any profile server carrying a key. Local playwright-mcp stays the browser."
-    },
-    {
-      "id": "agentseal",
-      "source": "getagentseal/agentseal",
-      "reason": "Scans skills and MCP configs for dangerous patterns and baseline-hashes configs to catch a rug-pull. The IDEA is right and this pack is most of the way to it already -- MANIFEST hashing, RETIRED-SKILLS.json, RETIRED-PLUGINS.json and an installed-state doctor. The instance is the problem. Checked 2026-08-27: last commit 2026-06-11, latest PUBLISHED release v0.8.0 from 2026-03-25 while the tree carries an unreleased 0.10.0 bump, and GitHub detects no OSI license (NOASSERTION). It is also from the same owner as CodeBurn, which this pack already ships and which committed twice in the last three days -- the security tool is the quiet side of that org, not its focus. A config-hash baseline belongs in Test-Installed-State.ps1, where it runs on this pack's own cadence and depends on nothing."
+     "id": "shadcn",
+     "catalog_component": "shadcn-mcp",
+     "command": "npx",
+     "args": [
+      "-y",
+      "shadcn@4.21.4",
+      "mcp"
+     ],
+     "note": "search, inspect and add components from configured shadcn registries (~1,124 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
+     "key": null,
+     "requires": {
+      "command": "npx",
+      "project_rel": "components.json"
+     },
+     "requires_note": "The server resolves registries from the project's components.json, so it is meaningless outside a shadcn project and is written project-scoped only.",
+     "measured_cost": {
+      "tools": 7,
+      "schema_bytes": 4495,
+      "approx_tokens_per_turn": 1124,
+      "method": "real MCP initialize -> tools/list over stdio, tools array serialized compactly, via TOOLS/Measure-McpSchemaCost.ps1",
+      "measured_utc": "2026-09-02"
+     }
     }
-  ],
-  "installed_vs_enabled": "Installed means files exist. Configured means an entry exists. Active requires provider scope/trust and connection; callable tools must also pass filters and permissions. Neither a file nor a direct handshake proves provider activation or billing. Set-McpProfile.ps1 installs missing prerequisites when possible, without silently making project tools global.",
-  "scope_forms": {
-    "project": "The default and, for every server in this file, the correct one. The entry is written where only sessions opened in that project can see it. What that means per provider is under provider_project_scope.",
-    "global": "Written into the provider's machine-wide config, available to sessions that load it; actual usage depends on the host. One profile declares it: 'reasoning' is a thinking aid rather than a project capability, so a project scope would be meaningless. It has no detection markers, so -Auto never turns it on; -Enable reasoning -Global is deliberate. Everything else here is project-scoped, and TOOLS/Set-McpProfile.ps1 -Global is the per-run override."
+   ]
   },
-  "provider_project_scope": {
-    "Claude": "projects[\"<absolute project path>\"].mcpServers in %USERPROFILE%\\.claude.json -- the same place `claude mcp add --scope local` writes (verified against Claude Code 2.1.237). Chosen over the project's .mcp.json because it adds no file to the user's repository and raises no trust prompt. A team that wants the server checked in should copy the entry into .mcp.json by hand.",
-    "Grok": "<project>\\.grok\\config.toml, the `project` scope of `grok mcp add -s project` (verified against grok 1.0.5). This one IS a file inside the project, because it is the only project mechanism grok-cli has.",
-    "Codex": "<project>\\.codex\\config.toml, loaded only after the project is trusted. Native codex-cli 0.152.0 verified trusted/untrusted and unrelated-folder isolation plus enabled_tools/disabled_tools filtering and a harmless call. The installer never grants trust. Restart and run codex mcp list --json from that folder; writing the file alone is not activation proof.",
-    "Kimi": "None found. kimi-code reads %USERPROFILE%\\.kimi-code\\mcp.json; a project-local .kimi-code\\mcp.json was not picked up by `kimi doctor`. Not written unless -Global.",
-    "Hermes": "Hermes has native named profiles, each with its own home/config, but no project-path MCP scope. TOOLS/Migrate-HermesProfiles.ps1 owns the default/code/roblox/skyrim/creative topology; this path-based router skips Hermes unless -Global is explicit."
+  {
+   "id": "game-skyrim",
+   "title": "Skyrim mod engineering (Skyrim Forge)",
+   "keywords": [
+    "skyrim",
+    "esp",
+    "esm",
+    "esl",
+    "plugin",
+    "papyrus",
+    "bethesda",
+    "bsa",
+    "formid",
+    "record"
+   ],
+   "scope": "project",
+   "why": "Skyrim Forge exposes a large typed tool surface for plugins, Papyrus, frameworks, assets, packaging and release gates. Keep the product and skill installed everywhere, but connect its MCP only inside a Skyrim mod project; providers without project-scoped MCP config use the same Forge CLI through the skyrim-forge skill.",
+   "detect": {
+    "files": [
+     "meta.ini",
+     "fomod/info.xml",
+     "fomod/ModuleConfig.xml"
+    ],
+    "globs": [
+     "*.esp",
+     "*.esm",
+     "*.esl",
+     "*.psc"
+    ]
+   },
+   "servers": [
+    {
+     "id": "skyrim-forge",
+     "command": "%SKYRIM_FORGE_ROOT%\\.venv\\Scripts\\python.exe",
+     "args": [
+      "-m",
+      "skyrim_forge",
+      "mcp"
+     ],
+     "note": "typed Skyrim mod engineering and release gates",
+     "key": null,
+     "requires": {
+      "command": "%SKYRIM_FORGE_ROOT%\\.venv\\Scripts\\python.exe",
+      "env": "SKYRIM_FORGE_ROOT"
+     }
+    }
+   ]
   },
-  "arg_forms": {
-    "args": "Base arguments. May contain %ENVVAR% and {project}.",
-    "args_by_provider": "Replaces args entirely for the named provider.",
-    "project_args": "Appended when the entry is written project-scoped, where the project path is known.",
-    "global_args": "Appended instead when the entry is written machine-wide with -Global. A server that needs to know its project must discover it from the session here, because one baked path would be wrong in every other session."
+  {
+   "id": "game-skyrim-load-order",
+   "title": "Skyrim installed load order (houseCARL)",
+   "keywords": [
+    "skyrim",
+    "load order",
+    "mo2",
+    "vortex",
+    "plugins",
+    "conflicts",
+    "housecarl"
+   ],
+   "scope": "project",
+   "why": "houseCARL is useful against a real MO2 instance or the bundle's Vortex shim, not in every Skyrim source repository. Its broad load-order and patching schemas activate only when the opened directory is an actual manager instance/shim.",
+   "detect": {
+    "files": [
+     "ModOrganizer.ini",
+     "HOUSECARL-SHIM.txt"
+    ],
+    "globs": []
+   },
+   "servers": [
+    {
+     "id": "housecarl",
+     "command": "%HOUSECARL_MCP%",
+     "args": [],
+     "note": "inspect and patch the active Skyrim load order",
+     "key": null,
+     "env_passthrough": [
+      "SKYRIM_MO2_INSTANCE",
+      "HouseCarl__Mo2InstanceDir"
+     ],
+     "requires": {
+      "command": "%HOUSECARL_MCP%",
+      "env": "SKYRIM_MO2_INSTANCE"
+     }
+    }
+   ]
+  },
+  {
+   "id": "game-roblox",
+   "title": "Roblox project engineering (Roblox Forge)",
+   "keywords": [
+    "roblox",
+    "luau",
+    "rojo",
+    "rokit"
+   ],
+   "scope": "project",
+   "why": "Roblox Forge's eleven tools are useful for a Roblox filesystem project and waste schema context elsewhere. The bundle discovers an existing official checkout and activates it only for Rojo, Rokit, place, or model markers.",
+   "detect": {
+    "files": [
+     "default.project.json",
+     "rokit.toml",
+     "aftman.toml"
+    ],
+    "globs": [
+     "*.rbxl",
+     "*.rbxlx",
+     "*.rbxm",
+     "*.rbxmx"
+    ]
+   },
+   "servers": [
+    {
+     "id": "robloxforge",
+     "command": "python",
+     "args": [
+      "%ROBLOX_FORGE_ROOT%\\mcp_server\\server.py"
+     ],
+     "note": "Roblox project analysis, planning, review and receipts",
+     "key": null,
+     "requires": {
+      "command": "python",
+      "env": "ROBLOX_FORGE_ROOT",
+      "any_path": [
+       "%ROBLOX_FORGE_ROOT%\\mcp_server\\server.py"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "game-saints-row",
+   "title": "Saints Row mod engineering (Saints Row Forge)",
+   "keywords": [
+    "saints row",
+    "volition"
+   ],
+   "scope": "project",
+   "why": "Saints Row Forge is a game-specific local server. Its MCP activates only when project.json identifies a supported Saints Row game or when a top-level game asset marker exists; other sessions keep using zero schemas from it.",
+   "detect": {
+    "files": [],
+    "globs": [
+     "*.xtbl",
+     "*.asm_pc",
+     "*.str2_pc",
+     "*.vpp_pc"
+    ],
+    "json": [
+     {
+      "path": "project.json",
+      "property": "game",
+      "equals": [
+       "srtt",
+       "sriv"
+      ]
+     }
+    ]
+   },
+   "servers": [
+    {
+     "id": "saints-row-forge",
+     "command": "python",
+     "args": [
+      "%SAINTSROW_FORGE_ROOT%\\mcp_server\\server.py"
+     ],
+     "note": "Saints Row assets, XTBL, projects, builds and dependency checks",
+     "key": null,
+     "requires": {
+      "command": "python",
+      "env": "SAINTSROW_FORGE_ROOT",
+      "any_path": [
+       "%SAINTSROW_FORGE_ROOT%\\mcp_server\\server.py"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "engine-blender",
+   "title": "Blender scene control",
+   "keywords": [
+    "blender",
+    "3d",
+    "mesh",
+    "model",
+    "scene",
+    "render",
+    "rig",
+    "bpy"
+   ],
+   "scope": "project",
+   "why": "Inspect and drive a running Blender: objects, materials, modifiers, and Python execution in the live scene. Relevant to this pack because Skyrim mesh work rides on Blender.",
+   "detect": {
+    "files": [],
+    "globs": [
+     "*.blend"
+    ]
+   },
+   "servers": [
+    {
+     "id": "blender",
+     "catalog_component": "blender-mcp",
+     "command": "uvx",
+     "args": [
+      "mcp-for-blender@2.1.9"
+     ],
+     "env_static": {
+      "BLENDER_MCP_DISABLE_TELEMETRY": "true",
+      "BLENDER_MCP_SAFE_MODE": "true"
+     },
+     "note": "live Blender scene inspection and control",
+     "key": null,
+     "requires": {
+      "command": "uvx",
+      "any_path": [
+       "%APPDATA%\\Blender Foundation\\Blender\\*\\scripts\\addons",
+       "%APPDATA%\\Blender Foundation\\Blender\\*\\extensions\\user_default",
+       "%ProgramFiles%\\Blender Foundation\\*\\blender.exe",
+       "%LOCALAPPDATA%\\Programs\\Blender Foundation\\*\\blender.exe"
+      ]
+     },
+     "editor_side": "uvx mcp-for-blender@2.1.9 install-addon",
+     "editor_side_note": "The server talks to an addon inside Blender. `install-addon` copies it into the user addons folder, but ENABLING it is inside the editor process and cannot be done from outside -- so Set-McpProfile prints the command rather than pretending it ran it. 'The MCP executable starts' and 'the addon is connected' are different claims: the server answers initialize with no Blender running at all. Only a tool call that reaches the scene proves the second.",
+     "requires_note": "Discovered, never hardcoded. 7.9.6 listed a Steam path on this maintainer's own drive letter, which could not match on anybody else's machine -- the exact class of path this pack forbids elsewhere. The first two entries are what `uvx mcp-for-blender@2.0.0 addon-paths` reports: Blender creates that user directory on first run whatever the install source, Steam included.",
+     "telemetry_note": "Measured 2026-09-17: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 tokens) while BLENDER_MCP_DISABLE_TELEMETRY=true logs the supported opt-out and BLENDER_MCP_SAFE_MODE=true validates generated Python before it reaches Blender. Safe mode preserves normal scene/render/save/import-export work and blocks interpreter, process, network and persistence escape paths."
+    }
+   ]
+  },
+  {
+   "id": "engine-godot",
+   "title": "Godot project control",
+   "keywords": [
+    "godot",
+    "gdscript"
+   ],
+   "scope": "project",
+   "why": "Run a Godot project, read its scene tree and capture runtime errors without leaving the agent loop.",
+   "detect": {
+    "files": [
+     "project.godot"
+    ],
+    "globs": []
+   },
+   "servers": [
+    {
+     "id": "godot",
+     "catalog_component": "godot-mcp",
+     "command": "npx",
+     "args": [
+      "-y",
+      "@coding-solo/godot-mcp@0.1.1"
+     ],
+     "note": "run Godot projects, read scene trees, capture runtime errors",
+     "key": null,
+     "env_passthrough": [
+      "GODOT_PATH"
+     ],
+     "requires": {
+      "command": "npx",
+      "env": "GODOT_PATH"
+     },
+     "requires_note": "The server shells out to the Godot editor binary and cannot find it by itself on Windows, where Godot has no fixed install location. Gated on GODOT_PATH rather than registered as a server that fails on first call: setx GODOT_PATH \"C:\\path\\to\\Godot.exe\".",
+     "alternative_evaluated": "hi-godot/godot-ai, compared 2026-08-21 on capability / context cost / setup friction / reliability. It is the fresher project (last push 2026-08-21 against Coding-Solo/godot-mcp 2026-04-16) but has fewer stars (1,822 against 5,299), is not published on npm under that name, and requires installing a Godot EDITOR PLUGIN which then starts the server itself and connects over WebSocket -- plus uv as a second runtime. That is the Unity-MCP shape: an editor-side step this pack cannot automate and must print. Coding-Solo runs headless through the Godot binary via a pinned npx package and one environment variable, which is the lower-friction fit for a bundle whose Godot support is incidental. Kept. Revisit if Coding-Solo goes a year without a push, or if a user needs live editor integration rather than run-and-read-the-scene-tree."
+    }
+   ]
+  },
+  {
+   "id": "engine-unity",
+   "title": "Unity editor control",
+   "keywords": [
+    "unity",
+    "prefab",
+    "scene",
+    "editor",
+    "c#"
+   ],
+   "scope": "project",
+   "why": "Read and drive an open Unity project -- GameObjects, components, assets, console, play mode.",
+   "detect": {
+    "files": [
+     "ProjectSettings/ProjectVersion.txt"
+    ],
+    "globs": []
+   },
+   "servers": [
+    {
+     "id": "unity",
+     "catalog_component": "unity-mcp",
+     "command": "{project}\\Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe",
+     "args": [
+      "client-transport=stdio"
+     ],
+     "note": "live Unity editor control (per-project server binary)",
+     "key": null,
+     "requires": {
+      "project_rel": "Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe"
+     },
+     "editor_side": "npx -y unity-mcp-cli@0.91.0 install-plugin \"{project}\"",
+     "requires_note": "Unity-MCP does not ship a machine-wide server. The executable is generated inside the project's Library folder by the Unity package, so there is no global registration to write -- the entry is project-scoped by construction, and the command is the resolved absolute path for that one project. Until the package is installed the exe does not exist, and the profile refuses rather than writing a path that is not there."
+    }
+   ]
+  },
+  {
+   "id": "reasoning",
+   "title": "Explicit step-by-step decomposition (sequential-thinking)",
+   "keywords": [
+    "think",
+    "plan",
+    "reasoning",
+    "step by step"
+   ],
+   "scope": "global",
+   "why": "Held an always-on slot through 7.9.6 and lost it on measurement in 7.9.7: one tool, but a 4,587-byte schema -- ~1,146 schema tokens (bytes/4, not a per-turn bill), as much as context7's two tools. It is a structured scratchpad, not a capability: it fetches nothing and reaches nothing the model could not write in its own reasoning, while this pack ships decomposition skills that cost nothing until they match and every provider it targets has native reasoning. Kept as an opt-in rather than deleted, because the benefit to WEAKER models was never benchmarked -- only schema size was. Turn it on with -Enable reasoning -Global if your provider has no native reasoning and you want it everywhere.",
+   "detect": {
+    "files": [],
+    "globs": []
+   },
+   "detect_note": "Deliberately empty. This is a way of thinking, not a property of a project, so there is no marker that could honestly imply it. -Auto will never enable it.",
+   "servers": [
+    {
+     "id": "sequential-thinking",
+     "command": "npx",
+     "args": [
+      "-y",
+      "@modelcontextprotocol/server-sequential-thinking@2026.7.4"
+     ],
+     "note": "explicit step-by-step decomposition (~1,146 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
+     "key": null,
+     "requires": {
+      "command": "npx"
+     },
+     "measured_cost": {
+      "tools": 1,
+      "schema_bytes": 4587,
+      "approx_tokens_per_turn": 1146,
+      "method": "real MCP initialize -> tools/list over stdio, tools array serialized compactly",
+      "measured_utc": "2026-08-21"
+     }
+    }
+   ]
+  },
+  {
+   "id": "windows",
+   "title": "Windows desktop control through UI Automation (windows-mcp)",
+   "keywords": [
+    "windows",
+    "desktop",
+    "click",
+    "window",
+    "ui automation"
+   ],
+   "toolbox": "on-request",
+   "scope": "global",
+   "why": "Every other optional MCP here stops at a file or browser tab. This one drives native Windows applications through UI Automation: clicking, typing, shortcuts, PowerShell, the registry, the filesystem, windows and processes. It is useful when a host has no native desktop control, or when UI Automation can expose controls more cheaply than repeated screenshots. Its full advertised schema is ~5,522 estimated tokens (bytes/4, not measured billing) (20 tools, 22,088 bytes, measured 2026-08-27), and provider-native computer-use availability is not uniform. That surface size and its machine-mutating scope make it a poor default for ordinary coding, research and modding sessions. It stays installed and off by default; -Enable windows -Global is the one-command fallback for a host that actually needs it.",
+   "detect": {
+    "files": [],
+    "globs": []
+   },
+   "detect_note": "Deliberately empty, and for a stronger reason than `reasoning`'s. That one is empty because a way of thinking is not a property of a directory. This one is empty because the profile can click, type, run PowerShell and write the registry, and no marker on disk is evidence that an operator wants an agent doing those things. -Auto will never enable it; -Enable windows -Global is the only way in.",
+   "servers": [
+    {
+     "id": "windows-mcp",
+     "catalog_component": "windows-mcp",
+     "command": "uvx",
+     "args": [
+      "--python",
+      "3.14",
+      "windows-mcp@0.8.8",
+      "serve"
+     ],
+     "note": "desktop control: click, type, shortcuts, PowerShell, registry, filesystem, windows, processes (~5,522 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
+     "key": null,
+     "requires": {
+      "command": "uvx"
+     },
+     "measured_cost": {
+      "tools": 20,
+      "schema_bytes": 22088,
+      "approx_tokens_per_turn": 5522,
+      "method": "real MCP initialize -> tools/list over stdio, tools array serialized compactly, via TOOLS/Measure-McpSchemaCost.ps1",
+      "measured_utc": "2026-08-27"
+     }
+    }
+   ]
   }
+ ],
+ "evaluated_not_shipped": [
+  {
+   "id": "unreal-mcp",
+   "source": "runreal/unreal-mcp",
+   "reason": "Last upstream commit 2025-06-06 and 113 stars at evaluation time. A bridge into a running editor is exactly the kind of component that breaks on an engine point release, and this pack pins exact versions precisely so it can tell when upstream has moved. Vendoring a bridge nobody is maintaining would ship that risk under a version number that implies otherwise."
+  },
+  {
+   "id": "storybook-mcp",
+   "reason": "No first-party server from the Storybook project at evaluation time. Community servers exist; none had provenance this pack would accept for an install it performs on a user's machine unattended."
+  },
+  {
+   "id": "supabase-mcp",
+   "reason": "Shipped as the 'cloud' profile in 7.9.5 and 7.9.6; removed in 7.9.7 at the owner's decision. It was also the only profile here that required an account and a personal access token, against this pack's default of free, local, keyless and no signup. Deliberately not replaced with another account-dependent backend MCP. Anyone who wants it can register @supabase/mcp-server-supabase themselves; the migration removes only entries this pack created and leaves an independently configured one alone."
+  },
+  {
+   "id": "kitesurf",
+   "source": "Cloudflare Browser Run (hosted, not a repository)",
+   "reason": "A browser built for agents, running on Cloudflare Workers. The headline figure is real -- Cloudflare's own numbers are 3.1-3.8x less CPU and 4.7-7x less memory than Chromium -- but the same measurement says tasks take 1.7-1.8x LONGER, which the recommendation that reached this pack had dropped. It is also account-gated, and an account requirement is the one thing test_bundle_stays_free_and_accountless exists to refuse: that contract was written when Supabase was withdrawn in 7.9.7 and it forbids any profile server carrying a key. Local playwright-mcp stays the browser."
+  },
+  {
+   "id": "agentseal",
+   "source": "getagentseal/agentseal",
+   "reason": "Scans skills and MCP configs for dangerous patterns and baseline-hashes configs to catch a rug-pull. The IDEA is right and this pack is most of the way to it already -- MANIFEST hashing, RETIRED-SKILLS.json, RETIRED-PLUGINS.json and an installed-state doctor. The instance is the problem. Checked 2026-08-27: last commit 2026-06-11, latest PUBLISHED release v0.8.0 from 2026-03-25 while the tree carries an unreleased 0.10.0 bump, and GitHub detects no OSI license (NOASSERTION). It is also from the same owner as CodeBurn, which this pack already ships and which committed twice in the last three days -- the security tool is the quiet side of that org, not its focus. A config-hash baseline belongs in Test-Installed-State.ps1, where it runs on this pack's own cadence and depends on nothing."
+  }
+ ],
+ "installed_vs_enabled": "Installed means files exist. Configured means an entry exists. Active requires provider scope/trust and connection; callable tools must also pass filters and permissions. Neither a file nor a direct handshake proves provider activation or billing. Set-McpProfile.ps1 installs missing prerequisites when possible, without silently making project tools global.",
+ "scope_forms": {
+  "project": "The default and, for every server in this file, the correct one. The entry is written where only sessions opened in that project can see it. What that means per provider is under provider_project_scope.",
+  "global": "Written into the provider's machine-wide config, available to sessions that load it; actual usage depends on the host. One profile declares it: 'reasoning' is a thinking aid rather than a project capability, so a project scope would be meaningless. It has no detection markers, so -Auto never turns it on; -Enable reasoning -Global is deliberate. Everything else here is project-scoped, and TOOLS/Set-McpProfile.ps1 -Global is the per-run override."
+ },
+ "provider_project_scope": {
+  "Claude": "projects[\"<absolute project path>\"].mcpServers in %USERPROFILE%\\.claude.json -- the same place `claude mcp add --scope local` writes (verified against Claude Code 2.1.237). Chosen over the project's .mcp.json because it adds no file to the user's repository and raises no trust prompt. A team that wants the server checked in should copy the entry into .mcp.json by hand.",
+  "Grok": "<project>\\.grok\\config.toml, the `project` scope of `grok mcp add -s project` (verified against grok 1.0.5). This one IS a file inside the project, because it is the only project mechanism grok-cli has.",
+  "Codex": "<project>\\.codex\\config.toml, loaded only after the project is trusted. Native codex-cli 0.152.0 verified trusted/untrusted and unrelated-folder isolation plus enabled_tools/disabled_tools filtering and a harmless call. The installer never grants trust. Restart and run codex mcp list --json from that folder; writing the file alone is not activation proof.",
+  "Kimi": "None found. kimi-code reads %USERPROFILE%\\.kimi-code\\mcp.json; a project-local .kimi-code\\mcp.json was not picked up by `kimi doctor`. Not written unless -Global.",
+  "Hermes": "Hermes has native named profiles, each with its own home/config, but no project-path MCP scope. TOOLS/Migrate-HermesProfiles.ps1 owns the default/code/roblox/skyrim/creative topology; this path-based router skips Hermes unless -Global is explicit."
+ },
+ "arg_forms": {
+  "args": "Base arguments. May contain %ENVVAR% and {project}.",
+  "args_by_provider": "Replaces args entirely for the named provider.",
+  "project_args": "Appended when the entry is written project-scoped, where the project path is known.",
+  "global_args": "Appended instead when the entry is written machine-wide with -Global. A server that needs to know its project must discover it from the session here, because one baked path would be wrong in every other session."
+ }
 }

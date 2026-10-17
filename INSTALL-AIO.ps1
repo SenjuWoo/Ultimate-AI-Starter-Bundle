@@ -539,7 +539,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.15.2 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.16.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -1567,6 +1567,12 @@ if (-not $ToolsOnly) {
       $srcName = $catalog.providers.$prov.instruction_src
       if ($srcName) { $general = Join-Path $tailoredHome ($prov + '\COPY-TO-PROVIDER-HOME\' + $srcName) }
     }
+    # A SOUL.md is the provider's persona and Hermes injects the whole file into
+    # every request of every profile. The operator's private profile and machine
+    # map therefore never go into a soul file: they belong in the provider
+    # instruction file (AGENTS/CLAUDE) and in ~/.uabs/profile, which the preamble
+    # tells the model to read when a task needs machine paths.
+    $targets = @($targets | Where-Object { -not ($_ -match '(?i)(^|[\\/])SOUL\.md$') })
     foreach ($t in $targets) {
       $isSkyrimHermes = $t -match '(?i)[\\/]profiles[\\/]skyrim[\\/]SOUL\.md$'
       $packsHere = if ($prov -eq 'Hermes' -and $t -match '(?i)[\\/]profiles[\\/]' -and -not $isSkyrimHermes) { @() } else { $packSel.Enabled }
@@ -2529,7 +2535,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.15.2'
+version = '8.16.0'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

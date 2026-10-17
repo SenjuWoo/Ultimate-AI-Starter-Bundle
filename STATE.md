@@ -417,3 +417,28 @@
 - No paid inference, host-editor interaction or game runtime is certified.
 
 Detailed machine-specific reports remain under ignored `artifacts/`.
+
+
+## Post-v8.16.0 - prompt layer rebuilt, tools synced (2026-10-17)
+
+- Preamble sizes now: SOUL 735 B, AIO 9,083 B, Compact 3,200 B, Web 1,397 B,
+  Web Light 635 B, MANUAL-PASTE 2,134 B (SOUL + Web).
+- The installer filters every SOUL.md out of the profile/machine-map writer, so
+  private paths never reach a persona file; the contract pins the filter and
+  the MACHINE-MAP pointer.
+- Live wiring on this machine: all seven Hermes souls are SOUL + AIO only
+  (9,821 B, zero host references), the SillyTavern persona soul is restored,
+  and the duplicate 2026-10-12 profile tail in Codex AGENTS.md is removed.
+- Components synced: codebase-memory 0.12.1, headroom 0.41.0, rtk 1.0.1,
+  ponytail 5.3.2. Held on their documented compatibility pins: houseCARL 1.9.0
+  (2.x breaks the 1.x tool API), unity-mcp 0.91.0 (needs an editor check),
+  impeccable 3.6.1 / 4.1.3 (4.x detector needs a re-audit).
+  OFFLINE-MANIFEST rebuilt from disk (9 assets, fresh sha256).
+- Removed: BUNDLED-TOOLS/packs/skyrim/legacy (7 dead soul copies) and
+  docs/history/V5-CHANGELOG.md.
+- Open: impeccable 4.6.0 ships the new launcher; run `impeccable context` once
+  to confirm it resolves. houseCARL's skill text stays as the pack's authored
+  routing variant - upstream's SKILL.md is a different, shorter file, so a
+  blind replace would lose the pack's routes.
+- Next: cut v8.16.0 (build, tag, release assets). Provider-tree dedupe (85 MB)
+  is deferred until the user approves the generated-tree change.

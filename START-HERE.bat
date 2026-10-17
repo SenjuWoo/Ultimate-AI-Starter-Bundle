@@ -4,7 +4,7 @@ set "PSModulePath="
 rem Stay outside the pack folder: an update replaces it, and Windows cannot
 rem rename a folder that this console is using as its working directory.
 cd /d "%~dp0.."
-title Ultimate AI Starter Bundle v8.15.2
+title Ultimate AI Starter Bundle v8.16.0
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0INSTALL-AIO.ps1" %*
 set "EXITCODE=%ERRORLEVEL%"
 echo.

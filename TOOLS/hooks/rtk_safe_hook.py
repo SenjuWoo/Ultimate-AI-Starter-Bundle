@@ -25,7 +25,7 @@ except Exception:  # installed beside assumption_gate.py; fail open if incomplet
 
 
 TIMEOUT = 5
-EXPECTED_RTK_VERSION = "1.0.0"
+EXPECTED_RTK_VERSION = "1.0.1"
 SHELL_META = re.compile(r"[\r\n;&|<>`]|\$\(")
 GIT_STATUS = re.compile(r"^\s*git(?:\.exe)?\s+status(?:\s+(?:--short|-s))?\s*$", re.I)
 TEST_COMMAND = re.compile(
