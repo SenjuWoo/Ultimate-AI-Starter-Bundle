@@ -273,7 +273,7 @@ export function markdown(s: Snapshot): string {
     ['ponytail level', s.level],
     ['Session', `\`${s.session}\``],
   ]
-  const cell = (v: string) => v.replace(/\|/g, '\\|')
+  const cell = (v: string) => v.replace(/\\/g, '\\\\').replace(/\|/g, '\\|').replace(/[\r\n]+/g, ' ')
   return [`## ${cell(s.name || 'Untitled session')}`, '', '| | |', '|---|---|', ...rows.map(([k, v]) => `| ${k} | ${cell(v ?? '')} |`)].join('\n')
 }
 

@@ -287,7 +287,8 @@ export const register: Register = (on, options) => {
       const grep = await $.process.run(['git', 'grep', '--untracked', '-nw', '-e', name]).catch(() => undefined)
       const rows = hits(grep?.stdout ?? '')
       if (rows.some(r => defsIn(r.file, r.text.trimStart()).includes(name))) continue
-      const call = new RegExp(`(?<![\\w$])${name.replace(/\$/g, '\\$')}\\s*\\(`)
+      const safeName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      const call = new RegExp(`(?<![\\w$])${safeName}\\s*\\(`)
       const refs = rows.filter(r => call.test(r.text)).map(r => `${r.file}:${r.line}`)
       if (refs.length > 0) {
         stillRemoved.push(name)

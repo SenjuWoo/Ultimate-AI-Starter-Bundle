@@ -40071,13 +40071,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/band/metrics.ts",
-  "size": 15101,
-  "sha256": "332a2a56458e059f8d56d0a0388396a9b63ba5ded0c90d8788d235ac8c452a41"
+  "size": 15149,
+  "sha256": "a950b4dab93e6b621653951daa1e8d2f2959e739e37a47c09315378c6cb6cfb4"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/band/register.tsx",
-  "size": 19636,
-  "sha256": "d6df3b9286e71ed72a336f491e0267c926b285124d0efd2e4f43002a589cc209"
+  "size": 19685,
+  "sha256": "a822a2bb91c92b17581fddf61b77f435483567c430e8876aa6e856f9ea542a3b"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/band/types.d.ts",
