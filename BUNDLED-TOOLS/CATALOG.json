@@ -24,7 +24,8 @@
     "Codex",
     "Grok",
     "Kimi",
-    "Hermes"
+    "Hermes",
+    "Antigravity"
    ],
    "runtimes": [
     "node22"
@@ -32,7 +33,7 @@
    "required_for": [
     "reverse-engineering-evidence"
    ],
-   "scope_note": "Optional CLI only; not part of default Components or MCP profiles. 2026-10-16 isolated Windows npm integrity-bound install of 6.5.0 with lifecycle scripts disabled (the 6.5.0 tarball sha512 matches the recorded pin) and a 2026-10-13 baseline of the same procedure on 6.4.0: help and execution-free JavaScript fixture analysis PASS (7-node fixture graph, no integrity contradictions), zero known production npm audit findings across 147 prod dependencies. Stdio transport probe exposed 207 tools and 3,087,942 compact UTF-8 schema bytes (170 tools / 1,954,683 bytes on 6.4.0), not loaded or billed tokens. No native Ghidra/runtime/GUI actions certified. Reuse Reverse THIS! shims and Universal Modder recon. No upstream setup/update or duplicate skill collection. See tool-discovery/references/reverse-engineering.md."
+   "scope_note": "Optional CLI only; not part of default Components or MCP profiles. 2026-10-18 isolated Windows npm integrity-bound install of 6.5.0 with lifecycle scripts disabled (the 6.5.0 tarball sha512 matches the recorded pin) and a 2026-10-13 baseline of the same procedure on 6.4.0: help and execution-free JavaScript fixture analysis PASS (7-node fixture graph, no integrity contradictions), zero known production npm audit findings across 147 prod dependencies. Stdio transport probe exposed 207 tools and 3,087,942 compact UTF-8 schema bytes (170 tools / 1,954,683 bytes on 6.4.0), not loaded or billed tokens. No native Ghidra/runtime/GUI actions certified. Reuse Reverse THIS! shims and Universal Modder recon. No upstream setup/update or duplicate skill collection. See tool-discovery/references/reverse-engineering.md."
   },
   {
    "id": "universal-modder",
@@ -45,10 +46,10 @@
     "owner": "rehan-remade",
     "repo": "universal-modder"
    },
-   "source_commit": "23902ef42e8ea9b077bfbbf6911eb8ea0348e55a",
-   "source_archive_sha256": "037196f80d4522de60afbb25e0914234998ad5a867551a9380309b01e43859fc",
+   "source_commit": "6a8865ae171b406f50892c7f46fc5f45655269eb",
+   "source_archive_sha256": "ccfaf145a69f6a76f524f29a4b4f8f5f26476a3a6a2a35b0564547d17ac20814",
    "source_dir": "BUNDLED-TOOLS/universal-modder",
-   "offline_asset": "universal_modder-0.2.0+uabs.23902ef-py3-none-any.whl",
+   "offline_asset": "universal_modder-0.2.0+uabs.6a8865a-py3-none-any.whl",
    "cli": "um",
    "cli_env": "UNIVERSAL_MODDER_CMD",
    "python": "3.13",
@@ -59,14 +60,15 @@
     "Codex",
     "Grok",
     "Kimi",
-    "Hermes"
+    "Hermes",
+    "Antigravity"
    ],
    "required_for": [
     "game-recon",
     "sprite-processing",
     "gameplay-showcase-video"
    ],
-   "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to twelve upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (the indexed knowledge snapshot), discovers native Windows Steam roots from the registry, never echoes matched credentials and prints a sha256 fingerprint plus key length where `um fal key status` used to print the first and last key characters (CodeQL py/clear-text-logging-sensitive-data); the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. The audited refresh adds quoted multi-word knowledge search, ranked hits and broken-link diagnostics while retaining local ComfyUI generation, SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification. 2026-10-13 source refresh adds Bannerlord, MT Framework, Hedgehog and Black Rock discovery plus a mod-porting reference; preserves UABS dependency pins, native Steam discovery and credential-safe output. 2026-10-16 source refresh (38 upstream commits, 23902ef) adds Isaac, Just Cause 3/Avalanche, Space Marine 2, Project Zomboid and S.T.A.L.K.E.R. 2 knowledge notes, fal keys through the desktop keyring with a masked status command, and a UTF-8 tool-output fix on Windows. Upstream's new agents/ team plus its OpenCode/session files stay unshipped, and the refresh tool now drops the unbounded UE3 unpack_upk.py fallback by rule instead of by hand."
+   "scope_note": "Local CLI installed by default for every selected provider. Pinned MIT source, offline wheel and one canonical skill routing to twelve upstream guides. UABS pins Pillow/NumPy/PyYAML, packages the knowledge snapshot (the indexed knowledge snapshot), discovers native Windows Steam roots from the registry, never echoes matched credentials and prints a sha256 fingerprint plus key length where `um fal key status` used to print the first and last key characters (CodeQL py/clear-text-logging-sensitive-data); the wheel carries a +uabs local version so a refresh reinstalls over an older 0.2.0. The audited refresh adds quoted multi-word knowledge search, ranked hits and broken-link diagnostics while retaining local ComfyUI generation, SHA-256-checked ffmpeg setup and collision-safe backups. No upstream session hook or fal MCP is registered. CLI processing is free/local; fal generation requires user-owned credentials and paid service authorization. FFmpeg/Blender and a real game are separate prerequisites for video/rendering/runtime verification. 2026-10-13 source refresh adds Bannerlord, MT Framework, Hedgehog and Black Rock discovery plus a mod-porting reference; preserves UABS dependency pins, native Steam discovery and credential-safe output. 2026-10-18 source refresh (38 upstream commits, 23902ef) adds Isaac, Just Cause 3/Avalanche, Space Marine 2, Project Zomboid and S.T.A.L.K.E.R. 2 knowledge notes, fal keys through the desktop keyring with a masked status command, and a UTF-8 tool-output fix on Windows. Upstream's new agents/ team plus its OpenCode/session files stay unshipped, and the refresh tool now drops the unbounded UE3 unpack_upk.py fallback by rule instead of by hand."
   },
   {
    "id": "uabs-toolbox",
@@ -87,7 +89,8 @@
     "Codex",
     "Grok",
     "Kimi",
-    "Hermes"
+    "Hermes",
+    "Antigravity"
    ],
    "required_for": [
     "on-demand-project-tools"
@@ -415,7 +418,8 @@
     "Codex",
     "Grok",
     "Kimi",
-    "Hermes"
+    "Hermes",
+    "Antigravity"
    ],
    "license": "see-upstream",
    "required_for": [
@@ -441,7 +445,8 @@
     "Codex",
     "Grok",
     "Kimi",
-    "Hermes"
+    "Hermes",
+    "Antigravity"
    ],
    "license": "see-upstream",
    "required_for": [
@@ -556,7 +561,8 @@
     "Codex",
     "Grok",
     "Kimi",
-    "Hermes"
+    "Hermes",
+    "Antigravity"
    ],
    "runtimes": [
     "node22"
@@ -591,7 +597,8 @@
     "Codex",
     "Grok",
     "Kimi",
-    "Hermes"
+    "Hermes",
+    "Antigravity"
    ],
    "runtimes": [
     "node22"
@@ -612,7 +619,7 @@
    "kind": "mcp-npx",
    "mcp": true,
    "license": "MIT",
-   "version": "4.4.1",
+   "version": "4.4.2",
    "github": {
     "owner": "upstash",
     "repo": "context7"
@@ -621,7 +628,7 @@
    "npx_command": "npx",
    "npx_args": [
     "-y",
-    "@upstash/context7-mcp@4.4.1"
+    "@upstash/context7-mcp@4.4.2"
    ],
    "auto_register": true,
    "api_key_env": "CONTEXT7_API_KEY",
@@ -638,7 +645,8 @@
     "Codex",
     "Grok",
     "Kimi",
-    "Hermes"
+    "Hermes",
+    "Antigravity"
    ],
    "required_for": [
     "library-documentation",
@@ -708,7 +716,7 @@
    "kind": "mcp-npx",
    "mcp": true,
    "license": "Apache-2.0",
-   "version": "1.10.1",
+   "version": "1.11.0",
    "github": {
     "owner": "ChromeDevTools",
     "repo": "chrome-devtools-mcp"
@@ -717,7 +725,7 @@
    "npx_command": "npx",
    "npx_args": [
     "-y",
-    "chrome-devtools-mcp@1.10.1",
+    "chrome-devtools-mcp@1.11.0",
     "--no-usage-statistics"
    ],
    "profile": "web",
@@ -736,7 +744,7 @@
    "kind": "mcp-npx",
    "mcp": true,
    "license": "MIT",
-   "version": "4.21.4",
+   "version": "4.22.0",
    "github": {
     "owner": "shadcn-ui",
     "repo": "ui"
@@ -745,7 +753,7 @@
    "npx_command": "npx",
    "npx_args": [
     "-y",
-    "shadcn@4.21.4",
+    "shadcn@4.22.0",
     "mcp"
    ],
    "profile": "web",
@@ -930,7 +938,7 @@
    "kind": "mcp-npx",
    "mcp": true,
    "license": "MIT",
-   "version": "2.8.3",
+   "version": "2.8.4",
    "github": {
     "owner": "mindstone",
     "repo": "Super-MCP"
@@ -939,7 +947,7 @@
    "npx_command": "npx",
    "npx_args": [
     "-y",
-    "super-mcp-router@2.8.3"
+    "super-mcp-router@2.8.4"
    ],
    "profile": null,
    "auto_register": false,
@@ -1001,8 +1009,8 @@
    "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
   }
  ],
- "pack_version": "8.18.1",
- "updated_utc": "2026-10-16",
+ "pack_version": "8.19.0",
+ "updated_utc": "2026-10-18",
  "providers": {
   "Grok": {
    "skills": "skills",
@@ -1089,7 +1097,7 @@
  "provider_config_schemas": {
   "Hermes": 44
  },
- "catalog_version": "8.18.1",
- "updated": "2026-10-15",
+ "catalog_version": "8.19.0",
+ "updated": "2026-10-18",
  "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

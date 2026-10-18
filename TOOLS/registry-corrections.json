@@ -25,7 +25,7 @@
       ],
       "provider_pack": "shared",
       "scope": "shared-cross-provider",
-      "applies_to": ["Claude", "Codex", "Grok", "Kimi", "Hermes"],
+      "applies_to": ["Claude", "Codex", "Grok", "Kimi", "Hermes", "Antigravity"],
       "provider_control": "Treat an empty AdditionalRaces list as a defect, but do not treat fixing it as proof the actor now renders."
     },
     {
@@ -52,7 +52,7 @@
       ],
       "provider_pack": "shared",
       "scope": "shared-cross-provider",
-      "applies_to": ["Claude", "Codex", "Grok", "Kimi", "Hermes"],
+      "applies_to": ["Claude", "Codex", "Grok", "Kimi", "Hermes", "Antigravity"],
       "provider_control": "Every gate result must be reported with its evidence level attached. 'PASS' alone is not a claim about the game."
     },
     {
@@ -80,7 +80,7 @@
       ],
       "provider_pack": "shared",
       "scope": "shared-cross-provider",
-      "applies_to": ["Claude", "Codex", "Grok", "Kimi", "Hermes"],
+      "applies_to": ["Claude", "Codex", "Grok", "Kimi", "Hermes", "Antigravity"],
       "provider_control": "Treat this whole approach as unproven. Do not cite it, or any artifact produced by it, as a working example."
     }
   ]

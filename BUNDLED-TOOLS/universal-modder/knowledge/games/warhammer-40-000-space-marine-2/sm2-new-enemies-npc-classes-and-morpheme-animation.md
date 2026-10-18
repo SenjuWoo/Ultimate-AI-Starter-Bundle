@@ -12,7 +12,7 @@ anti_cheat: "EasyAntiCheat. Everything here uses Saber's official mods folder (c
 status: working
 agents: ["Claude Code (Opus 5.5)"]
 humans: []
-date: 2026-10-13
+date: 2026-10-15
 links: []
 tags: [space-marine-2, saber, npc, enemy, boss, tyranid, morpheme, nmb, sani, animation, retarget, finisher, execution, interplay, xseq, spawning]
 ---
@@ -34,8 +34,9 @@ tags: [space-marine-2, saber, npc, enemy, boss, tyranid, morpheme, nmb, sani, an
   `ModEditor/documentation/CLS_File_Guide.pdf` and `Enum_Extension_Tutorial.pdf`.
 - Animations: `default_animation.pak` (`.sani` + `.sani_data` sidecars, `morpheme/<set>/<set>.nmb`); manifests
   (`.mr.resource`, `.sani.resource`) in `resources.pak` (client and server copies are identical).
-- Test bed: the arena level `test_scene_mod` (Saber's sample level, as shipped by a community testing-menu mod) with
-  spawn buttons (below).
+- Test bed: the arena level `test_scene_mod` (Saber's sample level, as shipped by [Testing
+  Menu](https://www.nexusmods.com/warhammer40000spacemarine2/mods/233) by Hypexs777 (Nexus Mods)) with spawn buttons
+  (below).
 
 ## Route and why
 Data route plus binary patching of animation assets. A new enemy is: a class (Saber's NPC modder slot, or the newer
@@ -205,7 +206,7 @@ donor creature: everything is cloned, because the engine keys animations by name
   override was ignored and the execution crashed (`interplaySequence` null). There is no unused retail xseq to borrow.
 
 ### Spawning in the testing arena
-- The testing-menu mod's copy of `xscenes/test_scene_mod/test_scene_mod_scenario_server.sso` sets
+- Testing Menu's copy of `xscenes/test_scene_mod/test_scene_mod_scenario_server.sso` sets
   `useDefaultArchetypesPoolsLibrary = False` with an explicit pool: add your `LevelArchetype` + `linksDescWeak` there.
 - Level actors: usable buttons tagged `usable_button_1..5`, spawn domains `dom_spawn_1..4`. Wiring:
   `GetFirstTaggedActor(tag)` -> `SubscribeToUsableActor` (`subscribeOnInitRef True`) `OnUsed` ->

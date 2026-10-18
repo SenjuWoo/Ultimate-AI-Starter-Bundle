@@ -3106,8 +3106,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/context.mjs",
-  "size": 67737,
-  "sha256": "e0d4b1ee9a143438a449c4c25ec2556d299b5c13782bf0ee61335e48a3f01a65"
+  "size": 67681,
+  "sha256": "04603141f27e861480634b442bfaaffc67c70dad27aad62f16827a8a9e360ab1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/critique-storage.mjs",
@@ -3231,8 +3231,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/detector/shared/page.mjs",
-  "size": 386,
-  "sha256": "0e2bc96b8bbafafb40c451771c6724db8193dd65d9b67e1912fc217291ed1945"
+  "size": 331,
+  "sha256": "b19bc7a07d9d09ea7f674c08a57e061d244152b355ca2ce2eaccecbe7a8c6b96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/doctor.mjs",
@@ -3396,8 +3396,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-accept.mjs",
-  "size": 36120,
-  "sha256": "342bc2d1646a703d185449f3f688586d4b8e58e1144321e5ac1eb9081123a49f"
+  "size": 35778,
+  "sha256": "11ad1b4eca47b399f1212d1b00dbca9a7a75b171bc67a86d98f12463aeac8bfd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser-dom.js",
@@ -3416,8 +3416,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser.js",
-  "size": 513801,
-  "sha256": "24241e41e394f18cc00a788e9b44117424b25dbed1391b2e8152ec8f395ffccf"
+  "size": 513613,
+  "sha256": "24ac204f95fa8a780eb7b641de35079047a23a97ffa1f5ffa160b942735975f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-commit-manual-edits.mjs",
@@ -3466,8 +3466,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-server.mjs",
-  "size": 70004,
-  "sha256": "e3801156dc319fa7e02c55e7350f62e4656ba9f33be3199c6d8e8571dda807d8"
+  "size": 70129,
+  "sha256": "a562dae339752538706f4b1a5c24ecf4823f167a1eed084070b1070aff9d7f74"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-status.mjs",
@@ -3641,8 +3641,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/svelte-component.mjs",
-  "size": 52649,
-  "sha256": "0fe9f123278fb5ba31cece997c3e0b01540e341b5bcb50fbc565f5588fcfdb54"
+  "size": 52557,
+  "sha256": "28d052ad85ddf5dc2c4619e3f3fa9de709db784ba33d0336c728546363a19389"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/sveltekit-adapter.mjs",
@@ -4996,8 +4996,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-debt/SKILL.md",
-  "size": 1818,
-  "sha256": "7dfb171088969fb5e78612025a238b3f6c7cc4c70455e98e336ebd987d3a3d3a"
+  "size": 1769,
+  "sha256": "b5ec2762f6ba8c4af9ea7173aa6c9f91b88655a25e43f9de0264f6ce8722b25f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-gain/SKILL.md",
@@ -6236,8 +6236,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/fal-assets/GUIDE.md",
-  "size": 9037,
-  "sha256": "3882201f700f8788d2bff1920fb85f0c19fd111d8bb8483d441b9f93cc1c8484"
+  "size": 9580,
+  "sha256": "925f5cc05e014804cec46fad00553ba228551439701dd03d54935e0789b709c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
@@ -6246,8 +6246,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
-  "size": 4011,
-  "sha256": "77a7c20e74e5add09824433d8181d30e9dbca2c96c2c271e22afdadc7af0adca"
+  "size": 4927,
+  "sha256": "e8db7ad6af8fad9e626d6f0e9529491bf7f0f5a5f77afed8bcf3811b0a65b795"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/references/compatibility.md",
+  "size": 9232,
+  "sha256": "7fbea608f678eaf2e95b2eb0f7a162b71cbc465b7f88fd7eb80e2227822f4fb0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-research-websearch/GUIDE.md",
@@ -6266,8 +6271,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12205,
-  "sha256": "dd850249fb70ece1781f36225adad36b3b5c6289b0aa8015b85f501d13be01d7"
+  "size": 12335,
+  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -6326,8 +6331,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/retro-decomp.md",
-  "size": 3408,
-  "sha256": "0044eaddcd27ae3949bddced6cbfe5d070728cc70e7d28b91c755be1422282cc"
+  "size": 3792,
+  "sha256": "1c5a365e7c325b364c346c5374dc0ca3ac68c905b2916db5b8460073b16ae10f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/source.md",
@@ -6351,8 +6356,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 4931,
-  "sha256": "74d0f670439e1d98d414fae5dd68848e9a704a2ad8e2cd335bfadb30ab692462"
+  "size": 5447,
+  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -9516,8 +9521,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/context.mjs",
-  "size": 67737,
-  "sha256": "e0d4b1ee9a143438a449c4c25ec2556d299b5c13782bf0ee61335e48a3f01a65"
+  "size": 67681,
+  "sha256": "04603141f27e861480634b442bfaaffc67c70dad27aad62f16827a8a9e360ab1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/critique-storage.mjs",
@@ -9641,8 +9646,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/detector/shared/page.mjs",
-  "size": 386,
-  "sha256": "0e2bc96b8bbafafb40c451771c6724db8193dd65d9b67e1912fc217291ed1945"
+  "size": 331,
+  "sha256": "b19bc7a07d9d09ea7f674c08a57e061d244152b355ca2ce2eaccecbe7a8c6b96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/doctor.mjs",
@@ -9806,8 +9811,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-accept.mjs",
-  "size": 36120,
-  "sha256": "342bc2d1646a703d185449f3f688586d4b8e58e1144321e5ac1eb9081123a49f"
+  "size": 35778,
+  "sha256": "11ad1b4eca47b399f1212d1b00dbca9a7a75b171bc67a86d98f12463aeac8bfd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser-dom.js",
@@ -9826,8 +9831,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser.js",
-  "size": 513801,
-  "sha256": "24241e41e394f18cc00a788e9b44117424b25dbed1391b2e8152ec8f395ffccf"
+  "size": 513613,
+  "sha256": "24ac204f95fa8a780eb7b641de35079047a23a97ffa1f5ffa160b942735975f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-commit-manual-edits.mjs",
@@ -9876,8 +9881,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-server.mjs",
-  "size": 70004,
-  "sha256": "e3801156dc319fa7e02c55e7350f62e4656ba9f33be3199c6d8e8571dda807d8"
+  "size": 70129,
+  "sha256": "a562dae339752538706f4b1a5c24ecf4823f167a1eed084070b1070aff9d7f74"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-status.mjs",
@@ -10051,8 +10056,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/svelte-component.mjs",
-  "size": 52649,
-  "sha256": "0fe9f123278fb5ba31cece997c3e0b01540e341b5bcb50fbc565f5588fcfdb54"
+  "size": 52557,
+  "sha256": "28d052ad85ddf5dc2c4619e3f3fa9de709db784ba33d0336c728546363a19389"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/sveltekit-adapter.mjs",
@@ -11406,8 +11411,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-debt/SKILL.md",
-  "size": 1818,
-  "sha256": "7dfb171088969fb5e78612025a238b3f6c7cc4c70455e98e336ebd987d3a3d3a"
+  "size": 1769,
+  "sha256": "b5ec2762f6ba8c4af9ea7173aa6c9f91b88655a25e43f9de0264f6ce8722b25f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-gain/SKILL.md",
@@ -12646,8 +12651,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/fal-assets/GUIDE.md",
-  "size": 9037,
-  "sha256": "3882201f700f8788d2bff1920fb85f0c19fd111d8bb8483d441b9f93cc1c8484"
+  "size": 9580,
+  "sha256": "925f5cc05e014804cec46fad00553ba228551439701dd03d54935e0789b709c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
@@ -12656,8 +12661,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
-  "size": 4011,
-  "sha256": "77a7c20e74e5add09824433d8181d30e9dbca2c96c2c271e22afdadc7af0adca"
+  "size": 4927,
+  "sha256": "e8db7ad6af8fad9e626d6f0e9529491bf7f0f5a5f77afed8bcf3811b0a65b795"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/references/compatibility.md",
+  "size": 9232,
+  "sha256": "7fbea608f678eaf2e95b2eb0f7a162b71cbc465b7f88fd7eb80e2227822f4fb0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-research-websearch/GUIDE.md",
@@ -12676,8 +12686,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12205,
-  "sha256": "dd850249fb70ece1781f36225adad36b3b5c6289b0aa8015b85f501d13be01d7"
+  "size": 12335,
+  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -12736,8 +12746,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/retro-decomp.md",
-  "size": 3408,
-  "sha256": "0044eaddcd27ae3949bddced6cbfe5d070728cc70e7d28b91c755be1422282cc"
+  "size": 3792,
+  "sha256": "1c5a365e7c325b364c346c5374dc0ca3ac68c905b2916db5b8460073b16ae10f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/source.md",
@@ -12761,8 +12771,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 4931,
-  "sha256": "74d0f670439e1d98d414fae5dd68848e9a704a2ad8e2cd335bfadb30ab692462"
+  "size": 5447,
+  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -15991,8 +16001,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/context.mjs",
-  "size": 67737,
-  "sha256": "e0d4b1ee9a143438a449c4c25ec2556d299b5c13782bf0ee61335e48a3f01a65"
+  "size": 67681,
+  "sha256": "04603141f27e861480634b442bfaaffc67c70dad27aad62f16827a8a9e360ab1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/critique-storage.mjs",
@@ -16116,8 +16126,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/detector/shared/page.mjs",
-  "size": 386,
-  "sha256": "0e2bc96b8bbafafb40c451771c6724db8193dd65d9b67e1912fc217291ed1945"
+  "size": 331,
+  "sha256": "b19bc7a07d9d09ea7f674c08a57e061d244152b355ca2ce2eaccecbe7a8c6b96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/doctor.mjs",
@@ -16281,8 +16291,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-accept.mjs",
-  "size": 36120,
-  "sha256": "342bc2d1646a703d185449f3f688586d4b8e58e1144321e5ac1eb9081123a49f"
+  "size": 35778,
+  "sha256": "11ad1b4eca47b399f1212d1b00dbca9a7a75b171bc67a86d98f12463aeac8bfd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser-dom.js",
@@ -16301,8 +16311,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser.js",
-  "size": 513801,
-  "sha256": "24241e41e394f18cc00a788e9b44117424b25dbed1391b2e8152ec8f395ffccf"
+  "size": 513613,
+  "sha256": "24ac204f95fa8a780eb7b641de35079047a23a97ffa1f5ffa160b942735975f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-commit-manual-edits.mjs",
@@ -16351,8 +16361,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-server.mjs",
-  "size": 70004,
-  "sha256": "e3801156dc319fa7e02c55e7350f62e4656ba9f33be3199c6d8e8571dda807d8"
+  "size": 70129,
+  "sha256": "a562dae339752538706f4b1a5c24ecf4823f167a1eed084070b1070aff9d7f74"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-status.mjs",
@@ -16526,8 +16536,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/svelte-component.mjs",
-  "size": 52649,
-  "sha256": "0fe9f123278fb5ba31cece997c3e0b01540e341b5bcb50fbc565f5588fcfdb54"
+  "size": 52557,
+  "sha256": "28d052ad85ddf5dc2c4619e3f3fa9de709db784ba33d0336c728546363a19389"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/sveltekit-adapter.mjs",
@@ -17881,8 +17891,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-debt/SKILL.md",
-  "size": 1818,
-  "sha256": "7dfb171088969fb5e78612025a238b3f6c7cc4c70455e98e336ebd987d3a3d3a"
+  "size": 1769,
+  "sha256": "b5ec2762f6ba8c4af9ea7173aa6c9f91b88655a25e43f9de0264f6ce8722b25f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-gain/SKILL.md",
@@ -19121,8 +19131,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/fal-assets/GUIDE.md",
-  "size": 9037,
-  "sha256": "3882201f700f8788d2bff1920fb85f0c19fd111d8bb8483d441b9f93cc1c8484"
+  "size": 9580,
+  "sha256": "925f5cc05e014804cec46fad00553ba228551439701dd03d54935e0789b709c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
@@ -19131,8 +19141,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
-  "size": 4011,
-  "sha256": "77a7c20e74e5add09824433d8181d30e9dbca2c96c2c271e22afdadc7af0adca"
+  "size": 4927,
+  "sha256": "e8db7ad6af8fad9e626d6f0e9529491bf7f0f5a5f77afed8bcf3811b0a65b795"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/references/compatibility.md",
+  "size": 9232,
+  "sha256": "7fbea608f678eaf2e95b2eb0f7a162b71cbc465b7f88fd7eb80e2227822f4fb0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-research-websearch/GUIDE.md",
@@ -19151,8 +19166,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12205,
-  "sha256": "dd850249fb70ece1781f36225adad36b3b5c6289b0aa8015b85f501d13be01d7"
+  "size": 12335,
+  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -19211,8 +19226,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/retro-decomp.md",
-  "size": 3408,
-  "sha256": "0044eaddcd27ae3949bddced6cbfe5d070728cc70e7d28b91c755be1422282cc"
+  "size": 3792,
+  "sha256": "1c5a365e7c325b364c346c5374dc0ca3ac68c905b2916db5b8460073b16ae10f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/source.md",
@@ -19236,8 +19251,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 4931,
-  "sha256": "74d0f670439e1d98d414fae5dd68848e9a704a2ad8e2cd335bfadb30ab692462"
+  "size": 5447,
+  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -22451,8 +22466,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/context.mjs",
-  "size": 67737,
-  "sha256": "e0d4b1ee9a143438a449c4c25ec2556d299b5c13782bf0ee61335e48a3f01a65"
+  "size": 67681,
+  "sha256": "04603141f27e861480634b442bfaaffc67c70dad27aad62f16827a8a9e360ab1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/critique-storage.mjs",
@@ -22576,8 +22591,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/detector/shared/page.mjs",
-  "size": 386,
-  "sha256": "0e2bc96b8bbafafb40c451771c6724db8193dd65d9b67e1912fc217291ed1945"
+  "size": 331,
+  "sha256": "b19bc7a07d9d09ea7f674c08a57e061d244152b355ca2ce2eaccecbe7a8c6b96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/doctor.mjs",
@@ -22741,8 +22756,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-accept.mjs",
-  "size": 36120,
-  "sha256": "342bc2d1646a703d185449f3f688586d4b8e58e1144321e5ac1eb9081123a49f"
+  "size": 35778,
+  "sha256": "11ad1b4eca47b399f1212d1b00dbca9a7a75b171bc67a86d98f12463aeac8bfd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser-dom.js",
@@ -22761,8 +22776,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser.js",
-  "size": 513801,
-  "sha256": "24241e41e394f18cc00a788e9b44117424b25dbed1391b2e8152ec8f395ffccf"
+  "size": 513613,
+  "sha256": "24ac204f95fa8a780eb7b641de35079047a23a97ffa1f5ffa160b942735975f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-commit-manual-edits.mjs",
@@ -22811,8 +22826,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-server.mjs",
-  "size": 70004,
-  "sha256": "e3801156dc319fa7e02c55e7350f62e4656ba9f33be3199c6d8e8571dda807d8"
+  "size": 70129,
+  "sha256": "a562dae339752538706f4b1a5c24ecf4823f167a1eed084070b1070aff9d7f74"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-status.mjs",
@@ -22986,8 +23001,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/svelte-component.mjs",
-  "size": 52649,
-  "sha256": "0fe9f123278fb5ba31cece997c3e0b01540e341b5bcb50fbc565f5588fcfdb54"
+  "size": 52557,
+  "sha256": "28d052ad85ddf5dc2c4619e3f3fa9de709db784ba33d0336c728546363a19389"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/sveltekit-adapter.mjs",
@@ -24341,8 +24356,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-debt/SKILL.md",
-  "size": 1818,
-  "sha256": "7dfb171088969fb5e78612025a238b3f6c7cc4c70455e98e336ebd987d3a3d3a"
+  "size": 1769,
+  "sha256": "b5ec2762f6ba8c4af9ea7173aa6c9f91b88655a25e43f9de0264f6ce8722b25f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-gain/SKILL.md",
@@ -25581,8 +25596,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/fal-assets/GUIDE.md",
-  "size": 9037,
-  "sha256": "3882201f700f8788d2bff1920fb85f0c19fd111d8bb8483d441b9f93cc1c8484"
+  "size": 9580,
+  "sha256": "925f5cc05e014804cec46fad00553ba228551439701dd03d54935e0789b709c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
@@ -25591,8 +25606,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
-  "size": 4011,
-  "sha256": "77a7c20e74e5add09824433d8181d30e9dbca2c96c2c271e22afdadc7af0adca"
+  "size": 4927,
+  "sha256": "e8db7ad6af8fad9e626d6f0e9529491bf7f0f5a5f77afed8bcf3811b0a65b795"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/references/compatibility.md",
+  "size": 9232,
+  "sha256": "7fbea608f678eaf2e95b2eb0f7a162b71cbc465b7f88fd7eb80e2227822f4fb0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-research-websearch/GUIDE.md",
@@ -25611,8 +25631,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12205,
-  "sha256": "dd850249fb70ece1781f36225adad36b3b5c6289b0aa8015b85f501d13be01d7"
+  "size": 12335,
+  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -25671,8 +25691,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/retro-decomp.md",
-  "size": 3408,
-  "sha256": "0044eaddcd27ae3949bddced6cbfe5d070728cc70e7d28b91c755be1422282cc"
+  "size": 3792,
+  "sha256": "1c5a365e7c325b364c346c5374dc0ca3ac68c905b2916db5b8460073b16ae10f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/source.md",
@@ -25696,8 +25716,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 4931,
-  "sha256": "74d0f670439e1d98d414fae5dd68848e9a704a2ad8e2cd335bfadb30ab692462"
+  "size": 5447,
+  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -28911,8 +28931,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/context.mjs",
-  "size": 67737,
-  "sha256": "e0d4b1ee9a143438a449c4c25ec2556d299b5c13782bf0ee61335e48a3f01a65"
+  "size": 67681,
+  "sha256": "04603141f27e861480634b442bfaaffc67c70dad27aad62f16827a8a9e360ab1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/critique-storage.mjs",
@@ -29036,8 +29056,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/detector/shared/page.mjs",
-  "size": 386,
-  "sha256": "0e2bc96b8bbafafb40c451771c6724db8193dd65d9b67e1912fc217291ed1945"
+  "size": 331,
+  "sha256": "b19bc7a07d9d09ea7f674c08a57e061d244152b355ca2ce2eaccecbe7a8c6b96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/doctor.mjs",
@@ -29201,8 +29221,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-accept.mjs",
-  "size": 36120,
-  "sha256": "342bc2d1646a703d185449f3f688586d4b8e58e1144321e5ac1eb9081123a49f"
+  "size": 35778,
+  "sha256": "11ad1b4eca47b399f1212d1b00dbca9a7a75b171bc67a86d98f12463aeac8bfd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser-dom.js",
@@ -29221,8 +29241,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser.js",
-  "size": 513801,
-  "sha256": "24241e41e394f18cc00a788e9b44117424b25dbed1391b2e8152ec8f395ffccf"
+  "size": 513613,
+  "sha256": "24ac204f95fa8a780eb7b641de35079047a23a97ffa1f5ffa160b942735975f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-commit-manual-edits.mjs",
@@ -29271,8 +29291,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-server.mjs",
-  "size": 70004,
-  "sha256": "e3801156dc319fa7e02c55e7350f62e4656ba9f33be3199c6d8e8571dda807d8"
+  "size": 70129,
+  "sha256": "a562dae339752538706f4b1a5c24ecf4823f167a1eed084070b1070aff9d7f74"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-status.mjs",
@@ -29446,8 +29466,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/svelte-component.mjs",
-  "size": 52649,
-  "sha256": "0fe9f123278fb5ba31cece997c3e0b01540e341b5bcb50fbc565f5588fcfdb54"
+  "size": 52557,
+  "sha256": "28d052ad85ddf5dc2c4619e3f3fa9de709db784ba33d0336c728546363a19389"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/sveltekit-adapter.mjs",
@@ -30801,8 +30821,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-debt/SKILL.md",
-  "size": 1818,
-  "sha256": "7dfb171088969fb5e78612025a238b3f6c7cc4c70455e98e336ebd987d3a3d3a"
+  "size": 1769,
+  "sha256": "b5ec2762f6ba8c4af9ea7173aa6c9f91b88655a25e43f9de0264f6ce8722b25f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-gain/SKILL.md",
@@ -32041,8 +32061,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/fal-assets/GUIDE.md",
-  "size": 9037,
-  "sha256": "3882201f700f8788d2bff1920fb85f0c19fd111d8bb8483d441b9f93cc1c8484"
+  "size": 9580,
+  "sha256": "925f5cc05e014804cec46fad00553ba228551439701dd03d54935e0789b709c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
@@ -32051,8 +32071,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
-  "size": 4011,
-  "sha256": "77a7c20e74e5add09824433d8181d30e9dbca2c96c2c271e22afdadc7af0adca"
+  "size": 4927,
+  "sha256": "e8db7ad6af8fad9e626d6f0e9529491bf7f0f5a5f77afed8bcf3811b0a65b795"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/references/compatibility.md",
+  "size": 9232,
+  "sha256": "7fbea608f678eaf2e95b2eb0f7a162b71cbc465b7f88fd7eb80e2227822f4fb0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-research-websearch/GUIDE.md",
@@ -32071,8 +32096,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12205,
-  "sha256": "dd850249fb70ece1781f36225adad36b3b5c6289b0aa8015b85f501d13be01d7"
+  "size": 12335,
+  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -32131,8 +32156,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/retro-decomp.md",
-  "size": 3408,
-  "sha256": "0044eaddcd27ae3949bddced6cbfe5d070728cc70e7d28b91c755be1422282cc"
+  "size": 3792,
+  "sha256": "1c5a365e7c325b364c346c5374dc0ca3ac68c905b2916db5b8460073b16ae10f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/source.md",
@@ -32156,8 +32181,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 4931,
-  "sha256": "74d0f670439e1d98d414fae5dd68848e9a704a2ad8e2cd335bfadb30ab692462"
+  "size": 5447,
+  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -35446,8 +35471,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/context.mjs",
-  "size": 67737,
-  "sha256": "e0d4b1ee9a143438a449c4c25ec2556d299b5c13782bf0ee61335e48a3f01a65"
+  "size": 67681,
+  "sha256": "04603141f27e861480634b442bfaaffc67c70dad27aad62f16827a8a9e360ab1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/critique-storage.mjs",
@@ -35571,8 +35596,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/detector/shared/page.mjs",
-  "size": 386,
-  "sha256": "0e2bc96b8bbafafb40c451771c6724db8193dd65d9b67e1912fc217291ed1945"
+  "size": 331,
+  "sha256": "b19bc7a07d9d09ea7f674c08a57e061d244152b355ca2ce2eaccecbe7a8c6b96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/doctor.mjs",
@@ -35736,8 +35761,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-accept.mjs",
-  "size": 36120,
-  "sha256": "342bc2d1646a703d185449f3f688586d4b8e58e1144321e5ac1eb9081123a49f"
+  "size": 35778,
+  "sha256": "11ad1b4eca47b399f1212d1b00dbca9a7a75b171bc67a86d98f12463aeac8bfd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser-dom.js",
@@ -35756,8 +35781,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-browser.js",
-  "size": 513801,
-  "sha256": "24241e41e394f18cc00a788e9b44117424b25dbed1391b2e8152ec8f395ffccf"
+  "size": 513613,
+  "sha256": "24ac204f95fa8a780eb7b641de35079047a23a97ffa1f5ffa160b942735975f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-commit-manual-edits.mjs",
@@ -35806,8 +35831,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-server.mjs",
-  "size": 70004,
-  "sha256": "e3801156dc319fa7e02c55e7350f62e4656ba9f33be3199c6d8e8571dda807d8"
+  "size": 70129,
+  "sha256": "a562dae339752538706f4b1a5c24ecf4823f167a1eed084070b1070aff9d7f74"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live-status.mjs",
@@ -35981,8 +36006,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/svelte-component.mjs",
-  "size": 52649,
-  "sha256": "0fe9f123278fb5ba31cece997c3e0b01540e341b5bcb50fbc565f5588fcfdb54"
+  "size": 52557,
+  "sha256": "28d052ad85ddf5dc2c4619e3f3fa9de709db784ba33d0336c728546363a19389"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/scripts/live/sveltekit-adapter.mjs",
@@ -37336,8 +37361,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-debt/SKILL.md",
-  "size": 1818,
-  "sha256": "7dfb171088969fb5e78612025a238b3f6c7cc4c70455e98e336ebd987d3a3d3a"
+  "size": 1769,
+  "sha256": "b5ec2762f6ba8c4af9ea7173aa6c9f91b88655a25e43f9de0264f6ce8722b25f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ponytail-gain/SKILL.md",
@@ -38576,8 +38601,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/fal-assets/GUIDE.md",
-  "size": 9037,
-  "sha256": "3882201f700f8788d2bff1920fb85f0c19fd111d8bb8483d441b9f93cc1c8484"
+  "size": 9580,
+  "sha256": "925f5cc05e014804cec46fad00553ba228551439701dd03d54935e0789b709c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
@@ -38586,8 +38611,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
-  "size": 4011,
-  "sha256": "77a7c20e74e5add09824433d8181d30e9dbca2c96c2c271e22afdadc7af0adca"
+  "size": 4927,
+  "sha256": "e8db7ad6af8fad9e626d6f0e9529491bf7f0f5a5f77afed8bcf3811b0a65b795"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/references/compatibility.md",
+  "size": 9232,
+  "sha256": "7fbea608f678eaf2e95b2eb0f7a162b71cbc465b7f88fd7eb80e2227822f4fb0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-research-websearch/GUIDE.md",
@@ -38606,8 +38636,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12205,
-  "sha256": "dd850249fb70ece1781f36225adad36b3b5c6289b0aa8015b85f501d13be01d7"
+  "size": 12335,
+  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -38666,8 +38696,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/retro-decomp.md",
-  "size": 3408,
-  "sha256": "0044eaddcd27ae3949bddced6cbfe5d070728cc70e7d28b91c755be1422282cc"
+  "size": 3792,
+  "sha256": "1c5a365e7c325b364c346c5374dc0ca3ac68c905b2916db5b8460073b16ae10f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/source.md",
@@ -38691,8 +38721,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 4931,
-  "sha256": "74d0f670439e1d98d414fae5dd68848e9a704a2ad8e2cd335bfadb30ab692462"
+  "size": 5447,
+  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -39106,13 +39136,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 56750,
-  "sha256": "dade273fd804c5351d8bbb123f70550c1bf51948811311924531f8469880c6cb"
+  "size": 56902,
+  "sha256": "2194e2e02e8ccc4a97ffd1c40fd24025c0e4740a6865909bd05970679d83601d"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1537,
-  "sha256": "d45d4da3cf341db079eecafcc80c903245434fb7427d51fad229fa55aff5a365"
+  "sha256": "ae6ba864637d818ab40807b147908b4fdf1b0ee10d754a1f44fca7dab775ee01"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -39121,8 +39151,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
-  "size": 34721,
-  "sha256": "338aac3f7de5d21cba8d85e05e7d393795ff6afde71c8723f7af1b15efae0d71"
+  "size": 35769,
+  "sha256": "c87750f68af2b1ee73507f0eeac15934990f486bdf684d32f4c32ef89e75654b"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -39245,9 +39275,9 @@
   "sha256": "051d7c77e8ae5ff5936ef3bae393812cb7af8a8e4f6db65b2161a6a8b4f964d2"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.23902ef-py3-none-any.whl",
-  "size": 1999693,
-  "sha256": "d29081df08cad316a48fb084caa5148d54b6068fcf1302975b8326c3343a4103"
+  "path": "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.6a8865a-py3-none-any.whl",
+  "size": 2171487,
+  "sha256": "076136483d547a9fed2360138fa7ff40337fc3e7e6c8398e6e74b67768dcf1a9"
  },
  {
   "path": "BUNDLED-TOOLS/optional-profiles/autonomous-builder.md",
@@ -39331,8 +39361,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.claude-plugin/plugin.json",
-  "size": 342,
-  "sha256": "c4f0dffa408502f6d720b469ed1b0c3069c69659135c3ff169f8096744b15a37"
+  "size": 1508,
+  "sha256": "efcef724e68ceec9b04803f2945f910c4d8712e1cdc83c26913f7b8c887fdd7b"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.clinerules/ponytail.md",
@@ -39342,7 +39372,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.codex-plugin/plugin.json",
   "size": 1280,
-  "sha256": "c5309571e1e05c8f82691095787d277c0c01b5b09f94467cd8f3a0ca27d4e28d"
+  "sha256": "4911226f462635f9515f296e52afb5893f45f0ba62ad4ebe2f1925015c8e793a"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.cursor/rules/ponytail.mdc",
@@ -39352,7 +39382,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.devin-plugin/plugin.json",
   "size": 508,
-  "sha256": "6f2d96f0addfcafb975596b0003c084783b38bc2ecef1c07dcdefac34d9a4f3e"
+  "sha256": "1e39f61c3acf33cf1a3600e9f0be336e34e37b6e47f530d7eb3c7572d7c0b875"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.github/CONTRIBUTING.md",
@@ -39377,7 +39407,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.github/plugin/plugin.json",
   "size": 597,
-  "sha256": "c9f2b1e2b21f4b53beed14160ee977a21a009399cf8845bcccf0a0b8ac2b90ea"
+  "sha256": "334ca2c18175591c18f2d592559a70cf931b5657565a1c00c85ba47e784476b9"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.github/workflows/publish.yml",
@@ -39391,8 +39421,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.gitignore",
-  "size": 495,
-  "sha256": "d97294d7a8b74ea0234c24ba6f923ee7e6f5ea572037f4d8ce63be0d270c805c"
+  "size": 615,
+  "sha256": "8c98480121f985851a8bcf082e0608fb7213c24163bdc9a2cfce927504795f6b"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.grok-plugin/marketplace.json",
@@ -39416,18 +39446,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.openclaw/skills/ponytail-debt/SKILL.md",
-  "size": 1794,
-  "sha256": "d36a041765b62f7f068e655a2cc44a35cb305a6a304d7af0e5acf59c9e164d05"
+  "size": 1745,
+  "sha256": "d55354743bf344611907bbcda8da105abe4d3eec4696b80099eb9b6c02029c40"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.openclaw/skills/ponytail-gain/SKILL.md",
-  "size": 2241,
-  "sha256": "7799bf2f22985caf5ef5db41d3afd41511ae7a767aeb3a95feb3a63aa503ab6d"
+  "size": 2199,
+  "sha256": "40efb084e29bfaaa85a0807ec3a88d5c85897a7bf751985496295e541dea937b"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.openclaw/skills/ponytail-help/SKILL.md",
-  "size": 2899,
-  "sha256": "a40197337100b5c2f66fb0f9e898ac659049aefe6c790075a8c167e914aa6ff2"
+  "size": 3186,
+  "sha256": "3a267f1c71058854b608c4eebcf2291a90c1a25972cbdd52fef777d6a2c60945"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.openclaw/skills/ponytail-review/SKILL.md",
@@ -39487,7 +39517,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.qoder-plugin/plugin.json",
   "size": 602,
-  "sha256": "39ced3aa3bc578c77b1c1fb6f1135a7989afda52fcbc29993b5bf4715191dfd0"
+  "sha256": "1a973d3d9154b1c84774f6a7aa3987da0639b8f8624a15da21871cd6d7e61a1b"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/.qoder/rules/ponytail.md",
@@ -39516,13 +39546,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/README.md",
-  "size": 12678,
-  "sha256": "e505449797326eebda6a44ea439f499418de00d27d0b1919cc66b993b78c3576"
+  "size": 14578,
+  "sha256": "3428352df7025c06241af37b51540a84418449abbcaf9bbf55a69ecd4f152619"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/__init__.py",
-  "size": 8728,
-  "sha256": "d14b538a8618bb8852b1a6faa1844832c95f50246d99aa89b9d44362d4689444"
+  "size": 8936,
+  "sha256": "f8ebbc5d26601369adab013506dc6797e6eb07643de91bece0df299be9836903"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/after-install.md",
@@ -40027,7 +40057,37 @@
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/gemini-extension.json",
   "size": 233,
-  "sha256": "4de16224ac5018445d2982b53737db0f929fd272e18bd0efcdf05c4f346ea9b9"
+  "sha256": "11a7c184f48ec279e987d94fb02a9aae0a577689f40ecdf96180dc59a827bdbc"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/band/board.ts",
+  "size": 45260,
+  "sha256": "c697da70dabdf9810361886f07ed6133610746ba31e7dc68bdab8384118c00ce"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/band/logo.ts",
+  "size": 49871,
+  "sha256": "187c17a751140e0a8b030dea9d4436ce818f287efbc6f7d899e48064ecfd309a"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/band/metrics.ts",
+  "size": 15101,
+  "sha256": "332a2a56458e059f8d56d0a0388396a9b63ba5ded0c90d8788d235ac8c452a41"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/band/register.tsx",
+  "size": 19636,
+  "sha256": "d6df3b9286e71ed72a336f491e0267c926b285124d0efd2e4f43002a589cc209"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/band/types.d.ts",
+  "size": 682,
+  "sha256": "b605a330639f508d044e01dd5e8ff7c3324f55790fe0514edc28c0ede0ebf09b"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/claude-band.json",
+  "size": 64,
+  "sha256": "8316581f357f5481dbf26077d118ca9ee03bcd14166e4da1bcd878ab723884c3"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/claude-codex-hooks.json",
@@ -40050,6 +40110,11 @@
   "sha256": "1ebc3af449da55df6183bcbf7b6799d01cf632834540a88ab66d13b1e62c8375"
  },
  {
+  "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/ponytail-band-import.js",
+  "size": 14078,
+  "sha256": "2d9dda3a6b77b46d5f46f6bc9a9ff2fa624d4f5dee77217c642f6926ab159edc"
+ },
+ {
   "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/ponytail-config.js",
   "size": 5911,
   "sha256": "ae81c3552064c9a9f0b9c0e8ec8a959af56f5599f0c899dd79659ea9a101dfc4"
@@ -40066,8 +40131,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/ponytail-mode-tracker.js",
-  "size": 7431,
-  "sha256": "3f54606cfca65828a8389169b432a5338eec58676a4f044d0693319f657b14ea"
+  "size": 9912,
+  "sha256": "ab2a7d89a71fdbecd5ea4d12ffe980c2213b80fe112d623ca13ceac0258307e7"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/hooks/ponytail-runtime.js",
@@ -40096,23 +40161,23 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/i18n/README.es.md",
-  "size": 13829,
-  "sha256": "585f1e47163f7f95ffd05debfbb2032d227e857491d4f9316dcf6bac73b84124"
+  "size": 15934,
+  "sha256": "a4bd3a28ab5d3237e1e00ed6cfc318139dc61a6af596c12d3c83465057565f87"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/i18n/README.ja.md",
-  "size": 16034,
-  "sha256": "566eb85fa97cff90b7c909c154aba428b749c4b77076430954b8ef66ebdc9c6d"
+  "size": 18596,
+  "sha256": "74c241dfaddfe386b287401055f0fbb25ec2087f0f854497d6dd20c7232ead68"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/i18n/README.ko.md",
-  "size": 14711,
-  "sha256": "0ab1819b36b3fd75f370caabe2eb35b8bfbd8e87257b094f72bf4658ab6cf33f"
+  "size": 16953,
+  "sha256": "dc190e0b90a9ff1fb849e7454429abc47a735e097c712a5b2682f9ad031bfb82"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/i18n/README.zh-CN.md",
-  "size": 13407,
-  "sha256": "32c6ff4af4bb2871f9452470985481ef016b62e9c6f4408f4aafef97403b6985"
+  "size": 15465,
+  "sha256": "1e3a52d76880216ef8dde4a18204da5c179adce9a557db905eeef14066378b61"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/opencode.json",
@@ -40122,7 +40187,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/package.json",
   "size": 1260,
-  "sha256": "2b987b29a0ae4cea0307d1ed274bc4595bcff63f6029c2107185fcd975f6cc16"
+  "sha256": "f062af314f6031fe88fcc63bdf1c42fbae9e4acb28b7ac94c1f8acc22d204562"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/pi-extension/index.js",
@@ -40152,7 +40217,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/plugin.yaml",
   "size": 467,
-  "sha256": "e9e430207aec6f023797745cdf7cfc9dbe317234e2a950f36a1aaf8460c41d04"
+  "sha256": "b1311c0a7a2da3afbd70d1eb7267cee5273028066a821b47a34d73615207ba33"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/scripts/build-openclaw-skills.js",
@@ -40196,18 +40261,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/skills/ponytail-debt/SKILL.md",
-  "size": 1818,
-  "sha256": "c82bb352bab21e081e71b70430af451b91750760fa776a4a807c8cfa52d4c85f"
+  "size": 1769,
+  "sha256": "b5ec2762f6ba8c4af9ea7173aa6c9f91b88655a25e43f9de0264f6ce8722b25f"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/skills/ponytail-gain/SKILL.md",
-  "size": 2206,
-  "sha256": "60e05eaf65e8e404c8975a944eda9d3ed4ae3345478b3550b0e74570982c187e"
+  "size": 2164,
+  "sha256": "231034a896d6762e4b5c8468287083422c56b499119976ec9f76821f7d083090"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/skills/ponytail-help/SKILL.md",
-  "size": 2901,
-  "sha256": "2927276bc9c10221ce8bcf80adb798db130cd70eb33a95db91ab3a0d105f5109"
+  "size": 3188,
+  "sha256": "86ab0ce0af70cbeeeef499d5c884873b393f87f86401dcc45553662ce2c1eff9"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/skills/ponytail-review/SKILL.md",
@@ -40216,8 +40281,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/skills/ponytail/SKILL.md",
-  "size": 3492,
-  "sha256": "ba68ff26239c3c3b05b2a9a47ee0d9a6b93a69639a2555ec87a5d44bffaf2f0c"
+  "size": 3496,
+  "sha256": "9badd22a32e19cb884e46dfa8d3aae82bb81dfa5484105b8b4f0262df823a509"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/ponytail/tests/band-import.test.js",
+  "size": 7790,
+  "sha256": "9e6dd986bee6a7aea98e3cc876199a0b8cc6f32cc63c1f4036545a241603029c"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/tests/behavior.test.js",
@@ -40256,18 +40326,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/tests/hermes-plugin.test.js",
-  "size": 15941,
-  "sha256": "1f55faab39b42d5eaaeb5f715845ce226687102008fa846299d2a3255126769d"
+  "size": 17418,
+  "sha256": "bc437f904465f85bc28cd2ad41163814f678852ffcd024d1980c083bff165787"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/tests/hooks-windows.test.js",
-  "size": 10139,
-  "sha256": "2444987b72bd19751ce58b087785e5a17b44f8c7bdf8a22bc5b5d49478bc1bb0"
+  "size": 10404,
+  "sha256": "6a1a580368e97f20967400279a7f12e0c2eee939c7a53fd56b0074653707339b"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/tests/hooks.test.js",
-  "size": 45138,
-  "sha256": "1610f9c46275749f995969209d3edfde027ad11b20150b22bd4d28b9d11e24d1"
+  "size": 48035,
+  "sha256": "8faae607bd8642d93161d84c7d968a98f9884797aaf0207662ee4ef4c4d36edc"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/ponytail/tests/kimi-plugin.test.js",
@@ -41546,13 +41616,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/README.md",
-  "size": 21233,
-  "sha256": "806936373af53c21373473cd7883a1ffaa0690fbaffceb7c0b15e773df6494b1"
+  "size": 22332,
+  "sha256": "920ec61f1a3efd29cddb146793978dcc34faa6b7832b1b2d807a3f768c2d61fd"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/INDEX.md",
-  "size": 66318,
-  "sha256": "f7680efb0c30270b6f549dae35b55b8abe3515b602f2e3bb12aca31ebe482558"
+  "size": 72578,
+  "sha256": "a80cf7357c303b0b1a0bdfd08104ff2a652e2dda2d94d745a6f80a93282bd939"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/README.md",
@@ -41576,8 +41646,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/armored-fist-3/60-fps-16-9-64-bit-rewrite-pff-encryption-3do-jim-and-a-voxe.md",
-  "size": 28009,
-  "sha256": "42841998dd4784593d9ee0d98087098b7210aa68dc51d4178a417ec8f8656932"
+  "size": 28517,
+  "sha256": "c757e937685698040f94a8eeb8f281f59ce4fa5d1169d52b67d50185f315040d"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/assassin-s-creed-iv-black-flag/coop-ghost-avatar.md",
@@ -41653,6 +41723,16 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/barotrauma/luacs-server-plugin-for-an-external-game-master.md",
   "size": 12882,
   "sha256": "aa430c69c0c6a2cd9488541f42d41d70909406393557305e5cd9b15d9f0bb9a1"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/batman-arkham-city/split-screen-co-op-fixes-for-arkham-city-bmsdk-c-scripts-cam.md",
+  "size": 15490,
+  "sha256": "7af80efc4192d6e3e0501b00468b175e5ba0dd0f0236065f0395f931a82dade5"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/batman-arkham-knight/splitscreen-one-view-composited-twice.md",
+  "size": 17943,
+  "sha256": "54669eb8740aad7049752b21690ee7a3d570aa4970c9b98551200e1c24644c07"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/battlefield-4/frostbite-3-archive-and-ebx-formats.md",
@@ -41765,9 +41845,19 @@
   "sha256": "944aa91e372aff2bf677555b899317adfbc489c62c1cda7f25c5f247c392d932"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dishonored-2/black-and-corrupt-bonecharm-traits-learnable-and-ng-persistent.md",
+  "size": 8977,
+  "sha256": "93530ba4016335b2a9f78d0900f45c26f0c21b9a07b2d317ffced804eb3ef0f0"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dishonored/ghost-co-op-ue3-reflection-postrender-hook.md",
-  "size": 14774,
-  "sha256": "3f799a06840ee5af6032ac38858d591f1536c8761765a362690f5deafa435147"
+  "size": 15429,
+  "sha256": "0575316660f1a289b14ff7716ac2d5b278b820b76cf0a3f55789a93fbaec2d5d"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dishonored/telekinesis-ragdoll-control-hand-anims-pickups.md",
+  "size": 21831,
+  "sha256": "737bded5406563b4f0c2a8b55a09c8750bcb03b0ca2a1db10a319d3170944f78"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dragon-s-dogma-2/blink-strike-teleports-behind-the-target-reframework-lua-ski.md",
@@ -41788,6 +41878,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/elden-ring/cs2-conversion-of-elden-ring-offline-native-rust-dll-via-me3.md",
   "size": 15030,
   "sha256": "7d40e7377138b9e84737517559e4a111a4472815b182c205872afdfc6a323385"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/elden-ring/elden-ball-z-xenoverse-2-fighters-and-skills.md",
+  "size": 12414,
+  "sha256": "9e2e46ea23cd6320ce67534bf87494dde0f318aab6459097e6a21f7c9a26279b"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/elden-ring/porting-dark-souls-remastered-enemies-into-elden-ring.md",
@@ -41840,6 +41935,11 @@
   "sha256": "da1ca0e7309c9b70bfb1ebf026370a5fc9475af25a1f84ec623d313aa1ac728b"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/gunner-heat-pc/private-mono-decompilation-and-source-navigation.md",
+  "size": 6714,
+  "sha256": "7f04cc6c0677c00c75901dc3b031ed49282678dd2539387d635303a51f2b9692"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/half-life/half-life-1-weapons-and-monsters-in-minecraft.md",
   "size": 7541,
   "sha256": "fa9cb75a3e5958ecc0976d9bf7222265191f976c52dd9079438553f48e0aef42"
@@ -41885,19 +41985,34 @@
   "sha256": "f744eb4d97404233e44b0ba866b7eba2e1403ae041eccc6b4431d6d07572bb92"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/hytale/deadlock-movement-suite-server-plugin.md",
+  "size": 13193,
+  "sha256": "d262e561c6772b1f9d6388893f700f6ff586be2221931a6b7ad1aa39a5d0fd84"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/insaniquarium-deluxe/an-android-port-of-insaniquarium-deluxe-from-the-winfish-decompilation.md",
+  "size": 24205,
+  "sha256": "bc65b6b69ef6f4b1759de3794105ede5a85215ac4c8aeec6c524d1e0fdfd8983"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/just-cause-3/vehicle-mesh-editing-added-geometry-loads-with-matching-toc.md",
   "size": 43280,
   "sha256": "9d47c893ba4979ca4058132e479b1f6f2ea265bc235e9b009607fa3f1b033698"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/kenshi/first-person-camera-and-wasd-on-vanilla-kenshi-1-0-68-an-ogr.md",
-  "size": 17107,
-  "sha256": "7c2d874c30e1f686ba691f3a069cb732442c255218ec69358dd220e1701d5b9e"
+  "size": 17207,
+  "sha256": "37bd91bca844aff194bcdd92439022cae1606b7ee6741b8a034826fea3c94943"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/kenshi/kenshi-1-0-65-native-ogre-recon.md",
-  "size": 25454,
-  "sha256": "7df27963dfb554c19611776daee4be779e5d6df363ea299b803b5bf4e6ea08af"
+  "size": 25577,
+  "sha256": "05739fcfdd868ddcdd0e671e06baf363d0e3c80d79279208fa84a238d4ff5dd1"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/kenshi/kenshi-generated-mods.md",
+  "size": 15176,
+  "sha256": "3215d59affec984b82541d111498794cc11d39d21b4ad28ada166f0868df950f"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/left-4-dead/left-4-dead-infected-and-tank-in-minecraft.md",
@@ -41915,6 +42030,11 @@
   "sha256": "d4644f0987d5ca2f00d5f157182b1a1eb23f747445cd1870b52956b65aa6b778"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/meccha-chameleon/meccha-chameleon-mod-kit-maps-local-manifest-loading-via-ste.md",
+  "size": 9068,
+  "sha256": "882280442a7191d5ab2acff25c65d8efd17576cd194ea930aaca186111312553"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/megabonk/custom-characters-and-weapons-with-bepinex-il2cpp-in-megabon.md",
   "size": 12073,
   "sha256": "82651b6c11cc36c9cf321941c683f8bff8f01a164b09cc7ac6e4897a4793beea"
@@ -41930,6 +42050,16 @@
   "sha256": "e47b19049484908ac98d07d53c7be91eeb75469e37bf51489e57317510c707a0"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/microtopia/per-object-tweaks-piles-fruit-speed-delete.md",
+  "size": 22599,
+  "sha256": "4bb6b5003adbbe257acbc07c04156cbffe2b2f2a77ef6e9c644512328d227938"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/middle-earth-shadow-of-war/falmer-tribe-a-skyrim-creature-as-a-nemesis-tribe.md",
+  "size": 13700,
+  "sha256": "15605bf31d2420ac2fd02ae0943ae28f4ff51b15ae83ddc168ee6901e3db5d78"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/middle-earth-shadow-of-war/goblin-tribe-a-new-nemesis-tribe-via-game-gamedb.md",
   "size": 16647,
   "sha256": "e10793b7783cadcfe58d0c5a41f8750172e134d3a98004b146adf5c767689c22"
@@ -41938,6 +42068,16 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/middle-earth-shadow-of-war/offline-mode-and-local-garrison.md",
   "size": 17805,
   "sha256": "788bed14a74a5fd0b01f88699c815f2d73817370d474f8e4787ee0bb7af1baea"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/middle-earth-shadow-of-war/packet-loader-mods-without-packet-loader.md",
+  "size": 8157,
+  "sha256": "290445b23b7bd282e05d5ccfb896a41ba53ed967b384d92159332610923e2596"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/middle-earth-shadow-of-war/save-format-decrypt-and-collectible-quests.md",
+  "size": 7391,
+  "sha256": "93904bf80ce39d92c35c0620fe2e925404e1cbf64545cfe947c2417747188995"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/might-and-magic-6/matching-decomp-vc6-byte-identical-text.md",
@@ -42025,6 +42165,11 @@
   "sha256": "ef1aeb4a1c30e2a8eab2740f134f4016062c5f4d974bfc60e15b30f6af9170eb"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/nuclear-option/ghpc-coop-survival-runtime-source-derived-integration-and-pe.md",
+  "size": 18100,
+  "sha256": "a1f97a0a34c3dbd4443429ffdf8194a2cc28d32ebb0a5efc6ece7ad7f6600145"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/outer-wilds/portal-2-portal-gun-in-outer-wilds-1-1-16-owml-see-through-p.md",
   "size": 14829,
   "sha256": "6ee47c57941e17a6c2d778ee36fbc3c2a18d38d1c85b8ef36734c112da099b50"
@@ -42085,9 +42230,14 @@
   "sha256": "3850dc99ecde893904982cf94f88e8b15cf5ba4091573af45b585e179478c639"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/rance-x/gameplay-mod-bonus-phases-after-majin-kills-with-an-in-vm-se.md",
+  "size": 9241,
+  "sha256": "097641ff85b523849dd28fef0f85609af7e611f468af3a357ea0c0b9c73add0f"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/resident-evil-2-2019/dlss5-neural-rendering-dlss-frame-generation-in-a-custom-ref.md",
-  "size": 17879,
-  "sha256": "d01dfb3e3b230ccafd13fcd8c71d5ce615e08183f46e668d89aaf6f118bf2b52"
+  "size": 18208,
+  "sha256": "6217f9e4d1047f00e0b85fc3bab327550011375bec983265affee1d760e45976"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/risk-of-rain-2/arkham-knight-batman-survivor.md",
@@ -42116,8 +42266,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/second-life/rigged-mesh-hobble-dress-for-ebody-reborn-waifus-headless-bl.md",
-  "size": 14653,
-  "sha256": "94ae433874a10d54a3d8648b301f007f42e751ac04341680c7d4e2b9a7904042"
+  "size": 14842,
+  "sha256": "42c28a540a87d07a83f46b42c19914a0cbacdc576ffe0369c0de89dc45e8d3fd"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/second-life/rigged-wedge-ballet-boots-for-ebody-reborn-feet-with-a-pbr-c.md",
+  "size": 16025,
+  "sha256": "9391e45a1c3b9d62515a0f28390f4ab9fca4e92982514fc7c618d1e59e3a6bc2"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/sid-meier-s-civilization-v/new-civ-animated-3d-leader-scene.md",
@@ -42138,6 +42293,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/starfield/starfield-animation-af-rig-and-havok-physics.md",
   "size": 4825,
   "sha256": "9c47171a14524aed9f754b699e6583f0b5619bdf71bb6e7767d6280fe1ea2244"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/streetpass-mii-plaza/streetpass-mii-plaza-on-sd-one-game-three-title-ids.md",
+  "size": 7879,
+  "sha256": "3a074cbfa05de18d5efa60f64a38676450a6ec7c3c9783654252d42ce0acaf1f"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/super-smash-bros-melee/a-custom-fighter-in-super-smash-bros-melee-m-ex-dat-code-iso.md",
@@ -42210,6 +42370,11 @@
   "sha256": "fc05a3981616c9d94454e1fe69a939a7fba086d30fac693b278c49234df4d944"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/the-binding-of-isaac-rebirth/isaac-bot-vanilla-lua-autopilot-any-character.md",
+  "size": 11986,
+  "sha256": "c4b6477a71e04d05ed0517baa888c7803e7a30a4eb20e3e684ea23ded60497a9"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/the-dark-legions/reloaded-single-dll-fix.md",
   "size": 7745,
   "sha256": "c3d93b1f8a59787f07869daed639350e03c9af25536de468bda9bbb353d4a78f"
@@ -42266,8 +42431,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-modding-foundations-paks-tools-and-crash-triage.md",
-  "size": 18365,
-  "sha256": "222ad3e59d7c0cc456a441c2708309ce4a01c5e718bd99d9302d84ae7c0919a8"
+  "size": 18603,
+  "sha256": "3bd4dede27bc7311dae149278810a4c7bec0dcfad22097728eb36fad0bc27af7"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-models-tpl-format-modelconverter-and-textures.md",
@@ -42276,23 +42441,23 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-new-enemies-npc-classes-and-morpheme-animation.md",
-  "size": 26123,
-  "sha256": "f80c060d01fdb53d3a0a0d45a5e3044b0b25717076bf30764079579993350d2a"
+  "size": 26192,
+  "sha256": "0584ed81dd3110f4e86bac7244e70d0e67fda0aff62d711f0eb5ad534fb47e82"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-new-playable-class-on-character-mod-slot.md",
-  "size": 11880,
-  "sha256": "bf734e9462a9570674ee53dc8f3c49ce5868daac67db2eac8dbd5070308b621e"
+  "size": 12111,
+  "sha256": "7b899fedc9cc027867ea5aa3f643ecc65e8ca7cd645ab2d0b61798a42272019b"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-voices-talkers-and-wwise-audio.md",
-  "size": 16187,
-  "sha256": "10317b33f0af94c81d7db6bb0f0edaf26859ceb6b7ffe060d9242a6d8f492547"
+  "size": 16703,
+  "sha256": "a4b57792db036cf7ead25ff1584f609f1918c0a348ecdbc3842e7e3937317214"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-weapons-skins-reloads-perks-vfx-and-sounds.md",
-  "size": 36926,
-  "sha256": "779381f5273c07dcf70c9798f18ec889c5137d714237c6bfbcc2bbb5ae73ff55"
+  "size": 37098,
+  "sha256": "7e48040cd4edcc446d7a96da9ee838822a9f1ecfd892a0efc25b8f29d119fa11"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/watch-dogs/editing-feu-gfx-ui-and-entitylibrary-fcb.md",
@@ -42321,8 +42486,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/white-knuckle/climbing-movement-and-damage-look-in-minecraft-fabric.md",
-  "size": 14728,
-  "sha256": "cd1b6bd803f46935638c87e567d97221c46af6e15671baeb155000a48b4f045d"
+  "size": 29704,
+  "sha256": "4f0f06d6c8ff04a301f8229750d7a6de641a9f280630ce9354b34a4a899c320c"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/wolfenstein-the-new-order/wolfenstein-the-new-order-id-tech-5-resources-bmodel-bmd6mod.md",
+  "size": 9048,
+  "sha256": "a59c9a979c4e0c86166ba821a2c8a1fb311d4d70a62e0e8b8b78910dddb67ac1"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/world-of-warcraft/addon-development-335a.md",
@@ -42386,8 +42556,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/index.json",
-  "size": 249371,
-  "sha256": "f93e7618322f26d236cac9e1bd9564ff76c23dd6f1d73aaebddab432b9beb7f3"
+  "size": 276528,
+  "sha256": "130178957cada347ef28894cb4274d7f526ccf6e0676427e50445be69f54d658"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/a-force-quit-pc-game-relaunch-wedges-as-an-unkillable-zombie.md",
@@ -42505,6 +42675,11 @@
   "sha256": "fcdc1958faa612b0519693d25d5b0dbb012ebab28ad9ce647a66f47cef1f3d92"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/dlss-sr-frame-generation-and-neural-rendering-from-engine-motion-vectors.md",
+  "size": 12281,
+  "sha256": "3e98e9ea2acbcce3dca495d714100a66563202b9fa5bbda6cea8509f8c2481b8"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/driving-a-game-from-a-mod-side-command-file-lab-profile-wake.md",
   "size": 5362,
   "sha256": "31b7c21c2c88d2325d8b74ac93f36640d2eabfcf12137f5cb768e9355459927c"
@@ -42556,8 +42731,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/fabric-mod-for-26-x-without-mappings.md",
-  "size": 7120,
-  "sha256": "8fdfe0b4236b66e5f8464f3f0869c0a7233a29ef4cb22873949c540a4c61f854"
+  "size": 17126,
+  "sha256": "abb233f697fa3aaa18ad4cdd24df39e9c8d42c61dddedf20a74344b0aadb6711"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/forzatech-burg-modelbin-containers-and-makeh2o.md",
@@ -42715,9 +42890,9 @@
   "sha256": "0f3193674d527502f4d9a788a87181073c8f67be9b91c422a17334939ab5e9fc"
  },
  {
-  "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/running-windows-dx11-dx12-games-on-apple-silicon-crossover.md",
-  "size": 25352,
-  "sha256": "8bdca0f79a76ebf7852a33c010e3d5581490aa5e6d0d3c3a730200af69ea1d70"
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/running-windows-dx11-dx12-games-on-apple-silicon.md",
+  "size": 43580,
+  "sha256": "d980ded2ed9b573cf9cc06ba1f14bdd565c8bc5ddd2505c81119adcd3c1764d4"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/running-xedit-and-windows-modding-tools-on-linux.md",
@@ -42792,7 +42967,7 @@
  {
   "path": "BUNDLED-TOOLS/universal-modder/pyproject.toml",
   "size": 682,
-  "sha256": "92eb6c940013eef9a6ab391c0a28ac2231c2a5828dedfb3035d1e06870ccbda9"
+  "sha256": "d34dd2c22438e282595bbd51a4c666c6bc2a64bf25269a9e2bbe427feffb2717"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_encoding.py",
@@ -42820,9 +42995,14 @@
   "sha256": "bef0c9a35db5efbd0f617bf0382eb0a6aac29408d131551f7c5b1001c6776f9c"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/tests/test_sprixen.py",
+  "size": 10878,
+  "sha256": "93907764ecbfcd9612258c728b593160822b7960392a5b1629da2013d9aaf6c0"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_um.py",
-  "size": 62028,
-  "sha256": "e977eaa79f7cc48d3b95cfae4b1f434e3e29311e347378c7235410c3025f7af1"
+  "size": 67226,
+  "sha256": "fbd3fee171fc5731b8fd6d76354501c9fdb8f00d6f286d36db3960d4561c347c"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_win_launch.py",
@@ -42831,8 +43011,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/__init__.py",
-  "size": 972,
-  "sha256": "79bd57d533a737f4ba58a03dad1cb7dc964052215f2cf328b1f4427c2b332afa"
+  "size": 1064,
+  "sha256": "506ee06040abc53260c5fa5425e87a5ec0c60ff3c51bcb39a86d4b996717ecb3"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/__main__.py",
@@ -42851,8 +43031,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/cli.py",
-  "size": 1272,
-  "sha256": "4a2e6dd8d0f22a090e8b8302bb6a013af507baa69d0232fc3146b6de884fe35d"
+  "size": 1283,
+  "sha256": "c845e45ba368b1ace2f004050cbf5e03102c61904616619c42348cbc110aa63d"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/comfy.py",
@@ -42911,8 +43091,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/publish.py",
-  "size": 7131,
-  "sha256": "7ff4fa2e3f4211da23736ddf22d31cd2746fc14e715bc431560607d7b33c9737"
+  "size": 7199,
+  "sha256": "5f252f3d1845183a074517f9f128c32f5e399d4df7c03b22694dc24711b0f427"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/render3d.py",
@@ -42921,13 +43101,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/scan.py",
-  "size": 49873,
-  "sha256": "d47198c46f0546189f1fdb8c4ca41a728b591dbae4ccd70bf0721dbce1efef4f"
+  "size": 52813,
+  "sha256": "4e5d2223a721a8a2c1c5461b13064e7b09a0db62d34e0852a2d3a2c595e6f31a"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/sprite.py",
   "size": 19459,
   "sha256": "e2f5d963ad62ef0d72a006b456847c2a295407c7a6dbd7d08dd685b9ce72a569"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/um/sprixen.py",
+  "size": 23751,
+  "sha256": "44231eb495814b90c256c8793b4265a788f61bd7fa5a04a2a06ca3c3e9182fe8"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/video.py",
@@ -42941,8 +43126,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 212295,
-  "sha256": "bb4f792bf5dd7e88767b4e4aec5dbbea855c5b5155cbdff3400913ae9bf79675"
+  "size": 214212,
+  "sha256": "8ace69f142df34b1748d1ed47c14eb1cc9aa2aaf4b4cce2bcdbd7aa4018beebb"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43016,8 +43201,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 174517,
-  "sha256": "b499c914619906f40aa8de7640de7ff4130ee6e4e2a3d44ddf5f7fe1514b32b0"
+  "size": 174585,
+  "sha256": "5ec006cce81de3e105617a508fc030a0f9570bd5758f37dfdb96fc0ed0f2de48"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43071,8 +43256,8 @@
  },
  {
   "path": "README.md",
-  "size": 64209,
-  "sha256": "8325d02ab24c21eb4ec607ca7e3b5457561f9ade80f51b791f7731f5af12eca7"
+  "size": 64763,
+  "sha256": "d7f1a4a308f60df03baa9cc8fa28aad8b0aad66bf41918de01292fd7df03b04b"
  },
  {
   "path": "SECURITY.md",
@@ -43082,17 +43267,17 @@
  {
   "path": "START-HERE.bat",
   "size": 888,
-  "sha256": "d30ff529e386493eb9f5a29f9d76708f40d2714a54a5c5cfd59fada9769a3138"
+  "sha256": "2f964ea7e0328f3d7421aef57cd17ece46f7c035f9a48ccf9b1a58c97f3e001c"
  },
  {
   "path": "START-HERE.txt",
-  "size": 11406,
-  "sha256": "02f86110ddbe712f88d5bd5529ae7427d69181a46ccd7cc770ca7b18ddcac04a"
+  "size": 11419,
+  "sha256": "3b7ff003d5323dc7f20210f0a31f9c3449a4b30edcd22b481992e7881de1b039"
  },
  {
   "path": "STATE.md",
-  "size": 33674,
-  "sha256": "212f5feff3c1cb40847a45d1c738b1d0198abd546f48b0b1cfb5057986229b10"
+  "size": 36267,
+  "sha256": "a9e0fad9f8870c2a201195044fed35cd1adbef46535f43d162d115374b669b7d"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -43162,7 +43347,7 @@
  {
   "path": "TESTS/Test-McpPark.ps1",
   "size": 10288,
-  "sha256": "e4444f1eb3af31901b2434c430403de8d745e0245bd6f89c96ed582549730c84"
+  "sha256": "a1d2d785d1b0fd35493274465f48e888f5c1e4621bf0750cf351a17400bb7292"
  },
  {
   "path": "TESTS/Test-McpProfiles.ps1",
@@ -43176,8 +43361,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 61752,
-  "sha256": "43e142bd62a7627a85758f006c0605ca154bc05378f93f458ae61be6df7d19ad"
+  "size": 62731,
+  "sha256": "bd1f1b5a2b39e71f2c1962d0947057333a453b8942e1c924651bbb1918d28ecb"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -43316,8 +43501,8 @@
  },
  {
   "path": "TESTS/impeccable-security-regressions.mjs",
-  "size": 1142,
-  "sha256": "66decc46d97740ccfa1dd75dc7eff10d4b5c85208a2bb64812daef5afeed422a"
+  "size": 2023,
+  "sha256": "0ca17174ba7a1671f6cd10970867c37982e50fc07220c8affb79e783e0e8044d"
  },
  {
   "path": "TESTS/ponytail-cursor-regression.cjs",
@@ -43416,8 +43601,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 325606,
-  "sha256": "c2b3d216c884864792ac244a9f6684cdf9f687a7bcb1f345d634b729cd9a4c40"
+  "size": 325621,
+  "sha256": "80f5046765a6cfa09e505fe5f886a3e71be243077ab8f82038a2228ff5cb7abe"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -43432,12 +43617,12 @@
  {
   "path": "TESTS/test_universal_modder.py",
   "size": 5379,
-  "sha256": "78af3753d9c102e28de3cf653ba394db8f2fd640baa8775f9e972f717ec6e220"
+  "sha256": "69f2a8a1a3373e22f8dd8a8876424aa8ddf2f63ea0f26f6f1e29fd313650c780"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
-  "size": 17045,
-  "sha256": "356e8e222df082f9aaa3d847e9ef6cf70b1e6c7c48c3145d02c543d5e2b5330b"
+  "size": 17060,
+  "sha256": "72c5220c9458db0a6bae71099cae634872035233c100326553e70750d3fd8faa"
  },
  {
   "path": "TOOLS/Backup-AiHistory.ps1",
@@ -43506,8 +43691,8 @@
  },
  {
   "path": "TOOLS/Install-SkyrimForge.ps1",
-  "size": 19968,
-  "sha256": "edc5964c41d08ca11e7d7543f40fcf7aff1db7b320e5c562503d16f10b654ce7"
+  "size": 19979,
+  "sha256": "bea9d3feea32d0d3f0b518bc339dd22c0395efc3c3ff26da72fbee1121b79387"
  },
  {
   "path": "TOOLS/MCP-CONFIG-EXAMPLES.toml.txt",
@@ -43521,8 +43706,8 @@
  },
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
-  "size": 65176,
-  "sha256": "3fe50b738ecd17cf0f84364d24c2030282c7972ce2e0794a0bc34db53e9dead4"
+  "size": 65694,
+  "sha256": "d933563dffb39a7da77f6d34b84cb4e8d51a603dd8a7de970f67d7c7efa07e58"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -43536,8 +43721,8 @@
  },
  {
   "path": "TOOLS/Set-McpProfile.ps1",
-  "size": 56776,
-  "sha256": "bc9823c73a6691af5ab2188a743aa7773c4f468f55d91025fe8b63eb28c31322"
+  "size": 56836,
+  "sha256": "fa6ca2bdb06b293305d7be84c19175739d6af93db77ba6d19fdd6c77940df646"
  },
  {
   "path": "TOOLS/Setup-CodebaseMemory-Index.ps1",
@@ -43551,8 +43736,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 61388,
-  "sha256": "d169c512541316a4d532fd8f7a64d06661d53d079ed42bf9e28f4e41d11c93a9"
+  "size": 61761,
+  "sha256": "626c768096322ed4255b04b7bd712ce527499f54a370a6757cc5625bf97ba798"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -43566,18 +43751,18 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 139298,
-  "sha256": "af70dc7caf1355d98499b5f40c3b2b025c7a3b00aa16e60059c8333cfe3d3638"
+  "size": 141492,
+  "sha256": "eaa9f2b90fcd5e248e88b11fbf93130da04cbc50cdf7ea7aa932244fed9484e5"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
-  "size": 13835,
-  "sha256": "0b0b1f64d5366b67450abe4e19681db6f0f5a3fdbeca30d463628adead80de2a"
+  "size": 13943,
+  "sha256": "c6686b0ae2712f4b47947934c97adc97f201580f2098828bc35b6f3eafa4f076"
  },
  {
   "path": "TOOLS/UABS-Mcp-Write.ps1",
-  "size": 48878,
-  "sha256": "3176733c77f23415645b8271976b245a54994a137ed53b80bcdd06b6837abd64"
+  "size": 49268,
+  "sha256": "d30f6f6825929431d4d3cc12850e5081e59ac61568929d4d7b2de92f2cecb45c"
  },
  {
   "path": "TOOLS/Update-From-GitHub.ps1",
@@ -43701,8 +43886,8 @@
  },
  {
   "path": "TOOLS/install_live_skills.py",
-  "size": 6898,
-  "sha256": "10d22c3281cf49e609d7051288db5b52988deb4161cda1b7cfa1ac5ef15b14ef"
+  "size": 7171,
+  "sha256": "596c20ebb1afba71b467fcabed93640be0adadf2a01f6ad83ae14bfc0d1d184d"
  },
  {
   "path": "TOOLS/mcp_handshake.py",
@@ -43736,8 +43921,8 @@
  },
  {
   "path": "TOOLS/registry-corrections.json",
-  "size": 6899,
-  "sha256": "0218b3ee0c6f284c0a2a1000a0b2a5664b8feaf43383fe0a471f1dc3c817bda3"
+  "size": 6944,
+  "sha256": "a7e2e6e174ad653b4215d502abc7874d928fa7729fca399b094ccaf264cefd68"
  },
  {
   "path": "TOOLS/uabs_hermes_openrouter_catalog.py",
@@ -43766,18 +43951,18 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2776,
-  "sha256": "4d5e79a2a0767288ef9ceb2339c5982b0891bc37f2cf751e49f38b0ca2f3c0d0"
+  "size": 2433,
+  "sha256": "88e88a47ce665d6c1a7aa1aaa00dbdbac044b4dbd1a8a7e750d806fd5da16297"
  },
  {
   "path": "VALIDATION.md",
   "size": 9889,
-  "sha256": "9002ab36113039c6170ace8d7d93f80f5423a2fd57bdd7d044b3a1a57b0ce828"
+  "sha256": "6e4cfc1fa01b97b224b2f58d3072d98a7a5815ac915271f0bb53c1c14e8c2d76"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "78c61adf3782fccd393bed27339890fa4cb128f6e8f507800bafe6927f1f724e"
+  "sha256": "d7f55fd9706f11367e5acd96d35145a4dc9c14002431a525cb95fa9684b24909"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -46726,8 +46911,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/context.mjs",
-  "size": 67737,
-  "sha256": "e0d4b1ee9a143438a449c4c25ec2556d299b5c13782bf0ee61335e48a3f01a65"
+  "size": 67681,
+  "sha256": "04603141f27e861480634b442bfaaffc67c70dad27aad62f16827a8a9e360ab1"
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/critique-storage.mjs",
@@ -46851,8 +47036,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/detector/shared/page.mjs",
-  "size": 386,
-  "sha256": "0e2bc96b8bbafafb40c451771c6724db8193dd65d9b67e1912fc217291ed1945"
+  "size": 331,
+  "sha256": "b19bc7a07d9d09ea7f674c08a57e061d244152b355ca2ce2eaccecbe7a8c6b96"
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/doctor.mjs",
@@ -47016,8 +47201,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/live-accept.mjs",
-  "size": 36120,
-  "sha256": "342bc2d1646a703d185449f3f688586d4b8e58e1144321e5ac1eb9081123a49f"
+  "size": 35778,
+  "sha256": "11ad1b4eca47b399f1212d1b00dbca9a7a75b171bc67a86d98f12463aeac8bfd"
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/live-browser-dom.js",
@@ -47036,8 +47221,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/live-browser.js",
-  "size": 513801,
-  "sha256": "24241e41e394f18cc00a788e9b44117424b25dbed1391b2e8152ec8f395ffccf"
+  "size": 513613,
+  "sha256": "24ac204f95fa8a780eb7b641de35079047a23a97ffa1f5ffa160b942735975f2"
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/live-commit-manual-edits.mjs",
@@ -47086,8 +47271,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/live-server.mjs",
-  "size": 70004,
-  "sha256": "e3801156dc319fa7e02c55e7350f62e4656ba9f33be3199c6d8e8571dda807d8"
+  "size": 70129,
+  "sha256": "a562dae339752538706f4b1a5c24ecf4823f167a1eed084070b1070aff9d7f74"
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/live-status.mjs",
@@ -47261,8 +47446,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/live/svelte-component.mjs",
-  "size": 52649,
-  "sha256": "0fe9f123278fb5ba31cece997c3e0b01540e341b5bcb50fbc565f5588fcfdb54"
+  "size": 52557,
+  "sha256": "28d052ad85ddf5dc2c4619e3f3fa9de709db784ba33d0336c728546363a19389"
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/live/sveltekit-adapter.mjs",
@@ -48616,8 +48801,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/ponytail-debt/SKILL.md",
-  "size": 1818,
-  "sha256": "7dfb171088969fb5e78612025a238b3f6c7cc4c70455e98e336ebd987d3a3d3a"
+  "size": 1769,
+  "sha256": "b5ec2762f6ba8c4af9ea7173aa6c9f91b88655a25e43f9de0264f6ce8722b25f"
  },
  {
   "path": "_CANONICAL-SKILLS/ponytail-gain/SKILL.md",
@@ -49856,8 +50041,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/fal-assets/GUIDE.md",
-  "size": 9037,
-  "sha256": "3882201f700f8788d2bff1920fb85f0c19fd111d8bb8483d441b9f93cc1c8484"
+  "size": 9580,
+  "sha256": "925f5cc05e014804cec46fad00553ba228551439701dd03d54935e0789b709c6"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/game-automation/GUIDE.md",
@@ -49866,8 +50051,13 @@
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/game-recon/GUIDE.md",
-  "size": 4011,
-  "sha256": "77a7c20e74e5add09824433d8181d30e9dbca2c96c2c271e22afdadc7af0adca"
+  "size": 4927,
+  "sha256": "e8db7ad6af8fad9e626d6f0e9529491bf7f0f5a5f77afed8bcf3811b0a65b795"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/game-recon/references/compatibility.md",
+  "size": 9232,
+  "sha256": "7fbea608f678eaf2e95b2eb0f7a162b71cbc465b7f88fd7eb80e2227822f4fb0"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/game-research-websearch/GUIDE.md",
@@ -49886,8 +50076,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12205,
-  "sha256": "dd850249fb70ece1781f36225adad36b3b5c6289b0aa8015b85f501d13be01d7"
+  "size": 12335,
+  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -49946,8 +50136,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/references/engines/retro-decomp.md",
-  "size": 3408,
-  "sha256": "0044eaddcd27ae3949bddced6cbfe5d070728cc70e7d28b91c755be1422282cc"
+  "size": 3792,
+  "sha256": "1c5a365e7c325b364c346c5374dc0ca3ac68c905b2916db5b8460073b16ae10f"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/references/engines/source.md",
@@ -49971,8 +50161,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 4931,
-  "sha256": "74d0f670439e1d98d414fae5dd68848e9a704a2ad8e2cd335bfadb30ab692462"
+  "size": 5447,
+  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -50688,6 +50878,11 @@
   "path": "docs/history/V8.18.1-CHANGELOG.md",
   "size": 1571,
   "sha256": "e9d2bc2dcb16f15fa9954d0d2b5fe059735a414549da8c43c95b3593e557ae12"
+ },
+ {
+  "path": "docs/history/V8.19.0-CHANGELOG.md",
+  "size": 1916,
+  "sha256": "0b0a5460e7d70d8d3fa7697fcf712a00c652644cc01720ae5fac88fe0da3dc3d"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",

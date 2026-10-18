@@ -1,11 +1,11 @@
-Ultimate AI Starter Bundle V8.18.1 - ALL-IN-ONE STARTER
+Ultimate AI Starter Bundle V8.19.0 - ALL-IN-ONE STARTER
 ======================================================
 
 Not just Skyrim. A full multi-provider AI starter bundle: skills, MCP tools,
 plugins, and offline installers - with a deep optional Skyrim SE/AE modding
 stack built in.
 
-Providers: Claude, Codex, Grok, Kimi, Hermes.
+Providers: Claude, Codex, Grok, Kimi, Hermes, Antigravity.
 
 
 NEW USERS - ONE COMMAND

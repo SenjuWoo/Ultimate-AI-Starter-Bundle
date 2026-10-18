@@ -35,6 +35,7 @@ HOMES = {
     'Codex': r'%USERPROFILE%\.agents\skills',
     'Kimi': r'%USERPROFILE%\.kimi-code\skills',
     'Hermes': r'%LOCALAPPDATA%\hermes\skills',
+    'Antigravity': r'%USERPROFILE%\.gemini\config\skills',
 }
 VERBATIM_EXT = {'.ps1', '.psm1', '.psd1', '.bat', '.cmd'}
 
@@ -77,11 +78,15 @@ def clear_dangling(dst_dir, notes):
 
 def install(canon, dest, provider, check, notes):
     added = changed = kept = withheld = 0
+    codex_sys = os.path.expandvars(r'%USERPROFILE%\.codex\skills\.system')
     skills = [d for d in sorted(os.listdir(canon))
               if os.path.isdir(os.path.join(canon, d))
               and os.path.exists(os.path.join(canon, d, 'SKILL.md'))]
     for sk in skills:
         if sk in SCOPED and provider not in SCOPED[sk]:
+            withheld += 1
+            continue
+        if provider == 'Codex' and os.path.isfile(os.path.join(codex_sys, sk, 'SKILL.md')):
             withheld += 1
             continue
         src_dir = os.path.join(canon, sk)

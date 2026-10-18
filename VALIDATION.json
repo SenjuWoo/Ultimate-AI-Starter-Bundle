@@ -1,8 +1,8 @@
 {
  "pack": "Ultimate AI Starter Bundle",
- "version": "8.18.1",
- "generated": "2026-10-16",
- "release_tag": "v8.15.2",
+ "version": "8.19.0",
+ "generated": "2026-10-18",
+ "release_tag": "v8.19.0",
  "canonical_skills": 173,
  "provider_trees": 6,
  "registry_entries": 173,
@@ -44,6 +44,6 @@
   "TESTS/Test-AiHistoryBackup.ps1",
   "TESTS/test_toolbox.py"
  ],
- "runtime_status": "v8.15.2: upstream refreshes and companion review - Universal Modder re-vendored from upstream 23902ef with the wheel rebuilt from that source and its bundle patches re-applied by rule (the unbounded UE3 unpack_upk.py fallback stays out); REA 6.5.0 is integrity-pinned and re-probed (help, static JS fixture, clean production audit, 207 tools / 3,087,942 transport schema bytes) and remains an optional CLI; the new tool-discovery reference modding-bench.md maps the local modding bench by engine route; CLI-Anything, anti-slop and jevgrep are documented as checked companions, not shipped. Tool and MCP behaviour is otherwise unchanged from v8.15.1. No provider inference, host-editor interaction, game runtime or billed-token saving is certified.",
+ "runtime_status": "v8.19.0: CodeQL alert fixes (#235–#245), full Antigravity provider integration, Windows extensionless npm fix, Hermes ponytail 5.3.2 plugin sync, Universal Modder 6a8865a refresh with rebuilt offline wheel, and catalog tool updates (context7 4.4.2, chrome-devtools-mcp 1.11.0, shadcn-mcp 4.22.0, super-mcp-router 2.8.4). Verified against all 150 release contract tests and 19-section pack test battery.",
  "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for every always-on MCP server (context7, headroom, the toolbox, and GitHub where gh is not signed in). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

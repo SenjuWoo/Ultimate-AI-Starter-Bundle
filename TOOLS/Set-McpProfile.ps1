@@ -67,7 +67,7 @@ param(
   [Parameter(ParameterSetName = 'Disable', Mandatory = $true)][string[]]$Disable,
   [string]$Path,
   [switch]$Global,
-  [string[]]$Providers = @('Claude', 'Grok', 'Codex', 'Kimi', 'Hermes'),
+  [string[]]$Providers = @('Claude', 'Grok', 'Codex', 'Kimi', 'Hermes', 'Antigravity'),
   [string]$PackRoot,
   [int]$GrokMcpBudget = 6,
   [switch]$CheckOnly
@@ -845,7 +845,7 @@ if ($PSCmdlet.ParameterSetName -eq 'Detect') {
 
 if ($PSCmdlet.ParameterSetName -eq 'Park') {
   Write-Head 'Task-specific MCP servers registered machine-wide'
-  $guarded = @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Grok', 'Kimi') })
+  $guarded = @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Grok', 'Kimi', 'Antigravity') })
   $parked = @(Invoke-UabsParkGlobalMcp -PackRoot $PackRoot -Providers $guarded -CheckOnly:$CheckOnly)
   # Hermes profiles are native and its app rewrites config.yaml from memory: report, never edit.
   $hermesSeen = @()
@@ -872,7 +872,7 @@ if ($PSCmdlet.ParameterSetName -eq 'Park') {
 
 if ($PSCmdlet.ParameterSetName -eq 'Unpark') {
   Write-Head ("Switching parked servers on for {0}" -f $Path)
-  $unparkable = @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Grok', 'Kimi') })
+  $unparkable = @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Grok', 'Kimi', 'Antigravity') })
   $wrote = @(Invoke-UabsUnparkMcp -Ids $Unpark -ProjectPath $Path -Providers $unparkable -CheckOnly:$CheckOnly)
   if (-not $wrote.Count) { Write-Skip ('nothing to switch on: no parked copy of {0}, or already present here' -f ($Unpark -join ', ')); return }
   foreach ($w in $wrote) { Write-Ok ("{0} -> {1}" -f $w, $Path) }
@@ -988,7 +988,7 @@ if ($PSCmdlet.ParameterSetName -eq 'Task') {
   # project only.
   $parkedHere = @(Get-UabsParkRules -PackRoot $PackRoot | Where-Object { -not $_.profile -and (Test-UabsProfileDetected -ProfileDef $_ -ProjectPath $Path) } | ForEach-Object { $_.id })
   if ($parkedHere.Count) {
-    $back = @(Invoke-UabsUnparkMcp -Ids $parkedHere -ProjectPath $Path -Providers @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Grok', 'Kimi') }) -CheckOnly:$CheckOnly)
+    $back = @(Invoke-UabsUnparkMcp -Ids $parkedHere -ProjectPath $Path -Providers @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Grok', 'Kimi', 'Antigravity') }) -CheckOnly:$CheckOnly)
     foreach ($w in $back) { Write-Ok ("parked server switched on for this project: {0}" -f $w) }
     if ($back.Count) { Write-Host 'Takes effect in the next chat opened in that project (or /mcp -> reconnect).' -ForegroundColor Yellow }
   }

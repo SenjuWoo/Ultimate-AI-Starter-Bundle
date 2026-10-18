@@ -362,7 +362,7 @@ function Get-UabsMcpTargets {
     # Antigravity reads mcpServers from one JSON file, globally or per workspace
     # (.agents/mcp_config.json). Streamable HTTP only - no legacy SSE entries.
     # Resolve through the provider home so ANTIGRAVITY_HOME can redirect it.
-    'Antigravity' = @{ Path = Join-UabsPath $env:USERPROFILE '.gemini\config\mcp_config.json'; Section = 'mcpServers'; Style = 'json'; Desktop = $false }
+    'Antigravity' = @{ Path = $(if ($env:ANTIGRAVITY_HOME) { Join-UabsPath $env:ANTIGRAVITY_HOME 'mcp_config.json' } else { Join-UabsPath $env:USERPROFILE '.gemini\config\mcp_config.json' }); Section = 'mcpServers'; Style = 'json'; Desktop = $false }
   }
 }
 
@@ -384,7 +384,8 @@ function Get-UabsProviderProjectTarget {
        Kimi    none found. `kimi doctor` in a project holding .kimi-code/mcp.json
                reported only the home configs.
        Hermes  native named profiles exist, but they are not bound to a project
-               path; Migrate-HermesProfiles.ps1 owns default/code/roblox/skyrim/creative. #>
+               path; Migrate-HermesProfiles.ps1 owns default/code/roblox/skyrim/creative.
+       Antigravity <project>\.agents\mcp_config.json (per-workspace mcpServers). #>
   param([string]$Provider, [string]$ProjectPath)
   if ([string]::IsNullOrEmpty($ProjectPath)) { return $null }
   switch ($Provider) {
@@ -409,6 +410,14 @@ function Get-UabsProviderProjectTarget {
         Style      = 'toml'
         Path       = (Join-UabsPath $ProjectPath '.codex\config.toml')
         Section    = 'mcp_servers'
+        ProjectKey = ''
+      }
+    }
+    'Antigravity' {
+      return @{
+        Style      = 'json'
+        Path       = (Join-UabsPath $ProjectPath '.agents\mcp_config.json')
+        Section    = 'mcpServers'
         ProjectKey = ''
       }
     }

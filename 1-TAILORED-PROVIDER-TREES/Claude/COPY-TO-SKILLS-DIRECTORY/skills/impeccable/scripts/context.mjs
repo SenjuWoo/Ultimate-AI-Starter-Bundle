@@ -851,10 +851,9 @@ export function hasVisualImplementation(projectRoot) {
 
     // Classification only: comments are removed to count authored visual
     // signals. This text is never emitted as sanitized HTML.
-    // codeql[js/incomplete-multi-character-sanitization]
     const evidence = body
-      .replace(/\/\*[\s\S]*?\*\//g, '')
-      .replace(/<!--[\s\S]*?-->/g, '')
+      .replace(/\/\*[\s\S]*?\*\//g, ' ')
+      .replace(/<!--[\s\S]*?-->/g, ' ')
       .replace(/^\s*\/\/.*$/gm, '');
     if (STYLE_EXTENSIONS.has(ext)) {
       const customProperties = evidence.match(/--[a-z0-9_-]+\s*:/gi)?.length ?? 0;

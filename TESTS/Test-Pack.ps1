@@ -48,7 +48,7 @@ if (-not $py) {
     # v7.6.6: only the tailored family remains; 2-OPTIONAL-SHARED-GENERIC was
     # a 97%-identical duplicate the installer never read.
     foreach ($fam in '1-TAILORED-PROVIDER-TREES') {
-        foreach ($prov in 'Claude', 'Codex', 'Grok', 'Hermes', 'Kimi') {
+        foreach ($prov in 'Claude', 'Codex', 'Grok', 'Hermes', 'Kimi', 'Antigravity') {
             $p = Join-Path $PackRoot "$fam\$prov\COPY-TO-SKILLS-DIRECTORY\skills"
             if (Test-Path $p) { $trees += $p }
         }
@@ -65,8 +65,8 @@ if (-not $py) {
         # bundle-owned names through the installed-state doctor; unrelated
         # malformed skills are reported by their owner, not blamed on UABS.
         $doctor = Join-Path $PackRoot 'TOOLS\Test-Installed-State.ps1'
-        $liveOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $doctor -PackRoot $PackRoot -Providers 'Claude,Codex,Grok,Kimi,Hermes' -SkipForge 2>&1 | Out-String
-        if ($LASTEXITCODE -eq 0) { Good 'all five live provider trees match bundle-owned skills' }
+        $liveOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $doctor -PackRoot $PackRoot -Providers 'Claude,Codex,Grok,Kimi,Hermes,Antigravity' -SkipForge 2>&1 | Out-String
+        if ($LASTEXITCODE -eq 0) { Good 'all six live provider trees match bundle-owned skills' }
         else { Bad ('live provider audit failed:' + [Environment]::NewLine + $liveOut.Trim()) }
     }
 }
@@ -993,15 +993,24 @@ if ($LASTEXITCODE -eq 0 -and $codexHookOut -match 'CODEX HOOK RETIREMENT GATE: P
     Good 'native legacy gates retired; exact backups, custom hooks/trust, fresh/custom homes and reruns verified'
 } else { Bad ('Codex hook retirement failed:' + [Environment]::NewLine + $codexHookOut) }
 
-Section '19. Ponytail Cursor regex security regression'
+Section '19. Ponytail Cursor and Impeccable security regressions'
 $nodeForCursor = Get-Command node -ErrorAction SilentlyContinue
-if (-not $nodeForCursor) { Bad 'Node is required to exercise the shipped Ponytail Cursor adapter' }
+if (-not $nodeForCursor) { Bad 'Node is required to exercise the shipped Ponytail Cursor and Impeccable security regressions' }
 else {
     $cursorRegression = & $nodeForCursor.Source (Join-Path $PackRoot 'TESTS\ponytail-cursor-regression.cjs') 2>&1 | Out-String
     if ($LASTEXITCODE -eq 0 -and $cursorRegression -match 'PONYTAIL CURSOR REGRESSION: PASS') {
         Good 'adversarial command completes within 3 seconds; real names recognized, embedded personal names preserved'
     } else { Bad ('Ponytail Cursor security regression failed:' + [Environment]::NewLine + $cursorRegression) }
+    $impeccableRegression = & $nodeForCursor.Source (Join-Path $PackRoot 'TESTS\impeccable-security-regressions.mjs') 2>&1 | Out-String
+    if ($LASTEXITCODE -eq 0 -and $impeccableRegression -match '(?i)IMPECCABLE SECURITY REGRESSIONS:?\s+PASS') {
+        Good 'Impeccable CodeQL security regressions pass across canonical and live scripts'
+    } else { Bad ('Impeccable security regressions failed:' + [Environment]::NewLine + $impeccableRegression) }
 }
+
+$headroomCleanupGate = Join-Path $PackRoot 'TESTS\Test-HeadroomTaskCleanup.ps1'
+$headroomCleanupOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $headroomCleanupGate -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0) { Good 'Headroom scheduled-task retirement preserves non-bundle tasks' }
+else { Bad ('Headroom task cleanup regression failed:' + [Environment]::NewLine + $headroomCleanupOut) }
 
 Write-Host ''
 if ($fail -eq 0) {

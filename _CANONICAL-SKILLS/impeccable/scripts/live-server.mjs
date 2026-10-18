@@ -96,8 +96,8 @@ const SSE_HEARTBEAT_INTERVAL = 30_000;  // keepalive ping every 30s
 function boundedPollDuration(raw, fallback) {
   if (raw === null || raw === '') return fallback;
   const parsed = Number(raw);
-  if (!Number.isFinite(parsed)) return fallback;
-  return Math.min(DEFAULT_POLL_TIMEOUT, Math.max(0, parsed));
+  if (!Number.isFinite(parsed) || parsed < 0) return 0;
+  return parsed <= DEFAULT_POLL_TIMEOUT ? parsed : DEFAULT_POLL_TIMEOUT;
 }
 
 // The browser events allowed to mint a NEW session journal. `generate` starts
@@ -1196,13 +1196,14 @@ function handlePollGet(req, res, url) {
     return;
   }
   const poll = { resolve, leaseMs, types };
+  const pollTimeout = timeout > 0 && timeout <= DEFAULT_POLL_TIMEOUT ? timeout : DEFAULT_POLL_TIMEOUT;
   const timer = setTimeout(() => {
     const idx = state.pendingPolls.indexOf(poll);
     if (idx !== -1) state.pendingPolls.splice(idx, 1);
     broadcastAgentPollingIfChanged();
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ type: 'timeout' }));
-  }, timeout);
+  }, pollTimeout);
   function resolve(event) {
     clearTimeout(timer);
     state.lastPollAt = Date.now();

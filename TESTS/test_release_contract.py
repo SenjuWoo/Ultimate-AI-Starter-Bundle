@@ -5032,7 +5032,7 @@ def test_every_canonical_skill_reached_every_provider_tree() -> None:
     Every file under each skill directory must match, not only SKILL.md.
     A stale reference still ships, and search used to return it five times.
     """
-    providers = ["Claude", "Codex", "Grok", "Kimi", "Hermes"]
+    providers = ["Claude", "Codex", "Grok", "Kimi", "Hermes", "Antigravity"]
     tag = re.compile(r"(?m)^\s*provider:\s*\S+\s*\n?")
     json_tag = re.compile(r'"provider":\s*"[^"]*"')
     text_ext = {".md", ".json", ".txt", ".yaml", ".yml", ".py", ".ps1"}

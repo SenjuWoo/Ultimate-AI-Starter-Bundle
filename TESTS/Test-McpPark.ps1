@@ -33,7 +33,7 @@ try {
 {
   "numStartups": 3,
   "mcpServers": {
-    "context7": { "command": "npx", "args": ["-y", "@upstash/context7-mcp@4.4.1"] },
+    "context7": { "command": "npx", "args": ["-y", "@upstash/context7-mcp@4.4.2"] },
     "github": { "command": "C:\\x\\github-mcp-server.exe", "args": ["stdio", "--toolsets", "repos"] },
     "rimworldforge": { "type": "stdio", "command": "S:\\Apps\\RimWorld Tools\\RimWorldForge\\.venv\\Scripts\\python.exe", "args": ["S:\\Apps\\RimWorld Tools\\RimWorldForge\\mcp_server\\server.py"], "env": {} },
     "avatarforge": { "command": "Z:\\Apps\\AvatarForge\\python.exe", "args": ["Z:\\Apps\\AvatarForge\\run.py", "mcp"], "env": { "AVATARFORGE_MANAGED": "1" }, "type": "stdio" },

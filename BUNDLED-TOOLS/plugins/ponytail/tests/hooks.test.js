@@ -636,6 +636,16 @@ assert.match(
   /PONYTAIL MODE CHANGED — level: ultra/,
 );
 
+// `/ponytail default lite` on Qoder: the turn still gets the live ruleset, with
+// the confirmation folded into the same JSON, and the live level stays ultra.
+const qoderDefaultEnv = { ...qoderEnv, XDG_CONFIG_HOME: path.join(qoderHome, '.config') };
+result = run('ponytail-mode-tracker.js', qoderDefaultEnv, JSON.stringify({ prompt: '/ponytail default lite' }));
+assert.equal(result.status, 0, result.stderr);
+assert.equal(fs.readFileSync(qoderState, 'utf8'), 'ultra');
+output = JSON.parse(result.stdout);
+assert.match(output.hookSpecificOutput.additionalContext, /^PONYTAIL DEFAULT SET — new sessions start in lite\./);
+assert.match(output.hookSpecificOutput.additionalContext, /PONYTAIL MODE ACTIVE — level: ultra/);
+
 // "stop ponytail": deactivates and persists off so a later prompt does
 // not mistake the missing flag for first-run initialization.
 result = run(
@@ -655,6 +665,12 @@ result = run(
 );
 assert.equal(result.status, 0, result.stderr);
 assert.equal(result.stdout, '', 'Qoder must stay off on later prompts');
+assert.equal(fs.readFileSync(qoderState, 'utf8'), 'off');
+
+// While off, `/ponytail default` only confirms; it must not switch ponytail on.
+result = run('ponytail-mode-tracker.js', qoderDefaultEnv, JSON.stringify({ prompt: '/ponytail default full' }));
+assert.equal(result.status, 0, result.stderr);
+assert.equal(JSON.parse(result.stdout).hookSpecificOutput.additionalContext, 'PONYTAIL DEFAULT SET — new sessions start in full.');
 assert.equal(fs.readFileSync(qoderState, 'utf8'), 'off');
 
 // Subagent injection via PreToolUse (task|Task matcher): when ponytail is
@@ -756,6 +772,32 @@ result = run('ponytail-mode-tracker.js', defEnv, JSON.stringify({ prompt: '/pony
 assert.equal(result.status, 0, result.stderr);
 assert.equal(result.stdout, '');
 assert.equal(fs.readFileSync(defFlag, 'utf8'), 'ultra', 'invalid mode must preserve the active session mode');
+
+// `/ponytail band` hides and shows the Claude Code band (hooks/band); the level stays.
+const bandFlag = path.join(defHome, '.claude', '.ponytail-band');
+const band = arg => run('ponytail-mode-tracker.js', defEnv, JSON.stringify({ prompt: ('/ponytail band ' + arg).trim() }));
+result = band('');
+assert.equal(result.status, 0, result.stderr);
+assert.match(result.stdout, /PONYTAIL BAND OFF/);
+assert.equal(fs.readFileSync(bandFlag, 'utf8'), 'off', '/ponytail band must hide a shown band');
+assert.equal(fs.readFileSync(defFlag, 'utf8'), 'ultra', '/ponytail band must not change the level');
+band('off');
+assert.equal(fs.readFileSync(bandFlag, 'utf8'), 'off', '/ponytail band off must keep a hidden band hidden');
+result = band('');
+assert.match(result.stdout, /PONYTAIL BAND ON/);
+assert.equal(fs.existsSync(bandFlag), false, 'a second /ponytail band must show it again');
+band('on');
+assert.equal(fs.existsSync(bandFlag), false, '/ponytail band on must keep a shown band shown');
+// Codex has no band, so there the word stays an unknown argument.
+result = run('ponytail-mode-tracker.js', { ...defEnv, PLUGIN_DATA: path.join(defHome, 'codex') }, JSON.stringify({ prompt: '/ponytail band' }));
+assert.equal(result.stdout, '');
+assert.equal(fs.existsSync(bandFlag), false, 'Codex must not write the band flag');
+// `/ponytail band import` starts the import in the background and leaves the band and level alone.
+result = band('import');
+assert.equal(result.status, 0, result.stderr);
+assert.match(result.stdout, /PONYTAIL BAND IMPORT/);
+assert.equal(fs.existsSync(bandFlag), false, '/ponytail band import must not hide the band');
+assert.equal(fs.readFileSync(defFlag, 'utf8'), 'ultra', '/ponytail band import must not change the level');
 
 // review is not a valid default (#377) — the command is ignored, config unchanged.
 result = run('ponytail-mode-tracker.js', defEnv, JSON.stringify({ prompt: '/ponytail default review' }));

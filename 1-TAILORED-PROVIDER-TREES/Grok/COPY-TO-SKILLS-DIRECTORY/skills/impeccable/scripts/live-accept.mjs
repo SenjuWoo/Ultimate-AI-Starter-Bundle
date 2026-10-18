@@ -656,34 +656,36 @@ function stripStyleAndJoin(lines, block) {
   const out = [];
   let inStyle = false;
   for (let i = block.start; i <= block.end; i++) {
-    let line = lines[i];
+    let rest = lines[i];
+    let cleaned = '';
+    let emitLine = !inStyle;
 
-    if (!inStyle) {
-      // Strip any complete <style> elements on this line (self-closed or
-      // same-line-closed), including their body content.
-      // Structural marker parsing only; this text is not emitted as sanitized
-      // HTML. The source file remains the authority for the final write.
-      // codeql[js/incomplete-multi-character-sanitization]
-      line = line
-        .replace(/<style\b[^>]*>[\s\S]*?<\/style\b[^>]*>/g, '')
-        .replace(/<style\b[^>]*\/\s*>/g, '');
-
-      // If a <style> opener remains (multi-line body starts here), strip from
-      // the opener to end-of-line and flip into skip mode.
-      const openerIdx = line.search(/<style\b/);
-      if (openerIdx !== -1) {
-        line = line.slice(0, openerIdx);
-        inStyle = true;
-      }
-      out.push(line);
-    } else {
-      // In multi-line style body; drop everything until we see </style>.
-      const closeIdx = line.search(/<\/style\b[^>]*>/);
-      if (closeIdx !== -1) {
+    while (rest.length > 0) {
+      if (!inStyle) {
+        const openerMatch = rest.match(/<style\b[^>]*>/);
+        if (!openerMatch) {
+          cleaned += rest;
+          break;
+        }
+        cleaned += rest.slice(0, openerMatch.index);
+        rest = rest.slice(openerMatch.index + openerMatch[0].length);
+        if (!/\/\s*>$/.test(openerMatch[0])) {
+          inStyle = true;
+        }
+      } else {
+        const closeMatch = rest.match(/<\/style\b[^>]*>/);
+        if (!closeMatch) {
+          rest = '';
+          break;
+        }
+        rest = rest.slice(closeMatch.index + closeMatch[0].length);
         inStyle = false;
-        out.push(line.slice(closeIdx).replace(/<\/style\b[^>]*>/, ''));
+        emitLine = true;
       }
-      // else: skip line entirely
+    }
+
+    if (emitLine) {
+      out.push(cleaned);
     }
   }
   return out.join('\n');

@@ -301,7 +301,12 @@ function Restore-UabsBackup {
     }
   }
   foreach ($profile in $script:CreatedProfiles) {
-    try { [void](Invoke-UabsHermes -Arguments @('profile', 'delete', $profile, '--yes') -AllowMissing) } catch { }
+    try {
+      $profDir = Join-Path (Join-Path $HermesHome 'profiles') $profile
+      $link = Join-Path $profDir 'plugins'
+      if (Test-Path -LiteralPath $link) { Remove-Item -LiteralPath $link -Recurse -Force -ErrorAction SilentlyContinue }
+      [void](Invoke-UabsHermes -Arguments @('profile', 'delete', $profile, '--yes') -AllowMissing)
+    } catch { }
   }
 }
 
@@ -748,7 +753,7 @@ try {
     try { $catalog = [IO.File]::ReadAllText($catalogPath) | ConvertFrom-Json }
     catch { Write-Warning "CATALOG.json is unreadable at $catalogPath - using the previous known-good Context7 pin and no houseCARL tool budget." }
   }
-  $context7Args = @('-y', '@upstash/context7-mcp@4.4.1')
+  $context7Args = @('-y', '@upstash/context7-mcp@4.4.2')
   if ($catalog) {
     foreach ($comp in @($catalog.components | Where-Object { $_.hook_policy -eq 'off' -and $_.discouraged_provider_plugins })) {
       $providerBlock = $comp.discouraged_provider_plugins.PSObject.Properties['Hermes']
@@ -1145,6 +1150,13 @@ try {
     }
     foreach ($item in $script:Plan | Where-Object { $_.Kind -eq 'LinkPlugins' }) {
       $link = Join-Path (Join-Path $profileDirs $item.Profile) 'plugins'
+      if (Test-Path -LiteralPath $link) {
+        $itemObj = Get-Item -LiteralPath $link -Force
+        if ($itemObj.LinkType -eq 'Junction' -and $itemObj.Target -eq $item.Value) {
+          continue
+        }
+        Remove-Item -LiteralPath $link -Recurse -Force
+      }
       [void](New-Item -ItemType Junction -Path $link -Target $item.Value -ErrorAction Stop)
     }
     $affectedProfiles = @($script:Plan | Where-Object { $_.Kind -ne 'CreateProfile' } | ForEach-Object { $_.Profile } | Select-Object -Unique)

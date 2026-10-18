@@ -388,10 +388,11 @@ function Invoke-UabsNative {
   variable silently breaks $LASTEXITCODE propagation (measured, PS 5.1).
   #>
   param([string]$Exe, [string[]]$ArgList)
+  $execPath = Resolve-UabsExecutable $Exe
   $prevEap = $ErrorActionPreference
   $ErrorActionPreference = 'Continue'
   try {
-    $lines = @(& $Exe @ArgList 2>&1 | ForEach-Object { [string]$_ })
+    $lines = @(& $execPath @ArgList 2>&1 | ForEach-Object { [string]$_ })
   } finally { $ErrorActionPreference = $prevEap }
   $ok = ($null -eq $LASTEXITCODE) -or ($LASTEXITCODE -eq 0)
   # npm/uv/plugin CLIs print pages of progress and JSON. Keep it in the details
@@ -433,7 +434,7 @@ function Remove-UabsOutdatedHermesNpmDuplicate {
     $packageName = Get-UabsNpxPackageBase -Arguments @($spec)
     if (-not $packageName) { return }
 
-    $activeRootText = [string](& $ActiveNpm root -g | Select-Object -Last 1)
+    $activeRootText = [string](@(Get-UabsNativeStdout -Exe $ActiveNpm -CmdArgs @('root', '-g')) | Select-Object -Last 1)
     if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($activeRootText)) { return }
     $activeRoot = [IO.Path]::GetFullPath($activeRootText.Trim()).TrimEnd('\')
     $activeJson = Join-Path (Join-Path $activeRoot $packageName) 'package.json'
@@ -539,7 +540,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.18.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.19.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -1029,14 +1030,13 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
           if (-not (Test-Path -LiteralPath (Join-Path $pluginStage 'skills') -PathType Container)) {
             Copy-UabsRobo -From (Join-Path $plugins $pluginId) -To $pluginStage
           }
-          # Hermes loads a plugin from .hermes-plugin/plugin.yaml. Ponytail's
-          # upstream tree ships only a Claude-style plugin.json, which Hermes
-          # rejects with "unsupported or missing Agent Plugins schema" - so write
-          # the Hermes manifest here or the native install can never succeed.
+          # Hermes loads a plugin from plugin.yaml or .hermes-plugin/plugin.yaml.
+          # Only write a fallback .hermes-plugin/plugin.yaml when the plugin ships neither.
+          $rootHermesManifest = Join-Path $pluginStage 'plugin.yaml'
           $hermesManifest = Join-Path $pluginStage '.hermes-plugin\plugin.yaml'
-          if (-not (Test-Path -LiteralPath $hermesManifest -PathType Leaf)) {
+          if (-not (Test-Path -LiteralPath $rootHermesManifest -PathType Leaf) -and -not (Test-Path -LiteralPath $hermesManifest -PathType Leaf)) {
             New-Item -ItemType Directory -Force -Path (Split-Path $hermesManifest) | Out-Null
-            $pluginVersion = if ($pluginId -eq 'superpowers') { '7.0.0' } else { '5.3.0' }
+            $pluginVersion = if ($pluginId -eq 'superpowers') { '7.0.0' } else { '5.3.2' }
             @(
               "name: $pluginId",
               "version: $pluginVersion",
@@ -1051,11 +1051,9 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
               Write-UabsWarn ('Hermes: git missing - cannot stage ' + $pluginId + ' as a git repo; copied skills stay')
               continue
             }
-            if ($pluginId -eq 'superpowers') {
-              $bridgeStripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $pluginStage)
-              if ($bridgeStripped.Count) {
-                Write-UabsOk ('Hermes: Superpowers bridge dropped foreign manifests: ' + ($bridgeStripped -join ', '))
-              }
+            $bridgeStripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $pluginStage)
+            if ($bridgeStripped.Count) {
+              Write-UabsOk ('Hermes: ' + $pluginId + ' bridge dropped foreign manifests: ' + ($bridgeStripped -join ', '))
             }
             [void](Invoke-UabsNative 'git' @('-C', $pluginStage, 'init'))
             [void](Invoke-UabsNative 'git' @('-C', $pluginStage, 'add', '-A'))
@@ -1071,11 +1069,9 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
             # Robocopy puts the other harness manifests back; strip them before
             # the dirty check so the deletion is part of the bridge commit.
             Copy-UabsRobo -From (Join-Path $plugins $pluginId) -To $pluginStage
-            if ($pluginId -eq 'superpowers') {
-              $bridgeStripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $pluginStage)
-              if ($bridgeStripped.Count) {
-                Write-UabsOk ('Hermes: Superpowers bridge dropped foreign manifests: ' + ($bridgeStripped -join ', '))
-              }
+            $bridgeStripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $pluginStage)
+            if ($bridgeStripped.Count) {
+              Write-UabsOk ('Hermes: ' + $pluginId + ' bridge dropped foreign manifests: ' + ($bridgeStripped -join ', '))
             }
             $dirty = Get-UabsNativeOutput -Exe 'git' -CmdArgs @('-C', $pluginStage, 'status', '--porcelain')
             if ($dirty -and $dirty.Trim()) {
@@ -1119,12 +1115,10 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
             }
           }
             if ($hEntry.native) {
-            if ($pluginId -eq 'superpowers') {
-              $installedPlugin = Join-Path $providerHome ('plugins\' + $pluginId)
-              $liveStripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $installedPlugin)
-              if ($liveStripped.Count) {
-                Write-UabsOk ('Hermes: installed Superpowers dropped foreign manifests: ' + ($liveStripped -join ', '))
-              }
+            $installedPlugin = Join-Path $providerHome ('plugins\' + $pluginId)
+            $liveStripped = @(Remove-UabsHermesForeignHarnessDirs -PluginRoot $installedPlugin)
+            if ($liveStripped.Count) {
+              Write-UabsOk ('Hermes: installed ' + $pluginId + ' dropped foreign manifests: ' + ($liveStripped -join ', '))
             }
             # Keep the copies. Hermes derives /skill-name slash commands and
             # desktop autofill from the skills dir (scan_skill_commands scans
@@ -1735,14 +1729,15 @@ if (-not $SkillsOnly) {
         $installed[$id] = @{ status='manual'; note=$comp.note }
       }
       'npx-or-npm' {
-        $npm = Get-Command npm -EA SilentlyContinue
+        $npmSource = Resolve-UabsExecutable 'npm'
+        $npm = if ($npmSource -and $npmSource -ne 'npm') { [pscustomobject]@{ Source = $npmSource } } else { Get-Command npm -EA SilentlyContinue }
         if ($npm) {
           try {
             # Already at the pinned version in the active global root: leave it.
             # A reinstall rewrote ~160 packages every run for no change.
             $npmCurrent = [string]$comp.version -and ((Get-UabsNpmGlobalVersion -Npm $npm.Source -Spec $comp.npm_spec) -ceq [string]$comp.version)
             if (-not $npmCurrent -and $comp.npm_integrity) {
-              $reported = (& $npm.Source view $comp.npm_spec dist.integrity --json 2>$null | Out-String).Trim()
+              $reported = (& (Resolve-UabsExecutable $npm.Source) view $comp.npm_spec dist.integrity --json 2>$null | Out-String).Trim()
               if ($LASTEXITCODE -ne 0 -or -not $reported) { throw "INTEGRITY: npm could not verify $($comp.npm_spec)" }
               $actualIntegrity = [string]($reported | ConvertFrom-Json)
               if ($actualIntegrity -cne [string]$comp.npm_integrity) {
@@ -2675,7 +2670,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.18.1'
+version = '8.19.0'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

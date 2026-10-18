@@ -139,7 +139,7 @@ function Find-UabsGlobalScopeLeaks {
      what the entry LAUNCHES (command, args, url), not on the name it was given,
      so a renamed registration is still found and a personal server that merely
      shares a name is not. An entry already switched off costs nothing: skipped. #>
-  param([string]$PackRoot, [string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes'))
+  param([string]$PackRoot, [string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes', 'Antigravity'))
   $rules = @(Get-UabsParkRules -PackRoot $PackRoot)
   $keep = @(Get-UabsKeepGlobalIds)
   $ghReady = $null
@@ -193,7 +193,7 @@ function Invoke-UabsParkGlobalMcp {
   <# Park every leak. The exact copy is saved and re-read BEFORE anything is
      removed; if it does not verify, nothing is removed. Returns the leaks acted
      on (or, with -CheckOnly, the ones that would be). #>
-  param([string]$PackRoot, [string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi'), [switch]$CheckOnly)
+  param([string]$PackRoot, [string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi', 'Antigravity'), [switch]$CheckOnly)
   $leaks = @(Find-UabsGlobalScopeLeaks -PackRoot $PackRoot -Providers $Providers | Where-Object { $_.Entry.Style -ne 'yaml' })
   if (-not $leaks.Count -or $CheckOnly) { return $leaks }
 
@@ -235,7 +235,7 @@ function Invoke-UabsParkGlobalMcp {
 function Invoke-UabsUnparkMcp {
   <# Put parked entries back for ONE project, exactly as saved. Existing entries
      in that project are never overwritten. Returns "Provider/id" for each write. #>
-  param([string[]]$Ids, [string]$ProjectPath, [string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi'), [switch]$CheckOnly)
+  param([string[]]$Ids, [string]$ProjectPath, [string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi', 'Antigravity'), [switch]$CheckOnly)
   $store = Read-UabsParkStore
   $wrote = @()
   $touched = $false
@@ -250,7 +250,8 @@ function Invoke-UabsUnparkMcp {
     $did = $false
     if ($target.Style -eq 'json') {
       $doc = Read-UabsJsonDocument -Path $target.Path
-      foreach ($key in @(Get-UabsClaudeProjectKeys -ProjectPath $ProjectPath -ConfigPath $target.Path)) {
+      $keys = if ($target.ProjectKey) { @(Get-UabsClaudeProjectKeys -ProjectPath $ProjectPath -ConfigPath $target.Path) } else { @('') }
+      foreach ($key in $keys) {
         $section = Get-UabsJsonSection -Container (Get-UabsJsonScopeContainer -Json $doc -ProjectKey $key -Create) -Section $target.Section -Create
         if ($section.ContainsKey([string]$rec['id'])) { continue }
         $section[[string]$rec['id']] = $rec['definition']

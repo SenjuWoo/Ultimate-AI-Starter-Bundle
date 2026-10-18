@@ -1,4 +1,4 @@
-﻿# UABS-Common.ps1 - shared helpers for Ultimate AI Starter Bundle AIO installer
+# UABS-Common.ps1 - shared helpers for Ultimate AI Starter Bundle AIO installer
 $script:UabsPackRoot = $null
 $script:UabsHeaders = @{ 'User-Agent' = 'Ultimate-AI-Starter-Bundle-AIO' }
 
@@ -1766,12 +1766,14 @@ function Install-UabsPreambleBlock {
 
 function Remove-UabsHermesForeignHarnessDirs {
   <#
-  Hermes walks one level into a plugin directory that has no root plugin.yaml.
+  Hermes walks one level into a plugin directory that has no root plugin.yaml,
+  and checks plugin.json BEFORE plugin.yaml when loading a plugin directory.
   Superpowers keeps the Hermes adapter at .hermes-plugin/plugin.yaml and ships
-  sibling plugin.json files for other harnesses (including Muse). Hermes
-  parses those siblings as its own plugins and warns on every gateway start.
-  The shared BUNDLED-TOOLS tree must keep them: Kimi installs .kimi-plugin.
-  Call this only on the Hermes git bridge or the installed Hermes plugin copy.
+  sibling plugin.json files for other harnesses (including Muse). Ponytail ships
+  a root plugin.yaml alongside a Claude-only plugin.json that Hermes rejects.
+  The shared BUNDLED-TOOLS tree must keep them: Kimi installs .kimi-plugin and
+  Claude/Cursor read plugin.json. Call this only on the Hermes git bridge or the
+  installed Hermes plugin copy.
   #>
   param([Parameter(Mandatory)][string]$PluginRoot)
   if (-not (Test-Path -LiteralPath $PluginRoot -PathType Container)) { return }
@@ -1779,8 +1781,22 @@ function Remove-UabsHermesForeignHarnessDirs {
   if ($full -match '(?i)[\\/]BUNDLED-TOOLS[\\/]plugins([\\/]|$)') {
     throw 'Refusing to strip foreign harness manifests inside BUNDLED-TOOLS\plugins'
   }
+  $rootYaml = Join-Path $PluginRoot 'plugin.yaml'
   $adapter = Join-Path $PluginRoot '.hermes-plugin\plugin.yaml'
-  if (-not (Test-Path -LiteralPath $adapter -PathType Leaf)) { return }
+  $hasRootYaml = Test-Path -LiteralPath $rootYaml -PathType Leaf
+  $hasAdapter = Test-Path -LiteralPath $adapter -PathType Leaf
+  if (-not $hasRootYaml -and -not $hasAdapter) { return }
+  if ($hasRootYaml -and (Test-Path -LiteralPath (Join-Path $PluginRoot '.hermes-plugin') -PathType Container)) {
+    Remove-Item -LiteralPath (Join-Path $PluginRoot '.hermes-plugin') -Recurse -Force
+    Write-Output '.hermes-plugin'
+  }
+  foreach ($relJson in @('plugin.json', 'skills\plugin.json')) {
+    $jsonFile = Join-Path $PluginRoot $relJson
+    if (Test-Path -LiteralPath $jsonFile -PathType Leaf) {
+      Remove-Item -LiteralPath $jsonFile -Force
+      Write-Output ($relJson -replace '\\', '/')
+    }
+  }
   # Write-Output one name at a time. Returning the whole list makes PowerShell
   # hand the caller a single nested array, and @() then counts it as one.
   foreach ($name in @(Get-ChildItem -LiteralPath $PluginRoot -Directory -Force | Where-Object {
@@ -1878,6 +1894,34 @@ function Get-UabsManifestFiles {
   }
 }
 
+function Resolve-UabsExecutable {
+  <#
+  Windows PowerShell 5.1 resolves extensionless files on PATH (such as POSIX
+  `#!/usr/bin/env bash` shims in $HOME\bin) as Application commands, and `&`
+  then fails with Win32 "not a valid application for this OS platform". Prefer
+  a real Windows executable extension (.cmd, .exe, .bat) when one exists.
+  #>
+  param([string]$Exe)
+  if ([string]::IsNullOrWhiteSpace($Exe)) { return $Exe }
+  if ([IO.Path]::GetExtension($Exe)) { return $Exe }
+  if ($Exe.IndexOfAny([char[]]@('\', '/')) -ge 0 -or [IO.Path]::IsPathRooted($Exe)) {
+    foreach ($ext in @('.cmd', '.exe', '.bat')) {
+      if (Test-Path -LiteralPath ($Exe + $ext) -PathType Leaf) { return ($Exe + $ext) }
+    }
+    $leaf = [IO.Path]::GetFileName($Exe)
+    $found = Get-Command -Name $leaf -All -CommandType Application -EA SilentlyContinue |
+      Where-Object { [IO.Path]::GetExtension($_.Source) -match '(?i)^\.(cmd|exe|bat)$' } |
+      Select-Object -First 1
+    if ($found) { return [string]$found.Source }
+    return $Exe
+  }
+  $found = Get-Command -Name $Exe -All -CommandType Application -EA SilentlyContinue |
+    Where-Object { [IO.Path]::GetExtension($_.Source) -match '(?i)^\.(cmd|exe|bat)$' } |
+    Select-Object -First 1
+  if ($found) { return [string]$found.Source }
+  return $Exe
+}
+
 function Get-UabsNativeOutput {
   <#
   Run a native command and return its combined output as one string, without
@@ -1886,9 +1930,10 @@ function Get-UabsNativeOutput {
   cures; this variant is for DETECTION, where the output itself is needed.)
   #>
   param([string]$Exe, [string[]]$CmdArgs)
+  $execPath = Resolve-UabsExecutable $Exe
   $prevEap = $ErrorActionPreference
   $ErrorActionPreference = 'Continue'
-  try { return (& $Exe @CmdArgs 2>&1 | Out-String) } finally { $ErrorActionPreference = $prevEap }
+  try { return (& $execPath @CmdArgs 2>&1 | Out-String) } finally { $ErrorActionPreference = $prevEap }
 }
 
 function Get-UabsNativeStdout {
@@ -1900,10 +1945,11 @@ function Get-UabsNativeStdout {
   the command's own.
   #>
   param([string]$Exe, [string[]]$CmdArgs)
+  $execPath = Resolve-UabsExecutable $Exe
   $prevEap = $ErrorActionPreference
   $ErrorActionPreference = 'Continue'
   try {
-    return @(& $Exe @CmdArgs 2>&1 | Where-Object { $_ -isnot [System.Management.Automation.ErrorRecord] } | ForEach-Object { [string]$_ })
+    return @(& $execPath @CmdArgs 2>&1 | Where-Object { $_ -isnot [System.Management.Automation.ErrorRecord] } | ForEach-Object { [string]$_ })
   } finally { $ErrorActionPreference = $prevEap }
 }
 

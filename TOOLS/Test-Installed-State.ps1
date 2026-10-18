@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
   Final fail-closed installed-state doctor for Ultimate AI Starter Bundle.
 #>
@@ -130,12 +130,17 @@ if(-not $SkipSkills){
     # CODEX_HOME is under TEMP). Under Stop that becomes a terminating
     # NativeCommandError before the exit code can be checked.
     $prevEap=$ErrorActionPreference; $ErrorActionPreference='Continue'
-    if ($provider -eq 'Hermes') {
+    if ($provider -eq 'Antigravity') {
+      # Antigravity.exe is an Electron GUI app; invoking it with --version launches
+      # an interactive window instead of printing a CLI version string.
+      $versionExit = 0
+    } elseif ($provider -eq 'Hermes') {
       $startupProbe = @(& $exe --help 2>&1)
+      $versionExit = $LASTEXITCODE
     } else {
       & $exe --version 2>&1 | Out-Null
+      $versionExit = $LASTEXITCODE
     }
-    $versionExit=$LASTEXITCODE
     $ErrorActionPreference=$prevEap
     if($versionExit -ne 0){Err "$provider executable failed its local startup probe."}
     if ($provider -eq 'Hermes' -and ($startupProbe -join "`n") -match 'Error processing line[^\r\n]*uabs_hermes_openrouter_catalog\.pth') {
@@ -496,7 +501,7 @@ if ($capCatalog) {
     # -Provider throws, and a swallowed throw here reports "registered: none"
     # for a machine where everything is registered. Resolve the target first,
     # and let Hermes use its own YAML-shaped check.
-    foreach ($prov in @('Claude','Codex','Grok','Kimi','Hermes')) {
+    foreach ($prov in @('Claude','Codex','Grok','Kimi','Hermes','Antigravity')) {
       try {
         if ($prov -eq 'Hermes') {
           if (Test-UabsHermesServerDeclared -Id $sid) { $capState.registered_for += $prov }
@@ -587,7 +592,7 @@ if ($capabilityStates.Count) {
 # purpose. Only what the entry launches is matched, never a name alone.
 try {
   . (Join-Path $PackRoot 'TOOLS\UABS-Mcp-Park.ps1')
-  $guarded = @($Providers | Where-Object { $_ -in @('Claude','Codex','Grok','Kimi','Hermes') })
+  $guarded = @($Providers | Where-Object { $_ -in @('Claude','Codex','Grok','Kimi','Hermes','Antigravity') })
   $leaks = @(Find-UabsGlobalScopeLeaks -PackRoot $PackRoot -Providers $guarded)
   foreach ($leak in @($leaks | Where-Object { $_.Entry.Style -eq 'yaml' })) {
     Warn ("Hermes: {0} ({1}) is in Hermes' default profile, so every default Hermes chat loads its tools. The next START-HERE.bat run parks it while Hermes is closed; the toolbox then starts it on demand." -f $leak.Id, $leak.Rule.title)
@@ -607,7 +612,7 @@ foreach ($npmComp in @($catalog.components | Where-Object { $_.npm_spec -and $_.
   try {
     $npmPkg = Get-UabsNpxPackageBase -Arguments @([string]$npmComp.npm_spec)
     $launchers = @()
-    foreach ($cmd in @(Get-Command ([string]$npmComp.id) -All -CommandType Application -ErrorAction SilentlyContinue)) {
+    foreach ($cmd in @(Get-Command ([string]$npmComp.id) -All -CommandType Application -ErrorAction SilentlyContinue | Where-Object { [IO.Path]::GetExtension($_.Source) -match '(?i)^\.(cmd|exe|bat)$' })) {
       $dir = Split-Path -Parent $cmd.Source
       $pkgJson = Join-Path $dir ('node_modules\' + $npmPkg + '\package.json')
       if (-not (Test-Path -LiteralPath $pkgJson -PathType Leaf)) { continue }

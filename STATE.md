@@ -1,5 +1,31 @@
 # Bundle audit state
 
+## v8.19.0: CodeQL fixes, Antigravity provider integration, tool refreshes, full verification (2026-10-18)
+
+- All 11 open GitHub CodeQL alerts (#235–#245) fixed in code in `_CANONICAL-SKILLS/impeccable/scripts/`:
+  - Alert #235: `context.mjs:855` regex empty-string replaced with space.
+  - Alert #236: `detector/shared/page.mjs:5` comment removal sanitized.
+  - Alerts #237, #238: `live-accept.mjs:655-690` index-based string slicing replacing unbounded regex.
+  - Alerts #239–#242: `live/svelte-component.mjs:761, 1021` sanitized script/style tag cleanup.
+  - Alert #243: `live-server.mjs:96, 1199` explicit relational comparisons breaking taint propagation.
+  - Alerts #244, #245: `live-browser.js:29, 7822, 11494` dynamic script loading sanitized with `LIVE_ORIGIN`.
+  - Regression suite `node TESTS/impeccable-security-regressions.mjs` PASS.
+- Full Antigravity provider integration:
+  - Added Antigravity to `CATALOG.json`, `PROFILES.json`, `registry-corrections.json`, `Add-Reasoning-MCPs.ps1`, `Install-SkyrimForge.ps1`, `Set-McpProfile.ps1`, `UABS-Mcp-Write.ps1`, `UABS-Mcp-Park.ps1`, `Test-Installed-State.ps1`, `install_live_skills.py`, `Test-Pack.ps1`, `test_release_contract.py`.
+- Windows PowerShell 5.1 extensionless `npm` resolution fixed via `Resolve-UabsExecutable` in `UABS-Common.ps1`, `INSTALL-AIO.ps1`, and launcher filters in `Test-Installed-State.ps1`.
+- Hermes `ponytail` plugin manifest detection fixed and upgraded to `5.3.2` with foreign harness manifest stripping in `UABS-Common.ps1` and `INSTALL-AIO.ps1`. Fixed junction collision in `Migrate-HermesProfiles.ps1`.
+- Universal Modder refreshed to commit `6a8865ae171b406f50892c7f46fc5f45655269eb`, offline wheel rebuilt (`universal_modder-0.2.0+uabs.6a8865a-py3-none-any.whl`), `OFFLINE-MANIFEST.json`, `CATALOG.json`, and `TESTS/test_universal_modder.py` updated.
+- Catalog versions refreshed (`context7` 4.4.2, `chrome-devtools-mcp` 1.11.0, `shadcn-mcp` 4.22.0, `super-mcp-router` 2.8.4); `python TOOLS/audit_catalog_versions.py` passes with 0 stale, 0 errors.
+- Verification battery 100% PASS:
+  - `INSTALL-AIO.ps1 -SkipSelfUpdate -Mode BundledOnly`: complete (exit code 0).
+  - `Migrate-HermesProfiles.ps1 -Apply`: complete (exit code 0).
+  - `Test-Installed-State.ps1 -PackRoot . -SkipForge`: PASS (0 errors, 0 warnings).
+  - `test_universal_modder.py`: PASS.
+  - `Test-Pack.ps1`: PASS (all 19 sections).
+  - `test_release_contract.py`: PASS (all 150 tests).
+  - `check_versions.py`: PASS (all declared versions agree on v8.19.0).
+  - `verify_manifest.py`: PASS (10,239 verified, 0 missing, 0 mismatch).
+
 ## Post-v8.15.2: caveman + OmniRoute evaluated, not installed (2026-10-16, docs only)
 
 - Owner asked about JuliusBrussee/caveman 4.0.1 (Apache-2.0, npm

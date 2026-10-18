@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.18.1 -->
+<!-- Ultimate AI Starter Bundle v8.19.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.18.1
+# Ultimate AI Starter Bundle v8.19.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -903,6 +903,8 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.19.0** - 2026-10-18. Closes all 11 open GitHub CodeQL alerts (#235–#245) in Impeccable scripts, completes Antigravity provider integration across all MCP targets and doctor checks, repairs Windows PowerShell extensionless `npm` resolution with `Resolve-UabsExecutable`, resolves Hermes ponytail plugin loading with ponytail 5.3.2, refreshes Universal Modder to `6a8865a`, and updates catalog components (`context7` 4.4.2, `chrome-devtools-mcp` 1.11.0, `shadcn-mcp` 4.22.0, `super-mcp-router` 2.8.4). [Changes](docs/history/V8.19.0-CHANGELOG.md).
 
 **v8.18.1** - 2026-10-18. Fixes the Antigravity bootstrap probe: a GUI app has no `--version`, and the old code read `$LASTEXITCODE` outside the branch that ran a process, so a cold install aborted with "exit code .". The probe now only reads an exit code where a process actually ran. [Changes](docs/history/V8.18.1-CHANGELOG.md).
 

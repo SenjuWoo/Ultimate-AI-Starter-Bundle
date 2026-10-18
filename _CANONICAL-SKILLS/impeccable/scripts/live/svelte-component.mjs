@@ -757,10 +757,9 @@ export function inlineSvelteComponentAccept(manifest, variantNum, paramValues = 
   // touched. Keeping it risks a visible re-attachment quirk on the accepted
   // region; deleting it breaks the rest of the route. Keep it.
   // Visibility accounting only; stripped text is never emitted as sanitized HTML.
-  // codeql[js/incomplete-multi-character-sanitization]
   const outsideMarkup = [...sourceLines.slice(0, start), ...sourceLines.slice(end + 1)]
     .join('\n')
-    .replace(/<style\b[^>]*>[\s\S]*?<\/style\b[^>]*>/gi, '');
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style\b[^>]*>/gi, ' ');
   const outsideClasses = new Set();
   {
     const attrRe = /class\s*=\s*(["'])(.*?)\1/g;
@@ -1017,11 +1016,10 @@ function inlineSvelteComponentInsertAccept({
 function svelteMarkupHasVisibleContent(markup) {
   // Text/element presence classification only; the transformed string never
   // reaches an HTML sink.
-  // codeql[js/incomplete-multi-character-sanitization]
   const text = String(markup || '')
-    .replace(/<script[\s\S]*?<\/script\b[^>]*>/gi, '')
-    .replace(/<style[\s\S]*?<\/style\b[^>]*>/gi, '')
-    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\b[^>]*>/gi, ' ')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style\b[^>]*>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();

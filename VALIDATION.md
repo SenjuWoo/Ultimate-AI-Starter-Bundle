@@ -1,10 +1,10 @@
-# v8.15.0 validation
+# v8.19.0 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are
 separate proofs. This file records the checked boundary, not a claim of perfect
 one-shot game/mod output.
 
-## Current audit (v8.15.0)
+## Current audit (v8.19.0)
 
 The owner's failed install (final doctor, 63 errors) was reproduced in cause, not
 re-run: two overlapping installers, the second recording no plugin ownership. After

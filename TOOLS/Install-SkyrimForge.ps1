@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
   Install the pinned Skyrim Forge release and prove it runs.
 
@@ -44,7 +44,7 @@ param(
   # goes under LOCALAPPDATA, which needs no admin rights and assumes no
   # drive letter.
   [string]$ForgeRoot,
-  [string[]]$Providers = @('Claude','Codex','Grok','Kimi','Hermes'),
+  [string[]]$Providers = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity'),
   # In the all-in-one bundle, provider skill content is owned by the bundle's
   # tailored trees. Forge may add its per-machine INSTALLATION.json descriptor
   # but must not replace that bundle-owned Forge skill with a second copy.

@@ -26,6 +26,9 @@
     window.__IMPECCABLE_LIVE_INIT__ = false; // reset so the real load can init
     return;
   }
+  const LIVE_ORIGIN = (typeof document !== 'undefined' && document.currentScript && document.currentScript.src)
+    ? new URL(document.currentScript.src).origin
+    : new URL('//localhost:' + PORT, window.location.href).origin;
 
   //
   // Design tokens
@@ -7816,10 +7819,7 @@
     if (msLoadPromise) return msLoadPromise;
     msLoadPromise = new Promise((resolve, reject) => {
       const s = document.createElement('script');
-      // This is the token-gated loopback server injected by live-server.mjs;
-      // HTTPS would target a different service and break local live mode.
-      // codeql[js/functionality-from-untrusted-source]
-      s.src = 'http://localhost:' + PORT + '/modern-screenshot.js';
+      s.src = new URL('/modern-screenshot.js', LIVE_ORIGIN).href;
       s.onload = () => resolve(window.modernScreenshot);
       s.onerror = () => { msLoadPromise = null; reject(new Error('modern-screenshot failed to load')); };
       uiAppendStyle(s);
@@ -11491,10 +11491,7 @@ void main() {
     if (detectScriptLoaded) return;
     detectScriptLoaded = true;
     const s = document.createElement('script');
-    // This is the token-gated loopback server injected by live-server.mjs;
-    // HTTPS would target a different service and break local live mode.
-    // codeql[js/functionality-from-untrusted-source]
-    s.src = 'http://localhost:' + PORT + '/detect.js';
+    s.src = new URL('/detect.js', LIVE_ORIGIN).href;
     s.dataset.impeccableExtension = 'true';
     document.head.appendChild(s);
   }

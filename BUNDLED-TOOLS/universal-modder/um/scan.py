@@ -4,11 +4,16 @@
     um scan terraria               # fuzzy name or a path; prints the report
     um scan "C:\\Games\\Foo" --json  # machine-readable, for agents
 
+The report starts with `host:`, the machine `um` runs on: OS and version, CPU (named like the exes' `[x64]`,
+`[x86]`, `[arm64]`) and WSL. Compare them to know whether the game is native here. It warns when the exes are
+Windows builds and the host is neither Windows nor WSL.
+
 The report ends with ranked modding routes and the playbook to read next
 (skills/mod-any-game/references/engines/*.md). Everything here is read-only.
 """
 from __future__ import annotations
 
+import argparse
 import fnmatch
 import json
 import os
@@ -795,6 +800,48 @@ def save_hints(name: str, det: dict) -> list[str]:
     return out
 
 
+def host_info() -> dict:
+    """The machine `um` runs on. `arch` uses the names of an exe's `arch` (x86, x64, arm64) so the two compare directly."""
+    import platform
+    # Windows asks WMI for the CPU from Python 3.12 on; before that, an x64 Python emulated on Windows on Arm
+    # reads its own process architecture and reports x64
+    machine = platform.machine().lower()
+    arch = {"x86_64": "x64", "amd64": "x64", "x86": "x86", "i386": "x86", "i686": "x86",
+            "arm64": "arm64", "aarch64": "arm64"}.get(machine, machine)
+    translated = False
+    if is_mac() and arch == "x64":
+        # an x86_64 Python on an Apple Silicon Mac runs under Rosetta; the hardware is arm64
+        try:
+            out = subprocess.run(["sysctl", "-n", "sysctl.proc_translated"], capture_output=True, **text_utf8(),
+                                 timeout=5).stdout.strip()
+        except (OSError, subprocess.TimeoutExpired):
+            out = ""
+        if out == "1":
+            arch, translated = "arm64", True
+    if is_mac():
+        os_name, version = "macos", platform.mac_ver()[0]
+    elif is_windows():
+        os_name, version = "windows", platform.version()
+    else:
+        os_name = "linux"
+        try:
+            version = platform.freedesktop_os_release().get("PRETTY_NAME") or platform.release()
+        except OSError:
+            version = platform.release()
+    # the same keys on every host, so `--json` readers never meet a missing field
+    return dict(os=os_name, os_version=version or "unknown", arch=arch, wsl=is_wsl(), translated=translated)
+
+
+def host_line(h: dict) -> str:
+    if h["wsl"]:
+        base = f"Windows via WSL ({h['os_version']})"
+    elif h["os"] == "linux" and not h["os_version"][:1].isdigit():
+        base = h["os_version"]                      # a distro name, for example "Ubuntu 24.04.1 LTS"
+    else:
+        base = {"macos": "macOS", "windows": "Windows", "linux": "Linux"}.get(h["os"], h["os"]) + " " + h["os_version"]
+    return f"{base}, {h['arch']}" + (" (Python runs under Rosetta)" if h.get("translated") else "")
+
+
 def scan(query: str) -> dict:
     game = resolve_game(query)
     root = Path(game["path"])
@@ -820,8 +867,12 @@ def scan(query: str) -> dict:
     if key not in ("native", "bannerlord"):
         routes.append(dict(route=ENGINES["native"][2], playbook="native.md", why="fallback when no loader reaches what you need"))
     warnings = []
+    host = host_info()
     if len(ix.files) < 5:
         warnings.append("the install folder is (nearly) empty: the game is not fully installed, or lives elsewhere")
+    if facts.get("executables") and host["os"] != "windows" and not host["wsl"]:
+        warnings.append(f"the exes are Windows (PE) builds but this host is {host_line(host)}: not native, so it needs a compatibility "
+                        "layer (unless the folder also holds a build for this OS); read skills/game-recon/references/compatibility.md")
     if anti:
         warnings.append(f"anti-cheat present ({', '.join(anti)}): offline/single-player only, never inject into online play; "
                         "many titles need the anti-cheat disabled via an official offline launch option - do not bypass it")
@@ -837,7 +888,7 @@ def scan(query: str) -> dict:
         workshop=game.get("workshop"), saves=save_hints(name, det),
         executables=facts.get("executables", {}), routes=routes, warnings=warnings,
         playbook=f"skills/mod-any-game/references/engines/{routes[0]['playbook']}",
-        files_indexed=len(ix.files), index_truncated=ix.truncated,
+        files_indexed=len(ix.files), index_truncated=ix.truncated, host=host,
     )
     return report
 
@@ -845,8 +896,10 @@ def scan(query: str) -> dict:
 def format_report(r: dict) -> str:
     e = r["engine"]
     lines = [f"{r['name']}" + (f"  ({r['store']} {r['appid']})" if r.get("store") else ""),
-             f"  path:      {r['path']}",
-             f"  engine:    {e['label']}  [{e['confidence']}%]  evidence: {', '.join(map(str, e['evidence']))}"]
+             f"  path:      {r['path']}"]
+    if r.get("host"):
+        lines.append(f"  host:      {host_line(r['host'])}")
+    lines += [f"  engine:    {e['label']}  [{e['confidence']}%]  evidence: {', '.join(map(str, e['evidence']))}"]
     extra = {k: v for k, v in e.items() if k not in ("key", "label", "confidence", "evidence")}
     if extra:
         lines.append("             " + ", ".join(f"{k}={v}" for k, v in extra.items()))
@@ -891,7 +944,8 @@ def main(args):
 
 
 def register(sub):
-    p = sub.add_parser("scan", help="find installed games; fingerprint engine, anti-cheat, loaders, saves, routes")
+    p = sub.add_parser("scan", help="find installed games; fingerprint engine, anti-cheat, loaders, saves, routes",
+                       description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("game", nargs="?", help="name (fuzzy) or install folder")
     p.add_argument("--list", action="store_true", help="list installed games (Steam, Epic, Xbox)")
     p.add_argument("--json", action="store_true")

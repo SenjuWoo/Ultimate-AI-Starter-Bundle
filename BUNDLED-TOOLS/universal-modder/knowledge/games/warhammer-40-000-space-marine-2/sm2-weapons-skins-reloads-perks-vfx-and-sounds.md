@@ -12,7 +12,7 @@ anti_cheat: "EasyAntiCheat. Everything here uses Saber's official mods folder (c
 status: working
 agents: ["Claude Code (Opus 5.5)"]
 humans: []
-date: 2026-10-13
+date: 2026-10-15
 links: []
 tags: [space-marine-2, saber, weapons, weapon-skin, melee, firearm, reload, active-reload, morpheme, animation-network, perks, damage, burning, vfx, sound, crosshair, hud, equipment]
 ---
@@ -37,8 +37,9 @@ tags: [space-marine-2, saber, weapons, weapon-skin, melee, firearm, reload, acti
   Animations in `default_animation.pak`; the Marine network is `morpheme/primaris/primaris.nmb`.
 - Read `client_pc/root/tools/meta_descs/meta_desc_ssl.ps` for every blueprint node's pins and defaults before
   wiring anything.
-- A testing arena (the community testing-menu mod's `test_scene_mod`) and screen recordings were the oracle; for
-  timing problems we stepped through recorded video frame by frame.
+- A testing arena (`test_scene_mod` from [Testing Menu](https://www.nexusmods.com/warhammer40000spacemarine2/mods/233)
+  by Hypexs777 (Nexus Mods)) and screen recordings were the oracle; for timing problems we stepped through recorded
+  video frame by frame.
 
 ## Route and why
 Data route. Weapon behaviour, skins, VFX and sound hookups are text files; models are tpls (see the models note).
@@ -348,11 +349,13 @@ sideEffects   =   [
 ## Verification
 - In game: revolver skin incl. reload, cylinder/hammer, the per-skin shot-sound graph and a retail material on our
   tpl; burning sword (perk transplant, side effect, hits-to-ignite); frost VFX on a chainsword actor; active-reload
-  press windows, early finish, restart penalty, jam animation routed through the network, gold marker and red/gold
-  HUD overlays; hip-fire fanning (edited network loaded from a mod pak); appended network records; the boot crash
-  without manifests; the finisher hijack crash; the Blend2 crashes; cloned war-cry ability with new bank events.
-- Not verified: the UNIQUE crosshair swap, the new Crozius-style melee weapon on a `melee_mod` slot, the finisher
-  damage-type string, whether fresh event-track GUIDs matter for cloned clips, the remaining holster glue cause.
+  press windows, early finish, restart penalty, jam animation routed through the network, gold marker and red/gold HUD
+  overlays; hip-fire fanning (edited network loaded from a mod pak); appended network records; the boot crash without
+  manifests; the finisher hijack crash; the Blend2 crashes; cloned war-cry ability with new bank events; the new
+  Crozius-style melee weapon on `melee_mod_1` (2026-10-15, user-confirmed: equips and attacks using the retail
+  one-handed hammer animations).
+- Not verified: the UNIQUE crosshair swap, the finisher damage-type string, whether fresh event-track GUIDs matter for
+  cloned clips, the remaining holster glue cause.
 
 ## Gotchas
 1. **New shot sound on a skin does nothing.** Cause: cosmetic skins don't run their actor's shot blueprint; the
