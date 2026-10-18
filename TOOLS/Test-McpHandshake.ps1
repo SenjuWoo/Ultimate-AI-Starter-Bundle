@@ -35,7 +35,7 @@
 #>
 [CmdletBinding()]
 param(
-  [ValidateSet('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes')][string]$Provider = 'Claude',
+  [ValidateSet('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes', 'Antigravity')][string]$Provider = 'Claude',
   [string]$Name,
   [string]$Path,
   [int]$TimeoutSeconds = 60,

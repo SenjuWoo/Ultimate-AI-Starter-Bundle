@@ -5,7 +5,7 @@
 [CmdletBinding()]
 param(
   [string]$PackRoot,
-  [string[]]$Providers = @('Claude','Codex','Grok','Kimi','Hermes'),
+  [string[]]$Providers = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity'),
   [switch]$SkipSkills,
   [switch]$SkipForge
 )
@@ -34,6 +34,7 @@ function Resolve-Exe([string]$Provider) {
     'Grok'{@((Join-Path $env:USERPROFILE '.grok\bin\grok.exe'))}
     'Kimi'{@((Join-Path $env:USERPROFILE '.local\bin\kimi.exe'),(Join-Path $env:USERPROFILE '.kimi-code\bin\kimi.exe'))}
     'Hermes'{@((Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'))}
+    'Antigravity'{@((Join-Path $env:LOCALAPPDATA 'Programs\antigravity\Antigravity.exe'))}
   }
   foreach($c in $cands){if($c -and (Test-Path -LiteralPath $c -PathType Leaf)){return $c}}
   return $null

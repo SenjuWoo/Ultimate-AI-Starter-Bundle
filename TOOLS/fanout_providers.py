@@ -20,7 +20,7 @@ import shutil
 import sys
 
 TAILORED = '1-TAILORED-PROVIDER-TREES'
-PROVIDERS = ['Claude', 'Codex', 'Grok', 'Hermes', 'Kimi']
+PROVIDERS = ['Claude', 'Codex', 'Grok', 'Hermes', 'Kimi', 'Antigravity']
 REL = os.path.join('COPY-TO-SKILLS-DIRECTORY', 'skills')
 
 # Canonical skills are distributed to every supported provider. Keep the map so

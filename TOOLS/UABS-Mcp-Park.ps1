@@ -96,7 +96,7 @@ function Get-UabsGlobalMcpEntries {
   <# Every machine-wide server the file-based provider configs declare. Hermes
      keeps named YAML profiles that Migrate-HermesProfiles.ps1 owns, so it is
      not read here. #>
-  param([string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes'))
+  param([string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes', 'Antigravity'))
   $targets = Get-UabsMcpTargets
   foreach ($provider in $Providers) {
     if ($provider -eq 'Hermes') { Get-UabsHermesDefaultEntries; continue }

@@ -359,6 +359,10 @@ function Get-UabsMcpTargets {
     'Kimi'   = @{ Path = Join-UabsPath $env:USERPROFILE '.kimi-code\mcp.json'; Section = 'mcpServers'; Style = 'json'; Desktop = $false }
     'Grok'   = @{ Path = Join-UabsPath $env:USERPROFILE '.grok\config.toml'; Section = 'mcp_servers'; Style = 'toml'; Desktop = $false }
     'Codex'  = @{ Path = Join-UabsPath $env:USERPROFILE '.codex\config.toml'; Section = 'mcp_servers'; Style = 'toml'; Desktop = $false }
+    # Antigravity reads mcpServers from one JSON file, globally or per workspace
+    # (.agents/mcp_config.json). Streamable HTTP only - no legacy SSE entries.
+    # Resolve through the provider home so ANTIGRAVITY_HOME can redirect it.
+    'Antigravity' = @{ Path = Join-UabsPath $env:USERPROFILE '.gemini\config\mcp_config.json'; Section = 'mcpServers'; Style = 'json'; Desktop = $false }
   }
 }
 

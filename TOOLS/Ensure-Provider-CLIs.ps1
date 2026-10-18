@@ -9,7 +9,7 @@
 #>
 [CmdletBinding()]
 param(
-  [string[]]$Providers = @('Claude','Codex','Grok','Kimi','Hermes'),
+  [string[]]$Providers = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity'),
   [switch]$CheckOnly
 )
 $ErrorActionPreference = 'Stop'
@@ -17,7 +17,7 @@ $ErrorActionPreference = 'Stop'
 
 # -File turns Claude,Codex into one string on Windows PowerShell 5.1.
 $Providers = @($Providers | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
-$allowed = @('Claude','Codex','Grok','Kimi','Hermes')
+$allowed = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity')
 foreach ($p in $Providers) { if ($allowed -notcontains $p) { throw "Unknown provider: $p" } }
 
 function Resolve-ProviderExe([string]$Provider) {
@@ -30,6 +30,8 @@ function Resolve-ProviderExe([string]$Provider) {
     'Grok'   { @((Join-Path $env:USERPROFILE '.grok\bin\grok.exe')) }
     'Kimi'   { @((Join-Path $env:USERPROFILE '.local\bin\kimi.exe'), (Join-Path $env:USERPROFILE '.kimi-code\bin\kimi.exe')) }
     'Hermes' { @((Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe')) }
+    # Desktop app, no CLI on PATH: the install folder is the only signal.
+    'Antigravity' { @((Join-Path $env:LOCALAPPDATA 'Programs\antigravity\Antigravity.exe')) }
   }
   foreach ($c in $candidates) { if ($c -and (Test-Path -LiteralPath $c -PathType Leaf)) { return $c } }
   return $null
@@ -97,6 +99,12 @@ foreach ($provider in $Providers) {
   $exe = Resolve-ProviderExe $provider
   $installedNow = $false
   if (-not $exe) {
+    if ($provider -eq 'Antigravity') {
+      # Nothing scriptable to install: Antigravity is a desktop app from
+      # antigravity.google. Report it and keep the other providers moving.
+      Write-UabsWarn 'Antigravity: desktop app not installed (get it from antigravity.google); skipped'
+      continue
+    }
     if ($CheckOnly) { Write-Host "$provider would install from $($installers[$provider])"; continue }
     $extra = if ($provider -eq 'Hermes') { @('-SkipSetup') } else { @() }
     $oldCodexNonInteractive = $env:CODEX_NON_INTERACTIVE
@@ -124,7 +132,11 @@ foreach ($provider in $Providers) {
   # making the bootstrap wait on a network update check (as the doctor does).
   $previous = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
   try {
-    if ($provider -eq 'Hermes') {
+    if ($provider -eq 'Antigravity') {
+      # Launching the GUI is not a startup probe; presence is the proof.
+      $probeExit = 0
+    }
+    elseif ($provider -eq 'Hermes') {
       & $exe --help 2>&1 | Out-Null
     } else {
       & $exe --version 2>&1 | Out-Host

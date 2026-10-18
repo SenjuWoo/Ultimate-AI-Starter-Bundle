@@ -1,3 +1,31 @@
+## 8.18.0
+
+- **Google Antigravity is a first-class provider.** The bundle now wires its
+  global rules (`~/.gemini/config/AGENTS.md`), 173 skills
+  (`~/.gemini/config/skills/`) and MCP servers
+  (`~/.gemini/config/mcp_config.json`) where Antigravity actually reads them,
+  verified against the app's shipped `agy-customizations` guide and the official
+  docs. `-Providers Antigravity` targets it alone; detection is
+  `Antigravity.exe`, and a machine without the app gets a clear skip because
+  there is no scriptable installer. Gemini 4 Argon inherits the same contract,
+  skills and tools as every other model on the install.
+- **The provider bootstrap no longer dies on an unknown name.** Four explicit
+  allow-lists (`Ensure-Provider-CLIs`, `Update-From-GitHub`,
+  `Install-Completeness-Gate`, `Test-McpHandshake`) and three provider
+  resolvers now know Antigravity; without them a scoped install failed before
+  writing anything.
+- **PATH shadows are reconciled, not ignored.** codebase-memory 0.12.1 was
+  installed while `~/.local/bin` still held 0.11.0 earlier on PATH, so every
+  caller kept running the old binary. The installer now compares the
+  PATH-resolved copy with the catalog pin and refreshes an older one in place
+  after a backup, using the same rule as external installs. Found by the
+  sandboxed fresh-install run, fixed on the machine and in the pack.
+- **Fresh-install proof, sandboxed:** a clean `ANTIGRAVITY_HOME` produced
+  13,839 bytes of rules (under the 24 KB cap), 173 skill folders, three MCP
+  servers that answered a real handshake, and a passing installed-state doctor.
+- Antigravity's 24,000-byte rule cap and 20,000-token rules budget are now a
+  contract test: the shipped template plus preamble must stay under the cap or
+  the tail of the contract would be silently truncated.
 ## 8.17.0
 
 - **External tool installs are version-aware.** `houseCARL`, `Spooky's Automod

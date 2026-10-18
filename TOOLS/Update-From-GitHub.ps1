@@ -17,7 +17,7 @@ $root = Get-UabsPackRoot
 $catalog = Get-UabsCatalog
 $Providers = @($Providers | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 foreach ($provider in $Providers) {
-  if ($provider -notin @('Claude','Codex','Grok','Kimi','Hermes')) { throw "Unknown provider: $provider" }
+  if ($provider -notin @('Claude','Codex','Grok','Kimi','Hermes','Antigravity')) { throw "Unknown provider: $provider" }
 }
 
 if (-not $ComponentsOnly) {

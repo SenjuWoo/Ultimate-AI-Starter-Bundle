@@ -1,0 +1,176 @@
+---
+name: release-checklist
+description: Use when preparing to version, tag, publish, or recover a GitHub release whose CI and shipped artifacts must be proven.
+compatibility: Windows 10/11; PowerShell 5.1 and Python 3; gh CLI authenticated.
+metadata:
+  version: 1.2.0
+  updated: '2026-10-10'
+  library: overseer-skyrim-agent-skills
+  error_registry_revision: 4.3.0
+---
+
+# Release checklist
+
+Run in order. Every item is mandatory — the ones that look redundant are the
+ones that previously shipped broken releases. Nothing below depends on memory:
+each step reads the repo's actual files.
+
+## Default flow
+
+Sync the live install through the ownership-aware installer (for skills only:
+`powershell -NoProfile -ExecutionPolicy Bypass -File INSTALL-AIO.ps1 -SkillsOnly -SkipNativePlugins -SkipStarterSettings -SkipPreamble -SkipCleanup`).
+Use the selected providers; preserve local override hashes and native-owned skills.
+Sync the local bundle, then commit -> push -> converge CI
+on the exact pushed SHA -> tag -> publish -> verify the shipped bytes (steps
+5-7). A step that requires an application to be closed - Hermes profile
+migration, an installer that rewrites provider config - is user-run by design:
+print the exact command, say why it cannot run here, and never report it as
+applied from inside the running app.
+
+## 0. Prove the public surface
+
+- Edited the pack's own preamble or provider instruction templates (`3-PREAMBLES/SOUL.md`,
+  `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, `1-TAILORED-PROVIDER-TREES/*/COPY-TO-PROVIDER-HOME/*.md`)? After
+  committing the edit, run `python TOOLS/generate_preamble_history.py`: it archives every shipped version so
+  installed machines strip the old text exactly instead of stacking a second block.
+
+For new repositories, also apply `github-fleet-maintenance`'s repository completion contract: real CI, applicable security settings, CodeQL/scanning and Dependabot must be verified separately from files merely existing. Resolve publication authorization from the current request and earlier approvals; prepare the release fully before asking if approval is still missing.
+
+Before versioning, make the repository understandable and credible without requiring the user to open the source tree:
+
+- one sentence saying what it does and who it is for;
+- a real final-state hero screenshot or short demo near the top when the product has a visual surface;
+- a small feature list, quick start, supported platform/requirements, and an honest current-status note;
+- a compact gallery for distinct workflows, with alt text and captions that explain what each image proves;
+- verification/test commands and results kept separate from unperformed runtime tests;
+- authors, data/assets, licences, permissions, and source provenance; and
+- no stale screenshots, placeholders, private paths, tokens, personal data, or claims unsupported by the shipped artifact;
+- public copy stays true across releases: no version numbers, dates or counts on platform-locked pages (Nexus, Steam, itch, forums) - the version lives in the platform's version field and the changelog, and agent-editable surfaces are the only place per-release facts may be scattered. See `public-copy-durability`.
+
+Inspect the rendered README/release page and the actual image pixels with `visual-verification`. A file existing is not visual proof.
+If no real final-state screenshot is available, say so and provide a capture plan instead of inventing one.
+
+## 1. Read the CI workflow before touching anything
+
+    cat .github/workflows/*.yml
+
+List every job and every command it runs. CI checks things the local gate does
+NOT — treat the workflow as the contract. Common CI-only traps:
+
+- A version-consistency script (`.github/scripts/check_versions.py`) that
+  requires a **dated changelog file** per version (e.g.
+  `docs/history/V7.X.Y-CHANGELOG.md`) in addition to the inline `CHANGELOG.md`.
+- A manifest verifier (`.github/scripts/verify_manifest.py`) that hashes every
+  tracked file — adding/removing/renaming a file without regenerating
+  `MANIFEST.json` fails it.
+
+## 2. Bump the version in EVERY place CI checks
+
+    grep -rn '<old-version>' --include='*.md' --include='*.txt' \
+      --include='*.ps1' --include='*.json' --include='*.toml' --include='*.py' .
+
+Then read `check_versions.py` (if present) and satisfy its exact file list —
+it names files a blind grep can miss (AIO banner vs state, CATALOG, dated
+changelog). Create the dated changelog for the new version even if the entry
+is three lines; its absence is the #1 CI failure.
+
+## 3. Regenerate integrity manifests
+
+If the repo has `MANIFEST.json` + a generator (`TOOLS/generate_manifest.py`):
+
+    python TOOLS/generate_manifest.py .
+    python .github/scripts/verify_manifest.py   # expect 0 missing / 0 mismatch
+
+Regenerate after ANY file add/remove/rename, not just content edits. Run the
+verifier — a manifest that "looks fine" but was never verified is not proof.
+
+## 4. Run the local gate
+
+    powershell -NoProfile -ExecutionPolicy Bypass -File TESTS/Test-Pack.ps1
+
+A local PASS is necessary but NOT sufficient — see step 5.
+
+## 5. Push, then converge CI for the exact pushed commit
+
+**REQUIRED SUB-SKILL:** Use `ci-convergence`.
+
+Record the exact pushed SHA and keep it as the release identity:
+
+    SHA=$(git rev-parse HEAD)
+    git push origin HEAD
+
+Do not use "latest on main" as a proxy. Query workflow/check state for that
+**exact pushed SHA**. GitHub CLI examples:
+
+    gh run list --commit "$SHA" --json databaseId,headSha,status,conclusion,workflowName
+    powershell -NoProfile -File TOOLS/Wait-External.ps1 -GitHubRun <run-id>
+    gh api repos/{owner}/{repo}/commits/$SHA/check-runs
+
+`Wait-External.ps1` runs `gh run watch --compact --exit-status` and returns
+the failed-step log only when the run fails. It does not call a model.
+
+Wait through queued/in-progress states. Every required check must reach a
+terminal successful/skipped state according to branch policy. If any required
+check fails, inspect its job/log, fix the root cause, commit and push a NEW SHA,
+and restart this section from that new SHA. Never tag, build a release, or end
+the release task while the chosen SHA is pending or red.
+
+Then query open Dependabot, code-scanning, and secret-scanning alerts on that
+same repository. Use `TOOLS/Get-GitHubFlags.ps1` when the checkout contains it;
+otherwise `gh api` those open-alert endpoints. Required checks do not include
+those alerts, and they can open after the workflow is green. `flags=open` or
+`flags=unknown` blocks the tag the same way a red check does. Fix the cause,
+push a new SHA, wait for that SHA's checks, and query again. Do not dismiss an
+alert. A failed query is not zero alerts. Do not print a secret. A 403 or 404
+on code quality is unavailable on that repository; leave it off.
+
+## 6. Tag and build artifacts from the GREEN commit
+
+    git tag -a vX.Y.Z -m '<summary>'
+    git push origin vX.Y.Z
+    powershell -NoProfile -ExecutionPolicy Bypass -File TOOLS/Build-Release.ps1
+
+Build zips AFTER the fix. Artifacts built from a red commit stay broken even
+if the tag is later moved.
+
+## 7. Publish, then verify what actually shipped
+
+    gh release create vX.Y.Z --title '...' --notes '...' <zip>... 
+    gh release view vX.Y.Z --json tagName,targetCommitish,assets
+
+Confirm the tag resolves to the exact green SHA from step 5 and EVERY asset name is present. Re-check the required checks for that SHA. A release is not done until the shipped assets and exact commit are both proven.
+
+Download every published asset into a fresh temporary directory. Require it to exist and be nonempty, then compare its size and SHA-256 with the verified local build and checksum record. Two missing or empty values must never count as a match. A source-code ZIP generated by GitHub is not a substitute for a promised usable installer or binary.
+
+## 8. Mod and app sites (Nexus, LoversLab, itch, Steam Workshop)
+
+After the GitHub release is proven, hand the user what they paste and upload:
+
+- **Changelog:** plain text, short `- ` lines, from the version users have
+  installed to the new one (several versions combined if the site skipped
+  some), one block per project. No markdown headers or tables; mod-site editors
+  mangle them.
+- **Upload archive:** only what users need: the program (exe, readme,
+  changelog) or the mod's `Data` layout/FOMOD. No build scripts, tests, root
+  README or PowerShell files inside a mod archive. A full new version unless the
+  user asked for a patch.
+- **Source:** push the matching source to GitHub with the release; published
+  binaries without published source invite tampering accusations.
+- Version numbers, dates and counts go in the site's version field and the
+  changelog, never in platform-locked page copy (`public-copy-durability`).
+
+## 9. If a release already shipped red (recovery)
+
+1. Fix the cause, push, get CI green.
+2. Prefer a new patch version that preserves the old release and shared tag.
+3. Build and publish the new version when authorized; verify as in step 7.
+4. Deleting a published release or rewriting its tag requires explicit authorization; ordinary maintenance does not authorize either.
+
+## Why these exist (evidence)
+
+- v7.7.13/7.7.14 CI failed: version bump missed the dated changelog file that
+  `check_versions.py` requires. Local pack gate passed; CI did not.
+- The release zips were built from the red commit and had to be deleted and
+  rebuilt after the tag was force-moved to green.
+- SkyrimForge v5.1.7: manifest hashed CRLF working-tree bytes while CI
+  verifies LF — same class of failure (CI-only trap), same fix discipline.

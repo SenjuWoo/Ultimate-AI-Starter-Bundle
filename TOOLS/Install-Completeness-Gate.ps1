@@ -81,7 +81,7 @@ $ErrorActionPreference = 'Stop'
 
 # powershell.exe -File serializes Claude,Codex as one comma-delimited string.
 $Providers = @($Providers | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
-$AllowedProviders = @('Claude','Grok','Codex','Hermes','Kimi')
+$AllowedProviders = @('Claude','Grok','Codex','Hermes','Kimi','Antigravity')
 foreach ($ProviderName in $Providers) { if ($AllowedProviders -notcontains $ProviderName) { throw "Unknown provider: $ProviderName" } }
 
 # Windows PowerShell 5.1's `Set-Content -Encoding utf8` writes a UTF-8 BOM, and a

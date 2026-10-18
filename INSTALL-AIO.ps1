@@ -324,7 +324,7 @@ if (-not $haveInstallLock) {
 # ---------- Which providers this run touches ----------
 # powershell -File collapses -Providers Grok,Claude into ONE string, so split
 # before validating. ValidateSet cannot do that, which is why it is gone.
-$script:UabsAllProviders = @('Claude','Codex','Grok','Kimi','Hermes')
+$script:UabsAllProviders = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity')
 $Providers = @($Providers | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
 foreach ($requested in $Providers) {
   if ($script:UabsAllProviders -notcontains $requested) {
@@ -539,7 +539,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.17.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.18.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -2016,6 +2016,28 @@ if (-not $SkillsOnly) {
                 $installed[$id] = @{ status = 'installed-or-updated'; exe = $exe }
                 Write-UabsOk ("codebase-memory installed/updated -> " + $exe)
               }
+            # A stale copy earlier on PATH silently shadows the binary just
+            # installed: callers and hardcoded hooks keep running the old one, so
+            # an update can report success and change nothing. Reconcile it under
+            # the same rule as an external install - older refreshed, newer kept.
+            $pathCopy = (Get-Command 'codebase-memory-mcp' -ErrorAction SilentlyContinue).Source
+            if ($pathCopy -and (Test-Path -LiteralPath $pathCopy) -and -not (Test-UabsPathWithin $pathCopy $target)) {
+              $pHave = Get-UabsProcessVersion $pathCopy
+              $wantVer = [string]$comp.version
+              $pCmp = if ($pHave) { Compare-UabsDottedVersion $pHave $wantVer } else { $null }
+              if ($null -ne $pCmp -and $pCmp -lt 0) {
+                $bak = $pathCopy + '.bak-' + (Get-Date -Format 'yyyyMMdd-HHmmss')
+                Copy-Item -LiteralPath $pathCopy -Destination $bak -Force
+                $newExe = Join-Path $target 'codebase-memory-mcp.exe'
+                try { Copy-Item -LiteralPath $newExe -Destination $pathCopy -Force }
+                catch {
+                  [void](Stop-UabsProcessUsingExecutable $pathCopy)
+                  Start-Sleep -Seconds 2
+                  Copy-Item -LiteralPath $newExe -Destination $pathCopy -Force
+                }
+                Write-UabsOk ("codebase-memory PATH copy updated {0} -> {1}: {2} (backup: {3})" -f $pHave, $wantVer, $pathCopy, $bak)
+              }
+            }
           }
           elseif ($id -eq 'spooky') {
             $existingRoot = $env:SPOOKY_AUTOMOD_ROOT
@@ -2653,7 +2675,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.17.0'
+version = '8.18.0'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

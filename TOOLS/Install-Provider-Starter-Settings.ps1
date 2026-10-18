@@ -17,7 +17,7 @@
 [CmdletBinding()]
 param(
   [string]$PackRoot,
-  [string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes'),
+  [string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes', 'Antigravity'),
   [switch]$SkipHermes
 )
 

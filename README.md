@@ -1,16 +1,17 @@
-<!-- Ultimate AI Starter Bundle v8.17.0 -->
+<!-- Ultimate AI Starter Bundle v8.18.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.17.0
+# Ultimate AI Starter Bundle v8.18.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
 Skills, MCP servers, plugins, and offline tools for Claude Code, Codex, Grok,
-Kimi, and Hermes — plus an optional deep Skyrim SE/AE modding stack.
+Kimi, Hermes and Google Antigravity — plus an optional deep Skyrim SE/AE
+modding stack.
 
 <p>
   <a href="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
@@ -185,8 +186,9 @@ The preamble is now **installed automatically**, not pasted by hand:
 
 `INSTALL-AIO.ps1` appends `SOUL.md` + `AIO-INSTRUCTION.md` to
 Claude Code (`~/.claude/CLAUDE.md`), Codex (`~/.codex/AGENTS.md`), Kimi
-(`~/.kimi-code/AGENTS.md`) and Grok (`~/.grok/AGENTS.md`, its global-rules
-file), and merges both into Hermes' home (`SOUL.md`). Idempotent
+(`~/.kimi-code/AGENTS.md`), Grok (`~/.grok/AGENTS.md`, its global-rules file)
+and Antigravity (`~/.gemini/config/AGENTS.md`, its global-rules file), and
+merges both into Hermes' home (`SOUL.md`). Idempotent
 and backup-first; `-SkipPreamble` opts out. Full map:
 `3-PREAMBLES/README.md`.
 
@@ -302,20 +304,44 @@ bundle installation steps.
 ### It wires the providers you have
 
 A plain run detects which provider CLIs are actually installed and configures
-those. Through v8.0.4 it assumed all five and then **downloaded the missing
+those. Through v8.0.4 it assumed all of them and then **downloaded the missing
 ones**, so a machine with only Claude Code finished a "one-click install"
-carrying Codex, Grok, Kimi and Hermes.
+carrying Codex, Grok, Kimi, Hermes and Antigravity.
 
 ```powershell
 .\INSTALL-AIO.ps1                        # detect and wire what is installed
-.\INSTALL-AIO.ps1 -AllProviders          # fresh machine: install all five
+.\INSTALL-AIO.ps1 -AllProviders          # fresh machine: install every provider
 .\INSTALL-AIO.ps1 -Providers Claude,Grok # exactly these
 ```
 
 Detection is executable presence, not a config folder: uninstalling Kimi
 actually removes it from future runs, and a leftover `~/.kimi-code` no longer
 counts as an install. A genuinely empty machine detects nothing and falls back
-to installing all five, because that is the only outcome that leaves it usable.
+to installing every provider, because that is the only outcome that leaves it usable.
+
+### Google Antigravity (Gemini 4 Argon)
+
+Antigravity is a first-class provider: the same SOUL + AIO contract, the same
+173 skills and the pack's always-on MCP servers, written where Antigravity
+actually reads them — verified against the app's own `agy-customizations` guide
+and `antigravity.google/docs/rules|skills|mcp`, not recalled:
+
+| Purpose | Path the installer writes | Notes |
+|---|---|---|
+| Global rules | `~/.gemini/config/AGENTS.md` | also read: `~/.gemini/AGENTS.md`; 24,000-byte cap per file, 20,000-token shared budget, so the bundle stays near 14 KB and leaves detail in skills |
+| Workspace rules | — | `AGENTS.md`, `GEMINI.md`, `.agents/AGENTS.md`, `.agents/rules/*.md` in your projects; the installer never writes there |
+| Global skills | `~/.gemini/config/skills/<name>/SKILL.md` | 173 skills, one level deep, exactly the layout its scanner expects |
+| MCP servers | `~/.gemini/config/mcp_config.json` | `mcpServers`, stdio or Streamable HTTP; legacy SSE is unsupported — plus per-project `.agents/mcp_config.json`, untouched |
+
+```powershell
+.\INSTALL-AIO.ps1 -Providers Antigravity   # wire only this app
+```
+
+Detection is the `Antigravity.exe` under `%LOCALAPPDATA%\Programs\antigravity`;
+a leftover `~/.gemini` folder alone does not count as an install. There is no
+scriptable installer for the app, so a machine without it gets a clear skip
+instead of a failed bootstrap. Gemini 4 Argon needs no special configuration:
+it inherits the rules, skills and tools every other model on this install gets.
 
 **The rule this follows:** bundle defaults optimize for a new user's
 reliability; the per-machine result optimizes for the capabilities actually
@@ -658,7 +684,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-- **Provider skills** — 124 general skills per AI (Claude, Codex, Grok, Kimi, Hermes), plus 49 with the Skyrim pack, all generated from one canonical tree.
+- **Provider skills** — 124 general skills per AI (Claude, Codex, Grok, Kimi, Hermes, Antigravity), plus 49 with the Skyrim pack, all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7 and Headroom are the always-on core (the official GitHub server too, where `gh` is not signed in); servers a tool's own installer registers machine-wide are parked per project. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup (Skyrim pack)
@@ -877,6 +903,8 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.18.0** - 2026-10-18. Google Antigravity is a first-class provider: global rules in `~/.gemini/config/AGENTS.md`, 173 skills in `~/.gemini/config/skills/`, MCP servers in `~/.gemini/config/mcp_config.json`, all verified against the app's own guide and docs. The provider bootstrap no longer dies on an unknown provider name, and a stale codebase-memory earlier on PATH is now reconciled instead of silently shadowing the installed one. [Changes](docs/history/V8.18.0-CHANGELOG.md).
 
 **v8.17.0** - 2026-10-17. External tool installs became version-aware: an older local copy of houseCARL, Spooky or codebase-memory is refreshed in place with a backup instead of being parked, and nothing is downgraded. Hermes can install ponytail natively (it now gets a `.hermes-plugin` manifest), Claude's stale marketplace paths are repaired, and the Skyrim pack gains verify-first wording plus an ownership section. [Changes](docs/history/V8.17.0-CHANGELOG.md).
 

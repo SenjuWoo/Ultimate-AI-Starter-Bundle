@@ -2777,6 +2777,10 @@ function Resolve-UabsProviderExe {
     'Grok'   { @((Join-Path $env:USERPROFILE '.grok\bin\grok.exe')) }
     'Kimi'   { @((Join-Path $env:USERPROFILE '.local\bin\kimi.exe'), (Join-Path $env:USERPROFILE '.kimi-code\bin\kimi.exe')) }
     'Hermes' { @((Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'), (Join-Path $env:LOCALAPPDATA 'hermes\bin\hermes.exe')) }
+    # Antigravity ships a desktop app, not a CLI on PATH: the executable in its
+    # install folder is the only reliable install signal (the config folder in
+    # ~/.gemini survives an uninstall).
+    'Antigravity' { @((Join-Path $env:LOCALAPPDATA 'Programs\antigravity\Antigravity.exe'), (Join-Path $env:LOCALAPPDATA 'Programs\Antigravity\Antigravity.exe')) }
     default  { @() }
   }
   foreach ($candidate in $candidates) {
@@ -2790,6 +2794,6 @@ function Resolve-UabsProviderExe {
 # treating a stale config folder as an install would keep re-wiring a provider
 # the user deliberately removed.
 function Get-UabsInstalledProviders {
-  param([string[]]$Candidates = @('Claude','Codex','Grok','Kimi','Hermes'))
+  param([string[]]$Candidates = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity'))
   return @($Candidates | Where-Object { Resolve-UabsProviderExe -Provider $_ })
 }

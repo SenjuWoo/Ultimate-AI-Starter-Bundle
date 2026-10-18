@@ -1,0 +1,120 @@
+# Third-party skills bundled here
+
+Most skills in `_CANONICAL-SKILLS/` are written for this pack. The ones below
+came from other projects and are redistributed under their own licences. They
+are listed so provenance is visible without opening every `SKILL.md`.
+
+This file covers **skills**. For the redistributed tools and binaries, see
+[`BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md`](../BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md).
+
+The pack installs these to **every detected provider** (Claude, Codex, Grok,
+Kimi, Hermes). That is the point of carrying them here rather than leaving them
+as a plugin: a plugin serves one provider, a canonical skill serves all five.
+
+## Universal Modder — `rehan-remade/universal-modder`, MIT
+
+`universal-modder` routes to all eleven upstream skill guides as on-demand
+references, from commit `2c2201437ca676fb4e5f06a18fff6e8db99eef0f` (0.2.0, built as 0.2.0+uabs.2c22014).
+The CLI source, offline tests and knowledge snapshot are in
+`BUNDLED-TOOLS/universal-modder`, with upstream LICENSE and the font OFL notices.
+UABS pins dependencies, includes the knowledge snapshot in the wheel, and
+discovers Windows Steam roots from the registry, and never echoes matched credentials. Upstream plugin hooks and
+fal MCP registrations are not installed; cloud asset calls remain optional.
+
+## Anthropic — `anthropics/claude-plugins-official`, Apache-2.0
+
+| skill | upstream plugin | note |
+|---|---|---|
+| `skill-creator` | `skill-creator` | Authoring, evaluating and benchmarking skills. Carries its own `LICENSE.txt`. Its `agents/` helpers use Claude Code subagents and do nothing on other providers; the authoring guidance and the Python scripts are portable. |
+| `build-mcp-server` | `mcp-server-dev` | Entry point for MCP server development; hands off to the two below. |
+| `build-mcpb` | `mcp-server-dev` | Packaging an MCP server as a `.mcpb` bundle. |
+| `build-mcp-app` | `mcp-server-dev` | Interactive UI widgets over MCP. |
+
+The three `mcp-server-dev` skills are kept as a **set**: `build-mcp-server`
+explicitly hands off to the other two, so taking one alone leaves a dangling
+reference.
+
+## img2threejs — `img2threejs/img2threejs`, Apache-2.0
+
+`img2threejs` is vendored from tag **v1.5.1**, commit
+`dede5909be4e494b228c801a55dda47439143932`. CI metadata, sponsor assets and the
+upstream provider-specific `CLAUDE.md` are excluded; the skill, stdlib Python
+forge, documentation, fixtures and license are retained. UABS adds one Windows
+Python/UTF-8 resolver and replaces upstream's provider symlink instructions with
+canonical fanout.
+
+## Impeccable — `pbakaus/impeccable`, Apache-2.0
+
+`impeccable` is the `.agents/skills/impeccable` payload from the official
+**skill-v4.1.3** `universal.zip` (29,823,936 bytes, SHA-256
+`fdcb41a24ddfb613786e3141bc7bb8466a406ffbd437a2e302f4ca70181bed9f`). UABS
+removes its provider-directory pin/self-update path and generated hook cache and
+applies the bundle's security hardening. Its vendored detector handles local,
+offline scans; the separately pinned CLI supplies explicit CLI and hook actions.
+The included `LICENSE` is upstream's.
+
+## skills CLI — `vercel-labs/skills`, MIT
+
+No upstream source is vendored. The `skill-discovery` wrapper invokes the exact
+published `skills@1.5.23` package on demand with telemetry disabled and exposes
+only its read-only `find` command. Its output is discovery evidence, never an
+installation decision.
+
+## kepano — `kepano/obsidian-skills`
+
+| skill |
+|---|
+| `defuddle` |
+| `json-canvas` |
+| `obsidian-bases` |
+| `obsidian-cli` |
+| `obsidian-markdown` |
+
+These MIT-licensed guides are included canonically. A native plugin serving
+the same files adds duplicate index entries; prefer one owner per provider.
+Independently configured user plugins are not globally disabled by this notice.
+
+## Code Review Skill — `awesome-skills/code-review-skill`, MIT
+
+`code-review-skill` retains the upstream `LICENSE` and attribution. Its canonical
+copy is distributed across provider trees rather than reinstalled over itself.
+
+## houseCARL — `Avick3110/houseCARL`, GPL-3.0-only
+
+The canonical `housecarl` guide retains upstream GPL text and its third-party
+notice. The separate tool payload and prerequisites are listed in the tool
+catalog. Inclusion here does not change those terms or enable its MCP globally.
+
+## Process guides — Superpowers and Ponytail, MIT
+
+The canonical process family incorporates guides from
+[`obra/superpowers`](https://github.com/obra/superpowers) and
+[`DietrichGebert/ponytail`](https://github.com/DietrichGebert/ponytail).
+Their native plugin payloads retain upstream licences; provider tailoring and
+bundle-specific routing are adaptations, not a claim of original authorship.
+
+## What was deliberately NOT taken
+
+Reviewed from the same Apache-2.0 marketplace and rejected, so the decision is
+not re-litigated every time someone browses it:
+
+- **`hookify/writing-rules`** — teaches the rule syntax of `hookify`, a plugin
+  this pack does not install. A skill describing an absent tool is index budget
+  spent on nothing.
+- **`claude-security`** — `disable-model-invocation: true`, and it orchestrates
+  Claude Code agent panels, so it is inert on the other four providers. The pack
+  already carries `security-boundaries`, `secret-hygiene` and
+  `supply-chain-verification`.
+- **`claude-md-management/claude-md-improver`** — would audit and rewrite the
+  same `CLAUDE.md` this pack's own preamble wiring owns. Two writers, one file.
+- **`plugin-dev/*`** (7 skills) — Claude Code plugin format: structure,
+  settings, commands, agents. Correct for Claude, noise on the other four.
+- **`frontend-design`** — prompt-only and now overlapped by Impeccable's
+  cross-provider design router plus executable detector.
+- **`session-report`, `receipts`, `project-artifact`,
+  `playground`, `math-olympiad`, `example-plugin/*`, `cwc-makers/*`** — off
+  mission for a provider-setup pack.
+
+Every entry added here costs index budget on every provider, and on Codex that
+budget is fixed and split across all entries — so the bar for adding one is
+that it works on more than one provider and is not already covered.

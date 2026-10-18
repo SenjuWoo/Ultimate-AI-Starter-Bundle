@@ -25,7 +25,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 CANON = ROOT / "_CANONICAL-SKILLS"
-PROVIDERS = ("Claude", "Codex", "Grok", "Hermes", "Kimi")
+PROVIDERS = ("Antigravity", "Claude", "Codex", "Grok", "Hermes", "Kimi")
 
 VERSION = (ROOT / "VERSION.txt").read_text(encoding="utf-8-sig").strip()   # current bundle version
 BARE = VERSION.lstrip("vV")                                               # 7.9.0
@@ -234,7 +234,7 @@ def test_documented_skill_counts() -> None:
     assert str(actual) in history, "release history does not state the shipped skill count"
     assert validation.get("canonical_skills") == actual, "VALIDATION canonical skill count drift"
     assert validation.get("registry_entries") == actual, "VALIDATION registry count drift"
-    assert validation.get("provider_trees") == 5, "VALIDATION provider tree count drift"
+    assert validation.get("provider_trees") == 6, "VALIDATION provider tree count drift"
     # Every provider tree must hold exactly what canonical holds. A skill
     # deleted from canonical but left in five provider trees is still shipped.
     for provider in PROVIDERS:
@@ -2716,6 +2716,7 @@ def main() -> int:
         test_impeccable_hold_records_a_real_engine_audit,
         test_maintenance_catalog_targets_remain_scoped,
         test_review_regressions_fail_closed,
+        test_antigravity_is_a_first_class_provider,
         # v8.17.0 -- an external tool install must be version-aware, not parked.
         test_external_tool_installs_are_version_aware,
         test_every_defined_contract_is_actually_run,
@@ -6040,6 +6041,51 @@ def test_external_tool_installs_are_version_aware() -> None:
     assert "Never launch SSEEdit" not in pack
     assert "Never invent framework syntax" not in pack
     assert "## Ownership of Skyrim tooling" in pack
+
+
+def test_antigravity_is_a_first_class_provider() -> None:
+    """Antigravity is wired through the same paths Google documents.
+
+    Verified against the app's own `agy-customizations` guide and
+    antigravity.google/docs: global rules are AGENTS.md in ~/.gemini/config
+    (24,000-byte cap per file), global skills live in ~/.gemini/config/skills,
+    and MCP servers live in ~/.gemini/config/mcp_config.json under mcpServers.
+    A provider that is only half-wired here silently does nothing in the IDE.
+    """
+    catalog = json.loads(read(ROOT / "BUNDLED-TOOLS" / "CATALOG.json"))
+    ag = catalog["providers"].get("Antigravity")
+    assert ag, "Antigravity missing from the provider catalog"
+    assert ag["instructions"] == "AGENTS.md"
+    assert ag["home_default"].endswith(".gemini\config")
+    assert ag["skills"] == "skills"
+    assert ag["mcp_config"] == "mcp_config.json"
+
+    common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
+    assert "'Antigravity' {" in common, "no install detection for the Antigravity app"
+    assert "Antigravity.exe" in common
+
+    aio = read(ROOT / "INSTALL-AIO.ps1")
+    assert "'Antigravity'" in aio, "the installer never visits Antigravity"
+
+    mcp = read(ROOT / "TOOLS" / "UABS-Mcp-Write.ps1")
+    assert "'Antigravity' = @{ Path" in mcp, "no MCP target for Antigravity"
+    assert r".gemini\config\mcp_config.json" in mcp
+
+    fan = read(ROOT / "TOOLS" / "fanout_providers.py")
+    assert "'Antigravity'" in fan
+
+    tree = ROOT / "1-TAILORED-PROVIDER-TREES" / "Antigravity" / "COPY-TO-SKILLS-DIRECTORY" / "skills"
+    skills = [d for d in tree.iterdir() if d.is_dir()]
+    assert len(skills) >= 100, "the Antigravity skill tree is empty"
+
+    tpl = read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Antigravity" / "COPY-TO-PROVIDER-HOME" / "AGENTS.md")
+    assert len(tpl.encode()) < 24000, "the provider template alone would be truncated by Antigravity"
+    assert ".gemini\config\skills" in tpl and "mcp_config.json" in tpl
+
+    # Rules are capped at 24 KB per file by Antigravity; the shipped preamble
+    # plus the provider template must stay under it or the tail is dropped.
+    preamble = read(ROOT / "3-PREAMBLES" / "SOUL.md") + read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md")
+    assert len((tpl + preamble).encode()) < 24000
 
 
 if __name__ == "__main__":
