@@ -548,3 +548,14 @@ Detailed machine-specific reports remain under ignored `artifacts/`.
   (`rtk json MANIFEST.json --keys-only` = 72 B vs 2,178,740 B raw).
 - Assets: Core 53,204,066 B `262769ebd95bbfe4...`; Full 219,810,178 B
   `0b76b757d3af6f2b...`; double build byte-identical, download re-hashed equal.
+
+### Release v8.19.0 (2026-10-18)
+
+- Argon 4's 202-file change audited and published: contracts 150/150, privacy
+  PASS, versions agree, MANIFEST 10,238 files covering every tracked file,
+  CodeQL alerts 0 (all 11 closed in code), impeccable regression test PASS.
+- Tag `v8.19.0` -> `75306e3`; release Latest with both assets, byte-identical
+  double build and re-hashed after download. Topics now include `antigravity`
+  (dropped `gpt`, the account limit is 20).
+- Assets: Core 53,491,749 B `4f4c6ac5733bb2f0...`; Full 220,267,579 B
+  `766debb8323710b3...`.
