@@ -138,10 +138,11 @@ foreach ($provider in $Providers) {
     }
     elseif ($provider -eq 'Hermes') {
       & $exe --help 2>&1 | Out-Null
+      $probeExit = $LASTEXITCODE
     } else {
       & $exe --version 2>&1 | Out-Host
+      $probeExit = $LASTEXITCODE
     }
-    $probeExit = $LASTEXITCODE
   } finally { $ErrorActionPreference = $previous }
   if ($probeExit -ne 0) { throw "$provider local startup probe failed with exit code $probeExit." }
   # Literal verification contracts kept visible for audit tooling:

@@ -539,7 +539,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.18.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.18.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -2675,7 +2675,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.18.0'
+version = '8.18.1'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode
@@ -2710,6 +2710,55 @@ if (-not $ToolsOnly) {
   }
 
   $hermesProfiles = Join-Path $PackRoot 'TOOLS\Migrate-HermesProfiles.ps1'
+  # Antigravity discovers plugins one directory deep under its customization
+  # root (~/.gemini/config/plugins) keyed by a minimal root plugin.json. Its
+  # loader only stages Claude-style trees through the `agy` CLI, which is not
+  # always present, so write the root manifest ourselves and then enable the
+  # plugins in config.json (config.json wins over what a plugin declares).
+  if ($Providers -contains 'Antigravity') {
+    try {
+      $agHome = Get-UabsProviderHome -Provider 'Antigravity' -Catalog $catalog
+      if (Test-Path -LiteralPath $agHome) {
+        $agPlugins = Join-Path $agHome 'plugins'
+        New-Item -ItemType Directory -Force -Path $agPlugins | Out-Null
+        $agEnable = @()
+        foreach ($pluginId in @('superpowers', 'ponytail')) {
+          $src = Join-Path $plugins $pluginId
+          if (-not (Test-Path -LiteralPath $src)) { continue }
+          $dst = Join-Path $agPlugins $pluginId
+          if (-not (Test-Path -LiteralPath (Join-Path $dst 'skills'))) {
+            Copy-UabsRobo -From $src -To $dst
+          }
+          $manifest = Join-Path $dst 'plugin.json'
+          if (-not (Test-Path -LiteralPath $manifest)) {
+            [IO.File]::WriteAllText($manifest, ('{ "name": "' + $pluginId + '" }' + "`n"), (New-Object Text.UTF8Encoding $false))
+          }
+          $agEnable += $pluginId
+        }
+        if ($agEnable.Count) {
+          $cfgPath = Join-Path $agHome 'config.json'
+          if (Test-Path -LiteralPath $cfgPath) {
+            $cfg = [IO.File]::ReadAllText($cfgPath) | ConvertFrom-Json
+            if ($null -eq $cfg.plugins) {
+              $cfg | Add-Member -NotePropertyName plugins -NotePropertyValue ([pscustomobject]@{})
+            }
+            foreach ($pluginId in $agEnable) {
+              if ($cfg.plugins.PSObject.Properties.Name -contains $pluginId) {
+                $cfg.plugins.$pluginId.enabled = $true
+              } else {
+                $cfg.plugins | Add-Member -NotePropertyName $pluginId -NotePropertyValue ([pscustomobject]@{ enabled = $true })
+              }
+            }
+            [IO.File]::WriteAllText($cfgPath, ($cfg | ConvertTo-Json -Depth 12), (New-Object Text.UTF8Encoding $false))
+          }
+          Write-UabsOk ('Antigravity: plugins enabled - ' + ($agEnable -join ', '))
+        }
+      }
+    } catch {
+      Write-UabsWarn ('Antigravity plugins: ' + $_.Exception.Message)
+    }
+  }
+
   if (-not $SkillsOnly -and -not $SkipMcpWire -and ($Providers -contains 'Hermes') -and (Test-Path -LiteralPath $hermesProfiles)) {
     try {
       # The migrator refuses to run while Hermes.exe is up, because the desktop

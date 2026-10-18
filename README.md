@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.18.0 -->
+<!-- Ultimate AI Starter Bundle v8.18.1 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.18.0
+# Ultimate AI Starter Bundle v8.18.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -903,6 +903,8 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.18.1** - 2026-10-18. Fixes the Antigravity bootstrap probe: a GUI app has no `--version`, and the old code read `$LASTEXITCODE` outside the branch that ran a process, so a cold install aborted with "exit code .". The probe now only reads an exit code where a process actually ran. [Changes](docs/history/V8.18.1-CHANGELOG.md).
 
 **v8.18.0** - 2026-10-18. Google Antigravity is a first-class provider: global rules in `~/.gemini/config/AGENTS.md`, 173 skills in `~/.gemini/config/skills/`, MCP servers in `~/.gemini/config/mcp_config.json`, all verified against the app's own guide and docs. The provider bootstrap no longer dies on an unknown provider name, and a stale codebase-memory earlier on PATH is now reconciled instead of silently shadowing the installed one. [Changes](docs/history/V8.18.0-CHANGELOG.md).
 

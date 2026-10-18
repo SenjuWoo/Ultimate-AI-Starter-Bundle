@@ -2717,6 +2717,7 @@ def main() -> int:
         test_maintenance_catalog_targets_remain_scoped,
         test_review_regressions_fail_closed,
         test_antigravity_is_a_first_class_provider,
+        test_provider_bootstrap_never_inherits_a_stale_exit_code,
         # v8.17.0 -- an external tool install must be version-aware, not parked.
         test_external_tool_installs_are_version_aware,
         test_every_defined_contract_is_actually_run,
@@ -6078,6 +6079,13 @@ def test_antigravity_is_a_first_class_provider() -> None:
     skills = [d for d in tree.iterdir() if d.is_dir()]
     assert len(skills) >= 100, "the Antigravity skill tree is empty"
 
+    # Plugins: Antigravity only stages Claude-style trees through its `agy` CLI,
+    # so the installer must write a root plugin.json and enable the plugin in
+    # config.json (config.json wins over the manifest declaration).
+    assert "Antigravity: plugins enabled" in aio
+    assert "plugins\config.json" not in aio
+    assert 'NotePropertyName plugins' in aio
+
     tpl = read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Antigravity" / "COPY-TO-PROVIDER-HOME" / "AGENTS.md")
     assert len(tpl.encode()) < 24000, "the provider template alone would be truncated by Antigravity"
     assert ".gemini\config\skills" in tpl and "mcp_config.json" in tpl
@@ -6086,6 +6094,22 @@ def test_antigravity_is_a_first_class_provider() -> None:
     # plus the provider template must stay under it or the tail is dropped.
     preamble = read(ROOT / "3-PREAMBLES" / "SOUL.md") + read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md")
     assert len((tpl + preamble).encode()) < 24000
+
+
+def test_provider_bootstrap_never_inherits_a_stale_exit_code() -> None:
+    """A provider with no CLI cannot run a startup probe.
+
+    Antigravity is a GUI app: running `Antigravity.exe --version` opens it, and
+    the old code then assigned `$LASTEXITCODE` unconditionally - on a cold
+    session that is empty and the install dies with "exit code .". Every probe
+    assignment must sit inside the branch that actually ran a process.
+    """
+    src = read(ROOT / "TOOLS" / "Ensure-Provider-CLIs.ps1")
+    assert "$probeExit = 0" in src, "Antigravity must short-circuit its probe"
+    body = src.split("if ($provider -eq 'Antigravity') {", 1)[1].split("if ($probeExit", 1)[0]
+    assert body.count("$probeExit = $LASTEXITCODE") == 2, (
+        "probe exit code must be read exactly twice, inside the branches that ran a process"
+    )
 
 
 if __name__ == "__main__":

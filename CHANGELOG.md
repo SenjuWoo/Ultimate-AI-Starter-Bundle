@@ -1,3 +1,24 @@
+## 8.18.1
+
+- **Antigravity installs no longer abort on a cold session.** The provider bootstrap probed
+  every executable with `--version`; a GUI app has no such flag, and the probe's exit code was
+  read outside the branch that ran a process, so it inherited an empty `$LASTEXITCODE` and
+  threw `Antigravity local startup probe failed with exit code .`. Warm sessions hid it by
+  inheriting a stale `0`. Each probe now reads its own exit code, and Antigravity short-circuits
+  on presence - launching the IDE is not a probe.
+- **Antigravity also gets the plugins and the toolbelt, not just the rules.** The installer now
+  stages `superpowers` and `ponytail` under `~/.gemini/config/plugins/`, writes the root
+  `plugin.json` Antigravity requires (it only auto-stages Claude-style trees through its `agy`
+  CLI), and enables both in `config.json`. Verified live on this machine; the same 173 skills
+  stay in every provider tree.
+- **RTK and Headroom proven against Antigravity, not assumed.** Headroom's MCP tools are cached
+  by the app itself in `~/.gemini/antigravity/mcp/headroom/` (`headroom_compress`,
+  `headroom_retrieve` schemas), which only happens after a real connection. RTK 1.0.1 resolves
+  from the user PATH the IDE inherits; measured `rtk json MANIFEST.json --keys-only` at 72 bytes
+  against 2,178,740 raw, and `rtk read` passes text through unchanged when it has nothing to
+  filter - the honest result, not a claimed one.
+- Regression test: the probe assignment count is pinned, so an unconditional
+  `$probeExit = $LASTEXITCODE` cannot come back.
 ## 8.18.0
 
 - **Google Antigravity is a first-class provider.** The bundle now wires its
