@@ -507,3 +507,18 @@ Detailed machine-specific reports remain under ignored `artifacts/`.
   installer under the same version rule as external installs.
 - Gemini 4 Argon needs no special casing: it inherits the same rules, skills
   and tools as every other model on the install.
+
+### Release v8.18.1 (2026-10-18)
+
+- Fixed a latent bootstrap bug: the provider probe read `$LASTEXITCODE` outside
+  the branch that ran a process, so a cold-session Antigravity install aborted
+  with "exit code .". Warm sessions inherited a stale 0 and hid it.
+- Antigravity plugins: `superpowers` (15 skills) and `ponytail` (6 skills) are
+  staged under `~/.gemini/config/plugins/` with the root `plugin.json`
+  Antigravity requires, and enabled in `config.json`.
+- RTK 1.0.1 and Headroom verified against the app: Headroom's tool schemas are
+  cached by Antigravity itself under `~/.gemini/antigravity/mcp/headroom/`;
+  RTK resolves from the user PATH and compresses structured output
+  (`rtk json MANIFEST.json --keys-only` = 72 B vs 2,178,740 B raw).
+- Assets: Core 53,204,066 B `262769ebd95bbfe4...`; Full 219,810,178 B
+  `0b76b757d3af6f2b...`; double build byte-identical, download re-hashed equal.
