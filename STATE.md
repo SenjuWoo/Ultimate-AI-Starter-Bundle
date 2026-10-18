@@ -489,3 +489,21 @@ Detailed machine-specific reports remain under ignored `artifacts/`.
 - Open decisions: the houseCARL 2.x hold stays until skills/profiles are migrated
   together (the user's own install already runs 2.0.5); the SPID validator
   slash-trait rows stay a documented non-defect (filters.md section 4).
+
+### Release v8.18.0 (2026-10-18)
+
+- Google Antigravity is a first-class provider. Wired where its own docs and
+  shipped `agy-customizations` guide say it reads them: global rules
+  `~/.gemini/config/AGENTS.md` (24,000 B/file cap, 20,000-token budget),
+  skills `~/.gemini/config/skills/`, MCP `~/.gemini/config/mcp_config.json`
+  (`mcpServers`, stdio or Streamable HTTP; no legacy SSE).
+- Live install on this box: rules 11,056 B, 173 skills / 1,279 files, MCP
+  context7 + headroom + toolbox + codebase-memory.
+- Sandboxed fresh install (`ANTIGRAVITY_HOME` redirected): rules 13,839 B,
+  173 skills, three MCP servers answering a real handshake, doctor PASS.
+- Fixed en route: four provider allow-lists and three resolvers rejected
+  `Antigravity` (install died at provider bootstrap); `codebase-memory-mcp`
+  0.11.0 was shadowing the installed 0.12.1 on PATH - now reconciled by the
+  installer under the same version rule as external installs.
+- Gemini 4 Argon needs no special casing: it inherits the same rules, skills
+  and tools as every other model on the install.
