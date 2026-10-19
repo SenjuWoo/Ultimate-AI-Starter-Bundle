@@ -575,3 +575,11 @@ Detailed machine-specific reports remain under ignored `artifacts/`.
 - Live skill trees for all six providers synced with backups
   (`skills.bak-uabs-20261019-195419`); Melty scope line verified live.
 - Gates: contracts 150/150, privacy PASS, versions agree, MANIFEST 10,241.
+
+- Tag `v8.19.1` -> `c48af2d`; release Latest, built twice byte-identical
+  (DIFF=0) and re-hashed after download equal. Core 53,502,084 B
+  `cb66d8dd98fe42b2...`; Full-Offline 220,277,907 B `bf18fd6d6528acc2...`.
+- Known cost, not changed: `.git` is 492 MiB because five revisions of
+  `codebase-memory-mcp-windows-amd64.zip` (~37-46 MB each) live in history.
+  Moving offline binaries to release-only assets would need a history rewrite
+  and an install-time download; propose before doing it.
