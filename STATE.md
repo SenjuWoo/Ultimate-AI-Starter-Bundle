@@ -559,3 +559,19 @@ Detailed machine-specific reports remain under ignored `artifacts/`.
   (dropped `gpt`, the account limit is 20).
 - Assets: Core 53,491,749 B `4f4c6ac5733bb2f0...`; Full 220,267,579 B
   `766debb8323710b3...`.
+
+### Release v8.19.1 (2026-10-19)
+
+- Melty is explicitly opt-in: no default mods folder, mashup route only for an
+  explicit two-game fusion or publish on Melty. Rule stated in
+  `capability-profiles`, the `project-intel` router, the `melty-mashups` skill,
+  the `game-mashup-melty` card and the `PROFILES.json` parked-server guard.
+- Context7 4.4.4 re-measured: `resolve-library-id` is keyless, `query-docs`
+  now needs `CONTEXT7_API_KEY`; the catalog claim was corrected, not copied.
+- Tool pins moved: REA 6.7.0, Serena 2.1.0, shadcn-mcp 4.22.1, blender-mcp
+  2.2.0, super-mcp-router 2.8.5; `audit_catalog_versions.py` stale=0.
+- US spelling across SOUL, AIO variants and MANUAL-PASTE; wired-prefix hash
+  updated in the same change. Workspace AIO mirror refreshed.
+- Live skill trees for all six providers synced with backups
+  (`skills.bak-uabs-20261019-195419`); Melty scope line verified live.
+- Gates: contracts 150/150, privacy PASS, versions agree, MANIFEST 10,241.
