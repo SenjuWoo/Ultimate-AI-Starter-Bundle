@@ -39006,8 +39006,8 @@
  },
  {
   "path": "3-PREAMBLES/MANUAL-PASTE.txt",
-  "size": 2134,
-  "sha256": "90e99ad09b2c43966ab85972a6a3fd619918a18958993a39ae1564f24058f936"
+  "size": 2132,
+  "sha256": "bb44864dac13f84b9e6883bd697bac4077a46b3cdb9302f3dd73ad4d88d2ea82"
  },
  {
   "path": "3-PREAMBLES/README.md",
@@ -43146,8 +43146,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 9083,
-  "sha256": "649d8d278fe4b9d19d9932ace976039d0ad5fda663f93bd497f9557164d731de"
+  "size": 9081,
+  "sha256": "603e7e252e217ef27872af04cb83aa971e9ca363dffa7f1a16a4404b12ccffef"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
