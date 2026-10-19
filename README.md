@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.19.0 -->
+<!-- Ultimate AI Starter Bundle v8.19.1 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.19.0
+# Ultimate AI Starter Bundle v8.19.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -84,7 +84,7 @@ The 124 general **skills** (plus 49 with the Skyrim pack) use a compact discover
 
 ### What's ON after install
 
-The always-on core is `context7` (library docs), `headroom` (context compression) and the bundle's `toolbox` (three small tools: `find`, `describe`, `call`). The official `github` server joins them only where the `gh` CLI is not signed in: `gh` covers repos, PRs, Actions and releases with no tool list, so the server would sit unused in every chat. Everything task-specific stays out of every chat until a task needs it, **including servers a tool's own installer registered machine-wide** (RimWorldForge, AvatarForge, Melty): the installer saves an exact copy and removes the machine-wide entry. Keep one machine-wide on purpose with `UABS_KEEP_GLOBAL_MCP=<id>`. Other independently configured servers are preserved. Schema bytes are not per-turn bills: filtering, deferred discovery, caching and tool calls determine actual usage.
+The always-on core is `context7` (library docs; keyless resolves library IDs only, `CONTEXT7_API_KEY` unlocks `query-docs`), `headroom` (context compression) and the bundle's `toolbox` (three small tools: `find`, `describe`, `call`). The official `github` server joins them only where the `gh` CLI is not signed in: `gh` covers repos, PRs, Actions and releases with no tool list, so the server would sit unused in every chat. Everything task-specific stays out of every chat until a task needs it, **including servers a tool's own installer registered machine-wide** (RimWorldForge, AvatarForge, Melty): the installer saves an exact copy and removes the machine-wide entry. Keep one machine-wide on purpose with `UABS_KEEP_GLOBAL_MCP=<id>`. Other independently configured servers are preserved. Schema bytes are not per-turn bills: filtering, deferred discovery, caching and tool calls determine actual usage.
 
 **You do not switch anything on.** When a task needs a project tool (Skyrim Forge, houseCARL, RimWorldForge, Blender, Unity, Godot, a browser, the GitHub API ...), your AI asks the toolbox, which starts that server in the same chat: no restart, no command, no config edit. The tool's own CLI keeps working too. For a project you use daily, the agent can also wire it natively with `Set-McpProfile.ps1 -Auto -Path <project>`; that copy loads in the next chat opened there.
 
@@ -904,6 +904,7 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
+**v8.19.1** - 2026-10-19. Melty is now explicitly opt-in: ordinary mods never default to a Melty folder, and the mashup route only applies to an explicit two-game fusion or publish on Melty. Context7 moved to 4.4.4 and its keyless tier now resolves library IDs only, so `query-docs` needs `CONTEXT7_API_KEY`; the catalog claim was re-measured rather than copied. REA 6.7.0, Serena 2.1.0 and shadcn-mcp 4.22.1. [Changes](docs/history/V8.19.1-CHANGELOG.md).
 **v8.19.0** - 2026-10-18. Closes all 11 open GitHub CodeQL alerts (#235–#245) in Impeccable scripts, completes Antigravity provider integration across all MCP targets and doctor checks, repairs Windows PowerShell extensionless `npm` resolution with `Resolve-UabsExecutable`, resolves Hermes ponytail plugin loading with ponytail 5.3.2, refreshes Universal Modder to `6a8865a`, and updates catalog components (`context7` 4.4.2, `chrome-devtools-mcp` 1.11.0, `shadcn-mcp` 4.22.0, `super-mcp-router` 2.8.4). [Changes](docs/history/V8.19.0-CHANGELOG.md).
 
 **v8.18.1** - 2026-10-18. Fixes the Antigravity bootstrap probe: a GUI app has no `--version`, and the old code read `$LASTEXITCODE` outside the branch that ran a process, so a cold install aborted with "exit code .". The probe now only reads an exit code where a process actually ran. [Changes](docs/history/V8.18.1-CHANGELOG.md).

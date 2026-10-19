@@ -40,7 +40,7 @@ class.
 | Nexus pages, releases, permissions, archive downloads | `references/skyrim-release.md` |
 | BDO, Helldivers 2, Saints Row, GTA/FiveM, RimWorld, Sims 4, Minecraft, Warframe | `references/game-modding-other.md` |
 | Model choice, harness routing, MCP wiring, agent cost control | `references/ai-models-harness.md` |
-| Game mashups, cross-engine character/asset swaps, Melty, UE4SS, ReShade add-ons, skeleton retargeting | `references/game-mashup-melty.md` |
+| Melty mashups and cross-engine character/asset swaps - only when the task is a mashup or an explicit two-game fusion on Melty; an ordinary mod uses its game card - plus UE4SS, ReShade add-ons, skeleton retargeting | `references/game-mashup-melty.md` |
 | Native Windows apps, browser extensions, installers, packaging | `references/apps-native-windows.md` |
 | Reverse engineering, cracking, exploits, malware false positives | `references/security-re.md` |
 

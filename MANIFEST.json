@@ -36,23 +36,23 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Compact.md",
-  "size": 3200,
-  "sha256": "886fded07fd6e791740d851eac15204447a5918e17fd6fa4bff854e39868df7a"
+  "size": 3199,
+  "sha256": "5bc27cb77f3aa1ad051004333c5ec38b7bf124916c6b1d36f134d02c832abf02"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web Light.md",
   "size": 635,
-  "sha256": "d78386eff264a21f34b88cc63f3028786e2caef4c8e0326c72e67d5a0822955f"
+  "sha256": "6b9bce061aff0d9653d505a415906bfbbfaac4b14ef16634ad4fa4b95541425a"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web.md",
   "size": 1397,
-  "sha256": "236356473ed0514bb2ca0e6f99b0b754477c7b9ca6404c73f1744d093850385f"
+  "sha256": "8c8d2e1119ffdd4d2ec1f5d84491aac70c453346336cd3bee2d676c5cc0a9a19"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 9083,
-  "sha256": "649d8d278fe4b9d19d9932ace976039d0ad5fda663f93bd497f9557164d731de"
+  "size": 9081,
+  "sha256": "603e7e252e217ef27872af04cb83aa971e9ca363dffa7f1a16a4404b12ccffef"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
@@ -401,8 +401,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 15738,
-  "sha256": "9110aa15843c43618e4e156399115384b030d3f7f35125d4795d2eba9ed878ce"
+  "size": 16023,
+  "sha256": "07a408cbd1330327d9f091a62625b14e7d7a5aba3ccfb586dd8158695e434d44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -5026,8 +5026,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3185,
-  "sha256": "28b340a57710229e02bd8a6e65949b076c70e89d943cbfc736409e11e8490867"
+  "size": 3297,
+  "sha256": "f6b9e002437b892a22a8a866a74c6bf325259801e98cfc6760a8e1cf45c696ed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -5041,8 +5041,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 7816,
-  "sha256": "a14b539dd726387530615639f07725482bbb5643317c5d919002525f8bb708a7"
+  "size": 8022,
+  "sha256": "d9cd7376da34099f24a9c5ee033bc03bbd4ffc09fbf46d1e16848843893b012a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -6816,8 +6816,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 15738,
-  "sha256": "9110aa15843c43618e4e156399115384b030d3f7f35125d4795d2eba9ed878ce"
+  "size": 16023,
+  "sha256": "07a408cbd1330327d9f091a62625b14e7d7a5aba3ccfb586dd8158695e434d44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -11441,8 +11441,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3185,
-  "sha256": "28b340a57710229e02bd8a6e65949b076c70e89d943cbfc736409e11e8490867"
+  "size": 3297,
+  "sha256": "f6b9e002437b892a22a8a866a74c6bf325259801e98cfc6760a8e1cf45c696ed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -11456,8 +11456,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 7816,
-  "sha256": "a14b539dd726387530615639f07725482bbb5643317c5d919002525f8bb708a7"
+  "size": 8022,
+  "sha256": "d9cd7376da34099f24a9c5ee033bc03bbd4ffc09fbf46d1e16848843893b012a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -13296,8 +13296,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 15738,
-  "sha256": "9110aa15843c43618e4e156399115384b030d3f7f35125d4795d2eba9ed878ce"
+  "size": 16023,
+  "sha256": "07a408cbd1330327d9f091a62625b14e7d7a5aba3ccfb586dd8158695e434d44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -17921,8 +17921,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3185,
-  "sha256": "28b340a57710229e02bd8a6e65949b076c70e89d943cbfc736409e11e8490867"
+  "size": 3297,
+  "sha256": "f6b9e002437b892a22a8a866a74c6bf325259801e98cfc6760a8e1cf45c696ed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -17936,8 +17936,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 7816,
-  "sha256": "a14b539dd726387530615639f07725482bbb5643317c5d919002525f8bb708a7"
+  "size": 8022,
+  "sha256": "d9cd7376da34099f24a9c5ee033bc03bbd4ffc09fbf46d1e16848843893b012a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -19761,8 +19761,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 15738,
-  "sha256": "9110aa15843c43618e4e156399115384b030d3f7f35125d4795d2eba9ed878ce"
+  "size": 16023,
+  "sha256": "07a408cbd1330327d9f091a62625b14e7d7a5aba3ccfb586dd8158695e434d44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -24386,8 +24386,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3185,
-  "sha256": "28b340a57710229e02bd8a6e65949b076c70e89d943cbfc736409e11e8490867"
+  "size": 3297,
+  "sha256": "f6b9e002437b892a22a8a866a74c6bf325259801e98cfc6760a8e1cf45c696ed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -24401,8 +24401,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 7816,
-  "sha256": "a14b539dd726387530615639f07725482bbb5643317c5d919002525f8bb708a7"
+  "size": 8022,
+  "sha256": "d9cd7376da34099f24a9c5ee033bc03bbd4ffc09fbf46d1e16848843893b012a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -26226,8 +26226,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 15738,
-  "sha256": "9110aa15843c43618e4e156399115384b030d3f7f35125d4795d2eba9ed878ce"
+  "size": 16023,
+  "sha256": "07a408cbd1330327d9f091a62625b14e7d7a5aba3ccfb586dd8158695e434d44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -30851,8 +30851,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3185,
-  "sha256": "28b340a57710229e02bd8a6e65949b076c70e89d943cbfc736409e11e8490867"
+  "size": 3297,
+  "sha256": "f6b9e002437b892a22a8a866a74c6bf325259801e98cfc6760a8e1cf45c696ed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -30866,8 +30866,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 7816,
-  "sha256": "a14b539dd726387530615639f07725482bbb5643317c5d919002525f8bb708a7"
+  "size": 8022,
+  "sha256": "d9cd7376da34099f24a9c5ee033bc03bbd4ffc09fbf46d1e16848843893b012a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -32766,8 +32766,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
-  "size": 15738,
-  "sha256": "9110aa15843c43618e4e156399115384b030d3f7f35125d4795d2eba9ed878ce"
+  "size": 16023,
+  "sha256": "07a408cbd1330327d9f091a62625b14e7d7a5aba3ccfb586dd8158695e434d44"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -37391,8 +37391,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3185,
-  "sha256": "28b340a57710229e02bd8a6e65949b076c70e89d943cbfc736409e11e8490867"
+  "size": 3297,
+  "sha256": "f6b9e002437b892a22a8a866a74c6bf325259801e98cfc6760a8e1cf45c696ed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -37406,8 +37406,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 7816,
-  "sha256": "a14b539dd726387530615639f07725482bbb5643317c5d919002525f8bb708a7"
+  "size": 8022,
+  "sha256": "d9cd7376da34099f24a9c5ee033bc03bbd4ffc09fbf46d1e16848843893b012a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -39016,8 +39016,8 @@
  },
  {
   "path": "3-PREAMBLES/SOUL.md",
-  "size": 736,
-  "sha256": "826859ba376aea998ea39f3b65ae38bdf3abebcb77f99a6147a01dd811d7958e"
+  "size": 735,
+  "sha256": "cbb03e767d90bff537795da3fc7caf8c4d44d42da3d94dd1d971e071324c5046"
  },
  {
   "path": "3-PREAMBLES/history/.gitkeep",
@@ -39136,13 +39136,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 56902,
-  "sha256": "2194e2e02e8ccc4a97ffd1c40fd24025c0e4740a6865909bd05970679d83601d"
+  "size": 56886,
+  "sha256": "bfa9b2efeb6af409b7426fa264a21a5ca70c473fecce6eb4f3b2834ba12ccb53"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1537,
-  "sha256": "ae6ba864637d818ab40807b147908b4fdf1b0ee10d754a1f44fca7dab775ee01"
+  "sha256": "b8ed063c3503e1aedb5118637d247c671d0a02e232fb046b975fbc640d79f356"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -39151,8 +39151,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
-  "size": 35769,
-  "sha256": "c87750f68af2b1ee73507f0eeac15934990f486bdf684d32f4c32ef89e75654b"
+  "size": 35772,
+  "sha256": "70e4eb5f43e7e0d79a6cc32819c95b87039a6c92e9841793bec3acf1bbbdd13f"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -39181,8 +39181,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/capability-records/context7.json",
-  "size": 854,
-  "sha256": "d5f9c8e4fc711dc62f6b40de432c140e2ff673c55fca1fc6e283af282b658585"
+  "size": 838,
+  "sha256": "ca9a41ee60bf96200695bb27563c3406ec361ee250f1caf7835e8fc0c341217c"
  },
  {
   "path": "BUNDLED-TOOLS/capability-records/firecrawl-mcp.json",
@@ -39286,8 +39286,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/optional-skills/melty-mashups/SKILL.md",
-  "size": 4021,
-  "sha256": "c0806067dedcf1097ade2d3d311b66fee2ce21e43942cf2763a0c09c5f736f4b"
+  "size": 4409,
+  "sha256": "b30be79c5cb09dc8107ee5678e491e4e574ad2a7dbf02fc19a409bd8902fe30b"
  },
  {
   "path": "BUNDLED-TOOLS/packs/skyrim/INSTRUCTIONS.md",
@@ -43126,8 +43126,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 214212,
-  "sha256": "8ace69f142df34b1748d1ed47c14eb1cc9aa2aaf4b4cce2bcdbd7aa4018beebb"
+  "size": 216092,
+  "sha256": "227145b7ddf7d952f6db4dbb02881787c6e8759614b610db24372b4615cbf990"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43202,7 +43202,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 174585,
-  "sha256": "5ec006cce81de3e105617a508fc030a0f9570bd5758f37dfdb96fc0ed0f2de48"
+  "sha256": "85e4887cd563c7b69e31ddada40c4ac15f082bc1024ddce1486919a0eb538663"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43256,8 +43256,8 @@
  },
  {
   "path": "README.md",
-  "size": 64763,
-  "sha256": "d7f1a4a308f60df03baa9cc8fa28aad8b0aad66bf41918de01292fd7df03b04b"
+  "size": 65295,
+  "sha256": "e7f15c5d158f5c1cd60378567c0abefc7255de0ef86dd62a020e8035ddb1816b"
  },
  {
   "path": "SECURITY.md",
@@ -43267,12 +43267,12 @@
  {
   "path": "START-HERE.bat",
   "size": 888,
-  "sha256": "2f964ea7e0328f3d7421aef57cd17ece46f7c035f9a48ccf9b1a58c97f3e001c"
+  "sha256": "944bcd8b2ca096d1ef9d2648bb591f641da0e99c3b05538f4c1787ce53d50fa1"
  },
  {
   "path": "START-HERE.txt",
   "size": 11419,
-  "sha256": "3b7ff003d5323dc7f20210f0a31f9c3449a4b30edcd22b481992e7881de1b039"
+  "sha256": "0b2b89ab59f02193e16062931803bd92cdd677a2aa2654236380917beeb0ad0d"
  },
  {
   "path": "STATE.md",
@@ -43347,7 +43347,7 @@
  {
   "path": "TESTS/Test-McpPark.ps1",
   "size": 10288,
-  "sha256": "a1d2d785d1b0fd35493274465f48e888f5c1e4621bf0750cf351a17400bb7292"
+  "sha256": "3c8f3bd8018dac6feca9131c0a9fce3184792992df7bf853fa7f2f8d2dc530c6"
  },
  {
   "path": "TESTS/Test-McpProfiles.ps1",
@@ -43602,7 +43602,7 @@
  {
   "path": "TESTS/test_release_contract.py",
   "size": 325621,
-  "sha256": "80f5046765a6cfa09e505fe5f886a3e71be243077ab8f82038a2228ff5cb7abe"
+  "sha256": "5a35f19814437051e6ecc663a6901b79f8212eda2564ce190c0574cd0a2e8d80"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -43896,8 +43896,8 @@
  },
  {
   "path": "TOOLS/measure_mcp_capability.py",
-  "size": 16128,
-  "sha256": "94892c00f50760c3acaec133eb1062a6c8c08117d2f5316a8eab160e10454196"
+  "size": 16278,
+  "sha256": "73ccc52eed9ab9a80e1b6cd75c9278448a821f653b2982f1473a5b6a2cdac018"
  },
  {
   "path": "TOOLS/merge_registry.py",
@@ -43951,8 +43951,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2433,
-  "sha256": "88e88a47ce665d6c1a7aa1aaa00dbdbac044b4dbd1a8a7e750d806fd5da16297"
+  "size": 2263,
+  "sha256": "8d4643d5f13e3669729c39618d41ff9b986653fa7ff6238de08cc4020ec0204d"
  },
  {
   "path": "VALIDATION.md",
@@ -43962,7 +43962,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "d7f55fd9706f11367e5acd96d35145a4dc9c14002431a525cb95fa9684b24909"
+  "sha256": "1a52b50b34f988939253548e93947a22976937aef4276033ea0649d4f05de453"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -44206,8 +44206,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/capability-profiles/SKILL.md",
-  "size": 15738,
-  "sha256": "9110aa15843c43618e4e156399115384b030d3f7f35125d4795d2eba9ed878ce"
+  "size": 16023,
+  "sha256": "07a408cbd1330327d9f091a62625b14e7d7a5aba3ccfb586dd8158695e434d44"
  },
  {
   "path": "_CANONICAL-SKILLS/capability-profiles/references/task-recipes.json",
@@ -48831,8 +48831,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/SKILL.md",
-  "size": 3185,
-  "sha256": "28b340a57710229e02bd8a6e65949b076c70e89d943cbfc736409e11e8490867"
+  "size": 3297,
+  "sha256": "f6b9e002437b892a22a8a866a74c6bf325259801e98cfc6760a8e1cf45c696ed"
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/ai-models-harness.md",
@@ -48846,8 +48846,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/game-mashup-melty.md",
-  "size": 7816,
-  "sha256": "a14b539dd726387530615639f07725482bbb5643317c5d919002525f8bb708a7"
+  "size": 8022,
+  "sha256": "d9cd7376da34099f24a9c5ee033bc03bbd4ffc09fbf46d1e16848843893b012a"
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/game-modding-other.md",

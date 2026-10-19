@@ -1,7 +1,7 @@
 {
  "schema": 1,
- "catalog_version": "8.19.0",
- "pack_version": "8.19.0",
+ "catalog_version": "8.19.1",
+ "pack_version": "8.19.1",
  "updated_utc": "2026-10-18",
  "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
  "reads": "TOOLS/Set-McpProfile.ps1",
@@ -110,15 +110,13 @@
     "keywords": [
      "melty",
      "mashup",
-     "publish",
-     "crossover",
-     "game mod listing"
+     "melty.gg"
     ],
     "match": [
      "melty.gg"
     ],
     "detect": null,
-    "note": "Publishing mashups only (an authenticated remote server). The toolbox starts it on demand from the parked entry."
+    "note": "Explicit Melty mashup publishing only (an authenticated remote server). Never the default home for mods; the toolbox starts it on demand from the parked entry."
    }
   ]
  },
@@ -251,7 +249,7 @@
      "requires": {
       "command": "%USERPROFILE%\\.local\\bin\\serena.exe"
      },
-     "install_hint": "uv tool install -p 3.13 serena-agent==2.0.0 && serena init",
+     "install_hint": "uv tool install -p 3.13 serena-agent==2.1.0 && serena init",
      "upstream_setup": "serena setup {claude-code|codex|grok} registers Serena machine-wide for that client. This pack deliberately does not call it: a machine-wide registration is the cost this file exists to avoid.",
      "context_note": "--context trims the tool set to what the client does not already have. Serena 2.0.0 ships named contexts for claude-code, codex and grok; Kimi and Hermes have none, so they get the generic 'agent' context. --project pins the registration to the project it was written for; --project-from-cwd is used instead for a -Global registration, since one baked path would activate the wrong project everywhere else. --enable-web-dashboard false keeps Serena from opening a browser window and from leaving an HTTP listener on the machine. Upstream recommends leaving the dashboard on and setting --open-web-dashboard false instead; this pack does not start a local web server a user did not ask for, and uses TOOLS/Test-McpHandshake.ps1 for diagnosis.",
      "auto_install": {
@@ -265,7 +263,7 @@
          "install",
          "-p",
          "3.13",
-         "serena-agent==2.0.0"
+         "serena-agent==2.1.0"
         ]
        },
        {
@@ -401,7 +399,7 @@
      "command": "npx",
      "args": [
       "-y",
-      "shadcn@4.22.0",
+      "shadcn@4.22.1",
       "mcp"
      ],
      "note": "search, inspect and add components from configured shadcn registries (~1,124 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
@@ -625,7 +623,7 @@
      "catalog_component": "blender-mcp",
      "command": "uvx",
      "args": [
-      "mcp-for-blender@2.1.9"
+      "mcp-for-blender@2.2.0"
      ],
      "env_static": {
       "BLENDER_MCP_DISABLE_TELEMETRY": "true",
@@ -642,7 +640,7 @@
        "%LOCALAPPDATA%\\Programs\\Blender Foundation\\*\\blender.exe"
       ]
      },
-     "editor_side": "uvx mcp-for-blender@2.1.9 install-addon",
+     "editor_side": "uvx mcp-for-blender@2.2.0 install-addon",
      "editor_side_note": "The server talks to an addon inside Blender. `install-addon` copies it into the user addons folder, but ENABLING it is inside the editor process and cannot be done from outside -- so Set-McpProfile prints the command rather than pretending it ran it. 'The MCP executable starts' and 'the addon is connected' are different claims: the server answers initialize with no Blender running at all. Only a tool call that reaches the scene proves the second.",
      "requires_note": "Discovered, never hardcoded. 7.9.6 listed a Steam path on this maintainer's own drive letter, which could not match on anybody else's machine -- the exact class of path this pack forbids elsewhere. The first two entries are what `uvx mcp-for-blender@2.0.0 addon-paths` reports: Blender creates that user directory on first run whatever the install source, Steam included.",
      "telemetry_note": "Measured 2026-09-17: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 tokens) while BLENDER_MCP_DISABLE_TELEMETRY=true logs the supported opt-out and BLENDER_MCP_SAFE_MODE=true validates generated Python before it reaches Blender. Safe mode preserves normal scene/render/save/import-export work and blocks interpreter, process, network and persistence escape paths."

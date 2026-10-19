@@ -1,5 +1,9 @@
 # Melty mashups and cross-engine character swaps — settled results
 
+> Scope: mashup and cross-engine fusion work only. An ordinary single-game mod
+> belongs to its game card (`skyrim-modding.md`, `game-modding-other.md`);
+> nothing here says to put mods in a Melty folder.
+
 Case: the operator's first Melty mashup (2026-10): a UE 4.25-derived shipping
 game as host, a UE 4.27 game and a Unity 2018.2 Mono game as companions, solo
 only. Status when written (2026-10-14): working in game on one lab build, not

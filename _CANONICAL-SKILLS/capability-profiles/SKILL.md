@@ -54,6 +54,11 @@ runtime/editor proof rather than claiming guaranteed one-shot success.
 
 ## Task tools: the toolbox starts them
 
+**Melty is opt-in.** It applies only when the user asks to fuse two games or
+publish on Melty's platform; an ordinary mod lives in its own project folder
+and never defaults to Melty. The server stays parked like every other task
+tool, so a Melty request can still start it on demand.
+
 Task MCP servers (Skyrim Forge, houseCARL, RimWorldForge, AvatarForge, Melty,
 Blender, Unity, Godot, Playwright, the code graph, the GitHub server where `gh`
 is signed in, ...) are in no chat until a task needs one. A tool's own installer

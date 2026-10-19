@@ -163,6 +163,9 @@ def sample_value(tool_name: str, prop: str, spec: dict):
         return {}
     if "url" in low:
         return SAMPLE_PAGE if ("scrape" in tool_name or "parse" in tool_name) else SAMPLE_URL
+    # Context7-style library references must be /owner/repo, not prose.
+    if low in ("libraryid", "library_id"):
+        return "/upstash/context7"
     if low in ("id", "jobid", "monitorid", "crawlid", "agentid", "sessionid"):
         return SAMPLE_ID
     if "schedule" in low:

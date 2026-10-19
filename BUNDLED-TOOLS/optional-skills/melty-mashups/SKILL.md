@@ -10,6 +10,14 @@ metadata:
 # Melty mashups
 
 Optional skill: the bundle never installs or routes to Melty by default.
+
+## When Melty applies
+
+Only when the user explicitly asks to fuse two games or publish a mashup on
+Melty. An ordinary mod (a Skyrim plugin, a RimWorld def, a texture pack) stays
+in its own project folder; nothing is copied, packaged or published to Melty
+unless that request is on the table. The server stays parked like every other
+task tool, so a Melty request can start it on demand.
 Melty's own app and instructions are the authority; this skill only keeps an
 agent inside them.
 

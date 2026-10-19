@@ -5,14 +5,14 @@
    "name": "REA (Reverse Engineer Anything)",
    "kind": "cli-optional",
    "install": "npx-or-npm",
-   "version": "6.5.0",
+   "version": "6.7.0",
    "license": "MIT",
    "github": {
     "owner": "morluto",
     "repo": "rea"
    },
-   "npm_spec": "rea-agents@6.5.0",
-   "npm_integrity": "sha512-C6BG7LyrAdR74mSjertM6PrxJkcNZ2bfQNOJornPo9erDEp2tyPRVYPnV5Yodr+1RqewCQla68WulXlVnveD+A==",
+   "npm_spec": "rea-agents@6.7.0",
+   "npm_integrity": "sha512-yhIx2ioJYYT1C/tONfYeitC6LhnKmCh+ZwRUOgYuhSc733lGhkkt73zhug9WmLgxoMdKuqIYGCoBfD4fXkOhFw==",
    "npm_args": [
     "--ignore-scripts"
    ],
@@ -619,7 +619,7 @@
    "kind": "mcp-npx",
    "mcp": true,
    "license": "MIT",
-   "version": "4.4.2",
+   "version": "4.4.4",
    "github": {
     "owner": "upstash",
     "repo": "context7"
@@ -628,17 +628,16 @@
    "npx_command": "npx",
    "npx_args": [
     "-y",
-    "@upstash/context7-mcp@4.4.2"
+    "@upstash/context7-mcp@4.4.4"
    ],
    "auto_register": true,
    "api_key_env": "CONTEXT7_API_KEY",
    "api_key_optional": true,
    "keyless_registration": "register",
    "keyless_tools": [
-    "resolve-library-id",
-    "query-docs"
+    "resolve-library-id"
    ],
-   "keyless_note": "Measured 2026-09-13 against pinned 4.1.0 with the credential environment scrubbed: BOTH advertised tools answered keyless, neither was rate-limited, key-gated or deprecated in this sweep. The optional key raises rate limits; no additional tool was observed. Regenerate with TOOLS/measure_mcp_capability.py.",
+   "keyless_note": "Measured 2026-10-19 against pinned 4.4.4 with the credential environment scrubbed: resolve-library-id answered keyless; query-docs now returns an auth-required response without a key. Set CONTEXT7_API_KEY to unlock documentation queries and raise rate limits. Regenerate with TOOLS/measure_mcp_capability.py.",
    "capability_record": "BUNDLED-TOOLS/capability-records/context7.json",
    "providers": [
     "Claude",
@@ -693,13 +692,13 @@
    "kind": "mcp-python",
    "mcp": true,
    "license": "MIT",
-   "version": "2.0.0",
+   "version": "2.1.0",
    "github": {
     "owner": "oraios",
     "repo": "serena"
    },
    "install": "uv-tool",
-   "install_command": "uv tool install -p 3.13 serena-agent==2.0.0",
+   "install_command": "uv tool install -p 3.13 serena-agent==2.1.0",
    "exe_rel": "%USERPROFILE%\\.local\\bin\\serena.exe",
    "profile": "code-intel",
    "auto_register": false,
@@ -744,7 +743,7 @@
    "kind": "mcp-npx",
    "mcp": true,
    "license": "MIT",
-   "version": "4.22.0",
+   "version": "4.22.1",
    "github": {
     "owner": "shadcn-ui",
     "repo": "ui"
@@ -753,7 +752,7 @@
    "npx_command": "npx",
    "npx_args": [
     "-y",
-    "shadcn@4.22.0",
+    "shadcn@4.22.1",
     "mcp"
    ],
    "profile": "web",
@@ -770,7 +769,7 @@
    "kind": "mcp-uvx",
    "mcp": true,
    "license": "MIT",
-   "version": "2.1.9",
+   "version": "2.2.0",
    "github": {
     "owner": "ahujasid",
     "repo": "mcp-for-blender"
@@ -778,7 +777,7 @@
    "install": "mcp-uvx",
    "npx_command": "uvx",
    "npx_args": [
-    "mcp-for-blender@2.1.9"
+    "mcp-for-blender@2.2.0"
    ],
    "profile": "engine-blender",
    "auto_register": false,
@@ -938,7 +937,7 @@
    "kind": "mcp-npx",
    "mcp": true,
    "license": "MIT",
-   "version": "2.8.4",
+   "version": "2.8.5",
    "github": {
     "owner": "mindstone",
     "repo": "Super-MCP"
@@ -947,7 +946,7 @@
    "npx_command": "npx",
    "npx_args": [
     "-y",
-    "super-mcp-router@2.8.4"
+    "super-mcp-router@2.8.5"
    ],
    "profile": null,
    "auto_register": false,
@@ -1009,7 +1008,7 @@
    "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
   }
  ],
- "pack_version": "8.19.0",
+ "pack_version": "8.19.1",
  "updated_utc": "2026-10-18",
  "providers": {
   "Grok": {
@@ -1097,7 +1096,7 @@
  "provider_config_schemas": {
   "Hermes": 44
  },
- "catalog_version": "8.19.0",
+ "catalog_version": "8.19.1",
  "updated": "2026-10-18",
  "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

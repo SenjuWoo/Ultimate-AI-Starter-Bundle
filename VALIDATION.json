@@ -1,8 +1,8 @@
 {
  "pack": "Ultimate AI Starter Bundle",
- "version": "8.19.0",
+ "version": "8.19.1",
  "generated": "2026-10-18",
- "release_tag": "v8.19.0",
+ "release_tag": "v8.19.1",
  "canonical_skills": 173,
  "provider_trees": 6,
  "registry_entries": 173,
@@ -44,6 +44,6 @@
   "TESTS/Test-AiHistoryBackup.ps1",
   "TESTS/test_toolbox.py"
  ],
- "runtime_status": "v8.19.0: CodeQL alert fixes (#235–#245), full Antigravity provider integration, Windows extensionless npm fix, Hermes ponytail 5.3.2 plugin sync, Universal Modder 6a8865a refresh with rebuilt offline wheel, and catalog tool updates (context7 4.4.2, chrome-devtools-mcp 1.11.0, shadcn-mcp 4.22.0, super-mcp-router 2.8.4). Verified against all 150 release contract tests and 19-section pack test battery.",
+ "runtime_status": "v8.19.1: Melty made explicitly opt-in (no default mods folder), context7 4.4.4 with the corrected keyless claim, REA 6.7.0, Serena 2.1.0, shadcn-mcp 4.22.1, US spelling across SOUL/AIO. Verified against all 150 release contract tests.",
  "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for every always-on MCP server (context7, headroom, the toolbox, and GitHub where gh is not signed in). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }
