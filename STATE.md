@@ -1,6 +1,6 @@
 # Bundle audit state
 
-## v8.20.0: Tools/Modding folder review, mashup skill, UM refresh (2026-10-21, in progress)
+## v8.20.0: Tools/Modding folder review, mashup skill, UM refresh (2026-10-21, released)
 
 - Owner asked to review the new `Tools` (6 snapshots) and `Modding` (bench +
   `Game-Mashup-Passthrough/LESSONS.md`) folders and bundle or document as best.
@@ -36,9 +36,35 @@
   (refresh-tool patch too; UM tests 178 pass on Pillow 13.0.0 in a scratch venv),
   both integrations `<14` and `uv lock --upgrade-package pillow --upgrade-package
   certifi`; fanout re-run. Dependabot PR #7 (vision only) is superseded.
-- Next: Test-Pack, commit, push, CI + CodeQL + flags (alerts must reach 0), build
-  twice, release, verify bytes, then START-HERE once so the live trees get the
-  skill and wheel.
+
+### Publication checkpoint (v8.20.0)
+
+- Tag `v8.20.0` -> `55465b75071198c0afa306f9a613336c0a35fef0` (not fa07679: the
+  first push was superseded by the Pillow/certifi fix before any tag existed).
+  CI (4 jobs) and CodeQL (3 jobs) success on that SHA; Dependabot / code-scanning
+  / secret-scanning open alerts 0 (`TOOLS/Get-GitHubFlags.ps1` flags=clean;
+  code_quality unavailable, left off).
+- Archives built twice byte-identical: Core 54,893,843 B
+  `eb09f5faf192eb77cc4561379bfbfd52dd16bfcb4ef9ca6f61657310c10ed5e5`,
+  Full-Offline 223,136,062 B
+  `3e427ffee1802d99224660e29272b647ee445bac30e8032051fb9eec6b0eb08f`.
+  Extracted under a space+Unicode path: contracts 151/0, manifest verified
+  (10,272 Core / 10,280 Full), Test-Pack PASS in both.
+- Release published as latest; downloaded assets equal the build (cmp, size,
+  sha256 sidecars, GitHub digests). Receipts: ignored `artifacts/release-v8.20.0/`.
+- Real START-HERE run on this PC after the release (336 s, longer than the
+  265 s of 2026-10-20: new wheel and Pillow 13 download, skills re-synced):
+  INSTALL COMPLETE, doctor PASS, 0 warnings, 0 TerminatingError;
+  `game-mashup-passthrough` present in Claude, Codex, Grok, Kimi, Hermes and
+  Antigravity skill dirs; preserved Impeccable 4.3.1 untouched; `um voidless`
+  live.
+- Not certified: the new skill was not exercised in a live mashup session
+  (needs a fresh chat after the apps are reopened); provider inference; game
+  runtime; billed-token savings.
+- Open for the owner: the local `Tools\rea-main` (6.5.0) and
+  `Tools\universal-modder-main` snapshots lag the pack's pins; the pack never
+  reads them. Dependabot PR #7 (img2threejs vision) is superseded by the fix;
+  close it if it stays open.
 
 ## v8.19.2: review of v8.15.1..v8.19.1 + install speed (2026-10-20, released)
 
