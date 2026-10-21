@@ -1,5 +1,59 @@
 # Bundle audit state
 
+## v8.19.2: review of v8.15.1..v8.19.1 + install speed (2026-10-20, in progress)
+
+- Owner asked to verify the DeepSeek-era edits (v8.15.1..v8.19.1, all committed),
+  find bugs, make the install faster. Baseline on HEAD 58c8180: contracts 150/0,
+  Test-Pack PASS, manifest 10,241, versions agree, privacy/toolbox/hermes/MCP/
+  codex-native/UM gates PASS; catalog audit stale=1 (blender-mcp).
+- Profiled the last real install (logs `install-20261018-050020*`, 5 min 24 s).
+  Fixed, each measured on this machine:
+  - Hermes migrator read config with `hermes config get` per key per profile
+    (~4.2 s each). Now one `load_config` process per profile, cached, cleared
+    after writes: reads 279.6 s -> 6.6 s (values identical), plan-only run
+    152.0 s -> 7.6 s, plans line-identical. Also raw (CLI masked secrets that
+    the map write-back would have persisted; none present here).
+  - `Get-UabsTreeDigest`: reused SHA-256 instead of Get-FileHash; identical on
+    321 trees x 2 sort modes, 4.8x faster.
+  - Plugin-owned skills (63: Claude/Codex/Kimi) no longer copied then deduped
+    every run; skipped from prior state's `owned`, restored if not native now.
+  - Spooky external update re-ran every install (folder-name version) and copied
+    from the archive root: now copies from the `.sln` folder, stamps
+    `.uabs-version`, `Get-UabsPathVersion` reads the stamp first.
+  - `Get-UabsProcessVersion`: stdin closed, 10 s timeout (was unbounded).
+    New gate `TESTS/Test-VersionProbes.ps1` (in Test-Pack + contract list).
+  - Antigravity plugins refreshed every run; config.json written only on change
+    (+ `.bak-uabs`), missing `enabled` property no longer throws.
+  - blender-mcp 2.2.0 -> 2.2.2 (handshake PASS, 9 tools, 15,754 B).
+  - test_release_contract.py: 4 invalid escape sequences (SyntaxWarning) fixed.
+  - VALIDATION.md was left at v8.19.0 with the v8.15.0 text; now v8.19.2.
+  - First real install stopped: "Local skill override changed: Claude/impeccable".
+    Cause: the v8.19.1 session ran `TOOLS/install_live_skills.py`, which ignored
+    `skill-overrides.json` and merged pack Impeccable 4.1.3 over the preserved
+    4.3.1 (Claude/Codex/Grok). Restored from `skills.bak-uabs-20261019-195419`
+    (ordinal digest == registry, all three); overwritten copies kept under
+    `backups\impeccable-overwritten-<prov>-20261020-221510`. Tool now skips
+    preserved skills (+ contract); file-handle leaks closed (-W error clean).
+  - Second real install: doctor FAIL on REA 6.5.0 (hand-installed, cli-optional,
+    never installed by the bundle) after v8.19.1 pinned 6.7.0; advice "re-run"
+    could never fix it. Doctor now fails only on `npm-global` copies the bundle
+    owns, warns otherwise. Machine's REA moved to 6.7.0 (integrity == catalog).
+  - Starter settings: 15 `hermes config get` -> one load_config pass with CLI
+    fallback (65.5 s -> 10.2 s). PS 5.1 `'[]'|ConvertFrom-Json` unwrap bug
+    caught by the first run (empty key set refused; nothing written).
+  - A timing probe of mine re-copied plugin skills into Claude/Kimi and retired
+    Antigravity's brainstorming; re-synced with correct excludes (verified).
+- Third real START-HERE run (UABS_NO_PAUSE=1, UABS_NO_SELF_UPDATE=1):
+  INSTALL COMPLETE, 265 s (324 s on 2026-10-18), 0 TerminatingError, handshakes
+  all six apps, doctor PASS; after the REA move the doctor is 0 errors 0
+  warnings. Skills+settings 37 s (was 82 s), Hermes migration 20 s (was ~107 s).
+- Not changed (by design / needs owner): MCP handshakes stay serial (~35 s;
+  parallel npx risks cache contention); `.git` 492 MiB history (needs rewrite).
+- Gates after changes: contracts 150/0 (warnings-as-errors clean), manifest
+  10,243, versions agree, privacy, hermes bootstrap, toolbox, MCP protocol, UM,
+  RTK candidate PASS. Next: Test-Pack, real START-HERE run, commit, push, CI,
+  release v8.19.2, verify bytes.
+
 ## v8.19.0: CodeQL fixes, Antigravity provider integration, tool refreshes, full verification (2026-10-18)
 
 - All 11 open GitHub CodeQL alerts (#235–#245) fixed in code in `_CANONICAL-SKILLS/impeccable/scripts/`:

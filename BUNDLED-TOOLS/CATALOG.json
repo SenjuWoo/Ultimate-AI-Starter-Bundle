@@ -769,7 +769,7 @@
    "kind": "mcp-uvx",
    "mcp": true,
    "license": "MIT",
-   "version": "2.2.0",
+   "version": "2.2.2",
    "github": {
     "owner": "ahujasid",
     "repo": "mcp-for-blender"
@@ -777,7 +777,7 @@
    "install": "mcp-uvx",
    "npx_command": "uvx",
    "npx_args": [
-    "mcp-for-blender@2.2.0"
+    "mcp-for-blender@2.2.2"
    ],
    "profile": "engine-blender",
    "auto_register": false,
@@ -785,7 +785,7 @@
    "required_for": [
     "blender-scene-control"
    ],
-   "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender. Update measured 2026-09-28 at 2.1.1: initialize/tools-list PASS, 36 tools, 45,055 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 2.1.3: initialize/tools-list PASS; 36 tools, 45,121 compact UTF-8 schema bytes; telemetry disabled, safe mode enabled. No live editor calls. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 2.1.9 Windows initialize/tools-list PASS; 9 advertised tools, 15,597 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised."
+   "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender. Update measured 2026-09-28 at 2.1.1: initialize/tools-list PASS, 36 tools, 45,055 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 2.1.3: initialize/tools-list PASS; 36 tools, 45,121 compact UTF-8 schema bytes; telemetry disabled, safe mode enabled. No live editor calls. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 2.1.9 Windows initialize/tools-list PASS; 9 advertised tools, 15,597 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. 2026-10-20: 2.2.2 Windows initialize/tools-list PASS (telemetry off, safe mode on); 9 tools, 15,754 compact UTF-8 schema bytes (2.2.0: 15,651). No editor calls."
   },
   {
    "id": "godot-mcp",
@@ -1008,7 +1008,7 @@
    "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings."
   }
  ],
- "pack_version": "8.19.1",
+ "pack_version": "8.19.2",
  "updated_utc": "2026-10-18",
  "providers": {
   "Grok": {
@@ -1096,7 +1096,7 @@
  "provider_config_schemas": {
   "Hermes": 44
  },
- "catalog_version": "8.19.1",
+ "catalog_version": "8.19.2",
  "updated": "2026-10-18",
  "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

@@ -626,7 +626,14 @@ foreach ($npmComp in @($catalog.components | Where-Object { $_.npm_spec -and $_.
       $older = $false
       try { $older = ([version]$first.Version) -lt ([version]$want) } catch { }
       $msg = "$($npmComp.id): the launcher that runs first on PATH ($($first.Dir)) is $($first.Version); this pack installs $want."
-      if ($older) { Err ($msg + ' Re-run START-HERE.bat: it removes the older copy after taking a verified recovery copy.') } else { Warn ($msg + ' Left alone: it is not older.') }
+      # Only a copy this install put there is the bundle's to fix. An optional
+      # tool the bundle never installed (REA 6.5.0 installed by hand, measured
+      # 2026-10-20) failed every install with advice a re-run cannot carry out.
+      $rec = if ($state -and $state.components) { $state.components.PSObject.Properties[[string]$npmComp.id] } else { $null }
+      $owned = $rec -and [string]$rec.Value.status -eq 'npm-global'
+      if ($older -and $owned) { Err ($msg + ' Re-run START-HERE.bat: it removes the older copy after taking a verified recovery copy.') }
+      elseif ($older) { Warn ($msg + ' Left alone: this optional tool was not installed by the bundle.') }
+      else { Warn ($msg + ' Left alone: it is not older.') }
     }
     foreach ($other in @($launchers | Select-Object -Skip 1 | Where-Object { $_.Version -ne $want })) {
       Warn "$($npmComp.id) $($other.Version) is also on PATH in $($other.Dir) (shadowed by the first launcher)."

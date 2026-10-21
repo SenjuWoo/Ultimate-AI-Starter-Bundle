@@ -130,8 +130,66 @@ function Invoke-UabsHermes([string[]]$Arguments, [switch]$AllowMissing) {
   return @{ Code = $code; Output = $output }
 }
 
+# Every key this migration reads, fetched once per profile in ONE Python process
+# through Hermes' own load_config - the API the writes below already use.
+# Measured 2026-10-20: `hermes config get` costs ~4.2 s per call, and seven keys
+# across ten profiles were ~100 s of a five-minute install that changed nothing;
+# load_config costs ~0.6 s per profile. It also returns real values: `config
+# get` masks credential-shaped fields (Hermes #84106) and the MCP map read here
+# is written back whole, so a token in an MCP env/header would have been
+# replaced by its mask.
+$script:UabsHermesReadKeys = @('mcp_servers', 'fallback_providers', 'plugins.enabled', 'plugins.disabled', 'model.aliases', 'auxiliary.vision', 'auxiliary.compression')
+$script:UabsHermesReadCache = @{}
+$script:UabsHermesReadScript = @'
+import json, os, sys
+from hermes_cli import config as hc
+cfg = hc.load_config()
+missing = getattr(hc, "_MISSING", object())
+def get(key):
+    if hasattr(hc, "_get_nested"):
+        return hc._get_nested(cfg, key)
+    node = cfg
+    for part in key.split("."):
+        if not isinstance(node, dict) or part not in node:
+            return missing
+        node = node[part]
+    return node
+out = {}
+for key in json.loads(os.environ["UABS_HERMES_READ_KEYS"]):
+    value = get(key)
+    if value is not missing:
+        out[key] = json.dumps(value, ensure_ascii=True)
+sys.stdout.write(json.dumps(out, ensure_ascii=True) + "\n")
+'@
+
+function Invoke-UabsHermesConfigGet([string]$Profile, [string]$Key) {
+  <# Drop-in for `hermes -p <profile> config get <key> --json` (same Code/Output
+     shape; Code 1 = key not set or profile missing), served from the per-profile
+     snapshot. Writes clear the snapshot, so a read after a write is live. #>
+  if (-not $script:UabsHermesReadCache.ContainsKey($Profile)) {
+    $profileHome = if ($Profile -eq 'default') { $HermesHome } else { Join-Path (Join-Path $HermesHome 'profiles') $Profile }
+    $values = $null
+    if ($Profile -eq 'default' -or (Test-Path -LiteralPath $profileHome -PathType Container)) {
+      try {
+        $lines = @(Invoke-UabsHermesConfig -Script $script:UabsHermesReadScript -EnvVars @{
+          HERMES_HOME = $profileHome
+          UABS_HERMES_READ_KEYS = (ConvertTo-Json -InputObject $script:UabsHermesReadKeys -Compress)
+        })
+      } catch { throw "Hermes config read failed for profile '$Profile': $($_.Exception.Message)" }
+      $json = @($lines | ForEach-Object { [string]$_ } | Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
+      if (-not $json) { throw "Hermes config read returned no JSON for profile '$Profile'." }
+      $values = @{}
+      foreach ($property in ($json | ConvertFrom-Json).PSObject.Properties) { $values[$property.Name] = [string]$property.Value }
+    }
+    $script:UabsHermesReadCache[$Profile] = $values
+  }
+  $values = $script:UabsHermesReadCache[$Profile]
+  if ($values -and $values.ContainsKey($Key)) { return @{ Code = 0; Output = @($values[$Key]) } }
+  return @{ Code = 1; Output = @() }
+}
+
 function Get-UabsMcpMap([string]$Profile) {
-  $result = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'mcp_servers', '--json') -AllowMissing
+  $result = Invoke-UabsHermesConfigGet $Profile 'mcp_servers'
   if ($result.Code -ne 0) { return @{} }
   $json = @($result.Output | ForEach-Object { [string]$_ } | Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
   if (-not $json) { throw "Hermes returned no JSON for profile '$Profile'." }
@@ -403,7 +461,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
     return Get-UabsProfilePrefs 'default'
   }
   $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @(); vision_chain = @(); compression = @{} }
-  $fb = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'fallback_providers', '--json') -AllowMissing
+  $fb = Invoke-UabsHermesConfigGet $Profile 'fallback_providers'
   if ($fb.Code -eq 0) {
     $json = @($fb.Output | ForEach-Object { [string]$_ } |
       Where-Object { $_.Trim().StartsWith('[') }) | Select-Object -Last 1
@@ -412,7 +470,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
     # and every entry then reads as Object[] instead of a server hashtable.
     if ($json) { $out.fallback = ConvertTo-UabsPlain ($json | ConvertFrom-Json) }
   }
-  $pl = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'plugins.enabled', '--json') -AllowMissing
+  $pl = Invoke-UabsHermesConfigGet $Profile 'plugins.enabled'
   if ($pl.Code -eq 0) {
     $json = @($pl.Output | ForEach-Object { [string]$_ } |
       Where-Object { $_.Trim().StartsWith('[') }) | Select-Object -Last 1
@@ -424,7 +482,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
       $out.plugins = @($parsedPlugins | ForEach-Object { [string]$_ })
     }
   }
-  $dp = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'plugins.disabled', '--json') -AllowMissing
+  $dp = Invoke-UabsHermesConfigGet $Profile 'plugins.disabled'
   if ($dp.Code -eq 0) {
     $json = @($dp.Output | ForEach-Object { [string]$_ } |
       Where-Object { $_.Trim().StartsWith('[') }) | Select-Object -Last 1
@@ -433,7 +491,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
       $out.disabled_plugins = @($parsedDisabled | ForEach-Object { [string]$_ })
     }
   }
-  $al = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'model.aliases', '--json') -AllowMissing
+  $al = Invoke-UabsHermesConfigGet $Profile 'model.aliases'
   if ($al.Code -eq 0) {
     $json = @($al.Output | ForEach-Object { [string]$_ } |
       Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
@@ -444,7 +502,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
   # parent key, not the dotted path: a key Hermes does not recognize makes the
   # CLI print a warning on stderr, and this script runs with
   # $ErrorActionPreference = 'Stop', so that warning is a terminating error.
-  $vc = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'auxiliary.vision', '--json') -AllowMissing
+  $vc = Invoke-UabsHermesConfigGet $Profile 'auxiliary.vision'
   if ($vc.Code -eq 0) {
     $json = @($vc.Output | ForEach-Object { [string]$_ } |
       Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
@@ -455,7 +513,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
       }
     }
   }
-  $cp = Invoke-UabsHermes -Arguments @('-p', $Profile, 'config', 'get', 'auxiliary.compression', '--json') -AllowMissing
+  $cp = Invoke-UabsHermesConfigGet $Profile 'auxiliary.compression'
   if ($cp.Code -eq 0) {
     $json = @($cp.Output | ForEach-Object { [string]$_ } |
       Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
@@ -1173,6 +1231,8 @@ try {
       }
     }
     $env:HERMES_HOME = $HermesHome
+    # The verification below must read what was just written, not the snapshot.
+    $script:UabsHermesReadCache = @{}
 
     foreach ($profile in $managedProfiles) {
       $actual = Get-UabsMcpMap $profile

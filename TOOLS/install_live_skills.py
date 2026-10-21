@@ -16,6 +16,7 @@ Deliberately conservative:
     python install_live_skills.py <canonical-dir> [--check]
 """
 import io
+import json
 import os
 import shutil
 import stat
@@ -38,11 +39,29 @@ HOMES = {
     'Antigravity': r'%USERPROFILE%\.gemini\config\skills',
 }
 VERBATIM_EXT = {'.ps1', '.psm1', '.psd1', '.bat', '.cmd'}
+# The installer's registry of skills the owner keeps on purpose (an
+# independently updated copy). Measured 2026-10-20: this tool ignored it and
+# merged the pack's Impeccable 4.1.3 over a preserved 4.3.1 in three apps, and
+# the next START-HERE run then refused to continue ("override changed").
+OVERRIDES = os.path.expandvars(r'%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\skill-overrides.json')
+
+
+def preserved_skills(provider):
+    """Names the owner preserves for this provider; never written here."""
+    try:
+        with io.open(OVERRIDES, encoding='utf-8-sig') as fh:
+            doc = json.load(fh)
+    except FileNotFoundError:
+        return set()
+    # A registry that exists but cannot be read must stop the sync, not
+    # silently turn into "nothing is preserved".
+    return set((doc.get('providers') or {}).get(provider) or {})
 
 
 def same(a, b):
     try:
-        return open(a, 'rb').read() == open(b, 'rb').read()
+        with open(a, 'rb') as fa, open(b, 'rb') as fb:
+            return fa.read() == fb.read()
     except OSError:
         return False
 
@@ -79,11 +98,16 @@ def clear_dangling(dst_dir, notes):
 def install(canon, dest, provider, check, notes):
     added = changed = kept = withheld = 0
     codex_sys = os.path.expandvars(r'%USERPROFILE%\.codex\skills\.system')
+    keep = preserved_skills(provider)
     skills = [d for d in sorted(os.listdir(canon))
               if os.path.isdir(os.path.join(canon, d))
               and os.path.exists(os.path.join(canon, d, 'SKILL.md'))]
     for sk in skills:
         if sk in SCOPED and provider not in SCOPED[sk]:
+            withheld += 1
+            continue
+        if sk in keep:
+            notes.append('preserved local override (skill-overrides.json): %s' % sk)
             withheld += 1
             continue
         if provider == 'Codex' and os.path.isfile(os.path.join(codex_sys, sk, 'SKILL.md')):
@@ -114,8 +138,10 @@ def install(canon, dest, provider, check, notes):
                 if os.path.splitext(f)[1].lower() in VERBATIM_EXT:
                     shutil.copy2(sp, op)
                 else:
-                    data = io.open(sp, 'rb').read()
-                    io.open(op, 'wb').write(data)
+                    with io.open(sp, 'rb') as fh:
+                        data = fh.read()
+                    with io.open(op, 'wb') as fh:
+                        fh.write(data)
     return added, changed, kept, len(skills) - withheld, withheld
 
 
@@ -154,8 +180,8 @@ def main():
                                 ignore_dangling_symlinks=True)
                 backed_up = True
         a, c, k, n, w = install(canon, dest, provider, check, notes)
-        if w:
-            held = ', '.join(sorted(s for s, p in SCOPED.items() if provider not in p))
+        held = ', '.join(sorted(s for s, p in SCOPED.items() if provider not in p))
+        if w and held:
             notes.insert(0, 'withheld (scoped elsewhere): %s' % held)
         print('%-8s %3d skills present -> canonical %d | +%d new, %d updated, %d unchanged%s'
               % (provider, existing, n, a, c, k, '  [CHECK ONLY]' if check else ''))

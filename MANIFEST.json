@@ -39146,13 +39146,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 56886,
-  "sha256": "bfa9b2efeb6af409b7426fa264a21a5ca70c473fecce6eb4f3b2834ba12ccb53"
+  "size": 57047,
+  "sha256": "2ae6d3587f57e911ed5bef39c4dbefdbc27f6ac3e1a02c052c2cfb8fe5b19dc6"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1537,
-  "sha256": "b8ed063c3503e1aedb5118637d247c671d0a02e232fb046b975fbc640d79f356"
+  "sha256": "7823b46dbf70a375e37fa3106aa980021886102f3c95ae540296f43ccd7cbaa4"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -39162,7 +39162,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 35772,
-  "sha256": "70e4eb5f43e7e0d79a6cc32819c95b87039a6c92e9841793bec3acf1bbbdd13f"
+  "sha256": "1174c312afdccf946da04d5060114eb2e3e8a4c0a2e7721d8dc84caf5ae529f1"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -43136,8 +43136,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 216092,
-  "sha256": "227145b7ddf7d952f6db4dbb02881787c6e8759614b610db24372b4615cbf990"
+  "size": 219121,
+  "sha256": "016a27ec875798908e73981daf0bcbdc761b0862e56bc0ea1c2ea5870ded086d"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43211,8 +43211,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 174585,
-  "sha256": "85e4887cd563c7b69e31ddada40c4ac15f082bc1024ddce1486919a0eb538663"
+  "size": 178562,
+  "sha256": "7b4ed69565b1385a33cb748bd195b1ac9bc52fc2dd83327e220a03789459a74f"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43266,8 +43266,8 @@
  },
  {
   "path": "README.md",
-  "size": 65295,
-  "sha256": "e7f15c5d158f5c1cd60378567c0abefc7255de0ef86dd62a020e8035ddb1816b"
+  "size": 65952,
+  "sha256": "124282726ed7c33b6be36dd8f6c6e8a04f0d73db2a8f571ed6a468635818280d"
  },
  {
   "path": "SECURITY.md",
@@ -43277,17 +43277,17 @@
  {
   "path": "START-HERE.bat",
   "size": 888,
-  "sha256": "944bcd8b2ca096d1ef9d2648bb591f641da0e99c3b05538f4c1787ce53d50fa1"
+  "sha256": "0effd2e789dd432d0e6bfb2b5f276608933987b25f89f7c3b7fd5b343fb33f09"
  },
  {
   "path": "START-HERE.txt",
   "size": 11419,
-  "sha256": "0b2b89ab59f02193e16062931803bd92cdd677a2aa2654236380917beeb0ad0d"
+  "sha256": "902d0bba74b10098d5e6adf11a0d277124602884366bd29ee24c71227095b8aa"
  },
  {
   "path": "STATE.md",
-  "size": 38298,
-  "sha256": "4c7de031c0b3ae27f52b7f55b1dbaa0483f10e2d8c39f6f4cc7f77175d062290"
+  "size": 42174,
+  "sha256": "829b4e8f82443272dec61d2d23987dfee86dbd453ec1c71c1239b3fda263b260"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -43371,8 +43371,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 62731,
-  "sha256": "bd1f1b5a2b39e71f2c1962d0947057333a453b8942e1c924651bbb1918d28ecb"
+  "size": 63179,
+  "sha256": "b9b99bd296def5f1c72b1642bae6ec18a422da8f3af37b49377919a802279f7e"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -43418,6 +43418,11 @@
   "path": "TESTS/Test-UserProfile.ps1",
   "size": 9581,
   "sha256": "771b8878e2fef99e4d26320b4ab256ad8aa773af6abbda09dd092a5e0a77f64b"
+ },
+ {
+  "path": "TESTS/Test-VersionProbes.ps1",
+  "size": 3144,
+  "sha256": "abc609423a30f759a71a1529727b139d27005528b6cb20e72bee96f60e562fc5"
  },
  {
   "path": "TESTS/Test-WaitExternal.ps1",
@@ -43611,8 +43616,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 325621,
-  "sha256": "5a35f19814437051e6ecc663a6901b79f8212eda2564ce190c0574cd0a2e8d80"
+  "size": 327775,
+  "sha256": "d01cf410e62d497af5fab023374f8607762f02136dd7be734940e6d3f98c01bd"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -43691,8 +43696,8 @@
  },
  {
   "path": "TOOLS/Install-Provider-Starter-Settings.ps1",
-  "size": 18655,
-  "sha256": "85df1b00eb1c1e0a329e2acef165c1d018ed499b88c6cacc58a130c6d250432f"
+  "size": 20031,
+  "sha256": "6b106e3d30d1cc4a8c368efdd5e4ac9412e704c4bfd6819ee8dab9a665d8f784"
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
@@ -43716,8 +43721,8 @@
  },
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
-  "size": 65694,
-  "sha256": "d933563dffb39a7da77f6d34b84cb4e8d51a603dd8a7de970f67d7c7efa07e58"
+  "size": 68465,
+  "sha256": "9c3a411de97cc6c5abd33ad3a6db5495ad5c3921e8031800fa475e25ba0a0da3"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -43746,8 +43751,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 61761,
-  "sha256": "626c768096322ed4255b04b7bd712ce527499f54a370a6757cc5625bf97ba798"
+  "size": 62318,
+  "sha256": "0d952597cfde073df709ad9920eebd7ded828c11cf0f00bd5a148fb939c8ce51"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -43761,8 +43766,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 141492,
-  "sha256": "eaa9f2b90fcd5e248e88b11fbf93130da04cbc50cdf7ea7aa932244fed9484e5"
+  "size": 142943,
+  "sha256": "3144a502f88fa87d6b59fec608922da3dda662c719d8baa31a32d670d7eaf34b"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
@@ -43896,8 +43901,8 @@
  },
  {
   "path": "TOOLS/install_live_skills.py",
-  "size": 7171,
-  "sha256": "596c20ebb1afba71b467fcabed93640be0adadf2a01f6ad83ae14bfc0d1d184d"
+  "size": 8339,
+  "sha256": "af9071920b78a8507eefcbf821fc4cd72868531335150fd66188246cceeab273"
  },
  {
   "path": "TOOLS/mcp_handshake.py",
@@ -43961,18 +43966,18 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2263,
-  "sha256": "8d4643d5f13e3669729c39618d41ff9b986653fa7ff6238de08cc4020ec0204d"
+  "size": 2361,
+  "sha256": "b06a44f7b611d6d6d870f43f466ccd0855a6735a8242da7a0d1b6ca8e3770c21"
  },
  {
   "path": "VALIDATION.md",
-  "size": 9889,
-  "sha256": "6e4cfc1fa01b97b224b2f58d3072d98a7a5815ac915271f0bb53c1c14e8c2d76"
+  "size": 12403,
+  "sha256": "f48a8ad9ca1926a7b6df8471ef53c701547f4432cb97c03e3bf20a2b3f74d6c9"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "1a52b50b34f988939253548e93947a22976937aef4276033ea0649d4f05de453"
+  "sha256": "93ab231b71d77ec5e01748c0aa2e8d71ee53a45700f24d7d3ed21125b551cda3"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -50898,6 +50903,11 @@
   "path": "docs/history/V8.19.1-CHANGELOG.md",
   "size": 1879,
   "sha256": "dfaeee412120b0c2143f13fd2dd06bd0b6bfe6830141bf4ae10d8d03ddb6e353"
+ },
+ {
+  "path": "docs/history/V8.19.2-CHANGELOG.md",
+  "size": 3028,
+  "sha256": "3b3c18dd79f12c27b217f5a1b9c8718ae8c1a331d3d770502da164c5f49de446"
  },
  {
   "path": "docs/history/V8.2.0-CHANGELOG.md",

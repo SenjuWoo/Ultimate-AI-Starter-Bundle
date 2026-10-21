@@ -1120,8 +1120,17 @@ function Update-UabsInstructionProfile {
 
 function Get-UabsTreeDigest([string]$Path, [switch]$Ordinal) {
   $root = (Resolve-Path -LiteralPath $Path).Path.TrimEnd('\') + '\'
-  $rows = @(Get-ChildItem -LiteralPath $Path -Recurse -File -Force -ErrorAction Stop |
-    ForEach-Object { $_.FullName.Substring($root.Length).Replace('\','/') + '=' + (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash })
+  # One SHA256 for the whole tree, same bytes and hex as Get-FileHash's .Hash:
+  # the cmdlet costs several ms per file in PS 5.1, and an install digests
+  # ~2,400 skill trees.
+  $fileSha = [Security.Cryptography.SHA256]::Create()
+  try {
+    $rows = @(Get-ChildItem -LiteralPath $Path -Recurse -File -Force -ErrorAction Stop | ForEach-Object {
+      $stream = [IO.File]::OpenRead($_.FullName)
+      try { $hex = [BitConverter]::ToString($fileSha.ComputeHash($stream)).Replace('-', '') } finally { $stream.Dispose() }
+      $_.FullName.Substring($root.Length).Replace('\','/') + '=' + $hex
+    })
+  } finally { $fileSha.Dispose() }
   # New portable fingerprints use ordinal sorting; keep old ledger semantics.
   if ($Ordinal) { [string[]]$rows = $rows; [Array]::Sort($rows, [StringComparer]::Ordinal) }
   else { $rows = @($rows | Sort-Object) }
@@ -1362,6 +1371,14 @@ function Get-UabsPathVersion([string]$Path) {
   # name, e.g. ...\spookys-automod-toolkit-v1.11.2\spookys-automod-toolkit.
   # Walks a few levels up because the versioned folder is often the parent.
   if (-not $Path) { return $null }
+  # An in-place update cannot rename the user's folder, so it stamps the new
+  # version here; without the stamp every run re-reads the old folder name and
+  # updates (and backs up) the toolkit again.
+  $stamp = Join-Path $Path '.uabs-version'
+  if (Test-Path -LiteralPath $stamp -PathType Leaf) {
+    $v = ([IO.File]::ReadAllText($stamp)).Trim()
+    if ($v -match '^\d+(\.\d+){1,3}$') { return $v }
+  }
   $probe = $Path
   for ($i = 0; $i -lt 3 -and $probe; $i++) {
     $leaf = Split-Path $probe -Leaf
@@ -1372,13 +1389,25 @@ function Get-UabsPathVersion([string]$Path) {
   return $null
 }
 
-function Get-UabsProcessVersion([string]$Exe) {
+function Get-UabsProcessVersion([string]$Exe, [int]$TimeoutMs = 10000) {
   # Some binaries (Go builds, static tools) carry no version resource. Ask them
-  # instead, with a short-lived child so a hung tool cannot block the installer.
+  # instead, with a short-lived child so a hung tool cannot block the installer:
+  # stdin is closed (an MCP server that ignores --version would otherwise wait
+  # on the console forever) and the child is killed after 10 s.
   if (-not $Exe -or -not (Test-Path -LiteralPath $Exe -PathType Leaf)) { return $null }
   try {
-    $out = & $Exe --version 2>&1 | Select-Object -First 1
-    if ($out -and ($out -match '(\d+\.\d+\.\d+)')) { return $Matches[1] }
+    $psi = New-Object Diagnostics.ProcessStartInfo $Exe, '--version'
+    $psi.UseShellExecute = $false
+    $psi.CreateNoWindow = $true
+    $psi.RedirectStandardInput = $true
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError = $true
+    $p = [Diagnostics.Process]::Start($psi)
+    $p.StandardInput.Close()
+    $outTask = $p.StandardOutput.ReadToEndAsync()
+    $errTask = $p.StandardError.ReadToEndAsync()
+    if (-not $p.WaitForExit($TimeoutMs)) { try { $p.Kill() } catch { }; return $null }
+    if (($outTask.Result + "`n" + $errTask.Result) -match '(\d+\.\d+\.\d+)') { return $Matches[1] }
   } catch { }
   return $null
 }

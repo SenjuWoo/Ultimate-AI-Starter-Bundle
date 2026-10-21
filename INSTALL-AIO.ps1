@@ -540,7 +540,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.19.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.19.2 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -654,6 +654,27 @@ function Get-ComponentAssetPath {
 if (-not $ToolsOnly) {
   Write-UabsStep "Installing provider skills"
   $tailored = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES'
+  # Skills a native plugin provided at the end of the last run are not copied
+  # in only for the plugin section below to delete them again: measured
+  # 2026-10-18, every install re-copied and re-removed 63 skills across Claude,
+  # Codex and Kimi, each removal with a fresh backup. If a plugin is not native
+  # by the end of this run, its copies are restored after the plugin section.
+  $script:UabsOwnedSkip = @{}
+  $script:UabsSkillSyncArgs = @{}
+  $priorStatePath = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\install-state.json'
+  if (Test-Path -LiteralPath $priorStatePath -PathType Leaf) {
+    try {
+      $priorNative = ([IO.File]::ReadAllText($priorStatePath) | ConvertFrom-Json).native_plugins
+      foreach ($pp in @($priorNative.PSObject.Properties)) {
+        $byPlugin = @{}
+        foreach ($pl in @($pp.Value.plugins.PSObject.Properties)) {
+          $ownedNames = @($pl.Value.owned | Where-Object { $_ } | ForEach-Object { [string]$_ })
+          if ($pl.Value.native -eq $true -and $ownedNames.Count) { $byPlugin[$pl.Name] = $ownedNames }
+        }
+        if ($byPlugin.Count) { $script:UabsOwnedSkip[$pp.Name] = $byPlugin }
+      }
+    } catch { $script:UabsOwnedSkip = @{} }   # unreadable: copy everything and dedupe as before
+  }
   foreach ($prov in $Providers) {
     $srcSkills = Join-Path $tailored "$prov\COPY-TO-SKILLS-DIRECTORY\skills"
     if (-not (Test-Path $srcSkills)) { Write-UabsBad "Missing $srcSkills"; continue }
@@ -687,7 +708,11 @@ if (-not $ToolsOnly) {
 
     # Skills of a disabled pack are left out; the managed-skill ledger then
     # retires the unmodified copies an earlier install put here.
-    Sync-UabsProviderSkills -From $srcSkills -To $destSkills -Provider $prov -ExcludeNames (@($codexBuiltins) + @($packSel.ExcludedSkills))
+    $baseExclude = @($codexBuiltins) + @($packSel.ExcludedSkills)
+    $script:UabsSkillSyncArgs[$prov] = @{ From = $srcSkills; To = $destSkills; Exclude = $baseExclude }
+    $ownedSkip = @()
+    if ($script:UabsOwnedSkip.ContainsKey($prov)) { $ownedSkip = @($script:UabsOwnedSkip[$prov].Values | ForEach-Object { $_ }) }
+    Sync-UabsProviderSkills -From $srcSkills -To $destSkills -Provider $prov -ExcludeNames ($baseExclude + $ownedSkip)
     $null = Sync-UabsOptionalSkills -SourceRoot (Join-Path $PackRoot 'BUNDLED-TOOLS\optional-skills') -SkillsDir $destSkills -Provider $prov -Requested $OptionalSkills
     if ($prov -eq 'Hermes') {
       # A Hermes profile clones the default skills folder when it is created
@@ -1550,6 +1575,25 @@ if (-not $ToolsOnly -and $SkipNativePlugins) {
   }
 }
 
+# Restore the copies skipped above for any plugin that did not end this run
+# native (uninstalled, CLI missing, install failed): its skills must still exist.
+if (-not $ToolsOnly) {
+  foreach ($prov in @($script:UabsOwnedSkip.Keys)) {
+    if (-not $script:UabsSkillSyncArgs.ContainsKey($prov)) { continue }
+    $stillNative = @()
+    $lost = @()
+    foreach ($pluginId in @($script:UabsOwnedSkip[$prov].Keys)) {
+      $now = $null
+      if ($nativePlugins.Contains($prov) -and $nativePlugins[$prov].plugins) { $now = $nativePlugins[$prov].plugins[$pluginId] }
+      if ($now -and $now.native -eq $true) { $stillNative += $script:UabsOwnedSkip[$prov][$pluginId] } else { $lost += $pluginId }
+    }
+    if (-not $lost.Count) { continue }
+    $a = $script:UabsSkillSyncArgs[$prov]
+    Sync-UabsProviderSkills -From $a.From -To $a.To -Provider $prov -ExcludeNames (@($a.Exclude) + $stillNative)
+    Write-UabsInfo ("{0}: {1} not native this run - its skills are installed as copies" -f $prov, ($lost -join ', '))
+  }
+}
+
 # Built-in ownership is independent of plugin lifecycle. Run this once after
 # either full plugin reconciliation or -SkipNativePlugins, including skills-only
 # syncs. The verified backup preserves modified copies shadowing a built-in.
@@ -2046,7 +2090,12 @@ if (-not $SkillsOnly) {
                 $backupRoot = Join-Path $env:LOCALAPPDATA ('Ultimate-AI-Starter-Bundle\backups\spooky-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
                 New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
                 Copy-Item -LiteralPath $existingRoot -Destination $backupRoot -Recurse -Force
-                Copy-UabsRoboSafe -From $rootExtract -To $existingRoot
+                # $existingRoot holds the .sln, so copy from the archive's .sln
+                # folder too; the archive root may wrap it in one more folder.
+                $srcSln = Find-UabsFileUnder $rootExtract 'SpookysAutomod.sln' 5
+                if (-not $srcSln) { throw 'SpookysAutomod.sln not in the bundled archive' }
+                Copy-UabsRoboSafe -From (Split-Path $srcSln -Parent) -To $existingRoot
+                [IO.File]::WriteAllText((Join-Path $existingRoot '.uabs-version'), $want)
                 Set-UabsUserEnv 'SPOOKY_AUTOMOD_ROOT' $existingRoot
                 $installed[$id] = @{ status='external-updated'; root=$existingRoot; from=$have; to=$want }
                 Write-UabsOk ("Spooky external install updated {0} -> {1} (backup: {2})" -f $have, $want, $backupRoot)
@@ -2670,7 +2719,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.19.1'
+version = '8.19.2'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode
@@ -2721,9 +2770,9 @@ if (-not $ToolsOnly) {
           $src = Join-Path $plugins $pluginId
           if (-not (Test-Path -LiteralPath $src)) { continue }
           $dst = Join-Path $agPlugins $pluginId
-          if (-not (Test-Path -LiteralPath (Join-Path $dst 'skills'))) {
-            Copy-UabsRobo -From $src -To $dst
-          }
+          # Every run, not only the first: robocopy /E copies just what changed
+          # and deletes nothing, so a bundled plugin update reaches Antigravity.
+          Copy-UabsRobo -From $src -To $dst
           $manifest = Join-Path $dst 'plugin.json'
           if (-not (Test-Path -LiteralPath $manifest)) {
             [IO.File]::WriteAllText($manifest, ('{ "name": "' + $pluginId + '" }' + "`n"), (New-Object Text.UTF8Encoding $false))
@@ -2734,17 +2783,32 @@ if (-not $ToolsOnly) {
           $cfgPath = Join-Path $agHome 'config.json'
           if (Test-Path -LiteralPath $cfgPath) {
             $cfg = [IO.File]::ReadAllText($cfgPath) | ConvertFrom-Json
+            $cfgChanged = $false
             if ($null -eq $cfg.plugins) {
               $cfg | Add-Member -NotePropertyName plugins -NotePropertyValue ([pscustomobject]@{})
             }
             foreach ($pluginId in $agEnable) {
-              if ($cfg.plugins.PSObject.Properties.Name -contains $pluginId) {
-                $cfg.plugins.$pluginId.enabled = $true
-              } else {
+              $entry = $cfg.plugins.PSObject.Properties[$pluginId]
+              if (-not $entry) {
                 $cfg.plugins | Add-Member -NotePropertyName $pluginId -NotePropertyValue ([pscustomobject]@{ enabled = $true })
+                $cfgChanged = $true
+              } elseif ($entry.Value -isnot [pscustomobject]) {
+                $entry.Value = [pscustomobject]@{ enabled = $true }
+                $cfgChanged = $true
+              } elseif ($entry.Value.PSObject.Properties['enabled']) {
+                if ($entry.Value.enabled -ne $true) { $entry.Value.enabled = $true; $cfgChanged = $true }
+              } else {
+                # Assigning a property the object never had throws in PS 5.1.
+                $entry.Value | Add-Member -NotePropertyName enabled -NotePropertyValue $true
+                $cfgChanged = $true
               }
             }
-            [IO.File]::WriteAllText($cfgPath, ($cfg | ConvertTo-Json -Depth 12), (New-Object Text.UTF8Encoding $false))
+            # Rewrite only on a real change: ConvertTo-Json reformats the whole
+            # file, and the user's own config should not churn every install.
+            if ($cfgChanged) {
+              Copy-Item -LiteralPath $cfgPath -Destination ($cfgPath + '.bak-uabs') -Force
+              [IO.File]::WriteAllText($cfgPath, ($cfg | ConvertTo-Json -Depth 12), (New-Object Text.UTF8Encoding $false))
+            }
           }
           Write-UabsOk ('Antigravity: plugins enabled - ' + ($agEnable -join ', '))
         }

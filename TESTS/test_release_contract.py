@@ -515,6 +515,13 @@ def test_hermes_native_profile_migration_contract() -> None:
         "vision_chain",
     ):
         assert token in body, f"Hermes native-profile migration lost {token!r}"
+    # Reads go through load_config in one process per profile: `hermes config
+    # get` masks credential-shaped values, and the MCP map read is written back
+    # whole; it also cost ~4 s per key (most of a no-change install).
+    assert "'config', 'get'" not in body, "the migrator reads Hermes config through masked per-key CLI calls again"
+    assert "hc.load_config()" in body and "$script:UabsHermesReadCache = @{}" in body, (
+        "the migrator lost its batched raw reader or no longer clears it after writing"
+    )
     # The sweep must match the retired id exactly -- a prefix match would delete
     # a user's alias for a live model that merely shares a name stem.
     assert "$mapped -eq $dead -or $mapped.EndsWith('/' + $dead)" in body, (
@@ -1942,8 +1949,31 @@ def test_provider_skill_sync_is_content_authoritative() -> None:
     # Staging inside the skills root was indexed by apps as a second skill.
     assert "Join-Path $To ('.uabs-skill-stage-" not in sync_body, "provider skill sync stages inside the indexed skills root again"
     assert "Get-UabsTreeDigest $destSkill -Ordinal" in sync_body, "unchanged skills are rewritten on every install again"
-    assert "Sync-UabsProviderSkills -From $srcSkills -To $destSkills -Provider $prov -ExcludeNames (@($codexBuiltins) + @($packSel.ExcludedSkills))" in installer, (
+    assert "$baseExclude = @($codexBuiltins) + @($packSel.ExcludedSkills)" in installer and (
+        "Sync-UabsProviderSkills -From $srcSkills -To $destSkills -Provider $prov -ExcludeNames ($baseExclude + $ownedSkip)" in installer), (
         "AIO does not use content-authoritative provider skill sync"
+    )
+    # The doctor fails only on an npm copy the bundle installed; a hand-installed
+    # optional tool must not fail every install with unfixable "re-run" advice.
+    doctor_code = read(ROOT / "TOOLS" / "Test-Installed-State.ps1")
+    assert "$owned = $rec -and [string]$rec.Value.status -eq 'npm-global'" in doctor_code, (
+        "the doctor fails installs over optional npm tools the bundle never installed"
+    )
+    # Hermes starter defaults are classified in one process, not 15 CLI calls.
+    starter = read(ROOT / "TOOLS" / "Install-Provider-Starter-Settings.ps1")
+    assert "hc._get_nested(cfg, k) is hc._MISSING" in starter and "$cliKeys" in starter, (
+        "Hermes efficiency defaults are probed with one ~4 s CLI call per key again"
+    )
+    # The maintainer live-sync tool must respect the same preserved-override
+    # registry as the installer; ignoring it broke the next one-click install.
+    live = read(ROOT / "TOOLS" / "install_live_skills.py")
+    assert "skill-overrides.json" in live and "if sk in keep:" in live, (
+        "install_live_skills.py overwrites skills the owner preserved on purpose"
+    )
+    # Skills a native plugin owned last run are skipped, never left missing:
+    # a plugin that is not native by the end of the run gets its copies back.
+    assert "$script:UabsOwnedSkip" in installer and "not native this run - its skills are installed as copies" in installer, (
+        "plugin-owned skills are re-copied and re-deduped every install again, or skipped with no restore"
     )
     assert "$codexBuiltins = @(Get-UabsCodexBuiltinSkillNames -CodexHome $providerHome)" in installer, (
         "Codex built-ins are not dynamically excluded before provider skill sync"
@@ -2162,7 +2192,7 @@ def test_hermes_receives_the_combined_soul_and_aio_contract() -> None:
 
 
 def test_a_profile_scoped_hermes_home_resolves_to_the_real_home() -> None:
-    """Hermes desktop points HERMES_HOME at the ACTIVE PROFILE for its children.
+    r"""Hermes desktop points HERMES_HOME at the ACTIVE PROFILE for its children.
 
     Measured 2026-10-16: an install or agent run started from inside an AI
     session inherited `...\hermes\profiles\<name>`, treated one profile as the
@@ -5555,7 +5585,7 @@ def test_global_scope_guard_is_safe_and_wired() -> None:
     handshake = installer.split("$coreMcp = @()", 1)[1].split("foreach ($prov in $Providers)", 1)[0]
     assert "Test-UabsGithubMcpParked" in handshake, "the install handshake expects a GitHub server the registrar skips"
     pack = read(ROOT / "TESTS" / "Test-Pack.ps1")
-    for gate in ("Test-McpPark.ps1", "Test-NpmDuplicate.ps1", "Test-AiHistoryBackup.ps1"):
+    for gate in ("Test-McpPark.ps1", "Test-NpmDuplicate.ps1", "Test-AiHistoryBackup.ps1", "Test-VersionProbes.ps1"):
         assert gate in pack, f"Test-Pack does not run {gate}"
 
 
@@ -6057,7 +6087,7 @@ def test_antigravity_is_a_first_class_provider() -> None:
     ag = catalog["providers"].get("Antigravity")
     assert ag, "Antigravity missing from the provider catalog"
     assert ag["instructions"] == "AGENTS.md"
-    assert ag["home_default"].endswith(".gemini\config")
+    assert ag["home_default"].endswith(r".gemini\config")
     assert ag["skills"] == "skills"
     assert ag["mcp_config"] == "mcp_config.json"
 
@@ -6083,12 +6113,12 @@ def test_antigravity_is_a_first_class_provider() -> None:
     # so the installer must write a root plugin.json and enable the plugin in
     # config.json (config.json wins over the manifest declaration).
     assert "Antigravity: plugins enabled" in aio
-    assert "plugins\config.json" not in aio
+    assert r"plugins\config.json" not in aio
     assert 'NotePropertyName plugins' in aio
 
     tpl = read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Antigravity" / "COPY-TO-PROVIDER-HOME" / "AGENTS.md")
     assert len(tpl.encode()) < 24000, "the provider template alone would be truncated by Antigravity"
-    assert ".gemini\config\skills" in tpl and "mcp_config.json" in tpl
+    assert r".gemini\config\skills" in tpl and "mcp_config.json" in tpl
 
     # Rules are capped at 24 KB per file by Antigravity; the shipped preamble
     # plus the provider template must stay under it or the tail is dropped.

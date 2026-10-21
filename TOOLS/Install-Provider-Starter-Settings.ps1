@@ -166,8 +166,26 @@ function Merge-UabsHermesEfficiencyDefaults {
     'auxiliary.transient_retries'              = '1'
   }
 
-  $missing = @()
-  foreach ($key in $defaults.Keys) {
+  # One Python process classifies every key through the same load_config +
+  # _get_nested path `hermes config get` uses: fifteen CLI calls cost ~60 s of
+  # every install (measured 2026-10-20). If that internal API ever moves, the
+  # per-key CLI loop below runs instead.
+  $missing = $null
+  $python = Join-Path (Split-Path -Parent $exe) 'python.exe'
+  if (Test-Path -LiteralPath $python -PathType Leaf) {
+    $env:UABS_HERMES_KEYS = ConvertTo-Json -InputObject @($defaults.Keys) -Compress
+    $prevEap = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+      $batch = (& $python -c "import json, os; from hermes_cli import config as hc; cfg = hc.load_config(); print(json.dumps([k for k in json.loads(os.environ['UABS_HERMES_KEYS']) if hc._get_nested(cfg, k) is hc._MISSING]))" 2>$null | Out-String).Trim()
+      # PS 5.1 ConvertFrom-Json emits a JSON array as ONE object ('[]' would be a
+      # one-item list holding an empty array); the parentheses unroll it.
+      if ($LASTEXITCODE -eq 0 -and $batch.StartsWith('[')) { $missing = @(($batch | ConvertFrom-Json) | ForEach-Object { [string]$_ } | Where-Object { $_ }) }
+    } catch { $missing = $null }
+    finally { $ErrorActionPreference = $prevEap; Remove-Item Env:UABS_HERMES_KEYS -ErrorAction SilentlyContinue }
+  }
+  if ($null -eq $missing) { $missing = @(); $cliKeys = @($defaults.Keys) } else { $cliKeys = @() }
+  foreach ($key in $cliKeys) {
     $prevEap = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
     try { $probe = (& $exe config get $key --json 2>&1 | Out-String); $code = $LASTEXITCODE }

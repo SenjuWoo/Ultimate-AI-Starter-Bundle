@@ -116,6 +116,9 @@ else { Bad ('User profile gate failed:' + [Environment]::NewLine + $profileOut) 
 $npmDupOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-NpmDuplicate.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $npmDupOut -match 'NPM DUPLICATE GATE: PASS') { Good 'An older npm copy of a pinned package is removed from either known prefix, after a verified recovery copy' }
 else { Bad ('npm duplicate gate failed:' + [Environment]::NewLine + $npmDupOut) }
+$probeOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-VersionProbes.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $probeOut -match 'VERSION PROBES GATE: PASS') { Good 'External-install version probes: dotted compare, update stamp, bounded --version' }
+else { Bad ('Version probe gate failed:' + [Environment]::NewLine + $probeOut) }
 $historyOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-AiHistoryBackup.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $historyOut -match 'AI HISTORY BACKUP GATE: PASS') { Good 'Chat history backup: copies new and changed transcripts, never deletes or overwrites a newer copy' }
 else { Bad ('History backup gate failed:' + [Environment]::NewLine + $historyOut) }

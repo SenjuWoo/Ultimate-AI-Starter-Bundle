@@ -1,10 +1,47 @@
-# v8.19.0 validation
+# v8.19.2 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are
 separate proofs. This file records the checked boundary, not a claim of perfect
 one-shot game/mod output.
 
-## Current audit (v8.19.0)
+## Current audit (v8.19.2)
+
+A review of v8.15.0..v8.19.1 (installer, shared helpers, Hermes migrator, MCP
+writers) plus profiling of the last real install (5 min 24 s on a six-app machine)
+found install time dominated by repeated work, and four defects.
+
+- Hermes migration: `hermes config get` costs ~4.2 s per call and was called per
+  key per profile. The migrator now reads every key of a profile in one process
+  through Hermes' `load_config`. Measured on this machine: a read of 7 keys x 12
+  profile names took 6.6 s against 279.6 s through the CLI with identical values
+  for every real profile; a full plan-only run took 7.6 s against 152.0 s, and the
+  two plans were line-identical. The CLI masks credential-shaped values and the MCP
+  map it returned was written back whole; reads are now raw (this machine's
+  profiles held no masked value, checked by key name only).
+- Skill fingerprints: one reused SHA-256 replaces `Get-FileHash` per file; digests
+  identical on 321 trees in both sort modes, 4.8x faster.
+- Plugin-owned skills (63 over Claude, Codex, Kimi) are skipped by the copy when
+  the last run recorded the plugin native, and restored if it is not native now.
+- Spooky in-place update stamps `.uabs-version` and copies from the `.sln` folder;
+  the `--version` probe closes stdin and stops at 10 s. `TESTS/Test-VersionProbes.ps1`
+  covers compare, stamp, stdin-waiting and hung tools.
+- blender-mcp 2.2.2: Windows initialize/tools-list PASS, 9 tools, 15,754 bytes.
+- Starter settings: 15 `hermes config get` probes replaced by one `load_config` pass
+  (65.5 s -> 10.2 s, same "already present" result; a missing key is reported missing by
+  both). The doctor failed the install on a hand-installed REA 6.5.0 the bundle never
+  installs; it now fails only on bundle-installed npm copies.
+- `install_live_skills.py` ignored `skill-overrides.json`; the first real install after the
+  v8.19.1 sync stopped at "override changed" for Claude/impeccable. The preserved 4.3.1
+  copies were restored from that sync's backups (ordinal digests equal the registry in all
+  three apps) and the tool now skips preserved skills.
+
+Real `START-HERE.bat` run on this tree (no pause, self-update off, six apps):
+`INSTALL COMPLETE` in 265 s (324 s before), no `TerminatingError` in the transcript,
+always-on handshakes on all six apps, doctor PASS; 0 errors and 0 warnings once the
+hand-installed REA was moved to the pinned 6.7.0. Not certified: provider inference,
+editor/game runtime, billed-token savings.
+
+## Earlier audit (v8.15.0)
 
 The owner's failed install (final doctor, 63 errors) was reproduced in cause, not
 re-run: two overlapping installers, the second recording no plugin ownership. After
