@@ -851,6 +851,46 @@ def test_publish_check_mod_inside_game(tmp_path, capsys):
     assert "copied.bin" in out and "page.png" not in out
 
 
+def test_publish_check_mod_installed_in_loader_folder(tmp_path, capsys):
+    # a UMM mod repo installed to <game>/Mods/<Id>/ (and a BepInEx build in plugins/<dll>/) matched its own copy
+    info = '{"Id": "N7MassEffect", "AssemblyName": "N7MassEffect.dll"}'
+    make(tmp_path / "mod", {"src/N7/Info.json": info + " " * 64, "src/N7/Assets/n7.png": b"i" * 4096,
+                            "src/N7/bin/N7MassEffect.dll": b"d" * 4096, "README.md": "My mod"})
+    make(tmp_path / "game", {"Data/big.bin": b"x" * 4096, "Mods/N7MassEffect/Info.json": info + " " * 64,
+                             "Mods/N7MassEffect/Assets/n7.png": b"i" * 4096,
+                             "BepInEx/plugins/N7MassEffect/N7MassEffect.dll": b"d" * 4096,
+                             "Mods/SomeoneElse/theirs.bin": b"z" * 4096})
+    assert publish.check(str(tmp_path / "mod"), str(tmp_path / "game")) == 0
+    # genuine game files still fail, including another mod's files under Mods/
+    (tmp_path / "mod" / "copied.bin").write_bytes(b"x" * 4096)
+    (tmp_path / "mod" / "theirs.bin").write_bytes(b"z" * 4096)
+    assert publish.check(str(tmp_path / "mod"), str(tmp_path / "game")) == 1
+    out = capsys.readouterr().out.replace("\\", "/")
+    assert "copied.bin" in out and "Mods/SomeoneElse/theirs.bin" in out and "n7.png" not in out and "N7MassEffect.dll" not in out
+    assert "not compared, this mod's own installed copy: BepInEx/plugins/N7MassEffect/, Mods/N7MassEffect/" in out
+
+
+def test_publish_check_own_installed_copy_is_named_by_metadata_only(tmp_path, capsys):
+    # only the mod's own metadata names its installed folder; a DLL it merely bundles doesn't
+    csproj = "<Project><PropertyGroup><AssemblyName>N7</AssemblyName></PropertyGroup></Project>"
+    make(tmp_path / "mod", {"README.md": "My mod", "src/N7Plugin.csproj": csproj, "bin/N7.dll": b"n" * 4096,
+                            "lib/ModMenu.dll": b"m" * 4096, "lib/Foo.dll": b"f" * 4096,
+                            "lib/Assembly-CSharp.dll": b"g" * 4096})
+    make(tmp_path / "game", {"BepInEx/plugins/N7.dll": b"n" * 4096,         # this mod, flat in plugins/
+                             "BepInEx/plugins/N7/N7.dll": b"n" * 4096,      # this mod, in its own folder
+                             "Mods/ModMenu/ModMenu.dll": b"m" * 4096,       # another mod it references
+                             "Mods/Foo/Foo.dll": b"f" * 4096,               # a folder the game ships under Mods/
+                             "Game_Data/Managed/Assembly-CSharp.dll": b"g" * 4096,
+                             "BepInEx/plugins/N7/Assembly-CSharp.dll": b"g" * 4096})   # copied in by the build
+    assert publish.check(str(tmp_path / "mod"), str(tmp_path / "game")) == 1
+    out = capsys.readouterr().out.replace("\\", "/")
+    fails = [ln for ln in out.splitlines() if ln.startswith("FAIL ")]
+    assert len(fails) == 3 and not any("bin/N7.dll" in ln for ln in fails)
+    assert "lib/ModMenu.dll  (== Mods/ModMenu/ModMenu.dll)" in out and "lib/Foo.dll  (== Mods/Foo/Foo.dll)" in out
+    assert "lib/Assembly-CSharp.dll  (== Game_Data/Managed/Assembly-CSharp.dll)" in out
+    assert publish._own_names([tmp_path / "mod" / "src/N7Plugin.csproj"]) == {"n7"}
+
+
 @pytest.mark.parametrize("label,key", [
     # assembled at runtime so this file doesn't trip the toolkit's own publish check
     ("OpenAI key", "sk-" + "proj-" + "Ab3_dE-f" + "Gh1jK2lM3nO4pQ5rS6tU7vW8xY9z0" * 4),
@@ -859,6 +899,7 @@ def test_publish_check_mod_inside_game(tmp_path, capsys):
     ("GitHub token", "github" + "_pat_" + "11ABCDEFG0123456789abc" + "_" + "aB3dE5fG7hJ9kL1mN3pQ5rS7tU9vW1xY3zA5bC7dE9fG1hJ3kL5mN7pQ9rS1t"),
     ("GitHub token", "gh" + "p_" + "aB3dE5fG7hJ9kL1mN3pQ5rS7tU9vW1xY3z"),
     ("Sprixen key", "spx_" + "live_" + "Gh1jK2lM3nO4pQ5rS6tU7vW8xY9z0" * 2),
+    ("Voidless key", "VOIDLESS_API_KEY=" + "void_" + "Gh1jK2lM3nO4pQ5rS6tU7vW8xY9z0"),
 ])
 def test_secret_patterns_catch_current_key_formats(label, key):
     rx = dict(publish.SECRET_PATTERNS)[label]
@@ -866,7 +907,8 @@ def test_secret_patterns_catch_current_key_formats(label, key):
 
 
 def test_secret_patterns_ignore_ordinary_text():
-    text = "sk-" + "learn-style-kebab-case-identifiers-are-not-keys and github_pat_ alone"
+    text = ("sk-" + "learn-style-kebab-case-identifiers-are-not-keys and github_pat_ alone, "
+            "static void " + "void_" + "callback_handler_with_a_long_descriptive_name(void);")
     assert not [label for label, rx in publish.SECRET_PATTERNS if rx.search(text)]
 
 
@@ -1010,7 +1052,25 @@ def test_kb_check_warns_on_links_to_missing_notes(tmp_path):
     sib.write_text(head + "Next to [real](real.md) and [gone](./gone.md).\n", encoding="utf-8")
     _, warns = kb.check_note(sib, root)
     assert [w for w in warns if "does not exist" in w] == [
-        "link to a note that does not exist: ./gone.md (links are relative to this note's folder)"]
+        "link to a note that does not exist: ./gone.md (links are relative to this note's folder; "
+        "if the file lives in another repo, link to it on GitHub instead)"]
+
+
+def test_kb_check_counts_numbered_gotchas_written_as_subheadings(tmp_path):
+    note = tmp_path / "n.md"
+    head = ("---\nkind: game\ntitle: t\ngame: X\nengine: unity-mono\nroute: managed-patch\nstatus: working\n"
+            "date: 2026-10-21\nagents: [a]\n---\n# t\n")
+    note.write_text(head + "\n## Gotchas\n\n1. **Symptom.** **Cause:** **Fix:**\n", encoding="utf-8")
+    _, warns = kb.check_note(note)
+    assert not [w for w in warns if "Gotchas" in w]
+    # a numbered subheading is a numbered item too
+    note.write_text(head + "\n## Gotchas\n\n### 1. Symptom\n\nCause and fix.\n", encoding="utf-8")
+    _, warns = kb.check_note(note)
+    assert not [w for w in warns if "Gotchas" in w]
+    # an unnumbered list still warns
+    note.write_text(head + "\n## Gotchas\n\n- Symptom, cause, fix.\n", encoding="utf-8")
+    _, warns = kb.check_note(note)
+    assert [w for w in warns if "Gotchas" in w] == ["Gotchas section has no numbered items"]
 
 
 def test_kb_check_rejects_secrets_and_dumps(tmp_path):

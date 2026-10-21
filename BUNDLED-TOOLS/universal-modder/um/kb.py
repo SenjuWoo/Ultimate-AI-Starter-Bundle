@@ -233,7 +233,9 @@ def check_note(path: Path, root: Path | None = None) -> tuple[list[str], list[st
         for s in GAME_SECTIONS:
             if not any(h.startswith(s) for h in heads):
                 fails.append(f"missing section: ## {s.capitalize()}...")
-        if "gotchas" in " ".join(heads) and not re.search(r"^##\s+Gotchas.*?\n(?:.*\n)*?\s*1\.", body, re.M | re.I):
+        # numbered items count as a list item ("1. ...") or a numbered subheading ("### 1. ...")
+        if "gotchas" in " ".join(heads) and not re.search(
+                r"^##\s+Gotchas.*?\n(?:.*\n)*?(?:\s*1\.|\s*#{2,6}\s+1\.)", body, re.M | re.I):
             warns.append("Gotchas section has no numbered items")
     if meta.get("status") and meta["status"] not in STATUSES:
         fails.append(f"status {meta['status']!r} not one of: {', '.join(STATUSES)}")
@@ -278,7 +280,8 @@ def check_note(path: Path, root: Path | None = None) -> tuple[list[str], list[st
     for m in re.finditer(r"\]\(([^)\s#]+\.md)(?:#[^)\s]*)?\)", body):
         target = m.group(1)
         if not re.match(r"[a-z][a-z0-9+.-]*:|/", target, re.I) and not (path.parent / target).resolve().exists():
-            warns.append(f"link to a note that does not exist: {target} (links are relative to this note's folder)")
+            warns.append(f"link to a note that does not exist: {target} (links are relative to this note's folder; "
+                         f"if the file lives in another repo, link to it on GitHub instead)")
     kroot = root or next((p for p in path.resolve().parents if p.name == "knowledge"), None)
     if kroot is not None:
         for m in re.finditer(r"`(?:knowledge/)?((?:games|techniques)/[a-z0-9_./-]+\.md)`", body):

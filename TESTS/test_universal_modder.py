@@ -80,7 +80,7 @@ def main():
             for name in ("um/knowledge/TEMPLATE.md", "um/knowledge/INDEX.md", "um/ps1/WinDrive.ps1",
                          "um/fonts/OFL-SpaceGrotesk.txt", "um/fonts/OFL-JetBrainsMono.txt"):
                 assert name in archive.namelist(), name
-    assert component["source_commit"] == "6a8865ae171b406f50892c7f46fc5f45655269eb"
+    assert component["source_commit"] == "c1dff21663665dd17af289744a301b66e369605e"
     assert not component["mcp"] and not component["auto_register"]
     # `um fal key status` must never print key characters or a hash of the key:
     # the UABS patch shows a length marker only (upstream printed key[:6] and

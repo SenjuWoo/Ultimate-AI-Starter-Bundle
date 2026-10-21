@@ -1,11 +1,11 @@
 {
  "pack": "Ultimate AI Starter Bundle",
- "version": "8.19.2",
- "generated": "2026-10-20",
- "release_tag": "v8.19.2",
- "canonical_skills": 173,
+ "version": "8.20.0",
+ "generated": "2026-10-21",
+ "release_tag": "v8.20.0",
+ "canonical_skills": 174,
  "provider_trees": 6,
- "registry_entries": 173,
+ "registry_entries": 174,
  "gates": [
   "TESTS/test_audit_regressions.py",
   "TESTS/Test-Pack.ps1",
@@ -45,6 +45,6 @@
   "TESTS/test_toolbox.py",
   "TESTS/Test-VersionProbes.ps1"
  ],
- "runtime_status": "v8.19.2: install speed and correctness - Hermes migration reads raw config once per profile (plan 152 s -> 7.6 s, identical plan), faster skill digests (identical on 321 trees), no plugin-skill copy/dedupe churn, Spooky stamp, bounded --version probe, Antigravity plugin refresh, blender-mcp 2.2.2.",
+ "runtime_status": "v8.20.0: game-mashup-passthrough skill + mashup card from the project's lessons, Universal Modder c1dff21 (wheel rebuilt reproducibly), bench map and tool evaluations updated.",
  "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for every always-on MCP server (context7, headroom, the toolbox, and GitHub where gh is not signed in). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

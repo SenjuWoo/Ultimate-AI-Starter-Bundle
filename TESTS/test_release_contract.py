@@ -2689,6 +2689,30 @@ def test_catalog_freshness_auditor_self_checks() -> None:
     assert "self-test PASS" in result.stdout
 
 
+def test_game_mashup_passthrough_knowledge_is_wired_and_private() -> None:
+    """The mashup lessons ship as a skill plus a card, without machine detail.
+
+    The source lessons file ends with the owner's install paths, log paths and a
+    launch URI; those must never reach a public pack. The skill must also keep
+    saying that it does not pick Melty or a publishing platform (Melty is opt-in).
+    """
+    skill = read(CANON / "game-mashup-passthrough" / "SKILL.md")
+    assert skill.startswith("---\nname: game-mashup-passthrough\ndescription: Use when "), "skill frontmatter drifted"
+    assert "does not select Melty" in skill, "the mashup skill no longer says it is not a Melty route"
+    card = read(CANON / "project-intel" / "references" / "game-mashup-melty.md")
+    router = read(CANON / "project-intel" / "SKILL.md")
+    assert "game-mashup-passthrough" in router and "references/game-mashup-melty.md" in router, "router row lost the skill"
+    assert "Drawing under the UI" in card and "game-mashup-passthrough" in card, "card lost the frame-split section"
+    for text in (skill, card):
+        assert not re.search(r"[A-Za-z]:[\\/]|%LOCALAPPDATA%|Epic Games|\bkarlo\b|com\.epicgames", text), (
+            "machine-specific detail in the shipped mashup knowledge"
+        )
+    # Every provider tree carries the skill, byte-identical to canonical.
+    for provider in PROVIDERS:
+        copy = ROOT / "1-TAILORED-PROVIDER-TREES" / provider / "COPY-TO-SKILLS-DIRECTORY" / "skills" / "game-mashup-passthrough" / "SKILL.md"
+        assert copy.is_file(), f"{provider} tree is missing game-mashup-passthrough"
+
+
 def main() -> int:
     # A failed gate must report Unicode paths on legacy Windows consoles too.
     sys.stdout.reconfigure(errors="backslashreplace")
@@ -2856,6 +2880,7 @@ def main() -> int:
         test_public_skyrim_workflow_requires_product_and_presentation_quality,
         test_portable_skill_routing_does_not_require_superpowers_prefix,
         test_toolbox_wheel_is_the_shipped_source,
+        test_game_mashup_passthrough_knowledge_is_wired_and_private,
     ]
     failed = []
     for fn in tests:

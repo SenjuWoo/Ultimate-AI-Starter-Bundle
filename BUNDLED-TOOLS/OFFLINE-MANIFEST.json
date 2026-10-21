@@ -1,6 +1,6 @@
 {
  "generated": "2026-10-18",
- "pack_version": "8.19.2",
+ "pack_version": "8.20.0",
  "assets": [
   {
    "file": "Skyrim-Forge-6.0.1.zip",
@@ -43,9 +43,9 @@
    "sha256": "051d7c77e8ae5ff5936ef3bae393812cb7af8a8e4f6db65b2161a6a8b4f964d2"
   },
   {
-   "file": "universal_modder-0.2.0+uabs.6a8865a-py3-none-any.whl",
-   "size": 2171487,
-   "sha256": "076136483d547a9fed2360138fa7ff40337fc3e7e6c8398e6e74b67768dcf1a9"
+   "file": "universal_modder-0.2.0+uabs.c1dff21-py3-none-any.whl",
+   "size": 3618451,
+   "sha256": "43207bb6bcb9f5b3df29336773422e13866599d8c9d0dabc4b451f325e685d82"
   }
  ],
  "updated": "2026-10-18"

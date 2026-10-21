@@ -1,5 +1,42 @@
 # Tool evaluations
 
+## 2026-10-21 — owner's `Tools` and `Modding` folders reviewed (v8.20.0)
+
+Question: should anything in the new `Tools` and `Modding` folders be bundled?
+Answer: one refresh, one new skill, the rest documented. Nothing from the bench
+is copied into the pack (about 5 GB of third-party binaries with their own
+licenses; the bench stays reference tooling).
+
+`Tools` (six source snapshots), checked against upstream on 2026-10-21:
+
+- Universal Modder: the local `universal-modder-main` snapshot was older than the
+  pack's pin (it lacked the `sprixen` module). Upstream had moved 28 commits
+  (`6a8865a` -> `c1dff21`, 130 files): a new `um voidless` command (2D sprites
+  from a paid API; its key goes through the same `um fal` helpers, so the pack's
+  hidden-key patch covers it), a window-capture title/exe escape fix, a publish
+  check that no longer flags a mod's own installed copy as game files, and about
+  twenty new game knowledge notes including Hogwarts Legacy depth compositing
+  with a ReShade add-on, a Minecraft-into-Outer-Wilds passthrough example and a
+  Prototype skeletal passthrough. Reviewed the changed code (`um/*.py`, tests),
+  re-vendored with `TOOLS/refresh_universal_modder.py` (all 20 pack patches
+  re-applied), wheel rebuilt byte-identically twice. The upstream `examples/`
+  trees are not part of the vendored subset.
+- REA: the snapshot is 6.5.0; the pack pins 6.7.0 (released 2026-10-18, the
+  current release). No action.
+- Reverse THIS! v1.2.1 = upstream head `2f3ccca`; CLI-Anything v0.4.0, anti-slop
+  v3.2.21 and jevgrep v0.8.0 are each still the latest release. Unchanged
+  decisions: documented companions, not shipped (see the 2026-10-16 entries).
+
+`Modding` (the bench): re-inventoried in `tool-discovery/references/modding-bench.md`
+(new: Noita tools, RoR2 editor kit and item-sync SDK, Roblox `Chrono`, the
+`_downloads` set for ReShade 6.8 / UE4SS experimental / AssetStudio source /
+VS Build Tools). `Game-Mashup-Passthrough/LESSONS.md` became the
+`game-mashup-passthrough` skill (order of work and guardrails) plus new sections
+in the `project-intel` mashup card (drawing under the UI, texture/hair rules,
+spike order, freeze/teleport traps). The machine-specific section of that file
+(install paths, log paths, launch URIs, private project names) was left out on
+purpose. Not run: no bench tool was executed; this was a read-only review.
+
 ## 2026-10-16 — Caveman and OmniRoute: evaluated, conflicting, not installed
 
 Both tools were analysed on request. Neither enters the bundle's install path,

@@ -1,5 +1,37 @@
 # Bundle audit state
 
+## v8.20.0: Tools/Modding folder review, mashup skill, UM refresh (2026-10-21, in progress)
+
+- Owner asked to review the new `Tools` (6 snapshots) and `Modding` (bench +
+  `Game-Mashup-Passthrough/LESSONS.md`) folders and bundle or document as best.
+  Decision: bundle nothing from the bench (5 GB third-party binaries); everything
+  else below. Read-only review, no bench tool executed.
+- `Tools`: all six already covered. REA snapshot 6.5.0 < pin 6.7.0 (current);
+  `universal-modder-main` predated the pin (no `sprixen.py`) and upstream had 28
+  newer commits -> refreshed UM `6a8865a` -> `c1dff21` with
+  `TOOLS/refresh_universal_modder.py --apply` (20 patches re-applied; changed
+  `um/*.py` read; new `um voidless` uses the patched hidden `mask`), wheel
+  `universal_modder-0.2.0+uabs.c1dff21` 3,618,451 B sha256 `43207bb6...5d82`
+  built twice identical (SOURCE_DATE_EPOCH=1792022400), CATALOG/OFFLINE-MANIFEST/
+  test pin updated, old wheel removed. CLI-Anything 0.4.0, anti-slop 3.2.21,
+  jevgrep 0.8.0, Reverse THIS! 1.2.1 each still latest -> stay documented only.
+- `Modding`: new skill `_CANONICAL-SKILLS/game-mashup-passthrough` (order of work,
+  guardrails, shell traps); `project-intel/references/game-mashup-melty.md` +
+  "Drawing under the UI", texture/hair rules, spike order, freeze/teleport traps;
+  router row updated; `tool-discovery/references/modding-bench.md` re-inventoried
+  (Noita, RoR2 kit/SDK, Roblox Chrono, `_downloads`, Tools-folder lag note). The
+  source file's section 9 (install/log paths, launch URI) and game-specific
+  offsets/file counts deliberately NOT shipped. `docs/TOOL-EVALUATIONS.md`
+  dated section added.
+- Counts: 174 canonical skills (125 general per AI + 49 Skyrim pack); contract
+  `test_game_mashup_passthrough_knowledge_is_wired_and_private` (151 tests).
+  `RETIRED-SKILLS.json` regenerated; new provider-tree skill paths are
+  gitignored and need `git add -f` (fanout prints the command).
+- Gates so far: contracts 151/0 (-W error clean), privacy, UM, audit regressions,
+  hermes bootstrap, toolbox PASS; MANIFEST 10,280 verified; versions agree.
+- Next: Test-Pack, commit, push, CI + CodeQL + flags, build twice, release,
+  verify bytes, then START-HERE once so the live trees get the skill and wheel.
+
 ## v8.19.2: review of v8.15.1..v8.19.1 + install speed (2026-10-20, released)
 
 - Owner asked to verify the DeepSeek-era edits (v8.15.1..v8.19.1, all committed),

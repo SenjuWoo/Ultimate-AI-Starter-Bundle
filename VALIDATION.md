@@ -1,10 +1,29 @@
-# v8.19.2 validation
+# v8.20.0 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are
 separate proofs. This file records the checked boundary, not a claim of perfect
 one-shot game/mod output.
 
-## Current audit (v8.19.2)
+## Current audit (v8.20.0)
+
+Review of the owner's new `Tools` and `Modding` folders (read-only; no bench tool was
+executed). Result: one upstream refresh, one new skill, documentation for the rest.
+
+- Universal Modder `6a8865a` -> `c1dff21` (28 commits, 130 files; 9 changed Python/test
+  files read, the new `um voidless` key handling confirmed to use the pack's patched
+  hidden-key helper). `TOOLS/refresh_universal_modder.py --apply` re-applied all 20 pack
+  patches; the wheel (3,618,451 B) built byte-identically twice;
+  `TESTS/test_universal_modder.py` PASS with the new pin.
+- New canonical skill `game-mashup-passthrough` (174 skills; 125 general per AI) and an
+  extended `project-intel` mashup card. A contract checks both ship in every provider tree
+  and carry no drive paths, `%LOCALAPPDATA%` or launch URIs.
+- Companion currency on 2026-10-21: CLI-Anything v0.4.0, anti-slop v3.2.21, jevgrep v0.8.0,
+  REA 6.7.0 and Reverse THIS! v1.2.1 are each the latest release; the local `rea-main`
+  snapshot (6.5.0) and `universal-modder-main` snapshot lag the pack's pins.
+- Not certified: the new skill's wording was not exercised in a live mashup session; the
+  lessons it carries are the project's own record of one lab build, verified in game there.
+
+## Previous audit (v8.19.2)
 
 A review of v8.15.0..v8.19.1 (installer, shared helpers, Hermes migrator, MCP
 writers) plus profiling of the last real install (5 min 24 s on a six-app machine)

@@ -1,8 +1,11 @@
-# Melty mashups and cross-engine character swaps — settled results
+# Game mashups by passthrough (and Melty) — settled results
 
 > Scope: mashup and cross-engine fusion work only. An ordinary single-game mod
 > belongs to its game card (`skyrim-modding.md`, `game-modding-other.md`);
-> nothing here says to put mods in a Melty folder.
+> nothing here says to put mods in a Melty folder. The order of work and the
+> guardrails are in the `game-mashup-passthrough` skill; this card holds the
+> technical results behind it. Updated 2026-10-21 with the project's full
+> lessons file (frame split, spikes, mistakes).
 
 Case: the operator's first Melty mashup (2026-10): a UE 4.25-derived shipping
 game as host, a UE 4.27 game and a Unity 2018.2 Mono game as companions, solo
@@ -85,6 +88,37 @@ a hang watchdog switchable from the ini.
   transform reads zero (the NaN source) and expose tuning from a data sheet with a
   live `reload`.
 
+## Drawing under the UI (ReShade add-on)
+
+Case: a D3D12 host with HDR10 (R10G10B10A2) output; add-on built on ReShade 6.8.
+Verified in game on one build; recheck on a different host or an SDR output.
+
+- Drawing bodies or effects as a present-time overlay covers the HUD. The fix is
+  to find the host's own pre-UI copy and draw there.
+- Frame structure found with one `frametrace` run of the add-on's bind/copy
+  events: the finished scene sits in the runtime back buffer F; the UI is drawn
+  into a separate 8-bit target U; the host then copies F to a pre-UI scene X and
+  composites X+U back into F. A copy whose source is F, with U as the last
+  non-F target bound before it, identifies X and U.
+- Recomposite in linear light: `out = F + (E - X) * (1 - U.alpha)`, where E is
+  the effects result on X. One ordered technique (a `pass` list) is simpler than
+  several techniques that depend on order.
+- Hook points that carried it: `bind_render_targets_and_depth_stencil`,
+  `begin_render_pass`, `draw`, `clear_render_target_view`, `copy_resource`,
+  `copy_texture_region`, `execute_command_list`, `present`
+  (`reshade::register_event`). `begin_render_pass` and the bind event both fire:
+  do not count both as separate targets.
+- Copying a new `.fx` over the old one does nothing until the reload call runs
+  (`reload_effect_next_frame("file.fx")`): send the add-on's reload command after
+  every copy. Cost an hour once.
+- In ReShade 6.8 `update_texture_bindings(semantic, srv, srv_srgb)` takes three
+  arguments.
+- SDR output has no separate UI target: plan HUD masks as the fallback.
+- Open when the lessons were written: health bar and bottom icons vanished in
+  one on/off comparison; the pair was captured before the reload, so the cause
+  was not isolated. Re-test with reload + on/off shots + a diff image, and trace
+  the frame before tuning masks (tuning masks first wasted turns).
+
 ## Extractor and cache
 
 - CUE4Parse read the UE paks without an AES key on this title. Avoid
@@ -92,7 +126,15 @@ a hang watchdog switchable from the ini.
   advisory); a small DDS/mesh writer was enough.
 - Hair had no colour texture (built in the material from a strand atlas) → bake
   colour+alpha; the first try picked a depth map; brows rendered white until the
-  DXT1 atlas decode was fixed; a transparent cornea needed alpha test.
+  DXT1 atlas decode was fixed; a transparent cornea needed alpha test. Pick
+  textures by their role in the material graph, never by a `_d` file-name suffix.
+- Some hair ships as a separate mesh on the same skeleton: merge parts by bone
+  name. A lash/brow material that is opaque in the source stays opaque; check
+  the source before "fixing" geometry with alpha tricks (spiky "cones" on one
+  creature were its real thorn mesh).
+- The animation-clip decode of the Unity companion was never finished (the spike
+  stopped at an API rate limit), so how much animation a companion yields stayed
+  unknown. Spike clip decode first next time; it sets the scope.
 - First version peaked at 9.7 GB and crashed beside the running game →
   manifest-driven extraction peaked near 380 MB as a single-file exe.
 - Unity FMOD banks store Vorbis with the setup headers stripped → rebuilt with the
@@ -106,6 +148,10 @@ a hang watchdog switchable from the ini.
   Enter to the game's own window, screenshots come from inside the add-on (HDR10
   converted to sRGB), lab commands dump bones and reload sheets, and an offline
   Blender preview of a cached body separates extraction bugs from renderer bugs.
+- Freezing all AI for screenshots and leaving it frozen while the owner played
+  cost them a session: every freeze probe needs its unfreeze. Teleporting to
+  frame a shot does not stick on aggro'd AI; use the add-on's rest-pose command
+  (`test <body> x y z yaw`) instead.
 - A fix counts as done only with an in-game shot or a log line, and the owner
   plays every build. No GitHub push and no Melty create/upload/submit until the
   owner says they are satisfied; local commits are fine.
@@ -120,7 +166,10 @@ a hang watchdog switchable from the ini.
 
 1. Read the host's engine version and anti-cheat/DRM status before choosing a route.
 2. Choose passthrough unless the host can load foreign assets natively.
-3. Get one verified native call and one verified screenshot before any feature.
+3. Spike the two unknowns before features: the host's draw/UI split and the
+   companion's animation decode. Get one verified native call and one verified
+   screenshot, and build the add-on command file (screenshot, dump, reload,
+   test-pose) first.
 4. Discover offsets at runtime, vote across actors, log what was chosen.
 5. Keep extraction manifest-driven and bounded in memory; never ship source-game assets.
 6. Write `STATE.md` and `MODLOG.md` as you go (failures with their cause).

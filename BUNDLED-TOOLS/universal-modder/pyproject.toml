@@ -1,6 +1,6 @@
 [project]
 name = "universal-modder"
-version = "0.2.0+uabs.6a8865a"
+version = "0.2.0+uabs.c1dff21"
 description = "Tools and a shared knowledge base for AI agents that mod games: engine scanner, fal asset generation, sprite and 3D-to-sprite pipelines, window capture and input on Windows, showcase video editing, field notes."
 readme = "README.md"
 license = "MIT"

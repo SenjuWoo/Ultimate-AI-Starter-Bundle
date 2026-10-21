@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.19.2 -->
+<!-- Ultimate AI Starter Bundle v8.20.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.19.2
+# Ultimate AI Starter Bundle v8.20.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -684,7 +684,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-- **Provider skills** — 124 general skills per AI (Claude, Codex, Grok, Kimi, Hermes, Antigravity), plus 49 with the Skyrim pack, all generated from one canonical tree.
+- **Provider skills** — 125 general skills per AI (Claude, Codex, Grok, Kimi, Hermes, Antigravity), plus 49 with the Skyrim pack, all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7 and Headroom are the always-on core (the official GitHub server too, where `gh` is not signed in); servers a tool's own installer registers machine-wide are parked per project. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup (Skyrim pack)
@@ -904,6 +904,7 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
+**v8.20.0** - 2026-10-21. New `game-mashup-passthrough` skill and a bigger mashup card from the project's full lessons (frame split, spike order, freeze/teleport traps; no machine paths). Universal Modder refreshed to `c1dff21` (new `um voidless`, ~20 game notes). Your `Tools` and `Modding` folders reviewed: nothing bundled, bench map and evaluations updated.
 **v8.19.2** - 2026-10-20. Faster, quieter installs: the Hermes profile migration reads each profile once (152 s to 7.6 s for an unchanged machine), skill fingerprints hash 4.8x faster, and plugin-owned skills are no longer copied and deleted again every run. Hermes starter defaults are checked in one process (65 s to 10 s). Fixes the live skill sync overwriting a preserved local skill, a final check that failed on a hand-installed optional tool, a Hermes read that could have written masked MCP secrets back, Spooky's toolkit re-updating itself every run, an unbounded `--version` probe, and Antigravity plugins that never refreshed. blender-mcp 2.2.2.
 **v8.19.1** - 2026-10-19. Melty is now explicitly opt-in: ordinary mods never default to a Melty folder, and the mashup route only applies to an explicit two-game fusion or publish on Melty. Context7 moved to 4.4.4 and its keyless tier now resolves library IDs only, so `query-docs` needs `CONTEXT7_API_KEY`; the catalog claim was re-measured rather than copied. REA 6.7.0, Serena 2.1.0 and shadcn-mcp 4.22.1. [Changes](docs/history/V8.19.1-CHANGELOG.md).
 **v8.19.0** - 2026-10-18. Closes all 11 open GitHub CodeQL alerts (#235–#245) in Impeccable scripts, completes Antigravity provider integration across all MCP targets and doctor checks, repairs Windows PowerShell extensionless `npm` resolution with `Resolve-UabsExecutable`, resolves Hermes ponytail plugin loading with ponytail 5.3.2, refreshes Universal Modder to `6a8865a`, and updates catalog components (`context7` 4.4.2, `chrome-devtools-mcp` 1.11.0, `shadcn-mcp` 4.22.0, `super-mcp-router` 2.8.4). [Changes](docs/history/V8.19.0-CHANGELOG.md).
