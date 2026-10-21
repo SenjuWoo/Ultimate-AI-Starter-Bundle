@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.20.0 -->
+<!-- Ultimate AI Starter Bundle v8.20.1 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.20.0
+# Ultimate AI Starter Bundle v8.20.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -424,7 +424,7 @@ Choose by the actual job: tool support, image input when required, sufficient
 context, then measured correctness, latency and total cost. Escalate after a
 reproducible failure; neither price nor a newer name is a quality benchmark.
 
-Shipped aliases: `v4.1-flash`, `flash`, `flash-vision`, `muse`, `v4-pro`,
+Shipped aliases: `v4.1-flash`, `flash`, `muse`, `v4-pro`,
 `gemini-flash`, `glm`, `grok`, `sol`, `opus`, `nemotron-ultra` and
 `nemotron-ultra-nofree`. These retain their configured targets; `sol` and
 `opus` do not automatically select the newest generation.
@@ -437,23 +437,20 @@ hermes model --refresh
 .\TOOLS\Migrate-HermesProfiles.ps1 -Apply  # backup + owned migration, Hermes closed
 ```
 
-The shipped fallback chain is:
+The starter ships **no fallback chain**. The old four-model free chain was
+weaker than the main model and text-only in places, so a failover silently
+downgraded the answer or dropped images instead of failing loudly. Add your own
+entries if you want failover, and only with models that accept the same
+modalities as the main model. Custom chains remain user-owned; migration clears
+a superseded pack chain and leaves a user-written one untouched.
 
-```text
-poolside/laguna-s-2.1:free -> thinkingmachines/inkling:free
-  -> thinkingmachines/inkling-small:free -> poolside/laguna-xs-2.1:free
-```
-
-Free endpoints are quota-limited and can disappear. Laguna is text-only:
-this chain is not an image-preserving guarantee. Custom chains and aliases
-remain user-owned; migration fills missing entries or replaces exact
-superseded bundle defaults, not arbitrary model choices.
-
-The retired `inclusionai/ling-3.0-flash-vl:free` compression endpoint is replaced
-with `thinkingmachines/inkling:free`, using supported `max` reasoning instead
-of `ultra`. Its listed 1,048,576-token context covers the 160,000-token cap.
-This is metadata compatibility, not a live summary-quality benchmark; failed
-summaries still abort without replacing context. [Profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md).
+Every auxiliary task (vision, compression, approvals, curator, skills hub, MCP
+suggestions, title generation) ships as `provider: auto` with an empty model, so
+it follows whatever main model you pick. Nothing pins a dated model id that can
+be retired, rate-limited or text-only behind your back. Compression fires at a
+320,000-token cap on the 1M-token default window, prunes oversized tool results
+from 80,000 tokens, and aborts rather than replacing context when a summary
+fails. [Model guidance](docs/HERMES-MODELS.md) · [Profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md).
 
 ### Hermes: native web search and keyless options
 
@@ -904,6 +901,7 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
+**v8.20.1** - 2026-10-21. Hermes settings are now future-proof: no fallback chain, no pinned auxiliary or delegation models (everything follows your main model), vision follows the main model instead of a retired experimental endpoint, and compression fires at a 320k cap on the 1M-token window. The component updater respects catalog holds unless `-Force`. [Changes](docs/history/V8.20.1-CHANGELOG.md).
 **v8.20.0** - 2026-10-21. New `game-mashup-passthrough` skill and a bigger mashup card from the project's full lessons (frame split, spike order, freeze/teleport traps; no machine paths). Universal Modder refreshed to `c1dff21` (new `um voidless`, ~20 game notes). Your `Tools` and `Modding` folders reviewed: nothing bundled, bench map and evaluations updated.
 **v8.19.2** - 2026-10-20. Faster, quieter installs: the Hermes profile migration reads each profile once (152 s to 7.6 s for an unchanged machine), skill fingerprints hash 4.8x faster, and plugin-owned skills are no longer copied and deleted again every run. Hermes starter defaults are checked in one process (65 s to 10 s). Fixes the live skill sync overwriting a preserved local skill, a final check that failed on a hand-installed optional tool, a Hermes read that could have written masked MCP secrets back, Spooky's toolkit re-updating itself every run, an unbounded `--version` probe, and Antigravity plugins that never refreshed. blender-mcp 2.2.2.
 **v8.19.1** - 2026-10-19. Melty is now explicitly opt-in: ordinary mods never default to a Melty folder, and the mashup route only applies to an explicit two-game fusion or publish on Melty. Context7 moved to 4.4.4 and its keyless tier now resolves library IDs only, so `query-docs` needs `CONTEXT7_API_KEY`; the catalog claim was re-measured rather than copied. REA 6.7.0, Serena 2.1.0 and shadcn-mcp 4.22.1. [Changes](docs/history/V8.19.1-CHANGELOG.md).

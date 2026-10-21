@@ -26011,8 +26011,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml",
-  "size": 8715,
-  "sha256": "7d6cb551b4fddb66aabf7f85a6f72b364f68411dc6093d0039bf6e12904b33a7"
+  "size": 8019,
+  "sha256": "397e2556d6c23918e8db367cd42a39c779fb5a3fa33093f5ee01c6b4531ba966"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
@@ -32471,13 +32471,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/README.txt",
-  "size": 5138,
-  "sha256": "aaa237cb128e0de59d0009ee995e3a68a1136c4d2e0baa57d5f497656b97649d"
+  "size": 5250,
+  "sha256": "09853dea9e32cdc08d85c507f3bbb338397b68981b0f7a00302ec7ab360fe683"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml",
-  "size": 8715,
-  "sha256": "7d6cb551b4fddb66aabf7f85a6f72b364f68411dc6093d0039bf6e12904b33a7"
+  "size": 8019,
+  "sha256": "397e2556d6c23918e8db367cd42a39c779fb5a3fa33093f5ee01c6b4531ba966"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md",
@@ -39177,12 +39177,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 57047,
-  "sha256": "f0212b718bf00e5d44801af35f20f7d2a50ca6d5b2834cf03c9524839db754ea"
+  "sha256": "a30284598a306e6c026b1a21f82e5450cba9d548c6544af4c4b063629dfbad33"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1537,
-  "sha256": "b06af98232fc60de32870f505b0c4fa33ead8f77fcfdbb361ec937b0f6022df3"
+  "sha256": "34fc8920fe5d71c5fe0db430a6447455cf4dd03c12c239d4d3e4e4a71a07c6d7"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -39192,7 +39192,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 35772,
-  "sha256": "97440b6ee9baf9a60b4503d1df3a03b6ef8d08a8c110dbffa4f1d664934b62e1"
+  "sha256": "e0c42baa8acc25fa20eadd4a04939a22f8638e496f1ff887c431f0691090a82f"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -43311,8 +43311,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 221939,
-  "sha256": "571fb9c6e3e80d70caa17d133fc5428ff95b3a9b0ab096f4315d963074e89e66"
+  "size": 224331,
+  "sha256": "8f3c53f1e92b06f07f210facdbc79b73d322bd53ca02bbbd4525126aa650ed95"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43387,7 +43387,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 178562,
-  "sha256": "5d7d0b73d2cc38245be56de17984ea66b3f4da03cb46fede8457e8ef25c669e9"
+  "sha256": "78cf9f60d7400124e89314e2b2b32dc44ea80830dd685a292c8eb7da92e50368"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43441,8 +43441,8 @@
  },
  {
   "path": "README.md",
-  "size": 66314,
-  "sha256": "9d01eee660039395ee0e95fafe724bd13ffe0a2f2624a4cf9bdfc9a514a25169"
+  "size": 66860,
+  "sha256": "08ed36d3d369890eb58f3e3465fdbf0e68cf89cb16278911e3a475f082e7d204"
  },
  {
   "path": "SECURITY.md",
@@ -43452,12 +43452,12 @@
  {
   "path": "START-HERE.bat",
   "size": 888,
-  "sha256": "aa08672bb3924440cce50eb6456e80dd57d856de36463b81a0437c41792b7fbc"
+  "sha256": "62e640d917fc5aa6f0ec1dfc655902a2a725d952a251f7627c8fd97afdc259fc"
  },
  {
   "path": "START-HERE.txt",
   "size": 11419,
-  "sha256": "9b57e058cacf57892b404617cffc995fce77ef0cd40ae73a12dee35da079e8ef"
+  "sha256": "0d310b2e208aaf54bcfe96b6122a9c7f11a192590141e4b3f6662390c7986a19"
  },
  {
   "path": "STATE.md",
@@ -43791,8 +43791,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 329468,
-  "sha256": "9eafe4af432adc449099004a21bd1231d08680906c367ae5bd2f14af77fc32ab"
+  "size": 329238,
+  "sha256": "9bab138bbce54d3152d75b61035318bb0c89669a10bbb62b899cc7b0cd315377"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -43872,7 +43872,7 @@
  {
   "path": "TOOLS/Install-Provider-Starter-Settings.ps1",
   "size": 20031,
-  "sha256": "6b106e3d30d1cc4a8c368efdd5e4ac9412e704c4bfd6819ee8dab9a665d8f784"
+  "sha256": "de3017050d7b34d65184740dc38dbf8383351311f23d22db03ef193c40e809e7"
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
@@ -43896,8 +43896,8 @@
  },
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
-  "size": 68465,
-  "sha256": "9c3a411de97cc6c5abd33ad3a6db5495ad5c3921e8031800fa475e25ba0a0da3"
+  "size": 67872,
+  "sha256": "659f7c41d0e5eefb37f025edbe8968500f489e859bc6aa3ec16e729980a1e1e1"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -43956,8 +43956,8 @@
  },
  {
   "path": "TOOLS/Update-From-GitHub.ps1",
-  "size": 3859,
-  "sha256": "4092bd269bf591280027fff304dbc18f454c0c81357022073dd2c50ec3fe001c"
+  "size": 4538,
+  "sha256": "6e7be70b6967e7199084fe30b68a547d5e19744eb1f1ebbb351b1de04c8d0f43"
  },
  {
   "path": "TOOLS/Wait-External.ps1",
@@ -44141,8 +44141,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2238,
-  "sha256": "59df4a6fc32483942883f14bf736cb75edc26f838c3b02da4c3a60cbb31d9b93"
+  "size": 2307,
+  "sha256": "e593fd5211437f5f97afd76adedbfe8b26ea5b36fbe316715031778bde820ddf"
  },
  {
   "path": "VALIDATION.md",
@@ -44152,7 +44152,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "a102e88bd1c07c515c69ce9114e9577fa2a42897eaeff3d3fe9a3f14bb553f3e"
+  "sha256": "b7c2981cdc4da799f482ffeece64e1b0a58436bbb6dc1f2ce192b109d0dea5a7"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -50581,8 +50581,8 @@
  },
  {
   "path": "docs/HERMES-MODELS.md",
-  "size": 3883,
-  "sha256": "7f9441fad0a036acfcdac38f7d9c6fce1525f27ab41c8dc4fd56c1550635ab6a"
+  "size": 5210,
+  "sha256": "b0f470225c16d092ada337517730c0568ce5220ff3b2ea4373143a913cd76286"
  },
  {
   "path": "docs/OPERATOR-PROFILES.md",

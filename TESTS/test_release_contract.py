@@ -435,12 +435,11 @@ def test_hermes_cost_contract() -> None:
         ):
             assert token in cfg, f"{path}: missing Hermes quality/closure setting {token}"
 
-        # Fixed 160k trigger on the 1M-window default (threshold_tokens is a CAP
-        # on context_length * threshold -- agent_init.py passes it as
-        # threshold_tokens_cap), preserving ~36k of recent tail and multiple
-        # true user turns. Avoid tiny rewrites that destroy a warm provider
-        # cache prefix; prune only when the reclaim is material.
-        assert re.search(r"(?m)^\s*threshold_tokens:\s*160000\s*$", cfg), path
+        # 320k absolute cap on the 1M-window default (threshold_tokens is a CAP
+        # on context_length * threshold). Without it the ratio waits until
+        # ~524k, which is a long, expensive turn past the range where most
+        # models hold quality. Prune only when the reclaim is material.
+        assert re.search(r"(?m)^\s*threshold_tokens:\s*320000\s*$", cfg), path
         assert re.search(r"(?m)^\s*target_ratio:\s*0\.20\s*$", cfg), path
         assert re.search(r"(?m)^\s*protect_last_n:\s*20\s*$", cfg), path
         assert re.search(r"(?m)^\s*min_tail_user_messages:\s*3\s*$", cfg), path
@@ -461,18 +460,16 @@ def test_hermes_cost_contract() -> None:
         assert re.search(r"(?m)^\s*transient_retries:\s*1\s*$", cfg), path
         assert re.search(r"(?m)^\s*cost_threshold_usd:\s*0\.01\s*$", cfg), path
         assert re.search(r"(?ms)^  background_review:\s*\n\s+enabled:\s*false\s*$", cfg), path
-        # Reviewed replacement: free multimodal summarizer; 1M context covers
-        # the retained 160k input cap. Compatibility is not proof of summary
-        # quality.
+        # Compression follows the main model; there is no pinned summarizer
+        # left to retire, rate-limit or silently swap.
         aux_start = cfg.index("auxiliary:")
         aux_end = cfg.index("\ndisplay:", aux_start)
         aux = cfg[aux_start:aux_end]
         m = re.search(r"(?ms)^  compression:\n(.*?)(?=^  [a-z_]+:|\Z)", aux)
         assert m, f"{path}: Hermes auxiliary.compression block missing"
         compression = m.group(0)
-        assert "model: thinkingmachines/inkling:free" in compression, path
-        # Inkling advertises max, not ultra; summary failures still abort.
-        assert "reasoning_effort: max" in compression, path
+        assert "provider: auto" in compression, path
+        assert re.search(r"(?m)^    model: ''\s*$", compression), path
         assert "timeout: 600" in compression, path
 
         assert re.search(r"(?m)^\s*cache_ttl:\s*1h\s*$", cfg), path
@@ -1182,14 +1179,10 @@ def test_doctor_counts_every_skill_root_and_never_interpolates() -> None:
     )
 
 
-# The chain the pack ships, in order. Named once so the three contracts below
-# cannot drift apart from each other.
-HERMES_FALLBACK_CHAIN = [
-    "poolside/laguna-s-2.1:free",
-    "thinkingmachines/inkling:free",
-    "thinkingmachines/inkling-small:free",
-    "poolside/laguna-xs-2.1:free",
-]
+# The pack ships no fallback chain: the old free chain was weaker than the main
+# model and text-only in places. Kept as an empty list so the contracts below
+# assert the absence instead of silently skipping.
+HERMES_FALLBACK_CHAIN: list[str] = []
 
 HERMES_STARTER = ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "config.yaml"
 
@@ -1205,47 +1198,39 @@ def _yaml_list_of_models(text: str, key: str) -> list:
     return re.findall(r"^\s*model:\s*(\S+)\s*$", m.group(1), re.M)
 
 
-def test_hermes_starter_ships_a_verified_fallback_chain() -> None:
-    """A fallback chain is only consulted when the primary is already failing.
+def test_hermes_starter_aux_models_follow_the_main_model() -> None:
+    """Auxiliary tasks must not pin a dated model id.
 
-    The starter had no `fallback_providers` at all -- only a commented-out
-    example -- so a BYOK user had no failover until they wrote one by hand, and
-    every profile cloned from it inherited that gap.
+    The old free chain went text-only, then quota-limited, then retired, and
+    every failure was silent. `provider: auto` plus an empty model follows the
+    main model, which accepts images on the shipped default.
     """
     text = HERMES_STARTER.read_text(encoding="utf-8")
-    got = _yaml_list_of_models(text, "fallback_providers")
-    assert got == HERMES_FALLBACK_CHAIN, (
-        "shipped Hermes fallback chain is %s, expected %s" % (got, HERMES_FALLBACK_CHAIN))
+    assert _yaml_list_of_models(text, "fallback_providers") == [], (
+        "the starter ships a fallback chain again; a weaker text-only model must "
+        "not silently replace the main model")
+    assert "fallback_chain:" not in text, (
+        "auxiliary.vision.fallback_chain is not a recognized Hermes key; it does nothing")
 
-    # laguna-s is TEXT-ONLY on OpenRouter. Putting it first is deliberate (it is
-    # the strongest free text model) but it silently drops images, so the
-    # multimodal entry has to sit directly behind it, not at the bottom.
-    assert got.index("thinkingmachines/inkling:free") == 1, (
-        "the multimodal fallback must sit directly behind the text-only first "
-        "entry, or a vision task that fails over loses its images with no other "
-        "multimodal option nearby")
-    assert "text-only" in text or "TEXT-ONLY" in text, (
-        "the config no longer warns that the first fallback is text-only")
+    aux_start = text.index("auxiliary:")
+    aux_end = text.index("\ndisplay:", aux_start)
+    aux = text[aux_start:aux_end]
+    assert re.search(r"(?m)^  vision:\n    provider: auto\n    model: ''\s*$", aux), (
+        "vision no longer follows the main model")
+    for task in ("compression", "skills_hub", "approval", "mcp", "title_generation", "curator"):
+        m = re.search(r"(?ms)^  %s:\n(.*?)(?=^  [a-z_]+:|\Z)" % task, aux)
+        assert m, "auxiliary.%s block missing" % task
+        block = m.group(1)
+        assert "provider: auto" in block, "auxiliary.%s pins a provider" % task
+        assert re.search(r"(?m)^    model: ''\s*$", block), (
+            "auxiliary.%s pins a model id instead of following the main model" % task)
 
-    # Vision cannot be pointed at a text-only model -- directly, or anywhere in
-    # the ordered chain an auto-routed block consults.
-    vision_models = []
-    in_vision = False
-    for line in text.splitlines():
-        if line == "  vision:":
-            in_vision = True
-            continue
-        if in_vision and line and not line.startswith("    "):
-            break
-        if in_vision:
-            model = re.match(r"^\s+model:\s*['\"]?([^'\"]+)['\"]?\s*$", line)
-            if model and model.group(1).strip():
-                vision_models.append(model.group(1).strip())
-    assert vision_models, "auxiliary vision model not found in the starter"
-    text_only = [mid for mid in vision_models if mid.startswith("poolside/laguna")]
-    assert not text_only, (
-        "the vision auxiliary consults a text-only model (%s); images would be "
-        "dropped" % ", ".join(text_only))
+    delegation = re.search(r"(?ms)^delegation:\n(.*?)(?=^[a-z_]+:|\Z)", text).group(1)
+    assert "provider: auto" in delegation and re.search(r"(?m)^  model: ''\s*$", delegation), (
+        "delegation still pins a dated model instead of following the main model")
+
+    assert re.search(r"(?m)^  default: deepseek/deepseek-v4\.1-flash-1017$", text), (
+        "the starter default moved; update this contract and docs/HERMES-MODELS.md together")
 
 
 def test_hermes_starter_carries_no_machine_state() -> None:
@@ -1289,7 +1274,7 @@ def test_hermes_starter_carries_no_machine_state() -> None:
     assert "rimworld/config.yaml" in migration and "$maps['rimworld'] = $rimworldMap" in migration
     assert "$context7.args = @($context7.args" in migration
     repair = read(ROOT / "TOOLS/Install-Provider-Starter-Settings.ps1")
-    for key, value in (("compression.threshold_tokens", "160000"),
+    for key, value in (("compression.threshold_tokens", "320000"),
                        ("compression.target_ratio", "0.20"),
                        ("openrouter.response_cache", "false")):
         assert re.search(r"'%s'\s*=\s*'%s'" % (re.escape(key), re.escape(value)), repair)
@@ -1304,8 +1289,11 @@ def test_hermes_profile_prefs_converge_without_clobbering_user_choice() -> None:
     """
     body = ps_code(ROOT / "TOOLS" / "Migrate-HermesProfiles.ps1")
 
-    for model in HERMES_FALLBACK_CHAIN:
-        assert model in body, "the migration no longer knows the %r fallback" % model
+    assert "poolside/laguna-s-2.1:free|thinkingmachines/inkling:free" in body, (
+        "the migration no longer knows the superseded free chain, so profiles "
+        "still carrying it are never cleared")
+    assert "$script:UabsFallbackChain = @()" in body, (
+        "the migration ships a fallback chain again")
     assert "UabsSupersededChains" in body, (
         "the migration no longer distinguishes a chain THIS PACK shipped from one "
         "the user chose, so it can only either clobber or do nothing")
@@ -1337,9 +1325,8 @@ def test_readme_model_guidance_matches_the_shipped_config() -> None:
     readme = read(ROOT / "README.md")
     starter = HERMES_STARTER.read_text(encoding="utf-8")
 
-    for model in HERMES_FALLBACK_CHAIN:
-        assert model in readme, (
-            "README does not document the shipped fallback %r" % model)
+    assert "no fallback chain" in readme.lower(), (
+        "README still documents a shipped fallback chain that the config no longer has")
 
     # Every alias the pack ships must be explained, and every alias the README
     # advertises must actually be shipped -- either direction is a lie.
@@ -2762,7 +2749,7 @@ def main() -> int:
         test_canonical_tree_carries_no_maintainer_identity,
         test_doctor_counts_every_skill_root_and_never_interpolates,
         # v8.5.0 -- a cloned Hermes profile drifts and nothing re-converged it.
-        test_hermes_starter_ships_a_verified_fallback_chain,
+        test_hermes_starter_aux_models_follow_the_main_model,
         test_hermes_starter_carries_no_machine_state,
         test_hermes_profile_prefs_converge_without_clobbering_user_choice,
         test_readme_model_guidance_matches_the_shipped_config,
@@ -3346,7 +3333,7 @@ def test_hermes_readme_matches_the_shipped_starter() -> None:
     for key, value, section in (
         ("reasoning_effort", "max", "agent"),
         ("max_turns", "null", "agent"),
-        ("threshold_tokens", "160000", "compression"),
+        ("threshold_tokens", "320000", "compression"),
     ):
         claim = f"{key}: {value}"
         block = re.search(rf"(?ms)^{section}:\n(.*?)(?=^[a-z_]+:|\Z)", cfg)
@@ -5894,7 +5881,7 @@ def test_compression_retirement_preserves_custom_preferences() -> None:
     assert "$current.compression.provider -eq 'openrouter' -and" in planner
     assert "'inclusionai/ling-3.0-flash-vl:free', 'openrouter/inclusionai/ling-3.0-flash-vl:free'" in planner
     retired = "inclusionai/ling-3.0-flash-vl:free"
-    replacement = "thinkingmachines/inkling:free"
+    replacement = ""
     # A stale plan must not overwrite a value changed after planning.
     cases = [
         ("openrouter", retired, "ultra", retired, True),
@@ -5913,14 +5900,14 @@ def test_compression_retirement_preserves_custom_preferences() -> None:
         cfg = copy.deepcopy(original)
         expected = copy.deepcopy(original)
         if changes:
+            expected["auxiliary"]["compression"]["provider"] = "auto"
             expected["auxiliary"]["compression"]["model"] = replacement
-            if effort == "ultra":
-                expected["auxiliary"]["compression"]["reasoning_effort"] = "max"
+            expected["auxiliary"]["compression"].pop("reasoning_effort", None)
         module = types.ModuleType("hermes_cli.config")
         module.load_config = lambda: cfg
         saved = []
         module.save_config = lambda value: saved.append(copy.deepcopy(value))
-        prefs = {"compression_migration": {"retired_model": planned, "model": replacement}}
+        prefs = {"compression_migration": {"retired_model": planned, "provider": "auto", "model": replacement}}
         with patch.dict(sys.modules, {"hermes_cli.config": module}), patch.dict(
                 os.environ, {"UABS_HERMES_PREFS_JSON": json.dumps(prefs)}):
             exec(compile(writer, "Hermes production preferences writer", "exec"), {})

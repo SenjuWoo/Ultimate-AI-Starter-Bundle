@@ -150,7 +150,7 @@ function Merge-UabsHermesEfficiencyDefaults {
   # "not a recognized config key", so filling it did nothing.
   $defaults = [ordered]@{
     'compression.enabled'                     = 'true'
-    'compression.threshold_tokens'            = '160000'
+    'compression.threshold_tokens'            = '320000'
     'compression.target_ratio'                = '0.20'
     'compression.protect_last_n'              = '20'
     'compression.min_tail_user_messages'      = '3'

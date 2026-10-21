@@ -1,7 +1,7 @@
 # Portable Hermes starter config. Ships provider/model preferences only;
 # MCP servers and hooks are wired per-machine by INSTALL-AIO.ps1.
 model:
-  default: deepseek/deepseek-v4.1-flash
+  default: deepseek/deepseek-v4.1-flash-1017
   provider: openrouter
   base_url: https://openrouter.ai/api/v1
   aliases:
@@ -11,7 +11,6 @@ model:
     nemotron-ultra-nofree: openrouter/nvidia/nemotron-3-ultra-550b-a55b
     v4.1-flash: openrouter/deepseek/deepseek-v4.1-flash
     flash: openrouter/deepseek/deepseek-v4-flash-0731
-    flash-vision: openrouter/deepseek/deepseek-v4-flash-vision-exp
     muse: openrouter/meta/muse-spark-1.2-contributor
     v4-pro: openrouter/deepseek/deepseek-v4-pro-0813
     gemini-flash: openrouter/google/gemini-3.7-flash
@@ -19,22 +18,11 @@ model:
     grok: openrouter/x-ai/grok-4.6
     sol: openrouter/openai/gpt-5.6-sol
     opus: openrouter/anthropic/claude-opus-5
-# Automatic failover when the primary is unavailable (429 rate limit, 529
-# overload, 503, or a connection failure). All four are :free variants, so a
-# failover costs nothing.
-#
-# Ordered best-first. Note that laguna-s is TEXT-ONLY: if a vision task fails
-# over to it, images are dropped. inkling (second) accepts text, image, and
-# audio, which is why it sits directly behind.
-fallback_providers:
-  - provider: openrouter
-    model: poolside/laguna-s-2.1:free
-  - provider: openrouter
-    model: thinkingmachines/inkling:free
-  - provider: openrouter
-    model: thinkingmachines/inkling-small:free
-  - provider: openrouter
-    model: poolside/laguna-xs-2.1:free
+# No automatic failover. The old free chain (laguna/inkling) was text-only or
+# weaker than the main model, so a failover silently downgraded answers and
+# dropped images. Add your own entries here if you want failover; they must
+# accept the same modalities as the main model or the task changes shape.
+fallback_providers: []
 database:
   journal_mode: wal
 runtime:
@@ -96,7 +84,7 @@ compression:
   enabled: true
   progress_notices: true
   threshold: 0.50
-  threshold_tokens: 160000
+  threshold_tokens: 320000
   target_ratio: 0.20
   tail_mode: lean
   protect_last_n: 20
@@ -122,40 +110,36 @@ openrouter:
   min_coding_score: 0.65
 auxiliary:
   transient_retries: 1
+  # Every auxiliary task follows the main model (provider auto, empty model).
+  # A pinned auxiliary model is a promise to revisit it: the old free chain
+  # went text-only, then rate-limited, then retired, and each failure was
+  # silent. Override one entry only when that task needs its own model.
   vision:
-    # Must be multimodal. laguna-s is text-only and would silently drop images.
-    # Auto-routed, with the multimodal chain below as the ordered fallback.
     provider: auto
     model: ''
-    fallback_chain:
-      - provider: openrouter
-        model: deepseek/deepseek-v4-flash-vision-exp
   compression:
-    provider: openrouter
-    # Catalog checked 2026-10-02: 1048576 context covers the retained 160k cap.
-    # Free endpoints can be rate-limited; failed summaries never replace context.
-    model: thinkingmachines/inkling:free
+    provider: auto
+    model: ''
     timeout: 600
     extra_body:
       provider:
         require_parameters: true
-    reasoning_effort: max
   skills_hub:
-    provider: openrouter
-    model: poolside/laguna-s-2.1:free
+    provider: auto
+    model: ''
   approval:
-    provider: openrouter
-    model: poolside/laguna-s-2.1:free
+    provider: auto
+    model: ''
   mcp:
-    provider: openrouter
-    model: poolside/laguna-s-2.1:free
+    provider: auto
+    model: ''
   title_generation:
     enabled: false
-    provider: openrouter
-    model: poolside/laguna-s-2.1:free
+    provider: auto
+    model: ''
   curator:
-    provider: openrouter
-    model: poolside/laguna-s-2.1:free
+    provider: auto
+    model: ''
   background_review:
     enabled: false
 display:
@@ -183,13 +167,14 @@ stt:
 memory:
   memory_enabled: true
   user_profile_enabled: true
-  memory_char_limit: 2200
-  user_char_limit: 1375
+  memory_char_limit: 6000
+  user_char_limit: 2000
   nudge_interval: 10
   flush_min_turns: 6
 delegation:
-  provider: openrouter
-  model: deepseek/deepseek-v4-flash-0731
+  # Follow the main model so subagents never inherit a retired pin.
+  provider: auto
+  model: ''
   reasoning_effort: high
   max_iterations: 50
   max_concurrent_children: 2

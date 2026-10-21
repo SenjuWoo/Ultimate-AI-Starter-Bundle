@@ -1,6 +1,6 @@
 # Hermes model guidance
 
-Catalog check: **2026-10-02**. Consult the [public OpenRouter catalog](https://openrouter.ai/api/v1/models)
+Catalog check: **2026-10-19**. Consult the [public OpenRouter catalog](https://openrouter.ai/api/v1/models)
 for current IDs, pricing, modalities and supported parameters, and
 [Hermes provider documentation](https://hermes-agent.nousresearch.com/docs/integrations/providers)
 for API, subscription/OAuth and local-endpoint routes. Metadata is compatibility
@@ -11,8 +11,10 @@ evidence, not a quality benchmark or guaranteed availability.
 `hermes model` opens the provider/model picker. `hermes model --refresh` clears
 its cache and refetches catalogs; `/model` switches inside a chat. Compare task
 accuracy, latency, modalities and budget, not release date alone. The starter
-still uses DeepSeek V4.1 Flash; upgrades do not replace existing main or auxiliary
-choices with newer paid models.
+default is `deepseek/deepseek-v4.1-flash-1017`: 1,048,576-token context,
+$0.15 / $0.60 per 1M input/output tokens, and text plus image input on
+OpenRouter's listing. Upgrades do not replace an existing main or auxiliary
+choice with a newer paid model.
 
 Currently listed candidates for deliberate comparison:
 
@@ -27,15 +29,58 @@ tier at 272,000 tokens: $4 / $15. Cached input, reasoning output, search and
 provider routing can change the bill. These are dated catalog rates, not task
 quotes. None was benchmarked or promoted to a default by this update.
 
+## Auxiliary tasks follow the main model
+
+Every `auxiliary.*` task ships as `provider: auto` with an empty `model`, which
+means "use the main model". No auxiliary task carries a pinned model ID any
+more. The reason is empirical: the old free chain went text-only, then hit
+quotas, then was retired, and each failure was silent — vision dropped images,
+compression fell back to a weaker summary, approvals ran on a model that no
+longer existed. A pin is a promise to revisit it; `auto` has nothing to retire.
+
+The vision task is safe to auto-route only because the default main model
+accepts images. If you switch to a text-only main model, set
+`auxiliary.vision.model` to a multimodal model explicitly, or images will fail
+rather than silently disappear.
+
+`auxiliary.vision.fallback_chain` is **not a recognized Hermes key**. Older
+configs carried it, and it did nothing; the pack no longer ships it. Use
+`fallback_providers` if you want failover, and only with models that accept the
+same modalities as the main model.
+
+## No shipped failover chain
+
+`fallback_providers` ships empty. The previous four-entry free chain
+(`laguna-s`, `inkling`, `inkling-small`, `laguna-xs`) was weaker than the main
+model and text-only in places, so a 429 quietly downgraded the answer instead
+of failing loudly. If you want failover, add entries yourself and check their
+modalities and quotas first; a free model is not a drop-in replacement for a
+multimodal paid one.
+
+## Compression tuning for a 1M-token window
+
+`compression.threshold_tokens: 320000` is an absolute cap: compaction fires at
+the lower of `threshold × context` and that count. On a 1,048,576-token window
+the ratio would otherwise wait until ~524k tokens, which is a long, expensive
+turn and past the range where most models hold quality. 320k keeps the working
+set large enough for multi-file work while bounding per-turn input cost
+(~$0.048 at $0.15/1M before caching) and cache invalidation frequency.
+
+`proactive_prune_tokens: 80000` reclaims stale large tool results before a
+summary is needed; `target_ratio: 0.20`, `tail_mode: lean`, `protect_last_n: 20`
+and `min_tail_user_messages: 3` keep recent turns and user messages intact.
+`abort_on_summary_failure: true` means a failed summary never replaces retained
+context. Raise the cap only after measuring your own turns; lower it if
+latency or spend matters more than long-range recall.
+
 ## Shipped aliases are shortcuts, not a ranking
 
-Existing mappings are retained. `sol` and `opus` are not moving “latest” pointers:
+Existing mappings are retained. `sol` and `opus` are not moving "latest" pointers:
 
 | Alias | Shipped model ID |
 | --- | --- |
 | `v4.1-flash` | `deepseek/deepseek-v4.1-flash` |
 | `flash` | `deepseek/deepseek-v4-flash-0731` |
-| `flash-vision` | `deepseek/deepseek-v4-flash-vision-exp` |
 | `muse` | `meta/muse-spark-1.2-contributor` |
 | `v4-pro` | `deepseek/deepseek-v4-pro-0813` |
 | `gemini-flash` | `google/gemini-3.7-flash` |
@@ -47,26 +92,7 @@ Existing mappings are retained. `sol` and `opus` are not moving “latest” poi
 | `nemotron-ultra-nofree` | `nvidia/nemotron-3-ultra-550b-a55b` |
 
 Check the catalog before switching: not every alias accepts images, context
-limits differ, and paid/free variants can have different limits. The fallback
-chain is retained; free endpoints have quotas and text-only fallbacks cannot
-preserve image understanding. Explicit custom chains stay untouched.
-
-## Retired compression endpoint
-
-`inclusionai/ling-3.0-flash-vl:free` is no longer listed. The paid sibling still
-exists; the pack does **not** silently switch to it. Compression now defaults to
-`thinkingmachines/inkling:free`: its listed 1,048,576-token context covers the
-160,000-token cap. Its effort set includes `max`, not `ultra`; the starter uses
-`max`, timeout 600, and abort-on-summary-failure. A failed summary must not
-replace retained context.
-
-The migrator repairs only that exact retired free Ling ID (including its
-`openrouter/`-prefixed form), with provider `openrouter`. Only `ultra` becomes
-`max`; other efforts and extra fields stay. Paid Ling, another provider/model,
-the main model, custom aliases and other auxiliary models are not replaced.
-The old value is rechecked at write time; existing verified backup/rollback
-handling is reused. No authenticated inference or summary-quality benchmark
-was run. Free does not mean lossless compression or unlimited usage.
+limits differ, and paid/free variants can have different limits.
 
 ## Local endpoints and privacy
 

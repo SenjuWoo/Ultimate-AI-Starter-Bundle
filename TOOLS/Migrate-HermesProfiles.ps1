@@ -391,15 +391,11 @@ function Write-UabsLedger([string]$BackupPath, [string]$Status) {
 # only consulted when the primary is already failing, so a stale one is invisible
 # until the moment it has to work.
 #
-# Ordered best-first. All four are :free variants, so a failover costs nothing;
-# the two 1M-context models sit above the 256K ones because a failover mid-task
-# must not truncate the context that survived.
-$script:UabsFallbackChain = @(
-  @{ provider = 'openrouter'; model = 'poolside/laguna-s-2.1:free' }
-  @{ provider = 'openrouter'; model = 'thinkingmachines/inkling:free' }
-  @{ provider = 'openrouter'; model = 'thinkingmachines/inkling-small:free' }
-  @{ provider = 'openrouter'; model = 'poolside/laguna-xs-2.1:free' }
-)
+# The pack ships NO fallback chain. The old four-model free chain was weaker
+# than the main model and text-only in places, so a failover downgraded the
+# answer or dropped images instead of failing loudly. Migration therefore
+# clears a superseded pack chain and leaves a user-written one untouched.
+$script:UabsFallbackChain = @()
 
 # Chains THIS PACK shipped before. A profile still carrying one of these has
 # never been touched by its owner, so migrating it forward is safe. Anything
@@ -408,6 +404,8 @@ $script:UabsSupersededChains = @(
   'dots-studio/dots-3-note-preview:free|openrouter/free'
   'dots-studio/dots-3-note-preview:free'
   'openrouter/free'
+  # The v8.x free chain this pack shipped until v8.20.1.
+  'poolside/laguna-s-2.1:free|thinkingmachines/inkling:free|thinkingmachines/inkling-small:free|poolside/laguna-xs-2.1:free'
 )
 
 # Model ids this pack once shipped that upstream no longer lists. The pack
@@ -424,7 +422,6 @@ $script:UabsRetiredModels = @(
 $script:UabsModelAliases = [ordered]@{
   'flash'        = 'openrouter/deepseek/deepseek-v4-flash-0731'
   'v4.1-flash'   = 'openrouter/deepseek/deepseek-v4.1-flash'
-  'flash-vision' = 'openrouter/deepseek/deepseek-v4-flash-vision-exp'
   'muse'         = 'openrouter/meta/muse-spark-1.2-contributor'
   'v4-pro'       = 'openrouter/deepseek/deepseek-v4-pro-0813'
   'gemini-flash' = 'openrouter/google/gemini-3.7-flash'
@@ -565,7 +562,7 @@ function Ensure-UabsProfilePrefs([string]$Profile) {
   # Only the retired free endpoint, not its paid sibling or another provider.
   if ($current.compression.provider -eq 'openrouter' -and
       $current.compression.model -in @('inclusionai/ling-3.0-flash-vl:free', 'openrouter/inclusionai/ling-3.0-flash-vl:free')) {
-    $migration = @{ retired_model = $current.compression.model; model = 'thinkingmachines/inkling:free' }
+    $migration = @{ retired_model = $current.compression.model; provider = 'auto'; model = '' }
     Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'auxiliary.compression' `
       -Key 'compression_migration' -Value $migration -Detail 'replace delisted free Ling compression endpoint; retain other preferences'
     $wanted['compression_migration'] = $migration
@@ -582,15 +579,13 @@ function Ensure-UabsProfilePrefs([string]$Profile) {
   }
 
   $signature = Get-UabsFallbackSignature $current.fallback
-  $target = Get-UabsFallbackSignature $script:UabsFallbackChain
-  if ($signature -eq $target) {
-    Add-UabsLedger 'untouched' "$Profile fallback chain already current"
-  } elseif (-not $signature -or ($script:UabsSupersededChains -contains $signature)) {
-    $why = if (-not $signature) { 'no fallback chain configured' }
-           else { "superseded pack default ($signature)" }
+  if (-not $signature) {
+    Add-UabsLedger 'untouched' "$Profile has no fallback chain (pack default: none)"
+  } elseif ($script:UabsSupersededChains -contains $signature) {
+    # Our old default, not the user's choice: clear it.
     Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'fallback_providers' `
-      -Key 'fallback_providers' -Value $script:UabsFallbackChain -Detail $why
-    $wanted['fallback_providers'] = $script:UabsFallbackChain
+      -Key 'fallback_providers' -Value @() -Detail "clear superseded pack fallback chain ($signature)"
+    $wanted['fallback_providers'] = @()
   } else {
     # Not ours to overwrite. Say so rather than silently leaving it.
     Add-UabsLedger 'kept' "$Profile fallback chain is a user choice ($signature)"
@@ -628,23 +623,14 @@ function Ensure-UabsProfilePrefs([string]$Profile) {
     $wanted['remove_aliases'] = $retiredAliases
     foreach ($k in $retiredAliases) { Add-UabsLedger 'removed' "$Profile alias '$k' (model no longer listed upstream)" }
   }
-  $chain = @($current.vision_chain)
-  $keptChain = @()
-  $droppedChain = @()
-  foreach ($entry in $chain) {
-    $mid = [string]$entry.model
-    $dead = $false
-    foreach ($r in $script:UabsRetiredModels) {
-      if ($mid -eq $r -or $mid.EndsWith('/' + $r)) { $dead = $true }
-    }
-    if ($dead) { $droppedChain += $mid } else { $keptChain += $entry }
-  }
-  if ($droppedChain.Count) {
+  # `auxiliary.vision.fallback_chain` is not a recognized Hermes key: it did
+  # nothing in any version that shipped it. Remove it instead of pruning it.
+  if (@($current.vision_chain).Count) {
     Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'auxiliary.vision.fallback_chain' `
-      -Key 'vision_chain' -Value $keptChain `
-      -Detail ('drop retired vision fallback(s): ' + ($droppedChain -join ', '))
-    $wanted['vision_chain'] = $keptChain
-    foreach ($m in $droppedChain) { Add-UabsLedger 'removed' "$Profile vision fallback '$m' (model no longer listed upstream)" }
+      -Key 'remove_vision_chain' -Value $true `
+      -Detail 'remove the unrecognized vision fallback_chain key'
+    $wanted['remove_vision_chain'] = $true
+    Add-UabsLedger 'removed' "$Profile vision fallback_chain (not a recognized Hermes key)"
   }
 
 
@@ -686,21 +672,22 @@ if aliases or retired:
         merged.pop(key, None)
     model["aliases"] = merged
     cfg["model"] = model
-chain = prefs.get("vision_chain")
-if chain is not None:
+if prefs.get("remove_vision_chain"):
     aux = dict(cfg.get("auxiliary") or {})
     vision = dict(aux.get("vision") or {})
-    vision["fallback_chain"] = chain
-    aux["vision"] = vision
-    cfg["auxiliary"] = aux
+    if "fallback_chain" in vision:
+        vision.pop("fallback_chain", None)
+        aux["vision"] = vision
+        cfg["auxiliary"] = aux
 migration = prefs.get("compression_migration")
 if migration:
     aux = dict(cfg.get("auxiliary") or {})
     compression = dict(aux.get("compression") or {})
     if compression.get("provider") == "openrouter" and compression.get("model") == migration["retired_model"]:
-        compression["model"] = migration["model"]
-        if compression.get("reasoning_effort") == "ultra":
-            compression["reasoning_effort"] = "max"  # Inkling advertises max, not ultra.
+        # Follow the main model instead of moving one dead pin to another pin.
+        compression["provider"] = "auto"
+        compression["model"] = ""
+        compression.pop("reasoning_effort", None)
         aux["compression"] = compression
         cfg["auxiliary"] = aux
 plugin_names = prefs.get("plugins") or []
@@ -1263,10 +1250,8 @@ try {
     foreach ($profile in $script:Prefs.Keys) {
       $after = Get-UabsProfilePrefs $profile
       if ($script:Prefs[$profile].ContainsKey('compression_migration')) {
-        $want = $script:Prefs[$profile]['compression_migration'].model
-        if ($after.compression.provider -ne 'openrouter' -or $after.compression.model -ne $want -or
-            $after.compression.reasoning_effort -eq 'ultra') {
-          throw "Verification failed: $profile retired compression model was not migrated."
+        if ($after.compression.provider -ne 'auto' -or $after.compression.model) {
+          throw "Verification failed: $profile retired compression model was not reset to auto."
         }
       }
       if ($script:Prefs[$profile].ContainsKey('fallback_providers')) {

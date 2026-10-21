@@ -1,8 +1,8 @@
 {
  "pack": "Ultimate AI Starter Bundle",
- "version": "8.20.0",
+ "version": "8.20.1",
  "generated": "2026-10-21",
- "release_tag": "v8.20.0",
+ "release_tag": "v8.20.1",
  "canonical_skills": 174,
  "provider_trees": 6,
  "registry_entries": 174,
@@ -45,6 +45,6 @@
   "TESTS/test_toolbox.py",
   "TESTS/Test-VersionProbes.ps1"
  ],
- "runtime_status": "v8.20.0: game-mashup-passthrough skill + mashup card from the project's lessons, Universal Modder c1dff21 (wheel rebuilt reproducibly), bench map and tool evaluations updated.",
+ "runtime_status": "v8.20.1: Hermes settings future-proofed - no fallback chain, auxiliary and delegation models follow the main model, compression 320k cap on the 1M window, component updater honours catalog holds. Verified against all 151 release contract tests.",
  "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for every always-on MCP server (context7, headroom, the toolbox, and GitHub where gh is not signed in). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

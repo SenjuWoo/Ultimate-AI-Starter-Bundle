@@ -7,8 +7,9 @@ said "Empty mcp_servers" while the starter shipped five live servers, and
 nothing was watching.
 
 - Main model: DeepSeek V4.1 Flash, reasoning_effort: max, max_turns: null (unlimited)
-- Compression threshold_tokens: 160000, lean tail (tool-result prune from 80000)
-- Compression: thinkingmachines/inkling:free, reasoning_effort: max, timeout 600
+- Compression threshold_tokens: 320000, lean tail (tool-result prune from 80000)
+- Auxiliary tasks (vision, compression, approvals, curator): provider auto, no pinned model
+- No fallback_providers chain ships; a weaker text-only model must not silently replace the main one
   The retired free Ling endpoint is repaired narrowly; other models stay unchanged.
   Current choices and limits: docs/HERMES-MODELS.md in the bundle.
 - Profiles: default (context7/github/headroom), code (+ codebase-memory),

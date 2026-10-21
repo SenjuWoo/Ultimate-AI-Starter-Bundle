@@ -8,7 +8,11 @@ param(
   [string[]]$Providers = @(),
   [switch]$ComponentsOnly,
   [switch]$InstallAfter,
-  [switch]$UpdateCatalogOffline
+  [switch]$UpdateCatalogOffline,
+  # Replace a component that the catalog holds on purpose. Without this, a
+  # compatibility or security hold is respected even when it is named
+  # explicitly on the command line.
+  [switch]$Force
 )
 
 $ErrorActionPreference = 'Stop'
@@ -39,6 +43,14 @@ $results = @()
 foreach ($id in $Components) {
   $comp = $catalog.components | Where-Object { $_.id -eq $id } | Select-Object -First 1
   if (-not $comp) { Write-UabsWarn "Unknown component $id"; continue }
+  $hold = if ($comp.compatibility_hold) { $comp.compatibility_hold } elseif ($comp.security_hold) { $comp.security_hold } else { $null }
+  if ($hold -and -not $Force) {
+    # A hold is a decision recorded with evidence, not a stale pin. Updating
+    # past it is how a working install turns into a migration.
+    Write-UabsWarn "$id is held in the catalog: $hold"
+    Write-UabsWarn "Skipping $id. Re-run with -Force only after migrating what the hold protects."
+    continue
+  }
   if (-not $comp.github) { Write-UabsWarn "$id has no GitHub source (manual)"; continue }
   Write-UabsStep "GitHub release (RTK uses the measured catalog pin): $($comp.github.owner)/$($comp.github.repo)"
   try {
