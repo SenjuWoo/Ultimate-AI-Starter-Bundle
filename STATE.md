@@ -29,8 +29,16 @@
   gitignored and need `git add -f` (fanout prints the command).
 - Gates so far: contracts 151/0 (-W error clean), privacy, UM, audit regressions,
   hermes bootstrap, toolbox PASS; MANIFEST 10,280 verified; versions agree.
-- Next: Test-Pack, commit, push, CI + CodeQL + flags, build twice, release,
-  verify bytes, then START-HERE once so the live trees get the skill and wheel.
+- After the first push (fa07679) Dependabot opened hundreds of alerts (Pillow
+  <=12.3.0 x3 advisories, certifi critical) over every Pillow pin: UM pyproject
+  and `img2threejs` `vision` + `glb_character_pipeline` (pyproject + uv.lock, in
+  canonical and all six provider trees). Fixed at the source: UM `pillow==13.0.0`
+  (refresh-tool patch too; UM tests 178 pass on Pillow 13.0.0 in a scratch venv),
+  both integrations `<14` and `uv lock --upgrade-package pillow --upgrade-package
+  certifi`; fanout re-run. Dependabot PR #7 (vision only) is superseded.
+- Next: Test-Pack, commit, push, CI + CodeQL + flags (alerts must reach 0), build
+  twice, release, verify bytes, then START-HERE once so the live trees get the
+  skill and wheel.
 
 ## v8.19.2: review of v8.15.1..v8.19.1 + install speed (2026-10-20, released)
 

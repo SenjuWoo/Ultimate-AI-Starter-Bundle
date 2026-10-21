@@ -6,7 +6,7 @@ requires-python = ">=3.11,<3.13"
 dependencies = [
   "mediapipe>=0.10.21,<0.11",
   "numpy>=1.26,<3",
-  "pillow>=11,<13",
+  "pillow>=11,<14",
   "torch>=2.5,<3",
   "torchvision>=0.20,<1",
   "transformers>=5.16.1,<6",

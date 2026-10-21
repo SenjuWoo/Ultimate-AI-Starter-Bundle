@@ -2737,7 +2737,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/pyproject.toml",
   "size": 330,
-  "sha256": "3b6985f475a887a40e182e4c9d2c1d957513118ef8cedc7064c8c17d7858ff61"
+  "sha256": "e4ac89a191679bd2906c81c0a8709569a4baee72ac9a5985c354cc425bfdf7d7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/python/bake_atlas_uvs.py",
@@ -2771,8 +2771,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/uv.lock",
-  "size": 21982,
-  "sha256": "fb3dc23313dc5a7484d3b8b29421e6a62faf4415cfe0a9a6c2db097b2580b2a8"
+  "size": 23625,
+  "sha256": "4cf10f69738dab9e77efbf5682ae8e6fc34f0e428cf750954e3ede77bda5b54b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/mesh3d/generate_reference_mesh.py",
@@ -2792,7 +2792,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/pyproject.toml",
   "size": 375,
-  "sha256": "42c60fa5bd708a645c2251f13df845d7da19d4d8064a171890346ab90960b1ce"
+  "sha256": "7ba1ba5c2c770b1ce589d30bfa352cb55d964219e0df31c03a41c3a39b212f70"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/reference_vision.py",
@@ -2801,8 +2801,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/uv.lock",
-  "size": 161387,
-  "sha256": "eec9001e066f03570c2e7233e715b1f25836d68207f8ad8965fa587609ea71f9"
+  "size": 163033,
+  "sha256": "681b3027c0a1c2b820df5f7e77ef9a35a27bf75e3f9221afc825554d9e9735a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/scripts/capture_threejs_playwright.py",
@@ -9157,7 +9157,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/pyproject.toml",
   "size": 330,
-  "sha256": "3b6985f475a887a40e182e4c9d2c1d957513118ef8cedc7064c8c17d7858ff61"
+  "sha256": "e4ac89a191679bd2906c81c0a8709569a4baee72ac9a5985c354cc425bfdf7d7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/python/bake_atlas_uvs.py",
@@ -9191,8 +9191,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/uv.lock",
-  "size": 21982,
-  "sha256": "fb3dc23313dc5a7484d3b8b29421e6a62faf4415cfe0a9a6c2db097b2580b2a8"
+  "size": 23625,
+  "sha256": "4cf10f69738dab9e77efbf5682ae8e6fc34f0e428cf750954e3ede77bda5b54b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/mesh3d/generate_reference_mesh.py",
@@ -9212,7 +9212,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/pyproject.toml",
   "size": 375,
-  "sha256": "42c60fa5bd708a645c2251f13df845d7da19d4d8064a171890346ab90960b1ce"
+  "sha256": "7ba1ba5c2c770b1ce589d30bfa352cb55d964219e0df31c03a41c3a39b212f70"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/reference_vision.py",
@@ -9221,8 +9221,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/uv.lock",
-  "size": 161387,
-  "sha256": "eec9001e066f03570c2e7233e715b1f25836d68207f8ad8965fa587609ea71f9"
+  "size": 163033,
+  "sha256": "681b3027c0a1c2b820df5f7e77ef9a35a27bf75e3f9221afc825554d9e9735a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/scripts/capture_threejs_playwright.py",
@@ -15642,7 +15642,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/pyproject.toml",
   "size": 330,
-  "sha256": "3b6985f475a887a40e182e4c9d2c1d957513118ef8cedc7064c8c17d7858ff61"
+  "sha256": "e4ac89a191679bd2906c81c0a8709569a4baee72ac9a5985c354cc425bfdf7d7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/python/bake_atlas_uvs.py",
@@ -15676,8 +15676,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/uv.lock",
-  "size": 21982,
-  "sha256": "fb3dc23313dc5a7484d3b8b29421e6a62faf4415cfe0a9a6c2db097b2580b2a8"
+  "size": 23625,
+  "sha256": "4cf10f69738dab9e77efbf5682ae8e6fc34f0e428cf750954e3ede77bda5b54b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/mesh3d/generate_reference_mesh.py",
@@ -15697,7 +15697,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/pyproject.toml",
   "size": 375,
-  "sha256": "42c60fa5bd708a645c2251f13df845d7da19d4d8064a171890346ab90960b1ce"
+  "sha256": "7ba1ba5c2c770b1ce589d30bfa352cb55d964219e0df31c03a41c3a39b212f70"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/reference_vision.py",
@@ -15706,8 +15706,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/uv.lock",
-  "size": 161387,
-  "sha256": "eec9001e066f03570c2e7233e715b1f25836d68207f8ad8965fa587609ea71f9"
+  "size": 163033,
+  "sha256": "681b3027c0a1c2b820df5f7e77ef9a35a27bf75e3f9221afc825554d9e9735a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/scripts/capture_threejs_playwright.py",
@@ -22112,7 +22112,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/pyproject.toml",
   "size": 330,
-  "sha256": "3b6985f475a887a40e182e4c9d2c1d957513118ef8cedc7064c8c17d7858ff61"
+  "sha256": "e4ac89a191679bd2906c81c0a8709569a4baee72ac9a5985c354cc425bfdf7d7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/python/bake_atlas_uvs.py",
@@ -22146,8 +22146,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/uv.lock",
-  "size": 21982,
-  "sha256": "fb3dc23313dc5a7484d3b8b29421e6a62faf4415cfe0a9a6c2db097b2580b2a8"
+  "size": 23625,
+  "sha256": "4cf10f69738dab9e77efbf5682ae8e6fc34f0e428cf750954e3ede77bda5b54b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/mesh3d/generate_reference_mesh.py",
@@ -22167,7 +22167,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/pyproject.toml",
   "size": 375,
-  "sha256": "42c60fa5bd708a645c2251f13df845d7da19d4d8064a171890346ab90960b1ce"
+  "sha256": "7ba1ba5c2c770b1ce589d30bfa352cb55d964219e0df31c03a41c3a39b212f70"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/reference_vision.py",
@@ -22176,8 +22176,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/uv.lock",
-  "size": 161387,
-  "sha256": "eec9001e066f03570c2e7233e715b1f25836d68207f8ad8965fa587609ea71f9"
+  "size": 163033,
+  "sha256": "681b3027c0a1c2b820df5f7e77ef9a35a27bf75e3f9221afc825554d9e9735a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/scripts/capture_threejs_playwright.py",
@@ -28582,7 +28582,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/pyproject.toml",
   "size": 330,
-  "sha256": "3b6985f475a887a40e182e4c9d2c1d957513118ef8cedc7064c8c17d7858ff61"
+  "sha256": "e4ac89a191679bd2906c81c0a8709569a4baee72ac9a5985c354cc425bfdf7d7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/python/bake_atlas_uvs.py",
@@ -28616,8 +28616,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/uv.lock",
-  "size": 21982,
-  "sha256": "fb3dc23313dc5a7484d3b8b29421e6a62faf4415cfe0a9a6c2db097b2580b2a8"
+  "size": 23625,
+  "sha256": "4cf10f69738dab9e77efbf5682ae8e6fc34f0e428cf750954e3ede77bda5b54b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/mesh3d/generate_reference_mesh.py",
@@ -28637,7 +28637,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/pyproject.toml",
   "size": 375,
-  "sha256": "42c60fa5bd708a645c2251f13df845d7da19d4d8064a171890346ab90960b1ce"
+  "sha256": "7ba1ba5c2c770b1ce589d30bfa352cb55d964219e0df31c03a41c3a39b212f70"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/reference_vision.py",
@@ -28646,8 +28646,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/uv.lock",
-  "size": 161387,
-  "sha256": "eec9001e066f03570c2e7233e715b1f25836d68207f8ad8965fa587609ea71f9"
+  "size": 163033,
+  "sha256": "681b3027c0a1c2b820df5f7e77ef9a35a27bf75e3f9221afc825554d9e9735a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/scripts/capture_threejs_playwright.py",
@@ -35127,7 +35127,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/pyproject.toml",
   "size": 330,
-  "sha256": "3b6985f475a887a40e182e4c9d2c1d957513118ef8cedc7064c8c17d7858ff61"
+  "sha256": "e4ac89a191679bd2906c81c0a8709569a4baee72ac9a5985c354cc425bfdf7d7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/python/bake_atlas_uvs.py",
@@ -35161,8 +35161,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/glb_character_pipeline/uv.lock",
-  "size": 21982,
-  "sha256": "fb3dc23313dc5a7484d3b8b29421e6a62faf4415cfe0a9a6c2db097b2580b2a8"
+  "size": 23625,
+  "sha256": "4cf10f69738dab9e77efbf5682ae8e6fc34f0e428cf750954e3ede77bda5b54b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/mesh3d/generate_reference_mesh.py",
@@ -35182,7 +35182,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/pyproject.toml",
   "size": 375,
-  "sha256": "42c60fa5bd708a645c2251f13df845d7da19d4d8064a171890346ab90960b1ce"
+  "sha256": "7ba1ba5c2c770b1ce589d30bfa352cb55d964219e0df31c03a41c3a39b212f70"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/reference_vision.py",
@@ -35191,8 +35191,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/integrations/vision/uv.lock",
-  "size": 161387,
-  "sha256": "eec9001e066f03570c2e7233e715b1f25836d68207f8ad8965fa587609ea71f9"
+  "size": 163033,
+  "sha256": "681b3027c0a1c2b820df5f7e77ef9a35a27bf75e3f9221afc825554d9e9735a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/scripts/capture_threejs_playwright.py",
@@ -39182,7 +39182,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1537,
-  "sha256": "e3ed856c5af9242a4d3e0d487518e23d1d59bc7875d64d1dec734fed5f8aa53d"
+  "sha256": "b06af98232fc60de32870f505b0c4fa33ead8f77fcfdbb361ec937b0f6022df3"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -39317,7 +39317,7 @@
  {
   "path": "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.c1dff21-py3-none-any.whl",
   "size": 3618451,
-  "sha256": "43207bb6bcb9f5b3df29336773422e13866599d8c9d0dabc4b451f325e685d82"
+  "sha256": "031e240d15ee6222507ca9a855988cb5faa29200d9ffbe6b02b242ccde6fbac1"
  },
  {
   "path": "BUNDLED-TOOLS/optional-profiles/autonomous-builder.md",
@@ -43137,7 +43137,7 @@
  {
   "path": "BUNDLED-TOOLS/universal-modder/pyproject.toml",
   "size": 682,
-  "sha256": "6bce799b864aa1a48962ba508c8d25cd3dc16e36ad0b0d28b7cf91c867e04d86"
+  "sha256": "229cffd4e98c1cd895aae7e164d399a96248df3b17ceed79c8c32e2868ebf590"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_encoding.py",
@@ -43311,8 +43311,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 221271,
-  "sha256": "07df11fb42a6d60b5b7c145090ad39af5218bcc79ebe693b39c0f074e881125c"
+  "size": 221939,
+  "sha256": "571fb9c6e3e80d70caa17d133fc5428ff95b3a9b0ab096f4315d963074e89e66"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43461,8 +43461,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 45562,
-  "sha256": "ae81bd5a5a635ca4da121908e7aca2af833c5cf6b469da847a7dc9be8723e843"
+  "size": 46144,
+  "sha256": "39178b1f661cfaf007c1c038956dead7e79baf30543c4f37d57d2e6d4ceb1f47"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -44102,7 +44102,7 @@
  {
   "path": "TOOLS/refresh_universal_modder.py",
   "size": 18182,
-  "sha256": "9ee788c8e2cd881605b60340ff53bd8e86e1f3c1a5efffdff5818e9768ddbbce"
+  "sha256": "7eaafa38fef7db0c53d0c956f7c6a98ddac1f4fc3fdb94102bf047e4e1837739"
  },
  {
   "path": "TOOLS/registry-additions.json",
@@ -46732,7 +46732,7 @@
  {
   "path": "_CANONICAL-SKILLS/img2threejs/integrations/glb_character_pipeline/pyproject.toml",
   "size": 330,
-  "sha256": "3b6985f475a887a40e182e4c9d2c1d957513118ef8cedc7064c8c17d7858ff61"
+  "sha256": "e4ac89a191679bd2906c81c0a8709569a4baee72ac9a5985c354cc425bfdf7d7"
  },
  {
   "path": "_CANONICAL-SKILLS/img2threejs/integrations/glb_character_pipeline/python/bake_atlas_uvs.py",
@@ -46766,8 +46766,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/img2threejs/integrations/glb_character_pipeline/uv.lock",
-  "size": 21982,
-  "sha256": "fb3dc23313dc5a7484d3b8b29421e6a62faf4415cfe0a9a6c2db097b2580b2a8"
+  "size": 23625,
+  "sha256": "4cf10f69738dab9e77efbf5682ae8e6fc34f0e428cf750954e3ede77bda5b54b"
  },
  {
   "path": "_CANONICAL-SKILLS/img2threejs/integrations/mesh3d/generate_reference_mesh.py",
@@ -46787,7 +46787,7 @@
  {
   "path": "_CANONICAL-SKILLS/img2threejs/integrations/vision/pyproject.toml",
   "size": 375,
-  "sha256": "42c60fa5bd708a645c2251f13df845d7da19d4d8064a171890346ab90960b1ce"
+  "sha256": "7ba1ba5c2c770b1ce589d30bfa352cb55d964219e0df31c03a41c3a39b212f70"
  },
  {
   "path": "_CANONICAL-SKILLS/img2threejs/integrations/vision/reference_vision.py",
@@ -46796,8 +46796,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/img2threejs/integrations/vision/uv.lock",
-  "size": 161387,
-  "sha256": "eec9001e066f03570c2e7233e715b1f25836d68207f8ad8965fa587609ea71f9"
+  "size": 163033,
+  "sha256": "681b3027c0a1c2b820df5f7e77ef9a35a27bf75e3f9221afc825554d9e9735a0"
  },
  {
   "path": "_CANONICAL-SKILLS/img2threejs/scripts/capture_threejs_playwright.py",
@@ -51096,8 +51096,8 @@
  },
  {
   "path": "docs/history/V8.20.0-CHANGELOG.md",
-  "size": 2149,
-  "sha256": "b677fb2de43bbd939aea70c1c7dbe9e311edde351add7d4c4b56a7d21f8d5d21"
+  "size": 2817,
+  "sha256": "722d62963a052bf2011773a72c22bfd4e676f6bbeaf3831f50b803265910e21e"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

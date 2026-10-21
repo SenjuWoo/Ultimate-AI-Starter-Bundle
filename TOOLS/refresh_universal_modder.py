@@ -46,7 +46,7 @@ SUBSET = ("um", "knowledge", "tests", "pyproject.toml", "README.md", "LICENSE")
 PATCHES: list[tuple[str, str, str]] = [
     ("pyproject.toml", 'version = "0.2.0"', 'version = "0.2.0+uabs.__SHA7__"'),
     ("pyproject.toml", 'requires-python = ">=3.10"', 'requires-python = ">=3.12"'),
-    ("pyproject.toml", '    "pillow>=10",\n', '    "pillow==12.3.0",\n'),
+    ("pyproject.toml", '    "pillow>=10",\n', '    "pillow==13.0.0",\n'),
     ("pyproject.toml", '    "numpy>=1.24",\n', '    "numpy==2.5.3",\n'),
     ("pyproject.toml", '    "pyyaml>=6",\n', '    "pyyaml==6.0.3",\n'),
     ("pyproject.toml", 'packages = ["um"]\n',
