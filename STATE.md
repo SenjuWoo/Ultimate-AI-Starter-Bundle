@@ -1,6 +1,6 @@
 # Bundle audit state
 
-## v8.19.2: review of v8.15.1..v8.19.1 + install speed (2026-10-20, in progress)
+## v8.19.2: review of v8.15.1..v8.19.1 + install speed (2026-10-20, released)
 
 - Owner asked to verify the DeepSeek-era edits (v8.15.1..v8.19.1, all committed),
   find bugs, make the install faster. Baseline on HEAD 58c8180: contracts 150/0,
@@ -51,8 +51,27 @@
   parallel npx risks cache contention); `.git` 492 MiB history (needs rewrite).
 - Gates after changes: contracts 150/0 (warnings-as-errors clean), manifest
   10,243, versions agree, privacy, hermes bootstrap, toolbox, MCP protocol, UM,
-  RTK candidate PASS. Next: Test-Pack, real START-HERE run, commit, push, CI,
-  release v8.19.2, verify bytes.
+  RTK candidate PASS. Final Test-Pack PASS on the committed tree.
+
+### Publication checkpoint (v8.19.2)
+
+- Tag `v8.19.2` -> `26118b00921b3cea81f1754bd22af49cc12ea89c`. CI (4 jobs) and
+  CodeQL (3 jobs) success on that SHA; Dependabot / code-scanning /
+  secret-scanning open alerts 0 (`TOOLS/Get-GitHubFlags.ps1` flags=clean;
+  code_quality unavailable, left off).
+- Archives built twice, byte-identical: Core 53,388,399 B
+  `8c1cec4a8f1537747c9211a4b4fad96c817a0c3a62c7d9dfc8c69892408a4a99`,
+  Full-Offline 220,186,174 B
+  `2eed3917821f5ab5182739c99fa77b9e650a480f8c05b8956a8782ac3294d111`.
+  Extracted under a space+Unicode path: contracts 150/0, manifest verified
+  (10,235 Core / 10,243 Full), Test-Pack PASS in both.
+- Release published as latest; downloaded assets equal the build (cmp, size,
+  sha256 sidecars, GitHub digests). Receipts: ignored `artifacts/release-v8.19.2/`.
+- Not certified: provider inference, editor/game runtime, billed-token savings.
+- Next: owner closes/reopens AI apps once. Candidate follow-ups (not done):
+  MCP handshakes are serial (~35 s of ~265 s); `Remove-UabsHermesLegacyOpenRouterExtra`
+  still makes 2 `hermes config get` calls (~8 s); `.git` is 492 MiB (needs an
+  owner-approved history rewrite).
 
 ## v8.19.0: CodeQL fixes, Antigravity provider integration, tool refreshes, full verification (2026-10-18)
 
