@@ -722,3 +722,28 @@ Detailed machine-specific reports remain under ignored `artifacts/`.
   `codebase-memory-mcp-windows-amd64.zip` (~37-46 MB each) live in history.
   Moving offline binaries to release-only assets would need a history rewrite
   and an install-time download; propose before doing it.
+
+### Release v8.20.1 (2026-10-21)
+
+- Hermes settings follow the main model: every `auxiliary.*` task and
+  `delegation` ships `provider: auto` with an empty model; no fallback chain;
+  the dead `auxiliary.vision.fallback_chain` key and the `flash-vision` alias
+  are gone. Default is `deepseek/deepseek-v4.1-flash-1017` (1,048,576 ctx,
+  $0.15/$0.60, text+image per OpenRouter on 2026-10-19).
+- Compression tuned: `threshold_tokens: 320000` (ratio alone would wait for
+  ~524k), target 0.20, prune from 80k, abort on summary failure.
+- Migrator: no longer injects a chain; clears the superseded pack chain;
+  resets a retired Ling compression pin to auto; deletes the vision
+  fallback_chain key. Dry run on this machine: all eight profiles report
+  "no fallback chain (pack default: none)" and nothing is planned.
+- `Update-From-GitHub.ps1` now skips `compatibility_hold`/`security_hold`
+  components unless `-Force` (houseCARL was in the default update set).
+- Live config changed only through `hermes config set/unset`; smoke test
+  `hermes chat -q ... --oneshot` returned OK on the new config.
+- Tag `v8.20.1` -> `3d3563e`; Core 55,022,412 B `5cb700ce29b87890...`;
+  Full 223,242,165 B `71440db81a2a5537...`; DIFF=0 and downloads re-hashed.
+- Known gaps: `1-TAILORED-PROVIDER-TREES/Hermes/profiles/sillytavern/config.yaml`
+  still pins `deepseek/deepseek-v4-flash-vision-exp` for that profile's own
+  vision route (left alone deliberately); held components (houseCARL 1.9.0,
+  impeccable, unity-mcp, firecrawl, perplexity) still need their own
+  migration before they can auto-update.
