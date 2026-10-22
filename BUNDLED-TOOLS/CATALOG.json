@@ -532,8 +532,6 @@
   {
    "id": "firecrawl-mcp",
    "name": "Firecrawl MCP",
-   "security_hold": "2026-10-13: isolated production npm audit reports three high-severity package findings for both 3.29.1 and candidate 3.30.0 via firecrawl's pinned Axios 1.18.0. The suggested 3.24.0 downgrade also has known findings; do not install, register, or auto-downgrade. Native web/search and Playwright remain available. Existing personal registrations require review; the doctor reports them, never deletes unknown configuration. Recheck after upstream updates the dependency and an isolated audit plus transport test pass. Advisory: https://github.com/advisories/GHSA-vh66-26gq-q6x8",
-   "compatibility_hold": "Security hold: current and candidate Firecrawl MCP production dependencies have known audit findings. Await a clean upstream dependency refresh; no automatic downgrade or registration.",
    "kind": "mcp-npx",
    "install": "mcp-npx",
    "mcp": true,
@@ -544,7 +542,7 @@
    "npx_command": "npx",
    "npx_args": [
     "-y",
-    "firecrawl-mcp@3.29.1"
+    "firecrawl-mcp@3.34.1"
    ],
    "api_key_env": "FIRECRAWL_API_KEY",
    "api_key_optional": true,
@@ -572,8 +570,10 @@
     "web-docs-extract"
    ],
    "offline_asset": null,
-   "scope_note": "Scraping general web docs (CommonLib docs, wikis, GitHub READMEs). NEVER Nexus Mods - houseCARL reads Nexus keylessly with changelogs and file lists. Update measured 2026-09-28 at 3.25.5: initialize/tools-list PASS, 27 tools, 74,789 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 3.27.3: initialize/tools-list PASS; 25 tools, 81,489 compact UTF-8 schema bytes. No credentialed scraping calls. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 3.29.1 Windows initialize/tools-list PASS; 26 advertised tools, 84,657 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised.",
-   "version": "3.29.1"
+   "scope_note": "Scraping general web docs (CommonLib docs, wikis, GitHub READMEs). NEVER Nexus Mods - houseCARL reads Nexus keylessly with changelogs and file lists. Update measured 2026-09-28 at 3.25.5: initialize/tools-list PASS, 27 tools, 74,789 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 3.27.3: initialize/tools-list PASS; 25 tools, 81,489 compact UTF-8 schema bytes. No credentialed scraping calls. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 3.29.1 Windows initialize/tools-list PASS; 26 advertised tools, 84,657 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. 2026-10-22: security hold lifted after isolated production npm audit (0 findings), registry tarball integrity verification, and credential-scrubbed initialize/tools-list PASS: 26 tools / 85,005 compact UTF-8 schema bytes. Toolbox/project-scoped only; FIRECRAWL_API_KEY required by the route. Authenticated scraping, billing and self-host compatibility remain unverified.",
+   "version": "3.34.1",
+   "auto_register": false,
+   "profile": "research-web"
   },
   {
    "id": "perplexity-mcp",

@@ -6,6 +6,8 @@
   failed component updates instead of continuing an install.
 - Refresh reviewed Superpowers 7.0.1, GitHub MCP 2.0.3, Chrome DevTools 1.12.0
   and optional Comfy CLI 1.23.0; preserve local patches and compatibility holds.
+- Recheck holds: Impeccable 0.1.16 still fails; clean Firecrawl 3.34.1
+  restored through the toolbox/project route with a key prerequisite.
 - Move long Superpowers guidance to upstream references for compaction recovery;
   retain validation and reasoning settings. Document Windows UTF-8 CLI invocation.
 

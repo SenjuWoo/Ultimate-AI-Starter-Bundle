@@ -10,7 +10,7 @@
 - Accepted Superpowers 7.0.1 (six vendored fixes + canonical routing preserved),
   GitHub MCP 2.0.3 (official digest + scoped 47-tool handshake), Chrome DevTools
   1.12.0 (32-tool handshake), optional Comfy CLI 1.23.0 (UTF-8 help).
-- Freshness: current=22, held=7, stale=0, skipped=1 (bundle-owned), error=0.
+- Freshness: current=23, held=6, stale=0, skipped=1 (bundle-owned), error=0.
 - Source gates: Windows Test-Pack PASS; supported contract runner 151/0;
   toolbox real stdio + timeout/HTTP/lost-reply gate PASS; offline-update PASS;
   audit regressions 15 + 7 subtests PASS; privacy/bootstrap/UM PASS;
@@ -23,7 +23,13 @@
 - Installed baseline doctor: ledger 8.20.0, modified/duplicate Codex skill-creator;
   no global task MCP leaks. Ownership-aware skills sync pending; full runtime
   refresh should run with AI apps closed to avoid in-memory config writers.
-- Remaining: commit/push, exact-commit CI + security, deterministic archives,
+- Skills sync complete: doctor 8.21.0 PASS, zero warnings; modified duplicate
+  skill-creator backed up by the installer. Old toolbox/GitHub processes are
+  still running; refresh runtimes after AI apps close.
+- Late hold recheck: engine 0.1.16 still fails malformed script/style; Firecrawl
+  3.34.1 audit 0 findings + integrity + credential-scrubbed handshake PASS.
+  Replaced obsolete hold with a toolbox/project route and key prerequisite.
+- Remaining: exact-commit CI + security, deterministic archives,
   publication/download hashes, skill sync/doctor and checkpoint.
 
 

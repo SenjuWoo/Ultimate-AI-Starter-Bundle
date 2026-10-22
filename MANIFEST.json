@@ -39476,8 +39476,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 57743,
-  "sha256": "6f4bf5d32e3e6f8e7cedeb4e45d6bd260db3e52ceb2aedde5c3dbfe2320b6fff"
+  "size": 57358,
+  "sha256": "b2b6b4559fdc05ddb345541da8b035d5f36f708d531180bdb4c227f351abb7c7"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
@@ -39491,8 +39491,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
-  "size": 35772,
-  "sha256": "dbdf50beb45e626fddf465252ca47c8796b9a5403ff7a03e37c57eec3a690973"
+  "size": 35729,
+  "sha256": "edc8284dc15d332302c587b60d7c12e22f7ad53abaa7deede4fb1306af3ac1fe"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -43576,8 +43576,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 224945,
-  "sha256": "f5125a4aef7c3894b19e93eb28d1a5c7400d39968606b4eb977f18b0e375d923"
+  "size": 225086,
+  "sha256": "86b4313b8efa2a591a2542dba15db0c6d779d71bd456eb66eaf00724f493ad1a"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43726,8 +43726,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 51077,
-  "sha256": "27fdceeaf677a6ca93835ad16ab9d0abaa3ab4eca86b903b8a107fd06e089d86"
+  "size": 51507,
+  "sha256": "3c7845bbce87da85fbfb6b6ba6a633c2d9aaf87aa1ea6568de1f6b2a0b48bc83"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -50901,8 +50901,8 @@
  },
  {
   "path": "docs/AUDIT-2026-10-22.md",
-  "size": 4107,
-  "sha256": "b24bbee919f7f7d4445bc0e4a7509791f5415acd489998b5f7f2bee4cd132871"
+  "size": 4637,
+  "sha256": "dd077ef8dab168067ddc20bb440728c4b969420276ca2377f721d42ed9877380"
  },
  {
   "path": "docs/HERMES-MODELS.md",
@@ -51431,8 +51431,8 @@
  },
  {
   "path": "docs/history/V8.21.0-CHANGELOG.md",
-  "size": 696,
-  "sha256": "782eddccf1e75d2afbb42b35736b0a73ad90fa83f285dc4321bce5dc72b6a8fc"
+  "size": 837,
+  "sha256": "32f0e589a3bc2dc783843afb2e2b22f2f05a444b888d0a745e57b05229dd8fbb"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

@@ -803,6 +803,41 @@
      }
     }
    ]
+  },
+  {
+   "id": "research-web",
+   "title": "Firecrawl web extraction",
+   "scope": "project",
+   "why": "Optional authenticated web extraction on demand; prefer native search for ordinary lookups. A stored key never enables it globally.",
+   "detect": {
+    "files": [],
+    "globs": []
+   },
+   "keywords": [
+    "firecrawl",
+    "crawl",
+    "scrape",
+    "extract"
+   ],
+   "servers": [
+    {
+     "id": "firecrawl-mcp",
+     "catalog_component": "firecrawl-mcp",
+     "command": "npx",
+     "args": [
+      "-y",
+      "firecrawl-mcp@3.34.1"
+     ],
+     "requires": {
+      "command": "npx",
+      "env": "FIRECRAWL_API_KEY"
+     },
+     "env_passthrough": [
+      "FIRECRAWL_API_KEY"
+     ],
+     "note": "Optional authenticated Firecrawl extraction; use only for the requested web task."
+    }
+   ]
   }
  ],
  "evaluated_not_shipped": [
