@@ -100,6 +100,9 @@ else {
 if ($LASTEXITCODE -ne 0) { Bad 'Hook shell prerequisites failed' } else { Good 'Hook shell prerequisites' }
 & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-CodexPluginDedupe.ps1') -PackRoot $PackRoot
 if ($LASTEXITCODE -ne 0) { Bad 'Codex duplicate plugin repair failed' } else { Good 'Codex duplicate plugin repair' }
+$offlineUpdateOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-OfflineUpdate.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $offlineUpdateOut -match 'OFFLINE UPDATE GATE: PASS') { Good 'Offline updater preserves pinned payloads on candidate mismatch' }
+else { Bad ('Offline update gate failed:' + [Environment]::NewLine + $offlineUpdateOut) }
 # Require the PASS line, not just exit 0: a script that stops early also exits 0.
 $selfUpdateOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-BundleSelfUpdate.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $selfUpdateOut -match 'BUNDLE SELF-UPDATE GATE: PASS') { Good 'START-HERE bundle update decision, forwarding, git fixture and staging exit code' }

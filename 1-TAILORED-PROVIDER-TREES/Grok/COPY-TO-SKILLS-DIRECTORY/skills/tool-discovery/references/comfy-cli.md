@@ -1,6 +1,6 @@
 # Local image/video workflows without another MCP
 
-Comfy-Org's optional `comfy-cli` 1.22.0 can inspect, compose, validate and run
+Comfy-Org's optional `comfy-cli` 1.23.0 can inspect, compose, validate and run
 ComfyUI workflows through shell access. It is not installed by the default
 bundle, and does not replace image-generation tools already available to the
 agent. First discover the user's actual ComfyUI installation and running local
@@ -10,10 +10,11 @@ For a process-local, pinned invocation:
 
 ```powershell
 $env:COMFY_NO_TELEMETRY = '1'
-uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local --version
-uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local workflow ls-nodes .\workflow.json
-uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local workflow validate --help
-uvx --python 3.13 --from comfy-cli==1.22.0 comfy --where local run --help
+$env:PYTHONUTF8 = '1' # Windows redirected help contains Unicode; cp1252 raises an error.
+uvx --python 3.13 --from comfy-cli==1.23.0 comfy --where local --version
+uvx --python 3.13 --from comfy-cli==1.23.0 comfy --where local workflow ls-nodes .\workflow.json
+uvx --python 3.13 --from comfy-cli==1.23.0 comfy --where local workflow validate --help
+uvx --python 3.13 --from comfy-cli==1.23.0 comfy --where local run --help
 ```
 
 Inspect only the relevant subcommand's help. `--help-json` describes the entire
@@ -37,3 +38,6 @@ workflow validation are unverified; no ComfyUI server or models are bundled.
 
 2026-10-02: isolated CLI 1.22.0 version and workflow-validation help pass with
 telemetry disabled. No GPU/server/model setup was performed.
+
+2026-10-22: 1.23.0 workflow-validation help passes with UTF-8 enabled. The
+redirected default-codepage failure was reproduced before adding PYTHONUTF8.

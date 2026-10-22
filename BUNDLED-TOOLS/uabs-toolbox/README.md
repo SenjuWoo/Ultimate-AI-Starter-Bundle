@@ -29,3 +29,8 @@ Diagnostics: `uabs-toolbox --list` prints what this PC can start. Set
 each started server's own stderr goes to `toolbox-<set>.log` beside it.
 
 Gate: `TESTS/test_toolbox.py` (needs a Python with `mcp==1.30.0`).
+
+Lost replies are retried only for tools explicitly marked read-only. For a write,
+the toolbox reports an unknown outcome so the agent checks before repeating it.
+A startup timeout or closed chat cancels the child transport, including a hung
+initialize request. HTTP tool sets honor the same project/environment prerequisites.

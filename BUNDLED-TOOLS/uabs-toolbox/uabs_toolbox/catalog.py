@@ -131,11 +131,9 @@ class Toolset:
     def status(self, project: str | None) -> str | None:
         """None when the set can start now; otherwise the reason it cannot."""
         req = self.requires
-        if self.server.get("url"):
-            return None
         if self.project_bound and not project:
             return "needs a project folder (pass project)"
-        reason = _command_reason(str(self.server.get("command", "")), project)
+        reason = None if self.server.get("url") else _command_reason(str(self.server.get("command", "")), project)
         if reason:
             return reason
         if req.get("command"):

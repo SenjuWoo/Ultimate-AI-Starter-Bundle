@@ -6,6 +6,7 @@ value of an environment variable, only whether one is set.
 
 import os
 import sys
+from pathlib import Path
 
 import anyio
 from mcp import types
@@ -25,6 +26,9 @@ async def _tools() -> list[types.Tool]:
         types.Tool(name="env_has", description="Report whether an environment variable is set.",
                    inputSchema={**obj, "properties": {"name": {"type": "string"}}, "required": ["name"]}),
         types.Tool(name="cwd", description="Report the working directory.", inputSchema=obj),
+        types.Tool(name="write_then_crash", description="Record a mutation and disconnect before replying.",
+                   inputSchema={**obj, "properties": {"path": {"type": "string"}}, "required": ["path"]},
+                   annotations=types.ToolAnnotations(destructiveHint=True)),
         types.Tool(name="crash", description="Exit the process at once.", inputSchema=obj,
                    annotations=types.ToolAnnotations(destructiveHint=True)),
     ]
@@ -38,6 +42,10 @@ async def _call(name: str, arguments: dict) -> list[types.TextContent]:
         text = "yes" if os.environ.get(arguments["name"]) else "no"
     elif name == "cwd":
         text = os.getcwd()
+    elif name == "write_then_crash":
+        with Path(arguments["path"]).open("a", encoding="utf-8") as marker:
+            marker.write("once\n")
+        os._exit(3)
     elif name == "crash":
         os._exit(3)
     else:
@@ -46,6 +54,8 @@ async def _call(name: str, arguments: dict) -> list[types.TextContent]:
 
 
 async def _main() -> None:
+    if "--hang-start" in sys.argv:
+        await anyio.sleep_forever()
     async with stdio_server() as (read, write):
         await server.run(read, write, server.create_initialization_options())
 

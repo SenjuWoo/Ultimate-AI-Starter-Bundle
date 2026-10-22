@@ -130,7 +130,7 @@ def audit(catalog: dict, timeout: int) -> list[dict]:
             try:
                 prefix = component.get("skill_release_prefix") if target_id.endswith(":skill") else None
                 latest = latest_version(source, timeout, prefix)
-                hold = component.get("compatibility_hold")
+                hold = component.get("compatibility_hold") or component.get("security_hold")
                 results.append({
                     "id": target_id,
                     "pinned": target_pin,

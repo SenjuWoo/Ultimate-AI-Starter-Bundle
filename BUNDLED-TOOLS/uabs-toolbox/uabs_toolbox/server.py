@@ -81,8 +81,24 @@ class Child:
         self.dead = False
         self.ready = anyio.Event()
         self.stop = anyio.Event()
+        self.cancel_scope: anyio.CancelScope | None = None
+
+    def cancel(self) -> None:
+        """Stop an initialized child or cancel one still connecting."""
+        self.stop.set()
+        if self.cancel_scope is not None:
+            self.cancel_scope.cancel()
 
     async def run(self) -> None:
+        # The transport and its cancel scopes stay in this task. Cancelling an
+        # unfinished handshake must also close the child process and pipes.
+        with anyio.CancelScope() as scope:
+            self.cancel_scope = scope
+            if self.stop.is_set():
+                scope.cancel()
+            await self._run_transport()
+
+    async def _run_transport(self) -> None:
         errlog = None
         try:
             async with AsyncExitStack() as stack:
@@ -152,7 +168,7 @@ class Manager:
         with anyio.move_on_after(START_TIMEOUT) as scope:
             await child.ready.wait()
         if scope.cancelled_caught:
-            child.stop.set()
+            child.cancel()
             raise ToolboxError(f"{toolset.id} did not start within {int(START_TIMEOUT)}s")
         if child.session is None:
             raise ToolboxError(f"{toolset.id} failed to start: {child.error or 'it exited'}"
@@ -161,7 +177,7 @@ class Manager:
 
     def close(self) -> None:
         for child in self.children.values():
-            child.stop.set()
+            child.cancel()
 
 
 # ---- the three tools ------------------------------------------------------------
@@ -342,17 +358,25 @@ async def do_call(mgr: Manager, full_name: str, arguments: object, project: str 
         raise ToolboxError("arguments must be an object")
     for attempt in (1, 2):
         child, tool = await _resolve(mgr, full_name, project)
+        session = child.session
         try:
-            return await child.session.call_tool(tool.name, arguments)
+            if session is None:
+                raise anyio.ClosedResourceError
+            return await session.call_tool(tool.name, arguments)
         except McpError as exc:
-            if exc.error.code != types.CONNECTION_CLOSED or attempt == 2:
+            if exc.error.code != types.CONNECTION_CLOSED:
                 raise ToolboxError(f"{full_name}: {exc.error.message}") from None
-        except (anyio.ClosedResourceError, anyio.BrokenResourceError, AttributeError):
-            if attempt == 2:
-                raise ToolboxError(f"{full_name}: its server stopped and did not come back") from None
-        # The server went away mid-session: start it again once.
+        except (anyio.ClosedResourceError, anyio.BrokenResourceError):
+            pass
         child.dead = True
-        child.stop.set()
+        child.cancel()
+        # Losing a reply is ambiguous: a file write or upload may already have
+        # succeeded. Only explicitly read-only tools are safe to repeat.
+        if not (tool.annotations and tool.annotations.readOnlyHint is True):
+            raise ToolboxError(f"{full_name}: connection lost; outcome unknown. "
+                               "Not retried. Check the result before repeating the action.") from None
+        if attempt == 2:
+            raise ToolboxError(f"{full_name}: its server stopped and did not come back") from None
     raise ToolboxError(f"{full_name}: unreachable")
 
 

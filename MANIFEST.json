@@ -251,8 +251,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/SKILL.md",
-  "size": 10073,
-  "sha256": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43"
+  "size": 13578,
+  "sha256": "cdec958844cca54a45fb76150a575292d7b28c0860ee0b9a1493051378e4d36e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/builder-check-prompt.md",
@@ -741,8 +741,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/SKILL.md",
-  "size": 6904,
-  "sha256": "5a652f8132cc901eb5ca61f89157839f87a2f20aed037fc7a2b51051bc37cd19"
+  "size": 6941,
+  "sha256": "3143de8695c5a2d63e8b1675f33837578076f464deb127c2ebdd0b46fceef886"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/prompts/analyst-common.md",
@@ -806,8 +806,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/github-issues.md",
-  "size": 1644,
-  "sha256": "a656f5e15b21c7a200c39c038f5ede74b9d6ea3ceeb90f39af7e930c8d8424d6"
+  "size": 1636,
+  "sha256": "d26ef9197b4a6ae5159ae6d11abd162bcc624d95fc7ccf508e07b68f916a1b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/redaction-policy.md",
@@ -831,8 +831,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/issue.md",
-  "size": 1851,
-  "sha256": "8f28dbfe60602f77dda76d81815cb4e2dce7d3e2a93348890e1581be8310ac1f"
+  "size": 2680,
+  "sha256": "afd21779e5de5bc5adfe2f5a50a04e44ab8d50d9ad0f829243de248d6f023eed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/report.md",
@@ -901,8 +901,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/SKILL.md",
-  "size": 20237,
-  "sha256": "fda988f826ca0f49a39f92699681c7a62a4347abb56ed217fa530bf24a67b1aa"
+  "size": 17947,
+  "sha256": "0850dc25c214ce5f1af21648e61c092a16a8def65e978f842fb07365912245c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/scripts/task-done",
@@ -6016,8 +6016,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
-  "size": 28243,
-  "sha256": "1cb5e8a14b85b353c50052a0354a37032ee5f1d673017de40d1882bff309e079"
+  "size": 17178,
+  "sha256": "52f02880e7f0f890e54e80c9e607b92903f07c7441417577359dd28a76d62811"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/implementer-prompt.md",
@@ -6028,6 +6028,41 @@
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/re-review-prompt.md",
   "size": 4761,
   "sha256": "0828a5e9cbb12ba49f14621dd8c3953c48c0fc383e75bb5494f055ed0d6d824f"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/batching.md",
+  "size": 571,
+  "sha256": "e33073abfc2ad3cec1026b918879af71364b7c28f5899920be07f034baec7540"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/cannot-verify.md",
+  "size": 501,
+  "sha256": "955754afa087ddd19e87a7032ca215335ca258ddb2e0e3e5ba0bcfadd7b1ad60"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/final-review.md",
+  "size": 1824,
+  "sha256": "99c5d6a1eac1e202b9a6d363221815945aa801db7d63d33a68799d9c3481f868"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/fix-loop.md",
+  "size": 4138,
+  "sha256": "390d760af9ae3f44006f2b87096c13e2030da81c6dd1efcc4ce5dd4e3b6aa599"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/handling-reports.md",
+  "size": 981,
+  "sha256": "7a27f568937586f21ab50762edddf2111417a1d15aa5ae5cd82df4300ee74d47"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/preflight.md",
+  "size": 738,
+  "sha256": "1f52288f52616941882be1e556af4821e4cd1b5699e9763039ad74e27b64f0f3"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/resuming.md",
+  "size": 602,
+  "sha256": "56541051e02302683546550a6726ffc0e0607efb81052fde156e24e21ca15872"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/scripts/review-package",
@@ -6146,8 +6181,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2101,
-  "sha256": "83d04cd39ef5aad40f046c61ee3a9844d172ff1d0bac9850e3ef91d1242b186c"
+  "size": 2344,
+  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
@@ -6541,38 +6576,53 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/SKILL.md",
-  "size": 26771,
-  "sha256": "223b7caf642216073ad49f12081658c5608484d4f0d3de967cdf3f671a384f96"
+  "size": 16910,
+  "sha256": "844ab714482067ced9ea3f8000dcf5aab2bd3892a1f9b4325dff85a268280986"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/anthropic-best-practices.md",
-  "size": 46197,
-  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/examples/CLAUDE_MD_TESTING.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/CLAUDE_MD_TESTING.md",
   "size": 5423,
   "sha256": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/graphviz-conventions.dot",
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/anthropic-best-practices.md",
+  "size": 46197,
+  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/bulletproofing.md",
+  "size": 2565,
+  "sha256": "cfe3073c09779d9eb9b3dc25a6d8a484e3c4276725ea5842c38e9cf562aa24d1"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/discovery.md",
+  "size": 7580,
+  "sha256": "43b3b3c5ba262aa99581ab94b45533263ca81412a578a2fc97160a2310953f8a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/flowcharts.md",
+  "size": 1250,
+  "sha256": "de99240af03ceea37a8b830263e2c53663cf478db73ea0f38b2955ac5921a09a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/graphviz-conventions.dot",
   "size": 5970,
   "sha256": "e2890a593c91370e384b42f2f67b1a6232c9e69dddea7891a0c1c46d7b20b694"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/persuasion-principles.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/persuasion-principles.md",
   "size": 5901,
   "sha256": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/testing-skills-with-subagents.md",
+  "size": 12545,
+  "sha256": "8c034367dd726bbe3aaacfb938ab34761cae1b4f25f58c5338f2a52ac4109e66"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/render-graphs.js",
   "size": 4968,
   "sha256": "c7f412cc629461c4d10287e668731874c0497707023e3e3f74a5355eb2cee196"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/testing-skills-with-subagents.md",
-  "size": 12558,
-  "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-MAP.md",
@@ -6671,8 +6721,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/SKILL.md",
-  "size": 10073,
-  "sha256": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43"
+  "size": 13578,
+  "sha256": "cdec958844cca54a45fb76150a575292d7b28c0860ee0b9a1493051378e4d36e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/builder-check-prompt.md",
@@ -7161,8 +7211,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/SKILL.md",
-  "size": 6904,
-  "sha256": "5a652f8132cc901eb5ca61f89157839f87a2f20aed037fc7a2b51051bc37cd19"
+  "size": 6941,
+  "sha256": "3143de8695c5a2d63e8b1675f33837578076f464deb127c2ebdd0b46fceef886"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/prompts/analyst-common.md",
@@ -7226,8 +7276,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/github-issues.md",
-  "size": 1644,
-  "sha256": "a656f5e15b21c7a200c39c038f5ede74b9d6ea3ceeb90f39af7e930c8d8424d6"
+  "size": 1636,
+  "sha256": "d26ef9197b4a6ae5159ae6d11abd162bcc624d95fc7ccf508e07b68f916a1b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/redaction-policy.md",
@@ -7251,8 +7301,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/issue.md",
-  "size": 1851,
-  "sha256": "8f28dbfe60602f77dda76d81815cb4e2dce7d3e2a93348890e1581be8310ac1f"
+  "size": 2680,
+  "sha256": "afd21779e5de5bc5adfe2f5a50a04e44ab8d50d9ad0f829243de248d6f023eed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/report.md",
@@ -7321,8 +7371,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/SKILL.md",
-  "size": 20237,
-  "sha256": "fda988f826ca0f49a39f92699681c7a62a4347abb56ed217fa530bf24a67b1aa"
+  "size": 17947,
+  "sha256": "0850dc25c214ce5f1af21648e61c092a16a8def65e978f842fb07365912245c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/scripts/task-done",
@@ -12436,8 +12486,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
-  "size": 28243,
-  "sha256": "1cb5e8a14b85b353c50052a0354a37032ee5f1d673017de40d1882bff309e079"
+  "size": 17178,
+  "sha256": "52f02880e7f0f890e54e80c9e607b92903f07c7441417577359dd28a76d62811"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/implementer-prompt.md",
@@ -12448,6 +12498,41 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/re-review-prompt.md",
   "size": 4761,
   "sha256": "0828a5e9cbb12ba49f14621dd8c3953c48c0fc383e75bb5494f055ed0d6d824f"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/batching.md",
+  "size": 571,
+  "sha256": "e33073abfc2ad3cec1026b918879af71364b7c28f5899920be07f034baec7540"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/cannot-verify.md",
+  "size": 501,
+  "sha256": "955754afa087ddd19e87a7032ca215335ca258ddb2e0e3e5ba0bcfadd7b1ad60"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/final-review.md",
+  "size": 1824,
+  "sha256": "99c5d6a1eac1e202b9a6d363221815945aa801db7d63d33a68799d9c3481f868"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/fix-loop.md",
+  "size": 4138,
+  "sha256": "390d760af9ae3f44006f2b87096c13e2030da81c6dd1efcc4ce5dd4e3b6aa599"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/handling-reports.md",
+  "size": 981,
+  "sha256": "7a27f568937586f21ab50762edddf2111417a1d15aa5ae5cd82df4300ee74d47"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/preflight.md",
+  "size": 738,
+  "sha256": "1f52288f52616941882be1e556af4821e4cd1b5699e9763039ad74e27b64f0f3"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/resuming.md",
+  "size": 602,
+  "sha256": "56541051e02302683546550a6726ffc0e0607efb81052fde156e24e21ca15872"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/scripts/review-package",
@@ -12566,8 +12651,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2101,
-  "sha256": "83d04cd39ef5aad40f046c61ee3a9844d172ff1d0bac9850e3ef91d1242b186c"
+  "size": 2344,
+  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
@@ -12961,38 +13046,53 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/SKILL.md",
-  "size": 26771,
-  "sha256": "223b7caf642216073ad49f12081658c5608484d4f0d3de967cdf3f671a384f96"
+  "size": 16910,
+  "sha256": "844ab714482067ced9ea3f8000dcf5aab2bd3892a1f9b4325dff85a268280986"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/anthropic-best-practices.md",
-  "size": 46197,
-  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/examples/CLAUDE_MD_TESTING.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/CLAUDE_MD_TESTING.md",
   "size": 5423,
   "sha256": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/graphviz-conventions.dot",
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/anthropic-best-practices.md",
+  "size": 46197,
+  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/bulletproofing.md",
+  "size": 2565,
+  "sha256": "cfe3073c09779d9eb9b3dc25a6d8a484e3c4276725ea5842c38e9cf562aa24d1"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/discovery.md",
+  "size": 7580,
+  "sha256": "43b3b3c5ba262aa99581ab94b45533263ca81412a578a2fc97160a2310953f8a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/flowcharts.md",
+  "size": 1250,
+  "sha256": "de99240af03ceea37a8b830263e2c53663cf478db73ea0f38b2955ac5921a09a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/graphviz-conventions.dot",
   "size": 5970,
   "sha256": "e2890a593c91370e384b42f2f67b1a6232c9e69dddea7891a0c1c46d7b20b694"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/persuasion-principles.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/persuasion-principles.md",
   "size": 5901,
   "sha256": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/testing-skills-with-subagents.md",
+  "size": 12545,
+  "sha256": "8c034367dd726bbe3aaacfb938ab34761cae1b4f25f58c5338f2a52ac4109e66"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/render-graphs.js",
   "size": 4968,
   "sha256": "c7f412cc629461c4d10287e668731874c0497707023e3e3f74a5355eb2cee196"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/testing-skills-with-subagents.md",
-  "size": 12558,
-  "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-WORKSPACE/.claude/hooks/skyrim-guard.py",
@@ -13156,8 +13256,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/SKILL.md",
-  "size": 10073,
-  "sha256": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43"
+  "size": 13578,
+  "sha256": "cdec958844cca54a45fb76150a575292d7b28c0860ee0b9a1493051378e4d36e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/builder-check-prompt.md",
@@ -13646,8 +13746,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/SKILL.md",
-  "size": 6904,
-  "sha256": "5a652f8132cc901eb5ca61f89157839f87a2f20aed037fc7a2b51051bc37cd19"
+  "size": 6941,
+  "sha256": "3143de8695c5a2d63e8b1675f33837578076f464deb127c2ebdd0b46fceef886"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/prompts/analyst-common.md",
@@ -13711,8 +13811,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/github-issues.md",
-  "size": 1644,
-  "sha256": "a656f5e15b21c7a200c39c038f5ede74b9d6ea3ceeb90f39af7e930c8d8424d6"
+  "size": 1636,
+  "sha256": "d26ef9197b4a6ae5159ae6d11abd162bcc624d95fc7ccf508e07b68f916a1b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/redaction-policy.md",
@@ -13736,8 +13836,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/issue.md",
-  "size": 1851,
-  "sha256": "8f28dbfe60602f77dda76d81815cb4e2dce7d3e2a93348890e1581be8310ac1f"
+  "size": 2680,
+  "sha256": "afd21779e5de5bc5adfe2f5a50a04e44ab8d50d9ad0f829243de248d6f023eed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/report.md",
@@ -13806,8 +13906,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/SKILL.md",
-  "size": 20237,
-  "sha256": "fda988f826ca0f49a39f92699681c7a62a4347abb56ed217fa530bf24a67b1aa"
+  "size": 17947,
+  "sha256": "0850dc25c214ce5f1af21648e61c092a16a8def65e978f842fb07365912245c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/scripts/task-done",
@@ -18921,8 +19021,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
-  "size": 28243,
-  "sha256": "1cb5e8a14b85b353c50052a0354a37032ee5f1d673017de40d1882bff309e079"
+  "size": 17178,
+  "sha256": "52f02880e7f0f890e54e80c9e607b92903f07c7441417577359dd28a76d62811"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/implementer-prompt.md",
@@ -18933,6 +19033,41 @@
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/re-review-prompt.md",
   "size": 4761,
   "sha256": "0828a5e9cbb12ba49f14621dd8c3953c48c0fc383e75bb5494f055ed0d6d824f"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/batching.md",
+  "size": 571,
+  "sha256": "e33073abfc2ad3cec1026b918879af71364b7c28f5899920be07f034baec7540"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/cannot-verify.md",
+  "size": 501,
+  "sha256": "955754afa087ddd19e87a7032ca215335ca258ddb2e0e3e5ba0bcfadd7b1ad60"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/final-review.md",
+  "size": 1824,
+  "sha256": "99c5d6a1eac1e202b9a6d363221815945aa801db7d63d33a68799d9c3481f868"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/fix-loop.md",
+  "size": 4138,
+  "sha256": "390d760af9ae3f44006f2b87096c13e2030da81c6dd1efcc4ce5dd4e3b6aa599"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/handling-reports.md",
+  "size": 981,
+  "sha256": "7a27f568937586f21ab50762edddf2111417a1d15aa5ae5cd82df4300ee74d47"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/preflight.md",
+  "size": 738,
+  "sha256": "1f52288f52616941882be1e556af4821e4cd1b5699e9763039ad74e27b64f0f3"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/resuming.md",
+  "size": 602,
+  "sha256": "56541051e02302683546550a6726ffc0e0607efb81052fde156e24e21ca15872"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/scripts/review-package",
@@ -19051,8 +19186,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2101,
-  "sha256": "83d04cd39ef5aad40f046c61ee3a9844d172ff1d0bac9850e3ef91d1242b186c"
+  "size": 2344,
+  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
@@ -19446,38 +19581,53 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/SKILL.md",
-  "size": 26771,
-  "sha256": "223b7caf642216073ad49f12081658c5608484d4f0d3de967cdf3f671a384f96"
+  "size": 16910,
+  "sha256": "844ab714482067ced9ea3f8000dcf5aab2bd3892a1f9b4325dff85a268280986"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/anthropic-best-practices.md",
-  "size": 46197,
-  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/examples/CLAUDE_MD_TESTING.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/CLAUDE_MD_TESTING.md",
   "size": 5423,
   "sha256": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/graphviz-conventions.dot",
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/anthropic-best-practices.md",
+  "size": 46197,
+  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/bulletproofing.md",
+  "size": 2565,
+  "sha256": "cfe3073c09779d9eb9b3dc25a6d8a484e3c4276725ea5842c38e9cf562aa24d1"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/discovery.md",
+  "size": 7580,
+  "sha256": "43b3b3c5ba262aa99581ab94b45533263ca81412a578a2fc97160a2310953f8a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/flowcharts.md",
+  "size": 1250,
+  "sha256": "de99240af03ceea37a8b830263e2c53663cf478db73ea0f38b2955ac5921a09a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/graphviz-conventions.dot",
   "size": 5970,
   "sha256": "e2890a593c91370e384b42f2f67b1a6232c9e69dddea7891a0c1c46d7b20b694"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/persuasion-principles.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/persuasion-principles.md",
   "size": 5901,
   "sha256": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/testing-skills-with-subagents.md",
+  "size": 12545,
+  "sha256": "8c034367dd726bbe3aaacfb938ab34761cae1b4f25f58c5338f2a52ac4109e66"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/render-graphs.js",
   "size": 4968,
   "sha256": "c7f412cc629461c4d10287e668731874c0497707023e3e3f74a5355eb2cee196"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/testing-skills-with-subagents.md",
-  "size": 12558,
-  "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-WORKSPACE/AGENTS.md",
@@ -19626,8 +19776,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/SKILL.md",
-  "size": 10073,
-  "sha256": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43"
+  "size": 13578,
+  "sha256": "cdec958844cca54a45fb76150a575292d7b28c0860ee0b9a1493051378e4d36e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/builder-check-prompt.md",
@@ -20116,8 +20266,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/SKILL.md",
-  "size": 6904,
-  "sha256": "5a652f8132cc901eb5ca61f89157839f87a2f20aed037fc7a2b51051bc37cd19"
+  "size": 6941,
+  "sha256": "3143de8695c5a2d63e8b1675f33837578076f464deb127c2ebdd0b46fceef886"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/prompts/analyst-common.md",
@@ -20181,8 +20331,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/github-issues.md",
-  "size": 1644,
-  "sha256": "a656f5e15b21c7a200c39c038f5ede74b9d6ea3ceeb90f39af7e930c8d8424d6"
+  "size": 1636,
+  "sha256": "d26ef9197b4a6ae5159ae6d11abd162bcc624d95fc7ccf508e07b68f916a1b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/redaction-policy.md",
@@ -20206,8 +20356,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/issue.md",
-  "size": 1851,
-  "sha256": "8f28dbfe60602f77dda76d81815cb4e2dce7d3e2a93348890e1581be8310ac1f"
+  "size": 2680,
+  "sha256": "afd21779e5de5bc5adfe2f5a50a04e44ab8d50d9ad0f829243de248d6f023eed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/report.md",
@@ -20276,8 +20426,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/SKILL.md",
-  "size": 20237,
-  "sha256": "fda988f826ca0f49a39f92699681c7a62a4347abb56ed217fa530bf24a67b1aa"
+  "size": 17947,
+  "sha256": "0850dc25c214ce5f1af21648e61c092a16a8def65e978f842fb07365912245c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/scripts/task-done",
@@ -25391,8 +25541,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
-  "size": 28243,
-  "sha256": "1cb5e8a14b85b353c50052a0354a37032ee5f1d673017de40d1882bff309e079"
+  "size": 17178,
+  "sha256": "52f02880e7f0f890e54e80c9e607b92903f07c7441417577359dd28a76d62811"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/implementer-prompt.md",
@@ -25403,6 +25553,41 @@
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/re-review-prompt.md",
   "size": 4761,
   "sha256": "0828a5e9cbb12ba49f14621dd8c3953c48c0fc383e75bb5494f055ed0d6d824f"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/batching.md",
+  "size": 571,
+  "sha256": "e33073abfc2ad3cec1026b918879af71364b7c28f5899920be07f034baec7540"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/cannot-verify.md",
+  "size": 501,
+  "sha256": "955754afa087ddd19e87a7032ca215335ca258ddb2e0e3e5ba0bcfadd7b1ad60"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/final-review.md",
+  "size": 1824,
+  "sha256": "99c5d6a1eac1e202b9a6d363221815945aa801db7d63d33a68799d9c3481f868"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/fix-loop.md",
+  "size": 4138,
+  "sha256": "390d760af9ae3f44006f2b87096c13e2030da81c6dd1efcc4ce5dd4e3b6aa599"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/handling-reports.md",
+  "size": 981,
+  "sha256": "7a27f568937586f21ab50762edddf2111417a1d15aa5ae5cd82df4300ee74d47"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/preflight.md",
+  "size": 738,
+  "sha256": "1f52288f52616941882be1e556af4821e4cd1b5699e9763039ad74e27b64f0f3"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/resuming.md",
+  "size": 602,
+  "sha256": "56541051e02302683546550a6726ffc0e0607efb81052fde156e24e21ca15872"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/scripts/review-package",
@@ -25521,8 +25706,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2101,
-  "sha256": "83d04cd39ef5aad40f046c61ee3a9844d172ff1d0bac9850e3ef91d1242b186c"
+  "size": 2344,
+  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
@@ -25916,38 +26101,53 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/SKILL.md",
-  "size": 26771,
-  "sha256": "223b7caf642216073ad49f12081658c5608484d4f0d3de967cdf3f671a384f96"
+  "size": 16910,
+  "sha256": "844ab714482067ced9ea3f8000dcf5aab2bd3892a1f9b4325dff85a268280986"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/anthropic-best-practices.md",
-  "size": 46197,
-  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/examples/CLAUDE_MD_TESTING.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/CLAUDE_MD_TESTING.md",
   "size": 5423,
   "sha256": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/graphviz-conventions.dot",
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/anthropic-best-practices.md",
+  "size": 46197,
+  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/bulletproofing.md",
+  "size": 2565,
+  "sha256": "cfe3073c09779d9eb9b3dc25a6d8a484e3c4276725ea5842c38e9cf562aa24d1"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/discovery.md",
+  "size": 7580,
+  "sha256": "43b3b3c5ba262aa99581ab94b45533263ca81412a578a2fc97160a2310953f8a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/flowcharts.md",
+  "size": 1250,
+  "sha256": "de99240af03ceea37a8b830263e2c53663cf478db73ea0f38b2955ac5921a09a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/graphviz-conventions.dot",
   "size": 5970,
   "sha256": "e2890a593c91370e384b42f2f67b1a6232c9e69dddea7891a0c1c46d7b20b694"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/persuasion-principles.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/persuasion-principles.md",
   "size": 5901,
   "sha256": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/testing-skills-with-subagents.md",
+  "size": 12545,
+  "sha256": "8c034367dd726bbe3aaacfb938ab34761cae1b4f25f58c5338f2a52ac4109e66"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/render-graphs.js",
   "size": 4968,
   "sha256": "c7f412cc629461c4d10287e668731874c0497707023e3e3f74a5355eb2cee196"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/testing-skills-with-subagents.md",
-  "size": 12558,
-  "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-WORKSPACE/AGENTS.md",
@@ -26096,8 +26296,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/SKILL.md",
-  "size": 10073,
-  "sha256": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43"
+  "size": 13578,
+  "sha256": "cdec958844cca54a45fb76150a575292d7b28c0860ee0b9a1493051378e4d36e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/builder-check-prompt.md",
@@ -26586,8 +26786,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/SKILL.md",
-  "size": 6904,
-  "sha256": "5a652f8132cc901eb5ca61f89157839f87a2f20aed037fc7a2b51051bc37cd19"
+  "size": 6941,
+  "sha256": "3143de8695c5a2d63e8b1675f33837578076f464deb127c2ebdd0b46fceef886"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/prompts/analyst-common.md",
@@ -26651,8 +26851,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/github-issues.md",
-  "size": 1644,
-  "sha256": "a656f5e15b21c7a200c39c038f5ede74b9d6ea3ceeb90f39af7e930c8d8424d6"
+  "size": 1636,
+  "sha256": "d26ef9197b4a6ae5159ae6d11abd162bcc624d95fc7ccf508e07b68f916a1b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/redaction-policy.md",
@@ -26676,8 +26876,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/issue.md",
-  "size": 1851,
-  "sha256": "8f28dbfe60602f77dda76d81815cb4e2dce7d3e2a93348890e1581be8310ac1f"
+  "size": 2680,
+  "sha256": "afd21779e5de5bc5adfe2f5a50a04e44ab8d50d9ad0f829243de248d6f023eed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/report.md",
@@ -26746,8 +26946,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/SKILL.md",
-  "size": 20237,
-  "sha256": "fda988f826ca0f49a39f92699681c7a62a4347abb56ed217fa530bf24a67b1aa"
+  "size": 17947,
+  "sha256": "0850dc25c214ce5f1af21648e61c092a16a8def65e978f842fb07365912245c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/scripts/task-done",
@@ -31861,8 +32061,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
-  "size": 28243,
-  "sha256": "1cb5e8a14b85b353c50052a0354a37032ee5f1d673017de40d1882bff309e079"
+  "size": 17178,
+  "sha256": "52f02880e7f0f890e54e80c9e607b92903f07c7441417577359dd28a76d62811"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/implementer-prompt.md",
@@ -31873,6 +32073,41 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/re-review-prompt.md",
   "size": 4761,
   "sha256": "0828a5e9cbb12ba49f14621dd8c3953c48c0fc383e75bb5494f055ed0d6d824f"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/batching.md",
+  "size": 571,
+  "sha256": "e33073abfc2ad3cec1026b918879af71364b7c28f5899920be07f034baec7540"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/cannot-verify.md",
+  "size": 501,
+  "sha256": "955754afa087ddd19e87a7032ca215335ca258ddb2e0e3e5ba0bcfadd7b1ad60"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/final-review.md",
+  "size": 1824,
+  "sha256": "99c5d6a1eac1e202b9a6d363221815945aa801db7d63d33a68799d9c3481f868"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/fix-loop.md",
+  "size": 4138,
+  "sha256": "390d760af9ae3f44006f2b87096c13e2030da81c6dd1efcc4ce5dd4e3b6aa599"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/handling-reports.md",
+  "size": 981,
+  "sha256": "7a27f568937586f21ab50762edddf2111417a1d15aa5ae5cd82df4300ee74d47"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/preflight.md",
+  "size": 738,
+  "sha256": "1f52288f52616941882be1e556af4821e4cd1b5699e9763039ad74e27b64f0f3"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/resuming.md",
+  "size": 602,
+  "sha256": "56541051e02302683546550a6726ffc0e0607efb81052fde156e24e21ca15872"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/scripts/review-package",
@@ -31991,8 +32226,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2101,
-  "sha256": "83d04cd39ef5aad40f046c61ee3a9844d172ff1d0bac9850e3ef91d1242b186c"
+  "size": 2344,
+  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
@@ -32386,38 +32621,53 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/SKILL.md",
-  "size": 26771,
-  "sha256": "223b7caf642216073ad49f12081658c5608484d4f0d3de967cdf3f671a384f96"
+  "size": 16910,
+  "sha256": "844ab714482067ced9ea3f8000dcf5aab2bd3892a1f9b4325dff85a268280986"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/anthropic-best-practices.md",
-  "size": 46197,
-  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/examples/CLAUDE_MD_TESTING.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/CLAUDE_MD_TESTING.md",
   "size": 5423,
   "sha256": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/graphviz-conventions.dot",
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/anthropic-best-practices.md",
+  "size": 46197,
+  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/bulletproofing.md",
+  "size": 2565,
+  "sha256": "cfe3073c09779d9eb9b3dc25a6d8a484e3c4276725ea5842c38e9cf562aa24d1"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/discovery.md",
+  "size": 7580,
+  "sha256": "43b3b3c5ba262aa99581ab94b45533263ca81412a578a2fc97160a2310953f8a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/flowcharts.md",
+  "size": 1250,
+  "sha256": "de99240af03ceea37a8b830263e2c53663cf478db73ea0f38b2955ac5921a09a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/graphviz-conventions.dot",
   "size": 5970,
   "sha256": "e2890a593c91370e384b42f2f67b1a6232c9e69dddea7891a0c1c46d7b20b694"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/persuasion-principles.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/persuasion-principles.md",
   "size": 5901,
   "sha256": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/testing-skills-with-subagents.md",
+  "size": 12545,
+  "sha256": "8c034367dd726bbe3aaacfb938ab34761cae1b4f25f58c5338f2a52ac4109e66"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/render-graphs.js",
   "size": 4968,
   "sha256": "c7f412cc629461c4d10287e668731874c0497707023e3e3f74a5355eb2cee196"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/testing-skills-with-subagents.md",
-  "size": 12558,
-  "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-WORKSPACE/AGENTS.md",
@@ -32641,8 +32891,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/SKILL.md",
-  "size": 10073,
-  "sha256": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43"
+  "size": 13578,
+  "sha256": "cdec958844cca54a45fb76150a575292d7b28c0860ee0b9a1493051378e4d36e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/brainstorming/builder-check-prompt.md",
@@ -33131,8 +33381,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/SKILL.md",
-  "size": 6904,
-  "sha256": "5a652f8132cc901eb5ca61f89157839f87a2f20aed037fc7a2b51051bc37cd19"
+  "size": 6941,
+  "sha256": "3143de8695c5a2d63e8b1675f33837578076f464deb127c2ebdd0b46fceef886"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/prompts/analyst-common.md",
@@ -33196,8 +33446,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/github-issues.md",
-  "size": 1644,
-  "sha256": "a656f5e15b21c7a200c39c038f5ede74b9d6ea3ceeb90f39af7e930c8d8424d6"
+  "size": 1636,
+  "sha256": "d26ef9197b4a6ae5159ae6d11abd162bcc624d95fc7ccf508e07b68f916a1b19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/references/redaction-policy.md",
@@ -33221,8 +33471,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/issue.md",
-  "size": 1851,
-  "sha256": "8f28dbfe60602f77dda76d81815cb4e2dce7d3e2a93348890e1581be8310ac1f"
+  "size": 2680,
+  "sha256": "afd21779e5de5bc5adfe2f5a50a04e44ab8d50d9ad0f829243de248d6f023eed"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/diagnosing-superpowers/templates/report.md",
@@ -33291,8 +33541,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/SKILL.md",
-  "size": 20237,
-  "sha256": "fda988f826ca0f49a39f92699681c7a62a4347abb56ed217fa530bf24a67b1aa"
+  "size": 17947,
+  "sha256": "0850dc25c214ce5f1af21648e61c092a16a8def65e978f842fb07365912245c6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/executing-plans/scripts/task-done",
@@ -38406,8 +38656,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
-  "size": 28243,
-  "sha256": "1cb5e8a14b85b353c50052a0354a37032ee5f1d673017de40d1882bff309e079"
+  "size": 17178,
+  "sha256": "52f02880e7f0f890e54e80c9e607b92903f07c7441417577359dd28a76d62811"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/implementer-prompt.md",
@@ -38418,6 +38668,41 @@
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/re-review-prompt.md",
   "size": 4761,
   "sha256": "0828a5e9cbb12ba49f14621dd8c3953c48c0fc383e75bb5494f055ed0d6d824f"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/batching.md",
+  "size": 571,
+  "sha256": "e33073abfc2ad3cec1026b918879af71364b7c28f5899920be07f034baec7540"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/cannot-verify.md",
+  "size": 501,
+  "sha256": "955754afa087ddd19e87a7032ca215335ca258ddb2e0e3e5ba0bcfadd7b1ad60"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/final-review.md",
+  "size": 1824,
+  "sha256": "99c5d6a1eac1e202b9a6d363221815945aa801db7d63d33a68799d9c3481f868"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/fix-loop.md",
+  "size": 4138,
+  "sha256": "390d760af9ae3f44006f2b87096c13e2030da81c6dd1efcc4ce5dd4e3b6aa599"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/handling-reports.md",
+  "size": 981,
+  "sha256": "7a27f568937586f21ab50762edddf2111417a1d15aa5ae5cd82df4300ee74d47"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/preflight.md",
+  "size": 738,
+  "sha256": "1f52288f52616941882be1e556af4821e4cd1b5699e9763039ad74e27b64f0f3"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/references/resuming.md",
+  "size": 602,
+  "sha256": "56541051e02302683546550a6726ffc0e0607efb81052fde156e24e21ca15872"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/scripts/review-package",
@@ -38536,8 +38821,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2101,
-  "sha256": "83d04cd39ef5aad40f046c61ee3a9844d172ff1d0bac9850e3ef91d1242b186c"
+  "size": 2344,
+  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/modding-bench.md",
@@ -38931,38 +39216,53 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/SKILL.md",
-  "size": 26771,
-  "sha256": "223b7caf642216073ad49f12081658c5608484d4f0d3de967cdf3f671a384f96"
+  "size": 16910,
+  "sha256": "844ab714482067ced9ea3f8000dcf5aab2bd3892a1f9b4325dff85a268280986"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/anthropic-best-practices.md",
-  "size": 46197,
-  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/examples/CLAUDE_MD_TESTING.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/CLAUDE_MD_TESTING.md",
   "size": 5423,
   "sha256": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/graphviz-conventions.dot",
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/anthropic-best-practices.md",
+  "size": 46197,
+  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/bulletproofing.md",
+  "size": 2565,
+  "sha256": "cfe3073c09779d9eb9b3dc25a6d8a484e3c4276725ea5842c38e9cf562aa24d1"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/discovery.md",
+  "size": 7580,
+  "sha256": "43b3b3c5ba262aa99581ab94b45533263ca81412a578a2fc97160a2310953f8a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/flowcharts.md",
+  "size": 1250,
+  "sha256": "de99240af03ceea37a8b830263e2c53663cf478db73ea0f38b2955ac5921a09a"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/graphviz-conventions.dot",
   "size": 5970,
   "sha256": "e2890a593c91370e384b42f2f67b1a6232c9e69dddea7891a0c1c46d7b20b694"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/persuasion-principles.md",
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/persuasion-principles.md",
   "size": 5901,
   "sha256": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/references/testing-skills-with-subagents.md",
+  "size": 12545,
+  "sha256": "8c034367dd726bbe3aaacfb938ab34761cae1b4f25f58c5338f2a52ac4109e66"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/render-graphs.js",
   "size": 4968,
   "sha256": "c7f412cc629461c4d10287e668731874c0497707023e3e3f74a5355eb2cee196"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-skills/testing-skills-with-subagents.md",
-  "size": 12558,
-  "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-WORKSPACE/AGENTS.md",
@@ -39176,13 +39476,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 57047,
-  "sha256": "a30284598a306e6c026b1a21f82e5450cba9d548c6544af4c4b063629dfbad33"
+  "size": 57743,
+  "sha256": "6f4bf5d32e3e6f8e7cedeb4e45d6bd260db3e52ceb2aedde5c3dbfe2320b6fff"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1537,
-  "sha256": "34fc8920fe5d71c5fe0db430a6447455cf4dd03c12c239d4d3e4e4a71a07c6d7"
+  "sha256": "f36af6f01ad12693b33df802d9a198cdcfc356c61d3b5a4706ea9509b965ae25"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -39192,7 +39492,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 35772,
-  "sha256": "e0c42baa8acc25fa20eadd4a04939a22f8638e496f1ff887c431f0691090a82f"
+  "sha256": "dbdf50beb45e626fddf465252ca47c8796b9a5403ff7a03e37c57eec3a690973"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -39285,9 +39585,9 @@
   "sha256": "4e4e0f16b45233af5c757a1fcbe3c3b16e9056375b1fbe2ce020b6de75dedcc0"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/github-mcp-server-2.0.2-windows-x86_64.zip",
-  "size": 9428417,
-  "sha256": "4ae64087501650752f21c9d5af5378107a5116d94ee1cf37786b22b8c4bd99df"
+  "path": "BUNDLED-TOOLS/offline/github-mcp-server-2.0.3-windows-x86_64.zip",
+  "size": 9576531,
+  "sha256": "f0e1b9880a1b88730d1250d1c25cfee39617ec3e800a7a252f2279cd0c8394e0"
  },
  {
   "path": "BUNDLED-TOOLS/offline/headroom_ai-0.41.0-cp310-abi3-win_amd64.whl",
@@ -39310,9 +39610,9 @@
   "sha256": "2e7848961785eedda3702851d477d878cf01e98a61710ca50fe8b0aafcb28bef"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/uabs_toolbox-1.0.0-py3-none-any.whl",
-  "size": 14442,
-  "sha256": "051d7c77e8ae5ff5936ef3bae393812cb7af8a8e4f6db65b2161a6a8b4f964d2"
+  "path": "BUNDLED-TOOLS/offline/uabs_toolbox-1.0.1-py3-none-any.whl",
+  "size": 14930,
+  "sha256": "d484db8b74a63c775f680ac9b866e1664ddc93c92deedff0338ea2e2212c0e22"
  },
  {
   "path": "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.c1dff21-py3-none-any.whl",
@@ -40427,32 +40727,32 @@
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.antigravity-plugin/plugin.json",
   "size": 668,
-  "sha256": "5541e8d6a744ad570e1a6b5e68d5e5d84242268c8e8ede3ca7b79619bffafd0f"
+  "sha256": "59d3191313f359668f608c2a3951faeb7717ee60f9c5fc740002f8a534f2da75"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.claude-plugin/marketplace.json",
   "size": 514,
-  "sha256": "c730744e1f3b159652a7d2ee43b3f5e9e177d692d619212638a01f24eb3267a5"
+  "sha256": "aa23337d43302fffa00927f3700205e92b6c09b79dfe4a13bf66b7b15122604a"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.claude-plugin/plugin.json",
   "size": 497,
-  "sha256": "f1e28bae51b4a6af9ea340868b140362b4a00ba72bd722e7037cec37c23aa0bb"
+  "sha256": "fa3b15088f102c31b7cf1abd4d329fd50d76a99222083638aab810d81930b162"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.codex-plugin/plugin.json",
   "size": 1730,
-  "sha256": "58c36fd4185719c9bee12fab1a03ce6cce48051c36ee9bdd9492235dd7ab2cfd"
+  "sha256": "fef198cdbcaa5544e4244ff74cb83a2a797d18c9cfb9af26a18418206bb806c3"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.cursor-plugin/plugin.json",
   "size": 578,
-  "sha256": "a623f01abe3ce86c053ece5f94f9efe1928c8602664201173f187e7ff0c0a04c"
+  "sha256": "4f0755b6150bf762c1d8fb2f63bd323bea020e6cd11f9f1d7c68b69ff690cf99"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.devin-plugin/plugin.json",
   "size": 575,
-  "sha256": "ac7daa69cf87d44d2a7a67f9a929d62638cef0af4519a99b4c9557d90155c985"
+  "sha256": "ee1269c4d4325006fa590fa8ccb20ea302cd11992363c3bc9bc4ac62a2d4792a"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.gitattributes",
@@ -40466,8 +40766,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.github/ISSUE_TEMPLATE/bug_report.md",
-  "size": 1593,
-  "sha256": "32a5b6e5ad3528daac479ad0025502dfad9dd06fe457242c1506ac19c77d6e46"
+  "size": 2338,
+  "sha256": "c766d3023f9a12280019055997ad2424887778d9b701b4118ea86a7fbf1f7fdb"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.github/ISSUE_TEMPLATE/config.yml",
@@ -40475,24 +40775,19 @@
   "sha256": "e955d428a9ac46ed35f407b6532d74d1dade217d89d9a4c7f6b05b72872a004a"
  },
  {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/.github/ISSUE_TEMPLATE/diagnosis_report.md",
-  "size": 1018,
-  "sha256": "42f87b4f856c872d01e933d2b2f4e1176e2811d1c36631679af6b9e76c3ee072"
- },
- {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.github/ISSUE_TEMPLATE/feature_request.md",
-  "size": 1604,
-  "sha256": "59ad1c8a7b5faca0273fa310f6c78fe2a3ec4917d9f3e12fb1220d5381c8f783"
+  "size": 2164,
+  "sha256": "a7aac80c9df2e46fce9a3c89a6e9e73e8d81e6de311dbd634ed9d5dfacb0bdc8"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.github/ISSUE_TEMPLATE/platform_support.md",
-  "size": 974,
-  "sha256": "006109a23ce39dbf252cc9f8acb59765cc755a1edfeb840efc79035f2c1d44a9"
+  "size": 1525,
+  "sha256": "19f6d78322bf53b62ac8d7baf117492de3bbfae80851657c24c102980ea2aa26"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.github/PULL_REQUEST_TEMPLATE.md",
-  "size": 5814,
-  "sha256": "b5cde91d5809bec88f6d11f6e295695549a59ea9fc5e32469ea12ad485cb37fb"
+  "size": 6626,
+  "sha256": "d837f95474fafb23298bb6e295409ecc522d4c4db6a2e1eff955bbfb7a4a40d9"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.gitignore",
@@ -40507,27 +40802,27 @@
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.hermes-plugin/plugin.yaml",
   "size": 151,
-  "sha256": "3c9a8f57352a5ebc608bc05de8e2be42a86cf887a0a3fbd1f03287aa8df58187"
+  "sha256": "956c7257fa4549a00d6501c2b81ea43805eb1f26b3a2cfd60920751ce3c63fe2"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.kimi-plugin/plugin.json",
   "size": 3090,
-  "sha256": "defa5c228f2ecd51ca4a51af928aa482dd8cda4687006e272d40cf85c466b479"
+  "sha256": "40af10480f1c943386c8bb1a1da4c5349262d162818bb2e561fc2c4c62730f92"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.muse-plugin/marketplace.json",
   "size": 507,
-  "sha256": "9001163777872ee0f934602a64b3217f66b3bcff688e135b241756796f6460c4"
+  "sha256": "8107646e9dedc1aea1aad369da66a1ba30e1f5faa53ab840e928a7e8ac4a7701"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.muse-plugin/plugin.json",
   "size": 2286,
-  "sha256": "1e1b379d71d7fb7b5a9f5a30f7aecd7be100e01ea037d44e2b732ff7442b61d9"
+  "sha256": "901b5b2fcd5aa32f904f5659f1f8199cb8d4db9635e465649a775fa658ac6c1c"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.opencode/INSTALL.md",
   "size": 5379,
-  "sha256": "5233998c438ef1cef1b1af953e46f965ae7b122876ee16971b0a76d231e2d3a8"
+  "sha256": "0594f252048cf87e98d56faa876b7f1c3d4ae1119cf8fc77bbf5a5b63729296f"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.opencode/plugins/superpowers.js",
@@ -40551,8 +40846,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/AGENTS.md",
-  "size": 8983,
-  "sha256": "28c88405f9357e01b06fb460fce2078ed0c264b5113160cff59ec6c5ee3cf74f"
+  "size": 9911,
+  "sha256": "3d7c31b2ed1592d0816e436a90549c8af5829627bcb663fe1c886a30f427cabe"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/CODE_OF_CONDUCT.md",
@@ -40571,13 +40866,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/README.md",
-  "size": 14589,
-  "sha256": "9b7be460027bf53c29f628eee72dceeebb83e52dd5e94a1b6f9828a64c579198"
+  "size": 14847,
+  "sha256": "79f29f50c735862d2e304ea547b4c9aa67d9db6909ff6fb7b5ea922d7bcbc3e7"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/RELEASE-NOTES.md",
-  "size": 108999,
-  "sha256": "fbe2d94c8b823a448c2b878fa4767a4164c3943de2b8e7be2a46463d94eea6ab"
+  "size": 112907,
+  "sha256": "7340c58689fd50b55010767bc2714d944aabcaf4ccdeeb8e6be4452516db669b"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/assets/antigravity-logo.png",
@@ -40602,7 +40897,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/README.opencode.md",
   "size": 8758,
-  "sha256": "7eebb57660c2e6f6c205643a752e4e26b1f4aae2a8d8f92d16b38ab637980e8f"
+  "sha256": "17ae31ae43f88ef40fd4b5dcb03bd9ad761fed46f4a7e1697fb824433c105433"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/plans/2025-11-22-opencode-support-design.md",
@@ -40628,91 +40923,6 @@
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/porting-to-a-new-harness.md",
   "size": 52602,
   "sha256": "f30e91289a3f4a11ce529b67ecc081e03be1d1d906628d645618e8129e83f519"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-01-22-document-review-system.md",
-  "size": 8999,
-  "sha256": "92875a4d7db7acef7737ace512ed5a6ae29ab76aff421633276a4a824c5d5cf7"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-02-19-visual-brainstorming-refactor.md",
-  "size": 18804,
-  "sha256": "fbc67c4e7c5e42ff6e8e647951b749a2610ca2e13639903867258032c175bbbe"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-03-11-zero-dep-brainstorm-server.md",
-  "size": 15576,
-  "sha256": "d1e3b19e1111cab0a113519a9d2d9e881080c5fe13c3227e6c22fa88d08dc11d"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-03-23-codex-app-compatibility.md",
-  "size": 19177,
-  "sha256": "28b0335e97ceea066ab2eefa9a02eea6bf30d3e580788ce462976efce13dc709"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-04-06-worktree-rototill.md",
-  "size": 29210,
-  "sha256": "98d21b8bbbee1d7359aaf65ba74a9f1313d9f5114000613301a00244a415f61f"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-05-06-lift-drill-into-evals.md",
-  "size": 48218,
-  "sha256": "3b1b5c8748dde0754872181631ef8b6188d0221b2723106ab2a82d2b9290accd"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-05-07-pi-extension-and-evals.md",
-  "size": 5748,
-  "sha256": "887dda265dc5f61ad4a04b9d0da98c059f6d93d08ff79180afbdafa7a000d75e"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-06-09-sdd-task-scoped-review-dispatch.md",
-  "size": 28766,
-  "sha256": "1597b91dbf9f8113533c6da8410607c5ac6c47db92b043a1284fff075b037aa8"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-06-09-visual-companion-issues.md",
-  "size": 18930,
-  "sha256": "bf939ca1e1398f54e1950193299084836e45767cb00735342e3d7c31ff1fe31e"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-06-10-visual-companion-auth-hardening.md",
-  "size": 23632,
-  "sha256": "7387fa4ddbc9bf071088372802c9aed6e44b224875291d2309007d76929af2f2"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-06-11-visual-companion-final-hardening-fixup.md",
-  "size": 36149,
-  "sha256": "5604d33566ba5ca9940924819892a6d3f095a8704e2705e3fcc64a23334ca2f3"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-07-06-sdd-plan-scoped-workspace.md",
-  "size": 48630,
-  "sha256": "2d1b484cd2a4ead41fd5be842ccbc4c114b7b5eb52135c79190a6f756acbfd39"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-07-15-sdd-fix-loop-redesign.md",
-  "size": 77641,
-  "sha256": "83189840f8591276c481187dc742f99f3e6add14eec0f7a782b5150a89024648"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-07-30-codex-efficiency-fixes.md",
-  "size": 52609,
-  "sha256": "78e7b8cd163ee78ac16a9ba9fbfffe3ae98b7711c092d75c7283bd325fdf42f7"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-08-06-hermes-version-bump-wiring.md",
-  "size": 9551,
-  "sha256": "3a9669467c0db792fb1465ccee38e086349b8415aa7077e1d6b8633f47eab208"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-08-27-diagnosing-superpowers.md",
-  "size": 76309,
-  "sha256": "a8a57533a032af65e649a63b9f0f9a306913cc319d3638ec609befcb6c77b7fd"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/plans/2026-10-06-antigravity-marketplace.md",
-  "size": 27810,
-  "sha256": "5948b389d7c0b263d2b3175a52fbc32790f6c5d5056e430bb7ae9cc11a76a10b"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/specs/2026-01-22-document-review-system-design.md",
@@ -40811,8 +41021,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/specs/2026-08-27-diagnosing-superpowers-design.md",
-  "size": 27042,
-  "sha256": "da21af32ea629de17c3221f08dc4825c0f26d7bea4902f217eba9e5caf7b966d"
+  "size": 27158,
+  "sha256": "396a4951cda08633501deb638a77961a638560441b7fde53fb43fc1a6497d0bf"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/specs/2026-10-05-brainstorming-rebuild-design.md",
@@ -40837,7 +41047,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/gemini-extension.json",
   "size": 187,
-  "sha256": "c8b2431e50b1fb626931d9e36a2fb0e00e4c757c430a936db5f1b80820f11d14"
+  "sha256": "8b7e69416536746b5948f49979fb34448c85fa10aabbdc9c6f4c2f4ded5fa985"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/hooks/hooks-cursor.json",
@@ -40867,7 +41077,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/package.json",
   "size": 433,
-  "sha256": "cac93fa9fd478b35465e56b9df4fbf91909f78c8810070f23c202c7cb5474656"
+  "sha256": "b4ca961ce1aead5d08e40507b2fca8c04c61dea054866bac92259308d24527e3"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/scripts/bump-version.sh",
@@ -40896,8 +41106,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/brainstorming/SKILL.md",
-  "size": 10073,
-  "sha256": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43"
+  "size": 13602,
+  "sha256": "61a7ef918652108c76a3fd01e02dd92d39996c6b46d4cb2819cbd03f6c45e46a"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/brainstorming/builder-check-prompt.md",
@@ -40936,8 +41146,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/diagnosing-superpowers/SKILL.md",
-  "size": 6904,
-  "sha256": "5a652f8132cc901eb5ca61f89157839f87a2f20aed037fc7a2b51051bc37cd19"
+  "size": 6941,
+  "sha256": "3143de8695c5a2d63e8b1675f33837578076f464deb127c2ebdd0b46fceef886"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/diagnosing-superpowers/prompts/analyst-common.md",
@@ -41001,8 +41211,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/diagnosing-superpowers/references/github-issues.md",
-  "size": 1644,
-  "sha256": "a656f5e15b21c7a200c39c038f5ede74b9d6ea3ceeb90f39af7e930c8d8424d6"
+  "size": 1636,
+  "sha256": "d26ef9197b4a6ae5159ae6d11abd162bcc624d95fc7ccf508e07b68f916a1b19"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/diagnosing-superpowers/references/redaction-policy.md",
@@ -41026,8 +41236,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/diagnosing-superpowers/templates/issue.md",
-  "size": 1851,
-  "sha256": "8f28dbfe60602f77dda76d81815cb4e2dce7d3e2a93348890e1581be8310ac1f"
+  "size": 2680,
+  "sha256": "afd21779e5de5bc5adfe2f5a50a04e44ab8d50d9ad0f829243de248d6f023eed"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/diagnosing-superpowers/templates/report.md",
@@ -41041,8 +41251,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/executing-plans/SKILL.md",
-  "size": 20405,
-  "sha256": "f38e8f2ddcf079f65493adc713c1fed78421dfaf5f4dbf6b3a6b2b1d95466e71"
+  "size": 18103,
+  "sha256": "e4649e59880ef2643d1da128e3d607e87e3f969410d72095a5bf65811b6036dc"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/executing-plans/scripts/task-done",
@@ -41076,8 +41286,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/SKILL.md",
-  "size": 32577,
-  "sha256": "8dde5589ee083fb4999106d116f01c8fdaf3116a8a9813fdedeb80329de49046"
+  "size": 19506,
+  "sha256": "ba41f697136cba88a7962d60c8e2f97488ba04a8688b1d0fbeb27f6953808e75"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/implementer-prompt.md",
@@ -41088,6 +41298,41 @@
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/re-review-prompt.md",
   "size": 4761,
   "sha256": "0828a5e9cbb12ba49f14621dd8c3953c48c0fc383e75bb5494f055ed0d6d824f"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/batching.md",
+  "size": 583,
+  "sha256": "b54dc7e23dbfb90db89bcb2fb3af591aabf6a271a165fbc0da4c6f9439980eac"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/cannot-verify.md",
+  "size": 513,
+  "sha256": "e698713a15e0eabf1a2ab26ffe1bb04bf70c9d6d2e2060d44a0f9a1bdd4408bf"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/final-review.md",
+  "size": 2447,
+  "sha256": "2fd999d86e5dd0b9b32aaf93f2a41663ef30b3e3cb78fb2fd5cb450eb59eb9de"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/fix-loop.md",
+  "size": 4249,
+  "sha256": "eafff1f801af2ced86e8761f3eeef04b701860d986ba5d0a8b20d506a75104bb"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/handling-reports.md",
+  "size": 1062,
+  "sha256": "8f759cdd4936220c38aab05b6d6c48c6df8ac8f146b0f37a6d2facbf87133c67"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/preflight.md",
+  "size": 1353,
+  "sha256": "3ea21c5fc1af1a190ac8a9d19ceb0849b47bf2ffe27b87dffcc21b6a0539776c"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/resuming.md",
+  "size": 614,
+  "sha256": "ff6e38bde2276faa2a7e93513086caded0ea10edbf2ec7f349a7e3b0d7c668c4"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/scripts/review-package",
@@ -41231,38 +41476,53 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/SKILL.md",
-  "size": 26623,
-  "sha256": "bbdfe742f853562e643a3d40d64476359d47881e39cef80a189283fa26d11ab9"
+  "size": 16738,
+  "sha256": "8cb3ac68c6d8c4bb46886b998b09af7989643cab8bd0e46ee86dd62e64546bbe"
  },
  {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/anthropic-best-practices.md",
-  "size": 46197,
-  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/examples/CLAUDE_MD_TESTING.md",
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/references/CLAUDE_MD_TESTING.md",
   "size": 5423,
   "sha256": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0"
  },
  {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/graphviz-conventions.dot",
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/references/anthropic-best-practices.md",
+  "size": 46197,
+  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/references/bulletproofing.md",
+  "size": 2577,
+  "sha256": "9397023e6bc85b556a57f3097371363bf03e28e755c57f403f470bcda90e0a23"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/references/discovery.md",
+  "size": 7616,
+  "sha256": "c6bbc74af3be90f693f7cbc986af6fa94e8df75f65109b52e96032587f5b92af"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/references/flowcharts.md",
+  "size": 1262,
+  "sha256": "8b1f542391f274f0d33f3457ac099a3d317d6877eaa3b8d3b1ebef151b55fda7"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/references/graphviz-conventions.dot",
   "size": 5970,
   "sha256": "e2890a593c91370e384b42f2f67b1a6232c9e69dddea7891a0c1c46d7b20b694"
  },
  {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/persuasion-principles.md",
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/references/persuasion-principles.md",
   "size": 5901,
   "sha256": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/references/testing-skills-with-subagents.md",
+  "size": 12557,
+  "sha256": "ed8a6862c085900135962390530d9dc7637ad6d650b4324ce3b051287a5c3f22"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/render-graphs.js",
   "size": 4968,
   "sha256": "c7f412cc629461c4d10287e668731874c0497707023e3e3f74a5355eb2cee196"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/writing-skills/testing-skills-with-subagents.md",
-  "size": 12558,
-  "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/antigravity/run-tests.sh",
@@ -41321,8 +41581,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/brainstorm-server/server.test.js",
-  "size": 24805,
-  "sha256": "87e23a66d4ef57c9621ed6a479383cefa530133ec9c12d71b2dc44e11fc554e9"
+  "size": 26676,
+  "sha256": "a8f2effba4647767e0e66b0c681ae63e89355cb6bb5e20a4f86d48149c3957e6"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/brainstorm-server/start-server.test.sh",
@@ -41595,6 +41855,11 @@
   "sha256": "e777907226ed8614fe1cbc06afd538e223e4081c368757b26a5f77dfb4355b40"
  },
  {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/tests/skill-size/test-skill-size.sh",
+  "size": 1099,
+  "sha256": "82aa688a6f17cb04006954f2c7e6894578ef13009c273fd40777f90c87d8b99a"
+ },
+ {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/systematic-debugging/test-find-polluter.sh",
   "size": 2609,
   "sha256": "7c5ae1adb7c6e292b73eccba6ba442501c442aefe8c883a94c9fdd809d592cea"
@@ -41616,23 +41881,23 @@
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/README.md",
-  "size": 1428,
-  "sha256": "296df1402948d6d8344113dbc2e8dccfdf0195aae8c8c8f221ff6f9e48a86baa"
+  "size": 1755,
+  "sha256": "98171efc76dc5e456f979ca17ea758eed48121bc9e49c21b7efaf6ae36f29593"
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/pyproject.toml",
   "size": 682,
-  "sha256": "8ce8bc32ff3f7d2961cd915e0e53bd117ca80c151ce3b64a00513f75e5bee6ca"
+  "sha256": "81f15ab6adde8c1c5914409b7245521edaf33257d8b648194df630077140e7f2"
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/tests/fake_server.py",
-  "size": 1979,
-  "sha256": "73e7605e9231e32890d648533a83e7b232dd4cf5e077e066d212313191372bcf"
+  "size": 2535,
+  "sha256": "d0f2f88b1dd602db44a4fa2d7b1d7a6513ed1ff14e782b2d99f504070ac49828"
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/uabs_toolbox/__init__.py",
   "size": 419,
-  "sha256": "67ad2446f3ceee13200f4a9d42db46b67df0e17c7e9d40d1e606e5a9de4f1b61"
+  "sha256": "8edeec056c8c8d2e684fb96e34615052e294e6248e0bbe723d2e7ccba8b62d50"
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/uabs_toolbox/__main__.py",
@@ -41641,13 +41906,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/uabs_toolbox/catalog.py",
-  "size": 13139,
-  "sha256": "08d9425b04d16abcabf79b12d167e9564954eaa19bbecce2880cf68b9caf3e20"
+  "size": 13116,
+  "sha256": "3a69d3f266e747efcf88a89c18822c79bcbeb6678d3c6a46f29d8a7d75a8ddc3"
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/uabs_toolbox/server.py",
-  "size": 18582,
-  "sha256": "06a9034c05c0ca8e3caca1bdb5dba8e8c21414d569b7e3618736832cab6edd5e"
+  "size": 19662,
+  "sha256": "04d15d9320ce0131a547ed7b58f2133aabf9b8928106ba745dd40a7160adb081"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/LICENSE",
@@ -43311,8 +43576,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 224331,
-  "sha256": "8f3c53f1e92b06f07f210facdbc79b73d322bd53ca02bbbd4525126aa650ed95"
+  "size": 224945,
+  "sha256": "f5125a4aef7c3894b19e93eb28d1a5c7400d39968606b4eb977f18b0e375d923"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43387,7 +43652,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 178562,
-  "sha256": "78cf9f60d7400124e89314e2b2b32dc44ea80830dd685a292c8eb7da92e50368"
+  "sha256": "b98436780623b7bb42663c3d9a00a716dc28c766e0366d81b5eda452f05bce0c"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43441,8 +43706,8 @@
  },
  {
   "path": "README.md",
-  "size": 66860,
-  "sha256": "08ed36d3d369890eb58f3e3465fdbf0e68cf89cb16278911e3a475f082e7d204"
+  "size": 66980,
+  "sha256": "006aba0ca754504e1f045fb0e3cf7f9f5a4cfa44e3d579c19c66a4ff62b2812e"
  },
  {
   "path": "SECURITY.md",
@@ -43452,17 +43717,17 @@
  {
   "path": "START-HERE.bat",
   "size": 888,
-  "sha256": "62e640d917fc5aa6f0ec1dfc655902a2a725d952a251f7627c8fd97afdc259fc"
+  "sha256": "b61534dba626bc5a2e6b8101da6ac4f05cf84f2ed561348c4ecdc962bbee3a13"
  },
  {
   "path": "START-HERE.txt",
   "size": 11419,
-  "sha256": "0d310b2e208aaf54bcfe96b6122a9c7f11a192590141e4b3f6662390c7986a19"
+  "sha256": "647347891250a4be5f5a9db4d890fd3607a1eb5143edee1d0ae591a79a81e7dc"
  },
  {
   "path": "STATE.md",
-  "size": 49271,
-  "sha256": "38c31ca713f8a8c68902521c31e6d184ced772c37f92cb9a0e18e1b34e4d9894"
+  "size": 51077,
+  "sha256": "27fdceeaf677a6ca93835ad16ab9d0abaa3ab4eca86b903b8a107fd06e089d86"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -43545,9 +43810,14 @@
   "sha256": "9f52c2e92996da71a2e1cefa0cf68c69f56f22fe43596cd8577555a17908a44b"
  },
  {
+  "path": "TESTS/Test-OfflineUpdate.ps1",
+  "size": 1879,
+  "sha256": "6e259f036929fd3ff173ec91198a1fa9d6e4d8455ba3ea1cae2a2da695f8b695"
+ },
+ {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 63179,
-  "sha256": "b9b99bd296def5f1c72b1642bae6ec18a422da8f3af37b49377919a802279f7e"
+  "size": 63635,
+  "sha256": "1e417b7946e560f1f985a4be12de43a6a8ba0dadb93461263a159f0ffc95020a"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -43801,8 +44071,8 @@
  },
  {
   "path": "TESTS/test_toolbox.py",
-  "size": 9916,
-  "sha256": "bb03f8290387e96ba908c898df0c4ef0611963a0987c3a3160298cc71c7bc91b"
+  "size": 11965,
+  "sha256": "e7cdbe4a94fac45852bf6d677a6a6ebd3c5a12698952e51555fab980d0eec1a8"
  },
  {
   "path": "TESTS/test_universal_modder.py",
@@ -43956,8 +44226,8 @@
  },
  {
   "path": "TOOLS/Update-From-GitHub.ps1",
-  "size": 4538,
-  "sha256": "6e7be70b6967e7199084fe30b68a547d5e19744eb1f1ebbb351b1de04c8d0f43"
+  "size": 5765,
+  "sha256": "f87c206af342774888589b7da3370a0d364781808d9d64b1ef5cde1ab0df5222"
  },
  {
   "path": "TOOLS/Wait-External.ps1",
@@ -43971,8 +44241,8 @@
  },
  {
   "path": "TOOLS/audit_catalog_versions.py",
-  "size": 10098,
-  "sha256": "25fc77b1aa05620623f1eb421fda18b508d596d9e93f0708f099b1ea1df0425a"
+  "size": 10132,
+  "sha256": "863ad432e17d5b14f4ef190eccac9dffcf95fbf81942197a84444567b477007b"
  },
  {
   "path": "TOOLS/audit_skills.py",
@@ -44141,18 +44411,18 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2307,
-  "sha256": "e593fd5211437f5f97afd76adedbfe8b26ea5b36fbe316715031778bde820ddf"
+  "size": 2284,
+  "sha256": "4c44f5b1146af54933ad59a26f8c644b74ffa69e193fca73ff0f6a067357c7dd"
  },
  {
   "path": "VALIDATION.md",
-  "size": 13666,
-  "sha256": "c08fb084e3186d9db8077046f3e844bbff22fa8155c1c51e82f6d8b14bc2e67b"
+  "size": 13772,
+  "sha256": "b3f1285d16159ae1113aa9f8213959349400780ce945bc339787fc5e8d47905a"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "b7c2981cdc4da799f482ffeece64e1b0a58436bbb6dc1f2ce192b109d0dea5a7"
+  "sha256": "a8b704b12e1b6e324eddeb824a268ed6d3f08e153a1e859cecb27f927df7e53d"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -44246,8 +44516,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/brainstorming/SKILL.md",
-  "size": 10073,
-  "sha256": "6ee10d1481b8a2580d5336ff66c5c08acc9d4b251b13bbc3bfd31be99c261d43"
+  "size": 13578,
+  "sha256": "cdec958844cca54a45fb76150a575292d7b28c0860ee0b9a1493051378e4d36e"
  },
  {
   "path": "_CANONICAL-SKILLS/brainstorming/builder-check-prompt.md",
@@ -44736,8 +45006,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/diagnosing-superpowers/SKILL.md",
-  "size": 6904,
-  "sha256": "5a652f8132cc901eb5ca61f89157839f87a2f20aed037fc7a2b51051bc37cd19"
+  "size": 6941,
+  "sha256": "3143de8695c5a2d63e8b1675f33837578076f464deb127c2ebdd0b46fceef886"
  },
  {
   "path": "_CANONICAL-SKILLS/diagnosing-superpowers/prompts/analyst-common.md",
@@ -44801,8 +45071,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/diagnosing-superpowers/references/github-issues.md",
-  "size": 1644,
-  "sha256": "a656f5e15b21c7a200c39c038f5ede74b9d6ea3ceeb90f39af7e930c8d8424d6"
+  "size": 1636,
+  "sha256": "d26ef9197b4a6ae5159ae6d11abd162bcc624d95fc7ccf508e07b68f916a1b19"
  },
  {
   "path": "_CANONICAL-SKILLS/diagnosing-superpowers/references/redaction-policy.md",
@@ -44826,8 +45096,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/diagnosing-superpowers/templates/issue.md",
-  "size": 1851,
-  "sha256": "8f28dbfe60602f77dda76d81815cb4e2dce7d3e2a93348890e1581be8310ac1f"
+  "size": 2680,
+  "sha256": "afd21779e5de5bc5adfe2f5a50a04e44ab8d50d9ad0f829243de248d6f023eed"
  },
  {
   "path": "_CANONICAL-SKILLS/diagnosing-superpowers/templates/report.md",
@@ -44896,8 +45166,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/executing-plans/SKILL.md",
-  "size": 20237,
-  "sha256": "fda988f826ca0f49a39f92699681c7a62a4347abb56ed217fa530bf24a67b1aa"
+  "size": 17947,
+  "sha256": "0850dc25c214ce5f1af21648e61c092a16a8def65e978f842fb07365912245c6"
  },
  {
   "path": "_CANONICAL-SKILLS/executing-plans/scripts/task-done",
@@ -50011,8 +50281,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/subagent-driven-development/SKILL.md",
-  "size": 28243,
-  "sha256": "1cb5e8a14b85b353c50052a0354a37032ee5f1d673017de40d1882bff309e079"
+  "size": 17178,
+  "sha256": "52f02880e7f0f890e54e80c9e607b92903f07c7441417577359dd28a76d62811"
  },
  {
   "path": "_CANONICAL-SKILLS/subagent-driven-development/implementer-prompt.md",
@@ -50023,6 +50293,41 @@
   "path": "_CANONICAL-SKILLS/subagent-driven-development/re-review-prompt.md",
   "size": 4761,
   "sha256": "0828a5e9cbb12ba49f14621dd8c3953c48c0fc383e75bb5494f055ed0d6d824f"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/subagent-driven-development/references/batching.md",
+  "size": 571,
+  "sha256": "e33073abfc2ad3cec1026b918879af71364b7c28f5899920be07f034baec7540"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/subagent-driven-development/references/cannot-verify.md",
+  "size": 501,
+  "sha256": "955754afa087ddd19e87a7032ca215335ca258ddb2e0e3e5ba0bcfadd7b1ad60"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/subagent-driven-development/references/final-review.md",
+  "size": 1824,
+  "sha256": "99c5d6a1eac1e202b9a6d363221815945aa801db7d63d33a68799d9c3481f868"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/subagent-driven-development/references/fix-loop.md",
+  "size": 4138,
+  "sha256": "390d760af9ae3f44006f2b87096c13e2030da81c6dd1efcc4ce5dd4e3b6aa599"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/subagent-driven-development/references/handling-reports.md",
+  "size": 981,
+  "sha256": "7a27f568937586f21ab50762edddf2111417a1d15aa5ae5cd82df4300ee74d47"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/subagent-driven-development/references/preflight.md",
+  "size": 738,
+  "sha256": "1f52288f52616941882be1e556af4821e4cd1b5699e9763039ad74e27b64f0f3"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/subagent-driven-development/references/resuming.md",
+  "size": 602,
+  "sha256": "56541051e02302683546550a6726ffc0e0607efb81052fde156e24e21ca15872"
  },
  {
   "path": "_CANONICAL-SKILLS/subagent-driven-development/scripts/review-package",
@@ -50141,8 +50446,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/comfy-cli.md",
-  "size": 2101,
-  "sha256": "83d04cd39ef5aad40f046c61ee3a9844d172ff1d0bac9850e3ef91d1242b186c"
+  "size": 2344,
+  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/modding-bench.md",
@@ -50536,38 +50841,53 @@
  },
  {
   "path": "_CANONICAL-SKILLS/writing-skills/SKILL.md",
-  "size": 26771,
-  "sha256": "223b7caf642216073ad49f12081658c5608484d4f0d3de967cdf3f671a384f96"
+  "size": 16910,
+  "sha256": "844ab714482067ced9ea3f8000dcf5aab2bd3892a1f9b4325dff85a268280986"
  },
  {
-  "path": "_CANONICAL-SKILLS/writing-skills/anthropic-best-practices.md",
-  "size": 46197,
-  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
- },
- {
-  "path": "_CANONICAL-SKILLS/writing-skills/examples/CLAUDE_MD_TESTING.md",
+  "path": "_CANONICAL-SKILLS/writing-skills/references/CLAUDE_MD_TESTING.md",
   "size": 5423,
   "sha256": "0b379a3415e185d3c434b3ad283d8aa132f3022c2a4f210f168865b5986bcef0"
  },
  {
-  "path": "_CANONICAL-SKILLS/writing-skills/graphviz-conventions.dot",
+  "path": "_CANONICAL-SKILLS/writing-skills/references/anthropic-best-practices.md",
+  "size": 46197,
+  "sha256": "217629b356c09c9bd11017c9788e8fc654ca1b32c92d4a51cd490e16dd65e59a"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/writing-skills/references/bulletproofing.md",
+  "size": 2565,
+  "sha256": "cfe3073c09779d9eb9b3dc25a6d8a484e3c4276725ea5842c38e9cf562aa24d1"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/writing-skills/references/discovery.md",
+  "size": 7580,
+  "sha256": "43b3b3c5ba262aa99581ab94b45533263ca81412a578a2fc97160a2310953f8a"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/writing-skills/references/flowcharts.md",
+  "size": 1250,
+  "sha256": "de99240af03ceea37a8b830263e2c53663cf478db73ea0f38b2955ac5921a09a"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/writing-skills/references/graphviz-conventions.dot",
   "size": 5970,
   "sha256": "e2890a593c91370e384b42f2f67b1a6232c9e69dddea7891a0c1c46d7b20b694"
  },
  {
-  "path": "_CANONICAL-SKILLS/writing-skills/persuasion-principles.md",
+  "path": "_CANONICAL-SKILLS/writing-skills/references/persuasion-principles.md",
   "size": 5901,
   "sha256": "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/writing-skills/references/testing-skills-with-subagents.md",
+  "size": 12545,
+  "sha256": "8c034367dd726bbe3aaacfb938ab34761cae1b4f25f58c5338f2a52ac4109e66"
  },
  {
   "path": "_CANONICAL-SKILLS/writing-skills/render-graphs.js",
   "size": 4968,
   "sha256": "c7f412cc629461c4d10287e668731874c0497707023e3e3f74a5355eb2cee196"
- },
- {
-  "path": "_CANONICAL-SKILLS/writing-skills/testing-skills-with-subagents.md",
-  "size": 12558,
-  "sha256": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade"
  },
  {
   "path": "assets/hero.svg",
@@ -50578,6 +50898,11 @@
   "path": "assets/mark.svg",
   "size": 550,
   "sha256": "01bf2e4f9e4389a4a4ff1c18e0297688091cc7d056fad64b5318609536aaf912"
+ },
+ {
+  "path": "docs/AUDIT-2026-10-22.md",
+  "size": 4107,
+  "sha256": "b24bbee919f7f7d4445bc0e4a7509791f5415acd489998b5f7f2bee4cd132871"
  },
  {
   "path": "docs/HERMES-MODELS.md",
@@ -51103,6 +51428,11 @@
   "path": "docs/history/V8.20.1-CHANGELOG.md",
   "size": 2391,
   "sha256": "7888e56494297b44930429dd4dfe8a24c0834b501e4e603443071f3860b0666c"
+ },
+ {
+  "path": "docs/history/V8.21.0-CHANGELOG.md",
+  "size": 696,
+  "sha256": "782eddccf1e75d2afbb42b35736b0a73ad90fa83f285dc4321bce5dc72b6a8fc"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

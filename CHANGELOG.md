@@ -1,3 +1,14 @@
+## 8.21.0
+
+- Prevent toolbox write replay after a lost reply; cancel hung server startup
+  and enforce project/credential prerequisites for HTTP servers.
+- Preserve pinned offline bytes when an updater candidate differs; report
+  failed component updates instead of continuing an install.
+- Refresh reviewed Superpowers 7.0.1, GitHub MCP 2.0.3, Chrome DevTools 1.12.0
+  and optional Comfy CLI 1.23.0; preserve local patches and compatibility holds.
+- Move long Superpowers guidance to upstream references for compaction recovery;
+  retain validation and reasoning settings. Document Windows UTF-8 CLI invocation.
+
 ## 8.20.1
 
 - **Hermes settings stop pinning models that can rot.** Every auxiliary task (vision, compression, approvals, curator, skills hub, MCP suggestions, title generation) now ships `provider: auto` with an empty model, so it follows whatever main model the user picks. The four-model free fallback chain is gone; the old chain went text-only, then quota-limited, then retired, and each failure was silent. `delegation` follows the main model too. The starter default is `deepseek/deepseek-v4.1-flash-1017` (1,048,576-token context, $0.15/$0.60, text and image input).

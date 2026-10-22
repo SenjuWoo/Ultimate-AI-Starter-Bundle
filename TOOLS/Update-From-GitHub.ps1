@@ -35,6 +35,20 @@ if (-not $ComponentsOnly) {
   return
 }
 
+function Copy-VerifiedOfflineSnapshot {
+  # Offline bytes are bound to the shipped manifest. Cache a newer release for
+  # review; never put it under an older, still-pinned offline filename.
+  param([string]$Source, [string]$Destination, [string]$Manifest)
+  $entry = @(([IO.File]::ReadAllText($Manifest) | ConvertFrom-Json).assets |
+    Where-Object { $_.file -eq (Split-Path -Leaf $Destination) })
+  if ($entry.Count -ne 1) { throw 'Offline snapshot has no unique integrity record.' }
+  $hash = (Get-FileHash -LiteralPath $Source -Algorithm SHA256).Hash
+  if ((Get-Item -LiteralPath $Source).Length -ne [long]$entry[0].size -or $hash -ine $entry[0].sha256) {
+    throw 'Candidate differs from the reviewed offline pin. Kept in cache; update and validate catalog and manifests together before shipping it.'
+  }
+  Copy-Item -LiteralPath $Source -Destination $Destination -Force
+}
+
 $cache = Join-Path $root 'BUNDLED-TOOLS\cache'
 $offline = Join-Path $root 'BUNDLED-TOOLS\offline'
 New-Item -ItemType Directory -Force -Path $cache | Out-Null
@@ -63,7 +77,7 @@ foreach ($id in $Components) {
       $out = Join-Path $cache $asset.name
       [void](Save-UabsReleaseAsset -Asset $asset -OutFile $out)
       if ($UpdateCatalogOffline -and $comp.offline_asset) {
-        Copy-Item $out (Join-Path $offline $comp.offline_asset) -Force
+        Copy-VerifiedOfflineSnapshot -Source $out -Destination (Join-Path $offline $comp.offline_asset) -Manifest (Join-Path $root 'BUNDLED-TOOLS\OFFLINE-MANIFEST.json')
         Write-UabsOk "offline snapshot updated: $($comp.offline_asset)"
       }
     } elseif ($comp.kind -eq 'skills-plugin') {
@@ -73,7 +87,7 @@ foreach ($id in $Components) {
       try { Save-UabsUrl -Url $zipUrl -OutFile $out }
       catch { Save-UabsUrl -Url $rel.zipball_url -OutFile $out }
       if ($UpdateCatalogOffline -and $comp.offline_asset) {
-        Copy-Item $out (Join-Path $offline $comp.offline_asset) -Force
+        Copy-VerifiedOfflineSnapshot -Source $out -Destination (Join-Path $offline $comp.offline_asset) -Manifest (Join-Path $root 'BUNDLED-TOOLS\OFFLINE-MANIFEST.json')
       }
     } else {
       Write-UabsWarn "No matching asset for $id — open $($rel.html_url)"
@@ -98,6 +112,7 @@ foreach ($row in @($results)) {
 if ($ledgerUpdates.Count) { Update-UabsComponentLedger -Updates $ledgerUpdates }
 Write-Host ""
 $results | Format-Table -AutoSize
+if (@($results | Where-Object { $_.error }).Count) { throw 'One or more component updates failed; see the results above. No install was started.' }
 if ($InstallAfter) {
   Write-UabsStep "Running INSTALL-AIO.ps1 -Mode OnlineLatest"
   & (Join-Path $root 'INSTALL-AIO.ps1') -Mode OnlineLatest -Providers $Providers

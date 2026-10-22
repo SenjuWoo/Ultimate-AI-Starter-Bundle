@@ -1,6 +1,6 @@
 {
  "generated": "2026-10-18",
- "pack_version": "8.20.1",
+ "pack_version": "8.21.0",
  "assets": [
   {
    "file": "Skyrim-Forge-6.0.1.zip",
@@ -13,9 +13,9 @@
    "sha256": "4e4e0f16b45233af5c757a1fcbe3c3b16e9056375b1fbe2ce020b6de75dedcc0"
   },
   {
-   "file": "github-mcp-server-2.0.2-windows-x86_64.zip",
-   "size": 9428417,
-   "sha256": "4ae64087501650752f21c9d5af5378107a5116d94ee1cf37786b22b8c4bd99df"
+   "file": "github-mcp-server-2.0.3-windows-x86_64.zip",
+   "size": 9576531,
+   "sha256": "f0e1b9880a1b88730d1250d1c25cfee39617ec3e800a7a252f2279cd0c8394e0"
   },
   {
    "file": "headroom_ai-0.41.0-cp310-abi3-win_amd64.whl",
@@ -38,9 +38,9 @@
    "sha256": "2e7848961785eedda3702851d477d878cf01e98a61710ca50fe8b0aafcb28bef"
   },
   {
-   "file": "uabs_toolbox-1.0.0-py3-none-any.whl",
-   "size": 14442,
-   "sha256": "051d7c77e8ae5ff5936ef3bae393812cb7af8a8e4f6db65b2161a6a8b4f964d2"
+   "file": "uabs_toolbox-1.0.1-py3-none-any.whl",
+   "size": 14930,
+   "sha256": "d484db8b74a63c775f680ac9b866e1664ddc93c92deedff0338ea2e2212c0e22"
   },
   {
    "file": "universal_modder-0.2.0+uabs.c1dff21-py3-none-any.whl",

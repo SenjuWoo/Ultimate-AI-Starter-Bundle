@@ -1,5 +1,32 @@
 # Bundle audit state
 
+## Active whole-bundle audit: v8.21.0 (2026-10-22)
+
+- Baseline 48097c7 (v8.20.1), clean checkout, moved owner folder verified.
+- Fixed toolbox ambiguous write replay (real fixture failed with two writes,
+  now one), hung-start cancellation and HTTP prerequisites; toolbox 1.0.1.
+- Offline updater now rejects bytes outside its reviewed manifest pin and
+  propagates errors before InstallAfter; disposable real-file gate PASS.
+- Accepted Superpowers 7.0.1 (six vendored fixes + canonical routing preserved),
+  GitHub MCP 2.0.3 (official digest + scoped 47-tool handshake), Chrome DevTools
+  1.12.0 (32-tool handshake), optional Comfy CLI 1.23.0 (UTF-8 help).
+- Freshness: current=22, held=7, stale=0, skipped=1 (bundle-owned), error=0.
+- Source gates: Windows Test-Pack PASS; supported contract runner 151/0;
+  toolbox real stdio + timeout/HTTP/lost-reply gate PASS; offline-update PASS;
+  audit regressions 15 + 7 subtests PASS; privacy/bootstrap/UM PASS;
+  Impeccable security PASS. Superpowers documented sequential integration
+  runner PASS (parallel node --test produced shared-port fixture conflicts).
+- All 174 skills retained; oversized bodies 6 -> 4, upstream references retained.
+  No reasoning/model/validation downgrade. Report: docs/AUDIT-2026-10-22.md.
+- Python 3.12 was removed externally during the audit (child imports failed);
+  discovered 3.14 and revalidated contracts/toolbox/audit there. Use py -3.14.
+- Installed baseline doctor: ledger 8.20.0, modified/duplicate Codex skill-creator;
+  no global task MCP leaks. Ownership-aware skills sync pending; full runtime
+  refresh should run with AI apps closed to avoid in-memory config writers.
+- Remaining: commit/push, exact-commit CI + security, deterministic archives,
+  publication/download hashes, skill sync/doctor and checkpoint.
+
+
 ## v8.20.0: Tools/Modding folder review, mashup skill, UM refresh (2026-10-21, released)
 
 - Owner asked to review the new `Tools` (6 snapshots) and `Modding` (bench +

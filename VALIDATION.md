@@ -1,3 +1,7 @@
+# v8.21.0 validation
+
+Current audit evidence and limits: [whole-bundle audit](docs/AUDIT-2026-10-22.md).
+
 # v8.20.0 validation
 
 Source, installed state, MCP transport, editor runtime and release bytes are

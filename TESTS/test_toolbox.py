@@ -135,6 +135,13 @@ async def run_gate(state: Path, project: Path) -> None:
             bad = await session.call_tool("call", {"tool": "projfake.cwd", "project": str(project / "missing")})
             check(bad.isError and "project folder not found" in text_of(bad), "a missing project folder was accepted")
 
+            # A lost reply does not prove that a mutation failed. Never replay it.
+            marker = state / "mutation-count.txt"
+            lost = await session.call_tool("call", {"tool": "fake.write_then_crash", "arguments": {"path": str(marker)}})
+            check(lost.isError, "lost mutation reply was reported as success")
+            check(marker.read_text(encoding="utf-8").splitlines() == ["once"],
+                  "toolbox replayed a mutation after losing its reply")
+
             crashed = await session.call_tool("call", {"tool": "fake.crash", "arguments": {}})
             check(crashed.isError, "a crashing tool did not report an error")
             again = await session.call_tool("call", {"tool": "fake.echo", "arguments": {"text": "back"}})
@@ -151,6 +158,36 @@ async def run_gate(state: Path, project: Path) -> None:
     check(PARKED_MARKER not in logs, "a parked credential value reached a toolbox log")
 
 
+async def lifecycle_gate() -> None:
+    # Use the real stdio transport: a server that never answers initialize must
+    # be torn down promptly, including when the chat closes during startup.
+    sys.path.insert(0, str(PKG))
+    from uabs_toolbox import server as implementation
+    from uabs_toolbox.catalog import Toolset, ToolboxError
+    remote = Toolset("remote", "Remote", "", {"url": "http://localhost/{project}"}, "fixture",
+                     requires={"env": "UABS_FIXTURE_MISSING_REMOTE_KEY"})
+    check("project folder" in (remote.status(None) or ""), "HTTP set ignored its project requirement")
+    check("not set" in (remote.status(os.getcwd()) or ""), "HTTP set ignored its credential requirement")
+    old_timeout = implementation.START_TIMEOUT
+    implementation.START_TIMEOUT = 0.3
+    try:
+        async with anyio.create_task_group() as tg:
+            mgr = implementation.Manager(tg, None)
+            ts = Toolset("hung", "Hung", "", {"command": sys.executable,
+                         "args": [str(FAKE), "--hang-start"]}, "fixture")
+            try:
+                await mgr.child(ts, None)
+                raise AssertionError("hung server unexpectedly initialized")
+            except ToolboxError as exc:
+                check("did not start" in str(exc), str(exc))
+            with anyio.fail_after(4):
+                while not mgr.children[("hung", "")].dead:
+                    await anyio.sleep(0.02)
+            mgr.close()
+    finally:
+        implementation.START_TIMEOUT = old_timeout
+
+
 def main() -> int:
     tmp = Path(tempfile.mkdtemp(prefix="uabs toolbox gate "))
     try:
@@ -160,6 +197,7 @@ def main() -> int:
         project.mkdir()
         write_state(state)
         anyio.run(run_gate, state, project)
+        anyio.run(lifecycle_gate)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     print("TOOLBOX GATE: PASS")

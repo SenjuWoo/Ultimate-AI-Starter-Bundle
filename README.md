@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.20.1 -->
+<!-- Ultimate AI Starter Bundle v8.21.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.20.1
+# Ultimate AI Starter Bundle v8.21.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -80,7 +80,7 @@ One distinction explains almost everything about how this pack behaves:
 | **INSTALLED** | A CLI/server payload exists on disk | A disconnected server adds no MCP schema; installed skills/plugins have separate discovery and hook behavior. |
 | **ENABLED** | Registered in a provider's config | Available in that scope after trust/connection checks; schema loading and billing depend on the provider. |
 
-The 124 general **skills** (plus 49 with the Skyrim pack) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
+The 125 general **skills** (plus 49 with the Skyrim pack) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
 
 ### What's ON after install
 
@@ -707,7 +707,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ```powershell
 .\TOOLS\Update-From-GitHub.ps1
-.\TOOLS\Update-From-GitHub.ps1 -Components housecarl,codebase-memory -UpdateCatalogOffline
+.\TOOLS\Update-From-GitHub.ps1 -ComponentsOnly -Components codebase-memory # cache candidates; reviewed pins stay authoritative
 .\TOOLS\Ensure-Tools.ps1
 .\TOOLS\Setup-HouseCarl.ps1
 ```
@@ -865,6 +865,8 @@ mode that works.
 [CHANGELOG.md](CHANGELOG.md) is the release history. Detailed measurements and
 old decisions live in [docs/history/](docs/history/), not a second README changelog.
 
+Latest workflow audit: [findings, fixes and evidence](docs/AUDIT-2026-10-22.md).
+
 ## Validation and diagnostics
 
 ```powershell
@@ -885,7 +887,7 @@ Source validation is not a substitute for local runtime proof.
 
 ## Known limitations
 
-- Six skills exceed the body-size budget. Their bodies load on demand;
+- Four skills exceed the body-size budget. Their bodies load on demand;
   these warnings do not mean they cost nothing.
 - **The knowledge graph cannot read Papyrus.** Use source search and
   `papyrus-reference` for `.psc`. The graph covers supported languages
@@ -901,7 +903,7 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.20.1** - 2026-10-21. Hermes settings are now future-proof: no fallback chain, no pinned auxiliary or delegation models (everything follows your main model), vision follows the main model instead of a retired experimental endpoint, and compression fires at a 320k cap on the 1M-token window. The component updater respects catalog holds unless `-Force`. [Changes](docs/history/V8.20.1-CHANGELOG.md).
+**v8.21.0** - 2026-10-21. Hermes settings are now future-proof: no fallback chain, no pinned auxiliary or delegation models (everything follows your main model), vision follows the main model instead of a retired experimental endpoint, and compression fires at a 320k cap on the 1M-token window. The component updater respects catalog holds unless `-Force`. [Changes](docs/history/V8.21.0-CHANGELOG.md).
 **v8.20.0** - 2026-10-21. New `game-mashup-passthrough` skill and a bigger mashup card from the project's full lessons (frame split, spike order, freeze/teleport traps; no machine paths). Universal Modder refreshed to `c1dff21` (new `um voidless`, ~20 game notes). Your `Tools` and `Modding` folders reviewed: nothing bundled, bench map and evaluations updated.
 **v8.19.2** - 2026-10-20. Faster, quieter installs: the Hermes profile migration reads each profile once (152 s to 7.6 s for an unchanged machine), skill fingerprints hash 4.8x faster, and plugin-owned skills are no longer copied and deleted again every run. Hermes starter defaults are checked in one process (65 s to 10 s). Fixes the live skill sync overwriting a preserved local skill, a final check that failed on a hand-installed optional tool, a Hermes read that could have written masked MCP secrets back, Spooky's toolkit re-updating itself every run, an unbounded `--version` probe, and Antigravity plugins that never refreshed. blender-mcp 2.2.2.
 **v8.19.1** - 2026-10-19. Melty is now explicitly opt-in: ordinary mods never default to a Melty folder, and the mashup route only applies to an explicit two-game fusion or publish on Melty. Context7 moved to 4.4.4 and its keyless tier now resolves library IDs only, so `query-docs` needs `CONTEXT7_API_KEY`; the catalog claim was re-measured rather than copied. REA 6.7.0, Serena 2.1.0 and shadcn-mcp 4.22.1. [Changes](docs/history/V8.19.1-CHANGELOG.md).

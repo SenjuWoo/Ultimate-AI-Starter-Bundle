@@ -1,8 +1,8 @@
 {
  "pack": "Ultimate AI Starter Bundle",
- "version": "8.20.1",
- "generated": "2026-10-21",
- "release_tag": "v8.20.1",
+ "version": "8.21.0",
+ "generated": "2026-10-22",
+ "release_tag": "v8.21.0",
  "canonical_skills": 174,
  "provider_trees": 6,
  "registry_entries": 174,
@@ -43,8 +43,9 @@
   "TESTS/Test-NpmDuplicate.ps1",
   "TESTS/Test-AiHistoryBackup.ps1",
   "TESTS/test_toolbox.py",
-  "TESTS/Test-VersionProbes.ps1"
+  "TESTS/Test-VersionProbes.ps1",
+  "TESTS/Test-OfflineUpdate.ps1"
  ],
- "runtime_status": "v8.20.1: Hermes settings future-proofed - no fallback chain, auxiliary and delegation models follow the main model, compression 320k cap on the 1M window, component updater honours catalog holds. Verified against all 151 release contract tests.",
+ "runtime_status": "v8.21.0: whole-bundle audit; toolbox lost-reply/lifecycle and offline updater integrity repairs. See docs/AUDIT-2026-10-22.md and STATE.md for measured gates and remaining runtime limits.",
  "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for every always-on MCP server (context7, headroom, the toolbox, and GitHub where gh is not signed in). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }
