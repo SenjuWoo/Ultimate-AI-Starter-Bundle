@@ -71,8 +71,16 @@
   revision 30bd948 has green CI on both 3.14/3.15 plus CodeQL. New Unicode
   discovery/PATH verification gate PASS, including a real junction alias.
   Working Python manager aliases are kept rather than adding a version lock.
-- Next: exact-SHA CI/security, deterministic archives
-  and public download checks. v8.21.0 remains unpublished.
+- Released v8.21.0 (tag `v8.21.0` -> `d6cdf74`, Latest). Exact-SHA CI and
+  CodeQL green; catalog audit current=23, held=6, stale=0, error=0.
+  Archives built twice with DIFF=0 and re-hashed after public download equal:
+  Core 54,934,756 B `0914670bc2b9cd0a...`, Full-Offline 223,309,264 B
+  `1a4123740c6d94b7...`. Final review fixed one unbalanced paren in the uv
+  tool base probe (`print(json.dumps(sys._base_executable)))`), which had
+  silently forced needless tool reinstalls.
+- Next: reopen AI apps so they inherit the new shared-runtime environment;
+  the held components (houseCARL 1.9.0, impeccable, unity-mcp, firecrawl,
+  perplexity) still need their own migrations before they can auto-update.
 
 
 
