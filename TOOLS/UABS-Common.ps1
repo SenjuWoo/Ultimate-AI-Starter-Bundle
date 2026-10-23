@@ -204,8 +204,13 @@ function Get-UabsPythonExecutable {
   # An explicitly selected shared runtime wins over app PATH and legacy Forge
   # hints. Fail visibly if it was purged; never choose a different Python silently.
   if ($env:UABS_PYTHON) {
-    try { $selected = @(Get-UabsNativeStdout -Exe $env:UABS_PYTHON -CmdArgs (@('-I','-c', 'import importlib,sys;[importlib.import_module(n) for n in sys.argv[1:]];print(sys.executable)') + @($RequiredModules))) }
+    try { $selected = @(Get-UabsNativeStdout -Exe $env:UABS_PYTHON -CmdArgs (@('-I','-c', 'import importlib,json,sys;[importlib.import_module(n) for n in sys.argv[1:]];print(json.dumps(sys.executable))') + @($RequiredModules))) }
     catch { throw 'Configured UABS_PYTHON is unavailable; repair the selected shared runtime.' }
+    # ASCII JSON survives PS 5.1/OEM pipes even when the user path is Unicode.
+    if ($LASTEXITCODE -eq 0 -and $selected.Count) {
+      try { $selected[-1] = [string]($selected[-1] | ConvertFrom-Json) }
+      catch { throw 'Configured UABS_PYTHON returned an invalid interpreter path.' }
+    }
     if ($LASTEXITCODE -ne 0 -or -not $selected.Count -or -not (Test-Path -LiteralPath $selected[-1] -PathType Leaf)) {
       throw 'Configured UABS_PYTHON is unavailable or lacks the required modules; repair the shared runtime instead of downloading another one.'
     }
@@ -239,8 +244,9 @@ function Get-UabsPythonExecutable {
     if ($seen.ContainsKey($key)) { continue }
     $seen[$key] = $true
     try {
-      $probeArgs = @($candidate.Prefix) + @('-c', 'import importlib,os,sys;[importlib.import_module(n) for n in sys.argv[1:]];print(os.path.abspath(sys.executable))') + @($RequiredModules)
+      $probeArgs = @($candidate.Prefix) + @('-I','-c', 'import importlib,json,os,sys;[importlib.import_module(n) for n in sys.argv[1:]];print(json.dumps(os.path.abspath(sys.executable)))') + @($RequiredModules)
       $resolved = @(Get-UabsNativeStdout -Exe $candidate.Source -CmdArgs $probeArgs | Where-Object { $_ } | Select-Object -Last 1)
+      if ($LASTEXITCODE -eq 0 -and $resolved.Count) { $resolved[0] = [string]($resolved[0] | ConvertFrom-Json) }
       if ($LASTEXITCODE -eq 0 -and $resolved.Count -and (Test-Path -LiteralPath $resolved[0] -PathType Leaf)) {
         # An installer run from inside an AI app inherits that app's private
         # runtime first on PATH; hooks wired to it break when the app updates.

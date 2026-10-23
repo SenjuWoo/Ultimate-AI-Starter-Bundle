@@ -7,9 +7,11 @@ $ErrorActionPreference = 'Stop'
 if (-not $Python) {
   # Re-select the user's working PATH after an upgrade, even if the old binding
   # points at an interpreter they removed. This never downloads a replacement.
-  $previousSelection = $env:UABS_PYTHON
-  try { $env:UABS_PYTHON = $null; $Python = Get-UabsPythonExecutable }
-  finally { $env:UABS_PYTHON = $previousSelection }
+  $previousSelection = $env:UABS_PYTHON; $selectionPath = $env:Path
+  try {
+    if ($Scope -eq 'User') { Refresh-ProcessPath }
+    $env:UABS_PYTHON = $null; $Python = Get-UabsPythonExecutable
+  } finally { $env:UABS_PYTHON = $previousSelection; $env:Path = $selectionPath }
 }
 if (-not $Python) { throw 'No runnable Python found. Install one shared base Python first.' }
 $raw = @(Get-UabsNativeStdout -Exe $Python -CmdArgs @('-I','-c','import json,sys;print(json.dumps(dict(exe=sys.executable,base=sys.base_prefix,prefix=sys.prefix,version=sys.version.split()[0])))'))
@@ -27,9 +29,19 @@ foreach ($key in @('Path','UABS_PYTHON','UV_PYTHON','UV_PYTHON_DOWNLOADS','PYTHO
   $oldProcess[$key] = [Environment]::GetEnvironmentVariable($key, 'Process')
 }
 $base = Split-Path -Parent $resolved
-$dirs = @($base)
-$scripts = Join-Path $base 'Scripts'
-if (Test-Path -LiteralPath $scripts -PathType Container) { $dirs += $scripts }
+# Keep a working launcher/manager alias so future user upgrades remain the default.
+$probePath = $env:Path; $alreadyDefault = $false
+try {
+  if ($Scope -eq 'User') { Refresh-ProcessPath }
+  $current = @(Get-UabsNativeStdout -Exe 'python' -CmdArgs @('-I','-c','import json,sys;print(json.dumps(sys.executable))'))
+  if ($LASTEXITCODE -eq 0 -and $current.Count) { $alreadyDefault = ([string]($current[-1] | ConvertFrom-Json) -ieq $resolved) }
+} finally { $env:Path = $probePath }
+$dirs = @()
+if (-not $alreadyDefault) {
+  $dirs += $base
+  $scripts = Join-Path $base 'Scripts'
+  if (Test-Path -LiteralPath $scripts -PathType Container) { $dirs += $scripts }
+}
 $dirs += @(([string]$old['Path']) -split ';' | Where-Object { $_ })
 $seen = @{}; $unique = @()
 foreach ($dir in $dirs) {
@@ -51,7 +63,8 @@ try {
   foreach ($key in @('UABS_PYTHON','UV_PYTHON','UV_PYTHON_DOWNLOADS','PYTHONUTF8','PYTHON_MANAGER_AUTOMATIC_INSTALL')) {
     [Environment]::SetEnvironmentVariable($key, $desired[$key], 'Process')
   }
-  $got = @(Get-UabsNativeStdout -Exe 'python' -CmdArgs @('-I','-c','import sys;print(sys.executable)'))
+  $got = @(Get-UabsNativeStdout -Exe 'python' -CmdArgs @('-I','-c','import json,sys;print(json.dumps(sys.executable))'))
+  if ($LASTEXITCODE -eq 0 -and $got.Count) { $got[-1] = [string]($got[-1] | ConvertFrom-Json) }
   if ($LASTEXITCODE -ne 0 -or $got[-1] -ine $resolved) { throw 'PATH verification failed; prior environment will be restored.' }
   foreach ($key in $desired.Keys) {
     if ([Environment]::GetEnvironmentVariable($key, $Scope) -cne $desired[$key]) { throw ('Environment verification failed: ' + $key) }

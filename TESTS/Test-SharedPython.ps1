@@ -17,6 +17,10 @@ try {
   if (($uvArgs -join '|') -cne ((@('tool','install','--python',$python,'--no-python-downloads','--force','fixture-package')) -join '|')) { throw 'uv tool install ignored shared Python.' }
   $untouched = @(Resolve-UabsUvPythonArgs -Command 'other.exe' -Arguments @('--python','child-value'))
   if (($untouched -join '|') -cne '--python|child-value') { throw 'Non-uv command was changed.' }
+  $beforePath = $saved['Path'] -split ';'
+  $baseDir = Split-Path -Parent $python
+  $bare = @(Get-UabsNativeStdout -Exe 'python' -CmdArgs @('-I','-c','import json,sys;print(json.dumps(sys.executable))'))
+  if ($LASTEXITCODE -eq 0 -and [string]($bare[-1] | ConvertFrom-Json) -ieq $python -and $beforePath -notcontains $baseDir -and ($env:Path -split ';') -contains $baseDir) { throw 'Setup unnecessarily pinned a working default to a version-specific PATH entry.' }
   $first=$env:Path
   & (Join-Path $PackRoot 'TOOLS\Set-SharedPython.ps1') -Python $python -Apply -Scope Process | Out-Null
   if($env:Path -cne $first){throw 'Repeated selection duplicated PATH entries.'}
@@ -33,6 +37,23 @@ try {
   try { & (Join-Path $PackRoot 'TOOLS\Set-SharedPython.ps1') -Python (Join-Path $fixture 'Scripts\python.exe') -Apply -Scope Process | Out-Null }
   catch {$refused=$_.Exception.Message -match 'base Python'}
   if(-not $refused -or $env:Path -cne $first){throw 'Virtual environment was accepted as a shared base or changed PATH.'}
+  # A junction tests a real Unicode base path without copying a runtime.
+  $aliasRoot = Join-Path $fixture 'unicode-base'
+  New-Item -ItemType Directory -Path $aliasRoot | Out-Null
+  $runtimeAlias = Join-Path $aliasRoot ('shared Python ' + [char]0x2603)
+  New-Item -ItemType Junction -Path $runtimeAlias -Target (Split-Path -Parent $python) | Out-Null
+  try {
+    $aliasPython = Join-Path $runtimeAlias 'python.exe'
+    $env:UABS_PYTHON = $aliasPython
+    if ((Get-UabsPythonExecutable) -ine $aliasPython) { throw 'Unicode selected Python was not resolved.' }
+    $env:UABS_PYTHON = $null; $env:Path = $runtimeAlias + ';' + $first
+    if ((Get-UabsPythonExecutable) -ine $aliasPython) { throw 'Unicode PATH Python was not resolved.' }
+    & (Join-Path $PackRoot 'TOOLS\Set-SharedPython.ps1') -Python $aliasPython -Apply -Scope Process | Out-Null
+  } finally {
+    $env:UABS_PYTHON = $python; $env:UV_PYTHON = $python; $env:Path = $first
+    if ((Get-Item -LiteralPath $runtimeAlias).LinkType -ne 'Junction') { throw 'Unexpected runtime alias type; cleanup refused.' }
+    [IO.Directory]::Delete($runtimeAlias)
+  }
   $fakeHermes = Join-Path $fixture 'hermes-fixture.ps1'
   $fakeScript = 'param([string]$Operation,[string]$ModuleFlag,[string]$Module)
 $code = "import sys,runpy;runpy.run_module(''$Module'', run_name=''__main__'', alter_sys=True)"
@@ -49,6 +70,7 @@ $global:LASTEXITCODE = 0
   foreach($key in $keys){[Environment]::SetEnvironmentVariable($key,$saved[$key],'Process')}
   if(Test-Path -LiteralPath $fixture){
     if(-not [IO.Path]::GetFullPath($fixture).StartsWith([IO.Path]::GetTempPath(),[StringComparison]::OrdinalIgnoreCase)){throw 'Unsafe fixture cleanup path'}
+    if ($runtimeAlias -and (Test-Path -LiteralPath $runtimeAlias)) { throw 'Runtime junction remains; recursive fixture cleanup refused.' }
     Remove-Item -LiteralPath $fixture -Recurse -Force
   }
 }

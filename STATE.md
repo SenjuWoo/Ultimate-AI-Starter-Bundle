@@ -64,7 +64,14 @@
   default (signed index dry-run selects 3.15.1), preserving existing versions;
   no manager minor-version lock. CI covers shared Python 3.14 and 3.15. Explicit
   project venvs retain priority inside Hermes terminal sessions.
-- Next: final sync/doctor, commit, exact-SHA CI/security, deterministic archives
+- Upgrade binding repair PASS. Added real Unicode-base-path regression after
+  reproducing a PS 5.1/OEM path corruption: Python probes now return ASCII JSON,
+  preserving the actual path without copying or downloading a runtime.
+- Owner rebooted; shared 3.14.9 and the no-download policy survived. Previous
+  revision 30bd948 has green CI on both 3.14/3.15 plus CodeQL. New Unicode
+  discovery/PATH verification gate PASS, including a real junction alias.
+  Working Python manager aliases are kept rather than adding a version lock.
+- Next: exact-SHA CI/security, deterministic archives
   and public download checks. v8.21.0 remains unpublished.
 
 

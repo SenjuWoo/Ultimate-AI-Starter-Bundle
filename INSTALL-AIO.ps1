@@ -1885,7 +1885,8 @@ if (-not $SkillsOnly) {
                   if ($uvSkip -and $env:UABS_PYTHON) {
                     $uvToolDir = @(Get-UabsNativeStdout -Exe $uv.Source -CmdArgs @('tool','dir')) | Select-Object -Last 1
                     $toolPy = Join-Path $uvToolDir ($uvName + '\Scripts\python.exe')
-                    $toolBase = @(Get-UabsNativeStdout -Exe $toolPy -CmdArgs @('-I','-c','import sys;print(sys._base_executable)')) | Select-Object -Last 1
+                    $toolBase = @(Get-UabsNativeStdout -Exe $toolPy -CmdArgs @('-I','-c','import json,sys;print(json.dumps(sys._base_executable)))')) | Select-Object -Last 1
+                    if ($LASTEXITCODE -eq 0 -and $toolBase) { $toolBase = [string]($toolBase | ConvertFrom-Json) }
                     $uvSkip = ($LASTEXITCODE -eq 0 -and $toolBase -ieq $env:UABS_PYTHON)
                   }
                 }
