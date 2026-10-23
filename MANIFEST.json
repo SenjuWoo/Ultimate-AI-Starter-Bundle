@@ -43651,8 +43651,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 179892,
-  "sha256": "3efe68f356f7e9303abe01e93d6e87eee61616c6a23dcb1b7a8eea53b6e985ab"
+  "size": 180149,
+  "sha256": "7076fd48e8ee8e77c5086ddee04b3ff286bc04f720d40e93399d1553930ed5a7"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43851,8 +43851,8 @@
  },
  {
   "path": "TESTS/Test-SharedPython.ps1",
-  "size": 4221,
-  "sha256": "0ea44558b487e0c36668148843258d8312572c1b13c94b76eae9d91ca2bc30cf"
+  "size": 4474,
+  "sha256": "d70e81c0b5063031abc285a1a4090a836a9b62c8ea2d09aa7e3de36f20a8aacb"
  },
  {
   "path": "TESTS/Test-SillyTavernGateway.ps1",
@@ -44201,8 +44201,8 @@
  },
  {
   "path": "TOOLS/Set-SharedPython.ps1",
-  "size": 4159,
-  "sha256": "83f7e5b74cea5d2b750aaef85dfb611886d41553738c3c7ed127a8357953dbed"
+  "size": 4452,
+  "sha256": "0a0bc85baf22d4e421b5c20413711eea3069254de6bef2d7570b9e73f21426aa"
  },
  {
   "path": "TOOLS/Setup-CodebaseMemory-Index.ps1",

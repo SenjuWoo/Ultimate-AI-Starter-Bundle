@@ -559,7 +559,13 @@ if (-not $SkipRuntimes -and -not $SkillsOnly) {
   if ($needSdk8 -and -not (Install-UabsWinget @('Microsoft.DotNet.SDK.8'))) { throw '.NET 8 SDK installation failed.' } elseif (-not $needSdk8) { Write-UabsOk '.NET 8 SDK' }
   # Run the candidate, do not trust PATH: stock Windows 11 ships a python.exe alias
   # that only opens the Microsoft Store, and it counted as "Python present".
-  $runtimePython = Get-UabsPythonExecutable
+  try { $runtimePython = Get-UabsPythonExecutable }
+  catch {
+    if (-not $env:UABS_PYTHON) { throw }
+    # A user replaced Python: repair the stale binding from working PATH first.
+    & (Join-Path $PSScriptRoot 'TOOLS\Set-SharedPython.ps1') -Apply
+    $runtimePython = Get-UabsPythonExecutable
+  }
   if (-not $runtimePython -or (Test-UabsPrivateRuntimePath $runtimePython)) {
     Write-UabsWarn 'No shared user Python found - installing the official Python install manager'
     if (-not (Get-Command pymanager -ErrorAction SilentlyContinue)) {

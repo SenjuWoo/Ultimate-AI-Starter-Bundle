@@ -24,7 +24,9 @@ try {
   $refused=$false
   try{$null=Get-UabsPythonExecutable}catch{$refused=$_.Exception.Message -match 'Configured UABS_PYTHON'}
   if(-not $refused){throw 'Missing selected runtime silently fell back to another Python.'}
-  $env:UABS_PYTHON=$python
+  # An explicit repair follows working PATH without trusting a stale binding.
+  & (Join-Path $PackRoot 'TOOLS\Set-SharedPython.ps1') -Apply -Scope Process | Out-Null
+  if ($env:UABS_PYTHON -ine $python) { throw 'Shared runtime repair did not recover the working user Python.' }
   & $python -m venv --without-pip $fixture
   if($LASTEXITCODE -ne 0){throw 'Fixture venv failed.'}
   $refused=$false

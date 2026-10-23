@@ -4,7 +4,13 @@
 param([string]$Python, [switch]$Apply, [ValidateSet('User','Process')][string]$Scope = 'User')
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'UABS-Common.ps1')
-if (-not $Python) { $Python = Get-UabsPythonExecutable }
+if (-not $Python) {
+  # Re-select the user's working PATH after an upgrade, even if the old binding
+  # points at an interpreter they removed. This never downloads a replacement.
+  $previousSelection = $env:UABS_PYTHON
+  try { $env:UABS_PYTHON = $null; $Python = Get-UabsPythonExecutable }
+  finally { $env:UABS_PYTHON = $previousSelection }
+}
 if (-not $Python) { throw 'No runnable Python found. Install one shared base Python first.' }
 $raw = @(Get-UabsNativeStdout -Exe $Python -CmdArgs @('-I','-c','import json,sys;print(json.dumps(dict(exe=sys.executable,base=sys.base_prefix,prefix=sys.prefix,version=sys.version.split()[0])))'))
 if ($LASTEXITCODE -ne 0 -or -not $raw.Count) { throw 'Selected Python does not run.' }
