@@ -20,7 +20,7 @@ max_thoughts_width = 120
 fork_secondary_model = "grok-4.6"
 yolo = false
 compact_mode = false
-permission_mode = "always-approve"
+# Keep the provider's default permission prompts on a fresh install.
 
 [compat.claude]
 hooks = false

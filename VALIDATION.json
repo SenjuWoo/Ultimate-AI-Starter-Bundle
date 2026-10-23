@@ -1,8 +1,8 @@
 {
  "pack": "Ultimate AI Starter Bundle",
- "version": "8.21.0",
- "generated": "2026-10-22",
- "release_tag": "v8.21.0",
+ "version": "8.21.1",
+ "generated": "2026-10-23",
+ "release_tag": "v8.21.1",
  "canonical_skills": 174,
  "provider_trees": 6,
  "registry_entries": 174,
@@ -46,6 +46,6 @@
   "TESTS/Test-VersionProbes.ps1",
   "TESTS/Test-OfflineUpdate.ps1"
  ],
- "runtime_status": "v8.21.0: whole-bundle audit; toolbox lost-reply/lifecycle and offline updater integrity repairs. See docs/AUDIT-2026-10-22.md and STATE.md for measured gates and remaining runtime limits.",
+ "runtime_status": "v8.21.1 source gates 2026-10-23: release contract 151/0 and Test-Pack PASS on Windows PowerShell 5.1. Live Claude/Codex install and the public release are still open; see STATE.md. v8.21.0 audit: docs/AUDIT-2026-10-22.md.",
  "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for every always-on MCP server (context7, headroom, the toolbox, and GitHub where gh is not signed in). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }

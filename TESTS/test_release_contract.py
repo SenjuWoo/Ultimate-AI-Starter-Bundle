@@ -363,25 +363,34 @@ def test_no_skill_restates_the_pack_version() -> None:
 def test_provider_bootstrap_contract() -> None:
     p = ROOT / "TOOLS" / "Ensure-Provider-CLIs.ps1"
     assert p.is_file(), "fresh-Windows provider bootstrap is missing"
-    text = read(p)
+    text = ps_code(p)
     expected = {
         "Claude": "https://claude.ai/install.ps1",
-        "Codex": "https://chatgpt.com/codex/install.ps1",
         "Grok": "https://x.ai/cli/install.ps1",
         "Kimi": "https://code.kimi.com/kimi-code/install.ps1",
         "Hermes": "https://hermes-agent.nousresearch.com/install.ps1",
     }
     for provider, url in expected.items():
         assert provider in text and url in text, f"{provider}: official Windows installer missing"
-    for token in ("git --version", "claude --version", "codex --version", "grok --version", "kimi --version", "hermes --help"):
-        assert token.lower() in text.lower(), f"provider bootstrap missing verification {token!r}"
+    assert "Get-Command npm.cmd -CommandType Application" in text, "Codex bootstrap can select Windows' unsigned npm.ps1 shim"
+    assert "install -g '@openai/codex'" in text, "Codex bootstrap does not install the official Windows npm package"
     assert "Refresh-ProcessPath" in text, "provider installers can update User PATH without the current process seeing it"
     assert "AUTH_REQUIRED" in text, "unavoidable account/OAuth state must be reported explicitly"
-    assert "CODEX_NON_INTERACTIVE" in text, "Codex official installer can still prompt during an AIO install"
     assert "Anthropic.ClaudeCode" in text, "Claude official WinGet fallback missing"
     assert "powershell.exe" in text.lower() and "'-File'" in text, "vendor installers are not isolated in a child PowerShell"
-    vendor = text[text.index("function Invoke-VerifiedOfficialScript"):text.index("# Claude and Kimi require Git Bash")]
+    vendor = text[text.index("function Invoke-VerifiedOfficialScript"):text.index("function Install-CodexCli")]
     assert "$LASTEXITCODE" in vendor and "throw" in vendor, "vendor installer child exit code is not fail-closed"
+    regression = ROOT / "TESTS" / "Test-ProviderBootstrap.ps1"
+    assert regression.is_file(), "provider bootstrap has no disposable-profile behavior regression"
+    if sys.platform == "win32":
+        result = subprocess.run(
+            ["powershell.exe", "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass",
+             "-File", str(regression), "-PackRoot", str(ROOT)],
+            capture_output=True, text=True, timeout=90,
+        )
+        assert result.returncode == 0 and "PROVIDER BOOTSTRAP GATE: PASS" in result.stdout, (
+            "provider bootstrap/startup/doctor behavior failed:\n" + result.stdout + result.stderr
+        )
 
 
 def test_gate_and_remote_fail_closed() -> None:
@@ -598,9 +607,11 @@ def test_one_click_install_touches_only_installed_providers() -> None:
     )
     assert "Get-UabsInstalledProviders" in aio, "the installer no longer asks what is installed"
     assert "[switch]$AllProviders" in aio, "-AllProviders opt-in is gone"
-    assert "none detected - bootstrapping all" in aio, (
-        "an empty detection must fall back to all five, or a genuinely fresh "
-        "machine installs nothing and the run still reports success"
+    assert "none detected - bootstrapping all" not in aio, (
+        "an empty detection must never authorize bootstrapping every provider"
+    )
+    assert "throw 'No supported AI apps detected." in aio, (
+        "a fresh machine must ask for explicit provider selection before installation"
     )
     # ValidateSet cannot survive `powershell -File`, which collapses
     # `-Providers Grok,Claude` into one string. START-HERE.bat forwards through
@@ -902,9 +913,13 @@ def test_cleanup_is_dry_run_by_default_and_scoped_to_pack_files() -> None:
     assert "$KeepBackups = 3" in body and "$KeepLogs = 5" in body, "retention defaults changed silently"
     assert "ValidateRange(1, 200)" in body, "log retention can be set to zero, deleting the evidence of the run that deleted it"
 
-    # And the installer has to actually call it, or nothing self-maintains.
+    # Installs preview cleanup; destructive retention requires explicit review.
     assert "Clean-StaleState.ps1" in installer, "the installer never runs the cleanup"
-    assert "'-Apply', '-PackRoot', $PackRoot" in installer, "the installer runs the cleanup as a dry run, so nothing is ever removed"
+    cleanup = installer[installer.index('if (-not $SkipCleanup -and -not $ToolsOnly)'):]
+    cleanup = cleanup[:cleanup.index("$state.status = 'complete'")]
+    assert "'-Apply'" not in cleanup, "default setup can delete personal backups or same-name skills"
+    assert "status = 'preview-only'" in cleanup, "cleanup preview is falsely recorded as applied"
+    assert 'Test-InstallerPreservation.ps1' in read(ROOT / 'TESTS/Test-Pack.ps1')
     assert "[switch]$SkipCleanup" in installer, "-SkipCleanup opt-out is gone"
 
 

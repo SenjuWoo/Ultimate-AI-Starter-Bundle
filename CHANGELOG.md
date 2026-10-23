@@ -1,3 +1,19 @@
+## 8.21.1
+
+- Repair fresh Windows provider discovery, including desktop apps, native/npm
+  CLI paths and stale process PATH. Require explicit selection when no app is
+  found; never silently install every provider. Deduplicate provider names.
+- Bootstrap a missing Codex CLI through OpenAI's documented npm package; share
+  executable discovery with the installed-state doctor.
+- Seed only missing workspace templates and preview stale-state cleanup by
+  default, preserving personal project files, backups and skills.
+- Keep vendor permission prompts in fresh Grok starter settings. Existing
+  permission and model choices remain user-owned.
+- Add Windows regression coverage for provider subsets, missing-provider
+  bootstrap and workspace preservation. See docs/WINDOWS-RECOVERY.md.
+- Recognize hook commands that still point at the pre-rename hooks folder and
+  replace them on upgrade. The retired folder name stays in the shared helper.
+
 ## 8.21.0
 
 - Reuse one shared user Python across agents, hooks and on-demand uv tools;

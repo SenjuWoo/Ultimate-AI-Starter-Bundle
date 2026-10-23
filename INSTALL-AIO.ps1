@@ -19,7 +19,8 @@
   - Writes discovery state
 
 .PARAMETER Providers
-  Which AI apps to install skills for. Default: all five.
+  Which AI apps to configure. Default: installed apps only. Use -Providers
+  Claude,Codex or -AllProviders to explicitly install missing provider CLIs.
 
 .PARAMETER Mode
   BundledFirst | OnlineLatest | BundledOnly
@@ -146,11 +147,9 @@ param(
   #   Full 45 tools ~41,768 schema tokens | Lean 42 ~31,369 (-25%) | ReadOnly 27 ~17,604 (-58%); bytes/4, not billing.
   [ValidateSet('', 'Full', 'Lean', 'ReadOnly')]
   [string]$SkyrimToolset = '',
-  # Leftovers this pack created and never removed: skills it stopped shipping,
-  # and its own .bak / log files, which had no ceiling. Cleaned every install so
-  # a machine converges on the current tree instead of accumulating every
-  # version it has ever seen. -SkipCleanup opts out; the tool is also runnable
-  # on its own (TOOLS\Clean-StaleState.ps1, dry-run by default).
+  # Preview stale state after a successful install. Deletion is never automatic:
+  # old backups and same-name skills may belong to the user. Inspect the report
+  # before explicitly invoking TOOLS\Clean-StaleState.ps1 -Apply.
   [switch]$SkipCleanup,
   # START-HERE checks GitHub for a newer bundle release first: a clean git
   # clone fast-forwards, a release copy installs the new release through
@@ -331,6 +330,7 @@ foreach ($requested in $Providers) {
     throw ("Unknown provider '$requested'. Valid: " + ($script:UabsAllProviders -join ', '))
   }
 }
+$Providers = @($script:UabsAllProviders | Where-Object { $Providers -contains $_ })
 $script:UabsProviderSource = 'explicit'
 if ($AllProviders) {
   if ($Providers.Count) { throw 'Use -Providers or -AllProviders, not both.' }
@@ -340,11 +340,10 @@ if ($AllProviders) {
   $Providers = @(Get-UabsInstalledProviders -Candidates $script:UabsAllProviders)
   $script:UabsProviderSource = 'auto-detected'
   if (-not $Providers.Count) {
-    # A genuinely fresh machine has nothing to detect. Bootstrapping all five
-    # is the only outcome that leaves the box usable, and it is what someone
-    # who ran an installer on an empty profile actually asked for.
-    $Providers = $script:UabsAllProviders
-    $script:UabsProviderSource = 'none detected - bootstrapping all'
+    if (-not $ToolsOnly) {
+      throw 'No supported AI apps detected. Choose the apps you want: START-HERE.bat -Providers Claude,Codex (or -AllProviders for all six). No provider or runtime has been installed.'
+    }
+    $script:UabsProviderSource = 'tools only - no providers detected'
   }
 }
 $script:UabsSkippedProviders = @($script:UabsAllProviders | Where-Object { $Providers -notcontains $_ })
@@ -540,7 +539,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.21.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.21.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -563,7 +562,7 @@ if (-not $SkipRuntimes -and -not $SkillsOnly) {
   catch {
     if (-not $env:UABS_PYTHON) { throw }
     # A user replaced Python: repair the stale binding from working PATH first.
-    & (Join-Path $PSScriptRoot 'TOOLS\Set-SharedPython.ps1') -Apply
+    & (Join-Path $PSScriptRoot 'TOOLS\Set-SharedPython.ps1') -Apply -SkipHermesBinding:($Providers -notcontains 'Hermes')
     $runtimePython = Get-UabsPythonExecutable
   }
   if (-not $runtimePython -or (Test-UabsPrivateRuntimePath $runtimePython)) {
@@ -576,7 +575,7 @@ if (-not $SkipRuntimes -and -not $SkillsOnly) {
     if (-not (Invoke-UabsNative $manager.Source @('install','--yes','default'))) { throw 'Default stable Python installation failed.' }
   } else { Write-UabsOk 'Python present' }
   # One user-owned base interpreter for all agents; uv keeps dependencies isolated.
-  & (Join-Path $PSScriptRoot 'TOOLS\Set-SharedPython.ps1') -Apply
+  & (Join-Path $PSScriptRoot 'TOOLS\Set-SharedPython.ps1') -Apply -SkipHermesBinding:($Providers -notcontains 'Hermes')
   if (-not (Get-Command node -EA SilentlyContinue)) {
     Write-UabsWarn 'Node not found (CodeBurn + reasoning MCPs) - attempting winget LTS'
     if (-not (Install-UabsWinget @('OpenJS.NodeJS.LTS'))) { throw 'Node LTS installation failed.' }
@@ -1755,13 +1754,8 @@ if (-not $ToolsOnly -and -not $SkipPreamble) {
 # ---------- Workspace ----------
 if ($WorkspaceRoot) {
   Write-UabsStep "Workspace files -> $WorkspaceRoot"
-  New-Item -ItemType Directory -Force -Path $WorkspaceRoot | Out-Null
-  $ws = Join-Path $PackRoot 'COPY-TO-YOUR-WORKSPACE'
-  Copy-Item (Join-Path $ws 'AGENTS.md') (Join-Path $WorkspaceRoot 'AGENTS.md') -Force -EA SilentlyContinue
-  Copy-Item (Join-Path $ws 'CLAUDE.md') (Join-Path $WorkspaceRoot 'CLAUDE.md') -Force -EA SilentlyContinue
-  $tpl = Join-Path $ws '_PROJECT-TEMPLATE'
-  if (Test-Path $tpl) { Copy-UabsRobo -From $tpl -To (Join-Path $WorkspaceRoot '_PROJECT-TEMPLATE') }
-  Write-UabsOk "Workspace template copied"
+  & (Join-Path $PackRoot 'TOOLS\Initialize-Workspace.ps1') -PackRoot $PackRoot -WorkspaceRoot $WorkspaceRoot
+  Write-UabsOk 'Missing workspace templates seeded; existing files preserved'
 }
 
 # ---------- Tools ----------
@@ -2745,7 +2739,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.21.0'
+version = '8.21.1'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode
@@ -2989,12 +2983,12 @@ if (-not $SkipCleanup -and -not $ToolsOnly) {
   $cleanTool = Join-Path $PackRoot 'TOOLS\Clean-StaleState.ps1'
   if (Test-Path -LiteralPath $cleanTool -PathType Leaf) {
     try {
-      $cleanArgs = @('-Apply', '-PackRoot', $PackRoot)
+      $cleanArgs = @('-PackRoot', $PackRoot)
       if ($SkillsOnly) { $cleanArgs += '-SkipSkills' }
       $cleanCode = Invoke-UabsChildScript -Title 'Leftover cleanup' -File $cleanTool -ArgList $cleanArgs
       if ($cleanCode -ne 0) { throw "cleanup exited with code $cleanCode" }
-      Write-UabsOk 'Old bundle leftovers cleaned (newest backups kept)'
-      $installed['stale-state-cleanup'] = @{ status = 'applied' }
+      Write-UabsOk 'Stale-state preview complete; no backups or skills deleted'
+      $installed['stale-state-cleanup'] = @{ status = 'preview-only' }
     } catch {
       # Never fail an otherwise-good install over housekeeping.
       Write-UabsWarn ('Leftover cleanup: ' + $_.Exception.Message)
@@ -3023,7 +3017,7 @@ if ($script:UabsHermesGatewayWasRunning) {
 }
 if ($script:UabsHermesDesktopExe) {
   if (Test-Path -LiteralPath $script:UabsHermesDesktopExe -PathType Leaf) {
-    Start-Process -FilePath $script:UabsHermesDesktopExe
+    Start-Process -FilePath $script:UabsHermesDesktopExe -WindowStyle Hidden
     Write-UabsOk 'Hermes desktop relaunched with the final config'
   } else {
     Write-UabsWarn ('Hermes desktop was closed for the install but its exe is gone (' + $script:UabsHermesDesktopExe + ') - relaunch it manually')

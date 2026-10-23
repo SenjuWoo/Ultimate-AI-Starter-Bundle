@@ -10,9 +10,7 @@ function Get-UabsStateRoot {
 }
 
 function Refresh-ProcessPath {
-  $machine = [Environment]::GetEnvironmentVariable('Path', 'Machine')
-  $user = [Environment]::GetEnvironmentVariable('Path', 'User')
-  $env:Path = (@($machine, $user) | Where-Object { $_ }) -join ';'
+  $env:Path = (@(Get-UabsProviderPathDirectories)) -join ';'
 }
 
 function Get-UabsGitShellDirectory {
@@ -75,8 +73,7 @@ function Repair-UabsHookShellPath {
     Write-UabsOk ('Git hook shells added to user PATH; original saved at ' + $backup)
     Write-UabsWarn 'Restart AI apps launched before this repair; their inherited PATH is unchanged.'
   }
-  # Preserve private runtime prefixes in this process; Refresh-ProcessPath
-  # would replace them with the registry PATH and can hide its Python/Node.
+  # Place the discovered shells before any WSL aliases in this process.
   if ($missing.Count) { $env:PATH = $directory + ';' + $env:PATH }
 }
 
@@ -89,6 +86,8 @@ function Get-UabsCodexCli {
     @(Get-Command codex.exe -All -ErrorAction SilentlyContinue)
     @(Get-Command codex.cmd -All -ErrorAction SilentlyContinue)
   )
+  $native = Resolve-UabsProviderExe -Provider 'Codex'
+  if ($native) { $commands += [pscustomobject]@{ Source = $native } }
   $seen = @{}
   $preferred = @()
   $fallback = @()
@@ -110,12 +109,30 @@ function Get-UabsCodexCli {
   return $null
 }
 
+function Get-UabsLegacyStateRoot {
+  <# Retired installer folder. The name stays in this helper so active
+     installers can migrate owned state and recognize old hook commands
+     without hardcoding the pre-rename path themselves. #>
+  $base = $env:LOCALAPPDATA
+  if (-not $base) { return $null }
+  return (Join-Path $base 'Skyrim-AI-V5')
+}
+
+function Get-UabsLegacyHookRoots {
+  <# Old hooks directory. Returned even when the folder is gone: a settings
+     command written before the rename can still point there and must be
+     recognized so the upgrade can replace it. #>
+  $old = Get-UabsLegacyStateRoot
+  if (-not $old) { return @() }
+  return @(Join-Path $old 'hooks')
+}
+
 function Invoke-UabsLegacyStateMigration {
   <# Move only paths owned by older bundle installers. Conflicts and unknown
      files stay where they are; this is deliberately not a directory mirror. #>
-  $old = Join-Path $env:LOCALAPPDATA 'Skyrim-AI-V5'
+  $old = Get-UabsLegacyStateRoot
+  if (-not $old -or -not (Test-Path -LiteralPath $old -PathType Container)) { return }
   $new = Get-UabsStateRoot
-  if (-not (Test-Path -LiteralPath $old -PathType Container)) { return }
   New-Item -ItemType Directory -Force -Path $new | Out-Null
   # Old provider sessions may still hold these generated helpers open. Stop
   # only the two bundle-owned command lines before moving their directory.
@@ -1684,8 +1701,9 @@ function Repair-UabsCodexLegacyHooks {
   $doc = $before | ConvertFrom-Json
   $hookProperty = $doc.PSObject.Properties['hooks']
   if (-not $hookProperty -or -not $hookProperty.Value) { return }
-  $root = (Join-Path (Get-UabsStateRoot) 'hooks').Replace('\','/').TrimEnd('/')
-  $owned = '(?i)(?:^|[\s"''])' + [regex]::Escape($root) + '/(completeness_gate\.py|assumption_gate\.py|rtk_safe_hook\.py)(?=[\s"'']|$)'
+  $roots = @((Join-Path (Get-UabsStateRoot) 'hooks')) + @(Get-UabsLegacyHookRoots)
+  $alternation = (@($roots | Where-Object { $_ } | ForEach-Object { [regex]::Escape($_.Replace('\','/').TrimEnd('/')) })) -join '|'
+  $owned = '(?i)(?:^|[\s"''])(?:' + $alternation + ')/(completeness_gate\.py|assumption_gate\.py|rtk_safe_hook\.py)(?=[\s"'']|$)'
   $impeccableUnix = '[ ! -f ".codex/skills/impeccable/scripts/impeccable" ] || ".codex/skills/impeccable/scripts/impeccable" hook'
   $impeccableWindows = 'if exist ".codex/skills/impeccable/scripts/impeccable.cmd" (".codex/skills/impeccable/scripts/impeccable.cmd" hook & exit /b)'
   # This legacy global pair targets an executable no longer shipped by the
@@ -2941,40 +2959,135 @@ function Add-UabsMarketplacePluginEntry {
   return $true
 }
 
-<# Resolve a provider CLI without installing anything.
+function Get-UabsProviderPathDirectories {
+  param(
+    [string]$ProcessPath = $env:PATH,
+    [string]$MachinePath = [Environment]::GetEnvironmentVariable('Path', 'Machine'),
+    [string]$UserPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+  )
+  # An installer launched from an already-open app inherits yesterday's PATH.
+  # Read the persisted paths too, without replacing app-private process paths.
+  $seen = @{}
+  foreach ($value in @($ProcessPath, $MachinePath, $UserPath)) {
+    foreach ($entry in @($value -split ';')) {
+      $directory = [Environment]::ExpandEnvironmentVariables($entry.Trim().Trim('"'))
+      if (-not $directory -or $seen.ContainsKey($directory.TrimEnd('\').ToLowerInvariant())) { continue }
+      $seen[$directory.TrimEnd('\').ToLowerInvariant()] = $true
+      $directory
+    }
+  }
+}
 
-   Shared so INSTALL-AIO.ps1's auto-detection and Ensure-Provider-CLIs.ps1's
-   bootstrap agree on what "installed" means. They disagreed before v8.1.0:
-   the installer assumed all five providers were wanted and the bootstrap then
-   downloaded the missing ones, so a machine with only Claude ended up with
-   four vendor CLIs nobody asked for. #>
+function Get-UabsProviderLocalAppDataDirectories {
+  # App containers can redirect LOCALAPPDATA (and the Windows known-folder
+  # API) into Packages\sandbox...\AC while provider apps live in the profile.
+  # Read both locations; discovery never creates or moves either directory.
+  $directories = @($env:LOCALAPPDATA)
+  if ($env:USERPROFILE) { $directories += Join-Path $env:USERPROFILE 'AppData\Local' }
+  @($directories | Where-Object { $_ } | Select-Object -Unique)
+}
+
+# Resolve a command without starting it or creating provider configuration.
+# Desktop app presence is a selection signal, but is not a runnable CLI.
 function Resolve-UabsProviderExe {
-  param([Parameter(Mandatory)][string]$Provider)
-  $cmd = Get-Command $Provider.ToLowerInvariant() -ErrorAction SilentlyContinue
-  if ($cmd) { return $cmd.Source }
-  $candidates = switch ($Provider) {
-    'Claude' { @((Join-Path $env:USERPROFILE '.local\bin\claude.exe')) }
-    'Codex'  { @((Join-Path $env:USERPROFILE '.local\bin\codex.exe'), (Join-Path $env:LOCALAPPDATA 'OpenAI\Codex\bin\codex.exe')) }
-    'Grok'   { @((Join-Path $env:USERPROFILE '.grok\bin\grok.exe')) }
-    'Kimi'   { @((Join-Path $env:USERPROFILE '.local\bin\kimi.exe'), (Join-Path $env:USERPROFILE '.kimi-code\bin\kimi.exe')) }
-    'Hermes' { @((Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'), (Join-Path $env:LOCALAPPDATA 'hermes\bin\hermes.exe')) }
-    # Antigravity ships a desktop app, not a CLI on PATH: the executable in its
-    # install folder is the only reliable install signal (the config folder in
-    # ~/.gemini survives an uninstall).
-    'Antigravity' { @((Join-Path $env:LOCALAPPDATA 'Programs\antigravity\Antigravity.exe'), (Join-Path $env:LOCALAPPDATA 'Programs\Antigravity\Antigravity.exe')) }
-    default  { @() }
+  param(
+    [Parameter(Mandatory)][ValidateSet('Claude','Codex','Grok','Kimi','Hermes','Antigravity')][string]$Provider,
+    [string[]]$PathDirectories = @(Get-UabsProviderPathDirectories)
+  )
+  $candidates = @()
+  foreach ($directory in $PathDirectories) {
+    if (-not $directory) { continue }
+    # Search files, never functions/aliases with a provider's name. In PS 5.1
+    # Get-Command may also miss a newly installed command in stale process PATH.
+    foreach ($extension in @('.exe','.cmd','.bat','.ps1','')) {
+      $candidates += Join-Path $directory ($Provider.ToLowerInvariant() + $extension)
+    }
+  }
+  $locations = @()
+  $localDirectories = @(Get-UabsProviderLocalAppDataDirectories)
+  switch ($Provider) {
+    'Claude' { $locations += ,@($env:USERPROFILE,'.local\bin\claude.exe') }
+    'Codex' {
+      $locations += ,@($env:USERPROFILE,'.local\bin\codex.exe')
+      foreach ($localDirectory in $localDirectories) {
+        $locations += @(@($localDirectory,'Programs\OpenAI\Codex\bin\codex.exe'), @($localDirectory,'OpenAI\Codex\bin\codex.exe'))
+        foreach ($relative in @('OpenAI\Codex\bin','Programs\OpenAI\Codex\bin')) {
+          $bin = Join-Path $localDirectory $relative
+          if (Test-Path -LiteralPath $bin -PathType Container) {
+            foreach ($version in @(Get-ChildItem -LiteralPath $bin -Directory -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending)) {
+              $candidates += Join-Path $version.FullName 'codex.exe'
+            }
+          }
+        }
+      }
+    }
+    'Grok' { $locations += ,@($env:USERPROFILE,'.grok\bin\grok.exe') }
+    'Kimi' { $locations += @(@($env:USERPROFILE,'.local\bin\kimi.exe'), @($env:USERPROFILE,'.kimi-code\bin\kimi.exe')) }
+    'Hermes' {
+      foreach ($localDirectory in $localDirectories) {
+        $locations += @(@($localDirectory,'hermes\bin\hermes.exe'), @($localDirectory,'hermes\hermes-agent\venv\Scripts\hermes.exe'))
+      }
+    }
+    # Antigravity's supported executable is its desktop app.
+    'Antigravity' {
+      foreach ($localDirectory in $localDirectories) { $locations += ,@($localDirectory,'Programs\Antigravity\Antigravity.exe') }
+    }
+  }
+  if ($env:APPDATA) { $locations += ,@($env:APPDATA,('npm\' + $Provider.ToLowerInvariant() + '.cmd')) }
+  foreach ($location in $locations) {
+    if ($location[0]) { $candidates += Join-Path $location[0] $location[1] }
   }
   foreach ($candidate in $candidates) {
-    if ($candidate -and (Test-Path -LiteralPath $candidate -PathType Leaf)) { return $candidate }
+    # AppX's bundled executable cannot serve as the external Codex CLI.
+    if ($Provider -eq 'Codex' -and $candidate -match '(?i)\\(?:WindowsApps\\OpenAI\.Codex_[^\\]+|Microsoft\\WindowsApps)(?:\\|$)') { continue }
+    if (Test-Path -LiteralPath $candidate -PathType Leaf) { return $candidate }
   }
   return $null
 }
 
-# Providers whose CLI is actually on this machine. Executable presence only:
-# a leftover ~/.kimi-code or ~/.codex directory survives an uninstall, and
-# treating a stale config folder as an install would keep re-wiring a provider
-# the user deliberately removed.
+function Get-UabsProviderAppxPackages {
+  # Current-user registrations cover Microsoft Store installs without guessing
+  # at package versions or enumerating the protected WindowsApps directory.
+  if (Get-Command Get-AppxPackage -ErrorAction SilentlyContinue) {
+    try {
+      Get-AppxPackage -ErrorAction Stop | Where-Object {
+        $_.Name -match '^(OpenAI\.Codex|(?:Anthropic(?:PBC)?[._-])?Claude)$'
+      }
+    } catch { }
+  }
+}
+
 function Get-UabsInstalledProviders {
-  param([string[]]$Candidates = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity'))
-  return @($Candidates | Where-Object { Resolve-UabsProviderExe -Provider $_ })
+  param(
+    [ValidateSet('Claude','Codex','Grok','Kimi','Hermes','Antigravity')][string[]]$Candidates = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity'),
+    [string[]]$PathDirectories = @(Get-UabsProviderPathDirectories)
+  )
+  $packages = $null
+  foreach ($provider in @('Claude','Codex','Grok','Kimi','Hermes','Antigravity')) {
+    if ($Candidates -notcontains $provider) { continue }
+    if (Resolve-UabsProviderExe -Provider $provider -PathDirectories $PathDirectories) { $provider; continue }
+    if ($provider -notin @('Claude','Codex')) { continue }
+    $desktopFiles = @()
+    foreach ($localDirectory in @(Get-UabsProviderLocalAppDataDirectories)) {
+      if ($provider -eq 'Claude') {
+        $desktopFiles += @('AnthropicClaude\Claude.exe','Programs\Claude\Claude.exe') | ForEach-Object { Join-Path $localDirectory $_ }
+        $claudeRoot = Join-Path $localDirectory 'AnthropicClaude'
+        if (Test-Path -LiteralPath $claudeRoot -PathType Container) {
+          $desktopFiles += @(Get-ChildItem -LiteralPath $claudeRoot -Directory -Filter 'app-*' -ErrorAction SilentlyContinue | ForEach-Object { Join-Path $_.FullName 'Claude.exe' })
+        }
+      } else {
+        $desktopFiles += @('OpenAI\Codex\Codex.exe','Programs\OpenAI\Codex\Codex.exe') | ForEach-Object { Join-Path $localDirectory $_ }
+      }
+    }
+    if (@($desktopFiles | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf }).Count) { $provider; continue }
+    if ($null -eq $packages) { $packages = @(Get-UabsProviderAppxPackages) }
+    foreach ($package in $packages) {
+      $matchesProvider = if ($provider -eq 'Codex') { $package.Name -eq 'OpenAI.Codex' } else { $package.Name -match '^(?:Anthropic(?:PBC)?[._-])?Claude$' }
+      if ($matchesProvider -and $package.InstallLocation -and
+          (Test-Path -LiteralPath (Join-Path $package.InstallLocation 'AppxManifest.xml') -PathType Leaf)) {
+        $provider
+        break
+      }
+    }
+  }
 }

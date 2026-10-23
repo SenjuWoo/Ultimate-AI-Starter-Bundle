@@ -190,14 +190,20 @@ async def lifecycle_gate() -> None:
 
 def main() -> int:
     tmp = Path(tempfile.mkdtemp(prefix="uabs toolbox gate "))
+    saved_state_dir = os.environ.get("UABS_TOOLBOX_STATE_DIR")
     try:
         state = tmp / "state"
         project = tmp / "project with space"
         state.mkdir()
         project.mkdir()
+        # lifecycle_gate starts a real child in this parent process too; the
+        # stdio server's private env alone does not isolate its stderr logs.
+        os.environ["UABS_TOOLBOX_STATE_DIR"] = str(state)
         write_state(state)
         anyio.run(run_gate, state, project)
         anyio.run(lifecycle_gate)
+        check((state / "logs" / "toolbox-hung.log").is_file(),
+              "parent lifecycle fixture stderr log escaped the temporary state folder")
         from uabs_toolbox import catalog
         saved_selection = os.environ.get("UABS_PYTHON")
         try:
@@ -221,6 +227,10 @@ def main() -> int:
                 os.environ["UABS_PYTHON"] = saved_selection
             catalog._PYTHON = None
     finally:
+        if saved_state_dir is None:
+            os.environ.pop("UABS_TOOLBOX_STATE_DIR", None)
+        else:
+            os.environ["UABS_TOOLBOX_STATE_DIR"] = saved_state_dir
         shutil.rmtree(tmp, ignore_errors=True)
     print("TOOLBOX GATE: PASS")
     return 0

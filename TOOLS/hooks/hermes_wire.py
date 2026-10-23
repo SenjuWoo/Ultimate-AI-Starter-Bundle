@@ -20,7 +20,9 @@ Usage:
 from __future__ import annotations
 
 import json
+import copy
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -29,6 +31,37 @@ from pathlib import Path
 
 # Set from the gate being wired, so wiring a second gate cannot strip the first.
 MARKER = "completeness_gate.py"
+
+
+def owned_gate_command(command: object, gate: str) -> bool:
+    """Only the generated command for this exact owned gate is replaceable."""
+    if not isinstance(command, str):
+        return False
+    match = re.fullmatch(
+        r'''\s*(?:&\s+)?(?:"[^"]+"|'[^']+'|[^\s"']+)\s+'''
+        r'''(?:"(?P<double>[^"]+)"|'(?P<single>[^']+)'|(?P<plain>[^\s"']+))'''
+        r'''\s+--(?:pre|stop)\s*''', command)
+    if not match:
+        return False
+    script = next(value for value in match.groupdict().values() if value)
+    actual = Path(script.replace("\\", "/"))
+    expected = Path(gate.replace("\\", "/"))
+    candidates = [expected]
+    # The installer sets this to the retired hooks directory. Recognize a
+    # command that still points there so an upgrade can replace it. The
+    # folder name stays in the PowerShell helper, not in this file.
+    legacy = os.environ.get("UABS_LEGACY_HOOK_ROOT", "").strip()
+    if (
+        legacy
+        and expected.parent.name.lower() == "hooks"
+        and expected.parent.parent.name.lower() == "ultimate-ai-starter-bundle"
+    ):
+        candidates.append(Path(legacy) / expected.name)
+    try:
+        normalized = os.path.normcase(str(actual.resolve()))
+        return any(normalized == os.path.normcase(str(path.resolve())) for path in candidates)
+    except (OSError, ValueError):
+        return False
 
 
 def config_path(hermes: str) -> Path | None:
@@ -66,6 +99,8 @@ def update_allowlist(cfg: Path, command: str, gate: Path, event: str,
                  if not (isinstance(entry, dict)
                          and entry.get("event") == event
                          and entry.get("command") == command)]
+    if not approve and approvals == data.get("approvals", []):
+        return True
     if approve:
         stamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         try:
@@ -127,6 +162,69 @@ def selftest() -> int:
         if any(e.get("command") == command for e in saved["approvals"]):
             print("HERMES WIRE SELFTEST: FAIL - approval survived removal")
             return 1
+        # Exercise the real YAML merge while replacing only vendor path lookup.
+        # A same-basename script in a personal folder must survive uninstall.
+        import yaml
+        from unittest.mock import patch
+
+        personal = '"python" "C:/personal/rtk_safe_hook.py" --pre'
+        chained = command + ' && echo personal-followup'
+        original = {"personal": "keep", "hooks": {"pre_tool_call": [
+            {"command": command}, {"command": personal, "future": "keep"},
+            {"command": chained},
+        ]}}
+        cfg.write_text(yaml.safe_dump(original), encoding="utf-8")
+        with patch(__name__ + ".config_path", return_value=cfg), patch.object(
+                sys, "argv", [__file__, "unused-hermes", "python", str(gate), "--remove", "--pre-only"]):
+            if main() != 0:
+                print("HERMES WIRE SELFTEST: FAIL - merge execution")
+                return 1
+        result = yaml.safe_load(cfg.read_text(encoding="utf-8"))
+        if result != {"personal": "keep", "hooks": {"pre_tool_call": [
+                {"command": personal, "future": "keep"}, {"command": chained}]}}:
+            print("HERMES WIRE SELFTEST: FAIL - custom hook with same basename was removed")
+            return 1
+        untouched_yaml = b'# Personal comments\r\npersonal: "keep"\r\n'
+        untouched_allowlist = b'{ "approvals": [{ "event": "pre_tool_call", "command": "personal" }] }'
+        cfg.write_bytes(untouched_yaml)
+        (base / "shell-hooks-allowlist.json").write_bytes(untouched_allowlist)
+        with patch(__name__ + ".config_path", return_value=cfg), patch.object(
+                sys, "argv", [__file__, "unused-hermes", "python", str(gate), "--remove", "--pre-only"]):
+            if main() != 0 or cfg.read_bytes() != untouched_yaml or (base / "shell-hooks-allowlist.json").read_bytes() != untouched_allowlist:
+                print("HERMES WIRE SELFTEST: FAIL - no-op uninstall rewrote personal configuration")
+                return 1
+        absent = base / "absent.yaml"
+        with patch(__name__ + ".config_path", return_value=absent), patch.object(
+                sys, "argv", [__file__, "unused-hermes", "python", str(gate), "--remove", "--pre-only"]):
+            if main() != 0 or absent.exists():
+                print("HERMES WIRE SELFTEST: FAIL - absent uninstall created config")
+                return 1
+        legacy_root = base / "retired-hooks"
+        legacy_root.mkdir()
+        legacy_gate = legacy_root / gate.name
+        legacy_gate.write_text("pass\n", encoding="utf-8")
+        bundle_gate = base / "Ultimate-AI-Starter-Bundle" / "hooks" / gate.name
+        bundle_gate.parent.mkdir(parents=True)
+        bundle_gate.write_text("pass\n", encoding="utf-8")
+        legacy_command = f'"python" "{legacy_gate.as_posix()}" --pre'
+        previous = os.environ.get("UABS_LEGACY_HOOK_ROOT")
+        os.environ.pop("UABS_LEGACY_HOOK_ROOT", None)
+        try:
+            if owned_gate_command(legacy_command, str(bundle_gate)):
+                print("HERMES WIRE SELFTEST: FAIL - retired hook owned without the installer root")
+                return 1
+            os.environ["UABS_LEGACY_HOOK_ROOT"] = str(legacy_root)
+            if not owned_gate_command(legacy_command, str(bundle_gate)):
+                print("HERMES WIRE SELFTEST: FAIL - retired hook was not replaceable")
+                return 1
+            if owned_gate_command(personal, str(bundle_gate)):
+                print("HERMES WIRE SELFTEST: FAIL - personal hook became owned")
+                return 1
+        finally:
+            if previous is None:
+                os.environ.pop("UABS_LEGACY_HOOK_ROOT", None)
+            else:
+                os.environ["UABS_LEGACY_HOOK_ROOT"] = previous
     print("HERMES WIRE SELFTEST: PASS")
     return 0
 
@@ -154,7 +252,8 @@ def main() -> int:
         print("SKIP: could not resolve the Hermes config path.")
         return 0
 
-    text = cfg.read_text(encoding="utf-8") if cfg.exists() else ""
+    original_bytes = cfg.read_bytes() if cfg.exists() else b""
+    text = original_bytes.decode("utf-8")
     try:
         data = yaml.safe_load(text) or {}
     except Exception as exc:
@@ -163,6 +262,7 @@ def main() -> int:
     if not isinstance(data, dict):
         print(f"SKIP: {cfg} is not a mapping; refusing to touch it.")
         return 0
+    original_data = copy.deepcopy(data)
 
     hooks = data.get("hooks") or {}
     if not isinstance(hooks, dict):
@@ -171,7 +271,7 @@ def main() -> int:
 
     def strip(event: str) -> None:
         entries = [e for e in (hooks.get(event) or [])
-                   if not (isinstance(e, dict) and MARKER in str(e.get("command", "")))]
+                   if not (isinstance(e, dict) and owned_gate_command(e.get("command"), gate))]
         if entries:
             hooks[event] = entries
         else:
@@ -207,15 +307,15 @@ def main() -> int:
     else:
         data.pop("hooks", None)
 
-    if cfg.exists():
-        backup = cfg.with_suffix(cfg.suffix + ".bak-gate")
-        backup.write_text(text, encoding="utf-8")
-
-    cfg.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True,
-                                  default_flow_style=False), encoding="utf-8")
+    if data != original_data:
+        if cfg.exists():
+            backup = cfg.with_suffix(cfg.suffix + ".bak-gate")
+            backup.write_bytes(original_bytes)
+        cfg.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True,
+                                      default_flow_style=False), encoding="utf-8")
 
     # Prove it round-trips before claiming success.
-    check = yaml.safe_load(cfg.read_text(encoding="utf-8"))
+    check = yaml.safe_load(cfg.read_text(encoding="utf-8")) if cfg.exists() else data
     ok = isinstance(check, dict) and (remove or MARKER in str(check.get("hooks")))
     approve = "--approve" in sys.argv and not remove
     approval_ok = True

@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.21.0 -->
+<!-- Ultimate AI Starter Bundle v8.21.1 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.21.0
+# Ultimate AI Starter Bundle v8.21.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -312,7 +312,7 @@ bundle installation steps.
 
 ### It wires the providers you have
 
-A plain run detects which provider CLIs are actually installed and configures
+A plain run detects which supported apps or provider CLIs are installed and configures
 those. Through v8.0.4 it assumed all of them and then **downloaded the missing
 ones**, so a machine with only Claude Code finished a "one-click install"
 carrying Codex, Grok, Kimi, Hermes and Antigravity.
@@ -323,10 +323,22 @@ carrying Codex, Grok, Kimi, Hermes and Antigravity.
 .\INSTALL-AIO.ps1 -Providers Claude,Grok # exactly these
 ```
 
-Detection is executable presence, not a config folder: uninstalling Kimi
-actually removes it from future runs, and a leftover `~/.kimi-code` no longer
-counts as an install. A genuinely empty machine detects nothing and falls back
-to installing every provider, because that is the only outcome that leaves it usable.
+Detection checks executable/native paths, desktop installations and current-user
+Store registrations, including a stale terminal PATH. A leftover config folder
+alone does not count. Desktop app detection selects that provider; the installer
+adds its CLI only when the bundle needs one and none is available.
+
+When nothing is found, setup stops before runtime/provider installation and
+prints the explicit selection command. For Claude and Codex:
+`START-HERE.bat -Providers Claude,Codex`. All six providers remain an explicit
+`-AllProviders` choice. Codex's missing CLI uses OpenAI's documented npm package
+route rather than depending on the standalone script URL.
+
+Workspace templates fill only missing files. Existing project instructions,
+templates and settings are preserved. Successful installs preview stale-state
+cleanup without deleting backups or skills. Review the standalone cleanup plan
+before deliberately applying it. See [Windows recovery](docs/WINDOWS-RECOVERY.md)
+for diagnostics, validation scope and persistent GitHub setup.
 
 ### Google Antigravity (Gemini 4 Argon)
 
@@ -912,6 +924,7 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
+**v8.21.1** - 2026-10-23. A fresh Windows install that finds no supported app stops and asks which providers to set up, instead of installing all six. A missing Codex CLI installs with `npm install -g @openai/codex` after the old standalone installer URL started returning HTTP 404. Setup fills only missing workspace files, previews cleanup, and leaves unselected provider homes alone. [Changes](docs/history/V8.21.1-CHANGELOG.md).
 **v8.21.0** - 2026-10-21. Hermes settings are now future-proof: no fallback chain, no pinned auxiliary or delegation models (everything follows your main model), vision follows the main model instead of a retired experimental endpoint, and compression fires at a 320k cap on the 1M-token window. The component updater respects catalog holds unless `-Force`. [Changes](docs/history/V8.21.0-CHANGELOG.md).
 **v8.20.0** - 2026-10-21. New `game-mashup-passthrough` skill and a bigger mashup card from the project's full lessons (frame split, spike order, freeze/teleport traps; no machine paths). Universal Modder refreshed to `c1dff21` (new `um voidless`, ~20 game notes). Your `Tools` and `Modding` folders reviewed: nothing bundled, bench map and evaluations updated.
 **v8.19.2** - 2026-10-20. Faster, quieter installs: the Hermes profile migration reads each profile once (152 s to 7.6 s for an unchanged machine), skill fingerprints hash 4.8x faster, and plugin-owned skills are no longer copied and deleted again every run. Hermes starter defaults are checked in one process (65 s to 10 s). Fixes the live skill sync overwriting a preserved local skill, a final check that failed on a hand-installed optional tool, a Hermes read that could have written masked MCP secrets back, Spooky's toolkit re-updating itself every run, an unbounded `--version` probe, and Antigravity plugins that never refreshed. blender-mcp 2.2.2.

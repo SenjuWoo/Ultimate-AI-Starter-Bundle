@@ -26,18 +26,7 @@ $warnings = New-Object System.Collections.Generic.List[string]
 function Err([string]$m){ [void]$errors.Add($m); Write-UabsBad $m }
 function Warn([string]$m){ [void]$warnings.Add($m); Write-UabsWarn $m }
 function Resolve-Exe([string]$Provider) {
-  $cmd=Get-Command $Provider.ToLowerInvariant() -EA SilentlyContinue
-  if($cmd){return $cmd.Source}
-  $cands=switch($Provider){
-    'Claude'{@((Join-Path $env:USERPROFILE '.local\bin\claude.exe'))}
-    'Codex'{@((Join-Path $env:USERPROFILE '.local\bin\codex.exe'),(Join-Path $env:LOCALAPPDATA 'OpenAI\Codex\bin\codex.exe'))}
-    'Grok'{@((Join-Path $env:USERPROFILE '.grok\bin\grok.exe'))}
-    'Kimi'{@((Join-Path $env:USERPROFILE '.local\bin\kimi.exe'),(Join-Path $env:USERPROFILE '.kimi-code\bin\kimi.exe'))}
-    'Hermes'{@((Join-Path $env:LOCALAPPDATA 'hermes\bin\hermes.exe'), (Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'))}
-    'Antigravity'{@((Join-Path $env:LOCALAPPDATA 'Programs\antigravity\Antigravity.exe'))}
-  }
-  foreach($c in $cands){if($c -and (Test-Path -LiteralPath $c -PathType Leaf)){return $c}}
-  return $null
+  return (Resolve-UabsProviderExe -Provider $Provider)
 }
 Write-UabsStep 'Final installed-state doctor'
 foreach ($issue in @(Repair-UabsHookShellPath -CheckOnly)) { Err $issue }
@@ -750,10 +739,12 @@ if ($Providers -contains 'Codex') {
 
 # Bundle gates wired to an AI app's private Python (Codex ships one under
 # ~\.cache\codex-runtimes) stop working when that app updates or is removed.
-$gateHookFiles = @((Join-Path $env:USERPROFILE '.claude\settings.json'))
-foreach ($p in @('Grok','Hermes')) {
+$gateHookFiles = @()
+foreach ($p in @('Claude','Grok','Hermes')) {
+  if ($Providers -notcontains $p) { continue }
   try { $h = Get-UabsProviderHome -Provider $p -Catalog $catalog } catch { continue }
-  $gateHookFiles += $(if ($p -eq 'Grok') { Join-Path $h 'hooks\ultimate-bundle.json' } else { Join-Path $h 'config.yaml' })
+  $relative = switch ($p) { 'Claude' { 'settings.json' } 'Grok' { 'hooks\ultimate-bundle.json' } 'Hermes' { 'config.yaml' } }
+  $gateHookFiles += Join-Path $h $relative
 }
 foreach ($f in $gateHookFiles) {
   if (-not (Test-Path -LiteralPath $f -PathType Leaf)) { continue }

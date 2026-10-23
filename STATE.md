@@ -1,5 +1,45 @@
 # Bundle audit state
 
+## Fresh Windows recovery (2026-10-23, v8.21.1 source gates)
+
+- This tree is v8.21.1. The published GitHub release is still v8.21.0 until a
+  release is cut from the pushed commit. Source fixes do not change the
+  downloadable archives by themselves.
+- Failure that was fixed: an empty provider scan installed all six providers,
+  then the old Codex PowerShell installer URL returned HTTP 404. A plain run
+  now stops when no app is installed. Choose `-Providers Claude,Codex` or
+  `-AllProviders`. A missing Codex CLI installs with `npm install -g @openai/codex`.
+  Git for Windows is still required, because plugin hooks need Git Bash.
+- Workspace seeding fills only missing files. Stale-state cleanup previews
+  unless `-Apply` is passed. Fresh Grok starter settings keep the vendor
+  permission prompt. Existing permission and model choices stay user-owned.
+- Hook commands that still point at the pre-rename hooks folder are recognized
+  through `Get-UabsLegacyHookRoots`. The retired folder name stays in that helper.
+- Shared Python is the `python` / `UABS_PYTHON` interpreter (3.14.9 on this
+  machine). The Python 3.15 directory has no `python.exe`; do not point tools
+  at it. Pack tests use `-TestPython` on a disposable venv. `pwsh.exe` is not
+  installed; the gates below ran on Windows PowerShell 5.1.
+- GitHub CLI auth was restored from the existing keyring into the real
+  `%AppData%\GitHub CLI` hosts file. No new browser login. Re-query flags
+  after the push.
+- Measured 2026-10-23:
+  - `.github/scripts/check_versions.py` exit 0.
+  - `.github/scripts/verify_manifest.py`: verified=10361, missing=0, mismatch=0.
+  - `python TESTS/test_release_contract.py`: 151 passed, 0 failed, exit 0.
+    Log: `artifacts/recovery/contract-8211b.log`.
+  - `TESTS/Test-Pack.ps1 -TestPython` on a disposable venv with mcp==1.30.0
+    and PyYAML==6.0.3: PACK GATE: PASS, exit 0. That run includes all 63
+    provider subsets, bootstrap, workspace seeding, installer preservation,
+    hook scope, and the doctor scope gate.
+    Log: `artifacts/recovery/pack-8211b.log`.
+  - `TOOLS/hooks/hermes_wire.py --selftest`: PASS on that same interpreter.
+- Not done yet: live `-Providers Claude,Codex` install and
+  `TOOLS/Test-Installed-State.ps1` on the real profile; push, CI, and GitHub
+  flags on the new commit; public v8.21.1 archives.
+- Notes below this heading describe the pre-reset machine and the v8.21.0
+  release. They are not this install's result.
+
+
 ## Active whole-bundle audit: v8.21.0 (2026-10-22)
 
 - Baseline 48097c7 (v8.20.1), clean checkout, moved owner folder verified.

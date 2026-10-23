@@ -1,4 +1,4 @@
-Ultimate AI Starter Bundle V8.21.0 - ALL-IN-ONE STARTER
+Ultimate AI Starter Bundle V8.21.1 - ALL-IN-ONE STARTER
 ======================================================
 
 Not just Skyrim. A full multi-provider AI starter bundle: skills, MCP tools,
@@ -57,15 +57,16 @@ every AI app. Seed it once:
 
 WHICH PROVIDERS GET CONFIGURED
 ------------------------------
-A plain run configures the provider CLIs you ACTUALLY HAVE. It no longer
-assumes all five and downloads the missing ones. Detection is executable
-presence, so uninstalling a provider really removes it from future runs.
+A plain run configures the supported apps/CLIs you ACTUALLY HAVE. Detection
+includes native paths, desktop apps and current-user Store registrations.
+Leftover configuration folders alone never count as installed providers.
 
-An empty machine detects nothing and falls back to installing all five.
+If nothing is detected, setup asks for an explicit provider choice before
+installing runtimes/providers. Example: START-HERE.bat -Providers Claude,Codex.
 
 Options:
     .\INSTALL-AIO.ps1                        # wire what is installed
-    .\INSTALL-AIO.ps1 -AllProviders          # fresh box: install all five
+    .\INSTALL-AIO.ps1 -AllProviders          # explicitly select all six
     .\INSTALL-AIO.ps1 -Providers Grok,Claude # exactly these
     .\INSTALL-AIO.ps1 -Mode OnlineLatest
     .\INSTALL-AIO.ps1 -CoreOnly       # smaller core only

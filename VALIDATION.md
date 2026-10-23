@@ -1,4 +1,4 @@
-# v8.21.0 validation
+# v8.21.1 validation
 
 Current audit evidence and limits: [whole-bundle audit](docs/AUDIT-2026-10-22.md).
 

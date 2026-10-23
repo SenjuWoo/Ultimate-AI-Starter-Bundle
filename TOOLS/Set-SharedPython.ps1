@@ -1,7 +1,13 @@
 ﻿# Select one user-owned Python for agents and uv. Does not delete any runtime.
 # -Apply writes only PATH and the documented runtime settings, with rollback.
 [CmdletBinding()]
-param([string]$Python, [switch]$Apply, [ValidateSet('User','Process')][string]$Scope = 'User')
+param(
+  [string]$Python,
+  [switch]$Apply,
+  [ValidateSet('User','Process')][string]$Scope = 'User',
+  # A provider-scoped AIO run can share Python without editing unselected Hermes.
+  [switch]$SkipHermesBinding
+)
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'UABS-Common.ps1')
 if (-not $Python) {
@@ -76,6 +82,6 @@ try {
   }
   throw
 }
-if ($Scope -eq 'User') { & (Join-Path $PSScriptRoot 'Set-HermesSharedPython.ps1') }
+if ($Scope -eq 'User' -and -not $SkipHermesBinding) { & (Join-Path $PSScriptRoot 'Set-HermesSharedPython.ps1') }
 Write-Host ('Configured shared Python ' + $info.version + '; uv runtime downloads disabled. Backup: ' + $backup)
 Write-Host 'Reopen agent apps to inherit the new environment. Tool dependency environments stay isolated.'

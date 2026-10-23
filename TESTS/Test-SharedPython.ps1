@@ -65,6 +65,52 @@ $global:LASTEXITCODE = 0
   if ($LASTEXITCODE -ne 0 -or $output[-1] -cne 'space + Unicode ☃') { throw 'Modern Hermes runtime adapter changed arguments.' }
   $null = Invoke-UabsHermesPython -HermesExe $fakeHermes -PythonArgs @('-c','raise SystemExit(7)')
   if ($LASTEXITCODE -ne 7) { throw 'Hermes runtime adapter lost the child failure exit code.' }
+
+  # Exercise the full User branch with an in-memory registry boundary. Never
+  # write the test runner's real User environment or a real Hermes config.
+  Add-Type -TypeDefinition @'
+using System;
+using System.Collections.Generic;
+public static class UabsSharedPythonTestEnvironment {
+  private static Dictionary<string,string> values = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
+  public static string GetEnvironmentVariable(string name, string target) {
+    string value; return values.TryGetValue(target + ":" + name, out value) ? value : null;
+  }
+  public static void SetEnvironmentVariable(string name, string value, string target) {
+    values[target + ":" + name] = value;
+  }
+  public static string ExpandEnvironmentVariables(string value) { return Environment.ExpandEnvironmentVariables(value); }
+}
+'@
+  foreach ($key in $keys) {
+    [UabsSharedPythonTestEnvironment]::SetEnvironmentVariable($key,[Environment]::GetEnvironmentVariable($key,'Process'),'Process')
+  }
+  $fakeUserPath = Join-Path $fixture 'personal-user-bin'
+  [UabsSharedPythonTestEnvironment]::SetEnvironmentVariable('Path',$fakeUserPath,'User')
+  [UabsSharedPythonTestEnvironment]::SetEnvironmentVariable('Path',((Split-Path -Parent $python) + ';' + $env:SystemRoot + '\System32'),'Machine')
+  [UabsSharedPythonTestEnvironment]::SetEnvironmentVariable('PYTHON_MANAGER_DEFAULT','keep-my-manager-version','User')
+  $bindingTools = Join-Path $fixture 'binding-tools'
+  [void][IO.Directory]::CreateDirectory($bindingTools)
+  $sharedSource = [IO.File]::ReadAllText((Join-Path $PackRoot 'TOOLS\Set-SharedPython.ps1'))
+  $sharedClone = Join-Path $bindingTools 'Set-SharedPython.ps1'
+  [IO.File]::WriteAllText($sharedClone,$sharedSource.Replace('[Environment]::','[UabsSharedPythonTestEnvironment]::'),(New-Object Text.UTF8Encoding $true))
+  $commonPath = (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1').Replace("'","''")
+  $fakeState = (Join-Path $fixture 'user-state').Replace("'","''")
+  $commonShim = ". '$commonPath'`nfunction Refresh-ProcessPath { `$env:Path = [UabsSharedPythonTestEnvironment]::GetEnvironmentVariable('Path','Machine') + ';' + [UabsSharedPythonTestEnvironment]::GetEnvironmentVariable('Path','User') }`nfunction Get-UabsStateRoot { return '$fakeState' }`n"
+  [IO.File]::WriteAllText((Join-Path $bindingTools 'UABS-Common.ps1'),$commonShim,(New-Object Text.UTF8Encoding $true))
+  $bindingMarker = Join-Path $fixture 'hermes-binding-marker.txt'
+  $hermesShim = "[IO.File]::AppendAllText('$($bindingMarker.Replace("'","''"))','bound')"
+  [IO.File]::WriteAllText((Join-Path $bindingTools 'Set-HermesSharedPython.ps1'),$hermesShim,(New-Object Text.UTF8Encoding $true))
+  & $sharedClone -Python $python -Apply -Scope User | Out-Null
+  if (-not (Test-Path -LiteralPath $bindingMarker) -or [IO.File]::ReadAllText($bindingMarker) -cne 'bound') { throw 'Direct User setup stopped binding Hermes by default.' }
+  [IO.File]::Delete($bindingMarker)
+  & $sharedClone -Python $python -Apply -Scope User -SkipHermesBinding | Out-Null
+  if (Test-Path -LiteralPath $bindingMarker) { throw 'Skipping Hermes binding still ran the Hermes configuration writer.' }
+  if ([UabsSharedPythonTestEnvironment]::GetEnvironmentVariable('UABS_PYTHON','User') -ine $python -or
+      [UabsSharedPythonTestEnvironment]::GetEnvironmentVariable('UV_PYTHON','User') -ine $python -or
+      [UabsSharedPythonTestEnvironment]::GetEnvironmentVariable('UV_PYTHON_DOWNLOADS','User') -cne 'never') { throw 'Skipping Hermes prevented shared User runtime setup.' }
+  if ([UabsSharedPythonTestEnvironment]::GetEnvironmentVariable('Path','User') -cne $fakeUserPath -or
+      [UabsSharedPythonTestEnvironment]::GetEnvironmentVariable('PYTHON_MANAGER_DEFAULT','User') -cne 'keep-my-manager-version') { throw 'User setup changed unrelated PATH or manager version preferences.' }
   'SHARED PYTHON GATE: PASS'
 } finally {
   foreach($key in $keys){[Environment]::SetEnvironmentVariable($key,$saved[$key],'Process')}

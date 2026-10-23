@@ -67,7 +67,7 @@
   Report what would change and exit.
 
 .PARAMETER Uninstall
-  Remove all three bundle controls from every provider.
+  Remove all three bundle controls from the selected providers.
 #>
 [CmdletBinding()]
 param(
@@ -117,13 +117,16 @@ $gates = @(
   @{ Name = 'assumption_gate.py';   Matcher = 'Bash|Shell|Terminal|PowerShell|run_command|execute_command|Write|Edit|MultiEdit|NotebookEdit|write_file|create_file|str_replace.*'; AllTools = $true; Stop = $true }
   @{ Name = 'rtk_safe_hook.py';     Matcher = 'Bash|Shell|Terminal|PowerShell|run_command|execute_command'; AllTools = $false; Stop = $false }
 )
-$managedHookNames = @($gates | ForEach-Object { [regex]::Escape($_.Name) }) -join '|'
 foreach ($g in $gates) {
   if (-not (Test-Path -LiteralPath (Join-Path $hooksSrc $g.Name))) { throw "$($g.Name) not found under $hooksSrc" }
 }
 
 $installRoot = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\hooks'
 $marketRoot  = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\codex-marketplace'
+# hermes_wire.py inherits this process. The retired folder name stays in
+# Get-UabsLegacyHookRoots; the wire script only receives the path.
+$legacyHookRoot = @(Get-UabsLegacyHookRoots) | Select-Object -First 1
+if ($legacyHookRoot) { $env:UABS_LEGACY_HOOK_ROOT = $legacyHookRoot }
 
 # Retirement must also work without Python and during uninstall/check-only.
 $codexHome = Get-UabsProviderHome -Provider Codex -Catalog (Get-UabsCatalog)
@@ -154,36 +157,99 @@ if (-not $python) {
   exit 0
 }
 
-# Files v6.8.0 wrote where the provider never looks. Removing them is part of the
-# fix: a hook file that is never read is worse than none, because it looks installed.
-$deadDrops = @(
-  (Join-Path $env:USERPROFILE '.codex\hooks\ultimate-bundle.json'),
-  (Join-Path $env:USERPROFILE '.kimi-code\hooks\ultimate-bundle.json'),
-  (Join-Path $env:USERPROFILE '.hermes\hooks\ultimate-bundle.json'),
-  # v6.8.1's installer wrote a Hermes config at the documented path. Hermes
-  # never reads it, so it is the same kind of dead weight.
-  (Join-Path $env:USERPROFILE '.hermes\config.yaml')
-)
+function Test-BundleHookCommand([string]$Command) {
+  # Recognize the generated command shape and the full owned script path.
+  # A personal completeness_gate.py elsewhere, or a chained custom command,
+  # is not ours to remove merely because the basename matches.
+  $shape = '^\s*(?:&\s+)?(?:"[^"]+"|''[^'']+''|[^\s"'']+)\s+(?:"(?<double>[^"]+)"|''(?<single>[^'']+)''|(?<plain>[^\s"'']+))\s+--(?:pre|stop)\s*$'
+  $match = [regex]::Match($Command, $shape)
+  if (-not $match.Success) { return $false }
+  $scriptPath = @('double','single','plain' | ForEach-Object { $match.Groups[$_].Value } | Where-Object { $_ }) | Select-Object -First 1
+  try { $scriptPath = [IO.Path]::GetFullPath($scriptPath.Replace('/','\')) } catch { return $false }
+  $hookRoots = @($installRoot) + @(Get-UabsLegacyHookRoots)
+  foreach ($root in @($hookRoots | Where-Object { $_ })) {
+    foreach ($gate in $gates) {
+      if ($scriptPath -ieq [IO.Path]::GetFullPath((Join-Path $root $gate.Name))) { return $true }
+    }
+  }
+  return $false
+}
+
+function Backup-ProviderHookFile([string]$Path) {
+  $item = Get-Item -LiteralPath $Path -Force -ErrorAction Stop
+  if ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) { throw ('Refusing to replace a linked hook file: ' + $Path) }
+  $backup = $Path + '.before-retired-' + [guid]::NewGuid().ToString('N') + '.bak'
+  [IO.File]::WriteAllBytes($backup, [IO.File]::ReadAllBytes($Path))
+  if ((Get-FileHash -LiteralPath $backup -Algorithm SHA256).Hash -cne (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash) {
+    throw ('Hook backup verification failed: ' + $Path)
+  }
+}
+
+function Test-EntireBundleHookDocument($Document) {
+  if (@($Document.PSObject.Properties.Name | Where-Object { $_ -ne 'hooks' }).Count -or -not $Document.hooks) { return $false }
+  $count = 0
+  foreach ($event in $Document.hooks.PSObject.Properties) {
+    if ($event.Name -notin @('PreToolUse','Stop')) { return $false }
+    foreach ($group in @($event.Value)) {
+      if (@($group.PSObject.Properties.Name | Where-Object { $_ -notin @('matcher','hooks') }).Count) { return $false }
+      foreach ($handler in @($group.hooks)) {
+        if (@($handler.PSObject.Properties.Name | Where-Object { $_ -notin @('type','command','timeout') }).Count -or
+            $handler.type -ne 'command' -or -not (Test-BundleHookCommand $handler.command)) { return $false }
+        $count++
+      }
+    }
+  }
+  return ($count -gt 0)
+}
+
+function Merge-ProviderHookDocument($Document, $NewBlock) {
+  if ($Document.PSObject.Properties.Name -notcontains 'hooks') {
+    if (-not $NewBlock) { return }
+    $Document | Add-Member -NotePropertyName hooks -NotePropertyValue ([pscustomobject]@{})
+  }
+  foreach ($evt in @('PreToolUse','Stop')) {
+    $remainingGroups = @()
+    $removed = $false
+    if ($Document.hooks.PSObject.Properties.Name -contains $evt) {
+      foreach ($group in @($Document.hooks.$evt)) {
+        if ($group.PSObject.Properties.Name -notcontains 'hooks') { $remainingGroups += $group; continue }
+        $remaining = @($group.hooks | Where-Object { -not (Test-BundleHookCommand $_.command) })
+        if ($remaining.Count -eq @($group.hooks).Count) { $remainingGroups += $group }
+        else {
+          $removed = $true
+          if ($remaining.Count) { $group.hooks = $remaining; $remainingGroups += $group }
+        }
+      }
+    }
+    if ($NewBlock) { $remainingGroups += @($NewBlock[$evt]) }
+    if (-not $NewBlock -and -not $removed) { continue }
+    if ($Document.hooks.PSObject.Properties.Name -contains $evt) { $Document.hooks.$evt = @($remainingGroups) }
+    elseif ($remainingGroups.Count) { $Document.hooks | Add-Member -NotePropertyName $evt -NotePropertyValue @($remainingGroups) }
+  }
+}
+
+# Retire only selected providers' proven bundle-only legacy hook drops. A Hermes
+# config.yaml can be a current user home and is never deleted as a legacy drop.
+$deadDrops = @($Providers | Where-Object { $_ -in @('Codex','Kimi','Hermes') } | ForEach-Object {
+  Join-Path (Get-UabsProviderHome -Provider $_ -Catalog (Get-UabsCatalog)) 'hooks\ultimate-bundle.json'
+})
 
 function Remove-DeadDrops {
   foreach ($d in $deadDrops) {
-    if (Test-Path -LiteralPath $d) {
-      # Only reclaim a config this pack created; never touch a user's own file.
-      if ($d -like '*config.yaml' -and ([IO.File]::ReadAllText($d)) -notmatch '_gate\.py') { continue }
-      if (-not $CheckOnly) { Remove-Item -LiteralPath $d -Force -ErrorAction SilentlyContinue }
-      Write-Host "  removed inert file: $d"
+    if (Test-Path -LiteralPath $d -PathType Leaf) {
+      $item = Get-Item -LiteralPath $d -Force
+      if ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) { continue }
+      try { $document = [IO.File]::ReadAllText($d) | ConvertFrom-Json } catch { continue }
+      if (-not (Test-EntireBundleHookDocument $document)) { continue }
+      if (-not $CheckOnly) { Backup-ProviderHookFile $d; Remove-Item -LiteralPath $d -Force }
+      Write-Host "  retired owned inert hook: $d"
     }
   }
 }
 
 function Get-HermesExe {
-  # Never assume ~/.hermes: a working install keeps its home wherever
-  # HERMES_HOME points, and on Windows that is under LOCALAPPDATA.
-  $cmd = (Get-Command hermes -ErrorAction SilentlyContinue).Source
-  if ($cmd) { return $cmd }
-  $venv = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'
-  if (Test-Path -LiteralPath $venv) { return $venv }
-  return $null
+  # Use the shared discovery rule for modern launchers and older source venvs.
+  return (Resolve-UabsProviderExe -Provider Hermes)
 }
 
 function New-HookBlock {
@@ -212,28 +278,29 @@ function New-HookBlock {
 
 if ($Uninstall) {
   Remove-DeadDrops
-  $g = Join-Path $env:USERPROFILE '.grok\hooks\ultimate-bundle.json'
-  if (Test-Path -LiteralPath $g) { if (-not $CheckOnly) { Remove-Item -LiteralPath $g -Force }; Write-Host "removed: $g" }
-  $s = Join-Path $env:USERPROFILE '.claude\settings.json'
-  if (Test-Path -LiteralPath $s) {
-    $json = [IO.File]::ReadAllText($s) | ConvertFrom-Json
-    if ($json.PSObject.Properties.Name -contains 'hooks') {
-      foreach ($evt in @('PreToolUse','Stop')) {
-        if ($json.hooks.PSObject.Properties.Name -contains $evt) {
-          $json.hooks.$evt = @($json.hooks.$evt | Where-Object {
-            -not ($_.hooks | Where-Object { $_.command -match $managedHookNames }) })
-        }
-      }
-      if (-not $CheckOnly) { Set-Utf8NoBom -Path $s -Text ($json | ConvertTo-Json -Depth 20) }
-      Write-Host "cleaned: $s"
+  foreach ($provider in @($Providers | Where-Object { $_ -in @('Claude','Grok') })) {
+    $relative = if ($provider -eq 'Claude') { 'settings.json' } else { 'hooks\ultimate-bundle.json' }
+    $target = Join-Path (Get-UabsProviderHome -Provider $provider -Catalog (Get-UabsCatalog)) $relative
+    if (-not (Test-Path -LiteralPath $target -PathType Leaf)) { continue }
+    $before = [IO.File]::ReadAllText($target)
+    $json = $before | ConvertFrom-Json
+    if ($provider -eq 'Grok' -and (Test-EntireBundleHookDocument $json)) {
+      if (-not $CheckOnly) { Backup-ProviderHookFile $target; Remove-Item -LiteralPath $target -Force }
+    } else {
+      $beforeSemantic = $json | ConvertTo-Json -Depth 32
+      Merge-ProviderHookDocument -Document $json -NewBlock $null
+      $after = $json | ConvertTo-Json -Depth 32
+      if (-not $CheckOnly -and $after -cne $beforeSemantic) { Backup-ProviderHookFile $target; Set-Utf8NoBom -Path $target -Text $after }
     }
+    Write-Host "cleaned selected provider: $target"
   }
-  $hx = Get-HermesExe
+  $hx = if ($Providers -contains 'Hermes') { Get-HermesExe } else { $null }
   if ($hx -and -not $CheckOnly -and (Test-Path -LiteralPath $wireSrc)) {
     foreach ($g in $gates) {
       $args = @($wireSrc, $hx, $python, (Join-Path $installRoot $g.Name), '--remove')
       if (-not $g.Stop) { $args += '--pre-only' }
-      & $python @args
+      Invoke-UabsHermesPython -HermesExe $hx -PythonArgs $args
+      if ($LASTEXITCODE -ne 0) { throw "Hermes hook removal failed for $($g.Name)." }
     }
   }
   Write-Host 'Codex: disable [plugins."completeness-gate@ultimate-bundle"] in ~/.codex/config.toml'
@@ -263,22 +330,13 @@ foreach ($p in $Providers) {
   switch ($p) {
 
     'Claude' {
-      $target = Join-Path $env:USERPROFILE '.claude\settings.json'
+      $target = Join-Path (Get-UabsProviderHome -Provider Claude -Catalog (Get-UabsCatalog)) 'settings.json'
       if (-not (Test-Path -LiteralPath (Split-Path -Parent $target))) { Write-Host 'Claude  not installed'; break }
       if ($CheckOnly) { Write-Host "Claude  would merge $target"; break }
       $json = if (Test-Path -LiteralPath $target) { [IO.File]::ReadAllText($target) | ConvertFrom-Json } else { [pscustomobject]@{} }
-      if ($json.PSObject.Properties.Name -notcontains 'hooks') { $json | Add-Member -NotePropertyName hooks -NotePropertyValue ([pscustomobject]@{}) }
-      foreach ($evt in @('PreToolUse','Stop')) {
-        $existing = @()
-        if ($json.hooks.PSObject.Properties.Name -contains $evt) {
-          $existing = @($json.hooks.$evt | Where-Object { -not ($_.hooks | Where-Object { $_.command -match $managedHookNames }) })
-        }
-        $merged = @($existing) + @($block[$evt])
-        if ($json.hooks.PSObject.Properties.Name -contains $evt) { $json.hooks.$evt = $merged }
-        else { $json.hooks | Add-Member -NotePropertyName $evt -NotePropertyValue $merged }
-      }
-      Copy-Item -LiteralPath $target -Destination "$target.bak-gate-$(Get-Date -Format yyyyMMdd-HHmmss)" -Force -ErrorAction SilentlyContinue
-      Set-Utf8NoBom -Path $target -Text ($json | ConvertTo-Json -Depth 20)
+      Merge-ProviderHookDocument -Document $json -NewBlock $block
+      if (Test-Path -LiteralPath $target -PathType Leaf) { Backup-ProviderHookFile $target }
+      Set-Utf8NoBom -Path $target -Text ($json | ConvertTo-Json -Depth 32)
       Write-Host "Claude  merged $($gates.Count) bundle controls into settings.json"
     }
 
@@ -293,10 +351,10 @@ foreach ($p in $Providers) {
       Repair-UabsGrokImpeccableHook -Path (Join-Path $dir 'impeccable.json')
       $grokBlock = New-HookBlock -Py $python -Root $installRoot -CallOperator
       $hookFile = Join-Path $dir 'ultimate-bundle.json'
-      $hookText = ([ordered]@{ hooks = $grokBlock }) | ConvertTo-Json -Depth 20
-      if ((Test-Path -LiteralPath $hookFile) -and [IO.File]::ReadAllText($hookFile) -ne $hookText) {
-        Copy-Item -LiteralPath $hookFile -Destination ($hookFile + '.bak-gate-' + (Get-Date -Format 'yyyyMMdd-HHmmssfff'))
-      }
+      $json = if (Test-Path -LiteralPath $hookFile -PathType Leaf) { [IO.File]::ReadAllText($hookFile) | ConvertFrom-Json } else { [pscustomobject]@{} }
+      Merge-ProviderHookDocument -Document $json -NewBlock $grokBlock
+      $hookText = $json | ConvertTo-Json -Depth 32
+      if (Test-Path -LiteralPath $hookFile -PathType Leaf) { Backup-ProviderHookFile $hookFile }
       Set-Utf8NoBom -Path $hookFile -Text $hookText
       Write-Host "Grok    wired ~/.grok/hooks/ultimate-bundle.json ($($gates.Count) controls, PowerShell call-operator form)"
     }

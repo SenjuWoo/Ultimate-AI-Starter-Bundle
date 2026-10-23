@@ -12,8 +12,8 @@
   The detector is the thing that decides that, so it is tested against a real
   filesystem rather than by reading the installer's source. Each case builds a
   throwaway USERPROFILE/LOCALAPPDATA, plants (or omits) the exact executables
-  Resolve-UabsProviderExe looks for, empties PATH so a real installation on the
-  build machine cannot leak into the answer, and compares the result.
+  installed desktop apps and CLI launchers, constrains PATH and Store discovery
+  so the build machine cannot leak into the answer, and compares the result.
 #>
 [CmdletBinding()]
 param([string]$PackRoot)
@@ -26,6 +26,30 @@ function Bad($m) { Write-Host "  FAIL $m" -ForegroundColor Red; $script:fail++ }
 
 . (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1')
 
+# Execute only the installer's pure provider-selection statements. Running the
+# full installer here would mutate the operator's settings and install tools.
+$aio = [IO.File]::ReadAllText((Join-Path $PackRoot 'INSTALL-AIO.ps1'))
+$parseTokens = $null; $parseErrors = $null
+$aioAst = [System.Management.Automation.Language.Parser]::ParseInput($aio, [ref]$parseTokens, [ref]$parseErrors)
+if ($parseErrors.Count) { throw 'INSTALL-AIO.ps1 does not parse.' }
+$selectionStart = $aioAst.EndBlock.Statements | Where-Object {
+    $_ -is [System.Management.Automation.Language.AssignmentStatementAst] -and $_.Left.Extent.Text -eq '$script:UabsAllProviders'
+} | Select-Object -First 1
+$selectionEnd = $aioAst.EndBlock.Statements | Where-Object {
+    $_ -is [System.Management.Automation.Language.AssignmentStatementAst] -and $_.Left.Extent.Text -eq '$script:UabsSkippedProviders'
+} | Select-Object -First 1
+if (-not $selectionStart -or -not $selectionEnd) { throw 'Cannot isolate installer provider selection.' }
+$selectionText = $aio.Substring($selectionStart.Extent.StartOffset, $selectionEnd.Extent.EndOffset - $selectionStart.Extent.StartOffset)
+$script:providerSelection = [scriptblock]::Create($selectionText + [Environment]::NewLine + '[pscustomobject]@{Providers=@($Providers);Skipped=@($script:UabsSkippedProviders);Source=$script:UabsProviderSource}')
+
+function Invoke-ProviderSelection {
+    param([string[]]$Providers=@(), [string[]]$Detected=@(), [switch]$AllProviders, [switch]$ToolsOnly)
+    # The detector itself is tested below against real files; this boundary
+    # supplies its result to the real selection branch without touching PATH.
+    function Get-UabsInstalledProviders { param([string[]]$Candidates) @($Detected) }
+    & $script:providerSelection
+}
+
 $sandboxRoot = Join-Path ([IO.Path]::GetTempPath()) ('uabs-provider-detect-' + [guid]::NewGuid().ToString('N'))
 
 # Executable layouts Resolve-UabsProviderExe knows, keyed by provider. Relative
@@ -36,13 +60,32 @@ $layout = @{
     Grok   = '.grok\bin\grok.exe'
     Kimi   = '.kimi-code\bin\kimi.exe'
     Hermes = 'LOCALAPPDATA:hermes\hermes-agent\venv\Scripts\hermes.exe'
+    Antigravity = 'LOCALAPPDATA:Programs\Antigravity\Antigravity.exe'
+    ClaudeDesktop = 'LOCALAPPDATA:AnthropicClaude\app-1.2.3\Claude.exe'
+    CodexDesktop = 'LOCALAPPDATA:OpenAI\Codex\Codex.exe'
+    CodexVersioned = 'LOCALAPPDATA:OpenAI\Codex\bin\37f54d68e5533a51\codex.exe'
+    CodexNative = 'LOCALAPPDATA:Programs\OpenAI\Codex\bin\codex.exe'
+    CodexNpm = 'APPDATA:npm\codex.cmd'
+    KimiUv = '.local\bin\kimi.exe'
+    HermesNative = 'LOCALAPPDATA:hermes\bin\hermes.exe'
+    CodexRedirected = 'AppData\Local\OpenAI\Codex\bin\37f54d68e5533a51\codex.exe'
+    ClaudeRedirected = 'AppData\Local\AnthropicClaude\app-1.2.3\Claude.exe'
 }
+
+# Current-user Store registrations are an external OS boundary; never inspect
+# the operator's real registrations while the filesystem fixture is selected.
+$script:testAppxPackages = @()
+function Get-UabsProviderAppxPackages { return @($script:testAppxPackages) }
 
 function Invoke-DetectionCase {
     param(
         [Parameter(Mandatory)][string]$Name,
         [string[]]$Present = @(),
         [string[]]$StaleHomes = @(),
+        [string[]]$CliAbsent = @(),
+        [string[]]$StoreApps = @(),
+        [switch]$StaleStore,
+        [switch]$VerifyCodexCli,
         # Not Mandatory: PowerShell 5.1 refuses to bind an empty array to a
         # mandatory parameter, and "detects nothing" is the most important case.
         [string[]]$Expected = @()
@@ -50,17 +93,21 @@ function Invoke-DetectionCase {
     $case = Join-Path $sandboxRoot ($Name -replace '[^A-Za-z0-9]', '-')
     $profileDir = Join-Path $case 'profile'
     $localDir = Join-Path $case 'local'
-    New-Item -ItemType Directory -Force -Path $profileDir, $localDir | Out-Null
+    $roamingDir = Join-Path $case 'roaming'
+    New-Item -ItemType Directory -Force -Path $profileDir, $localDir, $roamingDir | Out-Null
 
     foreach ($provider in $Present) {
         $rel = $layout[$provider]
         $full = if ($rel.StartsWith('LOCALAPPDATA:')) {
             Join-Path $localDir $rel.Substring('LOCALAPPDATA:'.Length)
+        } elseif ($rel.StartsWith('APPDATA:')) {
+            Join-Path $roamingDir $rel.Substring('APPDATA:'.Length)
         } else { Join-Path $profileDir $rel }
         New-Item -ItemType Directory -Force -Path (Split-Path -Parent $full) | Out-Null
-        # Content is irrelevant; the detector tests for a file, and planting a
-        # runnable stub would make this test depend on execution policy.
-        [IO.File]::WriteAllText($full, 'stub')
+        # Presence checks do not execute binaries; the npm fallback also gets
+        # one runnable version fixture to exercise Get-UabsCodexCli.
+        $content = if ($provider -eq 'CodexNpm') { "@echo off`r`necho codex-cli 1.2.3`r`nexit /b 0`r`n" } else { 'stub' }
+        [IO.File]::WriteAllText($full, $content)
     }
     # A config directory left behind by an uninstall must NOT read as installed.
     foreach ($provider in $StaleHomes) {
@@ -69,6 +116,7 @@ function Invoke-DetectionCase {
         $homeDir = switch ($provider) {
             'Claude' { '.claude' } 'Codex' { '.codex' } 'Grok' { '.grok' }
             'Kimi' { '.kimi-code' } 'Hermes' { '.hermes' }
+            'Antigravity' { '.gemini\antigravity' }
         }
         New-Item -ItemType Directory -Force -Path (Join-Path $profileDir $homeDir) | Out-Null
     }
@@ -76,17 +124,49 @@ function Invoke-DetectionCase {
     $savedProfile = $env:USERPROFILE
     $savedLocal = $env:LOCALAPPDATA
     $savedPath = $env:PATH
+    $savedRoaming = $env:APPDATA
     try {
         $env:USERPROFILE = $profileDir
         $env:LOCALAPPDATA = $localDir
+        $env:APPDATA = $roamingDir
         # Empty PATH: otherwise the build machine's own claude/codex/grok answer
         # for the sandbox and every case reports five.
         $env:PATH = Join-Path $case 'no-such-bin'
-        $got = @(Get-UabsInstalledProviders)
+        $script:testAppxPackages = @()
+        foreach ($app in $StoreApps) {
+            $installDir = Join-Path $case ('packages\' + $app)
+            New-Item -ItemType Directory -Force -Path $installDir | Out-Null
+            if (-not $StaleStore) { [IO.File]::WriteAllText((Join-Path $installDir 'AppxManifest.xml'), '<Package/>') }
+            $script:testAppxPackages += [pscustomobject]@{ Name=$app; InstallLocation=$installDir; IsFramework=$false }
+        }
+        $before = @(Get-ChildItem -LiteralPath $case -Recurse -Force | ForEach-Object FullName) -join '|'
+        $got = @(Get-UabsInstalledProviders -PathDirectories @())
+        if ($got.Count) {
+            $automatic = Invoke-ProviderSelection -Detected $got
+            if (($automatic.Providers -join ',') -ne ($Expected -join ',')) { Bad "$Name -> automatic selection added or dropped a provider" }
+            $explicit = Invoke-ProviderSelection -Providers $Expected -Detected @('Claude','Codex','Grok','Kimi','Hermes','Antigravity')
+            if (($explicit.Providers -join ',') -ne ($Expected -join ',')) { Bad "$Name -> explicit selection added or dropped a provider" }
+        }
+        if ($VerifyCodexCli) {
+            # Keep command lookup inside the same fixture even if the test
+            # machine has a provider in its persisted user/machine PATH.
+            function Get-UabsProviderPathDirectories { @() }
+            $cli = Get-UabsCodexCli
+            if (-not $cli -or $cli.Source -ne (Join-Path $roamingDir 'npm\codex.cmd')) {
+                Bad "$Name -> verified CLI resolver missed the native/npm fallback"
+            }
+        }
+        foreach ($provider in $CliAbsent) {
+            if (Resolve-UabsProviderExe -Provider $provider -PathDirectories @()) { Bad "$Name -> desktop app was treated as a usable $provider CLI" }
+        }
+        $after = @(Get-ChildItem -LiteralPath $case -Recurse -Force | ForEach-Object FullName) -join '|'
+        if ($before -ne $after) { Bad "$Name -> detection created or changed profile paths" }
     } finally {
         $env:USERPROFILE = $savedProfile
         $env:LOCALAPPDATA = $savedLocal
         $env:PATH = $savedPath
+        $env:APPDATA = $savedRoaming
+        $script:testAppxPackages = @()
     }
 
     $gotText = if ($got.Count) { ($got -join ',') } else { '(none)' }
@@ -101,6 +181,70 @@ try {
 
     Invoke-DetectionCase -Name 'only Claude installed' -Present @('Claude') -Expected @('Claude')
 
+    Invoke-DetectionCase -Name 'fresh Windows desktop-only Claude and Codex' `
+        -Present @('ClaudeDesktop', 'CodexDesktop') -CliAbsent @('Claude','Codex') -Expected @('Claude', 'Codex')
+
+    Invoke-DetectionCase -Name 'Codex app native versioned CLI is off inherited PATH' `
+        -Present @('CodexVersioned') -Expected @('Codex')
+
+    Invoke-DetectionCase -Name 'Codex official native location' -Present @('CodexNative') -Expected @('Codex')
+    Invoke-DetectionCase -Name 'Codex npm shim before process PATH refresh' -Present @('CodexNpm') -VerifyCodexCli -Expected @('Codex')
+    Invoke-DetectionCase -Name 'Kimi uv native launcher' -Present @('KimiUv') -Expected @('Kimi')
+    Invoke-DetectionCase -Name 'Hermes modern native launcher' -Present @('HermesNative') -Expected @('Hermes')
+    Invoke-DetectionCase -Name 'Microsoft Store Claude and Codex without CLIs' `
+        -StoreApps @('AnthropicPBC.Claude','OpenAI.Codex') -CliAbsent @('Claude','Codex') -Expected @('Claude','Codex')
+    Invoke-DetectionCase -Name 'unrelated Store package is not an AI provider' -StoreApps @('Unrelated.ClaudeNotes') -Expected @()
+    Invoke-DetectionCase -Name 'stale Store registration has no installed payload' -StoreApps @('OpenAI.Codex','Claude') -StaleStore -Expected @()
+    Invoke-DetectionCase -Name 'sandbox redirected LOCALAPPDATA still finds real profile apps' `
+        -Present @('ClaudeRedirected','CodexRedirected') -Expected @('Claude','Codex')
+
+    Write-Host '=== inherited and persisted PATH ===' -ForegroundColor Cyan
+    $pathRoot = Join-Path $sandboxRoot 'persisted-path'
+    $processBin = Join-Path $pathRoot 'inherited'
+    $machineBin = Join-Path $pathRoot 'machine'
+    $userBin = Join-Path $pathRoot 'new user bin'
+    New-Item -ItemType Directory -Force -Path $processBin, $machineBin, $userBin | Out-Null
+    [IO.File]::WriteAllText((Join-Path $machineBin 'claude.cmd'), '@echo fixture')
+    [IO.File]::WriteAllText((Join-Path $userBin 'codex.cmd'), '@echo fixture')
+    $inheritedPath = $env:PATH
+    $lookup = @(Get-UabsProviderPathDirectories -ProcessPath $processBin -MachinePath $machineBin -UserPath ('"' + $userBin + '";' + $processBin))
+    if (($lookup -join '|') -eq (@($processBin,$machineBin,$userBin) -join '|') -and $env:PATH -ceq $inheritedPath) {
+        Good 'PATH lookup combines current, machine and newly installed user entries without replacing process PATH'
+    } else { Bad 'PATH lookup omitted persisted entries, duplicated a directory or changed process PATH' }
+    try {
+        $env:PATH = $processBin
+        $persistedDirectories = @(Get-UabsProviderPathDirectories -ProcessPath '')
+        Refresh-ProcessPath
+        $refreshedDirectories = @($env:PATH -split ';')
+        if ($refreshedDirectories -contains $processBin -and
+            @($persistedDirectories | Where-Object { $refreshedDirectories -notcontains $_ }).Count -eq 0) {
+            Good 'Refresh-ProcessPath keeps inherited app CLI paths and adds persisted machine/user paths'
+        } else { Bad 'Refresh-ProcessPath dropped inherited app CLI paths or persisted paths' }
+    } finally { $env:PATH = $inheritedPath }
+    foreach ($entry in @(@{provider='Claude';expected=(Join-Path $machineBin 'claude.cmd')}, @{provider='Codex';expected=(Join-Path $userBin 'codex.cmd')})) {
+        $resolved = Resolve-UabsProviderExe -Provider $entry.provider -PathDirectories $lookup
+        if ($resolved -eq $entry.expected) { Good ($entry.provider + ' resolves through persisted PATH before app restart') }
+        else { Bad ($entry.provider + ' did not resolve through persisted PATH') }
+    }
+    $appxBin = Join-Path $pathRoot 'Microsoft\WindowsApps'
+    New-Item -ItemType Directory -Force -Path $appxBin | Out-Null
+    [IO.File]::WriteAllText((Join-Path $appxBin 'codex.exe'), 'desktop alias')
+    $savedProfile = $env:USERPROFILE; $savedLocal = $env:LOCALAPPDATA; $savedRoaming = $env:APPDATA
+    try {
+        $env:USERPROFILE = $pathRoot; $env:LOCALAPPDATA = $pathRoot; $env:APPDATA = $pathRoot
+        if (Resolve-UabsProviderExe -Provider Codex -PathDirectories @($appxBin)) { Bad 'Store desktop alias was accepted as a Codex CLI' }
+        else { Good 'Store desktop alias is excluded from runnable Codex CLI lookup' }
+    } finally { $env:USERPROFILE=$savedProfile; $env:LOCALAPPDATA=$savedLocal; $env:APPDATA=$savedRoaming }
+
+    foreach ($mask in 1..63) {
+        $combination = @()
+        $canonical = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity')
+        for ($index = 0; $index -lt $canonical.Count; $index++) {
+            if ($mask -band (1 -shl $index)) { $combination += $canonical[$index] }
+        }
+        Invoke-DetectionCase -Name ('all-six combination ' + $mask) -Present $combination -Expected $combination
+    }
+
     Invoke-DetectionCase -Name 'Claude plus Hermes under LOCALAPPDATA' `
         -Present @('Claude', 'Hermes') -Expected @('Claude', 'Hermes')
 
@@ -108,7 +252,7 @@ try {
     # AGENTS.md backups in it. Treating that folder as an install would keep
     # re-wiring a provider that was deliberately removed.
     Invoke-DetectionCase -Name 'uninstalled provider leaves a config folder' `
-        -Present @('Claude') -StaleHomes @('Kimi', 'Codex') -Expected @('Claude')
+        -Present @('Claude') -StaleHomes @('Kimi','Codex','Grok','Hermes','Antigravity') -Expected @('Claude')
 
     Invoke-DetectionCase -Name 'all five installed' `
         -Present @('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes') `
@@ -120,11 +264,8 @@ try {
         -Present @('Kimi', 'Claude', 'Grok') -Expected @('Claude', 'Grok', 'Kimi')
 
     Write-Host '=== installer honours the detector ===' -ForegroundColor Cyan
-    $aio = [IO.File]::ReadAllText((Join-Path $PackRoot 'INSTALL-AIO.ps1'))
     # Execute the installer's own normalization, including the single string
     # that powershell -File passes for a comma-separated component list.
-    $parseTokens = $null; $parseErrors = $null
-    $aioAst = [System.Management.Automation.Language.Parser]::ParseInput($aio, [ref]$parseTokens, [ref]$parseErrors)
     $componentSplit = $aioAst.Find({ param($node)
         $node -is [System.Management.Automation.Language.AssignmentStatementAst] -and
         $node.Left.Extent.Text -eq '$Components' -and $node.Right.Extent.Text -match '-split'
@@ -143,24 +284,27 @@ try {
             else { Bad ('wrong normalized components: ' + ($normalized -join ',')) }
         }
     }
-    # Single quotes: in a double-quoted PowerShell string `\$Providers` is not
-    # an escape -- backtick is -- so $Providers interpolates to empty and the
-    # pattern silently stops matching what it names.
-    if ($aio -match '(?m)^\s*\[string\[\]\]\$Providers\s*=\s*@\(\s*\)\s*,') {
-        Good '-Providers defaults to empty (auto-detect), not a hardcoded five'
-    } else {
-        Bad '-Providers no longer defaults to empty; a default list re-enables install-everything'
+    try { $unexpected = Invoke-ProviderSelection; Bad ('empty detection silently selected: ' + ($unexpected.Providers -join ',')) }
+    catch {
+        if ($_.Exception.Message -match 'No supported AI apps detected' -and $_.Exception.Message -match '-Providers' -and $_.Exception.Message -match '-AllProviders') {
+            Good 'empty detection stops before installation with explicit provider guidance'
+        } else { Bad ('empty detection failed unexpectedly: ' + $_.Exception.Message) }
     }
-    if ($aio -match 'Get-UabsInstalledProviders') { Good 'the installer calls the detector' }
-    else { Bad 'the installer does not call Get-UabsInstalledProviders' }
-    if ($aio -match '\$AllProviders') { Good '-AllProviders remains the explicit install-everything opt-in' }
-    else { Bad '-AllProviders opt-in is gone; a fresh-machine user has no way back' }
-    # A fresh machine detects nothing; falling through with an empty list would
-    # install nothing at all and report success.
-    if ($aio -match "none detected - bootstrapping all") {
-        Good 'an empty detection falls back to all five rather than installing nothing'
-    } else {
-        Bad 'no fallback when nothing is detected: a fresh machine would get an empty install'
+    $tools = Invoke-ProviderSelection -ToolsOnly
+    if ($tools.Providers.Count -eq 0) { Good 'tools-only with no detected providers keeps provider selection empty' }
+    else { Bad 'tools-only unexpectedly selected providers' }
+    $all = Invoke-ProviderSelection -AllProviders
+    if (($all.Providers -join ',') -eq 'Claude,Codex,Grok,Kimi,Hermes,Antigravity') { Good 'AllProviders explicitly selects all six' }
+    else { Bad 'AllProviders did not select all six canonical provider names' }
+    $normalized = Invoke-ProviderSelection -Providers @(' codex,CLAUDE ', 'Claude', 'antigravity')
+    if (($normalized.Providers -join ',') -eq 'Claude,Codex,Antigravity') { Good 'explicit choices split, trim, canonicalize case and deduplicate' }
+    else { Bad ('explicit provider normalization returned: ' + ($normalized.Providers -join ',')) }
+    foreach ($invalid in @(
+        @{Providers=@('Claude','Unknown');AllProviders=$false},
+        @{Providers=@('Codex');AllProviders=$true}
+    )) {
+        try { $null = Invoke-ProviderSelection @invalid; Bad 'invalid provider selection was accepted' }
+        catch { Good 'unknown names and conflicting explicit/all choices are rejected' }
     }
     # Run the actual updater against no-op fixture installers. No network,
     # credentials or real provider homes: check defaults and both forwarding paths.

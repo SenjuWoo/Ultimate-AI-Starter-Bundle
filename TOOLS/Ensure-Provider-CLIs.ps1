@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Bootstrap the five supported AI provider CLIs on a fresh Windows user profile.
+  Bootstrap the selected AI provider CLIs on a fresh Windows user profile.
 .DESCRIPTION
   Uses each provider's official Windows installer only when its command is absent,
   refreshes the current process PATH, and proves the executable starts. Existing
@@ -9,32 +9,19 @@
 #>
 [CmdletBinding()]
 param(
-  [string[]]$Providers = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity'),
+  [string[]]$Providers = @(),
   [switch]$CheckOnly
 )
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'UABS-Common.ps1')
 
 # -File turns Claude,Codex into one string on Windows PowerShell 5.1.
-$Providers = @($Providers | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+$Providers = @($Providers | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ } | Select-Object -Unique)
 $allowed = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity')
 foreach ($p in $Providers) { if ($allowed -notcontains $p) { throw "Unknown provider: $p" } }
-
-function Resolve-ProviderExe([string]$Provider) {
-  $name = $Provider.ToLowerInvariant()
-  $cmd = Get-Command $name -ErrorAction SilentlyContinue
-  if ($cmd) { return $cmd.Source }
-  $candidates = switch ($Provider) {
-    'Claude' { @((Join-Path $env:USERPROFILE '.local\bin\claude.exe')) }
-    'Codex'  { @((Join-Path $env:USERPROFILE '.local\bin\codex.exe'), (Join-Path $env:LOCALAPPDATA 'OpenAI\Codex\bin\codex.exe')) }
-    'Grok'   { @((Join-Path $env:USERPROFILE '.grok\bin\grok.exe')) }
-    'Kimi'   { @((Join-Path $env:USERPROFILE '.local\bin\kimi.exe'), (Join-Path $env:USERPROFILE '.kimi-code\bin\kimi.exe')) }
-    'Hermes' { @((Join-Path $env:LOCALAPPDATA 'hermes\bin\hermes.exe'), (Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe')) }
-    # Desktop app, no CLI on PATH: the install folder is the only signal.
-    'Antigravity' { @((Join-Path $env:LOCALAPPDATA 'Programs\antigravity\Antigravity.exe')) }
-  }
-  foreach ($c in $candidates) { if ($c -and (Test-Path -LiteralPath $c -PathType Leaf)) { return $c } }
-  return $null
+if (-not $Providers.Count) { $Providers = @(Get-UabsInstalledProviders) }
+if (-not $Providers.Count) {
+  throw 'No installed providers detected. Choose the providers to install explicitly with -Providers Claude,Codex (or another supported selection).'
 }
 
 function Invoke-VerifiedOfficialScript([string]$Provider,[string]$Url,[string[]]$ScriptArgs=@()) {
@@ -72,14 +59,34 @@ function Invoke-VerifiedOfficialScript([string]$Provider,[string]$Url,[string[]]
   }
 }
 
-# Claude and Kimi require Git Bash for their native Windows shell surfaces.
+# OpenAI documents npm as a supported Windows CLI installation method:
+# https://developers.openai.com/codex/enterprise/windows-deployment
+# The standalone script endpoint returned 404 on a fresh Windows install.
+# Use the official npm package instead of guessing another script URL. npm.cmd
+# avoids the unsigned npm.ps1 shim under Windows' normal execution policy.
+function Install-CodexCli {
+  $npm = Get-Command npm.cmd -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+  if (-not $npm) {
+    Write-UabsStep 'Codex requires npm - installing Node.js LTS'
+    if (-not (Install-UabsWinget @('OpenJS.NodeJS.LTS'))) { throw 'Node.js LTS installation failed; Codex CLI requires npm.' }
+    Refresh-ProcessPath
+    $npm = Get-Command npm.cmd -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+  }
+  if (-not $npm) { throw 'Node.js installation completed but npm.cmd cannot be found. Open a new PowerShell window and retry.' }
+  Write-UabsStep 'Codex official npm package'
+  & $npm.Source install -g '@openai/codex' | Out-Host
+  if ($LASTEXITCODE -ne 0) { throw "Codex npm installation failed with exit code $LASTEXITCODE." }
+}
+
+# Git Bash supports Claude's bundle hooks and Kimi's native shell surface.
+# A Codex-only or desktop-only selection does not need a Git installation here.
 Refresh-ProcessPath
-if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+if (($Providers -contains 'Claude' -or $Providers -contains 'Kimi') -and -not (Get-Command git -ErrorAction SilentlyContinue)) {
   if ($CheckOnly) { Write-Host 'Git would be installed with winget Git.Git' }
   elseif (-not (Install-UabsWinget @('Git.Git'))) { throw 'Git for Windows installation failed.' }
   Refresh-ProcessPath
 }
-if (-not $CheckOnly) {
+if (-not $CheckOnly -and ($Providers -contains 'Claude' -or $Providers -contains 'Kimi')) {
   $git = Get-Command git -ErrorAction SilentlyContinue
   if (-not $git) { throw 'Git installer completed but git is still not resolvable.' }
   & git --version | Out-Host
@@ -88,7 +95,6 @@ if (-not $CheckOnly) {
 
 $installers = @{
   Claude = 'https://claude.ai/install.ps1'
-  Codex  = 'https://chatgpt.com/codex/install.ps1'
   Grok   = 'https://x.ai/cli/install.ps1'
   Kimi   = 'https://code.kimi.com/kimi-code/install.ps1'
   Hermes = 'https://hermes-agent.nousresearch.com/install.ps1'
@@ -96,7 +102,7 @@ $installers = @{
 $results = @()
 foreach ($provider in $Providers) {
   Refresh-ProcessPath
-  $exe = Resolve-ProviderExe $provider
+  $exe = Resolve-UabsProviderExe -Provider $provider
   $installedNow = $false
   if (-not $exe) {
     if ($provider -eq 'Antigravity') {
@@ -105,11 +111,14 @@ foreach ($provider in $Providers) {
       Write-UabsWarn 'Antigravity: desktop app not installed (get it from antigravity.google); skipped'
       continue
     }
-    if ($CheckOnly) { Write-Host "$provider would install from $($installers[$provider])"; continue }
+    if ($CheckOnly) {
+      if ($provider -eq 'Codex') { Write-Host 'Codex would install with npm.cmd install -g @openai/codex (Node.js LTS if npm is missing)' }
+      else { Write-Host "$provider would install from $($installers[$provider])" }
+      continue
+    }
     $extra = if ($provider -eq 'Hermes') { @('-SkipSetup') } else { @() }
-    $oldCodexNonInteractive = $env:CODEX_NON_INTERACTIVE
-    if ($provider -eq 'Codex') { $env:CODEX_NON_INTERACTIVE = '1' }
-    try {
+    if ($provider -eq 'Codex') { Install-CodexCli }
+    else {
       try {
         Invoke-VerifiedOfficialScript -Provider $provider -Url $installers[$provider] -ScriptArgs $extra
       } catch {
@@ -117,15 +126,10 @@ foreach ($provider in $Providers) {
         Write-Warning "Claude native installer failed; trying Anthropic's official WinGet package. $($_.Exception.Message)"
         if (-not (Install-UabsWinget @('Anthropic.ClaudeCode'))) { throw 'Claude official script and WinGet fallback both failed.' }
       }
-    } finally {
-      if ($provider -eq 'Codex') {
-        if ($null -eq $oldCodexNonInteractive) { Remove-Item Env:CODEX_NON_INTERACTIVE -ErrorAction SilentlyContinue }
-        else { $env:CODEX_NON_INTERACTIVE = $oldCodexNonInteractive }
-      }
     }
     $installedNow = $true
     Refresh-ProcessPath
-    $exe = Resolve-ProviderExe $provider
+    $exe = Resolve-UabsProviderExe -Provider $provider
   }
   if (-not $exe) { throw "$provider installer returned but its executable cannot be found." }
   # Hermes --version fetches upstream; --help proves local startup without

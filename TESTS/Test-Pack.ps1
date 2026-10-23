@@ -15,6 +15,9 @@
 [CmdletBinding()]
 param(
     [string]$PackRoot,
+    # Dependency-rich disposable interpreter for tests only. Shared-runtime
+    # fixtures still resolve the real base Python from their own process.
+    [string]$TestPython,
     [switch]$IncludeLiveInstalls
 )
 
@@ -33,7 +36,7 @@ if (-not (Test-Path (Join-Path $PackRoot '_CANONICAL-SKILLS'))) {
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1')
 $fail = 0
-$pythonExe = Get-UabsPythonExecutable
+$pythonExe = if ($TestPython) { (Resolve-Path -LiteralPath $TestPython -ErrorAction Stop).ProviderPath } else { Get-UabsPythonExecutable }
 $py = if ($pythonExe) { [pscustomobject]@{ Source = $pythonExe } } else { $null }
 
 function Section($t) { Write-Host "`n=== $t ===" -ForegroundColor Cyan }
@@ -995,6 +998,18 @@ if (-not (Test-UabsPackPath $detectGate)) {
     } else {
         Bad ('provider detection gate failed:' + [Environment]::NewLine + ($detectOut.Trim()))
     }
+}
+
+foreach ($freshGate in @('Test-ProviderBootstrap.ps1','Test-WorkspaceSeeding.ps1','Test-InstallerPreservation.ps1','Test-ProviderHookScope.ps1','Test-DoctorProviderScope.ps1')) {
+    # PS5.1 wraps successful native stderr as ErrorRecords. Capture diagnostics
+    # without treating them as process failure; require exit 0 AND a final proof.
+    $freshEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+    try {
+        $freshOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot ('TESTS\' + $freshGate)) -PackRoot $PackRoot 2>&1 | Out-String
+        $freshCode = $LASTEXITCODE
+    } finally { $ErrorActionPreference = $freshEap }
+    if ($freshCode -eq 0 -and $freshOut -match 'GATE: PASS') { Good ($freshGate + ' passed') }
+    else { Bad ($freshGate + ':' + [Environment]::NewLine + $freshOut.Trim()) }
 }
 
 Section '17. Grok hook repair and effective discovery'
