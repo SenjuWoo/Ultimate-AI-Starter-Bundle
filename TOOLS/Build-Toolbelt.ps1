@@ -96,7 +96,7 @@ if ((Test-UabsGrokInheritsClaudeMcp) -and $grokOwn.Count -eq 0 -and $claudeIds.C
 
 $hx = Test-Has 'hermes'
 if (-not $hx) {
-  $cand = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'
+  $cand = Get-UabsHermesExecutable
   if (Test-Path -LiteralPath $cand) { $hx = $cand }
 }
 if ($hx) {

@@ -249,7 +249,7 @@
      "requires": {
       "command": "%USERPROFILE%\\.local\\bin\\serena.exe"
      },
-     "install_hint": "uv tool install -p 3.13 serena-agent==2.1.0 && serena init",
+     "install_hint": "uv tool install -p 3.14 serena-agent==2.1.0 && serena init",
      "upstream_setup": "serena setup {claude-code|codex|grok} registers Serena machine-wide for that client. This pack deliberately does not call it: a machine-wide registration is the cost this file exists to avoid.",
      "context_note": "--context trims the tool set to what the client does not already have. Serena 2.0.0 ships named contexts for claude-code, codex and grok; Kimi and Hermes have none, so they get the generic 'agent' context. --project pins the registration to the project it was written for; --project-from-cwd is used instead for a -Global registration, since one baked path would activate the wrong project everywhere else. --enable-web-dashboard false keeps Serena from opening a browser window and from leaving an HTTP listener on the machine. Upstream recommends leaving the dashboard on and setting --open-web-dashboard false instead; this pack does not start a local web server a user did not ask for, and uses TOOLS/Test-McpHandshake.ps1 for diagnosis.",
      "auto_install": {
@@ -262,7 +262,7 @@
          "tool",
          "install",
          "-p",
-         "3.13",
+         "3.14",
          "serena-agent==2.1.0"
         ]
        },

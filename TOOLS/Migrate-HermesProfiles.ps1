@@ -841,19 +841,20 @@ try {
   # Blender and Unity are uvx-served stdio MCP servers; both speak initialize
   # and tools/list without their editors running, but only a tool call that
   # reaches the live scene/editor proves the editor half is up.
-  $blenderArgs = @('--python', '3.11', 'mcp-for-blender@2.0.0')
+  $blenderArgs = @('--python', '3.14', 'mcp-for-blender@2.0.0')
   if ($catalog) {
     $blenderComp = @($catalog.components | Where-Object { $_.id -eq 'blender-mcp' }) | Select-Object -First 1
     $fromCatalog = if ($blenderComp) { @($blenderComp.npx_args | ForEach-Object { [string]$_ }) } else { @() }
-    if (@($fromCatalog | Where-Object { $_ -like '*mcp-for-blender@*' }).Count) { $blenderArgs = @('--python', '3.11') + $fromCatalog }
+    if (@($fromCatalog | Where-Object { $_ -like '*mcp-for-blender@*' }).Count) { $blenderArgs = @('--python', '3.14') + $fromCatalog }
   }
+  $blenderArgs = @(Resolve-UabsUvPythonArgs -Command 'uvx' -Arguments $blenderArgs)
   $blenderSpec = @{
     command = 'uvx'; args = $blenderArgs; enabled = $true; connect_timeout = 90
     env = @{ BLENDER_HOST = '127.0.0.1'; BLENDER_MCP_DISABLE_TELEMETRY = 'true'; BLENDER_MCP_SAFE_MODE = 'true' }
   }
   $unitySpec = @{
     command = 'uvx'
-    args = @('--python', '3.11', '--from', 'mcpforunityserver@10.2.0', 'mcp-for-unity', '--transport', 'stdio')
+    args = @(Resolve-UabsUvPythonArgs -Command 'uvx' -Arguments @('--python', '3.14', '--from', 'mcpforunityserver@10.2.0', 'mcp-for-unity', '--transport', 'stdio'))
     enabled = $true; connect_timeout = 90
     env = @{ UNITY_MCP_DISABLE_TELEMETRY = 'true' }
   }

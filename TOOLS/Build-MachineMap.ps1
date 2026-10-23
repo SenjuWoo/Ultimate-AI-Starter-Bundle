@@ -109,19 +109,10 @@ if ($gh) {
   if ($LASTEXITCODE -eq 0 -and $login -match '^[A-Za-z0-9-]+$') { Add 'GitHub account (gh)' @($login) }
 }
 
-# `python` on PATH is often the Microsoft Store stub ("Python was not found") although a real
-# Python is installed; every agent then burns calls finding out. Say so once, with the real
-# interpreter, and only on machines where it is true.
-$pyCmd = Get-Command python -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
-if ($pyCmd -and $pyCmd.Source -match '(?i)\\WindowsApps\\python') {
-  $realPython = $null
-  $pyLauncher = Get-Command py -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
-  if ($pyLauncher) {
-    $prev = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
-    try { $listed = @(& $pyLauncher.Source -0p 2>$null) } finally { $ErrorActionPreference = $prev }
-    $realPython = @($listed | ForEach-Object { if ([string]$_ -match '(?i)([A-Za-z]:\\[^\r\n]*python\.exe)') { $Matches[1] } } | Where-Object { $_ -notmatch '(?i)\\WindowsApps\\' }) | Select-Object -First 1
-  }
-  if ($realPython) { Add 'Python' @('`python` on PATH is the Microsoft Store stub; use `py -3` or ' + (Short $realPython)) }
+# Run Python: modern WindowsApps aliases may be the install manager, not a Store stub.
+$python = Get-UabsPythonExecutable
+if ($python) {
+  Add 'Python' @('Shared user runtime: ' + (Short $python) + '; use `python` on PATH or `UABS_PYTHON`. Reuse it; isolate tool dependencies with venv/uv, and do not download a second base interpreter. Embedded app runtimes stay app-owned.')
 }
 
 $text = "## Machine map (generated " + (Get-Date -Format 'yyyy-MM-dd') + " by the bundle installer; your own folders go in " + (Short (Join-Path $ProfileRoot 'PROFILE.md')) + ")`n" + ($lines -join "`n") + "`n"

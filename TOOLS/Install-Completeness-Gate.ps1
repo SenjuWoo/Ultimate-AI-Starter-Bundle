@@ -312,8 +312,8 @@ foreach ($p in $Providers) {
     'Hermes' {
       $hx = Get-HermesExe
       if (-not $hx) { Write-Host 'Hermes  not installed'; break }
-      $yamlPython = Get-UabsPythonExecutable -RequiredModules @('yaml')
-      if (-not $yamlPython) { throw 'Hermes hook wiring requires a working Python with PyYAML; none was found.' }
+      $yamlPython = Get-UabsPythonExecutable
+      if (-not $yamlPython) { throw 'Hermes hook wiring requires a working shared user Python; none was found.' }
       if (-not (Test-Path -LiteralPath $wireSrc)) { Write-Host 'Hermes  hermes_wire.py missing from pack'; break }
       if ($CheckOnly) { Write-Host "Hermes  would merge hooks into $(& $hx config path)"; break }
 
@@ -326,7 +326,7 @@ foreach ($p in $Providers) {
         if ($g.AllTools) { $args += '--all-tools' }
         if (-not $g.Stop) { $args += '--pre-only' }
         $args += '--approve'
-        & $yamlPython @args
+        Invoke-UabsHermesPython -HermesExe $hx -PythonArgs $args
         if ($LASTEXITCODE -ne 0) { throw "Hermes hook wiring failed for $($g.Name)." }
       }
       # Only the exact, self-tested bundle commands above are persisted. Never

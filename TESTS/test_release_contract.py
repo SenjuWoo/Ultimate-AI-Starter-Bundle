@@ -5856,7 +5856,7 @@ def test_maintenance_catalog_targets_remain_scoped() -> None:
     doctor = read(ROOT / "TOOLS/Test-Installed-State.ps1")
     assert "$startupProbe" in doctor and "failing bundle-owned catalog hook" in doctor
     wire = read(ROOT / "TOOLS/Install-Completeness-Gate.ps1")
-    assert "Get-UabsPythonExecutable -RequiredModules @('yaml')" in wire and "& $yamlPython @args" in wire
+    assert "Get-UabsPythonExecutable" in wire and "Invoke-UabsHermesPython -HermesExe $hx -PythonArgs $args" in wire
     starter = read(ROOT / "TOOLS/Install-Provider-Starter-Settings.ps1")
     inventory = starter.split("function Remove-UabsHermesLegacyOpenRouterExtra", 1)[1].split("function Install-UabsHermesOpenRouterCatalogShim", 1)[0]
     assert "$_ -isnot [System.Management.Automation.ErrorRecord]" in inventory

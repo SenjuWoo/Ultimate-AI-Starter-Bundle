@@ -26,8 +26,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 9131,
-  "sha256": "60c4436ec654f2695b541716d85f23e0df7a3e3e22362532043f65077a94d4eb"
+  "size": 9374,
+  "sha256": "4f655b9efb5c23c479ac7f02503b57800fe2c9b8fbef1d330ae355a6b5c959df"
  },
  {
   "path": ".gitignore",
@@ -6171,8 +6171,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10217,
-  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
+  "size": 10659,
+  "sha256": "8bff28aa299175e65e6a6e43415419e45ed226fb6bee268cccc05cf0263fa8bd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -12641,8 +12641,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10217,
-  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
+  "size": 10659,
+  "sha256": "8bff28aa299175e65e6a6e43415419e45ed226fb6bee268cccc05cf0263fa8bd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -19176,8 +19176,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10217,
-  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
+  "size": 10659,
+  "sha256": "8bff28aa299175e65e6a6e43415419e45ed226fb6bee268cccc05cf0263fa8bd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -25696,8 +25696,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10217,
-  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
+  "size": 10659,
+  "sha256": "8bff28aa299175e65e6a6e43415419e45ed226fb6bee268cccc05cf0263fa8bd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -32216,8 +32216,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10217,
-  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
+  "size": 10659,
+  "sha256": "8bff28aa299175e65e6a6e43415419e45ed226fb6bee268cccc05cf0263fa8bd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -38811,8 +38811,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10217,
-  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
+  "size": 10659,
+  "sha256": "8bff28aa299175e65e6a6e43415419e45ed226fb6bee268cccc05cf0263fa8bd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -39477,12 +39477,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 57358,
-  "sha256": "b2b6b4559fdc05ddb345541da8b035d5f36f708d531180bdb4c227f351abb7c7"
+  "sha256": "474e80097c1dc3c96abbbcddb68c9133b8e7befc78d28c8f4d1ee5ff512e7424"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1537,
-  "sha256": "f36af6f01ad12693b33df802d9a198cdcfc356c61d3b5a4706ea9509b965ae25"
+  "sha256": "fd0f631c178fe25d0ee06bf7d7514faa704be8f0ed093512a4b32e553c0e2ca4"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -39492,7 +39492,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 35729,
-  "sha256": "edc8284dc15d332302c587b60d7c12e22f7ad53abaa7deede4fb1306af3ac1fe"
+  "sha256": "3d16f4a8b4044f6272105a47f982d2fb7b11151c486db5fc40cd0f73768881eb"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -39610,9 +39610,9 @@
   "sha256": "2e7848961785eedda3702851d477d878cf01e98a61710ca50fe8b0aafcb28bef"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/uabs_toolbox-1.0.1-py3-none-any.whl",
-  "size": 14930,
-  "sha256": "d484db8b74a63c775f680ac9b866e1664ddc93c92deedff0338ea2e2212c0e22"
+  "path": "BUNDLED-TOOLS/offline/uabs_toolbox-1.0.2-py3-none-any.whl",
+  "size": 15471,
+  "sha256": "775e98000b2c88d19bda1620f51e88fb8d82744d620b2b2e3dfaafa0557292fc"
  },
  {
   "path": "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.c1dff21-py3-none-any.whl",
@@ -41887,7 +41887,7 @@
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/pyproject.toml",
   "size": 682,
-  "sha256": "81f15ab6adde8c1c5914409b7245521edaf33257d8b648194df630077140e7f2"
+  "sha256": "6603cb4ea81afb6209176c3a4e27dffe55e226b87cff3ad2534230bbae1fe714"
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/tests/fake_server.py",
@@ -41897,7 +41897,7 @@
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/uabs_toolbox/__init__.py",
   "size": 419,
-  "sha256": "8edeec056c8c8d2e684fb96e34615052e294e6248e0bbe723d2e7ccba8b62d50"
+  "sha256": "bf92c9eeadc9968385503dfc120c4b7b2919c633e5b871dadd7adc9ff72eff18"
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/uabs_toolbox/__main__.py",
@@ -41906,8 +41906,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/uabs_toolbox/catalog.py",
-  "size": 13116,
-  "sha256": "3a69d3f266e747efcf88a89c18822c79bcbeb6678d3c6a46f29d8a7d75a8ddc3"
+  "size": 14836,
+  "sha256": "3312149a90aae2ec69a6d112c3a7343d7f7619b5e7a60617a9ab3277c102fb12"
  },
  {
   "path": "BUNDLED-TOOLS/uabs-toolbox/uabs_toolbox/server.py",
@@ -43576,8 +43576,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 225086,
-  "sha256": "86b4313b8efa2a591a2542dba15db0c6d779d71bd456eb66eaf00724f493ad1a"
+  "size": 225238,
+  "sha256": "2659a89b96d3af55d3faaf4ebe18b1ccdec7dc9bd7d8e3e3696bed27f4741fc0"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43651,8 +43651,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 178562,
-  "sha256": "b98436780623b7bb42663c3d9a00a716dc28c766e0366d81b5eda452f05bce0c"
+  "size": 179892,
+  "sha256": "3efe68f356f7e9303abe01e93d6e87eee61616c6a23dcb1b7a8eea53b6e985ab"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43706,8 +43706,8 @@
  },
  {
   "path": "README.md",
-  "size": 66980,
-  "sha256": "006aba0ca754504e1f045fb0e3cf7f9f5a4cfa44e3d579c19c66a4ff62b2812e"
+  "size": 67551,
+  "sha256": "72dbe61d45fe61ad03aab9b0d8c56f2df164adc9fff7dd46b3bebe45cf8032ea"
  },
  {
   "path": "SECURITY.md",
@@ -43726,8 +43726,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 51507,
-  "sha256": "3c7845bbce87da85fbfb6b6ba6a633c2d9aaf87aa1ea6568de1f6b2a0b48bc83"
+  "size": 54119,
+  "sha256": "665d48f228653c311cf060f54b36b8423b5fdb5d1f243eabeb3c3d3a92f18454"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -43741,8 +43741,8 @@
  },
  {
   "path": "TESTS/Test-CodexHookRetirement.ps1",
-  "size": 17010,
-  "sha256": "c4c26255e4d064b21807bebe838e25818372790cbef2e5d2451d1544760060c8"
+  "size": 17135,
+  "sha256": "66b189a709ac4f9dd639f08f20dda42f4572aea59f56c6dccb5648b524afeb52"
  },
  {
   "path": "TESTS/Test-CodexPluginDedupe.ps1",
@@ -43786,8 +43786,8 @@
  },
  {
   "path": "TESTS/Test-HookPrerequisites.ps1",
-  "size": 6143,
-  "sha256": "7e7970c07b85896878170db4917d95a5be125c289ae1fe4fdbe86a90afe22fe5"
+  "size": 6238,
+  "sha256": "3b8c7a9afc101321ca0f4288fae548f62a608ecd512c00f601714b31332575fa"
  },
  {
   "path": "TESTS/Test-JsonCaseKeys.ps1",
@@ -43816,8 +43816,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 63635,
-  "sha256": "1e417b7946e560f1f985a4be12de43a6a8ba0dadb93461263a159f0ffc95020a"
+  "size": 64579,
+  "sha256": "f705c37fa8f291842ae3628c40a6a8e9c86f0ad596293fe6cfa26e35e6c06900"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -43848,6 +43848,11 @@
   "path": "TESTS/Test-SearchCollapse.ps1",
   "size": 7436,
   "sha256": "820779a261b709b78cc1ed313cfa9a6d44ad61d2a32dbb8f988fbaf1c3528391"
+ },
+ {
+  "path": "TESTS/Test-SharedPython.ps1",
+  "size": 4221,
+  "sha256": "0ea44558b487e0c36668148843258d8312572c1b13c94b76eae9d91ca2bc30cf"
  },
  {
   "path": "TESTS/Test-SillyTavernGateway.ps1",
@@ -44061,8 +44066,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 329238,
-  "sha256": "9bab138bbce54d3152d75b61035318bb0c89669a10bbb62b899cc7b0cd315377"
+  "size": 329248,
+  "sha256": "0f5b97fadb079d56acb7f4ed27646e98002f8ec4cd2853206cec08347ab4324c"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -44070,9 +44075,14 @@
   "sha256": "fbe713ec16ed81696073eaf635dc0189bb72245b441436e573c0726375d1e17e"
  },
  {
+  "path": "TESTS/test_shared_shell.py",
+  "size": 2998,
+  "sha256": "50f7d58d4a06713bcabaabbdbb7245c920170f5c87f0d408107f55b296ef7ef3"
+ },
+ {
   "path": "TESTS/test_toolbox.py",
-  "size": 11965,
-  "sha256": "e7cdbe4a94fac45852bf6d677a6a6ebd3c5a12698952e51555fab980d0eec1a8"
+  "size": 13191,
+  "sha256": "294965c4a2211e706fc3066cc61ec4eb179d6fa523e79c8f226be1a58ecfde0f"
  },
  {
   "path": "TESTS/test_universal_modder.py",
@@ -44081,8 +44091,8 @@
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
-  "size": 17060,
-  "sha256": "72c5220c9458db0a6bae71099cae634872035233c100326553e70750d3fd8faa"
+  "size": 16924,
+  "sha256": "9c4abd84e1072d932ec5f10fe98197d6b7ac3761cb54595926b100b9a14ecc3f"
  },
  {
   "path": "TOOLS/Backup-AiHistory.ps1",
@@ -44091,8 +44101,8 @@
  },
  {
   "path": "TOOLS/Build-MachineMap.ps1",
-  "size": 7822,
-  "sha256": "49c5e075b5a9b540d9dd2c5eab63bb28051276ff9acdb438f0318a09affb2801"
+  "size": 7120,
+  "sha256": "6ae172ef40a5d3584a24fa8d6e1254b82765942791fe777f522919d185ae66fe"
  },
  {
   "path": "TOOLS/Build-Release.ps1",
@@ -44101,8 +44111,8 @@
  },
  {
   "path": "TOOLS/Build-Toolbelt.ps1",
-  "size": 5828,
-  "sha256": "e2a246e56cf2833d4c1df89583b61d6b2c23874b43b636b0bcb72a95f7ebbec2"
+  "size": 5779,
+  "sha256": "f0f0fc4606c06b8ee77d087ea5044654f80c1ba993a72ffdad98b6b2229e1e21"
  },
  {
   "path": "TOOLS/Clean-StaleState.ps1",
@@ -44116,8 +44126,8 @@
  },
  {
   "path": "TOOLS/Ensure-Provider-CLIs.ps1",
-  "size": 8109,
-  "sha256": "af5f1c0e3b61773315ab1576c783f5cfeb850fd17d4163d16f8c9a7fe4c4c43d"
+  "size": 8392,
+  "sha256": "23975e5056f1866769fc1bc488be9cb65ef456b9140d9800eab2cc02b8ce8f65"
  },
  {
   "path": "TOOLS/Ensure-Tools.ps1",
@@ -44136,13 +44146,13 @@
  },
  {
   "path": "TOOLS/Install-Completeness-Gate.ps1",
-  "size": 17965,
-  "sha256": "e4f4b3abf27b5797d5c4392fbb04e95acd5a40532f21f451bd9ec4eed2818fec"
+  "size": 17975,
+  "sha256": "80b0dfdc0a7f8004a2a203979fdd338e1bb49150922da7e5fc0ceb588305f181"
  },
  {
   "path": "TOOLS/Install-Provider-Starter-Settings.ps1",
-  "size": 20031,
-  "sha256": "de3017050d7b34d65184740dc38dbf8383351311f23d22db03ef193c40e809e7"
+  "size": 20154,
+  "sha256": "bb99fa26decdc10f6f83b8df19b6e60817b58d77b52ad5c9452eaddc11361ba3"
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
@@ -44166,8 +44176,8 @@
  },
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
-  "size": 67872,
-  "sha256": "659f7c41d0e5eefb37f025edbe8968500f489e859bc6aa3ec16e729980a1e1e1"
+  "size": 68010,
+  "sha256": "45583ced171d07c7b3b15a9f6848888838a2fb1d0fcd8ff489b7a0ebcd4e6e1e"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -44180,9 +44190,19 @@
   "sha256": "d6eb5f43aed2138b8582d52b9efc90093ed2036ac2d2dfec230ce3ac58f51b0b"
  },
  {
+  "path": "TOOLS/Set-HermesSharedPython.ps1",
+  "size": 3664,
+  "sha256": "fd4a944fca81fc237ca47808991f538d03dee166f4f998516d5dfce1752289a9"
+ },
+ {
   "path": "TOOLS/Set-McpProfile.ps1",
-  "size": 56836,
-  "sha256": "fa6ca2bdb06b293305d7be84c19175739d6af93db77ba6d19fdd6c77940df646"
+  "size": 56915,
+  "sha256": "a9ccf95398f21f96dd449c09ea4c3eb820c5acbb0dc963bbeada0f1365b31267"
+ },
+ {
+  "path": "TOOLS/Set-SharedPython.ps1",
+  "size": 4159,
+  "sha256": "83f7e5b74cea5d2b750aaef85dfb611886d41553738c3c7ed127a8357953dbed"
  },
  {
   "path": "TOOLS/Setup-CodebaseMemory-Index.ps1",
@@ -44196,8 +44216,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 62318,
-  "sha256": "0d952597cfde073df709ad9920eebd7ded828c11cf0f00bd5a148fb939c8ce51"
+  "size": 62373,
+  "sha256": "40fca389505d4953a245e18c6b698631e900c133ee75245f37d636fd9715bbc8"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -44211,8 +44231,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 142943,
-  "sha256": "3144a502f88fa87d6b59fec608922da3dda662c719d8baa31a32d670d7eaf34b"
+  "size": 148735,
+  "sha256": "a339c49beaa498ad8245873f47e9bdec21de406bc3f3dec953a6f38fb1590315"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
@@ -44221,8 +44241,8 @@
  },
  {
   "path": "TOOLS/UABS-Mcp-Write.ps1",
-  "size": 49268,
-  "sha256": "d30f6f6825929431d4d3cc12850e5081e59ac61568929d4d7b2de92f2cecb45c"
+  "size": 49552,
+  "sha256": "a306bd8946b8da978d9186e3996527c86e3c0a701575d8bde98ee298e7854dd8"
  },
  {
   "path": "TOOLS/Update-From-GitHub.ps1",
@@ -50436,8 +50456,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/SKILL.md",
-  "size": 10217,
-  "sha256": "68ec6724c1a99275efcc4ff10d373ecce74bd53807d145bb0e72acbc61dd180a"
+  "size": 10659,
+  "sha256": "8bff28aa299175e65e6a6e43415419e45ed226fb6bee268cccc05cf0263fa8bd"
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/browser-cli.md",
@@ -50901,8 +50921,8 @@
  },
  {
   "path": "docs/AUDIT-2026-10-22.md",
-  "size": 4637,
-  "sha256": "dd077ef8dab168067ddc20bb440728c4b969420276ca2377f721d42ed9877380"
+  "size": 5058,
+  "sha256": "e777dfbe588d37ac5aa038c30fecc9b96cda3afcaddf0bb4d7597a322fd83f2d"
  },
  {
   "path": "docs/HERMES-MODELS.md",
@@ -51431,8 +51451,8 @@
  },
  {
   "path": "docs/history/V8.21.0-CHANGELOG.md",
-  "size": 837,
-  "sha256": "32f0e589a3bc2dc783843afb2e2b22f2f05a444b888d0a745e57b05229dd8fbb"
+  "size": 989,
+  "sha256": "747db48bda8e75e6b69e77a1ad0056c7675f0be90d2ee41f46b33154ad27ee23"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

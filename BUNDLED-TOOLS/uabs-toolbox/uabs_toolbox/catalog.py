@@ -78,7 +78,9 @@ def resolve_python() -> list[str] | None:
     if _PYTHON is not None:
         return _PYTHON or None
     flags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
-    for cand in (["py", "-3"], ["python"], ["python3"]):
+    selected = os.environ.get("UABS_PYTHON")
+    candidates = ([selected],) if selected else (["python"], ["python3"], ["py", "-3"])
+    for cand in candidates:
         exe = shutil.which(cand[0])
         if not exe:
             continue
@@ -92,6 +94,46 @@ def resolve_python() -> list[str] | None:
             return _PYTHON
     _PYTHON = []
     return None
+
+
+def shared_uv_args(command: str, args: list[str]) -> list[str]:
+    """Replace runner Python options while preserving options owned by the child CLI."""
+    selected = os.environ.get("UABS_PYTHON")
+    name = command.replace("\\", "/").rsplit("/", 1)[-1].lower().removesuffix(".exe")
+    start = 0
+    if name == "uv":
+        if args[:2] != ["tool", "install"]:
+            return args
+        start = 2
+    elif name != "uvx":
+        return args
+    if not selected:
+        return args
+    if not resolve_python():
+        raise ToolboxError("Selected shared Python is unavailable; repair it instead of downloading another runtime")
+    tail = []
+    runner, takes_value = True, False
+    i = start
+    while i < len(args):
+        part = args[i]
+        if runner and not takes_value:
+            if part in ("--python", "-p"):
+                i += 2
+                continue
+            if part.startswith("--python=") or part == "--no-python-downloads":
+                i += 1
+                continue
+            if not part.startswith("-") or part == "--":
+                runner = False
+            elif part in ("--from", "--with", "--with-editable", "--with-requirements", "--index",
+                          "--default-index", "--index-url", "--extra-index-url", "--exclude-newer",
+                          "--cache-dir", "--directory", "--project"):
+                takes_value = True
+        else:
+            takes_value = False
+        tail.append(part)
+        i += 1
+    return args[:start] + ["--python", selected, "--no-python-downloads"] + tail
 
 
 def _command_reason(command: str, project: str | None) -> str | None:
@@ -178,6 +220,7 @@ class Toolset:
         args = [expand(a, project) for a in argv]
         if any(a is None for a in args):
             raise ToolboxError(f"{self.id}: needs a project folder (pass project)")
+        args = shared_uv_args(command, args)
         env = dict(os.environ)
         env.update({str(k): str(v) for k, v in (s.get("env_static") or {}).items()})
         env.update({str(k): str(expand(v, project)) for k, v in (s.get("env") or {}).items()})

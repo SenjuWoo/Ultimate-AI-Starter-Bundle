@@ -33,7 +33,7 @@ function Resolve-Exe([string]$Provider) {
     'Codex'{@((Join-Path $env:USERPROFILE '.local\bin\codex.exe'),(Join-Path $env:LOCALAPPDATA 'OpenAI\Codex\bin\codex.exe'))}
     'Grok'{@((Join-Path $env:USERPROFILE '.grok\bin\grok.exe'))}
     'Kimi'{@((Join-Path $env:USERPROFILE '.local\bin\kimi.exe'),(Join-Path $env:USERPROFILE '.kimi-code\bin\kimi.exe'))}
-    'Hermes'{@((Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'))}
+    'Hermes'{@((Join-Path $env:LOCALAPPDATA 'hermes\bin\hermes.exe'), (Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'))}
     'Antigravity'{@((Join-Path $env:LOCALAPPDATA 'Programs\antigravity\Antigravity.exe'))}
   }
   foreach($c in $cands){if($c -and (Test-Path -LiteralPath $c -PathType Leaf)){return $c}}

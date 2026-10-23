@@ -627,6 +627,7 @@ function Invoke-UabsAutoInstall {
   foreach ($step in @($spec['steps'])) {
     $exe = Expand-UabsTemplate -Text $step['command'] -ProjectPath $ProjectPath
     $stepArgs = @(@($step['args']) | ForEach-Object { Expand-UabsTemplate -Text ([string]$_) -ProjectPath $ProjectPath })
+    $stepArgs = @(Resolve-UabsUvPythonArgs -Command $exe -Arguments $stepArgs)
     Write-Host ("      installing: {0} {1}" -f $exe, ($stepArgs -join ' ')) -ForegroundColor DarkGray
     if ($CheckOnly) { continue }
     # Redirecting a native command's stderr into the pipeline turns each line

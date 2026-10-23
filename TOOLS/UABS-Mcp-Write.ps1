@@ -36,6 +36,11 @@
   returns $null only for providers without a supported project-path mechanism.
 #>
 
+# Standalone consumers need the same runtime resolver as the main installer.
+if (-not (Get-Command Resolve-UabsUvPythonArgs -CommandType Function -ErrorAction SilentlyContinue)) {
+  . ([IO.Path]::Combine($PSScriptRoot, 'UABS-Common.ps1'))
+}
+
 # Windows PowerShell 5.1's `Set-Content -Encoding utf8` writes a UTF-8 BOM. A BOM
 # in a JSON config is a real hazard: a strict reader rejects the file outright.
 function Join-UabsPath {
@@ -589,7 +594,8 @@ function Resolve-UabsServerArgs {
   # Comma operator, not plain @(): `return` unrolls a pipeline, so a
   # one-argument server ('uvx blender-mcp') came back as a bare string and
   # was written into JSON as "args": "blender-mcp".
-  return ,@(@($argv) | ForEach-Object { Expand-UabsTemplate -Text ([string]$_) -ProjectPath $ProjectPath })
+  $expanded = @(@($argv) | ForEach-Object { Expand-UabsTemplate -Text ([string]$_) -ProjectPath $ProjectPath })
+  return ,@(Resolve-UabsUvPythonArgs -Command $Server['command'] -Arguments $expanded)
 }
 
 function Resolve-UabsServerEnv {
@@ -881,12 +887,11 @@ function Test-UabsHermesServerDeclared {
 
 function Get-UabsHermesPaths {
   $home_ = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-UabsPath $env:LOCALAPPDATA 'hermes' }
-  $exe = Join-UabsPath $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'
+  $exe = if (Test-UabsPath -LiteralPath $home_ -PathType Container) { Get-UabsHermesExecutable } else { $null }
   @{
     Home   = $home_
     Config = Join-UabsPath $home_ 'config.yaml'
     Exe    = $exe
-    Python = Join-UabsPath (Split-Path -Parent $exe) 'python.exe'
   }
 }
 
@@ -895,7 +900,7 @@ function Invoke-UabsHermesConfig {
      can block on Windows PowerShell 5.1. Drive its own config API instead. #>
   param([string]$Script, [hashtable]$EnvVars)
   $paths = Get-UabsHermesPaths
-  if (-not (Test-UabsPath -LiteralPath $paths.Python -PathType Leaf)) { throw 'Hermes Python runtime missing' }
+  if (-not $paths.Exe) { throw 'Hermes launcher missing' }
   $tmp = Join-UabsPath ([IO.Path]::GetTempPath()) ('uabs-hermes-' + [guid]::NewGuid().ToString('N') + '.py')
   $saved = @{}
   try {
@@ -904,7 +909,7 @@ function Invoke-UabsHermesConfig {
       Set-Item -Path ("Env:" + $k) -Value $EnvVars[$k]
     }
     Set-Utf8NoBom -Path $tmp -Text $Script
-    & $paths.Python $tmp
+    Invoke-UabsHermesPython -HermesExe $paths.Exe -PythonArgs @($tmp)
     if ($LASTEXITCODE -ne 0) { throw "Hermes MCP config update failed with exit code $LASTEXITCODE" }
   } finally {
     foreach ($k in $saved.Keys) {

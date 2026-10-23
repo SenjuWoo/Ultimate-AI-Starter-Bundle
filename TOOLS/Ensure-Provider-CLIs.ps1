@@ -29,7 +29,7 @@ function Resolve-ProviderExe([string]$Provider) {
     'Codex'  { @((Join-Path $env:USERPROFILE '.local\bin\codex.exe'), (Join-Path $env:LOCALAPPDATA 'OpenAI\Codex\bin\codex.exe')) }
     'Grok'   { @((Join-Path $env:USERPROFILE '.grok\bin\grok.exe')) }
     'Kimi'   { @((Join-Path $env:USERPROFILE '.local\bin\kimi.exe'), (Join-Path $env:USERPROFILE '.kimi-code\bin\kimi.exe')) }
-    'Hermes' { @((Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe')) }
+    'Hermes' { @((Join-Path $env:LOCALAPPDATA 'hermes\bin\hermes.exe'), (Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe')) }
     # Desktop app, no CLI on PATH: the install folder is the only signal.
     'Antigravity' { @((Join-Path $env:LOCALAPPDATA 'Programs\antigravity\Antigravity.exe')) }
   }
@@ -160,3 +160,6 @@ if (-not $CheckOnly) {
   $enc = New-Object System.Text.UTF8Encoding($false)
   [IO.File]::WriteAllText((Join-Path $reportDir 'provider-bootstrap.json'), ($results | ConvertTo-Json -Depth 6), $enc)
 }
+
+# Provider bootstrap can install Hermes after runtime setup; apply its shell route now.
+if (-not $CheckOnly -and $env:UABS_PYTHON -and $Providers -contains 'Hermes') { & (Join-Path $PSScriptRoot 'Set-HermesSharedPython.ps1') }

@@ -80,10 +80,23 @@ if ($py) {
     else { Good 'Universal Modder offline CLI and all-provider routing' }
     # The toolbox gate drives the real server over stdio, so it needs the MCP SDK
     # (CI installs the version the wheel pins).
-    $mcpSdk = (& $py.Source -c "from importlib.metadata import version; print(version('mcp'))" 2>$null | Out-String).Trim()
-    if (-not $mcpSdk) { Bad 'toolbox gate needs the MCP SDK in this Python: python -m pip install mcp==1.30.0' }
+    $mcpPython = $py.Source
+    $probeArgs = @('-c', "from importlib.metadata import version; print(version('mcp'))")
+    $mcpSdk = (Get-UabsNativeStdout -Exe $mcpPython -CmdArgs $probeArgs | Out-String).Trim()
+    # Reuse the installed toolbox dependency env; keep the shared base clean.
+    if (-not $mcpSdk -and (Get-Command uv -ErrorAction SilentlyContinue)) {
+      $toolDir = @(Get-UabsNativeStdout -Exe 'uv' -CmdArgs @('tool','dir')) | Select-Object -Last 1
+      if ($toolDir) {
+        $candidate = Join-Path $toolDir 'uabs-toolbox\Scripts\python.exe'
+        if (Test-Path -LiteralPath $candidate -PathType Leaf) {
+          $mcpPython = $candidate
+          $mcpSdk = (Get-UabsNativeStdout -Exe $mcpPython -CmdArgs $probeArgs | Out-String).Trim()
+        }
+      }
+    }
+    if (-not $mcpSdk) { Bad 'toolbox gate needs the installed toolbox environment or mcp==1.30.0 in the test environment' }
     else {
-        $tbOut = & $py.Source (Join-Path $PackRoot 'TESTS\test_toolbox.py') 2>&1 | Out-String
+        $tbOut = & $mcpPython (Join-Path $PackRoot 'TESTS\test_toolbox.py') 2>&1 | Out-String
         if ($LASTEXITCODE -ne 0) { Bad ('toolbox gate failed (mcp ' + $mcpSdk + '):' + [Environment]::NewLine + $tbOut.Trim()) }
         else { Good ('On-demand toolbox: find/describe/call, parked entries, project sets, crash restart (mcp ' + $mcpSdk + ')') }
     }
@@ -100,6 +113,8 @@ else {
 if ($LASTEXITCODE -ne 0) { Bad 'Hook shell prerequisites failed' } else { Good 'Hook shell prerequisites' }
 & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-CodexPluginDedupe.ps1') -PackRoot $PackRoot
 if ($LASTEXITCODE -ne 0) { Bad 'Codex duplicate plugin repair failed' } else { Good 'Codex duplicate plugin repair' }
+& (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-SharedPython.ps1') -PackRoot $PackRoot
+if ($LASTEXITCODE -ne 0) { Bad 'Shared Python selection failed' } else { Good 'Shared Python selection' }
 $offlineUpdateOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-OfflineUpdate.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $offlineUpdateOut -match 'OFFLINE UPDATE GATE: PASS') { Good 'Offline updater preserves pinned payloads on candidate mismatch' }
 else { Bad ('Offline update gate failed:' + [Environment]::NewLine + $offlineUpdateOut) }

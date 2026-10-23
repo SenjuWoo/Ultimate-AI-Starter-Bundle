@@ -137,7 +137,7 @@ function Copy-UabsStarterIfMissing {
 function Merge-UabsHermesEfficiencyDefaults {
   param([string]$Dest)
   if (-not (Test-Path -LiteralPath $Dest -PathType Leaf)) { return }
-  $exe = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'
+  $exe = Get-UabsHermesExecutable
   if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) {
     Write-UabsWarn 'Hermes config exists but the official CLI is unavailable; efficiency defaults were not merged'
     return
@@ -171,13 +171,13 @@ function Merge-UabsHermesEfficiencyDefaults {
   # every install (measured 2026-10-20). If that internal API ever moves, the
   # per-key CLI loop below runs instead.
   $missing = $null
-  $python = Join-Path (Split-Path -Parent $exe) 'python.exe'
+  $python = $exe
   if (Test-Path -LiteralPath $python -PathType Leaf) {
     $env:UABS_HERMES_KEYS = ConvertTo-Json -InputObject @($defaults.Keys) -Compress
     $prevEap = $ErrorActionPreference
     $ErrorActionPreference = 'Continue'
     try {
-      $batch = (& $python -c "import json, os; from hermes_cli import config as hc; cfg = hc.load_config(); print(json.dumps([k for k in json.loads(os.environ['UABS_HERMES_KEYS']) if hc._get_nested(cfg, k) is hc._MISSING]))" 2>$null | Out-String).Trim()
+      $batch = (Invoke-UabsHermesPython -HermesExe $exe -PythonArgs @('-c',"import json, os; from hermes_cli import config as hc; cfg = hc.load_config(); print(json.dumps([k for k in json.loads(os.environ['UABS_HERMES_KEYS']) if hc._get_nested(cfg, k) is hc._MISSING]))") 2>$null | Out-String).Trim()
       # PS 5.1 ConvertFrom-Json emits a JSON array as ONE object ('[]' would be a
       # one-item list holding an empty array); the parentheses unroll it.
       if ($LASTEXITCODE -eq 0 -and $batch.StartsWith('[')) { $missing = @(($batch | ConvertFrom-Json) | ForEach-Object { [string]$_ } | Where-Object { $_ }) }
@@ -215,8 +215,8 @@ function Merge-UabsHermesEfficiencyDefaults {
 function Remove-UabsHermesLegacyOpenRouterExtra {
   param([string]$Dest)
   if (-not (Test-Path -LiteralPath $Dest -PathType Leaf)) { return }
-  $exe = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'
-  $python = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\python.exe'
+  $exe = Get-UabsHermesExecutable
+  $python = $exe
   if (-not (Test-Path -LiteralPath $python -PathType Leaf)) {
     Write-UabsWarn 'Hermes CLI unavailable; legacy openrouter-extra migration skipped'
     return
@@ -297,7 +297,7 @@ os.replace(tmp, path)
     try {
       $enc = New-Object System.Text.UTF8Encoding($false)
       [IO.File]::WriteAllText($tmp, $script, $enc)
-      & $python $tmp $Dest
+      Invoke-UabsHermesPython -HermesExe $exe -PythonArgs @($tmp,$Dest)
       if ($LASTEXITCODE -ne 0) { throw 'Hermes rejected the legacy provider migration' }
       Write-UabsOk 'Hermes: removed legacy openrouter-extra; native OpenRouter model discovery remains enabled'
     } finally {
@@ -310,7 +310,7 @@ os.replace(tmp, path)
   $stateMigration = Join-Path $PackRoot 'TOOLS\migrate_hermes_state_provider.py'
   if ((Test-Path -LiteralPath $stateDb -PathType Leaf) -and
       (Test-Path -LiteralPath $stateMigration -PathType Leaf)) {
-    $stateResult = (& $python $stateMigration $stateDb 2>&1 | Out-String).Trim()
+    $stateResult = (Invoke-UabsHermesPython -HermesExe $exe -PythonArgs @($stateMigration,$stateDb) 2>&1 | Out-String).Trim()
     if ($LASTEXITCODE -ne 0) { throw ('Hermes resumable-session provider migration failed: ' + $stateResult) }
     if ($stateResult -notmatch 'migrated=0') {
       Write-UabsOk ('Hermes resumable sessions migrated to native OpenRouter: ' + $stateResult)
@@ -322,8 +322,11 @@ function Install-UabsHermesOpenRouterCatalogShim {
   param([string]$Dest)
   if (-not (Test-Path -LiteralPath $Dest -PathType Leaf)) { return }
   $hermesRoot = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent'
-  $python = Join-Path $hermesRoot 'venv\Scripts\python.exe'
-  $sitePackages = Join-Path $hermesRoot 'venv\Lib\site-packages'
+  $exe = Get-UabsHermesExecutable
+  $python = $exe
+  $sitePackages = if ($exe) {
+    (Invoke-UabsHermesPython -HermesExe $exe -PythonArgs @('-c','from pathlib import Path; import yaml; print(Path(yaml.__file__).resolve().parent.parent)') | Out-String).Trim()
+  } else { '' }
   $src = Join-Path $PackRoot 'TOOLS\uabs_hermes_openrouter_catalog.py'
   if (-not (Test-Path -LiteralPath $python -PathType Leaf) -or
       -not (Test-Path -LiteralPath $sitePackages -PathType Container) -or
@@ -347,7 +350,7 @@ function Install-UabsHermesOpenRouterCatalogShim {
     Move-Item -LiteralPath $moduleTmp -Destination $moduleDest -Force
     Move-Item -LiteralPath $pthTmp -Destination $pthDest -Force
 
-    $probe = (& $python -c "import hermes_cli.models as m; print(bool(getattr(m.fetch_openrouter_models, '_uabs_live_catalog', False))); m.clear_provider_models_cache('openrouter')" 2>&1 | Out-String).Trim()
+    $probe = (Invoke-UabsHermesPython -HermesExe $exe -PythonArgs @('-c',"import hermes_cli.models as m; print(bool(getattr(m.fetch_openrouter_models, '_uabs_live_catalog', False))); m.clear_provider_models_cache('openrouter')") 2>&1 | Out-String).Trim()
     if ($LASTEXITCODE -ne 0 -or $probe -notmatch '(?m)^True$') {
       throw ('Hermes full OpenRouter discovery shim verification failed: ' + $probe)
     }

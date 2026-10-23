@@ -198,6 +198,28 @@ def main() -> int:
         write_state(state)
         anyio.run(run_gate, state, project)
         anyio.run(lifecycle_gate)
+        from uabs_toolbox import catalog
+        saved_selection = os.environ.get("UABS_PYTHON")
+        try:
+            os.environ["UABS_PYTHON"] = sys.executable
+            catalog._PYTHON = None
+            check(catalog.resolve_python() == [sys.executable], "toolbox ignored shared Python")
+            actual = catalog.shared_uv_args("uvx", ["--python", "3.11", "--from", "fixture", "child", "--python", "keep"])
+            check(actual == ["--python", sys.executable, "--no-python-downloads", "--from", "fixture", "child", "--python", "keep"], "toolbox rewrote child options")
+            os.environ["UABS_PYTHON"] = str(tmp / "missing-python.exe")
+            catalog._PYTHON = None
+            check(catalog.resolve_python() is None, "missing shared Python silently fell back")
+            try:
+                catalog.shared_uv_args("uvx", ["fixture"])
+                raise AssertionError("missing shared Python allowed launch")
+            except catalog.ToolboxError:
+                pass
+        finally:
+            if saved_selection is None:
+                os.environ.pop("UABS_PYTHON", None)
+            else:
+                os.environ["UABS_PYTHON"] = saved_selection
+            catalog._PYTHON = None
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     print("TOOLBOX GATE: PASS")

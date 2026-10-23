@@ -5,7 +5,7 @@ $ErrorActionPreference = 'Stop'
 if (-not $PackRoot) { $PackRoot = Split-Path -Parent $PSScriptRoot }
 . (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1')
 $fixture = Join-Path ([IO.Path]::GetTempPath()) ('uabs-codex-hooks-' + [guid]::NewGuid().ToString('N'))
-$savedLocal = $env:LOCALAPPDATA; $savedCodex = $env:CODEX_HOME; $savedPy = $env:SKYRIM_FORGE_PYTHON; $savedPath = $env:PATH
+$savedLocal = $env:LOCALAPPDATA; $savedCodex = $env:CODEX_HOME; $savedPy = $env:SKYRIM_FORGE_PYTHON; $savedPath = $env:PATH; $savedShared = $env:UABS_PYTHON
 $powerShell = (Get-Command powershell.exe -ErrorAction Stop).Source
 $python = Get-UabsPythonExecutable
 $shellDirectory = Get-UabsGitShellDirectory
@@ -78,11 +78,11 @@ try {
   Assert ($LASTEXITCODE -eq 0 -and [IO.File]::ReadAllText($config) -ceq $partial) 'Legacy-plugin cleanup crossed into an unrelated TOML table.'
   [IO.File]::WriteAllText($manifest, $before, $utf8)
   [IO.File]::WriteAllText($config, $trust, $utf8)
-  $env:PATH = ''; $env:SKYRIM_FORGE_PYTHON = ''
+  $env:PATH = ''; $env:SKYRIM_FORGE_PYTHON = ''; $env:UABS_PYTHON = $null
   $output = & $powerShell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TOOLS\Install-Completeness-Gate.ps1') -PackRoot $PackRoot -Providers Codex 2>&1 | Out-String
   Assert ($LASTEXITCODE -eq 0 -and $output.Contains('no working python found')) 'Missing-Python fixture did not exercise the skip path.'
   Assert (@(Repair-UabsCodexLegacyHooks -Path $manifest -CheckOnly).Count -eq 0 -and [IO.File]::ReadAllText($config) -ceq $trust.Replace('enabled = true','enabled = false')) 'Missing Python prevented legacy retirement.'
-  $env:PATH = $savedPath; $env:SKYRIM_FORGE_PYTHON = $python
+  $env:PATH = $savedPath; $env:SKYRIM_FORGE_PYTHON = $python; $env:UABS_PYTHON = $savedShared
   $oldBackup = Join-Path $env:CODEX_HOME 'hooks.json.before-retired-00000000000000000000000000000000.bak'
   [IO.File]::WriteAllText($oldBackup, 'old owned backup', $utf8)
   [IO.File]::SetLastWriteTimeUtc($oldBackup, [DateTime]'2000-01-01')
@@ -190,7 +190,7 @@ try {
   Assert ($refused -and [IO.File]::ReadAllText($manifest) -ceq '{invalid') 'Malformed JSON was overwritten.'
   Write-Host 'CODEX HOOK RETIREMENT GATE: PASS'
 } finally {
-  $env:LOCALAPPDATA = $savedLocal; $env:CODEX_HOME = $savedCodex; $env:SKYRIM_FORGE_PYTHON = $savedPy; $env:PATH = $savedPath
+  $env:LOCALAPPDATA = $savedLocal; $env:CODEX_HOME = $savedCodex; $env:SKYRIM_FORGE_PYTHON = $savedPy; $env:PATH = $savedPath; $env:UABS_PYTHON = $savedShared
   if (Test-Path -LiteralPath $fixture) {
     if (-not (Test-UabsPathWithin -Path $fixture -Root ([IO.Path]::GetTempPath()))) { throw 'Fixture cleanup escaped its temporary root.' }
     Remove-Item -LiteralPath $fixture -Recurse -Force

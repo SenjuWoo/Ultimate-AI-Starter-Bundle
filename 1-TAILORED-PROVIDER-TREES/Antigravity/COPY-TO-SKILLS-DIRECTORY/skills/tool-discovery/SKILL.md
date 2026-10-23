@@ -7,6 +7,14 @@ metadata:
 
 # Tool discovery (portable)
 
+Use the working user `python` on PATH (`UABS_PYTHON` when set). Probe it before
+installing anything; a WindowsApps alias may be the working Python install
+manager. Reuse this base for venv/uv dependencies with runtime downloads off.
+If a package rejects its version, report that compatibility conflict instead
+of silently downloading another interpreter. App-owned embedded runtimes stay
+with their app and do not become the shared Python.
+
+
 For browser work, use native tools first; the optional shell fallback is
 [Playwright CLI](references/browser-cli.md), installed without an MCP schema
 or a second skill-directory writer.

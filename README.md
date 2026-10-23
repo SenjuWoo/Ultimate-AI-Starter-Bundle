@@ -282,6 +282,15 @@ for evidence-based tuning without leaking machine paths or bloating context.
 Modes choose tool payloads, not a disconnected Windows environment. Missing
 runtimes, Python/npm dependencies and provider bootstrap can still need network.
 
+Setup reuses the working user Python; when none exists, Python's official
+install manager supplies its stable default. Setup records the selected
+runtime in the private machine map and binds uv tools to it with
+interpreter downloads disabled. Tools keep isolated dependency environments;
+this does not create another full Python installation. App-owned embedded
+runtimes stay with their app. A package/version conflict is reported instead
+of silently installing another interpreter. After replacing Python, run
+`TOOLS\Set-SharedPython.ps1 -Apply` and reopen agent apps.
+
 RTK OSS is deliberately pinned to **1.0.0** in both the installer and component
 updater: the narrow rewrite hook and measurements are version-specific. A
 new upstream release is not automatically treated as tested. RTK fallback

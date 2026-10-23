@@ -58,7 +58,8 @@ try {
   Assert (-not (Test-UabsPrivateRuntimePath 'C:\Users\u\AppData\Local\Programs\Python\Python312\python.exe')) 'A user Python was treated as private.'
   $realPy = Get-UabsPythonExecutable
   if ($realPy) {
-    $savedLocal = $env:LOCALAPPDATA; $savedForge = $env:SKYRIM_FORGE_PYTHON
+    $savedLocal = $env:LOCALAPPDATA; $savedForge = $env:SKYRIM_FORGE_PYTHON; $savedShared = $env:UABS_PYTHON
+    $env:UABS_PYTHON = $null
     try {
       $private = Join-Path $fixture '.cache\codex-runtimes\rt'
       New-Item -ItemType Directory -Path (Split-Path -Parent $private) -Force | Out-Null
@@ -71,7 +72,7 @@ try {
       $chosen = Get-UabsPythonExecutable
       Assert ($chosen -and -not (Test-UabsPrivateRuntimePath $chosen)) ('A private app runtime beat a user Python: ' + $chosen)
     } finally {
-      $env:LOCALAPPDATA = $savedLocal; $env:SKYRIM_FORGE_PYTHON = $savedForge; $env:PATH = $savedPath
+      $env:LOCALAPPDATA = $savedLocal; $env:SKYRIM_FORGE_PYTHON = $savedForge; $env:UABS_PYTHON = $savedShared; $env:PATH = $savedPath
       if (Test-Path -LiteralPath $private) { [IO.Directory]::Delete($private) }
     }
   }

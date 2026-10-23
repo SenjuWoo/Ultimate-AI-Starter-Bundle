@@ -241,7 +241,6 @@ foreach ($p in $Providers) {
   if ($p -eq 'Hermes') {
     $hpaths = Get-UabsHermesPaths
     if (-not (Test-Path -LiteralPath $hpaths.Exe -PathType Leaf)) { Write-Host 'Hermes  not installed, skipped'; continue }
-    if (-not (Test-Path -LiteralPath $hpaths.Python -PathType Leaf)) { Write-Host 'Hermes  Python runtime missing, skipped'; continue }
     if (Test-UabsHermesRetired -Literals $retiredLiterals) {
       $retired = @(Remove-UabsMcpHermes -Ids $serverIds -CheckOnly:$CheckOnly)
       if ($retired.Count) {

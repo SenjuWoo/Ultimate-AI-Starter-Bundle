@@ -4,7 +4,7 @@
 
 - Baseline 48097c7 (v8.20.1), clean checkout, moved owner folder verified.
 - Fixed toolbox ambiguous write replay (real fixture failed with two writes,
-  now one), hung-start cancellation and HTTP prerequisites; toolbox 1.0.1.
+  now one), hung-start cancellation and HTTP prerequisites; toolbox 1.0.2.
 - Offline updater now rejects bytes outside its reviewed manifest pin and
   propagates errors before InstallAfter; disposable real-file gate PASS.
 - Accepted Superpowers 7.0.1 (six vendored fixes + canonical routing preserved),
@@ -29,8 +29,44 @@
 - Late hold recheck: engine 0.1.16 still fails malformed script/style; Firecrawl
   3.34.1 audit 0 findings + integrity + credential-scrubbed handshake PASS.
   Replaced obsolete hold with a toolbox/project route and key prerequisite.
-- Remaining: exact-commit CI + security, deterministic archives,
-  publication/download hashes, skill sync/doctor and checkpoint.
+- Owner removed 3.15 and installed 3.14.9; verified python == py default,
+  only one registered shared base. Applied shared runtime policy with local
+  environment backup; uv automatic interpreter downloads disabled. Embedded
+  app runtimes are app-owned and are not removed.
+- Shared-runtime wiring now covers uv tool installs, project auto-install,
+  uvx profiles, Hermes creative profiles and toolbox launchers. Default
+  fresh runtime comes from the official stable default; existing user PATH
+  wins over Forge hints, and manager default/version choices are preserved.
+  Shared Python boundary gate PASS (runner vs child arguments, failure,
+  idempotence, rejection of a venv as shared base).
+- Toolbox 1.0.2 wheel built; catalog/offline pin updated. Machine-map generator
+  now probes the working install-manager alias instead of assuming Store stub.
+- Seven uv tools rebuilt against shared 3.14.9 and toolbox 1.0.2. Active
+  Hermes launcher uses its app-owned managed engine; its obsolete source venv
+  is not the active interpreter. Managed engines are not treated as a shared
+  base or deleted. Hermes config helpers now resolve the active launcher.
+- Real Hermes LocalEnvironment.execute returned code 0 and Python 3.14.9;
+  shell-init route applied to ten profiles, preserving unrelated config.
+  Hermes hooks now use shared user Python; hook wiring and starter API/shim
+  sync PASS. All six provider executable/startup probes PASS; auth/inference
+  not exercised. Live provider apps still need reopening to inherit settings.
+- Shared Python gate and toolbox stdio gate PASS. MCP profile gate PASS after
+  preventing a launcher on PATH from initializing an explicitly absent data
+  root. Old source tests failed on an accidental RTK pin edit; pin restored.
+- Final local contract runner 151/0; full Windows pack gate PASS. Real YAML
+  preservation/idempotence/malformed-input fixture PASS. Seven tool dependency
+  checks + five CLI help probes PASS; all six provider startup probes PASS.
+- Scoped installed sync completed; all six core MCP handshakes and doctor PASS.
+  Its registrar warned on a removed legacy property; both consumers are fixed
+  and the real Hermes registrar refresh now PASS. Native plugins/skills and
+  machine maps synced with personal model/trust/settings preserved.
+- Public fresh setup now uses the official Python install manager's stable
+  default (signed index dry-run selects 3.15.1), preserving existing versions;
+  no manager minor-version lock. CI covers shared Python 3.14 and 3.15. Explicit
+  project venvs retain priority inside Hermes terminal sessions.
+- Next: final sync/doctor, commit, exact-SHA CI/security, deterministic archives
+  and public download checks. v8.21.0 remains unpublished.
+
 
 
 ## v8.20.0: Tools/Modding folder review, mashup skill, UM refresh (2026-10-21, released)

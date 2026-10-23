@@ -201,8 +201,15 @@ function Get-UabsPythonExecutable {
      `python.exe`, and the AIO's Hermes install already carries a stable Python
      even when neither launcher is visible in the current process. #>
   $candidates = @()
-  if ($env:SKYRIM_FORGE_PYTHON) {
-    $candidates += [pscustomobject]@{ Source = $env:SKYRIM_FORGE_PYTHON; Prefix = @() }
+  # An explicitly selected shared runtime wins over app PATH and legacy Forge
+  # hints. Fail visibly if it was purged; never choose a different Python silently.
+  if ($env:UABS_PYTHON) {
+    try { $selected = @(Get-UabsNativeStdout -Exe $env:UABS_PYTHON -CmdArgs (@('-I','-c', 'import importlib,sys;[importlib.import_module(n) for n in sys.argv[1:]];print(sys.executable)') + @($RequiredModules))) }
+    catch { throw 'Configured UABS_PYTHON is unavailable; repair the selected shared runtime.' }
+    if ($LASTEXITCODE -ne 0 -or -not $selected.Count -or -not (Test-Path -LiteralPath $selected[-1] -PathType Leaf)) {
+      throw 'Configured UABS_PYTHON is unavailable or lacks the required modules; repair the shared runtime instead of downloading another one.'
+    }
+    return [string]$selected[-1]
   }
   foreach ($name in @('python', 'python3')) {
     $cmd = Get-Command $name -ErrorAction SilentlyContinue
@@ -210,6 +217,9 @@ function Get-UabsPythonExecutable {
   }
   $launcher = Get-Command py -ErrorAction SilentlyContinue
   if ($launcher) { $candidates += [pscustomobject]@{ Source = $launcher.Source; Prefix = @('-3') } }
+  if ($env:SKYRIM_FORGE_PYTHON) {
+    $candidates += [pscustomobject]@{ Source = $env:SKYRIM_FORGE_PYTHON; Prefix = @() }
+  }
   # Flattened with +=: two installed versions used to land as ONE array element.
   $knownPaths = @()
   $knownPaths += @(Get-ChildItem -Path (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python*\python.exe') -File -ErrorAction SilentlyContinue |
@@ -245,6 +255,95 @@ function Get-UabsPythonExecutable {
   return $privateFallback
 }
 
+function Get-UabsHermesExecutable {
+  # Modern Hermes publishes a launcher in bin; old installs used the source venv.
+  $found = Get-Command hermes -ErrorAction SilentlyContinue
+  if ($found) { return $found.Source }
+  foreach ($rel in @('hermes\bin\hermes.exe','hermes\hermes-agent\venv\Scripts\hermes.exe')) {
+    $path = Join-Path $env:LOCALAPPDATA $rel
+    if (Test-Path -LiteralPath $path -PathType Leaf) { return $path }
+  }
+  return $null
+}
+
+function Invoke-UabsHermesPython {
+  # Let the installed launcher choose its own dependency environment. The user
+  # Python remains the interpreter for shell work and bundle-owned hooks.
+  param([string[]]$PythonArgs, [string]$HermesExe)
+  if (-not $HermesExe) { $HermesExe = Get-UabsHermesExecutable }
+  if (-not $HermesExe) { throw 'Hermes launcher is unavailable.' }
+  $tmp = $null
+  try {
+    $module = 'runpy'; $childArgs = @($PythonArgs)
+    if ($PythonArgs[0] -eq '-c') {
+      $tmp = Join-Path ([IO.Path]::GetTempPath()) ('uabs-hermes-code-' + [guid]::NewGuid().ToString('N') + '.py')
+      [IO.File]::WriteAllText($tmp, $PythonArgs[1], (New-Object Text.UTF8Encoding $false))
+      $childArgs = @($tmp)
+      if ($PythonArgs.Count -gt 2) { $childArgs += $PythonArgs[2..($PythonArgs.Count-1)] }
+    } elseif ($PythonArgs[0] -eq '-m') {
+      $module = $PythonArgs[1]; $childArgs = @()
+      if ($PythonArgs.Count -gt 2) { $childArgs = @($PythonArgs[2..($PythonArgs.Count-1)]) }
+    }
+    $key = $HermesExe + '|' + $module
+    if (-not (Get-Variable UabsHermesRuntimeCache -Scope Script -ErrorAction SilentlyContinue)) { $script:UabsHermesRuntimeCache = @{} }
+    if (-not $script:UabsHermesRuntimeCache.ContainsKey($key)) {
+      $raw = @(Get-UabsNativeStdout -Exe $HermesExe -CmdArgs @('--print-runtime-command','--module',$module))
+      $runtime = $null
+      if ($LASTEXITCODE -eq 0) { try { $runtime = ($raw -join '') | ConvertFrom-Json } catch { } }
+      if ($runtime -isnot [array] -or $runtime.Count -lt 2 -or -not (Test-Path -LiteralPath $runtime[0] -PathType Leaf)) {
+        $legacy = Join-Path (Split-Path -Parent $HermesExe) 'python.exe'
+        if (-not (Test-Path -LiteralPath $legacy -PathType Leaf)) { throw 'Hermes cannot resolve its active Python environment.' }
+        $runtime = @($legacy)
+        if ($module -ne 'runpy') { $runtime += @('-m',$module) }
+      }
+      if ($module -eq 'runpy' -and $runtime.Count -gt 1) {
+        # The launcher exports a module bootstrap; use the same initialized
+        # environment for a script file through runpy's documented run_path API.
+        $call = "runpy.run_module('runpy', run_name='__main__', alter_sys=True)"
+        if ($runtime[-1] -notlike ('*' + $call + '*')) { throw 'Hermes script bootstrap format changed; adapter needs review.' }
+        $runtime[-1] = $runtime[-1].Replace($call, "runpy.run_path(sys.argv.pop(1), run_name='__main__')")
+      }
+      $script:UabsHermesRuntimeCache[$key] = @($runtime)
+    }
+    $runtime = $script:UabsHermesRuntimeCache[$key]
+    $exe = $runtime[0]; $prefix = @()
+    if ($runtime.Count -gt 1) { $prefix = @($runtime[1..($runtime.Count-1)]) }
+    $oldEncoding = [Console]::OutputEncoding
+    try {
+      [Console]::OutputEncoding = New-Object Text.UTF8Encoding $false
+      & $exe '-X' 'utf8' @prefix @childArgs
+    } finally { [Console]::OutputEncoding = $oldEncoding }
+  } finally {
+    if ($tmp -and (Test-Path -LiteralPath $tmp)) { Remove-Item -LiteralPath $tmp -Force }
+  }
+}
+
+function Resolve-UabsUvPythonArgs {
+  # Only runner options before the package/command belong to uv; keep child args intact.
+  param([string]$Command, [string[]]$Arguments)
+  $name = [IO.Path]::GetFileNameWithoutExtension($Command)
+  $start = 0
+  if ($name -ieq 'uv') {
+    if ($Arguments.Count -lt 2 -or $Arguments[0] -ne 'tool' -or $Arguments[1] -ne 'install') { return @($Arguments) }
+    $start = 2
+  } elseif ($name -ine 'uvx') { return @($Arguments) }
+  if (-not $env:UABS_PYTHON) { return @($Arguments) }
+  $python = Get-UabsPythonExecutable
+  $tail = @(); $runner = $true; $takesValue = $false
+  for ($i = $start; $i -lt $Arguments.Count; $i++) {
+    $part = $Arguments[$i]
+    if ($runner -and -not $takesValue) {
+      if ($part -in @('--python','-p')) { $i++; continue }
+      if ($part -like '--python=*' -or $part -eq '--no-python-downloads') { continue }
+      if (-not $part.StartsWith('-') -or $part -eq '--') { $runner = $false }
+      elseif ($part -in @('--from','--with','--with-editable','--with-requirements','--index','--default-index','--index-url','--extra-index-url','--exclude-newer','--cache-dir','--directory','--project')) { $takesValue = $true }
+    } else { $takesValue = $false }
+    $tail += $part
+  }
+  $prefix = @(); if ($start) { $prefix = @($Arguments[0..($start-1)]) }
+  return @($prefix + @('--python',$python,'--no-python-downloads') + $tail)
+}
+
 function Test-UabsPrivateRuntimePath([string]$Path) {
   <# True for interpreters an AI desktop app ships for itself (Codex keeps one
      under ~\.cache\codex-runtimes and %LOCALAPPDATA%\OpenAI\Codex\runtimes).
@@ -255,7 +354,8 @@ function Test-UabsPrivateRuntimePath([string]$Path) {
      (os.path.isjunction, mcp) and whose hooks break on the next app update. #>
   if (-not $Path) { return $false }
   return $Path -match '(?i)[\\/](\.cache[\\/]codex-runtimes|OpenAI[\\/]Codex[\\/]runtimes|AnthropicClaude[\\/]app-[^\\/]+)[\\/]' -or
-         $Path -match '(?i)[\\/]hermes-agent[\\/]venv[\\/]Scripts[\\/]python[0-9.]*\.exe$'
+         $Path -match '(?i)[\\/]hermes-agent[\\/]venv[\\/]Scripts[\\/]python[0-9.]*\.exe$' -or
+         $Path -match '(?i)[\\/]hermes[\\/](tools[\\/]python-[^\\/]+[\\/]python\.exe|installs[\\/].+[\\/]venv[\\/]Scripts[\\/]python\.exe)$'
 }
 
 function Test-UabsPathWithin([string]$Path, [string]$Root) {

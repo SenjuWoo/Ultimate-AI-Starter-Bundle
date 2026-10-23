@@ -559,10 +559,18 @@ if (-not $SkipRuntimes -and -not $SkillsOnly) {
   if ($needSdk8 -and -not (Install-UabsWinget @('Microsoft.DotNet.SDK.8'))) { throw '.NET 8 SDK installation failed.' } elseif (-not $needSdk8) { Write-UabsOk '.NET 8 SDK' }
   # Run the candidate, do not trust PATH: stock Windows 11 ships a python.exe alias
   # that only opens the Microsoft Store, and it counted as "Python present".
-  if (-not (Get-UabsPythonExecutable)) {
-    Write-UabsWarn 'Python not found (needed for Headroom/Forge) - attempting winget'
-    if (-not (Install-UabsWinget @('Python.Python.3.12'))) { throw 'Python 3.12 installation failed.' }
+  $runtimePython = Get-UabsPythonExecutable
+  if (-not $runtimePython -or (Test-UabsPrivateRuntimePath $runtimePython)) {
+    Write-UabsWarn 'No shared user Python found - installing the official Python install manager'
+    if (-not (Get-Command pymanager -ErrorAction SilentlyContinue)) {
+      if (-not (Install-UabsWinget @('Python.PythonInstallManager'))) { throw 'Python install manager installation failed.' }
+    }
+    Refresh-ProcessPath
+    $manager = Get-Command pymanager -ErrorAction Stop
+    if (-not (Invoke-UabsNative $manager.Source @('install','--yes','default'))) { throw 'Default stable Python installation failed.' }
   } else { Write-UabsOk 'Python present' }
+  # One user-owned base interpreter for all agents; uv keeps dependencies isolated.
+  & (Join-Path $PSScriptRoot 'TOOLS\Set-SharedPython.ps1') -Apply
   if (-not (Get-Command node -EA SilentlyContinue)) {
     Write-UabsWarn 'Node not found (CodeBurn + reasoning MCPs) - attempting winget LTS'
     if (-not (Install-UabsWinget @('OpenJS.NodeJS.LTS'))) { throw 'Node LTS installation failed.' }
@@ -1000,7 +1008,7 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
       }
 
       'Hermes' {
-        $hermesExe = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'
+        $hermesExe = Get-UabsHermesExecutable
         if (-not (Test-Path -LiteralPath $hermesExe -PathType Leaf)) {
           $hc = Get-Command hermes -EA SilentlyContinue
           if ($hc) { $hermesExe = $hc.Source } else { $hermesExe = $null }
@@ -1868,6 +1876,12 @@ if (-not $SkillsOnly) {
                 if ($uvCurrent -and $uvCurrent -ceq $uvWanted -and $activeHeadroom -and $activeHeadroom.Source) {
                   $null = Get-UabsNativeStdout -Exe $activeHeadroom.Source -CmdArgs @('--version')
                   $uvSkip = ($LASTEXITCODE -eq 0)
+                  if ($uvSkip -and $env:UABS_PYTHON) {
+                    $uvToolDir = @(Get-UabsNativeStdout -Exe $uv.Source -CmdArgs @('tool','dir')) | Select-Object -Last 1
+                    $toolPy = Join-Path $uvToolDir ($uvName + '\Scripts\python.exe')
+                    $toolBase = @(Get-UabsNativeStdout -Exe $toolPy -CmdArgs @('-I','-c','import sys;print(sys._base_executable)')) | Select-Object -Last 1
+                    $uvSkip = ($LASTEXITCODE -eq 0 -and $toolBase -ieq $env:UABS_PYTHON)
+                  }
                 }
                 if ($uvSkip) {
                   $ok = $true; $installMethod = 'uv-tool'; $hrInstalled = $activeHeadroom.Source
@@ -1883,7 +1897,9 @@ if (-not $SkillsOnly) {
                 }
                 $uvSpec = if ($asset -and $asset.EndsWith('.whl')) { $asset + $extras } else { $packageSpec }
                 $uvArgs = @('tool','install','--force')
-                if ($comp.python) { $uvArgs += @('--python', [string]$comp.python) }
+                if ($env:UABS_PYTHON) {
+                  $uvArgs += @('--python', (Get-UabsPythonExecutable), '--no-python-downloads')
+                } elseif ($comp.python) { $uvArgs += @('--python', [string]$comp.python) }
                 $ok = Invoke-UabsNative $uv.Source ($uvArgs + @($uvSpec))
                 if ($ok) {
                   $installMethod = 'uv-tool'
@@ -1894,6 +1910,9 @@ if (-not $SkillsOnly) {
                   }
                   Refresh-ProcessPath
                 }
+              }
+              if (-not $ok -and $env:UABS_PYTHON) {
+                throw "${id}: installation failed with the selected shared Python. No alternate interpreter was downloaded and no packages were added to the base runtime."
               }
               if (-not $ok -and $asset -and $asset.EndsWith('.whl') -and $py) {
                 Write-Host "  pip install $asset"
@@ -2430,7 +2449,7 @@ if (-not $SkillsOnly) {
             }
             'Hermes' {
               $hp = Get-UabsHermesPaths
-              if (Test-Path -LiteralPath $hp.Python -PathType Leaf) {
+              if ($hp.Exe -and (Test-Path -LiteralPath $hp.Exe -PathType Leaf)) {
                 $existingText = if (Test-Path -LiteralPath $hp.Config) { [IO.File]::ReadAllText($hp.Config) } else { '' }
                 $dupe = Find-UabsServerByPackage -ConfigText $existingText -PackageBase (Get-UabsNpxPackageBase -Arguments $npxArgs)
                 if ($dupe -and $dupe -ne $id) {
@@ -2827,7 +2846,7 @@ if (-not $ToolsOnly) {
       # and an absent Hermes CLI both skip. Without this the migration became a
       # warning on exactly the runs that skipped that block, and the profile
       # topology silently never landed.
-      $hermesGw = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'
+      $hermesGw = Get-UabsHermesExecutable
       if (-not (Test-Path -LiteralPath $hermesGw -PathType Leaf)) {
         $hermesCmd = Get-Command hermes -ErrorAction SilentlyContinue
         if ($hermesCmd) { $hermesGw = $hermesCmd.Source } else { $hermesGw = $null }
@@ -2984,7 +3003,7 @@ $state | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $stateDir 'install-sta
 # Relaunch Hermes only after every config write is done. The gateway rewrites
 # config.yaml from the copy it loaded at start, so it cannot be up during migration.
 if ($script:UabsHermesGatewayWasRunning) {
-  $hermesGw = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent\venv\Scripts\hermes.exe'
+  $hermesGw = Get-UabsHermesExecutable
   if (-not (Test-Path -LiteralPath $hermesGw -PathType Leaf)) {
     $hermesCmd = Get-Command hermes -ErrorAction SilentlyContinue
     if ($hermesCmd) { $hermesGw = $hermesCmd.Source } else { $hermesGw = $null }
