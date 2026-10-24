@@ -144,7 +144,7 @@ function Invoke-UabsHermes([string[]]$Arguments, [switch]$AllowMissing) {
 # get` masks credential-shaped fields (Hermes #84106) and the MCP map read here
 # is written back whole, so a token in an MCP env/header would have been
 # replaced by its mask.
-$script:UabsHermesReadKeys = @('mcp_servers', 'fallback_providers', 'plugins.enabled', 'plugins.disabled', 'model', 'model.aliases', 'auxiliary.vision', 'auxiliary.compression', 'moa')
+$script:UabsHermesReadKeys = @('mcp_servers', 'fallback_providers', 'plugins.enabled', 'plugins.disabled', 'model', 'model.aliases', 'auxiliary.vision', 'auxiliary.compression', 'moa', 'uabs.moa_vendor_default')
 $script:UabsHermesReadCache = @{}
 $script:UabsHermesReadScript = @'
 import json, os, sys
@@ -152,6 +152,9 @@ from hermes_cli import config as hc
 cfg = hc.load_config()
 missing = getattr(hc, "_MISSING", object())
 def get(key):
+    if key == 'uabs.moa_vendor_default':
+        # Compare every setting before granting permission to rewrite presets.
+        return 'moa' in cfg and cfg['moa'] == hc.DEFAULT_CONFIG.get('moa')
     if hasattr(hc, "_get_nested"):
         return hc._get_nested(cfg, key)
     node = cfg
@@ -463,7 +466,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
     }).Count) {
     return Get-UabsProfilePrefs 'default'
   }
-  $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @(); vision_chain = @(); compression = @{}; model = @{}; moa = @{} }
+  $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @(); vision_chain = @(); compression = @{}; model = @{}; moa = @{}; moa_vendor_default = $false }
   $fb = Invoke-UabsHermesConfigGet $Profile 'fallback_providers'
   if ($fb.Code -eq 0) {
     $json = @($fb.Output | ForEach-Object { [string]$_ } |
@@ -540,6 +543,8 @@ function Get-UabsProfilePrefs([string]$Profile) {
       Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
     if ($json) { $out.moa = ConvertTo-UabsPlain ($json | ConvertFrom-Json) }
   }
+  $fingerprint = Invoke-UabsHermesConfigGet $Profile 'uabs.moa_vendor_default'
+  $out.moa_vendor_default = $fingerprint.Code -eq 0 -and ($fingerprint.Output -join '').Trim() -ceq 'true'
   return $out
 }
 
@@ -622,13 +627,18 @@ function Get-MoaModelId([string]$Value) {
   return $v
 }
 
-function Get-MoaMigrationPlan([object]$Moa, [string]$MainProvider, [string]$MainModel) {
+function Get-MoaMigrationPlan([object]$Moa, [bool]$IsVendorDefault = $false, [string]$MainProvider, [string]$MainModel) {
   <#
     Returns $null when the MoA block is not the inherited vendor default, or a
     hashtable describing the replacement block when it is.
   #>
+  if (-not $IsVendorDefault) { return $null }
   $plain = ConvertTo-UabsPlain $Moa
   if (-not ($plain -is [System.Collections.IDictionary])) { return $null }
+  # Current Hermes stores defaults inside presets, without flattened slots.
+  if (-not $plain.Contains('aggregator') -and $plain['presets']) {
+    $plain = ConvertTo-UabsPlain $plain['presets']['default']
+  }
   $aggregator = ConvertTo-UabsPlain $plain['aggregator']
   if (-not ($aggregator -is [System.Collections.IDictionary])) { return $null }
   $aggModel = Get-MoaModelId ([string]$aggregator['model'])
@@ -676,6 +686,7 @@ function Ensure-UabsProfilePrefs([string]$Profile) {
   # aggregator. Only the vendor-default fingerprint is touched (see
   # Get-MoaMigrationPlan), so a profile the owner configured is kept verbatim.
   $moaMigration = Get-MoaMigrationPlan -Moa $current.moa `
+    -IsVendorDefault $current.moa_vendor_default `
     -MainProvider ([string]$current.model['provider']) -MainModel ([string]$current.model['default'])
   if ($moaMigration) {
     Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'moa' -Key 'moa' -Value $moaMigration `

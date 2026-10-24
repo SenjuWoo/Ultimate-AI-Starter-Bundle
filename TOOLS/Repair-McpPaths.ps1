@@ -36,13 +36,15 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'UABS-Common.ps1')
+$hermesRoot = Get-UabsProviderHome -Provider Hermes -Catalog (Get-UabsCatalog)
 
 $configs = @(
   @{ Name = 'Claude'; Path = (Join-Path $env:USERPROFILE '.claude.json') }
   @{ Name = 'Kimi';   Path = (Join-Path $env:USERPROFILE '.kimi-code\mcp.json') }
   @{ Name = 'Codex';  Path = (Join-Path $env:USERPROFILE '.codex\config.toml') }
   @{ Name = 'Grok';   Path = (Join-Path $env:USERPROFILE '.grok\config.toml') }
-  @{ Name = 'Hermes'; Path = (Join-Path $env:LOCALAPPDATA 'hermes\config.yaml') }
+  @{ Name = 'Hermes'; Path = (Join-Path $hermesRoot 'config.yaml') }
 )
 
 # Hermes stores one config per profile under profiles\<name>\config.yaml. The
@@ -50,7 +52,7 @@ $configs = @(
 # (which changes the hash folder under runtimes\cua_node) left every profile
 # copy pointing at the dead path while the installer still printed
 # "MCP command paths checked". Scan the profile copies too.
-$hermesProfileRoot = Join-Path $env:LOCALAPPDATA 'hermes\profiles'
+$hermesProfileRoot = Join-Path $hermesRoot 'profiles'
 if (Test-Path -LiteralPath $hermesProfileRoot -PathType Container) {
   foreach ($profileDir in @(Get-ChildItem -LiteralPath $hermesProfileRoot -Directory -ErrorAction SilentlyContinue)) {
     $profileCfg = Join-Path $profileDir.FullName 'config.yaml'
@@ -220,7 +222,7 @@ foreach ($c in $configs) {
   # Resolve only a hash folder whose replacement is unique, and only for the
   # two known layouts (cua_node\<hash> and Codex\bin\<hash>). Anything else is
   # reported by the file-path pass or left alone.
-  $rxHashRoot = [regex]'(?i)(?<p>[A-Za-z]:[\\/][^"''\r\n;]*?[\\/](?:cua_node|bin)[\\/](?<h>[0-9a-f]{16}))'
+  $rxHashRoot = [regex]'(?i)(?<p>[A-Za-z]:[\\/][^"''\r\n;]*?[\\/](?:cua_node|bin)[\\/](?<h>[0-9a-f]{16}))(?=[\\/;"''\r\n]|$)'
   $hashSeen = New-Object 'System.Collections.Generic.HashSet[string]'
   foreach ($m in [regex]::Matches($newText, $rxHashRoot)) {
     $deadRoot = $m.Groups['p'].Value
@@ -251,7 +253,9 @@ foreach ($c in $configs) {
     Write-Host (("{0,-7} REPOINT" -f $c.Name)) -ForegroundColor Yellow
     Write-Host ("          folder $deadStyled") -ForegroundColor DarkYellow
     Write-Host ("          to     $liveStyled") -ForegroundColor DarkYellow
-    $newText = $newText.Replace($deadStyled, $liveStyled)
+    # A complete hash reference must not rewrite a longer personal folder prefix.
+    $newText = [regex]::Replace($newText, [regex]::Escape($deadStyled) + '(?=[\\/;"''\r\n]|$)',
+      [System.Text.RegularExpressions.MatchEvaluator]{ param($match) $liveStyled })
     $changed = $true
     $repairs++
   }

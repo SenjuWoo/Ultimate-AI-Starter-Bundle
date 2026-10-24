@@ -1,3 +1,11 @@
+## 8.21.3
+
+- Preserve personal Hermes MoA presets, providers and slot settings by comparing
+  the complete block with the installed vendor default before migration.
+- Recognize nested vendor presets, honor custom Hermes homes during MCP repair,
+  and replace complete hash directory segments without changing longer names.
+- Extend isolated regression fixtures to cover those failures.
+
 ## 8.21.2
 
 - Install the Git/Bash prerequisite for every selected provider, including solo

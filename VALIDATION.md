@@ -1,3 +1,25 @@
+# v8.21.3 candidate validation
+
+Independent review corrected the v8.21.2 handoff's preservation claim: matching
+only top-level model IDs missed nested vendor defaults and permitted custom
+presets/providers to be overwritten. Whole-block equality against the installed
+vendor baseline now controls migration. Hash-directory discovery and replacement
+both require a complete path segment; repair resolves custom Hermes homes.
+
+Focused profile regressions PASS (Windows PowerShell 5.1, shared Python 3.14.9).
+Fixtures execute the actual config-read Python script, reject custom presets,
+providers and slot settings, preserve longer hash-like names, and verify module
+and trust paths in a custom home. HERMES_HOME is explicitly isolated in tests.
+Final full-gate, installed-state, CI and archive receipts are recorded in
+`artifacts/recovery/resume-8213-final.local.json` and STATE.md as they complete.
+
+Release contracts: 151 passed, 0 failed. Actual installed Hermes runtime:
+inherited-default recognition and personal-preset protection PASS on disposable
+configs. Frozen v8.21.2 source is rejected by the new fixtures. Live v8.21.3
+installer: exit 0, fifteen core MCP checks answered, installed-state doctor PASS;
+thirteen model/permission/MoA fingerprints unchanged after exact config backups.
+Log: `logs/install-20261024-180827.log` under the installed state root.
+
 # v8.21.2 validation
 
 Resumed review verified the v8.21.1 public archive bytes and exact-SHA CI,
