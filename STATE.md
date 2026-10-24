@@ -2,9 +2,15 @@
 
 ## Fresh Windows recovery (2026-10-23, v8.21.1 source gates)
 
-- This tree is v8.21.1. This commit is the release candidate. The GitHub
-  release is published from this commit after its checks pass. A download of
-  v8.21.0 does not contain these fixes.
+- Published v8.21.1 on 2026-10-24 from `8d9b9f9eb844dfcbae61c0315cadba9ee10d63ff`:
+  https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.21.1
+  Downloaded Core is 54973227 bytes, sha256
+  a551e46c10cc11d581fa30b8ff6f9e153f901c3d9444ef3b416e0de6039475ec.
+  Downloaded Full-Offline is 223348205 bytes, sha256
+  8c89e3f531052f68b7ed1bad3328bc9bdd169f6807aad5045da68e33643a8ea9.
+  Both match the local build and the GitHub asset digests. CI run 40057631687
+  and CodeQL run 40057630836 succeeded on that commit. Flags were clean.
+  Do not move the v8.21.1 tag. A download of v8.21.0 does not contain these fixes.
 - Failure that was fixed: an empty provider scan installed all six providers,
   then the old Codex PowerShell installer URL returned HTTP 404. A plain run
   now stops when no app is installed. Choose `-Providers Claude,Codex` or
