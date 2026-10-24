@@ -236,6 +236,14 @@ trap {
   Write-Host (' Tool output: ' + $script:UabsDetailsLog) -ForegroundColor Yellow
   Write-Host ' Running START-HERE.bat again is safe.' -ForegroundColor Yellow
   Write-Host '=====================================================' -ForegroundColor Red
+  # The details log is the file people open. A child Python failure used to
+  # land only in the transcript, so this file looked like nothing went wrong.
+  try {
+    if ($script:UabsDetailsLog) {
+      $failText = "==== INSTALL FAILED (" + (Get-Date -Format 'HH:mm:ss') + ")`r`n" + [string]$failure.Exception.Message + "`r`n" + [string]$failure.ScriptStackTrace + "`r`n"
+      [IO.File]::AppendAllText($script:UabsDetailsLog, $failText, (New-Object System.Text.UTF8Encoding($false)))
+    }
+  } catch {}
   $summary = @(
     'Ultimate AI Starter Bundle installation failed.'
     ('UTC: ' + [DateTime]::UtcNow.ToString('o'))

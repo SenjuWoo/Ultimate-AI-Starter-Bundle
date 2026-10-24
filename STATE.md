@@ -65,6 +65,38 @@
   updated environment. `cua_repl` stays unwired
   (`CUA_REPL_NODE_REPL_PATH` unset) and is not an always-on installer check.
   `pwsh.exe` is still not installed.
+- Plain `INSTALL-AIO.ps1` at 22:12 auto-detected Claude, Codex, Grok, Hermes,
+  and Antigravity, then stopped in Hermes shell setup. Hermes's Python has
+  `hermes_yaml` (ruamel) and no PyYAML, so `import yaml` aborted before any
+  profile write. `INSTALL-FAILED.txt` existed, but its message was only
+  "inspect its exact error" and the details log did not contain the Python
+  traceback.
+- The shell merger and Hermes hook wiring now use `hermes_yaml` round-trip
+  when PyYAML is missing. A failed child Python error is written into
+  `INSTALL-FAILED.txt` and the details log. On a copy of the live Hermes
+  config, comment lines stayed identical and only the shell init path was
+  added.
+- Plain `INSTALL-AIO.ps1` at 22:32 finished: `INSTALL COMPLETE (v8.21.1)`,
+  exit 0. Providers Claude, Codex, Grok, Hermes, Antigravity. Kimi was not
+  installed and was not touched. Always-on tools answered for all five.
+  Installed-state doctor PASS. Log:
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\logs\install-20261023-223239.log`.
+  Doctor report:
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\installed-state-doctor.json`.
+  Hermes native plugin install warned `error launching git: Access is denied`;
+  copied skills stayed. Public v8.21.1 archives are not published.
+- The hook-wiring round trip then inflated Hermes `config.yaml`: a CRLF source
+  dumped with the carriage return still in comment tokens, and the text-mode
+  write turned each of those into a blank line. Default config went from 2500
+  lines and 145 blanks to 4679 lines and 2277 blanks. Comment lines and values
+  stayed. The load now strips CR and the save writes one newline style.
+  Measured on a copy of the repaired file: 2547 lines to 2550 after one new
+  hook, blanks stayed 145, no doubled CR. Live default is 2547 lines, 145
+  blanks, shell init present, hook events `pre_tool_call` and `pre_verify`.
+  Six cloned profiles had the same extra blank under each comment; values
+  matched after that blank was removed. The SillyTavern profile was already
+  clean and was not rewritten. Pre-repair copies:
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups\hermes-blank-repair\20261023-225626291150`.
 - Notes below this heading describe the pre-reset machine and the v8.21.0
   release. They are not this install's result.
 

@@ -43576,8 +43576,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 226687,
-  "sha256": "61ce20b2f737f10e85c30558e1769f585829909da3a0fae313a4acac3025c283"
+  "size": 227203,
+  "sha256": "78b37477bba2dffb2f28209ea43bbba2917b0e4f3a75aaf54b63e8c5cb49208b"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43651,8 +43651,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 180218,
-  "sha256": "2ea7256f1e549679ddc6172af0c5b0efe958c5da1b76587c48dd7b4db5a0d318"
+  "size": 180721,
+  "sha256": "3c7f7bd32645fcc43f30a2f4c2b517a03827d13f07f04cbfda7f67a52b81e274"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43731,8 +43731,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 59644,
-  "sha256": "3bc7d7f2632a8ba3f6e3323025edad712a786d3172ffe21ce371944bb89f414e"
+  "size": 61818,
+  "sha256": "ba225acd9bdf547c54d2a80aa778e9ac3ca0599a5171639f05442c1eb1ea15c9"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -44106,8 +44106,8 @@
  },
  {
   "path": "TESTS/test_shared_shell.py",
-  "size": 2998,
-  "sha256": "50f7d58d4a06713bcabaabbdbb7245c920170f5c87f0d408107f55b296ef7ef3"
+  "size": 6561,
+  "sha256": "7145a92e59e4995b6235ba1be0c5e7f3ffe52c2556c1f10f51f4d34459b25a7e"
  },
  {
   "path": "TESTS/test_toolbox.py",
@@ -44186,8 +44186,8 @@
  },
  {
   "path": "TOOLS/Install-Provider-Starter-Settings.ps1",
-  "size": 20154,
-  "sha256": "bb99fa26decdc10f6f83b8df19b6e60817b58d77b52ad5c9452eaddc11361ba3"
+  "size": 20618,
+  "sha256": "cfb0d7584e57429469251a4f0108d7d15f2e3919d4f89131abd4875d4c064514"
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
@@ -44226,8 +44226,8 @@
  },
  {
   "path": "TOOLS/Set-HermesSharedPython.ps1",
-  "size": 3664,
-  "sha256": "fd4a944fca81fc237ca47808991f538d03dee166f4f998516d5dfce1752289a9"
+  "size": 7512,
+  "sha256": "7b901f414263234875c1f88d4189551fb159e47affc87913e92e50b7eee767c9"
  },
  {
   "path": "TOOLS/Set-McpProfile.ps1",
@@ -44266,8 +44266,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 154662,
-  "sha256": "4b7fac1a5f68d0993d51388ac2a7d9602358bec587f6fa2f407d1d8bd53678c2"
+  "size": 156039,
+  "sha256": "c51e8989d4429ea052915e9ff6d61efbb953e90526961d314b79715d6a7e61c5"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
@@ -44351,8 +44351,8 @@
  },
  {
   "path": "TOOLS/hooks/hermes_wire.py",
-  "size": 14489,
-  "sha256": "37b9a2e2e4e430d8ffbdb755dbb64bc2da3836145a175187ae0b5efe65aaa227"
+  "size": 20159,
+  "sha256": "9836c8b5bde2121db00a0cdb7ef717040c9bf2424d5dc96b48af960ceb9c87f4"
  },
  {
   "path": "TOOLS/hooks/plugin/.claude-plugin/marketplace.json",
@@ -44466,8 +44466,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2546,
-  "sha256": "ae3e846cc70fe317d225601ba8dbd2dc9296a169bfd2cb3f46afda0e4fcbce70"
+  "size": 3112,
+  "sha256": "89d6798cedaa8dab844c38e8857f9732022a536e28f01c9a03746a2e9341844e"
  },
  {
   "path": "VALIDATION.md",
@@ -51496,8 +51496,8 @@
  },
  {
   "path": "docs/history/V8.21.1-CHANGELOG.md",
-  "size": 1544,
-  "sha256": "be77d19ea441ae8ff079575c6f6688e7fc059e2f0c65e8e9df2809441b494ff5"
+  "size": 2060,
+  "sha256": "8bb5ca40f9e06ffda0894acfeb574015ef78e937694fefb9c78eae5e5892c2ef"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

@@ -225,8 +225,101 @@ def selftest() -> int:
                 os.environ.pop("UABS_LEGACY_HOOK_ROOT", None)
             else:
                 os.environ["UABS_LEGACY_HOOK_ROOT"] = previous
+        # The installer runs this file on Hermes's interpreter, which has no PyYAML.
+        real_yaml = sys.modules["yaml"]
+        saved_yaml = sys.modules.pop("yaml", None)
+        class _Editor:
+            def load(self, text):
+                loaded = real_yaml.safe_load(text) if str(text).strip() else {}
+                return loaded or {}
+            def dump(self, data, stream):
+                stream.write(real_yaml.safe_dump(data, sort_keys=False, allow_unicode=True, default_flow_style=False))
+        class _HermesYaml:
+            def roundtrip_yaml(self):
+                return _Editor()
+            def safe_load(self, stream):
+                return real_yaml.safe_load(stream)
+        sys.modules["hermes_yaml"] = _HermesYaml()
+        import builtins
+        real_import = builtins.__import__
+        def _block_yaml(name, globals=None, locals=None, fromlist=(), level=0):
+            if name == "yaml" or (isinstance(name, str) and name.startswith("yaml.")):
+                raise ModuleNotFoundError("No module named 'yaml'")
+            return real_import(name, globals, locals, fromlist, level)
+        builtins.__import__ = _block_yaml
+        try:
+            fallback = base / "fallback.yaml"
+            fallback.write_text("personal: keep\n# note\n", encoding="utf-8")
+            with patch(__name__ + ".config_path", return_value=fallback), patch.object(
+                    sys, "argv", [__file__, "unused-hermes", "python", str(gate), "--pre-only", "--approve"]):
+                if main() != 0:
+                    print("HERMES WIRE SELFTEST: FAIL - hermes_yaml fallback")
+                    return 1
+            loaded = real_yaml.safe_load(fallback.read_text(encoding="utf-8"))
+            if loaded.get("personal") != "keep" or "rtk_safe_hook.py" not in str(loaded.get("hooks")):
+                print("HERMES WIRE SELFTEST: FAIL - hermes_yaml fallback merge")
+                return 1
+        finally:
+            builtins.__import__ = real_import
+            if saved_yaml is not None:
+                sys.modules["yaml"] = saved_yaml
+            sys.modules.pop("hermes_yaml", None)
+    # Text mode used to turn a mixed ruamel dump into one extra blank per
+    # preserved CRLF. The encoder must emit a single ending.
+    mixed = "a: 1\r\n# note\r\nb: 2\n"
+    encoded = _yaml_bytes(mixed, "\r\n")
+    if b"\r\r\n" in encoded or encoded.splitlines() != [b"a: 1", b"# note", b"b: 2"]:
+        print("HERMES WIRE SELFTEST: FAIL - newline encoder doubled a CRLF break")
+        return 1
+    logical = _logical_yaml_text(b"a: 1\r\n# note\r\n\r\nb: 2\r\n")
+    if "\r" in logical or logical.splitlines() != ["a: 1", "# note", "", "b: 2"]:
+        print("HERMES WIRE SELFTEST: FAIL - logical newlines")
+        return 1
+    try:
+        import hermes_yaml as real_roundtrip
+    except ImportError:
+        real_roundtrip = None
+    if real_roundtrip is not None and hasattr(real_roundtrip, "roundtrip_yaml"):
+        from io import StringIO
+        raw = b"# comment one\r\n# comment two\r\nkey: 1\r\n# tail\r\nother: 2\r\n"
+        editor = real_roundtrip.roundtrip_yaml()
+        loaded = editor.load(_logical_yaml_text(raw))
+        buffer = StringIO()
+        editor.dump(loaded, buffer)
+        fixed = _yaml_bytes(buffer.getvalue(), "\r\n")
+        if b"\r\r\n" in fixed or len(fixed.splitlines()) != len(raw.splitlines()):
+            print("HERMES WIRE SELFTEST: FAIL - CRLF round-trip added blank lines")
+            return 1
     print("HERMES WIRE SELFTEST: PASS")
     return 0
+
+
+def _plain(value):
+    """Drop loader-specific node types so a round-trip edit can be compared by value."""
+    if isinstance(value, dict):
+        return {key: _plain(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_plain(item) for item in value]
+    return value
+
+
+def _logical_yaml_text(raw: bytes) -> str:
+    """Strip CR before a round-trip load.
+
+    ruamel keeps the source break inside comment tokens. A CRLF file therefore
+    dumps as a mix of ``\\r\\n`` and ``\\n``. Writing that mix in text mode
+    turns every preserved ``\\r\\n`` into ``\\r\\r\\n``, which reads back as a
+    blank line. One logical newline on the way in keeps the dump clean.
+    """
+    return raw.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
+
+
+def _yaml_bytes(text: str, newline: str) -> bytes:
+    """Encode YAML with one newline style and no doubled CR."""
+    normalized = text.replace("\r\n", "\n").replace("\r", "\n")
+    if normalized and not normalized.endswith("\n"):
+        normalized += "\n"
+    return normalized.replace("\n", newline).encode("utf-8")
 
 
 def main() -> int:
@@ -235,11 +328,18 @@ def main() -> int:
     if len(sys.argv) < 4:
         print("usage: hermes_wire.py <hermes-exe> <python-exe> <gate.py> [--remove] [--pre-only] [--approve]")
         return 0
+    # Hermes's own interpreter ships ruamel as hermes_yaml, not PyYAML. Returning
+    # success on that ImportError left the hooks unwired while the installer passed.
+    editor = None
     try:
         import yaml
     except ImportError:
-        print("SKIP: PyYAML not available; cannot safely edit Hermes config.")
-        return 0
+        try:
+            import hermes_yaml as yaml
+        except ImportError:
+            print("SKIP: neither PyYAML nor Hermes YAML is available; refusing to edit Hermes config.")
+            return 1
+        editor = yaml.roundtrip_yaml()
     hermes, python, gate = sys.argv[1], sys.argv[2], sys.argv[3]
     remove = "--remove" in sys.argv
     pre_only = "--pre-only" in sys.argv
@@ -253,9 +353,17 @@ def main() -> int:
         return 0
 
     original_bytes = cfg.read_bytes() if cfg.exists() else b""
-    text = original_bytes.decode("utf-8")
+    # Keep the file's existing ending when it is consistent. Mixed or LF
+    # sources stay LF so a later text-mode write cannot double a CR.
+    newline = "\r\n" if b"\r\n" in original_bytes and b"\n" not in original_bytes.replace(b"\r\n", b"") else "\n"
+    text = _logical_yaml_text(original_bytes)
     try:
-        data = yaml.safe_load(text) or {}
+        if editor is None:
+            data = yaml.safe_load(text) or {}
+        else:
+            data = editor.load(text) if text.strip() else {}
+            if data is None:
+                data = {}
     except Exception as exc:
         print(f"SKIP: {cfg} is not valid YAML ({type(exc).__name__}); refusing to touch it.")
         return 0
@@ -307,12 +415,22 @@ def main() -> int:
     else:
         data.pop("hooks", None)
 
-    if data != original_data:
+    if editor is None:
+        changed = data != original_data
+    else:
+        changed = _plain(data) != _plain(original_data)
+    if changed:
         if cfg.exists():
             backup = cfg.with_suffix(cfg.suffix + ".bak-gate")
             backup.write_bytes(original_bytes)
-        cfg.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True,
-                                      default_flow_style=False), encoding="utf-8")
+        if editor is None:
+            cfg.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True,
+                                          default_flow_style=False), encoding="utf-8")
+        else:
+            from io import StringIO
+            buffer = StringIO()
+            editor.dump(data, buffer)
+            cfg.write_bytes(_yaml_bytes(buffer.getvalue(), newline))
 
     # Prove it round-trips before claiming success.
     check = yaml.safe_load(cfg.read_text(encoding="utf-8")) if cfg.exists() else data

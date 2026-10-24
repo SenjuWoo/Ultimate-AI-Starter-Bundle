@@ -299,7 +299,10 @@ function Get-UabsHermesExecutable {
 function Invoke-UabsHermesPython {
   # Let the installed launcher choose its own dependency environment. The user
   # Python remains the interpreter for shell work and bundle-owned hooks.
+  # Stdout stays on the success stream. Stderr is kept for the caller so a
+  # failed child is not reduced to "inspect its exact error."
   param([string[]]$PythonArgs, [string]$HermesExe)
+  $script:UabsHermesPythonError = ''
   if (-not $HermesExe) { $HermesExe = Get-UabsHermesExecutable }
   if (-not $HermesExe) { throw 'Hermes launcher is unavailable.' }
   $tmp = $null
@@ -338,14 +341,41 @@ function Invoke-UabsHermesPython {
     $runtime = $script:UabsHermesRuntimeCache[$key]
     $exe = $runtime[0]; $prefix = @()
     if ($runtime.Count -gt 1) { $prefix = @($runtime[1..($runtime.Count-1)]) }
+    $stdout = New-Object System.Collections.Generic.List[string]
+    $stderr = New-Object System.Collections.Generic.List[string]
+    $exitCode = 0
+    $ranChild = $false
     $oldEncoding = [Console]::OutputEncoding
+    $oldEap = $ErrorActionPreference
     try {
       [Console]::OutputEncoding = New-Object Text.UTF8Encoding $false
-      & $exe '-X' 'utf8' @prefix @childArgs
-    } finally { [Console]::OutputEncoding = $oldEncoding }
+      # Stop plus 2>&1 turns native stderr into a terminating error before the
+      # child's exit code can be read. Continue keeps that code and both streams.
+      $ErrorActionPreference = 'Continue'
+      & $exe '-X' 'utf8' @prefix @childArgs 2>&1 | ForEach-Object {
+        if ($_ -is [System.Management.Automation.ErrorRecord]) {
+          $text = [string]$_.Exception.Message
+          if (-not $text) { $text = [string]$_ }
+          [void]$stderr.Add($text)
+        } else { [void]$stdout.Add([string]$_) }
+      }
+      $exitCode = $LASTEXITCODE
+      $ranChild = $true
+    } finally {
+      [Console]::OutputEncoding = $oldEncoding
+      $ErrorActionPreference = $oldEap
+    }
   } finally {
     if ($tmp -and (Test-Path -LiteralPath $tmp)) { Remove-Item -LiteralPath $tmp -Force }
   }
+  $script:UabsHermesPythonError = ($stderr -join "`n")
+  foreach ($line in $stdout) { Write-Output $line }
+  # Plain text on failure. Write-Error turned one Python traceback into a
+  # stack frame per line and made a finished install look like it had crashed.
+  if ($ranChild -and $exitCode -ne 0) {
+    foreach ($line in $stderr) { Write-Host $line }
+  }
+  if ($ranChild) { $global:LASTEXITCODE = $exitCode }
 }
 
 function Resolve-UabsUvPythonArgs {

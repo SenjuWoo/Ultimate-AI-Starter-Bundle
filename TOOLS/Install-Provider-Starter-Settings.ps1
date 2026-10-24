@@ -311,6 +311,7 @@ os.replace(tmp, path)
   if ((Test-Path -LiteralPath $stateDb -PathType Leaf) -and
       (Test-Path -LiteralPath $stateMigration -PathType Leaf)) {
     $stateResult = (Invoke-UabsHermesPython -HermesExe $exe -PythonArgs @($stateMigration,$stateDb) 2>&1 | Out-String).Trim()
+    if ($script:UabsHermesPythonError) { $stateResult = (($stateResult, $script:UabsHermesPythonError) -join "`n").Trim() }
     if ($LASTEXITCODE -ne 0) { throw ('Hermes resumable-session provider migration failed: ' + $stateResult) }
     if ($stateResult -notmatch 'migrated=0') {
       Write-UabsOk ('Hermes resumable sessions migrated to native OpenRouter: ' + $stateResult)
@@ -324,11 +325,14 @@ function Install-UabsHermesOpenRouterCatalogShim {
   $hermesRoot = Join-Path $env:LOCALAPPDATA 'hermes\hermes-agent'
   $exe = Get-UabsHermesExecutable
   $python = $exe
-  $sitePackages = if ($exe) {
-    (Invoke-UabsHermesPython -HermesExe $exe -PythonArgs @('-c','from pathlib import Path; import yaml; print(Path(yaml.__file__).resolve().parent.parent)') | Out-String).Trim()
-  } else { '' }
+  # Hermes does not ship PyYAML. ruamel.yaml lives in the dependency
+  # environment whose site-packages actually loads on launch.
+  $sitePackages = ''
+  if ($exe) {
+    $sitePackages = (Invoke-UabsHermesPython -HermesExe $exe -PythonArgs @('-c','from pathlib import Path; import ruamel.yaml; p=Path(ruamel.yaml.__file__).resolve(); print(next(x for x in p.parents if x.name.lower()=="site-packages"))') | Out-String).Trim()
+  }
   $src = Join-Path $PackRoot 'TOOLS\uabs_hermes_openrouter_catalog.py'
-  if (-not (Test-Path -LiteralPath $python -PathType Leaf) -or
+  if (-not $sitePackages -or -not (Test-Path -LiteralPath $python -PathType Leaf) -or
       -not (Test-Path -LiteralPath $sitePackages -PathType Container) -or
       -not (Test-Path -LiteralPath $src -PathType Leaf)) {
     Write-UabsWarn 'Hermes full OpenRouter discovery shim skipped; official Hermes venv or bundle source is missing'
@@ -351,6 +355,7 @@ function Install-UabsHermesOpenRouterCatalogShim {
     Move-Item -LiteralPath $pthTmp -Destination $pthDest -Force
 
     $probe = (Invoke-UabsHermesPython -HermesExe $exe -PythonArgs @('-c',"import hermes_cli.models as m; print(bool(getattr(m.fetch_openrouter_models, '_uabs_live_catalog', False))); m.clear_provider_models_cache('openrouter')") 2>&1 | Out-String).Trim()
+    if ($script:UabsHermesPythonError) { $probe = (($probe, $script:UabsHermesPythonError) -join "`n").Trim() }
     if ($LASTEXITCODE -ne 0 -or $probe -notmatch '(?m)^True$') {
       throw ('Hermes full OpenRouter discovery shim verification failed: ' + $probe)
     }
