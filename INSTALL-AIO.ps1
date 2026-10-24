@@ -602,6 +602,9 @@ if (-not $ToolsOnly -and -not $SkipProviderBootstrap) {
   Write-UabsStep 'Checking your AI apps (a missing one is installed from its vendor)'
   $bootCode = Invoke-UabsChildScript -Title 'AI app check' -File $providerBootstrap -ArgList @('-Providers', ($Providers -join ','))
   if ($bootCode -ne 0) { throw "Provider bootstrap failed with exit code $bootCode." }
+  # The bootstrap child can install a CLI and update the user PATH. This
+  # process still has the PATH it started with until it is reread.
+  Refresh-ProcessPath
   $appsFound = @($script:UabsLastChildOutput | ForEach-Object { if ($_ -match 'OK\s+(\w+) executable verified') { $Matches[1] } })
   Write-UabsOk ('AI apps ready: ' + $(if ($appsFound.Count) { $appsFound -join ', ' } else { $Providers -join ', ' }))
 }

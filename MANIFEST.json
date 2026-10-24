@@ -43576,8 +43576,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 226182,
-  "sha256": "c0d63bf3272167687099d5462bdc967208825a68e5dd767700ba97139b98a654"
+  "size": 226687,
+  "sha256": "61ce20b2f737f10e85c30558e1769f585829909da3a0fae313a4acac3025c283"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43651,8 +43651,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 180056,
-  "sha256": "fa85f1761433d66584632de534d9a02ba7ff1c2b03953dd421e04bb0f87f676b"
+  "size": 180218,
+  "sha256": "2ea7256f1e549679ddc6172af0c5b0efe958c5da1b76587c48dd7b4db5a0d318"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43731,8 +43731,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 57676,
-  "sha256": "0a4a8f5971b64b75dabc1b45a31e6107ff596dd627de881e66358e422657681c"
+  "size": 59401,
+  "sha256": "b2f4a633d0565c92b682c7f07750d40257d51ec07c3ce55cf84aef06c60438d0"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -43796,8 +43796,8 @@
  },
  {
   "path": "TESTS/Test-HookPrerequisites.ps1",
-  "size": 6238,
-  "sha256": "3b8c7a9afc101321ca0f4288fae548f62a608ecd512c00f601714b31332575fa"
+  "size": 6579,
+  "sha256": "84886b73eeed104687deb0067b69e5b8df5e0a79a6d152a4799fe1a22603e58d"
  },
  {
   "path": "TESTS/Test-InstallerPreservation.ps1",
@@ -44256,8 +44256,8 @@
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
-  "size": 12613,
-  "sha256": "6391e1e4f1db93a6e1a7977aab9e1a121126f54999605cd15d21f76bbf3cfdd7"
+  "size": 12930,
+  "sha256": "29c4d76bbc0acc9388d9485b16433c5c5a9d472afc9751d86098d836233e6b5e"
  },
  {
   "path": "TOOLS/Test-VisionCanary.ps1",
@@ -44266,8 +44266,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 154326,
-  "sha256": "91ca172ebbaf5fe446f1bea21b2ddce4f7762e01ce6e5c73b0a83a74993e56a2"
+  "size": 154662,
+  "sha256": "4b7fac1a5f68d0993d51388ac2a7d9602358bec587f6fa2f407d1d8bd53678c2"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
@@ -44311,8 +44311,8 @@
  },
  {
   "path": "TOOLS/build_release.py",
-  "size": 10915,
-  "sha256": "0d500482a0c2cfb29aa48967ef4f3b5215537d5013866c13727827d34f3ff6c7"
+  "size": 11414,
+  "sha256": "9417d56c162050636517189bccd9f315ce0f66fb22b32e681064f51a7f0078b1"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -44466,8 +44466,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2318,
-  "sha256": "a105e54b566f338e4e56e51da54a6c4ea324f0a1c0c7c618f75d65bad2edd676"
+  "size": 2478,
+  "sha256": "11cde4470b0594dd0a6f538994894d44c029d3fe6b852756c5d2fece253bd55d"
  },
  {
   "path": "VALIDATION.md",
@@ -51496,8 +51496,8 @@
  },
  {
   "path": "docs/history/V8.21.1-CHANGELOG.md",
-  "size": 1039,
-  "sha256": "1b13fff62e67db80a5d242464b0eed770c8f3b8469a30a71032bf078a02990d2"
+  "size": 1544,
+  "sha256": "be77d19ea441ae8ff079575c6f6688e7fc059e2f0c65e8e9df2809441b494ff5"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",
@@ -51801,7 +51801,7 @@
  },
  {
   "path": "docs/superpowers/plans/2026-10-23-fresh-windows-recovery.md",
-  "size": 3316,
-  "sha256": "914a5f14b11158ddc0141fccc6cfc3ab52fdffa3daec853cd3da8d7a1d89d99a"
+  "size": 3573,
+  "sha256": "37c997ac45b957d1d42f4df12573a599ede6b81a0a7824b8ad5f4ee792cb5902"
  }
 ]

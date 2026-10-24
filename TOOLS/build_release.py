@@ -95,8 +95,14 @@ def _core_manifest_bytes(root:Path)->bytes:
     for p,rel in files(root,True):
         if rel.as_posix()=='MANIFEST.json':
             continue
+        # The note is generated, not copied. A tracked copy must not become a
+        # second archive entry or a second manifest row.
+        if rel.as_posix()=='README-CORE.txt':
+            rows.append(_row(rel,CORE_NOTE))
+            continue
         rows.append(_row(rel,overrides.get(rel.as_posix(),None) or p.read_bytes()))
-    rows.append(_row(Path('README-CORE.txt'),CORE_NOTE))
+    if not any(row['path']=='README-CORE.txt' for row in rows):
+        rows.append(_row(Path('README-CORE.txt'),CORE_NOTE))
     rows.sort(key=lambda r:str(r['path']))
     return (json.dumps(rows,indent=1)+'\n').encode('utf-8')
 
@@ -119,14 +125,18 @@ def build(root:Path,out:Path,core:bool)->None:
     core_manifest=_core_manifest_bytes(root) if core else None
     overrides=_core_overrides(root) if core else {}
     with zipfile.ZipFile(out,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+        wrote_note=False
         for p,rel in files(root,core):
-            if core and rel.as_posix()=='MANIFEST.json':
+            if core and rel.as_posix()=='README-CORE.txt':
+                _write(z,prefix,rel,CORE_NOTE)
+                wrote_note=True
+            elif core and rel.as_posix()=='MANIFEST.json':
                 _write(z,prefix,rel,core_manifest)
             elif rel.as_posix() in overrides:
                 _write(z,prefix,rel,overrides[rel.as_posix()])
             else:
                 _write(z,prefix,rel,p.read_bytes())
-        if core:
+        if core and not wrote_note:
             _write(z,prefix,Path('README-CORE.txt'),CORE_NOTE)
 
 def verify(path:Path,root:Path)->None:

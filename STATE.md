@@ -33,9 +33,34 @@
     hook scope, and the doctor scope gate.
     Log: `artifacts/recovery/pack-8211b.log`.
   - `TOOLS/hooks/hermes_wire.py --selftest`: PASS on that same interpreter.
-- Not done yet: live `-Providers Claude,Codex` install and
-  `TOOLS/Test-Installed-State.ps1` on the real profile; push, CI, and GitHub
-  flags on the new commit; public v8.21.1 archives.
+- Pushed `74f1c90` to `main`. CodeQL succeeded. GitHub flags were clean
+  (Dependabot, code scanning, and secret scanning 0 open; code quality
+  unavailable). CI failed on the Core zip: `README-CORE.txt` was written twice.
+  The builder writes that note once. That fix is not on `74f1c90`.
+- First live `INSTALL-AIO.ps1 -Providers Claude,Codex -SkipSelfUpdate` left
+  Grok, Kimi, Hermes, and Antigravity untouched, then stopped because the
+  Codex MCP proof used `Get-Command codex` and the CLI was not on that
+  process PATH. Log:
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\logs\install-20261023-205012.log`.
+- The same command, after the shared Codex resolver and the shell check,
+  finished: `INSTALL COMPLETE (v8.21.1)`, exit 0. Claude and Codex always-on
+  tools answered (context7, headroom, toolbox). The installed-state doctor
+  inside that run passed. Grok, Kimi, Hermes, and Antigravity were not
+  touched. Existing Claude and Codex settings were preserved. Log:
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\logs\install-20261023-211512.log`.
+  Doctor report:
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\installed-state-doctor.json`.
+- The doctor used to fail on `bash.exe` because Windows searches the machine
+  PATH first and `System32\bash.exe` is the WSL launcher. Git's `bin` was
+  already on the user PATH, and `sh.exe` already resolved to Git. Hook
+  dispatchers skip the launcher, so a later Git Bash counts.
+- Re-ran after those edits: release contract 151 passed, 0 failed;
+  `TESTS/Test-Pack.ps1 -TestPython` PACK GATE: PASS on the disposable venv;
+  hook-shell gate PASS, including a real Git shell.
+- Not done yet: push of this follow-up; CI on that SHA; public v8.21.1
+  archives. Restart Claude and Codex so they inherit the updated environment.
+  `cua_repl` stays unwired (`CUA_REPL_NODE_REPL_PATH` unset) and is not an
+  always-on installer check. `pwsh.exe` is still not installed.
 - Notes below this heading describe the pre-reset machine and the v8.21.0
   release. They are not this install's result.
 

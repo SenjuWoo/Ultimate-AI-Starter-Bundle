@@ -40,9 +40,13 @@ providers (chosen). No provider authentication or inference is fabricated.
   disposable environment, never the shared Python base.
   Verified 2026-10-23: contract 151/0; Test-Pack PASS with -TestPython on a
   disposable venv (mcp==1.30.0, PyYAML==6.0.3). Shared base was not modified.
-- [ ] Run the repaired selected-provider installation if validation permits;
+- [x] Run the repaired selected-provider installation if validation permits;
   verify installed-state doctor and local startup/MCP results. Record exact
   auth, network, restart or provider-matrix limits in STATE.md and handoff.
+  Verified 2026-10-23: INSTALL-AIO.ps1 -Providers Claude,Codex -SkipSelfUpdate
+  exit 0. Claude and Codex context7, headroom, and toolbox answered. Doctor
+  PASS. Other providers were not installed. Public archives and the follow-up
+  push remain separate.
 
 ## Review focus
 

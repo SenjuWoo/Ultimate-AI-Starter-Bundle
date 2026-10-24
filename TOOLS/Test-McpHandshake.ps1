@@ -158,7 +158,11 @@ function Get-ServersFromConfig {
   # from files. Other readers cover the pack's command/args config shape.
   param([string]$Provider, [string]$ProjectPath)
   if ($Provider -eq 'Codex') {
-    $cli = Get-Command codex -ErrorAction Stop
+    # Same resolver as bootstrap. Get-Command misses a CLI that is installed
+    # off the current process PATH, including the npm global shim, and it
+    # treats a desktop app as if it were the CLI.
+    $cli = Get-UabsCodexCli
+    if (-not $cli) { throw 'Codex CLI was not found. A desktop app is not enough. Install it with: npm.cmd install -g @openai/codex' }
     $pushed = $false
     try {
       if ($ProjectPath) { Push-Location -LiteralPath $ProjectPath; $pushed = $true }

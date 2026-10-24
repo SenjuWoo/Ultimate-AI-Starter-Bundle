@@ -39,12 +39,19 @@ function Get-UabsGitShellDirectory {
 function Repair-UabsHookShellPath {
   param([switch]$CheckOnly, [string]$GitExecutable)
   $directory = Get-UabsGitShellDirectory -GitExecutable $GitExecutable
-  # Judge only the first match, the one a hook would run: with WSL installed,
-  # System32\bash.exe also matches and made a working Git bash look missing.
-  $missing = @('sh.exe','bash.exe' | Where-Object {
-    $command = Get-Command $_ -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
-    -not $command -or $command.Source -match '(?i)\\(System32|Sysnative|WindowsApps)\\'
-  })
+  # Windows searches the machine PATH before the user PATH, so the WSL
+  # launcher at System32\bash.exe (and the WindowsApps alias) is always the
+  # first bash when it exists. Hook dispatchers skip those launchers and run
+  # Git bash by its own path. A later Git bash or sh is the prerequisite.
+  # A launcher with no Git shell behind it is still missing: appending Git's
+  # bin to the user PATH cannot put it ahead of System32.
+  $missing = @()
+  foreach ($name in @('sh.exe','bash.exe')) {
+    $usable = @(Get-Command $name -CommandType Application -All -ErrorAction SilentlyContinue | Where-Object {
+      $_.Source -and $_.Source -notmatch '(?i)\\(System32|Sysnative|WindowsApps)\\'
+    })
+    if (-not $usable) { $missing += $name }
+  }
   if ($CheckOnly) {
     if ($missing.Count) { 'Plugin shell prerequisite missing: ' + ($missing -join ', ') + '. Run TOOLS\Install-Completeness-Gate.ps1 and restart the AI apps.' }
     return
