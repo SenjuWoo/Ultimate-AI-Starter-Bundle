@@ -57,8 +57,11 @@
 - Re-ran after those edits: release contract 151 passed, 0 failed;
   `TESTS/Test-Pack.ps1 -TestPython` PACK GATE: PASS on the disposable venv;
   hook-shell gate PASS, including a real Git shell.
-- Code fix is `2327c20`. CI on the pushed tip, and the public v8.21.1
-  archives, are still open. Restart Claude and Codex so they inherit the
+- Pushed tip `29e2cd7` (code fix `2327c20`). CI run 40044617095 succeeded,
+  including the Core archive step on Python 3.14 and 3.15. CodeQL run
+  40044617122 succeeded. GitHub flags were clean (Dependabot, code scanning,
+  and secret scanning 0 open; code quality unavailable). Public v8.21.1
+  archives are not published. Restart Claude and Codex so they inherit the
   updated environment. `cua_repl` stays unwired
   (`CUA_REPL_NODE_REPL_PATH` unset) and is not an always-on installer check.
   `pwsh.exe` is still not installed.

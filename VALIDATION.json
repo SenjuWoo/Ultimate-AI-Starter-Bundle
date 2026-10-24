@@ -46,6 +46,6 @@
   "TESTS/Test-VersionProbes.ps1",
   "TESTS/Test-OfflineUpdate.ps1"
  ],
- "runtime_status": "v8.21.1 on 2026-10-23: release contract 151/0 and Test-Pack PASS on Windows PowerShell 5.1 after the Core-zip, Codex-resolver, and WSL-bash fixes. Live INSTALL-AIO.ps1 -Providers Claude,Codex -SkipSelfUpdate completed exit 0; Claude and Codex always-on tools answered; installed-state doctor PASS. Public v8.21.1 archives are not published. v8.21.0 audit: docs/AUDIT-2026-10-22.md.",
+ "runtime_status": "v8.21.1 on 2026-10-23: release contract 151/0 and Test-Pack PASS on Windows PowerShell 5.1 after the Core-zip, Codex-resolver, and WSL-bash fixes. Live INSTALL-AIO.ps1 -Providers Claude,Codex -SkipSelfUpdate completed exit 0; Claude and Codex always-on tools answered; installed-state doctor PASS. CI run 40044617095 and CodeQL run 40044617122 succeeded on 29e2cd7. Public v8.21.1 archives are not published. v8.21.0 audit: docs/AUDIT-2026-10-22.md.",
  "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for every always-on MCP server (context7, headroom, the toolbox, and GitHub where gh is not signed in). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }
