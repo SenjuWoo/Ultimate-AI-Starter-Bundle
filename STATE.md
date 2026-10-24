@@ -97,6 +97,10 @@
   matched after that blank was removed. The SillyTavern profile was already
   clean and was not rewritten. Pre-repair copies:
   `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups\hermes-blank-repair\20261023-225626291150`.
+- Pushed `7ab3476`. CI run 40052571014 succeeded, including the Core archive
+  step on Python 3.14 and 3.15. CodeQL run 40052570886 succeeded. GitHub
+  flags were clean (Dependabot, code scanning, and secret scanning 0 open;
+  code quality unavailable). Public v8.21.1 archives are not published.
 - Notes below this heading describe the pre-reset machine and the v8.21.0
   release. They are not this install's result.
 
