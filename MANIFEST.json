@@ -43576,8 +43576,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 227203,
-  "sha256": "78b37477bba2dffb2f28209ea43bbba2917b0e4f3a75aaf54b63e8c5cb49208b"
+  "size": 227401,
+  "sha256": "c7983102580e265d0f31fa8a447c660c50c6b17f115ea9228c0b984bba0fe99c"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43711,8 +43711,8 @@
  },
  {
   "path": "README.md",
-  "size": 68720,
-  "sha256": "235bb62c2aa2f344d411b5be5f3f5eebad2bb3c894b41871c2c18cc9d8e58f55"
+  "size": 68810,
+  "sha256": "4b054fdff29854e02a1722dc3b2948b0ad1137640ef307d90ead36907d649943"
  },
  {
   "path": "SECURITY.md",
@@ -43731,8 +43731,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 62115,
-  "sha256": "7baf272a788d9963e02f5782a19920bbf6d2a2d077d9211c249c881cf839e809"
+  "size": 62925,
+  "sha256": "755ca8acf35069ba8a9f9b14661757769feca41e2dfdec53f08abedad032e4fe"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -50946,8 +50946,8 @@
  },
  {
   "path": "assets/hero.svg",
-  "size": 2864,
-  "sha256": "08b37ed32351f2e2e97a2f719eea75fa69a83aceaafefc3bb8571f98bfc8764d"
+  "size": 3164,
+  "sha256": "2d57eb7ed181328ca0343edc765528431c1b86dd5d644e71231c89b93fe1a148"
  },
  {
   "path": "assets/mark.svg",
@@ -51496,8 +51496,8 @@
  },
  {
   "path": "docs/history/V8.21.1-CHANGELOG.md",
-  "size": 2060,
-  "sha256": "8bb5ca40f9e06ffda0894acfeb574015ef78e937694fefb9c78eae5e5892c2ef"
+  "size": 2258,
+  "sha256": "29984ad20f98b214b0b0f9af6d4d04476c10b49a808f9ba7b38e2c53b5780bc1"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

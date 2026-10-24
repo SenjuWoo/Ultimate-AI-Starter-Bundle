@@ -2,9 +2,9 @@
 
 ## Fresh Windows recovery (2026-10-23, v8.21.1 source gates)
 
-- This tree is v8.21.1. The published GitHub release is still v8.21.0 until a
-  release is cut from the pushed commit. Source fixes do not change the
-  downloadable archives by themselves.
+- This tree is v8.21.1. This commit is the release candidate. The GitHub
+  release is published from this commit after its checks pass. A download of
+  v8.21.0 does not contain these fixes.
 - Failure that was fixed: an empty provider scan installed all six providers,
   then the old Codex PowerShell installer URL returned HTTP 404. A plain run
   now stops when no app is installed. Choose `-Providers Claude,Codex` or
@@ -101,6 +101,18 @@
   step on Python 3.14 and 3.15. CodeQL run 40052570886 succeeded. GitHub
   flags were clean (Dependabot, code scanning, and secret scanning 0 open;
   code quality unavailable). Public v8.21.1 archives are not published.
+- Plain `INSTALL-AIO.ps1` at 00:00 on 2026-10-24 finished:
+  `INSTALL COMPLETE (v8.21.1)`, installed-state doctor PASS. Providers
+  Claude, Codex, Grok, Hermes, Antigravity. Kimi was not installed and was
+  not touched. `INSTALL-LAST.log` is that same transcript. Log:
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\logs\install-20261024-000005.log`.
+  Hermes native superpowers and ponytail still log `error launching git:
+  Access is denied`; copied skills stay. The optional Spooky compiler note,
+  the Perplexity key skip, and three transcript `TerminatingError` lines next
+  to successful steps are not install failures.
+- The README hero said 124 general skills and drew five providers. Current
+  copy is 125 general plus 49 Skyrim, six providers, and the always-on core
+  context7, headroom and toolbox.
 - Notes below this heading describe the pre-reset machine and the v8.21.0
   release. They are not this install's result.
 

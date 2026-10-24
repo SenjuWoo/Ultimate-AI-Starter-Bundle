@@ -27,6 +27,9 @@
   Round-trip saves drop the source carriage return before loading and write
   one newline style. Keeping that carriage return and writing the dump in text
   mode turned each preserved break into a blank line.
+- Correct the README hero and Antigravity section so they match the shipped
+  tree: 125 general skills plus 49 Skyrim skills, six providers, and the
+  always-on core context7, headroom and toolbox.
 
 ## 8.21.0
 

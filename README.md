@@ -33,10 +33,10 @@ modding stack.
 </div>
 
 <p align="center">
-  <img src="assets/hero.svg" alt="Installed is not enabled: five providers, parked optional MCPs" width="100%">
+  <img src="assets/hero.svg" alt="Installed is not enabled: six providers, parked optional MCPs" width="100%">
 </p>
 
-**Current source:** one-click setup, 124 general skills plus a 49-skill Skyrim
+**Current source:** one-click setup, 125 general skills plus a 49-skill Skyrim
 pack that installs only where Skyrim is, a small MCP core and project-specific
 tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest),
 [the changelog](CHANGELOG.md) and [evaluated component pins](BUNDLED-TOOLS/CATALOG.json).
@@ -53,7 +53,7 @@ Use the [start/resume prompts](PROMPTS/START-AND-RESUME.md) once per chat.
 [CodeBurn recommendations](_CANONICAL-SKILLS/codeburn/references/recommendations.md)
 are evidence candidates, not automatic deletion or guaranteed usage savings.
 
-The default installer provides `um` plus the same `universal-modder` skill to all five providers. Its twelve upstream guides are on-demand references, not twelve additional skill-index entries. `um comfy` adds key-free local ComfyUI image generation. Use `um --version`, `um scan "<verified game folder>" --json`, or the relevant subcommand's `--help`. The packaged knowledge base works offline; its examples must be rechecked against your actual game. Existing engine/Skyrim skills remain the implementation specialists.
+The default installer provides `um` plus the same `universal-modder` skill to all six providers. Its twelve upstream guides are on-demand references, not twelve additional skill-index entries. `um comfy` adds key-free local ComfyUI image generation. Use `um --version`, `um scan "<verified game folder>" --json`, or the relevant subcommand's `--help`. The packaged knowledge base works offline; its examples must be rechecked against your actual game. Existing engine/Skyrim skills remain the implementation specialists.
 
 The bundle does not install the upstream fal MCP or its session hooks. Paid fal generation is optional and needs the user's own setup. Video requires an installed FFmpeg; 3D-to-sprite rendering requires Blender. Core carries vendored source; Full-Offline also carries the wheel. Python/runtime and dependency setup can still need network access when they are not already cached.
 
@@ -180,7 +180,7 @@ The preamble is now **installed automatically**, not pasted by hand:
 - `3-PREAMBLES/SOUL.md` - the operator's own soul config: the unrestraint
   declaration, the no-yes-man rule and the source-recency rule, one line each,
   nothing that only decorates (728 B after the v8.15.1 cleanup). Shipped
-  verbatim and identity-neutral: it names no provider, so it is safe in all five
+  verbatim and identity-neutral: it names no provider, so it is safe in all six provider homes.
 - `3-PREAMBLES/MANUAL-PASTE.txt` — SOUL + the Web contract (`AIO-INSTRUCTION — Web.md`), pure ASCII, for web UIs (ChatGPT/Gemini) that have no
   instruction file: paste it into the custom-instructions box
 
@@ -343,7 +343,7 @@ for diagnostics, validation scope and persistent GitHub setup.
 ### Google Antigravity (Gemini 4 Argon)
 
 Antigravity is a first-class provider: the same SOUL + AIO contract, the same
-173 skills and the pack's always-on MCP servers, written where Antigravity
+125 general skills (plus 49 with the Skyrim pack) and the pack's always-on MCP servers, written where Antigravity
 actually reads them — verified against the app's own `agy-customizations` guide
 and `antigravity.google/docs/rules|skills|mcp`, not recalled:
 
@@ -351,7 +351,7 @@ and `antigravity.google/docs/rules|skills|mcp`, not recalled:
 |---|---|---|
 | Global rules | `~/.gemini/config/AGENTS.md` | also read: `~/.gemini/AGENTS.md`; 24,000-byte cap per file, 20,000-token shared budget, so the bundle stays near 14 KB and leaves detail in skills |
 | Workspace rules | — | `AGENTS.md`, `GEMINI.md`, `.agents/AGENTS.md`, `.agents/rules/*.md` in your projects; the installer never writes there |
-| Global skills | `~/.gemini/config/skills/<name>/SKILL.md` | 173 skills, one level deep, exactly the layout its scanner expects |
+| Global skills | `~/.gemini/config/skills/<name>/SKILL.md` | 125 general skills, plus 49 with the Skyrim pack, one level deep, exactly the layout its scanner expects |
 | MCP servers | `~/.gemini/config/mcp_config.json` | `mcpServers`, stdio or Streamable HTTP; legacy SSE is unsupported — plus per-project `.agents/mcp_config.json`, untouched |
 
 ```powershell
