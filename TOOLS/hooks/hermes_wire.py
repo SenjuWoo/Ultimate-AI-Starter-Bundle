@@ -167,6 +167,47 @@ def selftest() -> int:
         import yaml
         from unittest.mock import patch
 
+        linked = base / 'linked.yaml'
+        linked_target = base / 'link-target.yaml'
+        linked_target.write_bytes(b'personal: keep\n')
+        try:
+            linked.symlink_to(linked_target)
+        except OSError as exc:
+            if getattr(exc, 'winerror', None) != 1314:
+                raise
+            # Ordinary Windows accounts cannot create file links. CI also runs
+            # the physical-link case on Linux; here exercise the refusal path.
+            with patch.object(Path, 'is_symlink', return_value=True), patch(__name__ + '.config_path', return_value=linked), patch.object(
+                    sys, 'argv', [__file__, 'unused-hermes', 'python', str(gate)]):
+                if main() == 0 or linked_target.read_bytes() != b'personal: keep\n':
+                    return 1
+            print('LINK REFUSAL: guard verified; Windows file-link creation requires privilege (physical case runs in CI).')
+        else:
+            try:
+                with patch(__name__ + '.config_path', return_value=linked), patch.object(
+                        sys, 'argv', [__file__, 'unused-hermes', 'python', str(gate)]):
+                    if main() == 0 or not linked.is_symlink() or linked_target.read_bytes() != b'personal: keep\n':
+                        print('HERMES WIRE SELFTEST: FAIL - linked config was replaced')
+                        return 1
+                print('LINK REFUSAL: physical symlink preserved')
+            finally:
+                linked.unlink()
+
+        # Refused installs must return failure while preserving original bytes.
+        for original in (b'key: [\n', b'- personal\n', b'false\n', b'hooks: []\n', b'hooks: [personal]\n', b'hooks: {pre_tool_call: owner-command}\n'):
+            cfg.write_bytes(original)
+            with patch(__name__ + '.config_path', return_value=cfg), patch.object(
+                    sys, 'argv', [__file__, 'unused-hermes', 'python', str(gate), '--pre-only']):
+                code = main()
+            if code == 0 or cfg.read_bytes() != original:
+                print('HERMES WIRE SELFTEST: FAIL - refused install returned success or changed personal data')
+                return 1
+        with patch(__name__ + '.config_path', return_value=None), patch.object(
+                sys, 'argv', [__file__, 'unused-hermes', 'python', str(gate)]):
+            if main() == 0:
+                print('HERMES WIRE SELFTEST: FAIL - unresolved config returned success')
+                return 1
+
         personal = '"python" "C:/personal/rtk_safe_hook.py" --pre'
         chained = command + ' && echo personal-followup'
         original = {"personal": "keep", "hooks": {"pre_tool_call": [
@@ -228,15 +269,22 @@ def selftest() -> int:
         # The installer runs this file on Hermes's interpreter, which has no PyYAML.
         real_yaml = sys.modules["yaml"]
         saved_yaml = sys.modules.pop("yaml", None)
-        class _Editor:
-            def load(self, text):
-                loaded = real_yaml.safe_load(text) if str(text).strip() else {}
-                return loaded or {}
-            def dump(self, data, stream):
-                stream.write(real_yaml.safe_dump(data, sort_keys=False, allow_unicode=True, default_flow_style=False))
+        from ruamel.yaml import YAML
+        from ruamel.yaml.resolver import VersionedResolver
+        class _Yaml11Resolver(VersionedResolver):
+            @property
+            def processing_version(self):
+                return (1, 1)
         class _HermesYaml:
             def roundtrip_yaml(self):
-                return _Editor()
+                editor = YAML(typ='rt')
+                editor.Resolver = _Yaml11Resolver
+                editor.width = 2**31 - 1
+                editor.preserve_quotes = True
+                editor.allow_unicode = True
+                editor.default_flow_style = False
+                editor.indent(mapping=2, sequence=4, offset=2)
+                return editor
             def safe_load(self, stream):
                 return real_yaml.safe_load(stream)
         sys.modules["hermes_yaml"] = _HermesYaml()
@@ -259,6 +307,22 @@ def selftest() -> int:
             if loaded.get("personal") != "keep" or "rtk_safe_hook.py" not in str(loaded.get("hooks")):
                 print("HERMES WIRE SELFTEST: FAIL - hermes_yaml fallback merge")
                 return 1
+            # Exercise real ruamel node aliases and CRLF comments, not a PyYAML substitute.
+            raw = b'# owner comment\r\ncustom: &shared\r\n  pre_tool_call:\r\n    - command: owner-command\r\nhooks: *shared\r\n'
+            fallback.write_bytes(raw)
+            before = real_yaml.safe_load(raw)
+            with patch(__name__ + '.config_path', return_value=fallback), patch.object(
+                    sys, 'argv', [__file__, 'unused-hermes', 'python', str(gate), '--pre-only']):
+                if main() != 0:
+                    return 1
+                first = fallback.read_bytes()
+                after = real_yaml.safe_load(first)
+                if after['custom'] != before['custom'] or b'\r\r\n' in first or not first.startswith(b'# owner comment\r\n'):
+                    print('HERMES WIRE SELFTEST: FAIL - YAML alias or comment preservation')
+                    return 1
+                if main() != 0 or fallback.read_bytes() != first:
+                    print('HERMES WIRE SELFTEST: FAIL - roundtrip retry changed bytes')
+                    return 1
         finally:
             builtins.__import__ = real_import
             if saved_yaml is not None:
@@ -350,7 +414,10 @@ def main() -> int:
     cfg = config_path(hermes)
     if cfg is None:
         print("SKIP: could not resolve the Hermes config path.")
-        return 0
+        return 1
+    if cfg.is_symlink():
+        print('SKIP: linked Hermes config must be edited through its owner; refusing to replace the link.')
+        return 1
 
     original_bytes = cfg.read_bytes() if cfg.exists() else b""
     # Keep the file's existing ending when it is consistent. Mixed or LF
@@ -359,23 +426,31 @@ def main() -> int:
     text = _logical_yaml_text(original_bytes)
     try:
         if editor is None:
-            data = yaml.safe_load(text) or {}
+            data = yaml.safe_load(text)
         else:
             data = editor.load(text) if text.strip() else {}
-            if data is None:
-                data = {}
+        if data is None:
+            data = {}
     except Exception as exc:
         print(f"SKIP: {cfg} is not valid YAML ({type(exc).__name__}); refusing to touch it.")
-        return 0
+        return 1
     if not isinstance(data, dict):
         print(f"SKIP: {cfg} is not a mapping; refusing to touch it.")
-        return 0
+        return 1
     original_data = copy.deepcopy(data)
 
-    hooks = data.get("hooks") or {}
+    hooks = data.get("hooks")
+    if hooks is None:
+        hooks = {}
     if not isinstance(hooks, dict):
         print("SKIP: existing 'hooks' is not a mapping; refusing to touch it.")
-        return 0
+        return 1
+    # YAML aliases can share this object with personal settings outside hooks.
+    hooks = copy.deepcopy(hooks)
+    for event in ('pre_tool_call', 'pre_verify'):
+        if hooks.get(event) is not None and not isinstance(hooks[event], list):
+            print(f"SKIP: hooks.{event} is not a list; refusing to touch it.")
+            return 1
 
     def strip(event: str) -> None:
         entries = [e for e in (hooks.get(event) or [])
@@ -420,21 +495,34 @@ def main() -> int:
     else:
         changed = _plain(data) != _plain(original_data)
     if changed:
-        if cfg.exists():
-            backup = cfg.with_suffix(cfg.suffix + ".bak-gate")
-            backup.write_bytes(original_bytes)
         if editor is None:
-            cfg.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True,
-                                          default_flow_style=False), encoding="utf-8")
+            payload = _yaml_bytes(yaml.safe_dump(data, sort_keys=False, allow_unicode=True,
+                                                default_flow_style=False), newline)
         else:
             from io import StringIO
             buffer = StringIO()
             editor.dump(data, buffer)
-            cfg.write_bytes(_yaml_bytes(buffer.getvalue(), newline))
+            payload = _yaml_bytes(buffer.getvalue(), newline)
+        if _plain(yaml.safe_load(payload)) != _plain(data):
+            print('VERIFY FAILED: YAML serialization changed configuration values.')
+            return 1
+        if cfg.exists():
+            if cfg.read_bytes() != original_bytes:
+                print('VERIFY FAILED: Hermes config changed concurrently; retry setup.')
+                return 1
+            cfg.with_suffix(cfg.suffix + '.bak-gate').write_bytes(original_bytes)
+        # Replace only after parsing the complete payload, keeping a byte backup.
+        descriptor, temporary = tempfile.mkstemp(prefix=cfg.name + '.', suffix='.tmp', dir=cfg.parent)
+        try:
+            with os.fdopen(descriptor, 'wb') as stream:
+                stream.write(payload)
+            os.replace(temporary, cfg)
+        finally:
+            Path(temporary).unlink(missing_ok=True)
 
     # Prove it round-trips before claiming success.
     check = yaml.safe_load(cfg.read_text(encoding="utf-8")) if cfg.exists() else data
-    ok = isinstance(check, dict) and (remove or MARKER in str(check.get("hooks")))
+    ok = isinstance(check, dict) and _plain(check) == _plain(data)
     approve = "--approve" in sys.argv and not remove
     approval_ok = True
     if approve or remove:

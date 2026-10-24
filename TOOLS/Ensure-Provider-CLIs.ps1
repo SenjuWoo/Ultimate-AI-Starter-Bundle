@@ -78,15 +78,15 @@ function Install-CodexCli {
   if ($LASTEXITCODE -ne 0) { throw "Codex npm installation failed with exit code $LASTEXITCODE." }
 }
 
-# Git Bash supports Claude's bundle hooks and Kimi's native shell surface.
-# A Codex-only or desktop-only selection does not need a Git installation here.
+# Every selected provider gets bundled plugin hooks that require Git Bash.
+# Codex also needs Git sources for native plugins; npm alone is insufficient.
 Refresh-ProcessPath
-if (($Providers -contains 'Claude' -or $Providers -contains 'Kimi') -and -not (Get-Command git -ErrorAction SilentlyContinue)) {
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
   if ($CheckOnly) { Write-Host 'Git would be installed with winget Git.Git' }
   elseif (-not (Install-UabsWinget @('Git.Git'))) { throw 'Git for Windows installation failed.' }
   Refresh-ProcessPath
 }
-if (-not $CheckOnly -and ($Providers -contains 'Claude' -or $Providers -contains 'Kimi')) {
+if (-not $CheckOnly) {
   $git = Get-Command git -ErrorAction SilentlyContinue
   if (-not $git) { throw 'Git installer completed but git is still not resolvable.' }
   & git --version | Out-Host

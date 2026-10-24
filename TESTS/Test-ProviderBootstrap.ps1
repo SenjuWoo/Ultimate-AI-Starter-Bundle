@@ -9,7 +9,7 @@ function Assert($Condition, $Message) { if (-not $Condition) { throw $Message } 
 $fixture = Join-Path ([IO.Path]::GetTempPath()) ('uabs-provider-bootstrap-' + [guid]::NewGuid().ToString('N'))
 $savedEnvironment = @{}
 $environmentNames = @('USERPROFILE','LOCALAPPDATA','APPDATA','PATH','UABS_PYTHON','UABS_TEST_NPM_LOG',
-  'UABS_TEST_WINGET_LOG','UABS_TEST_NPM_TEMPLATE','UABS_TEST_CLI_TEMPLATE','UABS_TEST_BIN','UABS_TEST_INSTALL_NODE')
+  'UABS_TEST_WINGET_LOG','UABS_TEST_NPM_TEMPLATE','UABS_TEST_CLI_TEMPLATE','UABS_TEST_BIN','UABS_TEST_INSTALL_NODE','UABS_TEST_INSTALL_GIT')
 foreach ($name in $environmentNames) { $savedEnvironment[$name] = [Environment]::GetEnvironmentVariable($name, 'Process') }
 $failures = @()
 $commonSource = [IO.File]::ReadAllText((Join-Path $PackRoot 'TOOLS\UABS-Common.ps1'))
@@ -29,6 +29,14 @@ function Start-Sleep {}
 function Invoke-WebRequest { param($Uri) throw "Unexpected installer download: $Uri" }
 function Install-UabsWinget([string[]]$Ids) {
   [IO.File]::AppendAllText($env:UABS_TEST_WINGET_LOG, (($Ids -join ',') + [Environment]::NewLine))
+  if (($Ids -join ',') -eq 'Git.Git') {
+    if ($env:UABS_TEST_INSTALL_GIT -eq 'fail') { return $false }
+    if ($env:UABS_TEST_INSTALL_GIT -eq '1') {
+      [IO.File]::WriteAllText((Join-Path $env:UABS_TEST_BIN 'git.cmd'), "@echo off`r`necho git version 2.50.0`r`nexit /b 0`r`n")
+      foreach ($shell in @('sh.exe','bash.exe')) { [IO.File]::WriteAllText((Join-Path $env:UABS_TEST_BIN $shell), 'presence fixture; never executed') }
+      return $true
+    }
+  }
   if ($env:UABS_TEST_INSTALL_NODE -eq '1' -and ($Ids -join ',') -eq 'OpenJS.NodeJS.LTS') {
     Copy-Item -LiteralPath $env:UABS_TEST_NPM_TEMPLATE -Destination (Join-Path $env:UABS_TEST_BIN 'npm.cmd')
     return $true
@@ -55,6 +63,7 @@ function Invoke-BootstrapCase {
   $env:PATH = $env:UABS_TEST_BIN
   $env:UABS_PYTHON = $null
   $env:UABS_TEST_INSTALL_NODE = $null
+  $env:UABS_TEST_INSTALL_GIT = $null
   $env:UABS_TEST_NPM_LOG = Join-Path $caseRoot 'npm.log'
   $env:UABS_TEST_WINGET_LOG = Join-Path $caseRoot 'winget.log'
   $env:UABS_TEST_CLI_TEMPLATE = Join-Path $caseRoot 'codex-fixture.cmd'
@@ -67,6 +76,7 @@ function Invoke-BootstrapCase {
   [IO.File]::WriteAllText($env:UABS_TEST_CLI_TEMPLATE, "@echo off`r`necho codex-cli 9.9.9`r`nexit /b 0`r`n")
   [IO.File]::WriteAllText($env:UABS_TEST_NPM_TEMPLATE, ($npmTemplate -replace "`r?`n", "`r`n"))
   Copy-Item -LiteralPath $env:UABS_TEST_NPM_TEMPLATE -Destination (Join-Path $env:UABS_TEST_BIN 'npm.cmd')
+  [IO.File]::WriteAllText((Join-Path $env:UABS_TEST_BIN 'git.cmd'), "@echo off`r`necho git version 2.50.0`r`nexit /b 0`r`n")
   # npm.ps1 is unsigned in many real Windows installs. It must never be chosen.
   [IO.File]::WriteAllText((Join-Path $env:UABS_TEST_BIN 'npm.ps1'), "throw 'The unsigned npm.ps1 shim was selected.'")
   $settings = Join-Path $env:USERPROFILE '.codex\config.toml'
@@ -83,7 +93,7 @@ function Invoke-BootstrapCase {
 }
 
 try {
-  Invoke-BootstrapCase 'Codex uses npm.cmd without installing Git or unrelated providers' {
+  Invoke-BootstrapCase 'Codex uses npm.cmd and reuses installed Git without unrelated providers' {
     param($Bootstrap, $CaseRoot)
     # Existing Git lets the original bootstrap reach the broken download route.
     [IO.File]::WriteAllText((Join-Path $env:UABS_TEST_BIN 'git.cmd'), "@echo off`r`necho git version 2.50.0`r`nexit /b 0`r`n")
@@ -94,6 +104,25 @@ try {
     $report = @([IO.File]::ReadAllText((Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\provider-bootstrap.json')) | ConvertFrom-Json)
     Assert ($report.Count -eq 1 -and $report[0].provider -eq 'Codex' -and $report[0].installed_now) 'Bootstrap report did not contain only the selected installed Codex CLI.'
     Assert ($report[0].executable -eq (Join-Path $env:APPDATA 'npm\codex.cmd')) 'The newly installed CLI was not found with a cold PATH.'
+  }
+  Invoke-BootstrapCase 'solo Codex provisions missing Git for plugin setup and the shell doctor' {
+    param($Bootstrap, $CaseRoot)
+    Remove-Item -LiteralPath (Join-Path $env:UABS_TEST_BIN 'git.cmd')
+    $env:UABS_TEST_INSTALL_GIT = '1'
+    & $Bootstrap -Providers Codex
+    Assert (([IO.File]::ReadAllText($env:UABS_TEST_WINGET_LOG)).Trim() -eq 'Git.Git') 'Solo Codex did not provision its missing Git/Bash prerequisite.'
+    . (Join-Path $CaseRoot 'TOOLS\UABS-Common.ps1')
+    Assert (@(Repair-UabsHookShellPath -CheckOnly).Count -eq 0) 'Bootstrap left prerequisites that the final doctor would reject.'
+  }
+  Invoke-BootstrapCase 'missing Git install failure prevents a false provider success report' {
+    param($Bootstrap, $CaseRoot)
+    Remove-Item -LiteralPath (Join-Path $env:UABS_TEST_BIN 'git.cmd')
+    $env:UABS_TEST_INSTALL_GIT = 'fail'
+    $problem = $null
+    try { & $Bootstrap -Providers Codex } catch { $problem = $_.Exception.Message }
+    Assert ($problem -match 'Git for Windows installation failed') 'Git installation failure was not surfaced.'
+    Assert (-not (Test-Path -LiteralPath $env:UABS_TEST_NPM_LOG)) 'Provider installation continued after Git failed.'
+    Assert (-not (Test-Path -LiteralPath (Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\provider-bootstrap.json'))) 'A failed dependency installation wrote success.'
   }
   Invoke-BootstrapCase 'existing Codex CLI survives a cold PATH without reinstall' {
     param($Bootstrap, $CaseRoot)

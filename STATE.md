@@ -1,5 +1,44 @@
 # Bundle audit state
 
+## Resumed verification (2026-10-24, v8.21.2 candidate)
+
+- Started from clean main `d0b94e0`; reviewed the later edits against source
+  and recorded receipts. GitHub confirms v8.21.1 at `8d9b9f9`, both CI runs
+  succeeded on that SHA, release asset metadata matches the recorded digests,
+  and Dependabot/code/secret scanning each have zero open alerts.
+- Shared Python resolves to 3.14.9. The app supplies a bundled PowerShell 7;
+  a standalone pwsh installation is not required. GitHub keyring access works
+  outside the sandbox; no reauthentication or model/settings change needed.
+- Found/reproduced remaining defects: solo providers omitted Git despite the
+  final shell requirement; a cached Hermes runtime launch could reuse exit 0;
+  malformed Hermes hook config and mandatory-gate failures could report success;
+  aliased YAML hook mappings could change unrelated settings.
+- Fixed the reproduced failures. Focused negative fixtures pass, release
+  contracts are 151/0, full Windows PS5.1 Test-Pack PASS, and 10,362 manifest
+  entries verify with zero missing/mismatched files. Shared-Python testing now
+  measures the default before setup, so a repaired PATH cannot falsify that check.
+- Real ruamel.yaml 0.18.16 exercises YAML aliases/comments and schema 1.1 in
+  isolated tests; a separate fixture passed on the actual Hermes adapter.
+  Linked configs are refused rather than replaced. Windows cannot create file
+  symlinks without privilege here; its refusal guard is tested, with the physical
+  link fixture also required in the Linux CI job. The shared base stays clean.
+- Live `INSTALL-AIO.ps1 -Mode BundledFirst -SkipSelfUpdate -SkipNativePlugins`
+  with the five detected providers completed exit 0 as v8.21.2. All fifteen
+  always-on MCP checks answered; installed-state doctor PASS. Model/permission
+  fingerprints in eleven backed-up configs stayed identical. Kimi was untouched.
+  Native plugin state was deliberately reused, not claimed freshly installed.
+  Log: `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\logs\install-20261024-125859.log`.
+- Review branch: `fix/windows-bootstrap-gates`; v8.21.1 remains the public
+  last-known-good release. PR/check IDs, exact pushed SHA and package digests
+  belong in ignored `artifacts/recovery/resume-final.local.json`. Query the
+  branch's live review status with `gh pr view --json url,headRefOid,statusCheckRollup`.
+  Merge/publication of v8.21.2 remains a separate approval step.
+- Hermes native-plugin Git access failure remains a verified vendor limitation
+  on the current installed build. Copied skills are the supported fallback;
+  native plugin activation hooks/commands are not certified by doctor PASS.
+- Earlier entries below are chronological history; their unpublished/restart
+  notes are superseded only where later verified evidence says so.
+
 ## Fresh Windows recovery (2026-10-23, v8.21.1 source gates)
 
 - Published v8.21.1 on 2026-10-24 from `8d9b9f9eb844dfcbae61c0315cadba9ee10d63ff`:

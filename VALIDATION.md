@@ -1,4 +1,26 @@
-# v8.21.1 validation
+# v8.21.2 validation
+
+Resumed review verified the v8.21.1 public archive bytes and exact-SHA CI,
+then fixed the remaining required-dependency and false-success paths.
+
+- Windows PowerShell 5.1 `TESTS/Test-Pack.ps1 -TestPython <disposable-venv>`:
+  PASS. Release contracts: 151 passed, 0 failed. Manifest: 10,362 verified,
+  zero missing/mismatch. Version consistency: PASS.
+- Negative fixtures: solo-provider missing Git/failing installation; missing
+  or invalid cached Python; malformed hooks and failed required self-tests.
+- Pinned real ruamel 0.18.16 and the actual installed Hermes adapter: alias,
+  schema 1.1, CRLF comment, exact backup and idempotent-retry checks PASS.
+  Windows file-symlink creation lacks privilege locally; guard coverage is
+  supplemented by a required physical-symlink CI job on Linux.
+- Live v8.21.2 install: exit 0, doctor PASS, fifteen core MCP checks across
+  five installed providers. Eleven model/permission fingerprints unchanged.
+  Native plugins were reused; absent Kimi was not installed.
+- Exact pushed SHA, remote CI and candidate package receipts:
+  `artifacts/recovery/resume-final.local.json` (local-only). The public
+  v8.21.1 tag stays intact; v8.21.2 publication requires separate approval.
+
+Not certified: provider inference, absent provider/editor/game integrations,
+or Hermes native-plugin activation under its copied-skills fallback.
 
 Current audit evidence and limits: [whole-bundle audit](docs/AUDIT-2026-10-22.md).
 

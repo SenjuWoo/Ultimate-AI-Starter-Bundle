@@ -57,17 +57,25 @@ try:
         real_yaml = yaml
         saved_yaml_module = sys.modules.pop('yaml', None)
         saved_hermes_module = sys.modules.get('hermes_yaml')
-        class Editor:
-            def load(self, text):
-                return real_yaml.safe_load(text)
-            def dump(self, data, stream):
-                stream.write(real_yaml.safe_dump(data, allow_unicode=True, sort_keys=False))
+        from ruamel.yaml import YAML
+        from ruamel.yaml.resolver import VersionedResolver
+        class Yaml11Resolver(VersionedResolver):
+            @property
+            def processing_version(self):
+                return (1, 1)
         class HermesYaml:
             def __init__(self):
                 self.roundtrips = 0
             def roundtrip_yaml(self):
                 self.roundtrips += 1
-                return Editor()
+                editor = YAML(typ='rt')
+                editor.Resolver = Yaml11Resolver
+                editor.width = 2**31 - 1
+                editor.preserve_quotes = True
+                editor.allow_unicode = True
+                editor.default_flow_style = False
+                editor.indent(mapping=2, sequence=4, offset=2)
+                return editor
             def safe_load(self, stream):
                 return real_yaml.safe_load(stream)
         fake_yaml = HermesYaml()

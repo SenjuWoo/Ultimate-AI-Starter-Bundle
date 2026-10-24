@@ -157,6 +157,22 @@ function Invoke-UabsHermesPython {
         $failureCode = $LASTEXITCODE
     } finally { $ErrorActionPreference = $failureEap }
     Assert ($failureCode -ne 0 -and $failureOutput -match 'Hermes hook removal failed') 'Hermes uninstall swallowed a vendor runtime failure.'
+    # A printed PASS cannot hide an actual self-test failure; missing Python
+    # cannot silently skip the required executable controls either.
+    foreach ($failureKind in @('selftest','python')) {
+        if ($failureKind -eq 'selftest') {
+            Put (Join-Path $testPack 'TOOLS\hooks\completeness_gate.py') "print('PASS')`nraise SystemExit(7)`n"
+        } else {
+            [IO.File]::AppendAllText((Join-Path $testPack 'TOOLS\UABS-Common.ps1'), "`nfunction Get-UabsPythonExecutable { return `$null }`n")
+        }
+        $failureEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+        try {
+            $failureOutput = @(& $powershell -NoProfile -ExecutionPolicy Bypass -File $installer -PackRoot $testPack -Providers Hermes 2>&1 | ForEach-Object { [string]$_ }) -join "`n"
+            $failureCode = $LASTEXITCODE
+        } finally { $ErrorActionPreference = $failureEap }
+        $expected = if ($failureKind -eq 'selftest') { 'self-test failed' } else { 'need a working Python' }
+        Assert ($failureCode -ne 0 -and $failureOutput -match $expected) ('Required provider gate failure was swallowed: ' + $failureKind)
+    }
     Write-Host 'PROVIDER HOOK SCOPE GATE: PASS'
 } finally {
     foreach ($key in $saved.Keys) { [Environment]::SetEnvironmentVariable($key, $saved[$key], 'Process') }

@@ -64,6 +64,8 @@ Development gates are `TESTS\Test-Pack.ps1` and
 `python TESTS\test_release_contract.py`, plus manifest and version checks in
 `.github\scripts`. Test-Pack needs the pinned MCP SDK and PyYAML dependencies
 listed in CI; use a disposable test environment instead of the shared base.
+The test dependencies include `ruamel.yaml==0.18.16` so Hermes fallback tests
+exercise its real serializer, including YAML aliases and CRLF comments.
 Pass its interpreter through `TESTS\Test-Pack.ps1 -TestPython
 <venv>\Scripts\python.exe`; leave `UABS_PYTHON` pointing to the real shared base.
 Provider fixtures exercise all 63 nonempty selections and Windows paths;
@@ -75,3 +77,9 @@ Catalog freshness is available through
 compatibility/security hold is a candidate requiring its own validation, not
 permission to bypass the hold. Local source fixes do not update published
 release archives until a new release passes its publication gates.
+
+Required gate failures stop installation with a nonzero result. Repair a
+malformed personal configuration from its own backup; setup preserves it and
+reports the failure rather than overwriting it or claiming a complete install.
+Hermes can retain copied skills when its native plugin installer cannot launch
+Git. That fallback does not prove native plugin activation hooks or commands.

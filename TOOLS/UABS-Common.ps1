@@ -340,6 +340,11 @@ function Invoke-UabsHermesPython {
     }
     $runtime = $script:UabsHermesRuntimeCache[$key]
     $exe = $runtime[0]; $prefix = @()
+    if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) {
+      $global:LASTEXITCODE = 1
+      $script:UabsHermesPythonError = 'Hermes cached Python runtime is unavailable: ' + $exe
+      throw $script:UabsHermesPythonError
+    }
     if ($runtime.Count -gt 1) { $prefix = @($runtime[1..($runtime.Count-1)]) }
     $stdout = New-Object System.Collections.Generic.List[string]
     $stderr = New-Object System.Collections.Generic.List[string]
@@ -352,6 +357,8 @@ function Invoke-UabsHermesPython {
       # Stop plus 2>&1 turns native stderr into a terminating error before the
       # child's exit code can be read. Continue keeps that code and both streams.
       $ErrorActionPreference = 'Continue'
+      # A launch error does not set LASTEXITCODE; never reuse an earlier zero.
+      $global:LASTEXITCODE = $null
       & $exe '-X' 'utf8' @prefix @childArgs 2>&1 | ForEach-Object {
         if ($_ -is [System.Management.Automation.ErrorRecord]) {
           $text = [string]$_.Exception.Message
@@ -360,7 +367,12 @@ function Invoke-UabsHermesPython {
         } else { [void]$stdout.Add([string]$_) }
       }
       $exitCode = $LASTEXITCODE
+      if ($null -eq $exitCode) { throw ('Hermes Python runtime could not start: ' + $exe) }
       $ranChild = $true
+    } catch {
+      $global:LASTEXITCODE = 1
+      $script:UabsHermesPythonError = $_.Exception.Message
+      throw
     } finally {
       [Console]::OutputEncoding = $oldEncoding
       $ErrorActionPreference = $oldEap

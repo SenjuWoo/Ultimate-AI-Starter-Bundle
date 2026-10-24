@@ -27,6 +27,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  hermes-yaml:
+    name: Hermes YAML and physical symlink preservation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.14"
+      - run: python -m pip install --disable-pip-version-check PyYAML==6.0.3 ruamel.yaml==0.18.16
+      - run: python TOOLS/hooks/hermes_wire.py --selftest
+
   pack-gate:
     name: Pack gate (Windows PowerShell 5.1, Python ${{ matrix.python }})
     runs-on: windows-latest
@@ -54,7 +67,7 @@ jobs:
       - name: Toolbox gate dependency (the MCP SDK version the wheel pins)
         shell: powershell
         run: |
-          python -m pip install --disable-pip-version-check mcp==1.30.0 PyYAML==6.0.3
+          python -m pip install --disable-pip-version-check mcp==1.30.0 PyYAML==6.0.3 ruamel.yaml==0.18.16
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Pack gate

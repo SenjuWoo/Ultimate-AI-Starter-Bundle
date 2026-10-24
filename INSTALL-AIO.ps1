@@ -547,7 +547,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.21.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.21.2 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -2750,7 +2750,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.21.1'
+version = '8.21.2'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode
@@ -2772,9 +2772,9 @@ if (-not $ToolsOnly) {
   if (Test-Path -LiteralPath $gateInstaller) {
     if ((Invoke-UabsChildScript -Title 'Completeness gates' -File $gateInstaller -ArgList @('-Providers', $providerList)) -eq 0) {
       Write-UabsOk 'Completeness + assumption gates and safe RTK routing installed'
-    } else { Write-UabsWarn 'Gates: the gate installer reported an error (Tool output log)' }
+    } else { throw 'Required gate installation failed. See the tool output log; installation is incomplete.' }
   } else {
-    Write-UabsWarn 'TOOLS\Install-Completeness-Gate.ps1 missing from pack'
+    throw 'Required TOOLS\Install-Completeness-Gate.ps1 is missing from the pack.'
   }
 
   $mcpReason = Join-Path $PackRoot 'TOOLS\Add-Reasoning-MCPs.ps1'

@@ -154,6 +154,7 @@ if ($Providers -contains 'Codex') {
 $python = Get-UabsPythonExecutable
 if (-not $python) {
   Write-Host 'SKIP: no working python found. Install Python 3.9+ and re-run.' -ForegroundColor Yellow
+  if (@($Providers | Where-Object { $_ -in @('Claude','Grok','Hermes') }).Count) { throw 'Required provider gates need a working Python interpreter.' }
   exit 0
 }
 
@@ -313,10 +314,13 @@ if (-not $CheckOnly) {
     $dest = Join-Path $installRoot $g.Name
     Copy-Item -LiteralPath (Join-Path $hooksSrc $g.Name) -Destination $dest -Force
     # Never wire a gate that cannot prove itself first.
-    $selftest = & $python $dest --selftest 2>&1 | Out-String
-    if ($selftest -notmatch 'PASS') {
-      Write-Host "SKIP: $($g.Name) self-test failed, refusing to wire it:`n$selftest" -ForegroundColor Yellow
-      exit 0
+    $selftestEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+    try {
+      $selftest = & $python $dest --selftest 2>&1 | Out-String
+      $selftestCode = $LASTEXITCODE
+    } finally { $ErrorActionPreference = $selftestEap }
+    if ($selftestCode -ne 0 -or $selftest.Trim() -notmatch '\bPASS$') {
+      throw "$($g.Name) self-test failed (exit $selftestCode), refusing to wire it:`n$selftest"
     }
     Write-Host "gate: $dest  (self-test PASS)"
   }

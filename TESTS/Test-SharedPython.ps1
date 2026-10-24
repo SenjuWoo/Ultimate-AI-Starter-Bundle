@@ -8,6 +8,9 @@ $fixture=Join-Path ([IO.Path]::GetTempPath()) ('uabs-shared-python-'+[guid]::New
 try {
   $python=Get-UabsPythonExecutable
   if(-not $python){throw 'This gate needs a real base Python.'}
+  # Measure before setup; a repaired PATH cannot prove the old default worked.
+  $bare = @(Get-UabsNativeStdout -Exe 'python' -CmdArgs @('-I','-c','import json,sys;print(json.dumps(sys.executable))'))
+  $wasDefault = $LASTEXITCODE -eq 0 -and $bare.Count -and [string]($bare[-1] | ConvertFrom-Json) -ieq $python
   & (Join-Path $PackRoot 'TOOLS\Set-SharedPython.ps1') -Python $python -Apply -Scope Process | Out-Null
   if($env:UABS_PYTHON -ine $python -or $env:UV_PYTHON -ine $python -or $env:UV_PYTHON_DOWNLOADS -ne 'never'){throw 'Shared environment was not configured.'}
   if((Get-UabsPythonExecutable) -ine $python){throw 'Resolver ignored the selected runtime.'}
@@ -19,8 +22,7 @@ try {
   if (($untouched -join '|') -cne '--python|child-value') { throw 'Non-uv command was changed.' }
   $beforePath = $saved['Path'] -split ';'
   $baseDir = Split-Path -Parent $python
-  $bare = @(Get-UabsNativeStdout -Exe 'python' -CmdArgs @('-I','-c','import json,sys;print(json.dumps(sys.executable))'))
-  if ($LASTEXITCODE -eq 0 -and [string]($bare[-1] | ConvertFrom-Json) -ieq $python -and $beforePath -notcontains $baseDir -and ($env:Path -split ';') -contains $baseDir) { throw 'Setup unnecessarily pinned a working default to a version-specific PATH entry.' }
+  if ($wasDefault -and $beforePath -notcontains $baseDir -and ($env:Path -split ';') -contains $baseDir) { throw 'Setup unnecessarily pinned a working default to a version-specific PATH entry.' }
   $first=$env:Path
   & (Join-Path $PackRoot 'TOOLS\Set-SharedPython.ps1') -Python $python -Apply -Scope Process | Out-Null
   if($env:Path -cne $first){throw 'Repeated selection duplicated PATH entries.'}

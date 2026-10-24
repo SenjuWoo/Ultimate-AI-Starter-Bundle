@@ -1,3 +1,16 @@
+## 8.21.2
+
+- Install the Git/Bash prerequisite for every selected provider, including solo
+  Codex, before native plugin setup and the final shell checks.
+- Reject missing or unlaunchable cached Hermes runtimes instead of reusing a
+  previous process's successful exit code.
+- Fail incomplete required-gate setup: malformed hook configuration, missing
+  Python, failed self-tests and missing installer files no longer report success.
+- Preserve unrelated YAML mappings when hooks share an anchor, and verify
+  serialized values before an atomic config replacement with an exact backup.
+- Exercise the real pinned ruamel serializer in CI for YAML aliases, CRLF
+  comments and idempotent retries. Existing native-plugin fallback remains.
+
 ## 8.21.1
 
 - Repair fresh Windows provider discovery, including desktop apps, native/npm
