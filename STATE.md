@@ -57,10 +57,11 @@
 - Re-ran after those edits: release contract 151 passed, 0 failed;
   `TESTS/Test-Pack.ps1 -TestPython` PACK GATE: PASS on the disposable venv;
   hook-shell gate PASS, including a real Git shell.
-- Not done yet: push of this follow-up; CI on that SHA; public v8.21.1
-  archives. Restart Claude and Codex so they inherit the updated environment.
-  `cua_repl` stays unwired (`CUA_REPL_NODE_REPL_PATH` unset) and is not an
-  always-on installer check. `pwsh.exe` is still not installed.
+- Code fix is `2327c20`. CI on the pushed tip, and the public v8.21.1
+  archives, are still open. Restart Claude and Codex so they inherit the
+  updated environment. `cua_repl` stays unwired
+  (`CUA_REPL_NODE_REPL_PATH` unset) and is not an always-on installer check.
+  `pwsh.exe` is still not installed.
 - Notes below this heading describe the pre-reset machine and the v8.21.0
   release. They are not this install's result.
 
