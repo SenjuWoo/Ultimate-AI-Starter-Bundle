@@ -10,6 +10,29 @@
   serialized values before an atomic config replacement with an exact backup.
 - Exercise the real pinned ruamel serializer in CI for YAML aliases, CRLF
   comments and idempotent retries. Existing native-plugin fallback remains.
+- Materialize Hermes Mixture-of-Agents OFF in every profile that still carries
+  the vendor default. Hermes merges its own default into a profile with no
+  `moa:` key: MoA enabled, a gpt-5.5 advisor and an Opus 4.8 aggregator. The
+  migration writes an explicit disabled block with the profile's acting model
+  as aggregator and cheap OpenRouter advisors. A block the owner edited does
+  not match the fingerprint and is left untouched.
+- Repair dead MCP command paths in Hermes `profiles/*/config.yaml`, not just
+  the default profile. A Codex update changes its content-hash runtime folder,
+  and every profile copy kept the old path while the installer reported the
+  paths checked. Directory-only references (`NODE_REPL_NODE_MODULE_DIRS`,
+  `NODE_REPL_TRUSTED_CODE_PATHS`) are repointed by the same unique-sibling
+  rule, so a repaired server also finds its modules.
+- Resolve the real Hermes home when `HERMES_HOME` points at an active profile.
+  Hermes desktop exports the profile path to everything it launches; the
+  migrator and installer now walk it back to the home instead of creating
+  profiles inside a profile.
+- Cover the profile MCP repair, the hash-folder repair, ambiguity refusal and
+  the MoA fingerprint migration with fixtures that fail on the previous code.
+- Keep the pack gate hermetic: clear an inherited `PYTHONPATH`/`PYTHONHOME`
+  before child test Pythons run, and read `CallToolResult.is_error` or
+  `isError` on either MCP SDK generation. A host agent's venv otherwise
+  shadows the disposable test environment and fails the toolbox gate on a
+  version this repository never pinned.
 
 ## 8.21.1
 

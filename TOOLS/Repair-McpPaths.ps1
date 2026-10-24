@@ -45,6 +45,21 @@ $configs = @(
   @{ Name = 'Hermes'; Path = (Join-Path $env:LOCALAPPDATA 'hermes\config.yaml') }
 )
 
+# Hermes stores one config per profile under profiles\<name>\config.yaml. The
+# top-level file above is only the default profile, so a Codex runtime update
+# (which changes the hash folder under runtimes\cua_node) left every profile
+# copy pointing at the dead path while the installer still printed
+# "MCP command paths checked". Scan the profile copies too.
+$hermesProfileRoot = Join-Path $env:LOCALAPPDATA 'hermes\profiles'
+if (Test-Path -LiteralPath $hermesProfileRoot -PathType Container) {
+  foreach ($profileDir in @(Get-ChildItem -LiteralPath $hermesProfileRoot -Directory -ErrorAction SilentlyContinue)) {
+    $profileCfg = Join-Path $profileDir.FullName 'config.yaml'
+    if (Test-Path -LiteralPath $profileCfg -PathType Leaf) {
+      $configs += @{ Name = ('Hermes/' + $profileDir.Name); Path = $profileCfg }
+    }
+  }
+}
+
 # Claude Desktop (Store app) keeps its own MCP config and does NOT read
 # ~/.claude.json for its servers. The package folder is hash-suffixed, so
 # glob for the config file instead of hardcoding the package name.
@@ -75,7 +90,7 @@ function ConvertTo-ConfigLiteral([string]$LivePath, [string]$DeadLiteral) {
 }
 
 # Absolute Windows paths that look like a program, in either slash style.
-$rxPath = '(?<p>[A-Za-z]:[\\/](?:[^"''\r\n]*?)\.(?:exe|cmd|bat|ps1|py))'
+$rxPath = '(?<p>[A-Za-z]:[\\/](?:[^"''\r\n;]*?)\.(?:exe|cmd|bat|ps1|py))'
 
 <#
   Repointing rule: if a dead path contains a version-stamped directory
@@ -165,6 +180,7 @@ foreach ($c in $configs) {
     continue
   }
   $text = [IO.File]::ReadAllText($c.Path)
+  $problemsBefore = $problems
   $seen = New-Object 'System.Collections.Generic.HashSet[string]'
   $dead = @()
   foreach ($m in [regex]::Matches($text, $rxPath)) {
@@ -173,10 +189,7 @@ foreach ($c in $configs) {
     if (Test-Path -LiteralPath (Get-NormalPath $p)) { continue }
     $dead += $p
   }
-  if (-not $dead.Count) {
-    if (-not $Quiet) { Write-Host ("{0,-7} OK" -f $c.Name) -ForegroundColor Green }
-    continue
-  }
+  $filePathsClean = ($dead.Count -eq 0)
   $newText = $text
   $changed = $false
   foreach ($d in $dead) {
@@ -197,6 +210,57 @@ foreach ($c in $configs) {
     $changed = $true
     $repairs++
   }
+  # Directory-only references. NODE_REPL_NODE_MODULE_DIRS and
+  # NODE_REPL_TRUSTED_CODE_PATHS name folders, so the file-path scan above
+  # never sees them. Codex keys both its runtime tree and its CLI folder by a
+  # 16-hex content hash; an update changes the hash, the command is repaired,
+  # and the module/trust lists still point into the dead tree. The server then
+  # starts without its modules -- a silent partial failure.
+  #
+  # Resolve only a hash folder whose replacement is unique, and only for the
+  # two known layouts (cua_node\<hash> and Codex\bin\<hash>). Anything else is
+  # reported by the file-path pass or left alone.
+  $rxHashRoot = [regex]'(?i)(?<p>[A-Za-z]:[\\/][^"''\r\n;]*?[\\/](?:cua_node|bin)[\\/](?<h>[0-9a-f]{16}))'
+  $hashSeen = New-Object 'System.Collections.Generic.HashSet[string]'
+  foreach ($m in [regex]::Matches($newText, $rxHashRoot)) {
+    $deadRoot = $m.Groups['p'].Value
+    if (-not $hashSeen.Add((Get-NormalPath $deadRoot).ToLowerInvariant())) { continue }
+    if (Test-Path -LiteralPath (Get-NormalPath $deadRoot)) { continue }
+    $parent = Split-Path -Parent (Get-NormalPath $deadRoot)
+    $leaf = Split-Path -Leaf $parent
+    $marker = $null
+    if ($leaf -ieq 'cua_node') { $marker = 'bin\node_repl.exe' }
+    elseif ($leaf -ieq 'bin' -and (Split-Path -Leaf (Split-Path -Parent $parent)) -ieq 'Codex') { $marker = 'codex.exe' }
+    if (-not $marker) { continue }
+    $cands = @()
+    foreach ($d in (Get-ChildItem -LiteralPath $parent -Directory -ErrorAction SilentlyContinue)) {
+      if ($d.Name -ieq $m.Groups['h'].Value) { continue }
+      $probe = Join-Path $d.FullName $marker
+      if (Test-Path -LiteralPath $probe -PathType Leaf) { $cands += $d.FullName }
+    }
+    if ($cands.Count -ne 1) {
+      $problems++
+      Write-Host (("{0,-7} DEAD hash folder ({1} candidates)" -f $c.Name, $cands.Count)) -ForegroundColor Red
+      Write-Host ("          $deadRoot") -ForegroundColor Red
+      continue
+    }
+    $liveRoot = $cands[0]
+    $deadStyled = ConvertTo-ConfigLiteral -LivePath $deadRoot -DeadLiteral $deadRoot
+    $liveStyled = ConvertTo-ConfigLiteral -LivePath $liveRoot -DeadLiteral $deadRoot
+    $problems++
+    Write-Host (("{0,-7} REPOINT" -f $c.Name)) -ForegroundColor Yellow
+    Write-Host ("          folder $deadStyled") -ForegroundColor DarkYellow
+    Write-Host ("          to     $liveStyled") -ForegroundColor DarkYellow
+    $newText = $newText.Replace($deadStyled, $liveStyled)
+    $changed = $true
+    $repairs++
+  }
+
+  if ($filePathsClean -and -not $changed -and $problems -eq $problemsBefore) {
+    if (-not $Quiet) { Write-Host (("{0,-7} OK" -f $c.Name)) -ForegroundColor Green }
+    continue
+  }
+
   if ($changed -and $Apply) {
     $bytes = [IO.File]::ReadAllBytes($c.Path)
     $hadBom = ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF)

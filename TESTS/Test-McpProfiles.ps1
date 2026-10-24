@@ -940,6 +940,144 @@ $ctText = [IO.File]::ReadAllText($ct)
 if ($ctText -match 'context7-mcp@9\.9\.9' -and $ctText -match 'enabled_tools = \["resolve-library-id"\]' -and $ctText -notmatch '4\.0\.4') { Good 'custom policy kept, package pin moved in place' }
 else { Bad ('custom-policy table lost its filter or kept the old pin: ' + $ctText) }
 
+# ------------------------------------------------- Hermes profile repair ----
+Section 'MCP path repair covers Hermes profile configs'
+
+# The top-level Hermes config is only the default profile. A Codex runtime
+# update changes the hash folder under runtimes\cua_node, and every profile
+# copy kept the dead path while the installer reported "paths checked". The
+# repair script must scan profiles\*\config.yaml and resolve the one live
+# sibling, not just the root file.
+$repairScript = Join-Path $PackRoot 'TOOLS\Repair-McpPaths.ps1'
+if (-not (Test-UabsPath -LiteralPath $repairScript -PathType Leaf)) {
+  Bad 'TOOLS\Repair-McpPaths.ps1 missing'
+} else {
+  $repairBox = Join-Path $sandbox 'repair-box'
+  $repairLocal = Join-Path $repairBox 'LocalAppData'
+  $repairUser = Join-Path $repairBox 'UserProfile'
+  $liveBin = Join-Path $repairLocal 'OpenAI\Codex\runtimes\cua_node\livehash\bin'
+  $deadBin = Join-Path $repairLocal 'OpenAI\Codex\runtimes\cua_node\deadhash\bin'
+  New-Item -ItemType Directory -Force -Path $liveBin, (Join-Path $repairUser '.codex') | Out-Null
+  Set-Utf8NoBom -Path (Join-Path $liveBin 'node_repl.exe') -Text 'live'
+  $deadExe = Join-Path $deadBin 'node_repl.exe'
+  $liveExe = Join-Path $liveBin 'node_repl.exe'
+  $profileCfg = Join-Path $repairLocal 'hermes\profiles\code\config.yaml'
+  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $profileCfg) | Out-Null
+  Set-Utf8NoBom -Path $profileCfg -Text ("mcp_servers:`r`n  node_repl:`r`n    command: " + $deadExe + "`r`n    env:`r`n      NODE_REPL_NODE_MODULE_DIRS: " + $deadBin + "`r`n      NODE_REPL_TRUSTED_CODE_PATHS: C:\Users\fixture\.codex;" + $deadBin + "`r`n")
+  $oldLocal = $env:LOCALAPPDATA
+  $oldUser = $env:USERPROFILE
+  try {
+    $env:LOCALAPPDATA = $repairLocal
+    $env:USERPROFILE = $repairUser
+    $repairOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $repairScript -Apply -Quiet 2>&1 | Out-String
+    $repairCode = $LASTEXITCODE
+  } finally {
+    $env:LOCALAPPDATA = $oldLocal
+    $env:USERPROFILE = $oldUser
+  }
+  $repaired = [IO.File]::ReadAllText($profileCfg)
+  if ($repairCode -eq 0 -and $repaired -match [regex]::Escape($liveExe) -and $repaired -notmatch [regex]::Escape($deadExe)) {
+    Good 'a dead node_repl path in a profile config is repointed to the live runtime'
+  } else {
+    Bad ("profile MCP repair failed (exit $repairCode): " + $repaired)
+  }
+  if (@(Get-ChildItem -LiteralPath (Split-Path -Parent $profileCfg) -Filter 'config.yaml.before-mcprepair-*.bak' -ErrorAction SilentlyContinue).Count -ge 1) {
+    Good 'the profile config is backed up before the rewrite'
+  } else {
+    Bad 'the profile config was rewritten without a backup'
+  }
+  # A user block must never be guessed at: two live siblings mean "report",
+  # not "pick one".
+  $ambig = Join-Path $repairLocal 'hermes\profiles\ambig\config.yaml'
+  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $ambig) | Out-Null
+  $ambigDead = Join-Path $repairLocal 'OpenAI\Codex\runtimes\cua_node\gonehash\bin\node_repl.exe'
+  Set-Utf8NoBom -Path $ambig -Text ("mcp_servers:`r`n  node_repl:`r`n    command: " + $ambigDead + "`r`n")
+  $ambigLive1 = Join-Path $repairLocal 'OpenAI\Codex\runtimes\cua_node\other1\bin'
+  $ambigLive2 = Join-Path $repairLocal 'OpenAI\Codex\runtimes\cua_node\other2\bin'
+  New-Item -ItemType Directory -Force -Path $ambigLive1, $ambigLive2 | Out-Null
+  Set-Utf8NoBom -Path (Join-Path $ambigLive1 'node_repl.exe') -Text 'a'
+  Set-Utf8NoBom -Path (Join-Path $ambigLive2 'node_repl.exe') -Text 'b'
+  $oldLocal = $env:LOCALAPPDATA
+  $oldUser = $env:USERPROFILE
+  try {
+    $env:LOCALAPPDATA = $repairLocal
+    $env:USERPROFILE = $repairUser
+    $ambigOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $repairScript -Apply -Quiet 2>&1 | Out-String
+    $ambigCode = $LASTEXITCODE
+  } finally {
+    $env:LOCALAPPDATA = $oldLocal
+    $env:USERPROFILE = $oldUser
+  }
+  $ambigText = [IO.File]::ReadAllText($ambig)
+  if ($ambigCode -ne 0 -and $ambigText -match [regex]::Escape($ambigDead) -and $ambigOut -match 'no replacement found') {
+    Good 'two candidate runtimes are reported, never guessed'
+  } else {
+    Bad ("ambiguous runtime was rewritten or hidden (exit $ambigCode): " + $ambigOut)
+  }
+}
+
+# ------------------------------------------------------------- Hermes MoA ----
+Section 'MoA: the inherited vendor default is replaced, a user block is kept'
+
+# Hermes' DEFAULT_CONFIG enables MoA with a gpt-5.5 advisor and an Opus 4.8
+# aggregator, and load_config merges it into every profile that never wrote a
+# moa block. The migrator must materialize an explicit, cheap, disabled block
+# for that fingerprint -- and must not touch a block the owner edited.
+$migrationText = [IO.File]::ReadAllText((Join-Path $PackRoot 'TOOLS\Migrate-HermesProfiles.ps1'))
+$helperStart = $migrationText.IndexOf('function ConvertTo-UabsPlain')
+$helperEnd = $migrationText.IndexOf('function Test-UabsValueEqual')
+$moaStart = $migrationText.IndexOf('$script:UabsRetiredMoaAggregators')
+$moaEnd = $migrationText.IndexOf('function Ensure-UabsProfilePrefs')
+if ($helperStart -lt 0 -or $helperEnd -le $helperStart -or $moaStart -lt 0 -or $moaEnd -le $moaStart) {
+  Bad 'MoA migration block not found in the migrator'
+} else {
+  . ([scriptblock]::Create($migrationText.Substring($helperStart, $helperEnd - $helperStart)))
+  . ([scriptblock]::Create($migrationText.Substring($moaStart, $moaEnd - $moaStart)))
+
+  $vendorMoa = @{
+    enabled = $true
+    aggregator = @{ provider = 'openrouter'; model = 'anthropic/claude-opus-4.8' }
+    reference_models = @(
+      @{ provider = 'openai-codex'; model = 'gpt-5.5'; enabled = $true }
+      @{ provider = 'openrouter'; model = 'deepseek/deepseek-v4-pro'; enabled = $true }
+    )
+    presets = @{ default = @{ enabled = $true } }
+  }
+  $plan = Get-MoaMigrationPlan -Moa $vendorMoa -MainProvider 'openrouter' -MainModel 'deepseek/deepseek-v4.1-flash-1017'
+  if ($null -ne $plan -and $plan['disable'] -eq $true) {
+    Good 'the vendor default is scheduled for replacement'
+  } else {
+    Bad 'the vendor MoA default was left in place'
+  }
+  Is ([string]$plan['aggregator']['model']) 'deepseek/deepseek-v4.1-flash-1017' 'the acting model becomes the aggregator'
+  Is ([string]$plan['aggregator']['provider']) 'openrouter' 'the aggregator keeps the profile provider'
+  $planRefs = @($plan['reference_models'] | ForEach-Object { [string]$_['model'] })
+  if ($planRefs -notcontains 'gpt-5.5' -and $planRefs.Count -eq 2) {
+    Good 'the gpt-5.5 advisor is replaced with cheap OpenRouter models'
+  } else {
+    Bad ('advisor list still carries the vendor default: ' + ($planRefs -join ', '))
+  }
+
+  $customRef = @{
+    enabled = $true
+    aggregator = @{ provider = 'openrouter'; model = 'anthropic/claude-opus-4.8' }
+    reference_models = @(@{ provider = 'openrouter'; model = 'moonshotai/kimi-k3'; enabled = $true })
+  }
+  Is (Get-MoaMigrationPlan -Moa $customRef -MainProvider 'openrouter' -MainModel 'deepseek/deepseek-v4.1-flash-1017') $null 'a custom advisor keeps the whole block'
+  $customAgg = @{
+    enabled = $true
+    aggregator = @{ provider = 'openrouter'; model = 'anthropic/claude-opus-5' }
+    reference_models = @(@{ provider = 'openai-codex'; model = 'gpt-5.5'; enabled = $true })
+  }
+  Is (Get-MoaMigrationPlan -Moa $customAgg -MainProvider 'openrouter' -MainModel 'deepseek/deepseek-v4.1-flash-1017') $null 'a user-chosen aggregator is never overwritten'
+  $cleanMoa = @{
+    enabled = $false
+    aggregator = @{ provider = 'openrouter'; model = 'deepseek/deepseek-v4.1-flash-1017' }
+    reference_models = @(@{ provider = 'openai-codex'; model = 'gpt-5.5'; enabled = $false })
+  }
+  Is (Get-MoaMigrationPlan -Moa $cleanMoa -MainProvider 'openrouter' -MainModel 'deepseek/deepseek-v4.1-flash-1017') $null 'an already-migrated block is idempotent'
+}
+
 # ------------------------------------------------------- vision canary ----
 Section 'the vision canary is falsifiable'
 

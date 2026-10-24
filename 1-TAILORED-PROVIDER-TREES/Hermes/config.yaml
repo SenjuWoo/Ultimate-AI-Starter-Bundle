@@ -180,30 +180,35 @@ delegation:
   max_concurrent_children: 2
   max_spawn_depth: 1
 moa:
+  # Ships OFF. Hermes' own default enables MoA with a gpt-5.5 advisor and an
+  # Opus 4.8 aggregator; that is expensive, and the advisor fails wherever
+  # Codex is not signed in. If you turn it on, both slots below are cheap
+  # OpenRouter models that need no extra provider login.
   presets:
     default:
       reference_models:
         - provider: openrouter
-          model: deepseek/deepseek-v4-flash-0731
+          model: deepseek/deepseek-v4.1-flash-1017
           enabled: false
         - provider: openrouter
           model: google/gemini-3.7-flash
           enabled: false
       aggregator:
-        model: deepseek/deepseek-v4-flash-0731
+        provider: openrouter
+        model: deepseek/deepseek-v4.1-flash-1017
       enabled: false
       degraded_reference_policy: loud
       fanout: user_turn
   reference_models:
     - provider: openrouter
-      model: deepseek/deepseek-v4-flash-0731
+      model: deepseek/deepseek-v4.1-flash-1017
       enabled: false
     - provider: openrouter
       model: google/gemini-3.7-flash
       enabled: false
   aggregator:
     provider: openrouter
-    model: deepseek/deepseek-v4-flash-0731
+    model: deepseek/deepseek-v4.1-flash-1017
   degraded_reference_policy: loud
   max_tokens: 4096
   fanout: user_turn

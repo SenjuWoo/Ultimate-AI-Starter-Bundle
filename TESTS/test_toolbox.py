@@ -39,6 +39,19 @@ def text_of(result) -> str:
     return "\n".join(getattr(c, "text", "") for c in result.content)
 
 
+def is_error(result) -> bool:
+    """True when a tool call failed.
+
+    MCP 1.x exposes ``CallToolResult.isError``; the 2.x models rename the
+    Python attribute to ``is_error`` and keep the wire name as an alias. Read
+    both so the gate does not depend on which SDK the test environment has.
+    """
+    value = getattr(result, "is_error", None)
+    if value is None:
+        value = getattr(result, "isError", False)
+    return bool(value)
+
+
 def write_state(state: Path) -> None:
     py = sys.executable
     fake = str(FAKE)
@@ -110,7 +123,7 @@ async def run_gate(state: Path, project: Path) -> None:
             check("fake.nope" in described.get("not_found", {}), "describe hid an unknown tool")
 
             echoed = await session.call_tool("call", {"tool": "fake.echo", "arguments": {"text": "pass-through"}})
-            check(not echoed.isError and text_of(echoed) == "pass-through", f"call did not pass through: {echoed}")
+            check(not is_error(echoed) and text_of(echoed) == "pass-through", f"call did not pass through: {echoed}")
             as_string = await session.call_tool("call", {"tool": "fake.echo", "arguments": "{\"text\": \"json-string\"}"})
             check(text_of(as_string) == "json-string", "arguments given as a JSON string were not accepted")
 
@@ -133,24 +146,24 @@ async def run_gate(state: Path, project: Path) -> None:
             cwd = await session.call_tool("call", {"tool": "projfake.cwd", "arguments": {}, "project": str(project)})
             check(os.path.normcase(text_of(cwd)) == os.path.normcase(str(project)), f"project cwd not used: {text_of(cwd)}")
             bad = await session.call_tool("call", {"tool": "projfake.cwd", "project": str(project / "missing")})
-            check(bad.isError and "project folder not found" in text_of(bad), "a missing project folder was accepted")
+            check(is_error(bad) and "project folder not found" in text_of(bad), "a missing project folder was accepted")
 
             # A lost reply does not prove that a mutation failed. Never replay it.
             marker = state / "mutation-count.txt"
             lost = await session.call_tool("call", {"tool": "fake.write_then_crash", "arguments": {"path": str(marker)}})
-            check(lost.isError, "lost mutation reply was reported as success")
+            check(is_error(lost), "lost mutation reply was reported as success")
             check(marker.read_text(encoding="utf-8").splitlines() == ["once"],
                   "toolbox replayed a mutation after losing its reply")
 
             crashed = await session.call_tool("call", {"tool": "fake.crash", "arguments": {}})
-            check(crashed.isError, "a crashing tool did not report an error")
+            check(is_error(crashed), "a crashing tool did not report an error")
             again = await session.call_tool("call", {"tool": "fake.echo", "arguments": {"text": "back"}})
             check(text_of(again) == "back", f"the crashed set did not restart: {again}")
 
             unknown = await session.call_tool("call", {"tool": "nosuch.thing", "arguments": {}})
-            check(unknown.isError and "unknown tool" in text_of(unknown), "an unknown set was not refused")
+            check(is_error(unknown) and "unknown tool" in text_of(unknown), "an unknown set was not refused")
             unavailable = await session.call_tool("call", {"tool": "missingfake.echo", "arguments": {}})
-            check(unavailable.isError and "host application" in text_of(unavailable), "an unavailable set was started")
+            check(is_error(unavailable) and "host application" in text_of(unavailable), "an unavailable set was started")
 
     joined = "\n".join(seen_text)
     check(PARKED_MARKER not in joined, "a parked credential value reached toolbox output")

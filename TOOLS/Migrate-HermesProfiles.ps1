@@ -53,6 +53,12 @@ if (-not $HermesHome) {
   $HermesHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }
 }
 $HermesHome = [IO.Path]::GetFullPath($HermesHome)
+# Hermes desktop exports HERMES_HOME as the ACTIVE PROFILE for everything it
+# launches. Run from inside an AI session, this script would then treat
+# profiles\<name> as the whole home and create profiles inside a profile. The
+# shared helper walks a profile-scoped path back to the real home; an explicit
+# -HermesHome that is already a root passes through unchanged.
+$HermesHome = Get-UabsHermesHomeRoot $HermesHome
 
 if (-not $HermesExe) {
   $HermesExe = @(
@@ -138,7 +144,7 @@ function Invoke-UabsHermes([string[]]$Arguments, [switch]$AllowMissing) {
 # get` masks credential-shaped fields (Hermes #84106) and the MCP map read here
 # is written back whole, so a token in an MCP env/header would have been
 # replaced by its mask.
-$script:UabsHermesReadKeys = @('mcp_servers', 'fallback_providers', 'plugins.enabled', 'plugins.disabled', 'model.aliases', 'auxiliary.vision', 'auxiliary.compression')
+$script:UabsHermesReadKeys = @('mcp_servers', 'fallback_providers', 'plugins.enabled', 'plugins.disabled', 'model', 'model.aliases', 'auxiliary.vision', 'auxiliary.compression', 'moa')
 $script:UabsHermesReadCache = @{}
 $script:UabsHermesReadScript = @'
 import json, os, sys
@@ -457,7 +463,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
     }).Count) {
     return Get-UabsProfilePrefs 'default'
   }
-  $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @(); vision_chain = @(); compression = @{} }
+  $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @(); vision_chain = @(); compression = @{}; model = @{}; moa = @{} }
   $fb = Invoke-UabsHermesConfigGet $Profile 'fallback_providers'
   if ($fb.Code -eq 0) {
     $json = @($fb.Output | ForEach-Object { [string]$_ } |
@@ -516,6 +522,24 @@ function Get-UabsProfilePrefs([string]$Profile) {
       Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
     if ($json) { $out.compression = ConvertTo-UabsPlain ($json | ConvertFrom-Json) }
   }
+  # Main model + provider, used to choose a cheap MoA aggregator when the
+  # inherited vendor default is replaced.
+  $md = Invoke-UabsHermesConfigGet $Profile 'model'
+  if ($md.Code -eq 0) {
+    $json = @($md.Output | ForEach-Object { [string]$_ } |
+      Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
+    if ($json) { $out.model = ConvertTo-UabsPlain ($json | ConvertFrom-Json) }
+  }
+  # Hermes' load_config merges DEFAULT_CONFIG, so a profile with no `moa:` key
+  # still reports the vendor default (MoA ON, gpt-5.5 advisor, Opus 4.8
+  # aggregator). Reading it here is what lets the migration materialize an
+  # explicit, cheaper block instead of leaving that default to reappear.
+  $mo = Invoke-UabsHermesConfigGet $Profile 'moa'
+  if ($mo.Code -eq 0) {
+    $json = @($mo.Output | ForEach-Object { [string]$_ } |
+      Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
+    if ($json) { $out.moa = ConvertTo-UabsPlain ($json | ConvertFrom-Json) }
+  }
   return $out
 }
 
@@ -555,6 +579,86 @@ function Ensure-UabsProfilePluginPayload([string]$Profile, [string]$HermesRoot, 
     -Value $root -Detail 'profile cannot see any installed plugin (no plugins directory)'
 }
 
+# ---------------------------------------------------------------------------
+# MoA defaults (v8.21.2)
+#
+# Hermes' DEFAULT_CONFIG enables Mixture-of-Agents with a gpt-5.5 advisor and
+# an `anthropic/claude-opus-4.8` aggregator. `load_config()` merges that default
+# into every profile that never configured MoA, so a fresh install starts with
+# an expensive, long-retired aggregator acting on every tool-loop step and an
+# advisor that fails wherever Codex is not signed in. `profile create
+# --clone-from default` copied it once and nothing ever converged the copies.
+#
+# The pack ships MoA OFF. This migration materializes an explicit block when
+# the profile still carries the vendor default fingerprint. A block whose
+# aggregator or advisors the owner changed does not match and is left alone.
+$script:UabsRetiredMoaAggregators = @(
+  'anthropic/claude-opus-4.8'
+  'claude-opus-4.8'
+  'anthropic/claude-opus-4-8'
+  'claude-opus-4-8'
+)
+$script:UabsInheritedMoaReferences = @(
+  'gpt-5.5'
+  'openai/gpt-5.5'
+  'deepseek/deepseek-v4-pro'
+  'deepseek-v4-pro'
+)
+# Cheap advisors for the explicit block. Both are OpenRouter models already in
+# the pack's alias list, so a later `moa on` cannot reach a premium endpoint or
+# a provider the user never authenticated.
+$script:UabsMoaReferenceModels = @(
+  @{ provider = 'openrouter'; model = 'deepseek/deepseek-v4.1-flash-1017'; enabled = $true }
+  @{ provider = 'openrouter'; model = 'google/gemini-3.7-flash'; enabled = $true }
+)
+
+function Get-MoaModelId([string]$Value) {
+  # Compare model ids without the routing prefix: the same model is written as
+  # `anthropic/claude-opus-4.8` in the MoA slot and
+  # `openrouter/anthropic/claude-opus-4.8` in an alias.
+  if (-not $Value) { return '' }
+  $v = $Value.Trim().ToLowerInvariant()
+  if ($v.StartsWith('openrouter/')) { $v = $v.Substring(11) }
+  return $v
+}
+
+function Get-MoaMigrationPlan([object]$Moa, [string]$MainProvider, [string]$MainModel) {
+  <#
+    Returns $null when the MoA block is not the inherited vendor default, or a
+    hashtable describing the replacement block when it is.
+  #>
+  $plain = ConvertTo-UabsPlain $Moa
+  if (-not ($plain -is [System.Collections.IDictionary])) { return $null }
+  $aggregator = ConvertTo-UabsPlain $plain['aggregator']
+  if (-not ($aggregator -is [System.Collections.IDictionary])) { return $null }
+  $aggModel = Get-MoaModelId ([string]$aggregator['model'])
+  if ($script:UabsRetiredMoaAggregators -notcontains $aggModel) { return $null }
+
+  # Every configured advisor must be one the vendor default ships. One custom
+  # advisor means the owner edited this block; keep the whole thing.
+  $refValue = $plain['reference_models']
+  if ($null -ne $refValue) {
+    $refs = ConvertTo-UabsPlain $refValue
+    if ($refs -is [System.Collections.IDictionary]) { $refs = @($refs) }
+    foreach ($ref in $refs) {
+      if ($null -eq $ref) { continue }
+      $slot = ConvertTo-UabsPlain $ref
+      if (-not ($slot -is [System.Collections.IDictionary])) { return $null }
+      $id = Get-MoaModelId ([string]$slot['model'])
+      if ($script:UabsInheritedMoaReferences -notcontains $id) { return $null }
+    }
+  }
+
+  $provider = if ($MainProvider) { $MainProvider } else { 'openrouter' }
+  $model = Get-MoaModelId $MainModel
+  if (-not $model) { $model = 'deepseek/deepseek-v4.1-flash-1017' }
+  return @{
+    disable = $true
+    aggregator = @{ provider = $provider; model = $model }
+    reference_models = (Copy-UabsValue $script:UabsMoaReferenceModels)
+  }
+}
+
 function Ensure-UabsProfilePrefs([string]$Profile) {
   $current = Get-UabsProfilePrefs $Profile
   $wanted = @{}
@@ -566,6 +670,20 @@ function Ensure-UabsProfilePrefs([string]$Profile) {
     Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'auxiliary.compression' `
       -Key 'compression_migration' -Value $migration -Detail 'replace delisted free Ling compression endpoint; retain other preferences'
     $wanted['compression_migration'] = $migration
+  }
+
+  # Inherited MoA default: disable it and replace the retired Opus 4.8
+  # aggregator. Only the vendor-default fingerprint is touched (see
+  # Get-MoaMigrationPlan), so a profile the owner configured is kept verbatim.
+  $moaMigration = Get-MoaMigrationPlan -Moa $current.moa `
+    -MainProvider ([string]$current.model['provider']) -MainModel ([string]$current.model['default'])
+  if ($moaMigration) {
+    Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'moa' -Key 'moa' -Value $moaMigration `
+      -Detail 'disable the inherited vendor MoA default and replace its retired Opus 4.8 aggregator'
+    $wanted['moa'] = $moaMigration
+    Add-UabsLedger 'migrated' "$Profile MoA: off, Opus 4.8 aggregator replaced, cheap advisors"
+  } else {
+    Add-UabsLedger 'kept' "$Profile MoA settings are a user choice"
   }
 
   $toDisable = @($current.plugins | Where-Object { $script:UabsDiscouragedPlugins -contains [string]$_ })
@@ -690,6 +808,35 @@ if migration:
         compression.pop("reasoning_effort", None)
         aux["compression"] = compression
         cfg["auxiliary"] = aux
+moa_pref = prefs.get("moa")
+if moa_pref:
+    # Materialize the explicit block so the merged vendor default cannot come
+    # back: MoA off, the acting model as aggregator, cheap advisors. Presets are
+    # rewritten too because the active preset is what Hermes runs.
+    moa = dict(cfg.get("moa") or {})
+    aggregator = moa_pref.get("aggregator")
+    reference_models = moa_pref.get("reference_models")
+    if moa_pref.get("disable"):
+        moa["enabled"] = False
+    if aggregator:
+        moa["aggregator"] = dict(aggregator)
+    if reference_models is not None:
+        moa["reference_models"] = [dict(slot) for slot in reference_models]
+    presets = dict(moa.get("presets") or {})
+    for name, preset in list(presets.items()):
+        if not isinstance(preset, dict):
+            continue
+        preset = dict(preset)
+        if moa_pref.get("disable"):
+            preset["enabled"] = False
+        if aggregator:
+            preset["aggregator"] = dict(aggregator)
+        if reference_models is not None:
+            preset["reference_models"] = [dict(slot) for slot in reference_models]
+        presets[name] = preset
+    if presets:
+        moa["presets"] = presets
+    cfg["moa"] = moa
 plugin_names = prefs.get("plugins") or []
 disable_names = prefs.get("disable_plugins") or []
 if plugin_names or disable_names:
@@ -1253,6 +1400,28 @@ try {
       if ($script:Prefs[$profile].ContainsKey('compression_migration')) {
         if ($after.compression.provider -ne 'auto' -or $after.compression.model) {
           throw "Verification failed: $profile retired compression model was not reset to auto."
+        }
+      }
+      if ($script:Prefs[$profile].ContainsKey('moa')) {
+        $wantMoa = $script:Prefs[$profile]['moa']
+        if ($after.moa['enabled'] -ne $false) {
+          throw "Verification failed: $profile MoA is still enabled after the inherited default was replaced."
+        }
+        $wantAgg = Get-MoaModelId ([string]$wantMoa['aggregator']['model'])
+        $gotAgg = Get-MoaModelId ([string]$after.moa['aggregator']['model'])
+        if ($gotAgg -ne $wantAgg) {
+          throw "Verification failed: $profile MoA aggregator is '$gotAgg', expected '$wantAgg'."
+        }
+        $moaText = ConvertTo-Json -InputObject $after.moa -Depth 12 -Compress
+        foreach ($deadAgg in $script:UabsRetiredMoaAggregators) {
+          if ($moaText -match [regex]::Escape($deadAgg)) {
+            throw "Verification failed: $profile MoA still names the retired aggregator '$deadAgg'."
+          }
+        }
+        foreach ($preset in @(($after.moa['presets']) | ForEach-Object { $_.Values })) {
+          if ($preset -is [System.Collections.IDictionary] -and $preset['enabled'] -eq $true) {
+            throw "Verification failed: $profile has an enabled MoA preset after the migration."
+          }
         }
       }
       if ($script:Prefs[$profile].ContainsKey('fallback_providers')) {

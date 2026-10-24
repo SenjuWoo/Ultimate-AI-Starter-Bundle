@@ -15,9 +15,25 @@ then fixed the remaining required-dependency and false-success paths.
 - Live v8.21.2 install: exit 0, doctor PASS, fifteen core MCP checks across
   five installed providers. Eleven model/permission fingerprints unchanged.
   Native plugins were reused; absent Kimi was not installed.
+- Second pass, Hermes profile recovery: `Repair-McpPaths.ps1` now scans every
+  `profiles/*/config.yaml` and repoints hash-keyed runtime folders, not just
+  the default config. Applied live: 15 dead file paths plus 6 dead folder
+  references repaired (Codex runtime `2b841c3d44b123ec` -> `1fb7137c46617d50`),
+  with a backup beside each config. Report-only now resolves clean.
+- `Get-MoaMigrationPlan` materializes Hermes Mixture-of-Agents OFF for the
+  vendor-default fingerprint only (Opus 4.8 aggregator, gpt-5.5 /
+  deepseek-v4-pro advisors), using the profile's acting model as aggregator
+  and cheap OpenRouter advisors. Applied live to skyrim, blender and unity;
+  all four managed profiles read `enabled=false` with the deepseek aggregator.
+  `MCP PROFILE GATE: PASS`, including ambiguity refusal and four fingerprint
+  cases; release contracts remain 151/0.
+- `HERMES_HOME` is the active profile in a Hermes session. The migrator now
+  walks it back to the real home and INSTALL-AIO passes that root explicitly,
+  so an installer started from inside a session cannot create profiles inside
+  a profile.
 - Exact pushed SHA, remote CI and candidate package receipts:
   `artifacts/recovery/resume-final.local.json` (local-only). The public
-  v8.21.1 tag stays intact; v8.21.2 publication requires separate approval.
+  v8.21.1 tag stays intact until v8.21.2 is published.
 
 Not certified: provider inference, absent provider/editor/game integrations,
 or Hermes native-plugin activation under its copied-skills fallback.

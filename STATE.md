@@ -1,5 +1,54 @@
 # Bundle audit state
 
+## Hermes profile recovery (2026-10-24, v8.21.2 candidate, second pass)
+
+- User report after the Codex cutoff: Hermes still showed errors, the MoA
+  setting was on with weak/expensive models, and an outdated Opus 4.8
+  aggregator kept coming back. The installer had completed exit 0; these were
+  profile-level defects the installed-state doctor did not inspect.
+- Reproduced: `Repair-McpPaths.ps1` checked only the default Hermes config, so
+  five profile configs still pointed `node_repl` at the retired Codex runtime
+  hash `2b841c3d44b123ec` (live: `1fb7137c46617d50`), and their
+  `NODE_REPL_NODE_MODULE_DIRS` / `NODE_REPL_TRUSTED_CODE_PATHS` still pointed
+  into the dead tree. The installer printed "MCP command paths checked".
+- Reproduced: Hermes merges `DEFAULT_CONFIG` into any profile without a `moa:`
+  key, so a never-configured profile reports MoA ON with a gpt-5.5 advisor and
+  `anthropic/claude-opus-4.8` aggregator. Skyrim had it enabled; blender and
+  unity carried the same aggregator disabled.
+- Fixed `TOOLS/Repair-McpPaths.ps1`: scans `%LOCALAPPDATA%\hermes\profiles\*\
+  config.yaml`; repoints hash-keyed `cua_node\<hash>` and `Codex\bin\<hash>`
+  directories (module/trust lists) by the same unique-sibling rule; refuses an
+  ambiguous folder and exits non-zero. Applied live: 15 dead file paths plus 6
+  dead folder references repaired with per-config backups. Report-only now
+  prints "All MCP command paths resolve."
+- Fixed `TOOLS/Migrate-HermesProfiles.ps1`: `Get-MoaMigrationPlan` recognizes
+  the vendor-default fingerprint only (Opus 4.8 aggregator, gpt-5.5 /
+  deepseek-v4-pro advisors), writes an explicit `moa` block with
+  `enabled: false`, the profile's acting model as aggregator and two cheap
+  OpenRouter advisors, and rewrites presets. A user-edited block is kept.
+  Verification fails the run if MoA stays enabled, the aggregator differs, or
+  the retired id survives. Applied live to skyrim, blender and unity; all four
+  managed profiles now read `enabled=false` with the deepseek aggregator.
+- Fixed home resolution: `HERMES_HOME` is the active profile in a Hermes
+  session. The migrator now calls `Get-UabsHermesHomeRoot`, and INSTALL-AIO
+  passes `-HermesHome (Get-UabsProviderHome Hermes)` and enumerates that root.
+- `1-TAILORED-PROVIDER-TREES/Hermes/config.yaml` and its COPY mirror now ship
+  the same explicit MoA block (off, deepseek-v4.1-flash aggregator, cheap
+  advisors) so a fresh machine never inherits Opus 4.8.
+- Tests: `TESTS/Test-McpProfiles.ps1` adds profile-config repair, hash-folder
+  repair, ambiguity refusal and four MoA fingerprint cases. MCP PROFILE GATE:
+  PASS. `python TESTS/test_release_contract.py`: 151 passed, 0 failed.
+- Gate environment: the Hermes session exported `PYTHONPATH` into its own
+  install venv, which shadowed the disposable test venv (mcp 2.3.0 instead of
+  the pinned 1.30.0) and aborted the toolbox gate. `Test-Pack.ps1` now clears
+  `PYTHONPATH`/`PYTHONHOME` before child Pythons; `test_toolbox.py` reads
+  `is_error`/`isError` on either SDK. TOOLBOX GATE: PASS.
+- Remaining: full `TESTS/Test-Pack.ps1 -TestPython` on the disposable venv,
+  manifest regeneration, CI on the new SHA, merge of PR #8, publication of
+  v8.21.2, and one live installer run to re-prove the repaired gates with the
+  new code. Hermes native-plugin Git access remains the known vendor
+  limitation (copied-skills fallback).
+
 ## Resumed verification (2026-10-24, v8.21.2 candidate)
 
 - Started from clean main `d0b94e0`; reviewed the later edits against source

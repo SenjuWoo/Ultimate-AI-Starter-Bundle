@@ -34,6 +34,13 @@ if (-not (Test-Path (Join-Path $PackRoot '_CANONICAL-SKILLS'))) {
 }
 
 $ErrorActionPreference = 'Stop'
+# A host agent can export PYTHONPATH (Hermes points it at its own venv). Child
+# test Pythons would then import the host's mcp/pydantic instead of the
+# disposable test environment, and the toolbox gate fails on a version this
+# repository never pinned. Tests that need a path set it on their own child
+# environment; the gate itself owns a clean import path.
+Remove-Item Env:PYTHONPATH -ErrorAction SilentlyContinue
+Remove-Item Env:PYTHONHOME -ErrorAction SilentlyContinue
 . (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1')
 $fail = 0
 $pythonExe = if ($TestPython) { (Resolve-Path -LiteralPath $TestPython -ErrorAction Stop).ProviderPath } else { Get-UabsPythonExecutable }

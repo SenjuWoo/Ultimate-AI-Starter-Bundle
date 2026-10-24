@@ -26211,8 +26211,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml",
-  "size": 8019,
-  "sha256": "397e2556d6c23918e8db367cd42a39c779fb5a3fa33093f5ee01c6b4531ba966"
+  "size": 8339,
+  "sha256": "d89dab682b3a4d3a8013645891779d7dce20036a542c3b890574a442470dc9ab"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
@@ -32726,8 +32726,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml",
-  "size": 8019,
-  "sha256": "397e2556d6c23918e8db367cd42a39c779fb5a3fa33093f5ee01c6b4531ba966"
+  "size": 8339,
+  "sha256": "d89dab682b3a4d3a8013645891779d7dce20036a542c3b890574a442470dc9ab"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md",
@@ -43576,8 +43576,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 228138,
-  "sha256": "d977e62396dd416e96a9d88bbdf645ac619dd8d51c57de6f46ec44992d2d35c5"
+  "size": 229753,
+  "sha256": "7b1298e5e8c54ec28462478960054f22c5a757e746ca735d17e17cf85133e336"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43651,8 +43651,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 180746,
-  "sha256": "ea4f4d8080219a3f5c7fec3352bbae99ef8811175a70a2d19104fb0a4cd5eb15"
+  "size": 181215,
+  "sha256": "817c77dd653dd0d9845960c649f8ca900e84f86f5a1585cffda2d97c8af5c014"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43731,8 +43731,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 66186,
-  "sha256": "80c6f0c35d09a1e28b75789918b42da7ba977cb05b09d120a1fc7b476fd92f7c"
+  "size": 69588,
+  "sha256": "fab4f9a2754f13dea29a0d085ab85a3d4e0d2e7e4302a525db481369b85bcd9c"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -43816,8 +43816,8 @@
  },
  {
   "path": "TESTS/Test-McpProfiles.ps1",
-  "size": 64471,
-  "sha256": "57c9d3ffa6cd791d537a91c3ae5697a5c89e10423c276d56e460bddfdf3849e3"
+  "size": 72369,
+  "sha256": "60e39b934808235f079da73f06bcc5ffdfece5cd2f279c9a054ac4f989c94186"
  },
  {
   "path": "TESTS/Test-NpmDuplicate.ps1",
@@ -43831,8 +43831,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 65749,
-  "sha256": "0d8cd56724e1cb6752ca17fd300415c41bf1d71383f6d5557307518d0202fd57"
+  "size": 66223,
+  "sha256": "b625c8ae30ebfe0e2dd69850b643df15f00e95b2880366ea1c934f5a17bf8e10"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -44111,8 +44111,8 @@
  },
  {
   "path": "TESTS/test_toolbox.py",
-  "size": 13793,
-  "sha256": "3b9729f6e86a0416d98d33c51d7aafd6ff387d4550c725e37e4e7c6f8965aa79"
+  "size": 14252,
+  "sha256": "e31c47eec77ca35c6324edc207083d0c07bd405fe4f79f07a7ce741d61642c22"
  },
  {
   "path": "TESTS/test_universal_modder.py",
@@ -44211,8 +44211,8 @@
  },
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
-  "size": 68010,
-  "sha256": "45583ced171d07c7b3b15a9f6848888838a2fb1d0fcd8ff489b7a0ebcd4e6e1e"
+  "size": 76182,
+  "sha256": "70574b8f5b3deb11d0218274b6206b5f77ebc66d5988b0fc74e03dd05769c98d"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -44221,8 +44221,8 @@
  },
  {
   "path": "TOOLS/Repair-McpPaths.ps1",
-  "size": 10102,
-  "sha256": "d6eb5f43aed2138b8582d52b9efc90093ed2036ac2d2dfec230ce3ac58f51b0b"
+  "size": 13560,
+  "sha256": "64a6a3d2e9436cd11efc07fcf244efe93760d20a64680684e599207ef68f6a09"
  },
  {
   "path": "TOOLS/Set-HermesSharedPython.ps1",
@@ -44466,13 +44466,13 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2815,
-  "sha256": "eadd0e57a804bea9d1718a25b5d3b89c37947cdb80e52a03eced78ee31351465"
+  "size": 3161,
+  "sha256": "a435d7854612bd0c3a629415d412a37861d524800fec63e5d2d5306d060360a9"
  },
  {
   "path": "VALIDATION.md",
-  "size": 15138,
-  "sha256": "c1469014211e19ed83ef206fa18a88af7e83f2a167f0a99faa15b80f9639bcaa"
+  "size": 16229,
+  "sha256": "9dff6998f6a779c8d1d5bad37aa5b86acf7359932b21d4c1e63792cbdaebc775"
  },
  {
   "path": "VERSION.txt",
@@ -51501,8 +51501,8 @@
  },
  {
   "path": "docs/history/V8.21.2-CHANGELOG.md",
-  "size": 1490,
-  "sha256": "8ec92f862265348d84b8488112def5ca8f808824632687a5f7c92c7343a96510"
+  "size": 2994,
+  "sha256": "88a976b221fe8d20ca10b3edc8646d63ecf517e5d76a9e9960efcb6b09c82598"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

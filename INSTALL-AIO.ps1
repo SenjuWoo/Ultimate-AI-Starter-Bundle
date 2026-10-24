@@ -2882,10 +2882,16 @@ if (-not $ToolsOnly) {
         Start-Sleep -Milliseconds 500
       }
       $profileArgs = @('-Apply')
+      # Resolve the REAL Hermes home, not the active profile: Hermes desktop
+      # exports HERMES_HOME as profiles\<name> for everything it launches, and
+      # an installer started from inside a session would otherwise migrate one
+      # profile as if it were the whole home.
+      $hermesRoot = Get-UabsProviderHome -Provider 'Hermes' -Catalog $catalog
+      if ($hermesRoot) { $profileArgs += @('-HermesHome', $hermesRoot) }
       if ($SkyrimToolset) { $profileArgs += @('-SkyrimToolset', $SkyrimToolset) }
       $migrateCode = Invoke-UabsChildScript -Title 'Hermes profile migration' -File $hermesProfiles -ArgList $profileArgs
       if ($migrateCode -ne 0) { throw "Hermes profile migrator failed with exit code $migrateCode" }
-      $profileHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }
+      $profileHome = if ($hermesRoot) { $hermesRoot } elseif ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }
       $evaluatedProfiles = @('default') + @(Get-ChildItem -LiteralPath (Join-Path $profileHome 'profiles') -Directory -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name)
       $installed['hermes-native-profiles'] = @{ status='evaluated'; profiles=$evaluatedProfiles; skyrim_toolset=$(if ($SkyrimToolset) { $SkyrimToolset } else { 'default (Lean)' }) }
       Write-UabsOk ('Hermes profiles ready ({0}): task tools start on demand through the toolbox' -f $evaluatedProfiles.Count)
