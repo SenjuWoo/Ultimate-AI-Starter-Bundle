@@ -1,4 +1,4 @@
-# v8.21.3 candidate validation
+# v8.21.3 validation
 
 Independent review corrected the v8.21.2 handoff's preservation claim: matching
 only top-level model IDs missed nested vendor defaults and permitted custom
@@ -19,6 +19,15 @@ configs. Frozen v8.21.2 source is rejected by the new fixtures. Live v8.21.3
 installer: exit 0, fifteen core MCP checks answered, installed-state doctor PASS;
 thirteen model/permission/MoA fingerprints unchanged after exact config backups.
 Log: `logs/install-20261024-180827.log` under the installed state root.
+
+Full Windows pack gate PASS. Reviewed implementation SHA `8392ed8`: CI
+40133328203 and CodeQL 40133326481 PASS, including source and extracted-Core
+gates on Windows Python 3.14/3.15 and physical symlink preservation on Linux.
+Candidate Core/Full-Offline archives built identically twice. Extracted manifest,
+preservation fixtures and hook self-test PASS; batch entrypoint rejects invalid
+selection with exit 1 and no provider writes. Final release-source CI and
+downloaded-byte receipts: `artifacts/recovery/release-8213-final.local.json`.
+The public tag and release checksum files are the durable delivery record.
 
 # v8.21.2 validation
 

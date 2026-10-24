@@ -1,5 +1,39 @@
 # Bundle audit state
 
+## v8.21.3 release handoff (2026-10-24)
+
+- User authorized merge, push and public publication. PR #9 merged into main
+  as `2f6e2c773572daa67c9b36b39b5846a683fdb941`. The reviewed implementation
+  is `8392ed8357d3bc4396f5bdab8a7acb81cade0b37`.
+- Implementation proof: release contracts 151/0; full local Windows pack gate
+  PASS; exact implementation-SHA CI 40133328203 and CodeQL 40133326481 PASS.
+  Windows Python 3.14/3.15 each passed source and extracted-Core gates; Linux
+  passed the real symlink fixture. Independent read-only review found no further
+  blockers. Earlier candidate/publication-pending notes below are history.
+- Live v8.21.3 installation: exit 0, installed-state doctor PASS, all fifteen
+  core MCP checks answered across Claude/Codex/Grok/Hermes/Antigravity; thirteen
+  model/permission/MoA fingerprints unchanged. Kimi untouched. Exact config
+  backups: `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups\resume-8.21.3`.
+  Log: `logs\install-20261024-180827.log` under that state root.
+- Candidate archives built identically twice, passed CRC/extraction/manifest
+  checks, and passed the extracted preservation/hook fixtures. The delivered
+  batch launcher rejected an invalid provider with exit 1 and no provider writes.
+- Official release record:
+  https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.21.3
+  The immutable tag identifies the final source revision; the release assets
+  and `.sha256` files identify delivered bytes. Final main-SHA CI, upload and
+  downloaded-byte receipts: `artifacts/recovery/release-8213-final.local.json`.
+  The release pipeline requires green exact-SHA checks and clean security flags
+  before tagging; it verifies every downloaded asset against the final build.
+- Build: `powershell -NoProfile -ExecutionPolicy Bypass -File TOOLS/Build-Release.ps1`.
+  Run/update: `START-HERE.bat`. Test: `TESTS/Test-Pack.ps1 -TestPython <test-venv>`.
+  Prior verified release bytes remain in ignored `dist`; shared tags stay intact.
+- Next user step after publication: restart the AI apps once to inherit the
+  installed configuration. No further implementation work is identified in the
+  verified scope. Hermes native-plugin Git access still uses the copied-skills
+  fallback; provider inference and absent provider/editor/game runtimes remain
+  uncertified. Debug/detail logs live under the installed state root's `logs`.
+
 ## Independent resume review (2026-10-24, v8.21.3 candidate)
 
 - Goal: complete safe provider-independent setup while preserving personal
