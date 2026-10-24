@@ -43731,8 +43731,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 69588,
-  "sha256": "fab4f9a2754f13dea29a0d085ab85a3d4e0d2e7e4302a525db481369b85bcd9c"
+  "size": 70516,
+  "sha256": "dfabb3381e38fb1c7118473d973110eeccebe8cf22b4bc3e34fb9b8130384fac"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -44466,13 +44466,13 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 3161,
-  "sha256": "a435d7854612bd0c3a629415d412a37861d524800fec63e5d2d5306d060360a9"
+  "size": 3402,
+  "sha256": "2f96a591497bf9a294b7d95ec75704fda3da368d99dc72ff28940a1d6530ecc4"
  },
  {
   "path": "VALIDATION.md",
-  "size": 16229,
-  "sha256": "9dff6998f6a779c8d1d5bad37aa5b86acf7359932b21d4c1e63792cbdaebc775"
+  "size": 16508,
+  "sha256": "d673ad0ec108cfbe4e7b334714f8dc3b8fd29cb0adb0858508263212ae3bc38a"
  },
  {
   "path": "VERSION.txt",
@@ -51501,8 +51501,8 @@
  },
  {
   "path": "docs/history/V8.21.2-CHANGELOG.md",
-  "size": 2994,
-  "sha256": "88a976b221fe8d20ca10b3edc8646d63ecf517e5d76a9e9960efcb6b09c82598"
+  "size": 3013,
+  "sha256": "8ca2e801841965d5f40f40748ec65fee4ceab9d7d249309bc90a055d8fc16da4"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

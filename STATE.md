@@ -43,11 +43,25 @@
   the pinned 1.30.0) and aborted the toolbox gate. `Test-Pack.ps1` now clears
   `PYTHONPATH`/`PYTHONHOME` before child Pythons; `test_toolbox.py` reads
   `is_error`/`isError` on either SDK. TOOLBOX GATE: PASS.
-- Remaining: full `TESTS/Test-Pack.ps1 -TestPython` on the disposable venv,
-  manifest regeneration, CI on the new SHA, merge of PR #8, publication of
-  v8.21.2, and one live installer run to re-prove the repaired gates with the
-  new code. Hermes native-plugin Git access remains the known vendor
-  limitation (copied-skills fallback).
+- Published v8.21.2 on 2026-10-24 from
+  `f89b17eb3c5a4f90b8b149473fc1d36e99c0c967`:
+  https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.21.2
+  CI run 40116264364 and CodeQL run 40116263912 succeeded on that exact SHA
+  (the PR runs 40115411567 / 40115409250 were also green). GitHub flags were
+  clean: Dependabot, code scanning and secret scanning 0 open; code quality
+  unavailable. Core is 54988886 bytes, sha256
+  09450030647319158a1e848af454ed2478d9f6a6c9577af55cbcc8cf5b96257a.
+  Full-Offline is 223363857 bytes, sha256
+  35d98154c0149a8bce0f27cb6d72e311abd7716803e28396c15d700b45c33e3e.
+  Both downloaded assets hash to the local build and the published .sha256
+  files; the annotated tag dereferences to the same commit.
+- Remaining user step: one live installer run with the new code
+  (`START-HERE.bat`, or `INSTALL-AIO.ps1 -SkipSelfUpdate -SkipNativePlugins`).
+  It must close Hermes first, so it was not run from inside this session. The
+  MoA and MCP repairs on this machine were applied directly and verified with
+  `hermes config get`; the installer path is proven by the pack gate and the
+  profile fixtures, not re-run live here. Hermes native-plugin Git access
+  remains the known vendor limitation (copied-skills fallback).
 
 ## Resumed verification (2026-10-24, v8.21.2 candidate)
 

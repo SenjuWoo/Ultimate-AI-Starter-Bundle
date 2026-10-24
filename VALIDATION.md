@@ -32,8 +32,12 @@ then fixed the remaining required-dependency and false-success paths.
   so an installer started from inside a session cannot create profiles inside
   a profile.
 - Exact pushed SHA, remote CI and candidate package receipts:
-  `artifacts/recovery/resume-final.local.json` (local-only). The public
-  v8.21.1 tag stays intact until v8.21.2 is published.
+  `artifacts/recovery/resume-final.local.json` (local-only). v8.21.2 was
+  published on 2026-10-24 from
+  `f89b17eb3c5a4f90b8b149473fc1d36e99c0c967`; CI run 40116264364 and CodeQL
+  run 40116263912 succeeded on that SHA and GitHub flags were clean. Core
+  sha256 `09450030...96257a`, Full-Offline sha256 `35d98154...c33e3e`; the
+  downloaded assets match the local build and the published `.sha256` files.
 
 Not certified: provider inference, absent provider/editor/game integrations,
 or Hermes native-plugin activation under its copied-skills fallback.
