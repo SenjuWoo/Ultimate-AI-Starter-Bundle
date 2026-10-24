@@ -1,5 +1,49 @@
 # Bundle audit state
 
+## Independent resume review (2026-10-24, v8.21.3 candidate)
+
+- Goal: complete safe provider-independent setup while preserving personal
+  settings. Started on clean main `b433815`, after DeepSeek's v8.21.2 publication.
+- Verified GitHub: PR #8 merged at `f89b17e`; CI 40116264364 and CodeQL
+  40116263912 succeeded on that exact SHA. Published asset metadata agrees
+  with the local Core/Full-Offline digests below; security flags remain clean.
+- Independent source review found that the newer MoA migration could overwrite
+  custom presets/providers yet missed the installed vendor's nested-only
+  defaults. MCP repair ignored custom Hermes homes and could rewrite longer
+  directory names sharing a 16-hex prefix. Those claims in the earlier handoff
+  were too broad; earlier test fixtures did not exercise these boundaries.
+- Fixed the migration permission check using complete Python dictionary equality
+  against the installed vendor baseline; support nested defaults and preserve
+  any differing block. MCP repair uses the existing home resolver and matches
+  complete hash segments during discovery AND replacement.
+- Focused changed-boundary fixtures PASS, including real Python read-script
+  execution, custom presets/providers/options, custom homes, directory-only
+  references and longer hash-like names. Repair fixtures isolate HERMES_HOME.
+- The actual installed Hermes adapter also passes inherited-default recognition
+  and personal-preset protection on disposable configs. A frozen v8.21.2
+  implementation fails the new regression fixtures, as expected. Independent
+  read-only review found no further blockers in the fixes.
+- Live v8.21.3 install completed exit 0: fifteen core MCP checks answered across
+  the five installed providers; doctor PASS; thirteen model/permission/MoA
+  fingerprints unchanged. Exact config backups are under
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups\resume-8.21.3`.
+  Log: `logs\install-20261024-180827.log` under that state root. Kimi untouched.
+- Release contracts: 151 passed, 0 failed. Full Windows gate log:
+  `artifacts/recovery/resume-8213-pack-final.log`. Candidate delivery receipts,
+  final gate verdicts, exact pushed SHA, CI, PR and package digests belong in
+  `artifacts/recovery/resume-8213-final.local.json` (local-only).
+- Branch: `codex/hermes-preservation-8213`. Remaining delivery work: exact-SHA
+  CI, security-flag requery and candidate archive/launcher verification. Public
+  merge/publication is separate from the reviewed branch and local installation.
+- Last published version remains v8.21.2; do not move its tag or replace assets.
+  Native Hermes plugin Git access remains the known copied-skills fallback.
+  No provider inference, absent-provider or game/editor runtime certification.
+- Commands: `TESTS/Test-Pack.ps1 -TestPython <test-env-314/Scripts/python.exe>`;
+  `TOOLS/Build-Release.ps1 -OutDir <candidate-dir>`; live installer
+  `INSTALL-AIO.ps1 -Mode BundledFirst -SkipSelfUpdate -SkipNativePlugins`.
+  Logs: `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\logs`; candidate evidence
+  and previous release archives remain under ignored `artifacts/recovery`/`dist`.
+
 ## Hermes profile recovery (2026-10-24, v8.21.2 candidate, second pass)
 
 - User report after the Codex cutoff: Hermes still showed errors, the MoA

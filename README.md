@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.21.2 -->
+<!-- Ultimate AI Starter Bundle v8.21.3 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.21.2
+# Ultimate AI Starter Bundle v8.21.3
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -924,7 +924,7 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.21.2** - 2026-10-24. Candidate fixes provision Git/Bash for solo providers, fail incomplete required-gate setup and unavailable Hermes runtimes, and preserve aliased YAML settings. Real serializer regressions cover comments and newlines. [Changes](docs/history/V8.21.2-CHANGELOG.md).
+**v8.21.3** - 2026-10-24. Candidate fixes preserve custom Hermes MoA presets/providers, recognize nested vendor defaults, and repair complete runtime hash paths in custom Hermes homes. [Changes](docs/history/V8.21.3-CHANGELOG.md).
 **v8.21.1** - 2026-10-23. A fresh Windows install that finds no supported app stops and asks which providers to set up, instead of installing all six. A missing Codex CLI installs with `npm install -g @openai/codex` after the old standalone installer URL started returning HTTP 404. Setup fills only missing workspace files, previews cleanup, and leaves unselected provider homes alone. [Changes](docs/history/V8.21.1-CHANGELOG.md).
 **v8.21.0** - 2026-10-21. Hermes settings are now future-proof: no fallback chain, no pinned auxiliary or delegation models (everything follows your main model), vision follows the main model instead of a retired experimental endpoint, and compression fires at a 320k cap on the 1M-token window. The component updater respects catalog holds unless `-Force`. [Changes](docs/history/V8.21.0-CHANGELOG.md).
 **v8.20.0** - 2026-10-21. New `game-mashup-passthrough` skill and a bigger mashup card from the project's full lessons (frame split, spike order, freeze/teleport traps; no machine paths). Universal Modder refreshed to `c1dff21` (new `um voidless`, ~20 game notes). Your `Tools` and `Modding` folders reviewed: nothing bundled, bench map and evaluations updated.

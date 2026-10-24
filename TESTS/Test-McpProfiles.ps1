@@ -25,6 +25,8 @@ $ErrorActionPreference = 'Stop'
 if (-not $PackRoot) { $PackRoot = Split-Path -Parent $PSScriptRoot }
 
 . (Join-Path $PackRoot 'TOOLS\UABS-Mcp-Write.ps1')
+# Resolve before the command-availability fixture temporarily replaces this helper.
+$profileTestPython = Get-UabsPythonExecutable
 
 $script:fail = 0
 function Good($m) { Write-Host "  ok   $m" -ForegroundColor Green }
@@ -384,15 +386,17 @@ function Invoke-RepairInSandbox([string]$Root, [string]$DeadPath) {
   New-Item -ItemType Directory -Force -Path $codexDir | Out-Null
   Set-Utf8NoBom -Path (Join-Path $codexDir 'config.toml') -Text (
     "[mcp_servers.node_repl]`r`ncommand = '" + $DeadPath + "'`r`nargs = []`r`n")
-  $saved = @{ U = $env:USERPROFILE; L = $env:LOCALAPPDATA }
+  $saved = @{ U = $env:USERPROFILE; L = $env:LOCALAPPDATA; H = $env:HERMES_HOME }
   try {
     $env:USERPROFILE = $Root
     $env:LOCALAPPDATA = Join-Path $Root 'LocalAppData'
+    $env:HERMES_HOME = Join-Path $env:LOCALAPPDATA 'hermes'
     New-Item -ItemType Directory -Force -Path $env:LOCALAPPDATA | Out-Null
     & (Join-Path $PackRoot 'TOOLS\Repair-McpPaths.ps1') -Apply -Quiet *> $null
   } finally {
     $env:USERPROFILE = $saved.U
     $env:LOCALAPPDATA = $saved.L
+    $env:HERMES_HOME = $saved.H
   }
   return [IO.File]::ReadAllText((Join-Path $codexDir 'config.toml'))
 }
@@ -955,25 +959,31 @@ if (-not (Test-UabsPath -LiteralPath $repairScript -PathType Leaf)) {
   $repairBox = Join-Path $sandbox 'repair-box'
   $repairLocal = Join-Path $repairBox 'LocalAppData'
   $repairUser = Join-Path $repairBox 'UserProfile'
-  $liveBin = Join-Path $repairLocal 'OpenAI\Codex\runtimes\cua_node\livehash\bin'
-  $deadBin = Join-Path $repairLocal 'OpenAI\Codex\runtimes\cua_node\deadhash\bin'
+  $liveBin = Join-Path $repairLocal 'OpenAI\Codex\runtimes\cua_node\1111111111111111\bin'
+  $deadBin = Join-Path $repairLocal 'OpenAI\Codex\runtimes\cua_node\2222222222222222\bin'
   New-Item -ItemType Directory -Force -Path $liveBin, (Join-Path $repairUser '.codex') | Out-Null
   Set-Utf8NoBom -Path (Join-Path $liveBin 'node_repl.exe') -Text 'live'
   $deadExe = Join-Path $deadBin 'node_repl.exe'
   $liveExe = Join-Path $liveBin 'node_repl.exe'
-  $profileCfg = Join-Path $repairLocal 'hermes\profiles\code\config.yaml'
+  $customHermes = Join-Path $repairBox 'custom-hermes'
+  New-Item -ItemType Directory -Force -Path $customHermes | Out-Null
+  Set-Utf8NoBom -Path (Join-Path $customHermes 'config.yaml') -Text '{}'
+  $profileCfg = Join-Path $customHermes 'profiles\code\config.yaml'
   New-Item -ItemType Directory -Force -Path (Split-Path -Parent $profileCfg) | Out-Null
   Set-Utf8NoBom -Path $profileCfg -Text ("mcp_servers:`r`n  node_repl:`r`n    command: " + $deadExe + "`r`n    env:`r`n      NODE_REPL_NODE_MODULE_DIRS: " + $deadBin + "`r`n      NODE_REPL_TRUSTED_CODE_PATHS: C:\Users\fixture\.codex;" + $deadBin + "`r`n")
   $oldLocal = $env:LOCALAPPDATA
   $oldUser = $env:USERPROFILE
+  $oldHermes = $env:HERMES_HOME
   try {
     $env:LOCALAPPDATA = $repairLocal
     $env:USERPROFILE = $repairUser
+    $env:HERMES_HOME = Split-Path -Parent $profileCfg
     $repairOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $repairScript -Apply -Quiet 2>&1 | Out-String
     $repairCode = $LASTEXITCODE
   } finally {
     $env:LOCALAPPDATA = $oldLocal
     $env:USERPROFILE = $oldUser
+    $env:HERMES_HOME = $oldHermes
   }
   $repaired = [IO.File]::ReadAllText($profileCfg)
   if ($repairCode -eq 0 -and $repaired -match [regex]::Escape($liveExe) -and $repaired -notmatch [regex]::Escape($deadExe)) {
@@ -981,6 +991,31 @@ if (-not (Test-UabsPath -LiteralPath $repairScript -PathType Leaf)) {
   } else {
     Bad ("profile MCP repair failed (exit $repairCode): " + $repaired)
   }
+  if ($repaired.Contains('NODE_REPL_NODE_MODULE_DIRS: ' + $liveBin) -and
+      $repaired.Contains('C:\Users\fixture\.codex;' + $liveBin) -and -not $repaired.Contains($deadBin)) {
+    Good 'custom-home profile module and trust directories follow the repaired command'
+  } else { Bad 'profile directory references were left stale' }
+
+  # Folder-only references must be complete hash segments, never prefixes of longer names.
+  $folderCfg = Join-Path $repairUser '.codex\config.toml'
+  $longRoot = (Split-Path -Parent $deadBin) + '-custom'
+  $longHexRoot = (Split-Path -Parent $deadBin) + '0'
+  Set-Utf8NoBom -Path $folderCfg -Text ('module_dirs = "' + $deadBin + '"' + "`r`n" + 'personal = "' + $longRoot + ';' + $longHexRoot + '"')
+  try {
+    $env:LOCALAPPDATA = $repairLocal
+    $env:USERPROFILE = $repairUser
+    $env:HERMES_HOME = $customHermes
+    $folderOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $repairScript -Apply -Quiet 2>&1 | Out-String
+    $folderCode = $LASTEXITCODE
+  } finally {
+    $env:LOCALAPPDATA = $oldLocal
+    $env:USERPROFILE = $oldUser
+    $env:HERMES_HOME = $oldHermes
+  }
+  $folderText = [IO.File]::ReadAllText($folderCfg)
+  if ($folderCode -eq 0 -and $folderText.Contains($liveBin) -and $folderText.Contains($longRoot) -and $folderText.Contains($longHexRoot)) {
+    Good 'directory-only repair preserves longer hash-like personal folder names'
+  } else { Bad ('hash segment boundary repair failed: ' + $folderText) }
   if (@(Get-ChildItem -LiteralPath (Split-Path -Parent $profileCfg) -Filter 'config.yaml.before-mcprepair-*.bak' -ErrorAction SilentlyContinue).Count -ge 1) {
     Good 'the profile config is backed up before the rewrite'
   } else {
@@ -1002,11 +1037,13 @@ if (-not (Test-UabsPath -LiteralPath $repairScript -PathType Leaf)) {
   try {
     $env:LOCALAPPDATA = $repairLocal
     $env:USERPROFILE = $repairUser
+    $env:HERMES_HOME = Join-Path $repairLocal 'hermes'
     $ambigOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $repairScript -Apply -Quiet 2>&1 | Out-String
     $ambigCode = $LASTEXITCODE
   } finally {
     $env:LOCALAPPDATA = $oldLocal
     $env:USERPROFILE = $oldUser
+    $env:HERMES_HOME = $oldHermes
   }
   $ambigText = [IO.File]::ReadAllText($ambig)
   if ($ambigCode -ne 0 -and $ambigText -match [regex]::Escape($ambigDead) -and $ambigOut -match 'no replacement found') {
@@ -1043,7 +1080,7 @@ if ($helperStart -lt 0 -or $helperEnd -le $helperStart -or $moaStart -lt 0 -or $
     )
     presets = @{ default = @{ enabled = $true } }
   }
-  $plan = Get-MoaMigrationPlan -Moa $vendorMoa -MainProvider 'openrouter' -MainModel 'deepseek/deepseek-v4.1-flash-1017'
+  $plan = Get-MoaMigrationPlan -Moa $vendorMoa -IsVendorDefault $true -MainProvider 'openrouter' -MainModel 'deepseek/deepseek-v4.1-flash-1017'
   if ($null -ne $plan -and $plan['disable'] -eq $true) {
     Good 'the vendor default is scheduled for replacement'
   } else {
@@ -1076,6 +1113,66 @@ if ($helperStart -lt 0 -or $helperEnd -le $helperStart -or $moaStart -lt 0 -or $
     reference_models = @(@{ provider = 'openai-codex'; model = 'gpt-5.5'; enabled = $false })
   }
   Is (Get-MoaMigrationPlan -Moa $cleanMoa -MainProvider 'openrouter' -MainModel 'deepseek/deepseek-v4.1-flash-1017') $null 'an already-migrated block is idempotent'
+}
+
+# Exercise the actual read boundary with the installed vendor's nested-only shape.
+# Equality belongs in Python: a partial model-id fingerprint loses personal presets.
+$migrationAst = [System.Management.Automation.Language.Parser]::ParseInput($migrationText, [ref]$null, [ref]$null)
+$readAssignment = $migrationAst.Find({ param($n)
+  $n -is [System.Management.Automation.Language.AssignmentStatementAst] -and
+  $n.Left.Extent.Text -eq '$script:UabsHermesReadScript'
+}, $true)
+$readScript = $readAssignment.Right.Expression.Value
+$readPath = Join-Path $sandbox 'read-hermes.py'
+Set-Utf8NoBom -Path $readPath -Text $readScript
+$fakeModule = Join-Path $sandbox 'fake-hermes\hermes_cli'
+New-Item -ItemType Directory -Force -Path $fakeModule | Out-Null
+Set-Utf8NoBom -Path (Join-Path $fakeModule '__init__.py') -Text ''
+Set-Utf8NoBom -Path (Join-Path $fakeModule 'config.py') -Text @'
+import json, os
+DEFAULT_CONFIG = json.loads(os.environ['UABS_TEST_MOA_DEFAULT'])
+def load_config():
+    return json.loads(os.environ['UABS_TEST_MOA_CONFIG'])
+'@
+$baseline = @{ default_preset = 'default'; active_preset = ''; save_traces = $false; trace_dir = ''; privacy_filter = ''; presets = @{ default = $vendorMoa } }
+# The preset has no nested presets of its own in the vendor schema.
+$cloneMoa = Get-Command 'Copy-UabsValue' -CommandType Function -ErrorAction Stop
+$baseline.presets.default = & $cloneMoa $vendorMoa
+$baseline.presets.default.Remove('presets')
+$cases = @(
+  @{ name = 'nested-only inherited defaults'; value = $baseline; expected = $true }
+  @{ name = 'personal preset'; value = (& $cloneMoa $baseline); expected = $false }
+  @{ name = 'private provider'; value = (& $cloneMoa $baseline); expected = $false }
+  @{ name = 'personal slot settings'; value = (& $cloneMoa $baseline); expected = $false }
+  @{ name = 'future vendor model'; value = (& $cloneMoa $baseline); expected = $false }
+)
+$cases[1].value.presets['personal'] = @{ enabled = $true; aggregator = @{ provider = 'private'; model = 'my-model' } }
+$cases[2].value.presets.default.aggregator.provider = 'private'
+$cases[3].value.presets.default.reference_models[0]['reasoning_effort'] = 'high'
+$cases[4].value.presets.default.aggregator.model = 'future-vendor-model'
+$savedMoaEnv = @{}
+foreach ($key in @('PYTHONPATH','PYTHONHOME','UABS_HERMES_READ_KEYS','UABS_TEST_MOA_DEFAULT','UABS_TEST_MOA_CONFIG')) {
+  $savedMoaEnv[$key] = [Environment]::GetEnvironmentVariable($key, 'Process')
+}
+try {
+  $env:PYTHONPATH = Split-Path -Parent $fakeModule
+  Remove-Item Env:PYTHONHOME -ErrorAction SilentlyContinue
+  $env:UABS_HERMES_READ_KEYS = '["moa", "uabs.moa_vendor_default"]'
+  $env:UABS_TEST_MOA_DEFAULT = ConvertTo-Json @{ moa = $baseline } -Depth 20 -Compress
+  $py = $profileTestPython
+  foreach ($case in $cases) {
+    $env:UABS_TEST_MOA_CONFIG = ConvertTo-Json @{ moa = $case.value } -Depth 20 -Compress
+    $readOut = & $py $readPath
+    $readCode = $LASTEXITCODE
+    $readValue = $readOut | ConvertFrom-Json
+    $isDefault = $readValue.'uabs.moa_vendor_default' -eq 'true'
+    Is $readCode 0 ('MoA read exits successfully: ' + $case.name)
+    Is $isDefault $case.expected ('complete vendor comparison: ' + $case.name)
+    $plan = Get-MoaMigrationPlan -Moa $case.value -IsVendorDefault $isDefault -MainProvider 'openrouter' -MainModel 'acting-model'
+    Is ($null -ne $plan) $case.expected ('migration preserves choices: ' + $case.name)
+  }
+} finally {
+  foreach ($key in $savedMoaEnv.Keys) { [Environment]::SetEnvironmentVariable($key, $savedMoaEnv[$key], 'Process') }
 }
 
 # ------------------------------------------------------- vision canary ----

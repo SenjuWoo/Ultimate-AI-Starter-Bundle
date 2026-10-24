@@ -1,8 +1,8 @@
 {
  "pack": "Ultimate AI Starter Bundle",
- "version": "8.21.2",
+ "version": "8.21.3",
  "generated": "2026-10-24",
- "release_tag": "v8.21.2",
+ "release_tag": "v8.21.3",
  "canonical_skills": 174,
  "provider_trees": 6,
  "registry_entries": 174,
@@ -46,6 +46,6 @@
   "TESTS/Test-VersionProbes.ps1",
   "TESTS/Test-OfflineUpdate.ps1"
  ],
- "runtime_status": "v8.21.2 candidate on 2026-10-24: full Windows PS5.1 pack gate PASS; release contracts151/0; manifest10362 verified/0 missing/0 mismatch. Live selected-provider installer exit0 and doctor PASS with fifteen core MCP proofs across Claude,Codex,Grok,Hermes,Antigravity. Eleven personal model/permission fingerprints unchanged; absent Kimi untouched. Native plugin state reused; Hermes copied-skills fallback does not certify native activation. Real ruamel0.18.16 and actual vendor-adapter YAML fixtures pass. Second pass: MCP path repair scans Hermes profiles and hash-keyed runtime folders (15 file paths plus 6 folder references repaired live); MoA vendor default materialized OFF with the acting model as aggregator on skyrim,blender,unity; profile-scoped HERMES_HOME resolves to the real home; MCP PROFILE GATE PASS and release contracts remain151/0. Remote SHA/check/package receipts are local-only in artifacts/recovery/resume-final.local.json. v8.21.2 published on 2026-10-24 from f89b17e: CI 40116264364 and CodeQL 40116263912 succeeded, flags clean, Core sha256 09450030647319158a1e848af454ed2478d9f6a6c9577af55cbcc8cf5b96257a and Full-Offline sha256 35d98154c0149a8bce0f27cb6d72e311abd7716803e28396c15d700b45c33e3e both match the downloaded assets.",
+ "runtime_status": "v8.21.3 candidate: independent review found and fixed MoA custom-setting preservation, nested vendor-default detection, custom Hermes home discovery and hash-segment replacement defects. Focused changed-boundary fixtures PASS. Final full-gate, live-install, exact-SHA CI and archive receipts: artifacts/recovery/resume-8213-final.local.json. Prior v8.21.2 publication remains at f89b17e; its evidence is recorded in STATE.md and VALIDATION.md. Provider inference, absent providers/editor/game runtimes and Hermes native-plugin activation under copied-skills fallback remain uncertified.",
  "notes": "V8 uses stable versionless pack/state paths, official Codex plugin lifecycle, provider-native plugin updates, hash-ledger cleanup of unchanged retired skills, full-catalog default installation, and mandatory handshake checks for every always-on MCP server (context7, headroom, the toolbox, and GitHub where gh is not signed in). Credentialed and project/editor MCPs remain unregistered until their prerequisites exist. Historical V7 release records are retained under docs/history."
 }
