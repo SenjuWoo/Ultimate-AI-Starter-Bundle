@@ -5697,7 +5697,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-forge/SKILL.md",
   "size": 9753,
-  "sha256": "1f7a10a3962d9bdcc829c9785d6ff967a3a08e6ac22459974a5cc97f92c7f4fc"
+  "sha256": "d2f763ef828f2e3a62636450bb4b477b52b43880c74b026bbb88a28dd565f9b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-frameworks-index/SKILL.md",
@@ -12147,7 +12147,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-forge/SKILL.md",
   "size": 9753,
-  "sha256": "1f7a10a3962d9bdcc829c9785d6ff967a3a08e6ac22459974a5cc97f92c7f4fc"
+  "sha256": "d2f763ef828f2e3a62636450bb4b477b52b43880c74b026bbb88a28dd565f9b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-frameworks-index/SKILL.md",
@@ -18662,7 +18662,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-forge/SKILL.md",
   "size": 9753,
-  "sha256": "1f7a10a3962d9bdcc829c9785d6ff967a3a08e6ac22459974a5cc97f92c7f4fc"
+  "sha256": "d2f763ef828f2e3a62636450bb4b477b52b43880c74b026bbb88a28dd565f9b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-frameworks-index/SKILL.md",
@@ -25162,7 +25162,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-forge/SKILL.md",
   "size": 9753,
-  "sha256": "1f7a10a3962d9bdcc829c9785d6ff967a3a08e6ac22459974a5cc97f92c7f4fc"
+  "sha256": "d2f763ef828f2e3a62636450bb4b477b52b43880c74b026bbb88a28dd565f9b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-frameworks-index/SKILL.md",
@@ -31662,7 +31662,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-forge/SKILL.md",
   "size": 9753,
-  "sha256": "1f7a10a3962d9bdcc829c9785d6ff967a3a08e6ac22459974a5cc97f92c7f4fc"
+  "sha256": "d2f763ef828f2e3a62636450bb4b477b52b43880c74b026bbb88a28dd565f9b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-frameworks-index/SKILL.md",
@@ -38237,7 +38237,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-forge/SKILL.md",
   "size": 9753,
-  "sha256": "1f7a10a3962d9bdcc829c9785d6ff967a3a08e6ac22459974a5cc97f92c7f4fc"
+  "sha256": "d2f763ef828f2e3a62636450bb4b477b52b43880c74b026bbb88a28dd565f9b6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skyrim-frameworks-index/SKILL.md",
@@ -39361,13 +39361,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 57434,
-  "sha256": "c4c38f11eb6cb34cc48d28bd4b8786f039b0dac44cbe7c0ae070323705b5f28c"
+  "size": 60912,
+  "sha256": "cef838ce405a8f165f289acca11447fd0b33cee8689ddfa3140d77281223ae50"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
-  "size": 1424,
-  "sha256": "57e6869cfe53f1239a0346d2588904499da1f9c9b001a294373ba03db028703a"
+  "size": 1533,
+  "sha256": "90221180752c8ad832c0cfa87b245bb5b62e16def6237ef3417d0898658124f0"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -39377,7 +39377,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40536,
-  "sha256": "4a789afa08354bf075d5c59bb0e64b23d6aade64d2481097fab43ec7849c4f90"
+  "sha256": "32d4796fa2e2ae6d96bdf08e96788e1328093af3d7fdd51725f7980ca773c823"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -39460,9 +39460,9 @@
   "sha256": "b5279d1d6d3333d739d276c263a745ae51d74dac1e2a7a50fd26fffbde7cfd8b"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.0.1.zip",
-  "size": 5095925,
-  "sha256": "eed4e04dd138f6b86d20ba7641f33f5eda83c709ef39046f3e36d5dcbb3566fa"
+  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.1.0.zip",
+  "size": 5098608,
+  "sha256": "7220f17a67e7d5828d9ad887d85ab970d5d5c2959e2e2a7d7e6f6f3b8d1ab2ec"
  },
  {
   "path": "BUNDLED-TOOLS/offline/codebase-memory-mcp-windows-amd64.zip",
@@ -43456,8 +43456,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 231901,
-  "sha256": "62787a8f0244472d4f783f6d0c593713ef9ac19d491a2f4b65a2bdafe838b21f"
+  "size": 232878,
+  "sha256": "5f2b2a3b6fa9c409cd9e0370a4fd171d6ea377019ad82782ad27156bd0357ef3"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -43532,7 +43532,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 177773,
-  "sha256": "52b64925d8c777370f774cc12e34721d6030ee8e91d94f0ea90d58089fb1d5de"
+  "sha256": "09c5f422dd73d5b1af3b944cce97d04fa286cc387647205e7d7693589d33bf39"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -43591,8 +43591,8 @@
  },
  {
   "path": "README.md",
-  "size": 69704,
-  "sha256": "6247b9a4619d86e31e15c11158c93087998f321c4d2d4044b62b4b4b3f96c890"
+  "size": 71257,
+  "sha256": "f5d339948991c2314cb97f44deee2e14b601ad90128b1f2e4bb7d159df0b280c"
  },
  {
   "path": "SECURITY.md",
@@ -43602,17 +43602,17 @@
  {
   "path": "START-HERE.bat",
   "size": 888,
-  "sha256": "f4065c24790e4f3271fe36a91aca2909902df022e0a7ed71000d24739021ef41"
+  "sha256": "fc3ae25b59da21e959026b84b6e1c3a7f3d73eb3937996534c0b8b8be5b1d9aa"
  },
  {
   "path": "START-HERE.txt",
   "size": 11495,
-  "sha256": "e1d1f5a360a03535a8033f021768980c281a4f1245bc398ce65ab8f9cf962128"
+  "sha256": "3378a662de1deb99aeb8f835348a9a87bda8296685d63bf12063ef8cee8c5393"
  },
  {
   "path": "STATE.md",
-  "size": 78858,
-  "sha256": "b09c3ec0089c32e6db701e9e66ecd4acd2dc9f4b7cb0839aea559749a5029545"
+  "size": 81401,
+  "sha256": "97064087bd8ac7656fbaafa807103716b4b1fced8d831901545b5313969cc78b"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -43976,8 +43976,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 330104,
-  "sha256": "19715e8fc23e9e70498bbd4630419ebd4c70ec0cc31df4c0296dde8646a5856d"
+  "size": 330166,
+  "sha256": "fef6e2c5841963828094ba42f0e57bc5ae88e822a91ce84a58fd2a4ebae44830"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -44076,8 +44076,8 @@
  },
  {
   "path": "TOOLS/Install-SkyrimForge.ps1",
-  "size": 19979,
-  "sha256": "bea9d3feea32d0d3f0b518bc339dd22c0395efc3c3ff26da72fbee1121b79387"
+  "size": 21217,
+  "sha256": "9c82f3e5f56462ea777bb25be7796ad96503bfd0596614ab65f08b608eabc564"
  },
  {
   "path": "TOOLS/MCP-CONFIG-EXAMPLES.toml.txt",
@@ -44131,8 +44131,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 61617,
-  "sha256": "296416d6c3d93284bf2b3f2e33abf54bcd916853c9cb3407a1787dda02e6325e"
+  "size": 62809,
+  "sha256": "76843f0a9774a0e21ba330464aee0b7a99d1f95f67d99b753f113b254158ba9e"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -44346,18 +44346,18 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2898,
-  "sha256": "57a55cf165ff7e9c2bf339a9c80bae30cdd1ab9958202ccb5536429bf65df2e7"
+  "size": 2985,
+  "sha256": "1da25d6526c72680697681d06cdd36a431c6994fb043c2401fe613434218b965"
  },
  {
   "path": "VALIDATION.md",
-  "size": 20527,
-  "sha256": "89891f9efa32af2a95508b77133716c53c145c9a30721977ddb31db348c41e09"
+  "size": 22197,
+  "sha256": "c5126fd9b7b1234a837116f8636e126913b42f3a43e9e44e2d91b6c06dd2fd78"
  },
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "6cf477e707db8a1e63383856a34a48b009443a97fdb3ca71c8cbf4ca73d8837a"
+  "sha256": "c52bf818bb616996c17fcec2417f03fcacb148584eba4d972cc74fd355a91152"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -49897,7 +49897,7 @@
  {
   "path": "_CANONICAL-SKILLS/skyrim-forge/SKILL.md",
   "size": 9753,
-  "sha256": "1f7a10a3962d9bdcc829c9785d6ff967a3a08e6ac22459974a5cc97f92c7f4fc"
+  "sha256": "d2f763ef828f2e3a62636450bb4b477b52b43880c74b026bbb88a28dd565f9b6"
  },
  {
   "path": "_CANONICAL-SKILLS/skyrim-frameworks-index/SKILL.md",
@@ -51373,6 +51373,11 @@
   "path": "docs/history/V8.22.0-CHANGELOG.md",
   "size": 2967,
   "sha256": "398bbbbbbbfc22569acdba0621442b81528f2c4653023e6ce4c1f6b113456f4b"
+ },
+ {
+  "path": "docs/history/V8.22.1-CHANGELOG.md",
+  "size": 2082,
+  "sha256": "e1730f52fda3d410b5bea354de8396be10807992b8fe48dcc069f983783b46e3"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

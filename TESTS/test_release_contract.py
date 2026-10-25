@@ -1822,7 +1822,8 @@ def test_no_skill_documents_an_unshipped_product() -> None:
     """
     forge_skill = read(CANON / "skyrim-forge" / "SKILL.md")
     assert "bundle-contract" not in forge_skill, "current Forge skill still instructs the removed 5.x handshake"
-    assert "# Skyrim Forge 6.0" in forge_skill, "current Forge skill still presents the merged 6.0.0 product as an older series"
+    forge_series = ".".join(forge_version().split(".")[:2])
+    assert f"# Skyrim Forge {forge_series}" in forge_skill, f"current Forge skill does not match the pinned {forge_series} series"
     assert "Skyrim-Forge-<version>" not in forge_skill, "current Forge skill still teaches the removed version-stamped install layout"
     assert not (CANON / "skyrim-forge-bridge").exists(), "skyrim-forge-bridge is back"
     dead = ("SKYRIM_FORGE_BRIDGE_ROOT", "skyrim-forge-bridge", "Forge Bridge")

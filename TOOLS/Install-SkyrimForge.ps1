@@ -229,9 +229,23 @@ $preserve = @('Workspaces', '.venv', 'REPORTS', 'config.toml')
 # package a fixed Register-MCP.ps1 and then execute an older live copy forever.
 # Compare the live shipped tree against the source MANIFEST instead. This also
 # repairs a locally modified/missing shipped file without touching user state.
+$script:KeptNewerForgeVersion = $null
 function Test-ForgeShippedContentCurrent {
   param([string]$SourceRoot, [string]$InstalledRoot)
   if (-not (Test-Path -LiteralPath $InstalledRoot -PathType Container)) { return $false }
+  $installedVersionPath = Join-Path $InstalledRoot 'VERSION.txt'
+  if (Test-Path -LiteralPath $installedVersionPath -PathType Leaf) {
+    $installedVerText = [IO.File]::ReadAllText($installedVersionPath)
+    if ($installedVerText -match '(?m)^Skyrim Forge\s+(?<ver>\d+\.\d+\.\d+)\s*$') {
+      $parsedHave = $null; $parsedWant = $null
+      if ([version]::TryParse($Matches['ver'], [ref]$parsedHave) -and
+          [version]::TryParse($forgeVersion, [ref]$parsedWant) -and
+          $parsedHave -gt $parsedWant) {
+        $script:KeptNewerForgeVersion = $Matches['ver']
+        return $true
+      }
+    }
+  }
   $sourceManifestPath = Join-Path $SourceRoot 'MANIFEST.json'
   $installedManifestPath = Join-Path $InstalledRoot 'MANIFEST.json'
   if (-not (Test-Path -LiteralPath $sourceManifestPath -PathType Leaf)) { throw "Bundled Forge MANIFEST.json missing: $sourceManifestPath" }
@@ -280,11 +294,19 @@ if ($refreshRequired) {
     }
     if (Test-Path -LiteralPath $backup) { Remove-Item -LiteralPath $backup -Recurse -Force }
   } finally { Remove-Item -LiteralPath $stage -Recurse -Force -ErrorAction SilentlyContinue }
+} elseif ($script:KeptNewerForgeVersion) {
+  Write-Host ("  OK  Skyrim Forge parallel/external install kept ({0}, bundle has {1}): {2}" -f $script:KeptNewerForgeVersion, $forgeVersion, $target) -ForegroundColor Green
 } else {
   Write-Host '  OK  Skyrim Forge shipped content already matches this bundle exactly' -ForegroundColor Green
 }
 
 & (Join-Path $target 'Install-or-Update.ps1') -BootstrapPython
+
+if ($script:KeptNewerForgeVersion -and (Test-Path -LiteralPath (Join-Path $target 'Install-Skyrim-Pack.ps1') -PathType Leaf)) {
+  foreach ($prov in $Providers) {
+    & (Join-Path $target 'Install-Skyrim-Pack.ps1') -Provider $prov
+  }
+}
 
 $bundleCatalog = $null
 if ($BundleOwnsProviderSkills) {
@@ -328,9 +350,10 @@ if ($BundleOwnsProviderSkills) {
 # one Forge actually emits.
 $python = Join-Path $target '.venv\Scripts\python.exe'
 if (-not (Test-Path -LiteralPath $python -PathType Leaf)) { throw 'Forge venv Python is missing after installation.' }
+$expectedInstalledVersion = if ($script:KeptNewerForgeVersion) { $script:KeptNewerForgeVersion } else { $forgeVersion }
 $installedText = [IO.File]::ReadAllText((Join-Path $target 'VERSION.txt'))
-if ($installedText -notmatch ('(?m)^Skyrim Forge\s+' + [regex]::Escape($forgeVersion) + '\s*$')) {
-  throw "Installed Forge is not the version this pack ships ($forgeVersion): $target"
+if ($installedText -notmatch ('(?m)^Skyrim Forge\s+' + [regex]::Escape($expectedInstalledVersion) + '\s*$')) {
+  throw "Installed Forge is not the expected version ($expectedInstalledVersion): $target"
 }
 $prevEap=$ErrorActionPreference; $ErrorActionPreference='Continue'
 $doctorRaw = (& $python -m skyrim_forge doctor 2>&1 | Out-String)

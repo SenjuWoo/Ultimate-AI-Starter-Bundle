@@ -1,47 +1,47 @@
 {
- "generated": "2026-10-25",
- "pack_version": "8.22.0",
- "assets": [
-  {
-   "file": "Skyrim-Forge-6.0.1.zip",
-   "size": 5095925,
-   "sha256": "eed4e04dd138f6b86d20ba7641f33f5eda83c709ef39046f3e36d5dcbb3566fa"
-  },
-  {
-   "file": "codebase-memory-mcp-windows-amd64.zip",
-   "size": 48508123,
-   "sha256": "4e4e0f16b45233af5c757a1fcbe3c3b16e9056375b1fbe2ce020b6de75dedcc0"
-  },
-  {
-   "file": "github-mcp-server-2.0.3-windows-x86_64.zip",
-   "size": 9576531,
-   "sha256": "f0e1b9880a1b88730d1250d1c25cfee39617ec3e800a7a252f2279cd0c8394e0"
-  },
-  {
-   "file": "headroom_ai-0.41.0-cp310-abi3-win_amd64.whl",
-   "size": 15589221,
-   "sha256": "18b43230c4dbbe9889fdb0863a7943059f4509fdf49ad20b19be394f2725db18"
-  },
-  {
-   "file": "houseCARL-2.1.1.zip",
-   "size": 12671828,
-   "sha256": "1cb9fda834590d367e9907c35e5053624be050c316424d1f917f74e004c4816c"
-  },
-  {
-   "file": "rtk-oss-x86_64-pc-windows-msvc.zip",
-   "size": 5781191,
-   "sha256": "9b076379be9d86011ca3f3a0264d0be4851da5535453a47f67fa46b4e893fbb2"
-  },
-  {
-   "file": "uabs_toolbox-1.0.3-py3-none-any.whl",
-   "size": 16240,
-   "sha256": "ad48cea7318ef1c79b33a7d2a208cdb02d45c27a1d0f3ee92ef4049caed20083"
-  },
-  {
-   "file": "universal_modder-0.2.0+uabs.c1dff21-py3-none-any.whl",
-   "size": 3618451,
-   "sha256": "031e240d15ee6222507ca9a855988cb5faa29200d9ffbe6b02b242ccde6fbac1"
-  }
- ],
- "updated": "2026-10-25"
+  "generated": "2026-10-25",
+  "pack_version": "8.22.1",
+  "assets": [
+    {
+      "file": "Skyrim-Forge-6.1.0.zip",
+      "size": 5098608,
+      "sha256": "7220f17a67e7d5828d9ad887d85ab970d5d5c2959e2e2a7d7e6f6f3b8d1ab2ec"
+    },
+    {
+      "file": "codebase-memory-mcp-windows-amd64.zip",
+      "size": 48508123,
+      "sha256": "4e4e0f16b45233af5c757a1fcbe3c3b16e9056375b1fbe2ce020b6de75dedcc0"
+    },
+    {
+      "file": "github-mcp-server-2.0.3-windows-x86_64.zip",
+      "size": 9576531,
+      "sha256": "f0e1b9880a1b88730d1250d1c25cfee39617ec3e800a7a252f2279cd0c8394e0"
+    },
+    {
+      "file": "headroom_ai-0.41.0-cp310-abi3-win_amd64.whl",
+      "size": 15589221,
+      "sha256": "18b43230c4dbbe9889fdb0863a7943059f4509fdf49ad20b19be394f2725db18"
+    },
+    {
+      "file": "houseCARL-2.1.1.zip",
+      "size": 12671828,
+      "sha256": "1cb9fda834590d367e9907c35e5053624be050c316424d1f917f74e004c4816c"
+    },
+    {
+      "file": "rtk-oss-x86_64-pc-windows-msvc.zip",
+      "size": 5781191,
+      "sha256": "9b076379be9d86011ca3f3a0264d0be4851da5535453a47f67fa46b4e893fbb2"
+    },
+    {
+      "file": "uabs_toolbox-1.0.3-py3-none-any.whl",
+      "size": 16240,
+      "sha256": "ad48cea7318ef1c79b33a7d2a208cdb02d45c27a1d0f3ee92ef4049caed20083"
+    },
+    {
+      "file": "universal_modder-0.2.0+uabs.c1dff21-py3-none-any.whl",
+      "size": 3618451,
+      "sha256": "031e240d15ee6222507ca9a855988cb5faa29200d9ffbe6b02b242ccde6fbac1"
+    }
+  ],
+  "updated": "2026-10-25"
 }

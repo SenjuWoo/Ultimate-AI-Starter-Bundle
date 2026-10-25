@@ -185,6 +185,24 @@ if(-not $SkipSkills){
     if($expectedSkills.Count -eq 0){Err "$provider bundled skill source contains zero skills.";continue}
 
     $preserved=@(Get-UabsPreservedSkillNames -Provider $provider -SkillsDir $destSkills)
+    $skyrimPackSkills=New-Object System.Collections.Generic.HashSet[string]([StringComparer]::OrdinalIgnoreCase)
+    $packsPath=Join-Path $PackRoot 'BUNDLED-TOOLS\PACKS.json'
+    if(Test-Path -LiteralPath $packsPath -PathType Leaf){
+      try{
+        $packsDoc=[IO.File]::ReadAllText($packsPath) | ConvertFrom-Json
+        foreach($sk in @($packsDoc.packs.skyrim.skills)){if($sk){[void]$skyrimPackSkills.Add([string]$sk)}}
+      }catch{}
+    }
+    $ledgerDigests=@{}
+    $ledgerPath=Join-Path (Get-UabsStateRoot) ('managed-skills\' + $provider.ToLowerInvariant() + '.json')
+    if(Test-Path -LiteralPath $ledgerPath -PathType Leaf){
+      try{
+        $ledgerDoc=[IO.File]::ReadAllText($ledgerPath) | ConvertFrom-Json
+        foreach($item in @($ledgerDoc.skills)){
+          if($item.name -and $item.digest){$ledgerDigests[[string]$item.name]=[string]$item.digest}
+        }
+      }catch{}
+    }
     $localOwned=0
     $verified=0
     $nativeOwned=0
@@ -197,7 +215,14 @@ if(-not $SkipSkills){
       if(Test-Path -LiteralPath $dst -PathType Leaf){
         $srcHash=(Get-FileHash -LiteralPath $src -Algorithm SHA256).Hash
         $dstHash=(Get-FileHash -LiteralPath $dst -Algorithm SHA256).Hash
-        if($srcHash -ne $dstHash){Err "$provider bundled skill is stale/modified: $skill";continue}
+        if($srcHash -ne $dstHash){
+          $dstSkillDir=Join-Path $destSkills $skill
+          if($skyrimPackSkills.Contains($skill) -and $ledgerDigests.ContainsKey($skill) -and ((Get-UabsTreeDigest -Path $dstSkillDir) -ceq $ledgerDigests[$skill])){
+            $verified++
+            continue
+          }
+          Err "$provider bundled skill is stale/modified: $skill";continue
+        }
         $verified++
         continue
       }

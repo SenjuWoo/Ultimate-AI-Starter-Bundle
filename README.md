@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.22.0 -->
+<!-- Ultimate AI Starter Bundle v8.22.1 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.22.0
+# Ultimate AI Starter Bundle v8.22.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -41,8 +41,9 @@ pack that installs only where Skyrim is, a small MCP core and project-specific
 tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest),
 [the changelog](CHANGELOG.md) and [evaluated component pins](BUNDLED-TOOLS/CATALOG.json).
 
-The [v8.22.0 release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.0)
-includes the fresh-Windows bootstrap and Hermes profile repairs. Setup preserves
+The [v8.22.1 release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.1)
+includes the fresh-Windows bootstrap, Hermes profile repairs, and the Skyrim Forge
+6.1.0 parallel-development split. Setup preserves
 existing model, permission and personal MoA settings; inherited retired MoA
 defaults are disabled only when the entire block matches the vendor baseline.
 Windows CI covers Python 3.14/3.15 and extracted Core packages. Live verification
@@ -728,9 +729,11 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ### Skyrim Forge
 
-**Skyrim Forge 6.0.1** is released from [SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge) and installed by this bundle only with the Skyrim pack. CATALOG.json pins the release tag, archive and SHA-256; the installer takes the Full-Offline copy or downloads it, refuses an archive whose digest differs before extracting, installs into ONE versionless root (migrating a version-stamped install, preserving `Workspaces` and the virtualenv), refreshes the provider descriptors, sets `SKYRIM_FORGE_ROOT`, and proves the result with `forge doctor`. This repository's CI installs that exact release end to end, which is the check v7.8.0 lacked when the two repositories drifted. Its 52-tool MCP is not global: `game-skyrim` activates it only for matching Claude/Grok/trusted Codex projects; Kimi/Hermes use the CLI through the skill. Choose where it lands with `-ForgeRoot`; the default is `%LOCALAPPDATA%\Skyrim-Tools\Skyrim-Forge`.
+**Skyrim Forge 6.1.0** is released from [SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge) and installed by this bundle only with the Skyrim pack. CATALOG.json pins the release tag, archive and SHA-256; the installer takes the Full-Offline copy or downloads it, refuses an archive whose digest differs before extracting, installs into ONE versionless root (migrating a version-stamped install, preserving `Workspaces` and the virtualenv), refreshes the provider descriptors, sets `SKYRIM_FORGE_ROOT`, and proves the result with `forge doctor`. This repository's CI installs that exact release end to end, which is the check v7.8.0 lacked when the two repositories drifted. Its 52-tool MCP is not global: `game-skyrim` activates it only for matching Claude/Grok/trusted Codex projects; Kimi/Hermes use the CLI through the skill. Choose where it lands with `-ForgeRoot`; the default is `%LOCALAPPDATA%\Skyrim-Tools\Skyrim-Forge`.
 
-**Who owns what.** The Skyrim toolchain and the 48-skill Skyrim pack are owned by [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge), not by the general bundle: houseCARL, xEdit/SSEEdit, LOOT, the Creation Kit, and the user's own tool root (e.g. `S:\Apps\Skyrim Tools` or `Z:\Backup\!Skyrim\Skyrim tools`). When one of those already exists outside the bundle the installer is version-aware - an older copy is refreshed in place after a timestamped backup under `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups`, a same-or-newer copy is left untouched and reported with both versions, and nothing is ever downgraded. With no existing tool root the install stays inside the bundle's own folder. None of it is required for AI boost, coding, or modding other engines - leave the pack switched off and nothing Skyrim-related is installed.
+**Who owns what (parallel development).** The Skyrim toolchain and the 48-skill Skyrim pack (`integrations/skyrim-pack/`) are owned by [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge), while the general bundle owns provider-agnostic AI tooling, prompt preambles, MCP profiles, and the 125 general skills. Both repositories can be developed and installed in parallel without drift or downgrades:
+- Running `Install-AI-Bridge.ps1` or `Install-Skyrim-Pack.ps1` inside `SkyrimForge` deploys the 48 Skyrim skills to Claude, Codex (`~/.agents/skills`), Grok, Kimi, Hermes, and Antigravity and automatically updates the bundle's `managed-skills/*.json` ledgers so `Test-Installed-State.ps1` stays green.
+- Running `INSTALL-AIO.ps1` or `TOOLS\Install-SkyrimForge.ps1` in the bundle checks `VERSION.txt` on any existing or parallel `Skyrim-Forge` install as well as external tools (`houseCARL`, `xEdit`/`SSEEdit`, `LOOT`, the Creation Kit, and the user's own tool root such as `S:\Apps\Skyrim Tools`): an older copy is refreshed in place after a timestamped backup under `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups`, a same-or-newer copy is preserved untouched (and its newer `Install-Skyrim-Pack.ps1` is invoked so newer Skyrim skills win), and nothing is ever downgraded. None of it is required for AI boost, coding, or modding other engines - leave the pack switched off and nothing Skyrim-related is installed.
 
 ## Update tools later
 
@@ -931,7 +934,8 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.22.0** - 2026-10-24. Preserves custom Hermes MoA presets/providers, recognizes nested vendor defaults, and repairs complete runtime hash paths in custom Hermes homes. Includes the fresh-Windows bootstrap and required-gate fixes from v8.21.1/v8.21.2. [Release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.0) · [Changes](docs/history/V8.22.0-CHANGELOG.md).
+**v8.22.1** - 2026-10-25. Pins `Skyrim Forge 6.1.0` (`SenjuWoo/SkyrimForge` `v6.1.0`) and hardens parallel development between `SkyrimForge` and `Ultimate-AI-Starter-Bundle`: `Install-SkyrimForge.ps1` compares semantic versions before extracting so a newer parallel `Skyrim-Forge` install is preserved untouched and its newer `Install-Skyrim-Pack.ps1` wins, while `SkyrimForge`'s `Install-Skyrim-Pack.ps1` updates the bundle's `managed-skills/*.json` ledgers and resolves Codex's `~/.agents/skills` root. [Release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.1) · [Changes](docs/history/V8.22.1-CHANGELOG.md).
+**v8.22.0** - 2026-10-25. Updates `PROMPTS/START-AND-RESUME.md` and the AIO operating contract (`No Silent Fallbacks`, `Question Stale Patterns`), moves canonical ownership of the 48-skill Skyrim pack to `SenjuWoo/SkyrimForge`, retires `spookys-automod-toolkit` (`-68.6 MB`), upgrades `houseCARL` to `2.1.1` with cross-drive version-aware discovery, bumps `uabs-toolbox` to `1.0.3` with Codex isolated-env resolution, updates `rtk` to `1.1.0`, `blender-mcp` to `2.2.4`, and `rea` to `6.8.0`, and resolves 28 Dependabot lockfile alerts. [Release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.0) · [Changes](docs/history/V8.22.0-CHANGELOG.md).
 **v8.21.1** - 2026-10-23. A fresh Windows install that finds no supported app stops and asks which providers to set up, instead of installing all six. A missing Codex CLI installs with `npm install -g @openai/codex` after the old standalone installer URL started returning HTTP 404. Setup fills only missing workspace files, previews cleanup, and leaves unselected provider homes alone. [Changes](docs/history/V8.21.1-CHANGELOG.md).
 **v8.21.0** - 2026-10-21. Hermes settings are now future-proof: no fallback chain, no pinned auxiliary or delegation models (everything follows your main model), vision follows the main model instead of a retired experimental endpoint, and compression fires at a 320k cap on the 1M-token window. The component updater respects catalog holds unless `-Force`. [Changes](docs/history/V8.21.0-CHANGELOG.md).
 **v8.20.0** - 2026-10-21. New `game-mashup-passthrough` skill and a bigger mashup card from the project's full lessons (frame split, spike order, freeze/teleport traps; no machine paths). Universal Modder refreshed to `c1dff21` (new `um voidless`, ~20 game notes). Your `Tools` and `Modding` folders reviewed: nothing bundled, bench map and evaluations updated.

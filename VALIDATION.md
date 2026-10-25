@@ -1,3 +1,10 @@
+# v8.22.1 validation
+
+- Published `SenjuWoo/SkyrimForge` `v6.1.0` (`4a200b1913dd0300873b81df4c91619e678be857`): rebuilt `SkyrimForge.Native 6.1.0 go` for Windows x64 and Linux x64, updated `README.md`, `CHANGELOG.md`, `CHANGELOG.txt`, `STATE.md`, `PLAN.md`, `DECISIONS.md`, and `VALIDATION.md`, wired `Install-AI-Bridge.ps1` -> `Install-Skyrim-Pack.ps1` with `managed-skills/*.json` digest synchronization and Codex `~/.agents/skills` resolution, and connected the local `Skyrim-Forge` workspace to `origin/main`. Two-pass `validate_repository.py --scope full --write-reports` PASS (`errors=0`); GitHub Actions `CI` (`40227438934`, 10/10 jobs), `CodeQL` (`40227438862`), `Dependency Graph` (`40227444859`), `Release` (`40227557944`), and security flags (`clean`) PASS.
+- Pinned `Skyrim-Forge-6.1.0.zip` (`5,098,608` bytes, `sha256: 7220f17a67e7d5828d9ad887d85ab970d5d5c2959e2e2a7d7e6f6f3b8d1ab2ec`) in `Ultimate-AI-Starter-Bundle` `v8.22.1` and updated `TOOLS/Install-SkyrimForge.ps1` so a newer parallel `Skyrim-Forge` installation is never downgraded and its newer `Install-Skyrim-Pack.ps1` is executed to keep newer Skyrim skills active.
+- Fanned out `_CANONICAL-SKILLS/skyrim-forge/SKILL.md` (`# Skyrim Forge 6.1`) across all 6 provider trees; `check_versions.py`, `verify_manifest.py`, and `TESTS/test_release_contract.py` (`151 passed, 0 failed`) PASS.
+- Live `v8.22.1` installer (`INSTALL-AIO.ps1 -Mode BundledFirst -SkipSelfUpdate -SkipNativePlugins`): exit `0`, upgraded `Skyrim Forge` to `6.1.0`, verified fifteen core MCP checks (`context7`, `headroom`, `toolbox`) across Claude, Codex, Grok, Hermes, and Antigravity, and `installed-state-doctor.json` PASS.
+
 # v8.22.0 validation
 
 - Updated `PROMPTS/START-AND-RESUME.md` and synchronized all preamble files (`0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION — Compact.md`, `COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt`, `BUNDLED-TOOLS/PREAMBLE-HISTORY.json`); `python TOOLS/generate_preamble_history.py --check` PASS.

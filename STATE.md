@@ -1,5 +1,17 @@
 # Bundle audit state
 
+## v8.22.1 parallel-development split & SkyrimForge v6.1.0 (2026-10-25)
+
+- **Goal**: Release `SenjuWoo/SkyrimForge` `v6.1.0` with updated documentation and bidirectional parallel-development scripts (`Install-AI-Bridge.ps1`, `Install-Skyrim-Pack.ps1`), connect the local `Skyrim-Forge` folder as a live git repository, and release `SenjuWoo/Ultimate-AI-Starter-Bundle` `v8.22.1` pinning `Skyrim-Forge-6.1.0.zip` with version-aware preservation in `TOOLS/Install-SkyrimForge.ps1` so both repos can be worked on and installed in parallel without drift or downgrades.
+- **Completed**:
+  - Published `Ultimate-AI-Starter-Bundle` `v8.22.0` (`e3bfcb0ef00035781ec1f92989fc2619893b8a73`) after resolving all 28 Dependabot alerts (`flags=clean`), with green `CI` (`40225403600`), `CodeQL` (`40225403641`), and `Dependency Graph` (`40225409199`) and verified `Core` / `Full-Offline` release assets.
+  - Connected the local `Skyrim-Forge` development checkout to `https://github.com/SenjuWoo/SkyrimForge.git` (`main`), bumped `SkyrimForge` to `6.1.0`, rebuilt `SkyrimForge.Native 6.1.0 go` for Windows x64 and Linux x64, updated `Install-AI-Bridge.ps1` and `Install-Skyrim-Pack.ps1` (Codex `~/.agents/skills` resolution + bundle `managed-skills/*.json` ledger sync), updated `README.md` / `CHANGELOG.md` / `CHANGELOG.txt` / `STATE.md` / `PLAN.md` / `DECISIONS.md` / `VALIDATION.md`, and published `SenjuWoo/SkyrimForge` `v6.1.0` (`4a200b1913dd0300873b81df4c91619e678be857`) with green `CI` (`40227438934`), `CodeQL` (`40227438862`), `Dependency Graph` (`40227444859`), `Release` (`40227557944`), and `flags=clean`.
+  - Updated `Ultimate-AI-Starter-Bundle` to `v8.22.1`, pinned `Skyrim-Forge-6.1.0.zip` (`sha256: 7220f17a67e7d5828d9ad887d85ab970d5d5c2959e2e2a7d7e6f6f3b8d1ab2ec`), hardened `TOOLS/Install-SkyrimForge.ps1` to never downgrade a newer parallel `Skyrim-Forge` install and to invoke its newer `Install-Skyrim-Pack.ps1`, and updated `README.md`, `CHANGELOG.md`, `docs/history/V8.22.1-CHANGELOG.md`, and `VALIDATION.md`.
+- **Next step**: Run `fanout_providers.py`, regenerate `MANIFEST.json`, pass local gates (`check_versions.py`, `verify_manifest.py`, `test_release_contract.py`) and live `INSTALL-AIO.ps1`, then push `v8.22.1`, converge exact-SHA CI/CodeQL/security flags, and publish release `v8.22.1`.
+- **Last good version**: `v8.22.0` (`e3bfcb0ef00035781ec1f92989fc2619893b8a73`).
+- **Logs**: `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\logs`.
+- **Build/run commands**: `START-HERE.bat`, `TESTS/Test-Pack.ps1`, `TOOLS/Build-Release.ps1`.
+
 ## v8.22.0 implementation & SkyrimForge split (2026-10-25)
 
 - **Goal**: Update session start/resume preambles (`No silent fallbacks`, `Question stale patterns`), fix `toolbox` and `housecarl` MCP resolution in Codex, upgrade `houseCARL` to `2.1.1` with external Skyrim tool discovery + version comparison, move Skyrim skill pack ownership to `SenjuWoo/SkyrimForge` (`v6.0.1`), retire `spookys-automod-toolkit` (`spooky`), and release `v8.22.0`.

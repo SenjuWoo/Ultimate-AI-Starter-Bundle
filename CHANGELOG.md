@@ -1,3 +1,9 @@
+## 8.22.1
+
+- Pin `Skyrim Forge 6.1.0` (`SenjuWoo/SkyrimForge` `v6.1.0`, `Skyrim-Forge-6.1.0.zip`, `sha256: 7220f17a67e7d5828d9ad887d85ab970d5d5c2959e2e2a7d7e6f6f3b8d1ab2ec`) across `BUNDLED-TOOLS/CATALOG.json`, `BUNDLED-TOOLS/PROFILES.json`, `BUNDLED-TOOLS/OFFLINE-MANIFEST.json`, `INSTALL-AIO.ps1`, and `_CANONICAL-SKILLS/skyrim-forge/SKILL.md`.
+- Harden parallel development between `SenjuWoo/SkyrimForge` and `SenjuWoo/Ultimate-AI-Starter-Bundle` in `TOOLS/Install-SkyrimForge.ps1`: compare semantic versions via `VERSION.txt` before extracting so a newer parallel/external `Skyrim-Forge` installation is preserved untouched, its newer `Install-Skyrim-Pack.ps1` is executed to keep newer Skyrim skills active, and `forge doctor` verifies the preserved version without downgrading.
+- Document the `SkyrimForge` / `Ultimate-AI-Starter-Bundle` ownership split and bidirectional skill-ledger sync (`managed-skills/*.json` + Codex `~/.agents/skills` resolution) in `README.md`.
+
 ## 8.22.0
 
 - Update `PROMPTS/START-AND-RESUME.md` with the new `## New chat` and `## After a usage limit` operating contracts (`Selective Discovery`, `No Silent Fallbacks`, `Question Stale Patterns`, `Smart Autonomy & Efficiency`, `State & Verified Handoff`) and synchronize `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, `AIO-INSTRUCTION — Compact.md`, `COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt`, and `BUNDLED-TOOLS/PREAMBLE-HISTORY.json`.
