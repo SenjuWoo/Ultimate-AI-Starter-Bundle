@@ -13,7 +13,7 @@ For Skyrim use the `skyrim-*` skills instead -- they are deeper and this
 skill deliberately does not duplicate them. If they are not installed, the
 bundle's Skyrim pack is off on this machine: run the bundle's
 `START-HERE.bat -Packs skyrim` (path in the machine map, if present), which
-adds those skills plus Skyrim Forge, houseCARL and Spooky, then ask the user to
+adds those skills plus Skyrim Forge and houseCARL, then ask the user to
 restart the AI app.
 
 ## Pick the family first

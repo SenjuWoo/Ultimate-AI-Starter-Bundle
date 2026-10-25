@@ -88,7 +88,18 @@ def planned() -> dict[Path, str]:
                 out[HIST / f"provider-general-{sha12(tail)}.md"] = tail
     # Hand-named archives already cover some texts; never write a second copy.
     named = {norm(p.read_bytes()) for p in HIST.glob("*.md") if not re.search(r"-[0-9a-f]{12}\.md$", p.name)}
-    return {p: t for p, t in out.items() if t not in named}
+    live = {current_aio, current_soul} | current_templates | named
+    # Preserve content-addressed archives that predate a history squash/rewrite
+    # as long as their bytes still hash to their filename and are not current.
+    for d in (HIST, LEGACY):
+        for p in d.glob("*.md"):
+            m = re.search(r"([0-9a-f]{12})\.md$", p.name)
+            if not m:
+                continue
+            text = norm(p.read_bytes())
+            if len(text) >= MIN_CHARS and sha12(text) == m.group(1) and text not in live:
+                out.setdefault(p, text)
+    return {p: t for p, t in out.items() if t not in live}
 
 
 def main() -> int:

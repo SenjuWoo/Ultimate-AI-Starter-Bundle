@@ -859,6 +859,142 @@ function Find-UabsCodebaseMemoryExe {
   return $null
 }
 
+function Get-UabsSkyrimToolDirectories {
+  <# Portable discovery of Skyrim modding tool vaults on fixed drives or
+     user-configured UABS_TOOL_ROOTS (e.g. Z:\Backup\!Skyrim\Skyrim tools,
+     S:\Apps\Skyrim Tools). Never hardcodes a user's drive letter. #>
+  $out = New-Object System.Collections.Generic.List[string]
+  $seen = @{}
+  $addDir = {
+    param([string]$p)
+    if ([string]::IsNullOrWhiteSpace($p)) { return }
+    try {
+      if (Test-Path -LiteralPath $p -PathType Container) {
+        $rp = (Resolve-Path -LiteralPath $p).Path.TrimEnd('\')
+        $key = $rp.ToLowerInvariant()
+        if (-not $seen.ContainsKey($key)) {
+          $seen[$key] = $true
+          [void]$out.Add($rp)
+        }
+      }
+    } catch {}
+  }
+  foreach ($scope in @('Process', 'User')) {
+    $val = [Environment]::GetEnvironmentVariable('UABS_TOOL_ROOTS', $scope)
+    if ($val) {
+      foreach ($part in ($val -split ';')) { & $addDir $part }
+    }
+  }
+  $tails = @(
+    'Backup\!Skyrim\Skyrim tools',
+    'Backup\!Skyrim\Skyrim Tools',
+    'Backup\Skyrim tools',
+    'Backup\Skyrim Tools',
+    '!Skyrim\Skyrim tools',
+    '!Skyrim\Skyrim Tools',
+    'Apps\Skyrim Tools',
+    'Skyrim Tools',
+    'Skyrim tools',
+    'Tools\Skyrim',
+    'Modding\Tools'
+  )
+  foreach ($letter in @('C','D','E','F','G','H','S','T','Z')) {
+    $drive = "${letter}:\"
+    if (-not (Test-Path -LiteralPath $drive)) { continue }
+    foreach ($tail in $tails) {
+      & $addDir (Join-Path $drive $tail)
+    }
+  }
+  return @($out)
+}
+
+function Find-UabsHouseCarlMcp([string]$ExcludeRoot = '') {
+  <# Locate the best external housecarl-mcp.exe outside $ExcludeRoot,
+     picking the highest binary version when multiple copies exist. #>
+  $candidates = New-Object System.Collections.Generic.List[string]
+  $addCand = {
+    param([string]$p)
+    if ([string]::IsNullOrWhiteSpace($p)) { return }
+    try {
+      if (Test-Path -LiteralPath $p -PathType Leaf) {
+        $rp = (Resolve-Path -LiteralPath $p).Path
+        if ($ExcludeRoot -and (Test-UabsPathWithin -Path $rp -Root $ExcludeRoot)) { return }
+        if (-not $candidates.Contains($rp)) { [void]$candidates.Add($rp) }
+      }
+    } catch {}
+  }
+  foreach ($direct in @(
+    $env:HOUSECARL_MCP,
+    [Environment]::GetEnvironmentVariable('HOUSECARL_MCP', 'User')
+  )) { & $addCand $direct }
+  $roots = New-Object System.Collections.Generic.List[string]
+  foreach ($r in @(
+    $env:HOUSECARL_ROOT,
+    [Environment]::GetEnvironmentVariable('HOUSECARL_ROOT', 'User')
+  )) {
+    if ($r -and (Test-Path -LiteralPath $r -PathType Container)) { [void]$roots.Add($r) }
+  }
+  foreach ($toolDir in @(Get-UabsSkyrimToolDirectories)) {
+    $hcSub = Join-Path $toolDir 'houseCARL'
+    if (Test-Path -LiteralPath $hcSub -PathType Container) { [void]$roots.Add($hcSub) }
+    else { [void]$roots.Add($toolDir) }
+  }
+  foreach ($letter in @('C','D','E','F','G','H','S','T','Z')) {
+    $drive = "${letter}:\"
+    if (-not (Test-Path -LiteralPath $drive)) { continue }
+    foreach ($tail in @('Tools\houseCARL', 'houseCARL')) {
+      $c = Join-Path $drive $tail
+      if (Test-Path -LiteralPath $c -PathType Container) { [void]$roots.Add($c) }
+    }
+  }
+  foreach ($r in ($roots | Select-Object -Unique)) {
+    if ($ExcludeRoot -and (Test-UabsPathWithin -Path $r -Root $ExcludeRoot)) { continue }
+    $hit = Find-UabsFileUnder -Root $r -Name 'housecarl-mcp.exe' -Depth 6
+    if ($hit) { & $addCand $hit }
+  }
+  if ($candidates.Count -eq 0) { return $null }
+  $best = $null
+  $bestVer = $null
+  foreach ($c in $candidates) {
+    $v = Get-UabsBinaryVersion $c
+    if (-not $best) { $best = $c; $bestVer = $v; continue }
+    if ($v -and -not $bestVer) { $best = $c; $bestVer = $v; continue }
+    if ($v -and $bestVer -and ((Compare-UabsDottedVersion $v $bestVer) -gt 0)) {
+      $best = $c; $bestVer = $v
+    }
+  }
+  return $best
+}
+
+function Find-UabsSpookyAutomodRoot([string]$ExcludeRoot = '') {
+  <# Locate an external Spooky's AutoMod Toolkit root (folder with SpookysAutomod.sln). #>
+  foreach ($direct in @(
+    $env:SPOOKY_AUTOMOD_ROOT,
+    [Environment]::GetEnvironmentVariable('SPOOKY_AUTOMOD_ROOT', 'User')
+  )) {
+    if ($direct -and (Test-Path -LiteralPath (Join-Path $direct 'SpookysAutomod.sln') -PathType Leaf)) {
+      $rp = (Resolve-Path -LiteralPath $direct).Path
+      if (-not ($ExcludeRoot -and (Test-UabsPathWithin -Path $rp -Root $ExcludeRoot))) { return $rp }
+    }
+  }
+  foreach ($toolDir in @(Get-UabsSkyrimToolDirectories)) {
+    try {
+      $hit = Get-ChildItem -LiteralPath $toolDir -Directory -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -like 'spookys-automod*' } |
+        Sort-Object Name -Descending | Select-Object -First 1
+      if ($hit) {
+        foreach ($cand in @((Join-Path $hit.FullName 'spookys-automod-toolkit'), $hit.FullName)) {
+          if (Test-Path -LiteralPath (Join-Path $cand 'SpookysAutomod.sln') -PathType Leaf) {
+            $rp = (Resolve-Path -LiteralPath $cand).Path
+            if (-not ($ExcludeRoot -and (Test-UabsPathWithin -Path $rp -Root $ExcludeRoot))) { return $rp }
+          }
+        }
+      }
+    } catch {}
+  }
+  return $null
+}
+
 function Update-UabsGrokMcpBlock {
   param(
     [string]$Name,

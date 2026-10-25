@@ -1,11 +1,11 @@
 {
- "generated": "2026-10-18",
- "pack_version": "8.21.3",
+ "generated": "2026-10-25",
+ "pack_version": "8.22.0",
  "assets": [
   {
    "file": "Skyrim-Forge-6.0.1.zip",
-   "size": 3732625,
-   "sha256": "69e5dfbf5932d82a145d8cb6b87019cc32642f632c201df726da848d58f7fe79"
+   "size": 5095925,
+   "sha256": "eed4e04dd138f6b86d20ba7641f33f5eda83c709ef39046f3e36d5dcbb3566fa"
   },
   {
    "file": "codebase-memory-mcp-windows-amd64.zip",
@@ -23,24 +23,19 @@
    "sha256": "18b43230c4dbbe9889fdb0863a7943059f4509fdf49ad20b19be394f2725db18"
   },
   {
-   "file": "houseCARL-1.9.0.zip",
-   "size": 17647713,
-   "sha256": "56349058cdf6a090d2029dedf283db0aaa66a13ddd9560864bdceecced376947"
+   "file": "houseCARL-2.1.1.zip",
+   "size": 12671828,
+   "sha256": "1cb9fda834590d367e9907c35e5053624be050c316424d1f917f74e004c4816c"
   },
   {
    "file": "rtk-oss-x86_64-pc-windows-msvc.zip",
-   "size": 5708680,
-   "sha256": "0e53e2eca471e15fbd3636e64e6bc0b182cbc278ed0339c80450a2dd03f4cd6b"
+   "size": 5781191,
+   "sha256": "9b076379be9d86011ca3f3a0264d0be4851da5535453a47f67fa46b4e893fbb2"
   },
   {
-   "file": "spookys-automod-toolkit-v1.11.2.zip",
-   "size": 68584007,
-   "sha256": "2e7848961785eedda3702851d477d878cf01e98a61710ca50fe8b0aafcb28bef"
-  },
-  {
-   "file": "uabs_toolbox-1.0.2-py3-none-any.whl",
-   "size": 15471,
-   "sha256": "775e98000b2c88d19bda1620f51e88fb8d82744d620b2b2e3dfaafa0557292fc"
+   "file": "uabs_toolbox-1.0.3-py3-none-any.whl",
+   "size": 16240,
+   "sha256": "ad48cea7318ef1c79b33a7d2a208cdb02d45c27a1d0f3ee92ef4049caed20083"
   },
   {
    "file": "universal_modder-0.2.0+uabs.c1dff21-py3-none-any.whl",
@@ -48,5 +43,5 @@
    "sha256": "031e240d15ee6222507ca9a855988cb5faa29200d9ffbe6b02b242ccde6fbac1"
   }
  ],
- "updated": "2026-10-18"
+ "updated": "2026-10-25"
 }

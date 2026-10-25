@@ -62,14 +62,17 @@ param(
   [bool]$WireGrok = $true,
   [bool]$WireCodex = $true,
   [switch]$RefreshOnly,
-  [switch]$SkipDotNetCheck
+  [switch]$SkipDotNetCheck,
+  # Run by the installer: progress lines and the closing guide stay off the
+  # console (the installer prints one line); warnings and errors still show.
+  [switch]$Quiet
 )
 
 $ErrorActionPreference = 'Stop'
 $script:Report = [ordered]@{}
 
-function Write-Step($msg) { Write-Host "==> $msg" -ForegroundColor Cyan }
-function Write-Ok($msg)   { Write-Host "  OK  $msg" -ForegroundColor Green }
+function Write-Step($msg) { if (-not $Quiet) { Write-Host "==> $msg" -ForegroundColor Cyan } }
+function Write-Ok($msg)   { if (-not $Quiet) { Write-Host "  OK  $msg" -ForegroundColor Green } }
 function Write-Warn2($msg){ Write-Host "  !!  $msg" -ForegroundColor Yellow }
 function Write-Bad($msg)  { Write-Host "  XX  $msg" -ForegroundColor Red }
 
@@ -78,35 +81,106 @@ function Test-ExistingPath([string]$p) {
   try { return (Test-Path -LiteralPath $p) } catch { return $false }
 }
 
+function Get-HouseCarlExeVersion([string]$Path) {
+  if (-not (Test-ExistingPath $Path)) { return $null }
+  try {
+    $vi = (Get-Item -LiteralPath $Path).VersionInfo
+    foreach ($cand in @($vi.ProductVersion, $vi.FileVersion)) {
+      if ($cand -and ($cand -match '^\s*(\d+(?:\.\d+){1,3})')) {
+        return [version]$Matches[1]
+      }
+    }
+  } catch {}
+  return $null
+}
+
 function Find-HouseCarlMcp {
   param([string]$Hint)
   if (Test-ExistingPath $Hint) { return (Resolve-Path -LiteralPath $Hint).Path }
-  if (Test-ExistingPath $env:HOUSECARL_MCP) { return (Resolve-Path -LiteralPath $env:HOUSECARL_MCP).Path }
-  $candidates = @(
-    (Join-Path $env:LOCALAPPDATA 'houseCARL\server\housecarl-mcp.exe'),
-    (Join-Path $env:USERPROFILE '.claude\skills\housecarl\server\housecarl-mcp.exe'),
-    (Join-Path $env:USERPROFILE '.agents\skills\housecarl\server\housecarl-mcp.exe'),
-    (Join-Path $env:USERPROFILE '.codex\skills\housecarl\server\housecarl-mcp.exe'),
-    (Join-Path $env:USERPROFILE '.agents\skills\housecarl\server\housecarl-mcp.exe')
+  $defaultBundleDir = Join-Path $env:LOCALAPPDATA 'houseCARL'
+  $rawCandidates = New-Object System.Collections.Generic.List[string]
+  foreach ($envVal in @(
+    $env:HOUSECARL_MCP,
+    [Environment]::GetEnvironmentVariable('HOUSECARL_MCP', 'User')
+  )) {
+    if (Test-ExistingPath $envVal) {
+      $resolved = (Resolve-Path -LiteralPath $envVal).Path
+      # If an explicit env path has no version resource (e.g. a test stub), honour it directly.
+      if ($null -eq (Get-HouseCarlExeVersion $resolved)) { return $resolved }
+      if (-not $rawCandidates.Contains($resolved)) { [void]$rawCandidates.Add($resolved) }
+    }
+  }
+  foreach ($rootVal in @(
+    $env:HOUSECARL_ROOT,
+    [Environment]::GetEnvironmentVariable('HOUSECARL_ROOT', 'User')
+  )) {
+    if (Test-ExistingPath $rootVal) {
+      $hit = Get-ChildItem -LiteralPath $rootVal -Filter 'housecarl-mcp.exe' -Recurse -Depth 6 -File -ErrorAction SilentlyContinue | Select-Object -First 1
+      if ($hit -and -not $rawCandidates.Contains($hit.FullName)) { [void]$rawCandidates.Add($hit.FullName) }
+    }
+  }
+  $extraRoots = @()
+  foreach ($scope in @('Process', 'User')) {
+    $val = [Environment]::GetEnvironmentVariable('UABS_TOOL_ROOTS', $scope)
+    if ($val) { $extraRoots += ($val -split ';' | Where-Object { $_ }) }
+  }
+  foreach ($r in $extraRoots) {
+    if (Test-ExistingPath $r) {
+      $hit = Get-ChildItem -LiteralPath $r -Filter 'housecarl-mcp.exe' -Recurse -Depth 6 -File -ErrorAction SilentlyContinue | Select-Object -First 1
+      if ($hit -and -not $rawCandidates.Contains($hit.FullName)) { [void]$rawCandidates.Add($hit.FullName) }
+    }
+  }
+  $searchTails = @(
+    'Backup\!Skyrim\Skyrim tools\houseCARL',
+    'Backup\!Skyrim\Skyrim Tools\houseCARL',
+    'Backup\Skyrim tools\houseCARL',
+    'Backup\Skyrim Tools\houseCARL',
+    '!Skyrim\Skyrim tools\houseCARL',
+    '!Skyrim\Skyrim Tools\houseCARL',
+    'Apps\Skyrim Tools\houseCARL',
+    'Skyrim Tools\houseCARL',
+    'Skyrim tools\houseCARL',
+    'Modding\Tools\houseCARL',
+    'Tools\Skyrim\houseCARL',
+    'Tools\houseCARL',
+    'houseCARL'
   )
-  foreach ($c in $candidates) {
-    if (Test-ExistingPath $c) { return (Resolve-Path -LiteralPath $c).Path }
-  }
-  if (Test-ExistingPath $env:HOUSECARL_ROOT) {
-    $hit = Get-ChildItem -LiteralPath $env:HOUSECARL_ROOT -Filter 'housecarl-mcp.exe' -Recurse -Depth 6 -File -ErrorAction SilentlyContinue | Select-Object -First 1
-    if ($hit) { return $hit.FullName }
-  }
   foreach ($letter in @('C','D','E','F','G','H','S','T','Z')) {
     $drive = "${letter}:\"
     if (-not (Test-ExistingPath $drive)) { continue }
-    foreach ($tail in @('Apps\Skyrim Tools\houseCARL','Skyrim Tools\houseCARL','Tools\houseCARL','houseCARL')) {
+    foreach ($tail in $searchTails) {
       $root = Join-Path $drive $tail
       if (-not (Test-ExistingPath $root)) { continue }
       $hit = Get-ChildItem -LiteralPath $root -Filter 'housecarl-mcp.exe' -Recurse -Depth 5 -File -ErrorAction SilentlyContinue | Select-Object -First 1
-      if ($hit) { return $hit.FullName }
+      if ($hit -and -not $rawCandidates.Contains($hit.FullName)) { [void]$rawCandidates.Add($hit.FullName) }
     }
   }
-  return $null
+  foreach ($c in @(
+    (Join-Path $env:LOCALAPPDATA 'houseCARL\server\housecarl-mcp.exe'),
+    (Join-Path $env:USERPROFILE '.claude\skills\housecarl\server\housecarl-mcp.exe'),
+    (Join-Path $env:USERPROFILE '.agents\skills\housecarl\server\housecarl-mcp.exe'),
+    (Join-Path $env:USERPROFILE '.codex\skills\housecarl\server\housecarl-mcp.exe')
+  )) {
+    if (Test-ExistingPath $c) {
+      $resolved = (Resolve-Path -LiteralPath $c).Path
+      if (-not $rawCandidates.Contains($resolved)) { [void]$rawCandidates.Add($resolved) }
+    }
+  }
+  if ($rawCandidates.Count -eq 0) { return $null }
+  $best = $null
+  $bestVer = [version]'0.0.0.0'
+  $bestExternal = $false
+  foreach ($cand in $rawCandidates) {
+    $ver = Get-HouseCarlExeVersion $cand
+    if (-not $ver) { $ver = [version]'0.0.0.0' }
+    $isExternal = -not $cand.StartsWith($defaultBundleDir, [StringComparison]::OrdinalIgnoreCase)
+    if ($null -eq $best -or $ver -gt $bestVer -or ($ver -eq $bestVer -and $isExternal -and -not $bestExternal)) {
+      $best = $cand
+      $bestVer = $ver
+      $bestExternal = $isExternal
+    }
+  }
+  return $best
 }
 
 function Find-SkyrimSe {
@@ -162,6 +236,17 @@ function Find-SkyrimSe {
   return $null
 }
 
+function Test-IsVortexShim([string]$Dir) {
+  if (-not (Test-ExistingPath $Dir)) { return $false }
+  if (Test-ExistingPath (Join-Path $Dir 'HOUSECARL-SHIM.txt')) { return $true }
+  if ($ShimRoot -and (Test-ExistingPath $ShimRoot)) {
+    try {
+      if ((Resolve-Path -LiteralPath $Dir).Path.TrimEnd('\') -ieq (Resolve-Path -LiteralPath $ShimRoot).Path.TrimEnd('\')) { return $true }
+    } catch {}
+  }
+  return $false
+}
+
 function Find-Mo2Instances {
   $found = New-Object System.Collections.Generic.List[string]
   $roots = New-Object System.Collections.Generic.List[string]
@@ -183,20 +268,21 @@ function Find-Mo2Instances {
     }
   }
   foreach ($root in $roots) {
-    if (Test-ExistingPath (Join-Path $root 'ModOrganizer.ini')) {
-      if (-not $found.Contains($root)) { [void]$found.Add((Resolve-Path -LiteralPath $root).Path) }
+    if ((Test-ExistingPath (Join-Path $root 'ModOrganizer.ini')) -and -not (Test-IsVortexShim $root)) {
+      $rp = (Resolve-Path -LiteralPath $root).Path
+      if (-not $found.Contains($rp)) { [void]$found.Add($rp) }
     }
     # portable instances / instances subfolder
     try {
       Get-ChildItem -LiteralPath $root -Directory -ErrorAction SilentlyContinue | ForEach-Object {
-        if (Test-ExistingPath (Join-Path $_.FullName 'ModOrganizer.ini')) {
+        if ((Test-ExistingPath (Join-Path $_.FullName 'ModOrganizer.ini')) -and -not (Test-IsVortexShim $_.FullName)) {
           $rp = (Resolve-Path -LiteralPath $_.FullName).Path
           if (-not $found.Contains($rp)) { [void]$found.Add($rp) }
         }
         $inst = Join-Path $_.FullName 'instances'
         if (Test-ExistingPath $inst) {
           Get-ChildItem -LiteralPath $inst -Directory -ErrorAction SilentlyContinue | ForEach-Object {
-            if (Test-ExistingPath (Join-Path $_.FullName 'ModOrganizer.ini')) {
+            if ((Test-ExistingPath (Join-Path $_.FullName 'ModOrganizer.ini')) -and -not (Test-IsVortexShim $_.FullName)) {
               $rp = (Resolve-Path -LiteralPath $_.FullName).Path
               if (-not $found.Contains($rp)) { [void]$found.Add($rp) }
             }
@@ -379,11 +465,19 @@ patches=houseCARL writes 'houseCARL - *' folders under mods/ (Vortex staging). I
 function Test-DotNet9 {
   try {
     $runtimes = & dotnet --list-runtimes 2>$null
-    $hasNet = $runtimes | Where-Object { $_ -match '^Microsoft\.NETCore\.App 9\.' }
-    $hasAsp = $runtimes | Where-Object { $_ -match '^Microsoft\.AspNetCore\.App 9\.' }
-    return @{ net = [bool]$hasNet; asp = [bool]$hasAsp; raw = $runtimes }
+    $hasNet10 = $runtimes | Where-Object { $_ -match '^Microsoft\.NETCore\.App 10\.' }
+    $hasNet9 = $runtimes | Where-Object { $_ -match '^Microsoft\.NETCore\.App 9\.' }
+    $hasAsp9 = $runtimes | Where-Object { $_ -match '^Microsoft\.AspNetCore\.App 9\.' }
+    return @{
+      net10 = [bool]$hasNet10
+      net9  = [bool]$hasNet9
+      asp9  = [bool]$hasAsp9
+      net   = ([bool]$hasNet10 -or [bool]$hasNet9)
+      asp   = ([bool]$hasNet10 -or [bool]$hasAsp9)
+      raw   = $runtimes
+    }
   } catch {
-    return @{ net = $false; asp = $false; raw = @() }
+    return @{ net10 = $false; net9 = $false; asp9 = $false; net = $false; asp = $false; raw = @() }
   }
 }
 
@@ -493,17 +587,26 @@ function Write-CodexHint([string]$McpExe,[string]$InstanceDir) {
 }
 
 # ---------------- main ----------------
-Write-Host ""
-Write-Host "houseCARL V5 automatic setup (MO2 + Vortex shim)" -ForegroundColor Magenta
-Write-Host ""
+if (-not $Quiet) {
+  Write-Host ""
+  Write-Host "houseCARL Uabs automatic setup (MO2 + Vortex shim)" -ForegroundColor Magenta
+  Write-Host ""
+}
 
 if (-not $ShimRoot) { $ShimRoot = Join-Path $env:LOCALAPPDATA 'houseCARL-Shim' }
 
 if (-not $SkipDotNetCheck) {
-  Write-Step "Checking .NET 9 runtimes"
+  Write-Step "Checking .NET runtimes"
   $dn = Test-DotNet9
-  if ($dn.net) { Write-Ok ".NET 9 runtime present" } else { Write-Bad ".NET 9 Runtime MISSING - winget install Microsoft.DotNet.Runtime.9" }
-  if ($dn.asp) { Write-Ok "ASP.NET Core 9 runtime present" } else { Write-Bad "ASP.NET Core 9 Runtime MISSING - winget install Microsoft.DotNet.AspNetCore.9" }
+  if ($dn.net10) {
+    Write-Ok ".NET 10 runtime present (houseCARL 2.x)"
+  } elseif ($dn.net9 -and $dn.asp9) {
+    Write-Ok ".NET 9 + ASP.NET Core 9 runtimes present (houseCARL 1.x)"
+  } else {
+    if (-not $dn.net) { Write-Bad ".NET 10 Runtime MISSING - winget install Microsoft.DotNet.Runtime.10 (or Microsoft.DotNet.Runtime.9 for houseCARL 1.x)" }
+    if (-not $dn.asp) { Write-Bad "ASP.NET Core 9 Runtime MISSING - winget install Microsoft.DotNet.AspNetCore.9" }
+  }
+  $script:Report['dotnet10'] = $dn.net10
   $script:Report['dotnet9'] = $dn.net
   $script:Report['aspnet9'] = $dn.asp
 }
@@ -517,7 +620,7 @@ if (-not $mcp) {
 INSTALL houseCARL first:
   1. Run houseCARL-Setup.exe from the houseCARL distribution
      (or copy the housecarl\ folder so server\housecarl-mcp.exe exists)
-  2. Install .NET 9 Runtime + ASP.NET Core Runtime 9
+  2. Install .NET 10 Runtime (winget install Microsoft.DotNet.Runtime.10)
   3. Re-run this script
 
 Optional: -HouseCarlMcp 'D:\path\housecarl-mcp.exe'
@@ -547,7 +650,12 @@ if ($Mo2Instance) {
   }
   $mo2List = @((Resolve-Path -LiteralPath $Mo2Instance).Path)
 } else {
-  $mo2List = Find-Mo2Instances
+  # @() is load-bearing. Find-Mo2Instances returns a List[string], and a
+  # single-element return unrolls to a bare [string] on the way out. A string
+  # still answers .Count = 1, so the MO2 branch is taken, and $mo2List[0] then
+  # indexes the STRING - yielding its first character ("C" of "C:\..."). That
+  # is how SKYRIM_MO2_INSTANCE ends up set to "C".
+  $mo2List = @(Find-Mo2Instances)
 }
 
 $staging = $null
@@ -558,9 +666,11 @@ if ($VortexStaging) {
 }
 
 Write-Step "Manager detection"
-Write-Host "  MO2 instances found: $($mo2List.Count)"
-foreach ($m in $mo2List) { Write-Host "    - $m" }
-Write-Host "  Vortex staging: $(if($staging){$staging}else{'not found'})"
+if (-not $Quiet) {
+  Write-Host "  MO2 instances found: $($mo2List.Count)"
+  foreach ($m in $mo2List) { Write-Host "    - $m" }
+  Write-Host "  Vortex staging: $(if($staging){$staging}else{'not found'})"
+}
 
 $mode = $Manager
 $instanceDir = $null
@@ -611,8 +721,21 @@ if ($RefreshOnly) {
 $script:Report['mode'] = $mode
 $script:Report['instance'] = $instanceDir
 
+# Refuse to persist an instance that is not a real MO2-shaped directory. A
+# malformed value here is silent: houseCARL starts, then every load-order read
+# fails against a path that never existed.
+if (-not (Test-ExistingPath (Join-Path $instanceDir 'ModOrganizer.ini'))) {
+  Write-Bad "Refusing to persist a bogus MO2 instance: '$instanceDir'"
+  Write-Host "  Expected a directory containing ModOrganizer.ini."
+  Write-Host "  Pass -Mo2Instance <path>, or -VortexStaging <path> to build a shim."
+  exit 4
+}
+
 Write-Step "Persisting environment"
 Set-UserEnv -Name 'HOUSECARL_MCP' -Value $mcp
+$mcpParent = Split-Path $mcp -Parent
+$hcRoot = if ((Split-Path $mcpParent -Leaf) -ieq 'server') { Split-Path $mcpParent -Parent } else { $mcpParent }
+if ($hcRoot -and (Test-ExistingPath $hcRoot)) { Set-UserEnv -Name 'HOUSECARL_ROOT' -Value $hcRoot }
 Set-UserEnv -Name 'SKYRIM_MO2_INSTANCE' -Value $instanceDir
 Set-UserEnv -Name 'HouseCarl__Mo2InstanceDir' -Value $instanceDir
 if ($game) { Set-UserEnv -Name 'SKYRIM_SE_PATH' -Value $game }
@@ -649,28 +772,30 @@ $statePath = Write-StateFile @{
   )
 }
 
-Write-Host ""
-Write-Host "========== SETUP COMPLETE ==========" -ForegroundColor Green
-Write-Host "Mode:     $mode"
-Write-Host "Instance: $instanceDir"
-Write-Host "MCP:      $mcp"
-Write-Host "State:    $statePath"
-Write-Host ""
-Write-Host "NEXT:" -ForegroundColor Yellow
-Write-Host "  1. FULLY restart your AI app (Grok / Claude / Codex)."
-Write-Host "  2. Confirm houseCARL MCP tools are visible."
-Write-Host "  3. Ask: what does my Skyrim load order look like?"
-Write-Host "  4. Claude plugin users: set MO2 instance folder to:"
-Write-Host "       $instanceDir"
-Write-Host "  5. Vortex users: after load-order changes run:"
-Write-Host "       .\Setup-HouseCarl.ps1 -RefreshOnly"
-Write-Host ""
-if ($mode -eq 'Vortex') {
-  Write-Host "Vortex patch hand-off: houseCARL writes mods under staging as 'houseCARL - <name>'." -ForegroundColor Yellow
-  Write-Host "Drag that folder into Vortex Mods (or zip + Install From File), enable, Deploy." -ForegroundColor Yellow
+if (-not $Quiet) {
+  Write-Host ""
+  Write-Host "========== SETUP COMPLETE ==========" -ForegroundColor Green
+  Write-Host "Mode:     $mode"
+  Write-Host "Instance: $instanceDir"
+  Write-Host "MCP:      $mcp"
+  Write-Host "State:    $statePath"
+  Write-Host ""
+  Write-Host "NEXT:" -ForegroundColor Yellow
+  Write-Host "  1. FULLY restart your AI app (Grok / Claude / Codex)."
+  Write-Host "  2. Confirm houseCARL MCP tools are visible."
+  Write-Host "  3. Ask: what does my Skyrim load order look like?"
+  Write-Host "  4. Claude plugin users: set MO2 instance folder to:"
+  Write-Host "       $instanceDir"
+  Write-Host "  5. Vortex users: after load-order changes run:"
+  Write-Host "       .\Setup-HouseCarl.ps1 -RefreshOnly"
+  Write-Host ""
+  if ($mode -eq 'Vortex') {
+    Write-Host "Vortex patch hand-off: houseCARL writes mods under staging as 'houseCARL - <name>'." -ForegroundColor Yellow
+    Write-Host "Drag that folder into Vortex Mods (or zip + Install From File), enable, Deploy." -ForegroundColor Yellow
+  }
+  Write-Host "Reference PDF: TOOLS\housecarl\houseCARL-Vortex-shim-setup.pdf"
+  Write-Host ""
 }
-Write-Host "Reference PDF: TOOLS\housecarl\houseCARL-Vortex-shim-setup.pdf"
-Write-Host ""
 
 # exit non-zero if critical runtimes missing (still wrote shim)
 if (-not $SkipDotNetCheck -and (-not $script:Report['dotnet9'] -or -not $script:Report['aspnet9'])) {
@@ -678,3 +803,4 @@ if (-not $SkipDotNetCheck -and (-not $script:Report['dotnet9'] -or -not $script:
   exit 4
 }
 exit 0
+

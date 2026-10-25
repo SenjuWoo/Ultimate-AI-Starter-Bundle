@@ -1,8 +1,8 @@
 ---
 name: ai-tooling-stack
-description: Map of Skyrim + AI coding tools (Forge, houseCARL, Spooky, codebase-memory, Headroom, Superpowers, Ponytail, CodeBurn). Load to choose tools, wire MCP, or recommend installs when missing.
+description: Map of Skyrim + AI coding tools (Forge, houseCARL, codebase-memory, Headroom, Superpowers, Ponytail, CodeBurn). Load to choose tools, wire MCP, or recommend installs when missing.
 metadata:
-  version: 5.0.0
+  version: 5.1.0
 ---
 
 # AI tooling stack
@@ -21,8 +21,7 @@ This skill is the **cross-tool index**. Exact syntax lives in specialist skills.
 | Tool | Role | Skill(s) | If missing |
 |---|---|---|---|
 | **Skyrim Forge** | Typed automation broker: doctor, capabilities, Papyrus compile pipeline, FOMOD, release/nexus gates, tool-resolve | `skyrim-forge` | Bundle-managed; the AIO installs it. Continue with narrower tools if absent |
-| **houseCARL** | Live MO2 load-order MCP: true winners, conflict trees, reviewable patch ESPs, Nexus keyless lookup, VFS assets | `housecarl` + mutagen/spid/kid/skypatcher authoring helpers | Recommend houseCARL-Setup + .NET 9 pair + MCP register |
-| **Spooky's AutoMod Toolkit** | CLI for ESP/Papyrus/MCM/NIF/BSA/audio/SKSE project workflows with `--json` | `spookys-automod-toolkit` + `skyrim-plugin-authoring` | Recommend toolkit release + .NET 8 SDK |
+| **houseCARL** | Live MO2 load-order MCP: true winners, conflict trees, reviewable patch ESPs, NIF/BSA tools, Nexus keyless lookup, VFS assets | `housecarl` + mutagen/spid/kid/skypatcher authoring helpers | Recommend houseCARL-Setup + .NET 10 Runtime + MCP register |
 | **codebase-memory-mcp** | Knowledge-graph code navigation (call graphs, impact) | `codebase-memory` | Recommend DeusData install + MCP wire |
 | **Headroom** | Context compression / retrieve / session stats MCP | `headroom` | Optional; recommend pip install when context thrash is real |
 | **Superpowers** | Process discipline (debug, TDD, plans, verification) | `using-superpowers` + family | Bundled skill text works; plugin optional |
@@ -37,8 +36,8 @@ context when used. houseCARL is **MCP only -- no CLI**, and provides live
 MO2 load-order evidence that an offline plugin reader cannot replace.
 
 Historical schema estimates, not per-turn bills: Forge MCP 52 tools / 17,488
-bytes / ~4,372 tokens (bytes/4); houseCARL Full 45 tools / 167,072 bytes /
-~41,768; Lean 125,476 bytes / ~31,369; ReadOnly 70,418 bytes / ~17,604.
+bytes / ~4,372 tokens (bytes/4); houseCARL 2.1.1 Full 31 tools / 163,959 bytes /
+~40,989 (1.9.0 historical: 41,768); Lean 28 tools / 128,501 bytes / ~32,125; ReadOnly 17 tools / 75,075 bytes / ~18,768.
 Tool count alone is a poor size proxy.
 
 **Preferring a cheaper server you have already connected does not guarantee
@@ -48,8 +47,8 @@ servers. Codex supports `enabled_tools` / `disabled_tools`; Hermes supports
 `tools.include` / `tools.exclude`; Claude Code supports deferred Tool Search.
 Do not buy a new router for a capability already native to the provider.
 
-Use Forge CLI for typed engineering, Spooky CLI for its specialist workflows,
-and houseCARL for live load-order truth, conflict trees, VFS and keyless Nexus.
+Use Forge CLI for typed engineering and offline plugin/asset pipelines,
+and houseCARL for live load-order truth, conflict trees, VFS, NIF/BSA inspection and keyless Nexus.
 See `capability-profiles` for setup and measurement boundaries.
 
 ## Decision cheat-sheet
@@ -58,7 +57,7 @@ See `capability-profiles` for setup and measurement boundaries.
 |---|---|
 | "What wins this FormID in MY list?" | houseCARL - nothing else can answer it |
 | "Typed release / FOMOD / nexus policy / doctor" | Forge **CLI** (`forge release-build`, `forge doctor`) |
-| "Create ESL + quest + compile papyrus from CLI" | Spooky, or Forge CLI - both free |
+| "Create ESL + quest + compile papyrus from CLI" | Forge CLI - zero MCP schema overhead |
 | "Read a record / query a plugin off disk" | Forge CLI `record-query` / `plugin-info` before houseCARL |
 | "Build or validate a patch plugin from a plan" | Forge CLI `plugin-build` / `plugin-plan-validate` |
 | "Edit what the LIVE load order resolves to" | houseCARL - Forge has no view of MO2 |
@@ -88,7 +87,7 @@ See `capability-profiles` for setup and measurement boundaries.
 ## Session tool report (optional once per session)
 
 ```text
-TOOLS: forge=<found|missing> housecarl=<found|missing|mcp-down> spooky=<found|missing> codebase-memory=<found|missing|mcp-down> headroom=<found|missing> codeburn=<found|missing> mo2=<set|unset>
+TOOLS: forge=<found|missing> housecarl=<found|missing|mcp-down> codebase-memory=<found|missing|mcp-down> headroom=<found|missing> codeburn=<found|missing> mo2=<set|unset>
 ```
 
 ## houseCARL first-time / Vortex

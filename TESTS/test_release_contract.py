@@ -279,7 +279,7 @@ def test_bootstrap() -> None:
     assert "-BundleVersion" not in ps_code(ROOT / "INSTALL-AIO.ps1"), (
         "AIO still negotiates a bundle version with its own subtree"
     )
-    assert "Microsoft.DotNet.SDK.8" in ps, ".NET 8 SDK is required for default Spooky component"
+    assert "Microsoft.DotNet.Runtime.10" in ps, ".NET 10 runtime is required for houseCARL 2.x"
     assert "Oven-sh.Bun" in ps and "Find-UabsBunExecutable" in ps, "default Claude plugin install does not provision Bun"
     assert "Microsoft\\WinGet\\Packages\\Oven-sh.Bun_" in ps, "current-process Bun discovery misses Winget's package directory"
     assert "claude-mem','telemetry','disable" in ps, "claude-mem telemetry is left on by the AIO"
@@ -509,7 +509,6 @@ def test_hermes_native_profile_migration_contract() -> None:
         "codebase-memory-mcp",
         "HOUSECARL_MCP",
         "SKYRIM_MO2_INSTANCE",
-        "SPOOKY_AUTOMOD_ROOT",
         "WithForgeCompatibility",
         "return Get-UabsProfilePrefs 'default'",
         "unowned/user-specific",
@@ -2285,7 +2284,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "a9359e693d463862daa99a579556e9b8c1b09202355f9c838bbe4791f201b819", (
+    assert digest == "7a4dc118d90b44f0b6b4a4bba849519e4bfab26128c06dd8c8b23e84d87e11dc", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )

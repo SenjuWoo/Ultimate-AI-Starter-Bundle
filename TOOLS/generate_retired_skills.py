@@ -48,6 +48,7 @@ SUCCESSORS = {
     "skyrim-papyrus": "skyrim-papyrus-modding",
     "skyrim-skse": "skse-plugin-authoring",
     "skyrim-forge-bridge": "skyrim-forge",
+    "spookys-automod-toolkit": "skyrim-forge",
 }
 
 # Skills this pack never SHIPPED but now supersedes. The mega-pack was copied

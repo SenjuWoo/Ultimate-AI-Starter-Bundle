@@ -1,5 +1,22 @@
 # Bundle audit state
 
+## v8.22.0 implementation & SkyrimForge split (2026-10-25)
+
+- **Goal**: Update session start/resume preambles (`No silent fallbacks`, `Question stale patterns`), fix `toolbox` and `housecarl` MCP resolution in Codex, upgrade `houseCARL` to `2.1.1` with external Skyrim tool discovery + version comparison, move Skyrim skill pack ownership to `SenjuWoo/SkyrimForge` (`v6.0.1`), retire `spookys-automod-toolkit` (`spooky`), and release `v8.22.0`.
+- **Completed**:
+  - Updated `PROMPTS/START-AND-RESUME.md`, `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION — Compact.md`, `COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt`, and `BUNDLED-TOOLS/PREAMBLE-HISTORY.json`.
+  - Bumped `uabs-toolbox` to `1.0.3` with `HKCU\Environment` + `installed-state.json` fallback resolution and `env_passthrough` registration in `TOOLS/Add-Reasoning-MCPs.ps1`; `TESTS/test_toolbox.py` PASS.
+  - Upgraded `houseCARL` to `2.1.1` (`21` MCP tools, `.NET 10`), updated `Setup-HouseCarl.ps1`, `discover_tools.ps1`, `UABS-Common.ps1`, and `Build-MachineMap.ps1` for external Skyrim tool discovery across fixed drives + version comparison + Vortex shim filtering.
+  - Retired `spookys-automod-toolkit` (`spooky`) (`-68.6 MB` offline archive reduction; `173` canonical skills: `125` general + `48` Skyrim pack), rewrote `skyrim-nif` and `skyrim-audio` to use `houseCARL 2.1.1` and `Skyrim Forge 6.0.1`, and fanned out all 6 provider trees.
+  - Updated `SenjuWoo/SkyrimForge` (`v6.0.1`, commit `34f6947c9b766601d35e2400c4a63536e47ee08b`) with `integrations/skyrim-pack/` and `Install-Skyrim-Pack.ps1`; CI (`40223406469`), CodeQL (`40223406317`), Release (`40223408045`), and security flags (`clean`) PASS. Synced `Skyrim-Forge-6.0.1.zip` (`sha256: eed4e04dd138f6b86d20ba7641f33f5eda83c709ef39046f3e36d5dcbb3566fa`).
+  - Updated `rtk` to `1.1.0`, `blender-mcp` to `2.2.4`, and `rea` to `6.8.0` (`audit_catalog_versions.py --fail-on-stale`: `current=23, held=5, stale=0, error=0`).
+  - Full Windows pack gate (`TESTS/Test-Pack.ps1`) PASS across all 19 sections; release contracts (`TESTS/test_release_contract.py`) `151 passed, 0 failed`.
+  - Live `v8.22.0` installer (`INSTALL-AIO.ps1`) completed exit `0` (`logs/install-20261025-160710.log`), `installed-state-doctor.json` PASS, fifteen core MCP proofs answered across Claude, Codex, Grok, Hermes, and Antigravity.
+- **Next step**: Commit, push `v8.22.0` to `SenjuWoo/Ultimate-AI-Starter-Bundle`, wait for exact-SHA CI & CodeQL, check security flags, and publish release `v8.22.0` (`TOOLS/Build-Release.ps1`).
+- **Last good version**: `v8.21.3` (`2f6e2c773572daa67c9b36b39b5846a683fdb941`).
+- **Logs**: `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\logs`.
+- **Build/run commands**: `START-HERE.bat`, `TESTS/Test-Pack.ps1`, `TOOLS/Build-Release.ps1`.
+
 ## v8.21.3 release handoff (2026-10-24)
 
 - User authorized merge, push and public publication. PR #9 merged into main

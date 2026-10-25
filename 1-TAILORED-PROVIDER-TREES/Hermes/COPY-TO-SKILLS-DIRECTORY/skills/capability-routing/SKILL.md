@@ -87,7 +87,7 @@ benchmark beats this table if they disagree.
 | symbol-level navigation, references | `code-intel` / Serena | grepping every file when cross-refs matter |
 | Skyrim live load-order winner | houseCARL | parsing plugins.txt and guessing |
 | Skyrim typed build/release | Skyrim Forge / the owning toolkit | reimplementing its pipeline in Python |
-| ESP / Papyrus / NIF / BSA operations | Spooky's toolkit where it owns it | hand-rolled binary parsing |
+| ESP / Papyrus / NIF / BSA operations | Skyrim Forge / houseCARL | hand-rolled binary parsing |
 | does the rendered UI look right | `visual-verification` + a vision-capable path | reading the CSS |
 
 ### And where the primitive genuinely wins

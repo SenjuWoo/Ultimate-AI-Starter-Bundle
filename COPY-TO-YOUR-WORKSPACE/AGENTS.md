@@ -1,4 +1,4 @@
-﻿# Skyrim AI workspace instructions
+# Skyrim AI workspace instructions
 
 Scope: workspace
 
@@ -53,12 +53,11 @@ UNRESOLVED: none | exact remaining risks
 
 ## V5 tooling laws
 
-- Load `ai-tooling-stack` when choosing among Forge, houseCARL, Spooky, and MCP utilities.
+- Load `ai-tooling-stack` when choosing among Forge, houseCARL, and MCP utilities.
 - Load `tool-discovery` before assuming any absolute tool path. Never hardcode another machine's drive letters or username.
-- If a recommended tool is not installed or its MCP tools are not visible, tell the user how to install/register it and continue with a safe fallback. Do not invent tool results.
-- **houseCARL**: live MO2 load-order truth, conflict trees, reviewable patch ESPs, Nexus keyless lookup. FormIDs use `XXXXXX:Plugin.esp`. Requires MCP + .NET 9 pair + MO2 instance.
+- If a recommended tool is not installed or its MCP tools are not visible, repair or tell the user how to install/register it before spending tokens on manual workarounds. Do not invent tool results.
+- **houseCARL**: live MO2/Vortex load-order truth, conflict trees, reviewable patch ESPs, NIF/BSA inspection and edits, Nexus keyless lookup. FormIDs use `XXXXXX:Plugin.esp`. Requires MCP + .NET 10 runtime + MO2 instance or Vortex shim.
 - **Skyrim Forge**: typed automation broker, doctor/capabilities, release and nexus gates when configured.
-- **Spooky's AutoMod Toolkit**: CLI ESP/Papyrus/MCM/NIF/archive/audio/SKSE with `--json`; resolve `SPOOKY_AUTOMOD_ROOT`.
 - **codebase-memory-mcp**: structural code graph; index before query.
 - **Headroom**: optional context compression MCP.
 - **Superpowers / Ponytail**: process and minimal-diff overlays; bundled markdown works without plugins.

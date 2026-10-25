@@ -33,7 +33,7 @@ untouched.
 
 Never hardcode `C:\Users\<name>`, `S:\Apps`, or `Z:\Backup` as authority. Those may appear only as **example** paths on the pack author's machine.
 
-Treat pasted roots as hints. When the user says a path is "just suggestions" and pastes a Steam `Skyrim Special Edition` folder or a tools root (houseCARL, Skyrim Forge, Spooky's AutoMod Toolkit), those are step-5 conversation candidates, not install authority. Resolve via env, `PATH`, and the conversation path. Do not hardcode them as the game or tool root.
+Treat pasted roots as hints. When the user says a path is "just suggestions" and pastes a Steam `Skyrim Special Edition` folder or a tools root (houseCARL, Skyrim Forge), those are step-5 conversation candidates, not install authority. Resolve via env, `PATH`, and the conversation path. Do not hardcode them as the game or tool root.
 
 ## Resolution order (every tool)
 
@@ -97,7 +97,6 @@ Only recommend tools that help the active task. Do not nag about every optional 
 | `SKYRIM_FORGE_ROOT` | Skyrim Forge product root |
 | `HOUSECARL_ROOT` | houseCARL install folder (contains `housecarl\` or `housecarl-mcp.exe`) |
 | `HOUSECARL_MCP` | Full path to `housecarl-mcp.exe` |
-| `SPOOKY_AUTOMOD_ROOT` | Spooky's AutoMod Toolkit root (folder with `SpookysAutomod.sln` or `src\`) |
 | `CODEBASE_MEMORY_MCP` | Full path to `codebase-memory-mcp.exe` |
 | `HEADROOM_CMD` | `headroom` executable or `python -m headroom` entry |
 | `SKYRIM_MO2_INSTANCE` | MO2 instance folder containing `ModOrganizer.ini` |
@@ -127,25 +126,15 @@ It prints FOUND / MISSING for each known tool and never modifies the system.
 
 - Env: `HOUSECARL_MCP`, `HOUSECARL_ROOT`
 - Defaults to search (existence only):  
+  `%LOCALAPPDATA%\houseCARL\**\housecarl-mcp.exe`  
   `%LOCALAPPDATA%\Programs\houseCARL\**\housecarl-mcp.exe`  
   `%USERPROFILE%\.housecarl\**\housecarl-mcp.exe`  
   any path the user names
 - MCP must be registered in the **current** AI app (Claude plugin, Codex config, Grok `config.toml`, etc.)
-- Requirements: Windows x64, **.NET 9 Runtime + ASP.NET Core 9 Runtime**, MO2 instance
-- Install: run `houseCARL-Setup.exe` from the houseCARL distribution, fully restart the AI app, then set MO2 instance
+- Requirements: Windows x64, **.NET 10 Runtime**, MO2 instance (or Vortex shim)
+- Install: run `TOOLS\Setup-HouseCarl.ps1` or `houseCARL-Setup.exe` from the houseCARL distribution, fully restart the AI app, then set MO2 instance
 - Official product docs ship with the installer `START-HERE.txt` / `housecarl\README.md`
 - Fallback when MCP absent: read-only file inspection + Forge if present; do **not** pretend load-order winners
-
-### Spooky's AutoMod Toolkit
-
-- Env: `SPOOKY_AUTOMOD_ROOT`
-- Markers: `SpookysAutomod.sln`, `src\SpookysAutomod.Cli`, or built CLI under `src\`
-- Verify:  
-  `dotnet run --project src/SpookysAutomod.Cli -- --help`  
-  (from toolkit root; always prefer `--json` on real commands)
-- Requirements: Windows, **.NET 8 SDK** for build
-- Install: https://github.com/SpookyPirate/spookys-automod-toolkit/releases or clone + `dotnet build`
-- Fallback: houseCARL / Forge / Papyrus skill scripts
 
 ### codebase-memory-mcp
 

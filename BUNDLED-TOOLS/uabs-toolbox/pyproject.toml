@@ -3,7 +3,7 @@
 # with `uv tool install` like the other bundle-owned Python tools.
 [project]
 name = "uabs-toolbox"
-version = "1.0.2"
+version = "1.0.3"
 description = "One small MCP server that finds and starts the project tools a chat does not load, on demand."
 readme = "README.md"
 license = "MIT"

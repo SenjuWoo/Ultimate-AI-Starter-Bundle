@@ -19,7 +19,7 @@ Use this skill first, then load only the specialist rows that match the task.
 
 1. `skyrim-memory`
 2. This router
-3. `ai-tooling-stack` when choosing among Forge / houseCARL / Spooky / MCP utilities
+3. `ai-tooling-stack` when choosing among Forge / houseCARL / MCP utilities
 4. `tool-discovery` when any external binary or MCP might be required
 5. `skyrim-versioned-workspace` before the first write
 6. Only the specialist skills selected below
@@ -28,10 +28,10 @@ Optional process overlays (not Skyrim-specific): `using-superpowers`, `systemati
 
 | Task | Primary skill | Add when needed |
 |---|---|---|
-| New mod or large new feature | `skyrim-mod-development` | plugin, Papyrus, runtime, DLL, assets, animation, packaging; prefer houseCARL/Spooky/Forge per tooling stack |
+| New mod or large new feature | `skyrim-mod-development` | plugin, Papyrus, runtime, DLL, assets, animation, packaging; prefer houseCARL/Forge per tooling stack |
 | Repair or modernize an existing mod | `skyrim-mod-reworking` | same specialists as evidence demands |
 | Live load order, conflict tree, MO2 patch ESP | `housecarl` | `mutagen-reference`, `tool-output-awareness`, bulk/facegen helpers |
-| ESP/ESL/ESM records without live LO | `skyrim-plugin-authoring` | Spooky CLI `esp` module; `skyrim-esp-vmad-renaming` for string renames only; Forge when typed jobs fit |
+| ESP/ESL/ESM records without live LO | `skyrim-plugin-authoring` | `skyrim-esp-vmad-renaming` for string renames only; Forge when typed jobs fit |
 | Papyrus, quests, MCM, aliases, script events | `skyrim-papyrus-modding` | `papyrus-reference`; `papyrus-optimization` |
 | SPID exact syntax | `spid-authoring` | prefer bundled grammar reference; never invent tokens |
 | KID exact syntax | `kid-authoring` | type-label grammar only |
@@ -46,9 +46,9 @@ Optional process overlays (not Skyrim-specific): `using-superpowers`, `systemati
 | SKSE or CommonLib DLL | `skyrim-skse-commonlib` or `skse-plugin-authoring` | crash diagnostics |
 | Crash log or startup failure | `skyrim-crash-diagnostics` | SKSE, animation, assets, or reworking after diagnosis |
 | Read-only code/config review | `skyrim-code-review` | domain specialist; optional `ponytail-review` for bloat |
-| DDS, NIF, parallax, PBR | `skyrim-assets-pbr` | Spooky `skyrim-nif`; houseCARL mesh tools when MCP up |
-| BSA/BA2 archive work | Forge `bsarch` tools | Spooky CLI `archive` module; `skyrim-fomod-packaging` for installers |
-| Audio FUZ/XWM/WAV | Spooky `skyrim-audio` | `skyrim-voiced-dialogue` |
+| DDS, NIF, parallax, PBR | `skyrim-assets-pbr` | `skyrim-nif`; houseCARL mesh tools (`housecarl_nif_inspect`, `housecarl_nif_set`) when MCP up |
+| BSA/BA2 archive work | Forge `bsarch` tools | houseCARL BSA tools (`housecarl_bsa_list`, `housecarl_bsa_extract`, `housecarl_bsa_repack`); `skyrim-fomod-packaging` for installers |
+| Audio FUZ/XWM/WAV | `skyrim-audio` | `skyrim-voiced-dialogue` |
 | Player-facing menu, HUD, preview, or visual polish | `skyrim-mod-development` or `skyrim-mod-reworking` | `visual-verification`; exact UI-framework docs/tools |
 | OAR, BFCO, Nemesis, Pandora, behavior | `skyrim-animation-behaviors` | crash diagnostics or DLL work |
 | Follower from RaceMenu preset | `skyrim-racemenu-followers` | plugin, Papyrus, assets; facegen diagnostics |
@@ -74,7 +74,7 @@ Optional process overlays (not Skyrim-specific): `using-superpowers`, `systemati
 
 - Load `skyrim-versioned-workspace` before the first write.
 - Load `skyrim-modding-facts` whenever a framework token, record field, FormID, API, hook, path, or version is uncertain.
-- Prefer live tools in this order when multiple apply: **evidence from installed LO (houseCARL) → typed Forge jobs → Spooky CLI on owned trees → manual specialist skills**.
+- Prefer live tools in this order when multiple apply: **evidence from installed LO (houseCARL) → typed Forge jobs → manual specialist skills**.
 - Try `skyrim-forge` for supported inspection; the bundle installs Forge, so it is normally present.
 - Never load every Skyrim skill into one session.
 - If a tool is missing, first decide **which kind of missing**, because the two
@@ -121,7 +121,7 @@ never an install problem.
 ## Route report
 
 ```text
-ROUTE: intent=<task> | primary=<skill> | supporting=<skills> | plugin=<none|existing|new> | forge=<used|skipped:reason> | housecarl=<used|skipped:reason> | spooky=<used|skipped:reason>
+ROUTE: intent=<task> | primary=<skill> | supporting=<skills> | plugin=<none|existing|new> | forge=<used|skipped:reason> | housecarl=<used|skipped:reason>
 ```
 
 ## Cross-application intake gate

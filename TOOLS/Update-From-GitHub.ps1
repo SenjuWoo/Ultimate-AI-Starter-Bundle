@@ -1,10 +1,10 @@
-﻿<#
+<#
 .SYNOPSIS
   Update the stable bundle installation and re-run the AIO installer.
 #>
 [CmdletBinding()]
 param(
-  [string[]]$Components = @('housecarl','spooky','codebase-memory','headroom','superpowers','ponytail'),
+  [string[]]$Components = @('housecarl','codebase-memory','headroom','superpowers','ponytail'),
   [string[]]$Providers = @(),
   [switch]$ComponentsOnly,
   [switch]$InstallAfter,
@@ -90,7 +90,7 @@ foreach ($id in $Components) {
         Copy-VerifiedOfflineSnapshot -Source $out -Destination (Join-Path $offline $comp.offline_asset) -Manifest (Join-Path $root 'BUNDLED-TOOLS\OFFLINE-MANIFEST.json')
       }
     } else {
-      Write-UabsWarn "No matching asset for $id — open $($rel.html_url)"
+      Write-UabsWarn "No matching asset for $id - open $($rel.html_url)"
     }
     $results += [pscustomobject]@{ id=$id; tag=$rel.tag_name; file=$out; url=$rel.html_url }
   } catch {

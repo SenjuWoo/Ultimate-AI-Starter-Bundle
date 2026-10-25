@@ -20,54 +20,79 @@ The complete source for houseCARL is published at:
     https://github.com/Avick3110/houseCARL
 The corresponding source for the bundled Mutagen libraries is at:
     https://github.com/Mutagen-Modding/Mutagen
-    (release 0.53.1; repository commit bdbb6ff6faad3b4c3b0689e98e889ecd205068c8)
+  --- generated: Mutagen release ---
+    (release 0.54.4; repository commit 0188012c607ce8bb283d2704400d37737f089134)
+  --- end generated ---
 The other GPL components' sources are linked beside each entry below.
 
 WHAT SHIPS
 ----------
 The plugin bundles the third-party components below in server/ — compiled .NET
-assemblies from a framework-dependent .NET 9 publish (the .NET runtime itself is
+assemblies from a framework-dependent .NET 10 publish (the .NET runtime itself is
 NOT bundled; the user installs it). Components are grouped by license.
+
+The regions between the "--- generated ---" markers — the component tables below and
+the Mutagen release and commit above — are written by the build from that publish
+output (scripts/generate-notices.ps1), so the names and versions are what actually
+ships. Everything else here is hand-authored.
 
 
 ===============================================================================
 GPL-3.0-only   (copyleft — the same license as houseCARL; see the LICENSE file)
 ===============================================================================
 
-  Mutagen.Bethesda.Skyrim          0.53.1   github.com/Mutagen-Modding/Mutagen
-  Mutagen.Bethesda.Core            0.53.1   github.com/Mutagen-Modding/Mutagen
-  Mutagen.Bethesda.Kernel          0.53.1   github.com/Mutagen-Modding/Mutagen
-  Loqui                            3.2.0    github.com/Noggog/Loqui
-  Noggog.CSharpExt                 4.1.0    github.com/Noggog/CSharpExt
-  NexusMods.Paths                  0.10.0   github.com/Nexus-Mods/NexusMods.Paths
-  Reloaded.Memory                  9.4.1    github.com/Reloaded-Project/Reloaded.Memory
-  GameFinder.Common                4.4.0    github.com/erri120/GameFinder
-  GameFinder.RegistryUtils         4.4.0    github.com/erri120/GameFinder
-  GameFinder.StoreHandlers.GOG     4.4.0    github.com/erri120/GameFinder
-  GameFinder.StoreHandlers.Steam   4.4.0    github.com/erri120/GameFinder
-  GameFinder.StoreHandlers.Xbox    4.4.0    github.com/erri120/GameFinder
-  GameFinder.Wine                  4.4.0    github.com/erri120/GameFinder
-  NiflySharp                       1.0.0    github.com/ousnius/NiflySharp
+  --- generated: GPL-3.0-only components ---
+  GameFinder.Common                         4.9.0               github.com/erri120/GameFinder
+  GameFinder.RegistryUtils                  4.9.0               github.com/erri120/GameFinder
+  GameFinder.StoreHandlers.GOG              4.9.0               github.com/erri120/GameFinder
+  GameFinder.StoreHandlers.Steam            4.9.0               github.com/erri120/GameFinder
+  GameFinder.StoreHandlers.Xbox             4.9.0               github.com/erri120/GameFinder
+  GameFinder.Wine                           4.9.0               github.com/erri120/GameFinder
+  Loqui                                     3.7.0               github.com/Noggog/Loqui
+  Mutagen.Bethesda.Core                     0.54.4              github.com/Mutagen-Modding/Mutagen
+  Mutagen.Bethesda.Kernel                   0.54.4              github.com/Mutagen-Modding/Mutagen
+  Mutagen.Bethesda.Skyrim                   0.54.4              github.com/Mutagen-Modding/Mutagen
+  NexusMods.Paths                           0.19.1              github.com/Nexus-Mods/NexusMods.Paths
+  NiflySharp (fork of ousnius/NiflySharp)   1.1.0-housecarl.4   github.com/Avick3110/NiflySharp
+  Noggog.CSharpExt                          4.3.0               github.com/Noggog/CSharpExt
+  Reloaded.Memory                           9.4.2               github.com/Reloaded-Project/Reloaded.Memory
+  --- end generated ---
 
   NiflySharp (NuGet package "Nifly", by ousnius / the nifly project) is the
   asset-internal mesh reader the NIF layer is built on — pure C#, source-generated
-  from nifxml. It is GPL-3.0-only, the same license as houseCARL.
+  from nifxml. It is GPL-3.0-only, the same license as houseCARL. houseCARL ships
+  its own build of a fork: the source of the shipped NiflySharp.dll is commit
+  55da70711949f77b879dcf5b1d2f9c18a2405792 of github.com/Avick3110/NiflySharp,
+  which is upstream github.com/ousnius/NiflySharp at commit
+  7b55e88a749fd6b6b5ca23a1c18f4b1aed207634 (the commit Nifly 1.1.0 was built
+  from) plus a change that checks a malformed mesh's counts and sizes against
+  the file before reading them. The package's own metadata records the same
+  commit.
 
   These components are distributed under the GPL-3.0-only terms reproduced in the
   LICENSE file. One copy of the GPLv3 text covers all of them.
 
 
 ===============================================================================
-Apache License 2.0   (the Model Context Protocol C# SDK)
+Apache License 2.0
 ===============================================================================
 
-  ModelContextProtocol             1.3.0    github.com/modelcontextprotocol/csharp-sdk
-  ModelContextProtocol.Core        1.3.0    github.com/modelcontextprotocol/csharp-sdk
-  ModelContextProtocol.AspNetCore  1.3.0    github.com/modelcontextprotocol/csharp-sdk
+  --- generated: Apache-2.0 components ---
+  miniball                    1.0.4
+  ModelContextProtocol        2.2.0
+  ModelContextProtocol.Core   2.2.0
+  --- end generated ---
 
-  Copyright (c) the Model Context Protocol authors. Licensed under the Apache
-  License, Version 2.0 (full text at the end of this file). The upstream
-  distribution carries no separate NOTICE file.
+  ModelContextProtocol*: Copyright (c) the Model Context Protocol authors, from
+  github.com/modelcontextprotocol/csharp-sdk.
+  miniball (NuGet package "miniball-devel0"): Copyright (c) Lorenzo Delana, per
+  the package metadata, which also records it as a fork of Kaspar Fischer's
+  github.com/hbf/miniball. The Apache-2.0 grant above is the fork's own declaration;
+  neither repository carries a LICENSE or NOTICE file, so the package metadata is the
+  only licence statement available for it. It reaches the package as a dependency of
+  NiflySharp and ships as miniball.dll.
+  All of the above are licensed under the Apache License, Version 2.0, whose full
+  text is at the end of this file.
 
 
 ===============================================================================
@@ -80,46 +105,64 @@ MIT License
   © Microsoft Corporation and/or the .NET Foundation; the rest are © their
   respective authors.
 
-  DynamicData                                  9.4.1
-  FluentResults                                3.15.2
-  K4os.Compression.LZ4                         1.3.8
-  K4os.Compression.LZ4.Streams                 1.3.8
-  K4os.Hash.xxHash                             1.0.8
-  ini-parser-netstandard                       2.5.3
-  OneOf                                        3.0.271
-  SharpZipLib                                  1.4.2
-  StrongInject                                 1.4.4
-  System.IO.Abstractions                       22.0.16
-  TestableIO.System.IO.Abstractions            22.0.16
-  TestableIO.System.IO.Abstractions.Wrappers   22.0.16
-  Testably.Abstractions.FileSystem.Interface   9.0.0
-  ValveKeyValue                                0.10.0.360
-  System.Linq.Async                            6.0.3
-  System.Reactive                              6.0.1
-  Microsoft.Extensions.AI.Abstractions         10.5.2
-  Microsoft.Extensions.Caching.Abstractions    10.0.7
-  Microsoft.Extensions.Configuration.Abstractions        10.0.7
-  Microsoft.Extensions.DependencyInjection.Abstractions  10.0.7
-  Microsoft.Extensions.Diagnostics.Abstractions          10.0.7
-  Microsoft.Extensions.FileProviders.Abstractions        10.0.7
-  Microsoft.Extensions.Hosting.Abstractions    10.0.7
-  Microsoft.Extensions.Logging.Abstractions    10.0.7
-  Microsoft.Extensions.Options                 10.0.7
-  Microsoft.Extensions.Primitives              10.0.7
-  System.Diagnostics.DiagnosticSource          10.0.7
-  System.IO.Pipelines                          10.0.6
-  System.Net.ServerSentEvents                  10.0.7
-  System.Text.Encodings.Web                    10.0.6
-  System.Text.Json                             10.0.6
-  System.Threading.Tasks.Extensions            4.5.4
-  Microsoft.Win32.Registry                     5.0.0
-  Microsoft.NETCore.Platforms                  5.0.0
-  System.Collections.Immutable                 5.0.0
-  System.Security.AccessControl                5.0.0
-  System.Security.Principal.Windows            5.0.0
+  TransparentValueObjects.Abstractions 1.1.0 declares no license in its NuGet
+  metadata (no <license>, no licenseUrl, no projectUrl). It is MIT: the package
+  owner on nuget.org is erri120, the upstream repository
+  github.com/erri120/TransparentValueObjects is MIT-licensed, and the repository
+  commit recorded in the package's own nuspec —
+  ff32127019b0f53480f5e9c1867924b14138999c — resolves in that repository. Recorded
+  here so the determination does not have to be re-derived. It reaches the package
+  as a dependency of GameFinder and NexusMods.Paths.
 
-  (Some of the trailing packages are provided by the .NET shared framework and
-  may not emit a private DLL on every publish; they are MIT either way.)
+  --- generated: MIT components ---
+  DynamicData                                               9.4.31
+  FluentResults                                             3.15.2
+  ini-parser-netstandard                                    2.5.3
+  K4os.Compression.LZ4                                      1.3.8
+  K4os.Compression.LZ4.Streams                              1.3.8
+  K4os.Hash.xxHash                                          1.0.8
+  Microsoft.Extensions.AI.Abstractions                      10.8.3
+  Microsoft.Extensions.Caching.Abstractions                 10.0.10
+  Microsoft.Extensions.Configuration                        10.0.13
+  Microsoft.Extensions.Configuration.Abstractions           10.0.13
+  Microsoft.Extensions.Configuration.Binder                 10.0.13
+  Microsoft.Extensions.Configuration.CommandLine            10.0.13
+  Microsoft.Extensions.Configuration.EnvironmentVariables   10.0.13
+  Microsoft.Extensions.Configuration.FileExtensions         10.0.13
+  Microsoft.Extensions.Configuration.Json                   10.0.13
+  Microsoft.Extensions.Configuration.UserSecrets            10.0.13
+  Microsoft.Extensions.DependencyInjection                  10.0.13
+  Microsoft.Extensions.DependencyInjection.Abstractions     10.0.13
+  Microsoft.Extensions.Diagnostics                          10.0.13
+  Microsoft.Extensions.Diagnostics.Abstractions             10.0.13
+  Microsoft.Extensions.FileProviders.Abstractions           10.0.13
+  Microsoft.Extensions.FileProviders.Physical               10.0.13
+  Microsoft.Extensions.FileSystemGlobbing                   10.0.13
+  Microsoft.Extensions.Hosting                              10.0.13
+  Microsoft.Extensions.Hosting.Abstractions                 10.0.13
+  Microsoft.Extensions.Http                                 10.0.13
+  Microsoft.Extensions.Logging                              10.0.13
+  Microsoft.Extensions.Logging.Abstractions                 10.0.13
+  Microsoft.Extensions.Logging.Configuration                10.0.13
+  Microsoft.Extensions.Logging.Console                      10.0.13
+  Microsoft.Extensions.Logging.Debug                        10.0.13
+  Microsoft.Extensions.Logging.EventLog                     10.0.13
+  Microsoft.Extensions.Logging.EventSource                  10.0.13
+  Microsoft.Extensions.Options                              10.0.13
+  Microsoft.Extensions.Options.ConfigurationExtensions      10.0.13
+  Microsoft.Extensions.Primitives                           10.0.13
+  OneOf                                                     3.0.271
+  SharpZipLib                                               1.4.2
+  StrongInject                                              1.4.4
+  System.Diagnostics.EventLog                               10.0.13
+  System.IO.Abstractions                                    22.1.1
+  System.Reactive                                           6.1.0
+  TestableIO.System.IO.Abstractions                         22.1.1
+  TestableIO.System.IO.Abstractions.Wrappers                22.1.1
+  Testably.Abstractions.FileSystem.Interface                10.1.0
+  TransparentValueObjects.Abstractions                      1.1.0
+  ValveKeyValue                                             0.13.1.398
+  --- end generated ---
 
 
 ===============================================================================
@@ -149,13 +192,11 @@ Bundled skill reference content
       vendored. With thanks to Zzyxzz (SkyPatcher) and to powerofthree (SPID and
       KID, MIT), whose public documentation the grammar facts were drawn from.
 
-  papyrus-optimization
-      A Papyrus performance-review skill (original reference prose plus the
-      review workflow, describing Papyrus cost patterns and their fixes),
-      contributed to houseCARL by DrHeisen. It is an original community
-      contribution, conveyed as part of this GPL-3.0-only combined work under
-      the same terms. With thanks to DrHeisen - houseCARL's first
-      community-contributed skill.
+  open-animation-replacer
+      An Open Animation Replacer config-authoring skill (original reference
+      prose plus the authoring workflow), contributed to houseCARL by DrHeisen.
+      It is an original community contribution, conveyed as part of this
+      GPL-3.0-only combined work under the same terms. With thanks to DrHeisen.
 
 
 ===============================================================================
@@ -182,7 +223,7 @@ SOFTWARE.
 
 
 ===============================================================================
-Apache License, Version 2.0   (applies to the ModelContextProtocol components)
+Apache License, Version 2.0   (applies to every Apache-2.0 component listed above)
 ===============================================================================
 
                                  Apache License

@@ -27,15 +27,21 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'UABS-Common.ps1')
 $python = Get-UabsPythonExecutable
 if (-not $python) { throw 'No working Python interpreter found.' }
+$useShell = ($PSCmdlet.ParameterSetName -eq 'CommandLine') -and -not (Test-Path -LiteralPath $Command -PathType Leaf)
 if ($PSCmdlet.ParameterSetName -eq 'CommandLine') {
-  # Legacy -Command explicitly accepts a Windows shell command. Prefer argv
-  # for executable paths with spaces; never interpolate untrusted input here.
-  $Executable = $env:ComSpec
-  $Arguments = @('/d', '/s', '/c', $Command)
+  if ($useShell) {
+    # Legacy -Command explicitly accepts a Windows shell command. Prefer argv
+    # for executable paths with spaces; never interpolate untrusted input here.
+    $Executable = $env:ComSpec
+    $Arguments = @('/d', '/s', '/c', $Command)
+  } else {
+    $Executable = (Resolve-Path -LiteralPath $Command).Path
+    $Arguments = @()
+  }
 }
 if (-not $Name) { $Name = if ($Command) { $Command } else { $Executable } }
 $spec = @{ command = $Executable; args = @($Arguments); timeout = $TimeoutSeconds }
-if ($PSCmdlet.ParameterSetName -eq 'CommandLine') { $spec.shell_command = $Command }
+if ($useShell) { $spec.shell_command = $Command }
 $spec = $spec | ConvertTo-Json -Depth 4 -Compress
 $encoded = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($spec))
 $raw = @(& $python (Join-Path $PSScriptRoot 'mcp_handshake.py') --spec $encoded)

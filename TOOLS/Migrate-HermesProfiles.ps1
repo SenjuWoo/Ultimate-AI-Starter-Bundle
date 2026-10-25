@@ -29,11 +29,11 @@
 param(
   [switch]$Apply,
   [switch]$WithForgeCompatibility,
-  # How much of houseCARL to register in the skyrim profile. Measured, 1.9.0:
+  # How much of houseCARL to register in the skyrim profile. Measured, 2.1.1:
   # Historical schema estimates (bytes/4), not measured prompt usage or billing:
-  #   Full      45 tools  167,072 bytes  ~41,768 schema tokens
-  #   Lean      42 tools  125,476 bytes  ~31,369 schema tokens   -25%  (default)
-  #   ReadOnly  27 tools   70,418 bytes  ~17,604 schema tokens   -58%
+  #   Full      31 tools  163,959 bytes  ~40,989 schema tokens
+  #   Lean      28 tools  128,501 bytes  ~32,125 schema tokens   -22%  (default)
+  #   ReadOnly  17 tools   75,075 bytes  ~18,768 schema tokens   -54%
   # Hermes enforces mcp_servers.<name>.tools.include/exclude at REGISTRATION,
   # so a filtered tool's schema never reaches the model. The sets live in
   # BUNDLED-TOOLS/CATALOG.json, not here.
@@ -898,17 +898,10 @@ try {
     (Test-Path -LiteralPath $mo2 -PathType Container)
   $skyrimForgeRoot = [Environment]::GetEnvironmentVariable('SKYRIM_FORGE_ROOT', 'Process')
   if (-not $skyrimForgeRoot) { $skyrimForgeRoot = [Environment]::GetEnvironmentVariable('SKYRIM_FORGE_ROOT', 'User') }
-  $spookyRoot = [Environment]::GetEnvironmentVariable('SPOOKY_AUTOMOD_ROOT', 'Process')
-  if (-not $spookyRoot) { $spookyRoot = [Environment]::GetEnvironmentVariable('SPOOKY_AUTOMOD_ROOT', 'User') }
   if ($skyrimForgeRoot -and (Test-Path -LiteralPath (Join-Path $skyrimForgeRoot 'skyrim_forge\cli.py') -PathType Leaf)) {
     Add-UabsLedger 'kept' 'Skyrim Forge installed skill/CLI capability (not a default MCP member)'
   } else {
     Add-UabsLedger 'untouched' 'Skyrim Forge capability (not installed; no MCP entry created)'
-  }
-  if ($spookyRoot -and (Test-Path -LiteralPath (Join-Path $spookyRoot 'SpookysAutomod.sln') -PathType Leaf)) {
-    Add-UabsLedger 'kept' "Spooky's AutoMod installed CLI capability (not an MCP member)"
-  } else {
-    Add-UabsLedger 'untouched' "Spooky's AutoMod capability (not installed; no MCP entry created)"
   }
 
   # RimWorldForge is external, not downloaded by this bundle. Adopt only an

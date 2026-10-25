@@ -109,15 +109,15 @@ Its bytes/4 figure is a schema-token estimate, not actual tokenization, prompt
 usage, cached tokens or billing. Tool results and discovery metadata have their
 own costs. Compare the same serialization and use provider usage for real cost.
 
-Historical houseCARL 1.9.0 measurements (sum of per-tool bytes, not array framing):
+Measured houseCARL 2.1.1 schema sizes (sum of per-tool bytes, not array framing; historical 1.9.0 Full was 45 tools / 167,072 bytes / 41,768 est):
 
 | set | tools | schema bytes | bytes/4 estimate |
 |---|---:|---:|---:|
-| Full | 45 | 167,072 | 41,768 |
-| Lean | 42 | 125,476 | 31,369 |
-| ReadOnly | 27 | 70,418 | 17,604 |
+| Full | 31 | 163,959 | 40,989 |
+| Lean | 28 | 128,501 | 32,125 |
+| ReadOnly | 17 | 75,075 | 18,768 |
 
-Three tools account for 41,596 bytes: tool count is not a reliable size proxy.
+Three tools (`housecarl_create`, `housecarl_nif_set`, `housecarl_place`) account for 35,458 bytes: tool count is not a reliable size proxy.
 Never average a full server's bytes to price a subset. Measure the selected set
 or report it unmeasured. Legacy JSON fields named `tokens_per_turn` retain
 schema estimates for compatibility; they are not billing evidence.
@@ -167,9 +167,9 @@ headroom and the toolbox; GitHub only where `gh` is not signed in), `code`
 adds codebase-memory, `roblox` adds the official Roblox Studio MCP, `skyrim`
 adds houseCARL, and `creative` adds Blender MCP plus MCP for Unity. Use `hermes -p code` in a code repository; its ~5,994 schema-token
 estimate is not a bill, and its servers are absent from ordinary Hermes sessions.
-The Skyrim toolset still includes all three specialists: houseCARL through the
-profile MCP, Skyrim Forge through its skill/CLI, and Spooky's AutoMod through
-the routed specialist skills/CLI. Forge's MCP is opt-in compatibility, not a
+The Skyrim toolset includes both specialists: houseCARL through the
+profile MCP, and Skyrim Forge through its skill/CLI and routed specialist
+skills. Forge's MCP is opt-in compatibility, not a
 default profile member.
 
 Hermes rewrites its config when it exits, so any profile-config write is
@@ -242,7 +242,7 @@ one that answers this question, not the set that looks related:
 | symbol-level refactor in a real codebase | `code-intel` |
 | "which API does this library have now" | `research-verification` — installed `--help`, upstream, Context7. No Blender, no DevTools. |
 | Blender / Godot / Unity work | that engine's profile, plus a render or capture if you can see it |
-| Skyrim mod project | Hermes `skyrim` for houseCARL evidence; use Skyrim Forge and Spooky through their routed skills/CLIs unless Forge MCP compatibility is explicitly needed. No `skyrim-*` skills installed = Skyrim pack off: `START-HERE.bat -Packs skyrim` |
+| Skyrim mod project | Hermes `skyrim` for houseCARL evidence; use Skyrim Forge through its routed skills/CLI unless Forge MCP compatibility is explicitly needed. No `skyrim-*` skills installed = Skyrim pack off: `START-HERE.bat -Packs skyrim` |
 | Roblox project | Hermes `roblox` for the official Studio bridge; use RobloxForge through its skill/CLI |
 | Saints Row project | `game-saints-row` when markers match; otherwise its installed CLI/skill |
 | Skyrim crash | the crash log and the Skyrim diagnostic skills. Only reach outward if a version fact is genuinely unresolved. |

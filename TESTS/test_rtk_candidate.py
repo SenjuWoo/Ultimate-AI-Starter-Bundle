@@ -32,9 +32,15 @@ def verify(rtk, root):
             raw = git("status", flag)
             filtered = run([str(rtk), "git", "status", flag], p)
             assert raw.splitlines() == filtered.splitlines(), (flag, raw, filtered)
+    tags = subprocess.run(["git", "tag", "-l"], cwd=root, capture_output=True, text=True, check=True).stdout.splitlines()
+    if "v8.6.1" in tags and "v8.6.5" in tags:
+        corpus_args = (("diff", "v8.6.1..v8.6.5"), ("log", "v8.6.1..v8.6.5"),
+                       ("diff", "v8.6.4..v8.6.5"), ("log", "--stat", "-20", "v8.6.5"))
+    else:
+        corpus_args = (("diff", "v8.21.0..v8.21.3"), ("log", "v8.21.0..v8.21.3"),
+                       ("diff", "v8.21.2..v8.21.3"), ("log", "--stat", "-20", "v8.21.3"))
     rows = []
-    for args in (("diff", "v8.6.1..v8.6.5"), ("log", "v8.6.1..v8.6.5"),
-                 ("diff", "v8.6.4..v8.6.5"), ("log", "--stat", "-20", "v8.6.5")):
+    for args in corpus_args:
         raw = run(["git", *args], root)
         filtered = run([str(rtk), "git", *args], root)
         rows.append({"args": list(args), "raw_bytes": len(raw), "rtk_bytes": len(filtered)})

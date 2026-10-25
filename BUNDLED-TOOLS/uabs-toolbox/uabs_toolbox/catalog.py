@@ -50,13 +50,56 @@ def state_dir() -> Path:
     return Path(base) / "Ultimate-AI-Starter-Bundle"
 
 
+def get_env(name: str) -> str | None:
+    """Read an environment variable from the process, or on Windows (outside
+    isolated test sandboxes) fall back to HKCU\\Environment and houseCARL's
+    recorded setup state so providers that strip child env vars still resolve
+    installed tool roots without a host restart."""
+    val = os.environ.get(name)
+    if val:
+        return val
+    if os.name != "nt" or os.environ.get("UABS_TOOLBOX_STATE_DIR"):
+        return None
+    try:
+        import winreg
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment") as key:
+            raw, _ = winreg.QueryValueEx(key, name)
+            if raw:
+                return os.path.expandvars(str(raw))
+    except OSError:
+        pass
+    if name in ("HOUSECARL_MCP", "SKYRIM_MO2_INSTANCE", "HouseCarl__Mo2InstanceDir"):
+        local = os.environ.get("LOCALAPPDATA") or str(Path.home() / "AppData" / "Local")
+        state_file = Path(local) / "houseCARL-data" / "uabs-setup-state.json"
+        if state_file.is_file():
+            try:
+                st = json.loads(state_file.read_text(encoding="utf-8-sig"))
+                if name == "HOUSECARL_MCP" and st.get("housecarl_mcp"):
+                    return str(st["housecarl_mcp"])
+                if name in ("SKYRIM_MO2_INSTANCE", "HouseCarl__Mo2InstanceDir"):
+                    mo2_val = st.get("mo2_instance_or_shim") or st.get("mo2_instance")
+                    if mo2_val:
+                        return str(mo2_val)
+            except Exception:
+                pass
+        if name == "HOUSECARL_MCP":
+            cand = Path(local) / "houseCARL" / "server" / "housecarl-mcp.exe"
+            if cand.is_file():
+                return str(cand)
+        else:
+            shim = Path(local) / "houseCARL-Shim"
+            if (shim / "ModOrganizer.ini").is_file():
+                return str(shim)
+    return None
+
+
 def expand(text: object, project: str | None) -> str | None:
     """%VAR% like [Environment]::ExpandEnvironmentVariables, then {project}.
 
     Returns None when the text needs {project} and no project was given.
     Unset variables stay literal, which a requirement check then reports.
     """
-    out = _VAR.sub(lambda m: os.environ.get(m.group(1), m.group(0)), str(text))
+    out = _VAR.sub(lambda m: get_env(m.group(1)) or m.group(0), str(text))
     if "{project}" in out:
         if not project:
             return None
@@ -78,7 +121,7 @@ def resolve_python() -> list[str] | None:
     if _PYTHON is not None:
         return _PYTHON or None
     flags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
-    selected = os.environ.get("UABS_PYTHON")
+    selected = get_env("UABS_PYTHON")
     candidates = ([selected],) if selected else (["python"], ["python3"], ["py", "-3"])
     for cand in candidates:
         exe = shutil.which(cand[0])
@@ -98,7 +141,7 @@ def resolve_python() -> list[str] | None:
 
 def shared_uv_args(command: str, args: list[str]) -> list[str]:
     """Replace runner Python options while preserving options owned by the child CLI."""
-    selected = os.environ.get("UABS_PYTHON")
+    selected = get_env("UABS_PYTHON")
     name = command.replace("\\", "/").rsplit("/", 1)[-1].lower().removesuffix(".exe")
     start = 0
     if name == "uv":
@@ -186,7 +229,7 @@ class Toolset:
             hits = [p for p in (expand(x, project) for x in req["any_path"]) if p and glob.glob(p)]
             if not hits:
                 return "its host application is not installed"
-        if req.get("env") and not os.environ.get(str(req["env"])):
+        if req.get("env") and not get_env(str(req["env"])):
             return f"{req['env']} is not set"
         if req.get("project_rel"):
             if not project:
@@ -215,13 +258,30 @@ class Toolset:
         elif s.get("global_args"):
             argv += list(s["global_args"])
         extra_env = s.get("extra_args_env")
-        if extra_env and os.environ.get(extra_env):
-            argv += [str(t).replace("{value}", os.environ[extra_env]) for t in s.get("extra_args_template") or []]
+        extra_val = get_env(str(extra_env)) if extra_env else None
+        if extra_val:
+            argv += [str(t).replace("{value}", extra_val) for t in s.get("extra_args_template") or []]
         args = [expand(a, project) for a in argv]
         if any(a is None for a in args):
             raise ToolboxError(f"{self.id}: needs a project folder (pass project)")
         args = shared_uv_args(command, args)
         env = dict(os.environ)
+        names = list(s.get("env_passthrough") or [])
+        if s.get("key"):
+            names.append(s["key"])
+        if self.id == "housecarl":
+            for hc_var in ("HOUSECARL_MCP", "HOUSECARL_ROOT", "SKYRIM_MO2_INSTANCE", "HouseCarl__Mo2InstanceDir"):
+                if hc_var not in names:
+                    names.append(hc_var)
+        for name in names:
+            val = get_env(str(name))
+            if val:
+                env[str(name)] = val
+        if self.id == "housecarl":
+            mo2 = env.get("HouseCarl__Mo2InstanceDir") or env.get("SKYRIM_MO2_INSTANCE")
+            if mo2:
+                env["SKYRIM_MO2_INSTANCE"] = mo2
+                env["HouseCarl__Mo2InstanceDir"] = mo2
         env.update({str(k): str(v) for k, v in (s.get("env_static") or {}).items()})
         env.update({str(k): str(expand(v, project)) for k, v in (s.get("env") or {}).items()})
         cwd = project or s.get("cwd") or None

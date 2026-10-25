@@ -233,6 +233,28 @@ def main() -> int:
                 raise AssertionError("missing shared Python allowed launch")
             except catalog.ToolboxError:
                 pass
+            saved_mo2 = os.environ.get("SKYRIM_MO2_INSTANCE")
+            saved_hc_mo2 = os.environ.get("HouseCarl__Mo2InstanceDir")
+            try:
+                os.environ["SKYRIM_MO2_INSTANCE"] = str(project)
+                os.environ.pop("HouseCarl__Mo2InstanceDir", None)
+                hc_ts = catalog.Toolset(
+                    "housecarl", "houseCARL", "",
+                    {"command": sys.executable, "args": [], "env_passthrough": ["SKYRIM_MO2_INSTANCE", "HouseCarl__Mo2InstanceDir"]},
+                    "fixture",
+                )
+                hc_spec = hc_ts.launch(None)
+                check(hc_spec["env"].get("HouseCarl__Mo2InstanceDir") == str(project),
+                      "housecarl launch did not propagate SKYRIM_MO2_INSTANCE to HouseCarl__Mo2InstanceDir")
+            finally:
+                if saved_mo2 is None:
+                    os.environ.pop("SKYRIM_MO2_INSTANCE", None)
+                else:
+                    os.environ["SKYRIM_MO2_INSTANCE"] = saved_mo2
+                if saved_hc_mo2 is None:
+                    os.environ.pop("HouseCarl__Mo2InstanceDir", None)
+                else:
+                    os.environ["HouseCarl__Mo2InstanceDir"] = saved_hc_mo2
         finally:
             if saved_selection is None:
                 os.environ.pop("UABS_PYTHON", None)

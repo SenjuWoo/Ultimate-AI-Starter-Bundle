@@ -1,11 +1,11 @@
-<!-- Ultimate AI Starter Bundle v8.21.3 -->
+<!-- Ultimate AI Starter Bundle v8.22.0 -->
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.21.3
+# Ultimate AI Starter Bundle v8.22.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -41,7 +41,7 @@ pack that installs only where Skyrim is, a small MCP core and project-specific
 tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest),
 [the changelog](CHANGELOG.md) and [evaluated component pins](BUNDLED-TOOLS/CATALOG.json).
 
-The [v8.21.3 release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.21.3)
+The [v8.22.0 release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.0)
 includes the fresh-Windows bootstrap and Hermes profile repairs. Setup preserves
 existing model, permission and personal MoA settings; inherited retired MoA
 defaults are disabled only when the entire block matches the vendor baseline.
@@ -89,7 +89,7 @@ One distinction explains almost everything about how this pack behaves:
 | **INSTALLED** | A CLI/server payload exists on disk | A disconnected server adds no MCP schema; installed skills/plugins have separate discovery and hook behavior. |
 | **ENABLED** | Registered in a provider's config | Available in that scope after trust/connection checks; schema loading and billing depend on the provider. |
 
-The 125 general **skills** (plus 49 with the Skyrim pack) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
+The 125 general **skills** (plus 48 with the Skyrim pack) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
 
 ### What's ON after install
 
@@ -97,7 +97,7 @@ The always-on core is `context7` (library docs; keyless resolves library IDs onl
 
 **You do not switch anything on.** When a task needs a project tool (Skyrim Forge, houseCARL, RimWorldForge, Blender, Unity, Godot, a browser, the GitHub API ...), your AI asks the toolbox, which starts that server in the same chat: no restart, no command, no config edit. The tool's own CLI keeps working too. For a project you use daily, the agent can also wire it natively with `Set-McpProfile.ps1 -Auto -Path <project>`; that copy loads in the next chat opened there.
 
-When the matching local tool is installed, Hermes also gets native named profiles without loading them into default: `code` adds codebase-memory, `roblox` adds the official Roblox Studio MCP, and `skyrim` connects houseCARL while Skyrim Forge and Spooky's AutoMod remain available through their routed skills/CLIs. Forge MCP compatibility is explicit.
+When the matching local tool is installed, Hermes also gets native named profiles without loading them into default: `code` adds codebase-memory, `roblox` adds the official Roblox Studio MCP, and `skyrim` connects houseCARL while Skyrim Forge remains available through its routed skill/CLI. Forge MCP compatibility is explicit.
 
 ### Profiles do not expire automatically
 
@@ -259,8 +259,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
 
 ### Packs: content only some users need
 
-`BUNDLED-TOOLS\PACKS.json` lists them; today there is one, `skyrim` (49 skills,
-an instruction block, Skyrim Forge, houseCARL, Spooky). It turns on when the
+`BUNDLED-TOOLS\PACKS.json` lists them; today there is one, `skyrim` (48 skills,
+an instruction block, Skyrim Forge, houseCARL). It turns on when the
 installer finds Skyrim (Steam or GOG install, `My Games`, Vortex, tool
 variables) and stays off otherwise, so general users do not pay for its skill
 index and instructions on every request. `-Packs skyrim` / `-ExcludePacks skyrim`
@@ -567,7 +567,7 @@ OpenRouter fallback, vision and compression settings are not local-only.
 Installed by default with a **bundle-owned narrow hook**; RTK's broad upstream
 hook remains disabled. [RTK](https://github.com/rtk-ai/rtk) (Apache-2.0, single
 Rust binary) filters noisy dev commands. Measured here
-**at rtk 1.0.1** (Apache-2.0 OSS edition) against **pinned tag ranges**, so the corpus cannot drift:
+**at rtk 1.1.0** (Apache-2.0 OSS edition) against **pinned tag ranges**, so the corpus cannot drift:
 
 | Command | Raw | Through rtk | Saved |
 |---|---|---|---|
@@ -711,11 +711,10 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-- **Provider skills** — 125 general skills per AI (Claude, Codex, Grok, Kimi, Hermes, Antigravity), plus 49 with the Skyrim pack, all generated from one canonical tree.
+- **Provider skills** — 125 general skills per AI (Claude, Codex, Grok, Kimi, Hermes, Antigravity), plus 48 with the Skyrim pack, all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7 and Headroom are the always-on core (the official GitHub server too, where `gh` is not signed in); servers a tool's own installer registers machine-wide are parked per project. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup (Skyrim pack)
-- **Spooky's AutoMod Toolkit** (Skyrim pack)
 - **codebase-memory-mcp** — installed but enabled only by Claude/Grok/trusted Codex project-scoped `code-intel` or Hermes' native `code` profile; `.cbmignore` + `TOOLS/Setup-CodebaseMemory-Index.ps1` keep the graph on source, not asset trees
 - **Headroom** (context compression, registered as an MCP server — see [Headroom + Grok](#headroom--grok))
 - **Superpowers** + **Ponytail** plugins/skills
@@ -731,7 +730,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 **Skyrim Forge 6.0.1** is released from [SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge) and installed by this bundle only with the Skyrim pack. CATALOG.json pins the release tag, archive and SHA-256; the installer takes the Full-Offline copy or downloads it, refuses an archive whose digest differs before extracting, installs into ONE versionless root (migrating a version-stamped install, preserving `Workspaces` and the virtualenv), refreshes the provider descriptors, sets `SKYRIM_FORGE_ROOT`, and proves the result with `forge doctor`. This repository's CI installs that exact release end to end, which is the check v7.8.0 lacked when the two repositories drifted. Its 52-tool MCP is not global: `game-skyrim` activates it only for matching Claude/Grok/trusted Codex projects; Kimi/Hermes use the CLI through the skill. Choose where it lands with `-ForgeRoot`; the default is `%LOCALAPPDATA%\Skyrim-Tools\Skyrim-Forge`.
 
-**Who owns what.** The Skyrim toolchain is owned by that pack and by Skyrim Forge, not by the general bundle: houseCARL, Spooky's Automod Toolkit, xEdit/SSEEdit, LOOT, the Creation Kit, and the user's own tool root (on this machine `S:\Apps\Skyrim Tools`). When one of those already exists outside the bundle the installer is version-aware - an older copy is refreshed in place after a timestamped backup under `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups`, a same-or-newer copy is left untouched and reported with both versions, and nothing is ever downgraded. With no existing tool root the install stays inside the bundle's own folder. None of it is required for AI boost, coding, or modding other engines - leave the pack switched off and nothing Skyrim-related is installed.
+**Who owns what.** The Skyrim toolchain and the 48-skill Skyrim pack are owned by [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge), not by the general bundle: houseCARL, xEdit/SSEEdit, LOOT, the Creation Kit, and the user's own tool root (e.g. `S:\Apps\Skyrim Tools` or `Z:\Backup\!Skyrim\Skyrim tools`). When one of those already exists outside the bundle the installer is version-aware - an older copy is refreshed in place after a timestamped backup under `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups`, a same-or-newer copy is left untouched and reported with both versions, and nothing is ever downgraded. With no existing tool root the install stays inside the bundle's own folder. None of it is required for AI boost, coding, or modding other engines - leave the pack switched off and nothing Skyrim-related is installed.
 
 ## Update tools later
 
@@ -789,7 +788,6 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | `universal-modder` | [Universal Modder](https://github.com/rehan-remade/universal-modder) | Vendored CLI/source and routed guides; default install |
 | `uabs-toolbox` | [UABS Toolbox](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle) | Bundle-owned; always-on find/describe/call, starts project tools on demand |
 | `housecarl` | [houseCARL](https://github.com/Avick3110/houseCARL) | Offline payload; game/profile scope |
-| `spooky` | [Spooky's AutoMod Toolkit](https://github.com/SpookyPirate/spookys-automod-toolkit) | Offline CLI payload |
 | `codebase-memory` | [codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) | Offline payload; code profile |
 | `headroom` | [Headroom](https://github.com/headroomlabs-ai/headroom) | Wheel/source; core MCP |
 | `superpowers` | [Superpowers](https://github.com/obra/superpowers) | Vendored skills and native plugins |
@@ -933,7 +931,7 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.21.3** - 2026-10-24. Preserves custom Hermes MoA presets/providers, recognizes nested vendor defaults, and repairs complete runtime hash paths in custom Hermes homes. Includes the fresh-Windows bootstrap and required-gate fixes from v8.21.1/v8.21.2. [Release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.21.3) · [Changes](docs/history/V8.21.3-CHANGELOG.md).
+**v8.22.0** - 2026-10-24. Preserves custom Hermes MoA presets/providers, recognizes nested vendor defaults, and repairs complete runtime hash paths in custom Hermes homes. Includes the fresh-Windows bootstrap and required-gate fixes from v8.21.1/v8.21.2. [Release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.0) · [Changes](docs/history/V8.22.0-CHANGELOG.md).
 **v8.21.1** - 2026-10-23. A fresh Windows install that finds no supported app stops and asks which providers to set up, instead of installing all six. A missing Codex CLI installs with `npm install -g @openai/codex` after the old standalone installer URL started returning HTTP 404. Setup fills only missing workspace files, previews cleanup, and leaves unselected provider homes alone. [Changes](docs/history/V8.21.1-CHANGELOG.md).
 **v8.21.0** - 2026-10-21. Hermes settings are now future-proof: no fallback chain, no pinned auxiliary or delegation models (everything follows your main model), vision follows the main model instead of a retired experimental endpoint, and compression fires at a 320k cap on the 1M-token window. The component updater respects catalog holds unless `-Force`. [Changes](docs/history/V8.21.0-CHANGELOG.md).
 **v8.20.0** - 2026-10-21. New `game-mashup-passthrough` skill and a bigger mashup card from the project's full lessons (frame split, spike order, freeze/teleport traps; no machine paths). Universal Modder refreshed to `c1dff21` (new `um voidless`, ~20 game notes). Your `Tools` and `Modding` folders reviewed: nothing bundled, bench map and evaluations updated.

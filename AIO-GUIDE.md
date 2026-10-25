@@ -48,10 +48,11 @@ and filters are retained; exact retired bundle settings are migrated.
 
 ## Skyrim tools
 
-Skyrim Forge is included as source and an installed CLI/skill, not an always-on
-MCP. Universal Modder and Spooky's toolkit are also CLI capabilities. houseCARL
-needs MO2 or a Vortex shim: `TOOLS\Setup-HouseCarl.ps1`; refresh the shim after
-load-order changes with `-RefreshOnly`. Structural checks are not gameplay proof.
+Skyrim Forge is installed from `SenjuWoo/SkyrimForge` as a CLI/skill and scoped
+MCP when the Skyrim pack is active, not an always-on global MCP. Universal Modder
+is a general cross-engine CLI capability. houseCARL needs MO2 or a Vortex shim:
+`TOOLS\Setup-HouseCarl.ps1`; refresh the shim after load-order changes with
+`-RefreshOnly`. Structural checks are not gameplay proof.
 
 ## Updates and verification
 

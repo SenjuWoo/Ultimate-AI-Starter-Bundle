@@ -74,7 +74,7 @@ param(
   [switch]$AllProviders,
   [ValidateSet('BundledFirst','OnlineLatest','BundledOnly')]
   [string]$Mode = 'OnlineLatest',
-  [string[]]$Components = @('housecarl','spooky','codebase-memory','headroom','superpowers','ponytail','codeburn','impeccable','playwright-cli','github-mcp-server','rtk','universal-modder','uabs-toolbox'),
+  [string[]]$Components = @('housecarl','codebase-memory','headroom','superpowers','ponytail','codeburn','impeccable','playwright-cli','github-mcp-server','rtk','universal-modder','uabs-toolbox'),
   [string]$WorkspaceRoot = '',
   # The directory Skyrim Forge is installed INTO, not the folder that
   # contains it: -ForgeRoot 'S:\Apps\Skyrim Tools\Skyrim-Forge' keeps Forge
@@ -547,7 +547,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.21.3 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.22.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -558,12 +558,10 @@ Write-Host ""
 # ---------- Runtimes ----------
 if (-not $SkipRuntimes -and -not $SkillsOnly) {
   Write-UabsStep "Runtime checks"
-  $needNet9 = -not (Test-UabsDotNetRuntime 'Microsoft\.NETCore\.App 9\.')
-  $needAsp9 = -not (Test-UabsDotNetRuntime 'Microsoft\.AspNetCore\.App 9\.')
-  $needSdk8 = -not (Test-UabsDotNetSdk '^8\.')
-  if ($needNet9 -and -not (Install-UabsWinget @('Microsoft.DotNet.Runtime.9'))) { throw '.NET 9 runtime installation failed.' } elseif (-not $needNet9) { Write-UabsOk '.NET 9 runtime' }
-  if ($needAsp9 -and -not (Install-UabsWinget @('Microsoft.DotNet.AspNetCore.9'))) { throw 'ASP.NET Core 9 installation failed.' } elseif (-not $needAsp9) { Write-UabsOk 'ASP.NET Core 9' }
-  if ($needSdk8 -and -not (Install-UabsWinget @('Microsoft.DotNet.SDK.8'))) { throw '.NET 8 SDK installation failed.' } elseif (-not $needSdk8) { Write-UabsOk '.NET 8 SDK' }
+  if ($skyrimPackOn -or ($Components -contains 'housecarl')) {
+    $needNet10 = -not (Test-UabsDotNetRuntime 'Microsoft\.NETCore\.App 10\.')
+    if ($needNet10 -and -not (Install-UabsWinget @('Microsoft.DotNet.Runtime.10'))) { throw '.NET 10 runtime installation failed.' } elseif (-not $needNet10) { Write-UabsOk '.NET 10 runtime' }
+  }
   # Run the candidate, do not trust PATH: stock Windows 11 ships a python.exe alias
   # that only opens the Microsoft Store, and it counted as "Python present".
   try { $runtimePython = Get-UabsPythonExecutable }
@@ -1985,9 +1983,9 @@ if (-not $SkillsOnly) {
           $rootExtract = Resolve-UabsSingleRoot $stage
           # houseCARL zip layout: may contain housecarl\server or server
           if ($id -eq 'housecarl') {
-            $existingMcp = $env:HOUSECARL_MCP
+            $existingMcp = Find-UabsHouseCarlMcp -ExcludeRoot $target
             if ($existingMcp -and (Test-Path $existingMcp) -and -not (Test-UabsPathWithin $existingMcp $target)) {
-              $existingRoot = if ($env:HOUSECARL_ROOT -and (Test-Path $env:HOUSECARL_ROOT)) { $env:HOUSECARL_ROOT } else { Split-Path (Split-Path $existingMcp -Parent) -Parent }
+              $existingRoot = if ($env:HOUSECARL_ROOT -and (Test-Path $env:HOUSECARL_ROOT) -and (Test-UabsPathWithin $existingMcp $env:HOUSECARL_ROOT)) { $env:HOUSECARL_ROOT } else { Split-Path (Split-Path $existingMcp -Parent) -Parent }
               $want = [string]$comp.version
               $have = Get-UabsBinaryVersion $existingMcp
               $cmp = if ($have) { Compare-UabsDottedVersion $have $want } else { $null }
@@ -2107,50 +2105,6 @@ if (-not $SkillsOnly) {
                 }
                 Write-UabsOk ("codebase-memory PATH copy updated {0} -> {1}: {2} (backup: {3})" -f $pHave, $wantVer, $pathCopy, $bak)
               }
-            }
-          }
-          elseif ($id -eq 'spooky') {
-            $existingRoot = $env:SPOOKY_AUTOMOD_ROOT
-            if ($existingRoot -and (Test-Path (Join-Path $existingRoot 'SpookysAutomod.sln')) -and -not (Test-UabsPathWithin $existingRoot $target)) {
-              $want = [string]$comp.version
-              $have = Get-UabsPathVersion $existingRoot
-              $cmp = if ($have) { Compare-UabsDottedVersion $have $want } else { $null }
-              # Same rule as houseCARL: update an older external toolkit in
-              # place, never touch one that is level or ahead of the bundle.
-              if ($null -ne $cmp -and $cmp -lt 0) {
-                $backupRoot = Join-Path $env:LOCALAPPDATA ('Ultimate-AI-Starter-Bundle\backups\spooky-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
-                New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
-                Copy-Item -LiteralPath $existingRoot -Destination $backupRoot -Recurse -Force
-                # $existingRoot holds the .sln, so copy from the archive's .sln
-                # folder too; the archive root may wrap it in one more folder.
-                $srcSln = Find-UabsFileUnder $rootExtract 'SpookysAutomod.sln' 5
-                if (-not $srcSln) { throw 'SpookysAutomod.sln not in the bundled archive' }
-                Copy-UabsRoboSafe -From (Split-Path $srcSln -Parent) -To $existingRoot
-                [IO.File]::WriteAllText((Join-Path $existingRoot '.uabs-version'), $want)
-                Set-UabsUserEnv 'SPOOKY_AUTOMOD_ROOT' $existingRoot
-                $installed[$id] = @{ status='external-updated'; root=$existingRoot; from=$have; to=$want }
-                Write-UabsOk ("Spooky external install updated {0} -> {1} (backup: {2})" -f $have, $want, $backupRoot)
-              }
-              else {
-                Set-UabsUserEnv 'SPOOKY_AUTOMOD_ROOT' $existingRoot
-                $installed[$id] = @{ status='external-current'; root=$existingRoot; version=$have }
-                $label = if ($have) { "v$have" } else { 'version unknown' }
-                Write-UabsOk ("Spooky external install kept ({0}, bundle has v{1}): {2}" -f $label, $want, $existingRoot)
-              }
-            }
-            else {
-              New-Item -ItemType Directory -Force -Path $target | Out-Null
-              Copy-UabsRobo -From $rootExtract -To $target
-              # find sln
-              $sln = Find-UabsFileUnder $target 'SpookysAutomod.sln' 5
-              $toolkitRoot = if ($sln) { Split-Path $sln -Parent } else { $target }
-              # nested spookys-automod-toolkit folder
-              $inner = Join-Path $toolkitRoot 'spookys-automod-toolkit'
-              if (Test-Path (Join-Path $inner 'SpookysAutomod.sln')) { $toolkitRoot = $inner }
-              Set-UabsUserEnv 'SPOOKY_AUTOMOD_ROOT' $toolkitRoot
-              $installed[$id] = @{ status='installed-or-updated'; root=$toolkitRoot }
-              Write-UabsOk "Spooky installed/updated -> $toolkitRoot"
-              Write-UabsWarn "Optional: run SpookysAutomodSetup.exe inside the toolkit folder for headers/compiler"
             }
           }
           elseif ($id -eq 'rtk') {
@@ -2750,7 +2704,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.21.3'
+version = '8.22.0'
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

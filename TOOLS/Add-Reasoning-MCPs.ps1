@@ -191,6 +191,17 @@ if ($headroom -and (Test-Path -LiteralPath $headroom -PathType Leaf)) {
 $toolboxCmd = [Environment]::GetEnvironmentVariable('UABS_TOOLBOX_CMD', 'User')
 if (-not $toolboxCmd) { try { $toolboxCmd = (Get-Command uabs-toolbox -ErrorAction SilentlyContinue).Source } catch { } }
 if ($toolboxCmd -and (Test-Path -LiteralPath $toolboxCmd -PathType Leaf)) {
+  $toolboxEnvNames = @(
+    'HOUSECARL_MCP', 'HOUSECARL_ROOT', 'SKYRIM_MO2_INSTANCE', 'HouseCarl__Mo2InstanceDir',
+    'SKYRIM_FORGE_ROOT', 'CODEBASE_MEMORY_MCP', 'UABS_PYTHON',
+    'ROBLOX_FORGE_ROOT', 'SAINTSROW_FORGE_ROOT'
+  )
+  foreach ($envName in $toolboxEnvNames) {
+    if (-not [Environment]::GetEnvironmentVariable($envName, 'Process')) {
+      $uVal = [Environment]::GetEnvironmentVariable($envName, 'User')
+      if ($uVal) { [Environment]::SetEnvironmentVariable($envName, $uVal, 'Process') }
+    }
+  }
   $servers += @{
     id               = 'toolbox'
     command          = $toolboxCmd
@@ -198,6 +209,7 @@ if ($toolboxCmd -and (Test-Path -LiteralPath $toolboxCmd -PathType Leaf)) {
     note             = 'switched-off project tools on demand (find, describe, call)'
     key              = $null
     tool_timeout_sec = 600
+    env_passthrough  = $toolboxEnvNames
   }
 }
 

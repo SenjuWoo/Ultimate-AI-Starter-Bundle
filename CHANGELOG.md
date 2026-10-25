@@ -1,3 +1,11 @@
+## 8.22.0
+
+- Update `PROMPTS/START-AND-RESUME.md` with the new `## New chat` and `## After a usage limit` operating contracts (`Selective Discovery`, `No Silent Fallbacks`, `Question Stale Patterns`, `Smart Autonomy & Efficiency`, `State & Verified Handoff`) and synchronize `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, `AIO-INSTRUCTION — Compact.md`, `COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt`, and `BUNDLED-TOOLS/PREAMBLE-HISTORY.json`.
+- Move canonical ownership of the 48-skill Skyrim pack (`integrations/skyrim-pack/`), `Setup-HouseCarl.ps1`, and `discover_tools.ps1` to `SenjuWoo/SkyrimForge` (`v6.0.1`), and retire `spookys-automod-toolkit` (`spooky`) and its `.NET 8 SDK` requirement (`-68.6 MB` offline payload reduction; `173` canonical skills total: `125` general + `48` Skyrim pack). Route NIF/BSA/ESP/Papyrus/audio workflows through `houseCARL 2.1.1` and `Skyrim Forge 6.0.1`.
+- Upgrade bundled `houseCARL` from `1.9.0` to `2.1.1` (`.NET 10`, `21` MCP tools including `housecarl_nif_inspect`, `housecarl_nif_set`, `housecarl_bsa_list`, `housecarl_bsa_extract`, `housecarl_bsa_repack`), discover external Skyrim tool roots across fixed drives with version comparison (`Setup-HouseCarl.ps1`, `discover_tools.ps1`, `UABS-Common.ps1`, `Build-MachineMap.ps1`), and filter non-Vortex stage directories when generating the Vortex MO2 shim.
+- Bump `uabs-toolbox` to `1.0.3` with Windows User registry (`HKCU\Environment`) and `installed-state.json` fallback resolution plus `env_passthrough` registration in `TOOLS/Add-Reasoning-MCPs.ps1` so Codex's isolated MCP environment always resolves `HOUSECARL_MCP`, `SKYRIM_FORGE_ROOT`, `SKYRIM_MO2_INSTANCE`, and `CODEBASE_MEMORY_MCP`.
+- Update `rtk` to `1.1.0`, `blender-mcp` to `2.2.4`, and `rea` to `6.8.0`.
+
 ## 8.21.3
 
 - Preserve personal Hermes MoA presets, providers and slot settings by comparing

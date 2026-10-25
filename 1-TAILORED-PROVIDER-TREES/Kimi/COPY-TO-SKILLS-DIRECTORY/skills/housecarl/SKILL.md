@@ -51,10 +51,9 @@ This skill originally targets Claude Code + houseCARL MCP. On **any** AI:
 ```text
 INSTALL houseCARL:
 1. Get the houseCARL distribution (houseCARL-Setup.exe + housecarl\ folder).
-2. Install .NET 9 Runtime AND ASP.NET Core Runtime 9:
-   https://dotnet.microsoft.com/download/dotnet/9.0
-   winget install Microsoft.DotNet.Runtime.9
-   winget install Microsoft.DotNet.AspNetCore.9
+2. Install .NET 10 Runtime (for houseCARL 2.x; or .NET 9 + ASP.NET Core 9 for 1.x):
+   https://dotnet.microsoft.com/download/dotnet/10.0
+   winget install Microsoft.DotNet.Runtime.10
 3. Run houseCARL-Setup.exe (quit AI apps first when updating).
 4. Fully restart the AI application.
 5. Set MO2 instance (folder containing ModOrganizer.ini).
@@ -70,8 +69,7 @@ INSTALL houseCARL:
 
 ### Fallback without houseCARL
 
-- Forge inspection jobs if available
-- Spooky `esp info` / analyze on **owned** plugins only
+- Forge inspection jobs (`forge plugin-info`, `forge record-query`) if available on **owned** plugins only
 - Manual xEdit findings **reported by the user** (agent does not launch GUI)
 - Never invent load-order winners
 
@@ -101,8 +99,8 @@ housecarl\scripts\Setup-HouseCarl.ps1
 
 ### Behavior of Setup-HouseCarl.ps1
 
-1. Finds `housecarl-mcp.exe` (env, `%LOCALAPPDATA%\houseCARL`, Claude/Codex skill trees, optional tool vaults).
-2. Checks .NET 9 + ASP.NET Core 9 runtimes.
+1. Finds `housecarl-mcp.exe` (env, `%LOCALAPPDATA%\houseCARL`, Claude/Codex skill trees, optional tool vaults) and selects the highest version.
+2. Checks .NET 10 Runtime (or .NET 9 + ASP.NET Core 9 for 1.x).
 3. **Auto** selects MO2 if `ModOrganizer.ini` instances exist; else **Vortex** if staging is found.
 4. **MO2:** sets instance path.
 5. **Vortex:** creates `%LOCALAPPDATA%\houseCARL-Shim` per `references/houseCARL-Vortex-shim-setup.pdf` (also in pack `TOOLS\housecarl\`).

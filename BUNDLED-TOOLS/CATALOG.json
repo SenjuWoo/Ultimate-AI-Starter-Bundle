@@ -5,14 +5,14 @@
    "name": "REA (Reverse Engineer Anything)",
    "kind": "cli-optional",
    "install": "npx-or-npm",
-   "version": "6.7.0",
+   "version": "6.8.0",
    "license": "MIT",
    "github": {
     "owner": "morluto",
     "repo": "rea"
    },
-   "npm_spec": "rea-agents@6.7.0",
-   "npm_integrity": "sha512-yhIx2ioJYYT1C/tONfYeitC6LhnKmCh+ZwRUOgYuhSc733lGhkkt73zhug9WmLgxoMdKuqIYGCoBfD4fXkOhFw==",
+   "npm_spec": "rea-agents@6.8.0",
+   "npm_integrity": "sha512-9QDeRnGqEDzABZyr04eLnBXBv/c6I9/TWu/6M0MD4pEfkySI/BIgwTODIbAReX3C1x6hjw9+Jlx4A2yUSPZ9ww==",
    "npm_args": [
     "--ignore-scripts"
    ],
@@ -75,10 +75,10 @@
    "name": "UABS Toolbox (project tools on demand)",
    "kind": "mcp-python",
    "install": "pip-or-wheel",
-   "version": "1.0.2",
+   "version": "1.0.3",
    "license": "MIT",
    "source_dir": "BUNDLED-TOOLS/uabs-toolbox",
-   "offline_asset": "uabs_toolbox-1.0.2-py3-none-any.whl",
+   "offline_asset": "uabs_toolbox-1.0.3-py3-none-any.whl",
    "cli": "uabs-toolbox",
    "cli_env": "UABS_TOOLBOX_CMD",
    "python": "3.14",
@@ -95,7 +95,8 @@
    "required_for": [
     "on-demand-project-tools"
    ],
-   "scope_note": "Bundle-owned, always-on MCP server with three tools (find, describe, call). Task servers stay out of every chat; the toolbox starts the one a task needs on first use, in the same chat, from the bundle's own catalog (toolbox-profiles.json, a copy of PROFILES.json) and the exact entries Set-McpProfile.ps1 -Park saved (parked-mcp.json). Nothing is written to any provider config at call time. Credentials in a parked entry start its server and are never printed. Gate: TESTS/test_toolbox.py (fixture child server; find/describe/call, env pass-through without secret output, project-bound sets, crash restart, TOML parked entries, duplicate suppression)."
+   "scope_note": "Bundle-owned, always-on MCP server with three tools (find, describe, call). Task servers stay out of every chat; the toolbox starts the one a task needs on first use, in the same chat, from the bundle's own catalog (toolbox-profiles.json, a copy of PROFILES.json) and the exact entries Set-McpProfile.ps1 -Park saved (parked-mcp.json). Nothing is written to any provider config at call time. Credentials in a parked entry start its server and are never printed. Gate: TESTS/test_toolbox.py (fixture child server; find/describe/call, env pass-through without secret output, project-bound sets, crash restart, TOML parked entries, duplicate suppression).",
+   "sha256": "ad48cea7318ef1c79b33a7d2a208cdb02d45c27a1d0f3ee92ef4049caed20083"
   },
   {
    "github": {
@@ -104,8 +105,7 @@
    },
    "id": "housecarl",
    "runtimes": [
-    "dotnet9",
-    "aspnetcore9"
+    "dotnet10"
    ],
    "license": "GPL-3.0-only",
    "target_dir": "%LOCALAPPDATA%\\houseCARL",
@@ -116,7 +116,7 @@
    ],
    "name": "houseCARL",
    "mcp": true,
-   "offline_asset": "houseCARL-1.9.0.zip",
+   "offline_asset": "houseCARL-2.1.1.zip",
    "kind": "mcp-binary+skills",
    "setup_after": "Setup-HouseCarl.ps1",
    "asset_match": [
@@ -126,105 +126,65 @@
    "install": "zip-extract",
    "exe_rel": "server\\housecarl-mcp.exe",
    "mcp_tool_budget": {
-    "measured_utc": "2026-08-25T17:20:00Z",
+    "measured_utc": "2026-10-25T18:23:00Z",
     "measured_with": "TOOLS/Measure-McpSchemaCost.ps1",
     "mechanism": "Hermes tools.include/tools.exclude filter at tool registration; fnmatch globs are supported. Codex has native enabled_tools/disabled_tools; Claude Code supports deferred Tool Search. These sets describe Hermes selections, not a universal provider surface or a bill.",
     "measurement_basis": "Historical sum of per-tool UTF-8 JSON bytes, excluding array framing. Legacy *_tokens_per_turn fields are bytes/4 schema estimates; saving_pct is a schema-size reduction, not measured billed savings.",
-    "all_tools": 45,
-    "all_schema_bytes": 167072,
-    "all_tokens_per_turn": 41768,
+    "all_tools": 31,
+    "all_schema_bytes": 163959,
+    "all_tokens_per_turn": 40989,
     "sets": {
      "Full": {
       "include": [],
-      "tools": 45,
-      "schema_bytes": 167072,
-      "tokens_per_turn": 41768,
+      "tools": 31,
+      "schema_bytes": 163959,
+      "tokens_per_turn": 40989,
       "saving_pct": 0,
       "why": "No filter. Every tool registered. Use when authoring records in bulk and diagnosing in the same session."
      },
      "Lean": {
       "exclude": [
-       "housecarl_bulk_create",
-       "housecarl_create_record",
-       "housecarl_bulk_apply"
+       "housecarl_create",
+       "housecarl_nif_set",
+       "housecarl_place"
       ],
-      "tools": 42,
-      "schema_bytes": 125476,
-      "tokens_per_turn": 31369,
-      "saving_pct": 25,
-      "why": "Drops only the three tools whose parameter schemas carry full nested record objects: bulk_create (14,655 B), create_record (14,548 B) and bulk_apply (12,393 B) are 41,596 bytes between them -- a quarter of the server, and more than the whole of Skyrim Forge. They are dedicated bulk-authoring entry points, so a diagnosis or patch-reading session pays for them and never calls them. This is the shipped default because it costs no capability a normal session uses."
+      "tools": 28,
+      "schema_bytes": 128501,
+      "tokens_per_turn": 32125,
+      "saving_pct": 22,
+      "why": "Drops the three dedicated creation/NIF-mutation/world-placement tools whose parameter schemas carry deep nested objects: housecarl_create (19,198 B), housecarl_nif_set (9,285 B) and housecarl_place (6,975 B) are 35,458 bytes between them -- 22% of the server, and more than the whole of Skyrim Forge. Keeps housecarl_apply for normal patch edits. This is the shipped default because it costs no capability a normal diagnosis or patch-editing session uses."
      },
      "ReadOnly": {
       "include": [
-       "housecarl_resolve",
-       "housecarl_read_record",
-       "housecarl_batch_record_detail",
-       "housecarl_diff_record",
-       "housecarl_cross_plugin_query",
-       "housecarl_read_plugin_file",
-       "housecarl_load_order_status",
-       "housecarl_check_errors",
+       "housecarl_records",
+       "housecarl_check",
+       "housecarl_skse",
        "housecarl_asset_status",
-       "housecarl_update_status",
-       "housecarl_validate_scripts",
-       "housecarl_validate_dialogue",
-       "housecarl_native_pairing_audit",
-       "housecarl_skse_inventory",
-       "housecarl_skse_config_audit",
-       "housecarl_skypatcher_read",
        "housecarl_nif_inspect",
-       "housecarl_decompile_script",
-       "housecarl_bsa_list",
-       "housecarl_bsa_extract",
-       "housecarl_nexus_search",
        "housecarl_nexus_mod",
+       "housecarl_decompile_script",
        "housecarl_nexus_check_updates",
-       "housecarl_nexus_identify",
+       "housecarl_load_order_status",
+       "housecarl_nexus_search",
        "housecarl_nexus_graphql",
-       "housecarl_set_mo2_instance",
-       "housecarl_set_tool_path"
+       "housecarl_bsa_list",
+       "housecarl_update_status",
+       "housecarl_set_tool_path",
+       "housecarl_bsa_extract",
+       "housecarl_nexus_identify",
+       "housecarl_set_mo2_instance"
       ],
-      "tools": 27,
-      "schema_bytes": 70418,
-      "tokens_per_turn": 17604,
-      "saving_pct": 58,
-      "why": "Everything that reads, diagnoses, validates or looks up, and nothing that writes. Keeps load-order truth, conflict trees, cross-plugin queries, script/dialogue validation, the SKSE audit and the whole keyless Nexus surface. Drops the 18 write tools. Use for diagnosis, load-order work and Nexus research."
+      "tools": 17,
+      "schema_bytes": 75075,
+      "tokens_per_turn": 18768,
+      "saving_pct": 54,
+      "why": "Everything that reads, diagnoses, validates or looks up, and nothing that writes. Keeps load-order truth, conflict trees, cross-plugin queries, script/dialogue validation, the SKSE audit and the whole keyless Nexus surface. Drops the 14 write tools. Use for diagnosis, load-order work and Nexus research."
      }
     },
     "restore": "hermes -p skyrim mcp configure housecarl  (interactive checklist, rewrites tools.include). Re-running the migrator will not undo a hand-edited filter."
    },
-   "version": "1.9.0",
-   "release_tag": "v1.9.0",
-   "compatibility_hold": "2026-09-13: v2.0.0 removes the 1.x tool API. Keep v1.9.0 until skills, profiles and live read-only validation are migrated together. OnlineLatest must not silently replace it."
-  },
-  {
-   "github": {
-    "repo": "spookys-automod-toolkit",
-    "owner": "SpookyPirate"
-   },
-   "id": "spooky",
-   "runtimes": [
-    "dotnet8-sdk"
-   ],
-   "license": "see-upstream",
-   "target_dir": "%LOCALAPPDATA%\\Ultimate-AI-Starter-Bundle\\spookys-automod-toolkit",
-   "required_for": [
-    "esp-cli",
-    "papyrus-cli",
-    "nif",
-    "bsa"
-   ],
-   "name": "Spooky's AutoMod Toolkit",
-   "verify": "dotnet run --project src/SpookysAutomod.Cli -- --help",
-   "offline_asset": "spookys-automod-toolkit-v1.11.2.zip",
-   "kind": "cli-toolkit",
-   "asset_match": [
-    "spookys-automod-toolkit-*.zip"
-   ],
-   "install": "zip-extract",
-   "env": "SPOOKY_AUTOMOD_ROOT",
-   "version": "1.11.2",
-   "release_tag": "v1.11.2"
+   "version": "2.1.1",
+   "release_tag": "v2.1.1"
   },
   {
    "github": {
@@ -397,7 +357,7 @@
    "release_tag": "v6.0.1",
    "asset": "Skyrim-Forge-6.0.1.zip",
    "offline_asset": "Skyrim-Forge-6.0.1.zip",
-   "sha256": "69e5dfbf5932d82a145d8cb6b87019cc32642f632c201df726da848d58f7fe79",
+   "sha256": "eed4e04dd138f6b86d20ba7641f33f5eda83c709ef39046f3e36d5dcbb3566fa",
    "note": "Released from github.com/SenjuWoo/SkyrimForge. Installed only with the Skyrim pack. The installer verifies the pinned SHA-256 before extracting, resolves ONE versionless install root, migrates a version-stamped install onto it, preserves Workspaces and the virtualenv, wires selected providers, then proves the result runs with `forge doctor`. CI installs this exact release end to end.",
    "version": "6.0.1"
   },
@@ -769,7 +729,7 @@
    "kind": "mcp-uvx",
    "mcp": true,
    "license": "MIT",
-   "version": "2.2.2",
+   "version": "2.2.4",
    "github": {
     "owner": "ahujasid",
     "repo": "mcp-for-blender"
@@ -777,7 +737,7 @@
    "install": "mcp-uvx",
    "npx_command": "uvx",
    "npx_args": [
-    "mcp-for-blender@2.2.2"
+    "mcp-for-blender@2.2.4"
    ],
    "profile": "engine-blender",
    "auto_register": false,
@@ -785,7 +745,7 @@
    "required_for": [
     "blender-scene-control"
    ],
-   "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender. Update measured 2026-09-28 at 2.1.1: initialize/tools-list PASS, 36 tools, 45,055 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 2.1.3: initialize/tools-list PASS; 36 tools, 45,121 compact UTF-8 schema bytes; telemetry disabled, safe mode enabled. No live editor calls. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 2.1.9 Windows initialize/tools-list PASS; 9 advertised tools, 15,597 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. 2026-10-20: 2.2.2 Windows initialize/tools-list PASS (telemetry off, safe mode on); 9 tools, 15,754 compact UTF-8 schema bytes (2.2.0: 15,651). No editor calls."
+   "scope_note": "Talks to an addon inside a running Blender. Pinned: `uvx blender-mcp` was version-free through 7.9.6, and an unpinned invocation can change its tool surface mid-session. `uvx mcp-for-blender@2.0.0 install-addon` places the addon, but ENABLING it is inside the editor and cannot be done from outside that process -- so the profile prints the step rather than claiming it ran it. Note the difference between 'the MCP executable starts' and 'the addon is connected': the server answers initialize with no Blender running at all, and only a tool call that reaches the scene proves the second. Blender is discovered from %APPDATA%\\Blender Foundation, which Blender creates on first run whatever the install source -- 7.9.6 carried a maintainer's own Steam drive path here, which could never match on another machine. Measured 2026-09-17 with telemetry disabled and safe mode enabled: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 schema tokens (bytes/4; actual usage unmeasured)). The profile writes BLENDER_MCP_DISABLE_TELEMETRY=true and BLENDER_MCP_SAFE_MODE=true. Safe mode keeps normal bpy/bmesh/mathutils scene, render, save and import/export work while rejecting eval/exec/open, os/subprocess/network, persistence hooks and external .blend datablock loading before code reaches Blender. Update measured 2026-09-28 at 2.1.1: initialize/tools-list PASS, 36 tools, 45,055 compact UTF-8 schema bytes. Editor/browser tool actions were not part of this handshake. 2026-10-02 refresh: 2.1.3: initialize/tools-list PASS; 36 tools, 45,121 compact UTF-8 schema bytes; telemetry disabled, safe mode enabled. No live editor calls. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 2.1.9 Windows initialize/tools-list PASS; 9 advertised tools, 15,597 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. 2026-10-20: 2.2.2 Windows initialize/tools-list PASS (telemetry off, safe mode on); 9 tools, 15,754 compact UTF-8 schema bytes (2.2.0: 15,651). 2026-10-25: 2.2.4 Windows initialize/tools-list PASS (telemetry off, safe mode on); 9 tools, 15,978 compact UTF-8 schema bytes. No editor calls."
   },
   {
    "id": "godot-mcp",
@@ -841,7 +801,7 @@
    "name": "RTK (Rust Token Killer)",
    "kind": "cli-optional",
    "license": "Apache-2.0",
-   "version": "1.0.1",
+   "version": "1.1.0",
    "github": {
     "owner": "rtk-ai",
     "repo": "rtk"
@@ -881,7 +841,7 @@
     ],
     "broad_upstream_hook": false
    },
-   "scope_note": "CLI output filter with zero standing schema tokens. GIT CORPUS, measured on this repo AT rtk 1.0.1 against pinned refs: git diff v8.6.1..v8.6.5 430,285 -> 55,870 bytes (87%), git log v8.6.1..v8.6.5 14,250 -> 1,660 (88%), git diff v8.6.4..v8.6.5 33,453 -> 26,820 (20%), and git log --stat -20 v8.6.5 102,301 -> 102,301 (0%). Those are summaries, not lossless replacements: on the larger diff RTK retained 341 of 5,856 changed lines and omitted 5,515. Exact short status is different: a fixture covering staged, unstaged, deleted, renamed, Unicode and untracked paths was line-identical 5/5. NON-GIT CORPUS measured at 0.46.0 on 2026-08-27: rtk test kept the failure at about 93% saved; excluding truncating rows, the aggregate was 7.4% against git's 85.2%. TRUNCATION IS NOT SAVING: rtk json returned one of 5,425 array rows plus `... +5424 more`. rtk find works with a simple -name but breaks on compound predicates; rtk-ai/rtk#3410 reports its unconditional rewrite also intercepts find -delete/-exec. Archive correction: rtk test writes a complete tee for the measured 5.4 KB run and prints its path, but RTK documents a 1 MB raw tee cap. WINDOWS INTEGRATION, re-probed at 0.47.0 on 2026-09-02: upstream rewrite still catches lossy diff/log/show, broken find, cat/read, grep, curl, gh, and mutating git add/commit/push. Therefore broad upstream init and Hermes rtk-rewrite stay off. The bundle installs RTK by default and wires its own allowlist: exact standalone git status plus standalone human-facing pytest, cargo test and go test. Machine-readable output, pipes/redirection, all mutating Git, diff/show/log/find/search/read/curl/gh stay raw. Claude, Grok and Hermes receive the executable hook; Codex and Kimi receive the same narrow instruction because no trusted command-mutation hook is established there. Telemetry remains opt-in. Remeasured 2026-10-02 with TESTS/test_rtk_candidate.py: all four pinned corpus rows; allowlisted rewrite protocol exit 3 PASS; --short/-s preserved staged, unstaged, deleted, renamed, Unicode and untracked status lines (status comparison is line-wise). Broad hooks remain disabled; these are byte savings, not measured billed tokens. 2026-10-13: Apache-2.0 OSS edition selected explicitly; upstream's default binary now uses different licensing. Official Windows OSS archive SHA-256 verified, all four fixed corpus rows unchanged, exact short-status fixture PASS and allowlisted rewrite exit-3 protocol PASS. No pipelines, daemon or upstream broad hook enabled."
+   "scope_note": "CLI output filter with zero standing schema tokens. GIT CORPUS, measured on this repo AT rtk 1.1.0 against pinned refs: git diff v8.6.1..v8.6.5 430,285 -> 55,870 bytes (87%), git log v8.6.1..v8.6.5 14,250 -> 1,660 (88%), git diff v8.6.4..v8.6.5 33,453 -> 26,820 (20%), and git log --stat -20 v8.6.5 102,301 -> 102,301 (0%). Those are summaries, not lossless replacements: on the larger diff RTK retained 341 of 5,856 changed lines and omitted 5,515. Exact short status is different: a fixture covering staged, unstaged, deleted, renamed, Unicode and untracked paths was line-identical 5/5. NON-GIT CORPUS measured at 0.46.0 on 2026-08-27: rtk test kept the failure at about 93% saved; excluding truncating rows, the aggregate was 7.4% against git's 85.2%. TRUNCATION IS NOT SAVING: rtk json returned one of 5,425 array rows plus `... +5424 more`. rtk find works with a simple -name but breaks on compound predicates; rtk-ai/rtk#3410 reports its unconditional rewrite also intercepts find -delete/-exec. Archive correction: rtk test writes a complete tee for the measured 5.4 KB run and prints its path, but RTK documents a 1 MB raw tee cap. WINDOWS INTEGRATION, re-probed at 0.47.0 on 2026-09-02: upstream rewrite still catches lossy diff/log/show, broken find, cat/read, grep, curl, gh, and mutating git add/commit/push. Therefore broad upstream init and Hermes rtk-rewrite stay off. The bundle installs RTK by default and wires its own allowlist: exact standalone git status plus standalone human-facing pytest, cargo test and go test. Machine-readable output, pipes/redirection, all mutating Git, diff/show/log/find/search/read/curl/gh stay raw. Claude, Grok and Hermes receive the executable hook; Codex and Kimi receive the same narrow instruction because no trusted command-mutation hook is established there. Telemetry remains opt-in. Remeasured 2026-10-02 with TESTS/test_rtk_candidate.py: all four pinned corpus rows; allowlisted rewrite protocol exit 3 PASS; --short/-s preserved staged, unstaged, deleted, renamed, Unicode and untracked status lines (status comparison is line-wise). Broad hooks remain disabled; these are byte savings, not measured billed tokens. 2026-10-13: Apache-2.0 OSS edition selected explicitly; upstream's default binary now uses different licensing. Official Windows OSS archive SHA-256 verified, all four fixed corpus rows unchanged, exact short-status fixture PASS and allowlisted rewrite exit-3 protocol PASS. 2026-10-25: 1.1.0 OSS Windows archive SHA-256 verified, exact short-status fixture PASS and allowlisted rewrite exit-3 protocol PASS. No pipelines, daemon or upstream broad hook enabled."
   },
   {
    "id": "omni",
@@ -1008,7 +968,7 @@
    "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings. 2026-10-22: 1.23.0 workflow-validation help PASS with PYTHONUTF8=1 and telemetry disabled. Default Windows cp1252 help reproduced a UnicodeEncodeError; UTF-8 is required for redirected output."
   }
  ],
- "pack_version": "8.21.3",
+ "pack_version": "8.22.0",
  "updated_utc": "2026-10-18",
  "providers": {
   "Grok": {
@@ -1059,6 +1019,12 @@
   }
  },
  "runtimes": {
+  "dotnet10": {
+   "winget": [
+    "Microsoft.DotNet.Runtime.10"
+   ],
+   "check": "dotnet --list-runtimes | findstr /R \"Microsoft.NETCore.App 10\\.\""
+  },
   "aspnetcore9": {
    "winget": [
     "Microsoft.DotNet.AspNetCore.9"
@@ -1077,12 +1043,6 @@
    ],
    "note": "For CodeBurn and Impeccable"
   },
-  "dotnet8-sdk": {
-   "winget": [
-    "Microsoft.DotNet.SDK.8"
-   ],
-   "note": "Needed to build/run Spooky from source"
-  },
   "python3": {
    "winget": [
     "Python.Python.3.12"
@@ -1096,7 +1056,7 @@
  "provider_config_schemas": {
   "Hermes": 44
  },
- "catalog_version": "8.21.3",
- "updated": "2026-10-18",
+ "catalog_version": "8.22.0",
+ "updated": "2026-10-25",
  "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
 }

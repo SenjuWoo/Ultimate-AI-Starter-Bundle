@@ -1,4 +1,4 @@
-﻿# Example MCP snippets for Uabs tools
+# Example MCP snippets for Uabs tools
 # Copy only what you installed. Replace paths. Restart the AI app after edits.
 # Prefer Set-McpProfile.ps1 task/project routing over machine-wide manual entries.
 
@@ -56,8 +56,7 @@
 # houseCARL ships a codex\ skill stub in its zip — MCP binary still required.
 
 # ---------- Env vars (optional, any shell profile) ----------
-# setx SKYRIM_FORGE_ROOT "D:\Tools\Skyrim-Forge-x.y.z"
-# setx HOUSECARL_MCP "D:\Tools\houseCARL\housecarl\server\housecarl-mcp.exe"
-# setx SPOOKY_AUTOMOD_ROOT "D:\Tools\spookys-automod-toolkit"
+# setx SKYRIM_FORGE_ROOT "D:\Tools\Skyrim-Forge"
+# setx HOUSECARL_MCP "D:\Tools\houseCARL\server\housecarl-mcp.exe"
 # setx CODEBASE_MEMORY_MCP "%LOCALAPPDATA%\Programs\codebase-memory-mcp\codebase-memory-mcp.exe"
 # setx SKYRIM_MO2_INSTANCE "D:\MO2\instances\MyList"

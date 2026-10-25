@@ -1,3 +1,12 @@
+# v8.22.0 validation
+
+- Updated `PROMPTS/START-AND-RESUME.md` and synchronized all preamble files (`0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION — Compact.md`, `COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt`, `BUNDLED-TOOLS/PREAMBLE-HISTORY.json`); `python TOOLS/generate_preamble_history.py --check` PASS.
+- Retired `spookys-automod-toolkit` (`spooky`) and `.NET 8 SDK`, updated `skyrim-nif` and `skyrim-audio` to route through `houseCARL 2.1.1` and `Skyrim Forge 6.0.1`, regenerated `BUNDLED-TOOLS/RETIRED-SKILLS.json` (`173` current skills, `74` retired), and fanned out `1,287` files per provider across all 6 provider trees.
+- Published `SenjuWoo/SkyrimForge` `v6.0.1` (`34f6947c9b766601d35e2400c4a63536e47ee08b`) owning `integrations/skyrim-pack/` (48 Skyrim skills, `Setup-HouseCarl.ps1`, `discover_tools.ps1`, `Install-Skyrim-Pack.ps1`); CI (`40223406469`), CodeQL (`40223406317`), Release (`40223408045`), and GitHub security flags (`clean`) PASS.
+- Upgraded `uabs-toolbox` to `1.0.3` (`TESTS/test_toolbox.py` PASS), `housecarl` to `2.1.1` (`21` MCP tools, `.NET 10`), `rtk` to `1.1.0`, `blender-mcp` to `2.2.4`, and `rea` to `6.8.0` (`python TOOLS/audit_catalog_versions.py --fail-on-stale`: `current=23, held=5, stale=0, error=0`).
+- Full Windows pack gate (`TESTS/Test-Pack.ps1`) PASS across all 19 sections; release contracts (`TESTS/test_release_contract.py`) `151 passed, 0 failed`; manifest (`10,332` files) and version consistency (`check_versions.py`) PASS.
+- Live `v8.22.0` installer (`INSTALL-AIO.ps1 -Mode BundledFirst -SkipSelfUpdate -SkipNativePlugins`): exit `0`, retired `spookys-automod-toolkit` removed across Claude, Codex, Grok, Hermes, and Antigravity, external `houseCARL 2.1.1` recognized and preserved (`v2.1.1`), `Skyrim Forge 6.0.1`, `rtk 1.1.0`, and `uabs-toolbox 1.0.3` installed and verified, fifteen core MCP checks (`context7`, `headroom`, `toolbox`) answered across all five installed providers, and `installed-state-doctor.json` PASS (`logs/install-20261025-160710.log`).
+
 # v8.21.3 validation
 
 Independent review corrected the v8.21.2 handoff's preservation claim: matching

@@ -73,7 +73,7 @@ Supports `--args-file <json>` and stdin JSON for scripted batches.
 **Purge discipline — what never deserves a graph:** personal chat/export
 folders, roots that were moved or deleted, and unmodified third-party tool
 installs (SSEEdit/DynDOLOD-class binaries). Tool SOURCE trees the operator
-works on (houseCARL, Spooky's toolkit, Skyrim-Forge, Grabber) DO get indexed.
+works on (houseCARL, Skyrim-Forge, Grabber) DO get indexed.
 The registry at
 `!!!SkyrimAEaiWorkspace/_AI-SHARED-MEMORY/locations/CODEBASE-MEMORY-PROJECTS.md`
 is the authority on what is indexed and why — check it before deleting

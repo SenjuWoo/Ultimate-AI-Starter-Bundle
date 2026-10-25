@@ -91,6 +91,8 @@ foreach ($scope in 'User', 'Process') {
   }
 }
 Add 'Tool roots' ($roots | Sort-Object -Unique)
+$skyrimVaults = @(Get-UabsSkyrimToolDirectories | ForEach-Object { Short $_ })
+if ($skyrimVaults.Count) { Add 'Skyrim tool folders' $skyrimVaults }
 
 # AI app homes that exist here.
 $homes = @()

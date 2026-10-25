@@ -7,7 +7,7 @@
       "enable": "START-HERE.bat -Packs skyrim",
       "disable": "START-HERE.bat -ExcludePacks skyrim",
       "instructions": "BUNDLED-TOOLS/packs/skyrim/INSTRUCTIONS.md",
-      "components": ["skyrim-forge", "housecarl", "spooky"],
+      "components": ["skyrim-forge", "housecarl"],
       "skills": [
         "ai-tooling-stack",
         "biped-slot-reference",
@@ -56,14 +56,13 @@
         "skyrim-versioned-workspace",
         "skyrim-voiced-dialogue",
         "spid-authoring",
-        "spookys-automod-toolkit",
         "tool-output-awareness"
       ],
       "detect": {
         "steam_appids": ["489830", "611670"],
         "my_games": ["Skyrim Special Edition", "Skyrim Special Edition GOG", "Skyrim VR"],
         "vortex_games": ["skyrimse", "skyrimvr"],
-        "env": ["SKYRIM_FORGE_ROOT", "SKYRIM_MO2_INSTANCE", "SPOOKY_AUTOMOD_ROOT", "HOUSECARL_ROOT"],
+        "env": ["SKYRIM_FORGE_ROOT", "SKYRIM_MO2_INSTANCE", "HOUSECARL_ROOT"],
         "gog_game_name": "Skyrim"
       }
     }

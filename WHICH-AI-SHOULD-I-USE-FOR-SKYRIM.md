@@ -25,7 +25,7 @@ remapped to new paid endpoints by this guide.
 | Publication | Usable archive, preserved variants/dependencies, credits/permissions, honest screenshots and release verification |
 
 Start with `skyrim-tool-router` and `skyrim-frameworks-index`; dedicated skills
-own exact grammar. Forge, houseCARL, Spooky's toolkit and Universal Modder have
+own exact grammar. Forge, houseCARL and Universal Modder have
 separate roles, not interchangeable evidence. A missing MCP can mean installed
 but inactive: see [profile discovery](AIO-GUIDE.md#when-an-ai-cannot-find-a-tool),
 not a blanket reinstall. Hermes uses its native named profile; project-scoped
