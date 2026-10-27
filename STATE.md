@@ -1,73 +1,27 @@
 # Bundle audit state
 
-## Final three-repository update (2026-10-26, in progress)
+## Final three-repository update (2026-10-26)
 
-- Goal: three standalone, mutually recommended owners; reuse shared tools and
-  update supported older installations while preserving project pins, newer
-  compatible versions, personal edits/settings and private work.
-- Decision: retain independent repositories and optional bundle orchestration,
-  not a Reverse source/catalog merge. docs/COMPANION-ARCHITECTURE.md records
-  the analysis. Use -Packs skyrim,reverse or remembered exclusions.
-- Targets/current source: bundle 8.24.0 on codex/skyrim-pack-ownership at
-  85f82b9 plus intended staged split; Forge 6.2.0 on clean main aefa1a2d222801a4953e6fe39b65983750dc7997;
-  Reverse 1.4.0 on clean main 979fa17c7a9b7687a433e4f6a1e4689940d3b756.
-- Reverse PR #7 merged after fixed-head and main CI/security passed. Release
-  v1.4.0 is public from 979fa17. Both public assets downloaded and verified
-  against local bytes, GitHub digests and checksum file. ZIP: 108,789 bytes,
-  SHA256 4087251269e6da95ffa563837ad4b6c684b4d60d52fe9873b3a6874351d5c24b.
-  Receipt: artifacts/split-recovery/reverse14-release/final.local.json.
-- Forge PR #16 merged the standalone updater/migration; PR #17 added requested
-  tool coverage. Exact aefa1a2 main has all 13 attached checks successful and
-  security flags clean. Tag v6.2.0 points there. Release workflow 40421709024
-  passed on retry after a GitHub HTTP-500 publication failure. All eight
-  public assets verified against GitHub digests/checksums; the bundle now pins
-  the public ZIP: 5,137,601 bytes, SHA256
-  2c66c6bdf79473a68e95b749e12489e0fa14db876cc583184e77b20370d1b175. Earlier
-  03ea6af had an unrerunnable GitHub graph backend failure; no release used it.
-- Source review fixed private-tree copy/junction risk, edited-source overwrite,
-  update locking/rollback, newer Java/Node shim binding and a source-version
-  race. Regression negative controls proved the race/Node fixes. Reverse CI
-  also exposed hidden AppData probes and expected-child exit leakage; fixed
-  and tested under actual GitHub-style PS5.1/7 invocation.
-- General bundle: 126 canonical skills, generated 933 files/provider. Forge
-  independently owns 48; its index is skyrim-tooling-stack, while the general
-  ai-tooling-stack stays in the bundle. Legacy migration requires digest proof.
-- New tool intake: installed Xmake 3.1.2 and supplied installer digest verified
-  against upstream; shared provisioning/owner updates and real offline C++23/
-  MSVC compile/run PASS. Nx/Vite/webpack sources and Turbo binary are documented
-  as general project dependencies, not copied/global-installed. Forge discovers
-  CLibDT 6.0 without launching it. CommonLib main is libxse/Xmake with an empty
-  archive submodule; dev README matches powerof3/CMake, not its stale dann1 badge.
-  Libraries remain pinned per plugin project; reference snapshots untouched.
-- Gates so far: full Forge validator PASS after additions; dual-shell Reverse
-  source/actual-shell/extracted-archive gates PASS; compiler recovery/Xmake and
-  real compile/run PASS; pack/root/companion boundaries PASS; privacy PASS.
-  Corrected bundle full Windows gate PASS and all 151 release contracts PASS.
-  Extracted candidate gates remain pending.
-- Currency evidence: artifacts/split-recovery/currency-20261026.json and
-  compatibility-20261026/. Perplexity 1.3 transport/four schemas pass with
-  network blocked (real API/paid use untested). Impeccable .16/.17 engines still
-  fail malformed script/style probes; compatibility holds remain documented.
-- User approved full compilers by default and live deployments with backups.
-  Reverse LIVE remains 1.3.0 (58 installed records); Forge LIVE remains 6.1.1.
-  Last bundle live run FAILED five old skill-name ownership checks; do not
-  call it healthy. Kimi is outside the live selected provider set.
-- Fresh 13-config backup/fingerprints: final-8240-settings.local.json under
-  artifacts/split-recovery; backup under installed-state backups/final-8.24.0.
-  Compare with preserve-live-8240.py after deployment. Older split-8.23 backups
-  and last-good releases remain available. A stale empty Git index lock was
-  retained under split-recovery after confirming no active Git process/handle.
-- Live update is now running from the validated 8.24.0 source. It currently
-  awaits Windows UAC for the .NET 10.0.403 installer; user action requested
-  asynchronously. Do not bypass or claim installation success while it waits.
-- Next smallest step: extracted gates against public companion bytes; push/merge exact-SHA CI/
-  security; build/publish/verify 8.24.0; approved live deployment plus owner
-  doctors, shared binding refresh, fifteen MCP proofs and thirteen unchanged
-  preference fingerprints; final all-repository STATE/clean-tree handoff.
-- Last good bundle public version: 8.22.0. Build/test: TESTS/Test-Pack.ps1 with
-  existing -TestPython artifacts/recovery/test-env-314/Scripts/python.exe;
-  TOOLS/Build-Release.ps1. Run START-HERE.bat. Installer/build logs:
-  %LOCALAPPDATA%/Ultimate-AI-Starter-Bundle/logs. Evidence: artifacts/split-recovery.
+- Goal/decision: three standalone, mutually recommended owners with optional bundle orchestration; retain Reverse THIS! separately. See docs/COMPANION-ARCHITECTURE.md for the merge analysis, ownership and update policy. Reuse compatible shared tools; update older managed tools; preserve newer versions, project pins, private work and personal settings.
+- Bundle source 8.24.0: main baseline e13b7507ee3e3fefef836fb2c2af82654b9dd657 passed CI/security; final public companion pins and handoff are on codex/final-release-8-24. Exact final SHA CI and bundle publication remain pending.
+- Forge 6.2.1: public/tag 7adcda288d551bf4de226b82679317087c053dc0; source documentation main 5667637e19ac2e137fafb525870c3484bb505092. Release workflow 40431539964 PASS. All eight assets match CI bytes, GitHub digests and checksums. ZIP 5,137,963 bytes; SHA256 3d0aac570891526dfd64faface1273d1eac9dc089e1c1feb0184dd48a2a46fea.
+- Reverse 1.4.1: public/tag b21a41427dd38cbb6f76cd00ddcca9df8808781e; source documentation main b89fa095fe57f272639569e1637732afdc1c48ff. Exact-main CI/security PASS; both public assets match deterministic local bytes, GitHub digests and checksums. ZIP 108,340 bytes; SHA256 76b7ce541f313defbecb832a14dac4b8934a5fa8fde2ca1724639244306f0826.
+- LIVE PASS: approved final 8.24.0 AIO exited 0; installed-state doctor zero errors/warnings; all fifteen Context7/headroom/toolbox checks answered across Claude, Codex, Grok, Hermes and Antigravity. Kimi remains unselected/untouched. Runtime SDK/provider/model/trust choices preserved.
+- Live Reverse selected update: 56 successful, zero failed, owner doctor PASS. Forge setup/native/import/doctor PASS; all 588 public owner file hashes match the release, zero mismatches; Reverse-owned tool bindings refreshed in place.
+- Thirteen saved model/permission/MoA preference fingerprints remain unchanged. Backups: LOCALAPPDATA/Ultimate-AI-Starter-Bundle/backups/final-8.24.0; older split-8.23 backups and last-good releases retained. Supplied tool/reference folders and game Data/staging/saves untouched.
+- Final live log: LOCALAPPDATA/Ultimate-AI-Starter-Bundle/logs/install-20261026-222005.log and matching -details.log. Evidence: artifacts/split-recovery/bundle824-live-complete.log; installed-state-doctor.json under installed state; final-8240-settings.local.json; forge621-live-public-proof.local.json.
+- Shared Python updated in place from 3.14.9 to 3.14.10 through the official manager after exact idle headroom/toolbox launcher trees released its DLLs. Base/venv health PASS; no second base interpreter. Reopen AI apps once to reconnect MCP sessions and inherit refreshed environment.
+- Full default compiler suite receipt 1.2.0 PASS: real Go/GCC/Rust/.NET 10/CMake-Ninja-MSVC-Windows SDK/Xmake C++23 compile/run. .NET SDK 10.0.403 installed after user UAC approval. Final AIO reused this unchanged-input proof with -SkipBuildTools, kept existing native plugins with -SkipNativePlugins and used local source with -SkipSelfUpdate.
+- General canonical skills 126, generated 933 files/provider, six source trees; Forge independently owns 48 under skyrim-tooling-stack. Combined 174 distinct names; old shared-name migration requires digest proof. Full split removes duplicate specialist payloads from the general owner.
+- Requested tools: installed Xmake 3.1.2 reused/verified; general project-local Nx/Turbo/Vite/webpack documented. Forge discovers CLibDT 6.0 without running/redistributing it; CommonLib main is libxse/Xmake with an empty archive submodule, dev matches powerof3/CMake. SDKs stay pinned per project. Supplied snapshots/binaries not vendored.
+- Live upgrade defects fixed and released: Reverse's PS5.1 Python quoting now has a real native regression; Forge retains old timestamp bytecode in the rollback tree so equal-size new source cannot import old code. Both regressions fail before their fixes and pass afterward. Full source validators, package/native/MCP gates and actual live upgrades pass.
+- Full Windows gate and all 151 release contracts PASS on shared Python 3.14.10. Earlier extracted Full candidate and source/Core Python 3.14/3.15 CI PASS; final pin changes additionally have public-byte/live proof and await final exact-SHA CI/extracted artifact inspection.
+- Currency evidence: currency-20261026.json and compatibility-20261026/. Perplexity 1.3 transport/four tool schemas pass without paid API use; live install skips its absent optional key. Impeccable newer engines still fail malformed input probes; Unity/Omni compatibility holds remain evidence-based. Do not auto-promote incompatible held upgrades.
+- Security: queried Dependabot/code-scanning/secret-scanning alerts zero for all three repos; code quality unavailable, left off. Recheck final pushed SHA and flags before publication.
+- Next: validate final manifest/pins, push final bundle change, wait exact-SHA CI/security, build twice from that green SHA, publish 8.24.0 and verify every public byte; update final handoff and verify clean source trees.
+- Last good LIVE: bundle 8.24.0, Forge 6.2.1, Reverse 1.4.1. Last good bundle PUBLIC: 8.22.0 until this publication. Prior tags/releases/deployment backups retained.
+- Build/run: TESTS/Test-Pack.ps1 -TestPython artifacts/recovery/test-env-314/Scripts/python.exe; TOOLS/Build-Release.ps1; START-HERE.bat. Logs: LOCALAPPDATA/Ultimate-AI-Starter-Bundle/logs.
+- Exact limits: actual game/app GUI targets, paid APIs/inference, Windows Sandbox guest and real absent-provider installations are untested. Existing native plugins retained. An AI-app restart remains required for active host sessions.
 
 ## v8.22.1 parallel-development split & SkyrimForge v6.1.0 (2026-10-25)
 
@@ -1232,3 +1186,9 @@ Detailed machine-specific reports remain under ignored `artifacts/`.
   vision route (left alone deliberately); held components (houseCARL 1.9.0,
   impeccable, unity-mcp, firecrawl, perplexity) still need their own
   migration before they can auto-update.
+
+### Verified companion patch publication (2026-10-26)
+
+- Forge 6.2.1 PR #19 merged at 7adcda288d551bf4de226b82679317087c053dc0; all main checks and security clean. Release workflow 40431539964 passed; all eight assets downloaded and matched CI bytes, GitHub digests and checksum file. ZIP 5,137,963 bytes, SHA256 3d0aac570891526dfd64faface1273d1eac9dc089e1c1feb0184dd48a2a46fea.
+- The approved live candidate upgrade to 6.2.1 passed actual setup, native helper, source-version import, doctor and Reverse tool binding refresh. Previous cache bytes retained in rollback tree. Final provider integration is resuming from the public companion pins.
+- Reverse final handoff PR #9 merged at b89fa095fe57f272639569e1637732afdc1c48ff with all checks successful; release tag remains b21a414. Both owners remain independent. Bundle 8.24.0 publication pending.

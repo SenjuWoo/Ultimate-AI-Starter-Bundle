@@ -5,7 +5,9 @@
 - Keep three standalone tool owners with optional, remembered companion installation from one launcher.
 - Reuse registered tool roots and shared runtimes; update supported older tools automatically while protecting project pins and personal edits.
 - Delegate Skyrim source updates and skill migrations to Forge; remove the ai-tooling-stack ownership collision.
+- Pin Forge 6.2.1, retaining stale owner bytecode in rollback backups so upgrades import the new release.
 - Add the Reverse THIS! front door without copying its specialist catalog or tool state.
+- Pin Reverse THIS! 1.4.1, including the real-Python PowerShell 5.1 compatibility fix.
 - Update Perplexity after an isolated protocol probe; retain incompatible or unvalidated optional upgrades with current evidence.
 - Document the repository merge analysis, tool coverage, update boundaries and remaining runtime limits.
 - Add Xmake shared provisioning/update and real C++23/MSVC proof; document project-local Nx, Turbo, Vite and webpack without duplicate global installations.

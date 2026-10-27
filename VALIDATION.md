@@ -1,29 +1,14 @@
-# v8.24.0 source validation (publication/live gates pending)
+# v8.24.0 verified source and live validation (publication pending)
 
-- Full Windows PowerShell 5.1 pack gate PASS with shared Python 3.14.9 and
-  isolated test dependencies. Release contracts: 151 passed, zero failed.
-  Manifest: 7,865 files verified, zero missing/mismatch before this doc refresh.
-- Compiler fixtures and real offline compile/run PASS for Go, GCC, Rust, .NET,
-  CMake/Ninja/MSVC/Windows SDK and Xmake C++23. Existing project pins remain.
-- Companion ZIP/child-process boundaries, selected owner reuse, newer-version
-  preservation, source-checkout protection, rollback and native failures PASS.
-- Published Reverse 1.4.0 and Forge 6.2.0 passed exact merged-SHA CI/security.
-  All two/eight public assets were downloaded and checked against GitHub
-  digests and checksum files. Forge's HTTP-500 draft failure was recovered
-  without changing its tag; retry receipts differ, while its payload manifest
-  and wheel/sdist bytes are identical. Pins use actual public ZIP bytes.
-- Forge covers the supplied CLibDT GUI and distinct CommonLib source layouts;
-  it never runs or copies those supplied third-party binaries/library snapshots.
-  Xmake is shared; Nx/Turbo/Vite/webpack stay project-local documented choices.
-- Privacy boundary PASS. The corrected routing contract checks the specialist
-  owner and avoids obsolete fixed schema-cost promises in the general index.
-- Fresh thirteen-config backups/fingerprints exist. Live deployment is running,
-  currently waiting for Windows elevation of the .NET SDK installer. The older
-  failed live install is not reported as healthy. Kimi remains unselected.
-- Remaining: extracted candidate gates, exact-SHA bundle CI/security, final
-  deterministic build/public-byte verification, live owner doctors/fifteen MCP
-  proofs/preference comparison, and final repository handoff. Paid API/inference,
-  editor/game/guest runtimes and absent-provider installations are not certified.
+- Full Windows PowerShell gate PASS on shared Python 3.14.10; release contracts 151 passed, zero failed. Final companion-pin manifest and exact-SHA CI are checked separately before publication.
+- Live 8.24.0 AIO exit 0 (install-20261026-222005.log). Installed-state doctor zero errors/warnings; fifteen Context7/headroom/toolbox checks answered across five selected providers. Thirteen saved model/permission/MoA fingerprints unchanged. Kimi untouched.
+- Shared compiler suite receipt 1.2.0 PASS with actual six-route compile/run; .NET SDK 10.0.403 and Python 3.14.10 installed in place. Completed compiler evidence reused; native plugin choices retained. AI apps need reopening for host MCP/environment refresh.
+- Forge 6.2.1 and Reverse 1.4.1 exact release commits passed CI/security. Their eight/two published assets matched successful CI or deterministic local builds, GitHub digests and checksums. Live Reverse update 56/0 plus doctor PASS; live Forge setup/native/import/doctor PASS and all 588 public file hashes match.
+- Real regressions prove the PS5.1 Python quote fix and stale timestamp-bytecode migration fix. Previous versions/backups retained; private venv/workspace trees and personal settings preserved.
+- Requested Xmake shared compile/run PASS; CLibDT/CommonLib and project build-system snapshots are discovered/documented according to owner and license, without copying supplied binaries/source snapshots.
+- Source privacy and ownership/rollback/native-failure boundaries PASS. Combined skills: 126 general + 48 independently owned Skyrim names. Earlier extracted Full candidate and Core CI proofs retained; final release bytes must be tied to exact green commit.
+- Security queries: Dependabot/code-scanning/secret-scanning zero; code quality unavailable and left off.
+- Remaining: final bundle exact-SHA CI/security, deterministic build/public-byte proof and final handoff. No game/GUI runtime, paid inference/API, guest Sandbox or absent-provider install certification. Tooling ship-gate report is in Forge VALIDATION.md; no plugin/Papyrus/FOMOD/game asset change.
 
 # v8.22.1 validation
 

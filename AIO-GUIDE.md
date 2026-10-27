@@ -69,6 +69,11 @@ is a general cross-engine CLI capability. houseCARL needs MO2 or a Vortex shim:
 update strategies. “Latest” does not override holds or guarantee no-network
 bootstrap. [Evaluations](docs/TOOL-EVALUATIONS.md) are not default installation.
 
+Close AI apps before a shared Python patch update: their MCP processes can hold
+the interpreter's DLLs open. If the official manager reports files in use,
+close those apps and rerun `START-HERE.bat`; the failed update retains the
+working runtime. Do not install another Python to get around the lock.
+
 ```powershell
 .\TOOLS\Test-Installed-State.ps1
 .\TESTS\Test-Pack.ps1
