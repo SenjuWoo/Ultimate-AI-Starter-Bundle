@@ -3,9 +3,9 @@
   "pack_version": "8.25.1",
   "assets": [
     {
-      "file": "Skyrim-Forge-6.3.1.zip",
-      "size": 4818789,
-      "sha256": "ff6f4e04dcb362cd3ceb65d0d17292c4d2ed715e8558b093e3f635578d890fa4"
+      "file": "Skyrim-Forge-6.3.2.zip",
+      "size": 4818367,
+      "sha256": "8f5507f6255e42c238e4adedc321c7843ca15e6da0838ec0ef75027be778138a"
     },
     {
       "file": "codebase-memory-mcp-windows-amd64.zip",

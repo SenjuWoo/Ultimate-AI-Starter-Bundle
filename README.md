@@ -740,7 +740,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ### Skyrim Forge
 
-**Skyrim Forge 6.3.1** ([source](https://github.com/SenjuWoo/SkyrimForge)) is installed
+**Skyrim Forge 6.3.2** ([source](https://github.com/SenjuWoo/SkyrimForge)) is installed
 only with the Skyrim pack. CATALOG.json pins its tag, archive and SHA-256.
 The bundle verifies the archive and delegates existing deployments to Forge's
 preserving updater. Private workspace trees move intact, edited owner files

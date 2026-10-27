@@ -28792,12 +28792,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 61456,
-  "sha256": "4fee81bb00f2f85550f89dba994dad67b0a0cf549684b50441e98b97e51abd5e"
+  "sha256": "4790f800d602f9823ad7fd595bee6de5a4ff7df36f5f63225fe9164faf61d427"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1643,
-  "sha256": "301e8b209e01985bc0062f5d914e4af5553795bdc6cff67bd2b1c837b2b1f6fd"
+  "sha256": "990477daf00a881191ce82d87fe0bbad12d312fd2d25834f88ccf6675ca7d298"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28895,9 +28895,9 @@
   "sha256": "5734af455687f5c4345a497f8ea672e6fb0d2249f060e79ada36628b09b8a7ca"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.3.1.zip",
-  "size": 4818789,
-  "sha256": "ff6f4e04dcb362cd3ceb65d0d17292c4d2ed715e8558b093e3f635578d890fa4"
+  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.3.2.zip",
+  "size": 4818367,
+  "sha256": "8f5507f6255e42c238e4adedc321c7843ca15e6da0838ec0ef75027be778138a"
  },
  {
   "path": "BUNDLED-TOOLS/offline/codebase-memory-mcp-windows-amd64.zip",
@@ -32886,8 +32886,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 239765,
-  "sha256": "f5bf9637151d38d437567b35b2b1168ac9f396c0fb36df550d8bed5fa51d376b"
+  "size": 239789,
+  "sha256": "5165d8319464412ea779a178c5279215da880693bac9017de3a814fb34debfe0"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -33027,7 +33027,7 @@
  {
   "path": "README.md",
   "size": 61850,
-  "sha256": "6a8db6d337833ed5d0f53f5a5e206bc426a4295dbc9c705464fc47f37c008eed"
+  "sha256": "ffdae93155c4fce35b7b22369fc810c578963252f3fd164c329789994615de14"
  },
  {
   "path": "SECURITY.md",
@@ -39121,8 +39121,8 @@
  },
  {
   "path": "docs/history/V8.25.1-CHANGELOG.md",
-  "size": 1392,
-  "sha256": "f655e2071b72b409f176bed6ab4924bff12848921f0aba4d966ee02b429ce385"
+  "size": 1402,
+  "sha256": "28ccf332e0bb6bd796ccfaee2c1042a69004f68676c7b2079e95e315ea1b8872"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",
