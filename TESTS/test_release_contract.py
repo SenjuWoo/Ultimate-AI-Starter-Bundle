@@ -22,6 +22,7 @@ import ast
 import hashlib
 import importlib.util
 import tempfile
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -1399,13 +1400,22 @@ def test_forge_release_is_pinned_and_complete() -> None:
     for rel in ("VERSION.txt", "Install-or-Update.ps1", "Install-Forge-Skill.ps1",
                 "Register-MCP.ps1", "START-HERE.bat", "MANIFEST.json",
                 "skyrim_forge/__init__.py", "skyrim_forge/environment.py",
-                "integrations/skyrim-forge/SKILL.md"):
+                "integrations/skyrim-pack/skills/skyrim-forge/SKILL.md"):
         assert forge_read(rel) is not None
     assert re.search(r"(?m)^Skyrim Forge\s+" + re.escape(version) + r"\s*$", forge_read("VERSION.txt")), (
         "pinned archive's VERSION.txt disagrees with CATALOG.json"
     )
     assert f'VERSION = "{version}"' in forge_read("skyrim_forge/version.py")
-    assert f'const version = "{version}"' in forge_read("writer/native-go/main.go")
+    # Product ZIPs omit Go source; execute the exact pinned helper rather than inspecting a source literal.
+    platform = 'win-x64' if os.name == 'nt' else 'linux-x64'
+    executable = 'SkyrimForge.Native.exe' if os.name == 'nt' else 'SkyrimForge.Native'
+    with tempfile.TemporaryDirectory() as temporary:
+        target = Path(temporary) / executable
+        with zipfile.ZipFile(FORGE_ZIP) as archive:
+            target.write_bytes(archive.read(f'Skyrim-Forge-{version}/writer/published/{platform}/{executable}'))
+        if os.name != 'nt': target.chmod(0o755)
+        result = subprocess.run([str(target),'version'],capture_output=True,text=True,timeout=20)
+        assert result.returncode == 0 and result.stdout.strip() == f'SkyrimForge.Native {version} go'
     with zipfile.ZipFile(FORGE_ZIP) as z:
         helper = z.getinfo(f"Skyrim-Forge-{version}/writer/published/linux-x64/SkyrimForge.Native")
         assert (helper.external_attr >> 16) & 0o111, "pinned Forge archive ships its Linux helper non-executable"
@@ -2451,7 +2461,12 @@ def test_no_shipped_config_carries_a_maintainer_path() -> None:
 
 
 def test_generated_forge_reports_carry_no_private_user_path() -> None:
-    reports = {name: forge_read(name) for name in ("VALIDATION.json", "BUILD-RECEIPT.json")}
+    if not FORGE_ZIP.is_file(): return
+    # Developer reports stay in the owner repository/separate assets, never in the runtime ZIP.
+    with zipfile.ZipFile(FORGE_ZIP) as archive:
+        names = {n.removeprefix(f'Skyrim-Forge-{forge_version()}/') for n in archive.namelist()}
+    assert not {'VALIDATION.json','BUILD-RECEIPT.json','SBOM.spdx.json','STATE.md','CHANGELOG.txt','CHANGELOG.md','WORKSPACE_OWNERSHIP.md'} & names
+    reports = {'MANIFEST.json':forge_read('MANIFEST.json')}
     private_user = re.compile(r"(?i)[A-Z]:(?:\\{1,4}|/)+Users(?:\\{1,4}|/)+(?!<)[A-Za-z0-9._-]+")
     offenders = [name for name, text in reports.items() if text and private_user.search(text)]
     assert not offenders, "generated Forge reports expose a private user path: " + ", ".join(offenders)

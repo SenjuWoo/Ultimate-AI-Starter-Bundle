@@ -96,7 +96,7 @@ def _row(rel:Path,data:bytes)->dict[str,object]:
 
 def _core_offline_manifest_bytes(root:Path)->bytes:
     # BUNDLED-TOOLS/OFFLINE-MANIFEST.json inventories the vendored payloads.
-    # Core carries one of them. Shipping the Full inventory unchanged made the
+    # Core carries none of them. Shipping the Full inventory unchanged made the
     # Core archive describe six files it does not contain -- and the release
     # contract run FROM the extracted Core failed on exactly that, while the
     # same suite passed on Full. Rewrite it to describe Core.

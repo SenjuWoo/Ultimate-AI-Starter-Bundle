@@ -27,7 +27,7 @@
  {
   "path": ".github/workflows/ci.yml",
   "size": 10344,
-  "sha256": "93b2dc730e1c1833511e78ffa7ed853a7f19bc73aabfab48c312068b4ed321d7"
+  "sha256": "c5d883198313045255d5447dc78fdb2ea385d78d4f2b7fcb558ef87a6b297cef"
  },
  {
   "path": ".gitignore",
@@ -28782,12 +28782,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 61456,
-  "sha256": "4888039e0d1a1eca3fcd4a1dd260849349918f781999d54e322aca6c4bf2a081"
+  "sha256": "6a1c0ca1d4b959b38772a88192764505403b9a322657954ca0da8810342b0099"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1643,
-  "sha256": "92c8decd7f56828b17a9600380ad6415a4dc38cdd83e52849f74167863aac849"
+  "sha256": "0e90bb409bfb12651b39c98506391d5270218f55efc3ec27f21c0b70ef0d68a0"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28885,9 +28885,9 @@
   "sha256": "5734af455687f5c4345a497f8ea672e6fb0d2249f060e79ada36628b09b8a7ca"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.2.1.zip",
-  "size": 5137963,
-  "sha256": "3d0aac570891526dfd64faface1273d1eac9dc089e1c1feb0184dd48a2a46fea"
+  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.3.1.zip",
+  "size": 4818789,
+  "sha256": "ff6f4e04dcb362cd3ceb65d0d17292c4d2ed715e8558b093e3f635578d890fa4"
  },
  {
   "path": "BUNDLED-TOOLS/offline/codebase-memory-mcp-windows-amd64.zip",
@@ -32876,8 +32876,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 238242,
-  "sha256": "0ee33750f1a2fd33df6ff601a6d1ef423b426a6ffc7cbbba35db3bec3d6ee555"
+  "size": 238490,
+  "sha256": "e4a3d19cc07abd67625e5ad7d7f9afdcfd313b6165c6855dcd4b885accd9eae0"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -32956,8 +32956,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 176615,
-  "sha256": "c3683c5c7063977948e202280feaf6fdd71f25a82f5668f3dffb63c8d1e96779"
+  "size": 177123,
+  "sha256": "f9ed951430b259f89fc2bc9e11b462f75842ffc641ad6ca78d2095936862f962"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33017,7 +33017,7 @@
  {
   "path": "README.md",
   "size": 74672,
-  "sha256": "973c7efc782754c1d8fbcbba05409d337a6fc18e1804dabb0499e600458b1b0d"
+  "sha256": "ce333a91c9434e6a7f8a9d91e7cb0476d5f5e59c0417a49241210297e0c5f81a"
  },
  {
   "path": "SECURITY.md",
@@ -33036,8 +33036,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 97916,
-  "sha256": "05bf2392ba9cec9f5140044c77b389b943ae07256277fd07a1381c88f4509153"
+  "size": 97494,
+  "sha256": "2d922ef5937428f896c74d2b12fca2e3823a6e2049c798f8fc3a43d0c81000fc"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -33078,6 +33078,11 @@
   "path": "TESTS/Test-ForgeRootResolution.ps1",
   "size": 8653,
   "sha256": "7fc641af45ac1ee0a9dc384b62122b46d4772ee42abde12fffbf763a5856bbff"
+ },
+ {
+  "path": "TESTS/Test-ForgeRuntimeVersion.ps1",
+  "size": 2314,
+  "sha256": "ad1723eb32cac61b860311e73a40c0568e705def8487ac56cca8b1a1863b3ab0"
  },
  {
   "path": "TESTS/Test-GitHubFlags.ps1",
@@ -33146,8 +33151,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 66041,
-  "sha256": "bd8113b8a2f505e5c6b498eb742d9bffa247ff024591d98678e1125681202430"
+  "size": 66411,
+  "sha256": "0c40124be3368f71424efd9d95d8b6efd09d329a4f505c4657be0cd42f7806c5"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -33421,8 +33426,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 330347,
-  "sha256": "a848f9fe8c06f63e022e9b9ad51f4a291e9faeabe5e0a2e516cb381b9ff90247"
+  "size": 331455,
+  "sha256": "58c4c97ea4c38013b8e3e1fecd9927443f021d0c6e5736055ed98f1d4823b719"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -33591,8 +33596,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 63578,
-  "sha256": "3612f04779308ad212eb2d56d39c53a803e11773239db35121862af6aebec5d5"
+  "size": 63524,
+  "sha256": "1d760d4019fb5c5a460f37e05d8b1c72028bb825e5af7bf8b0a6d18885b93953"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -33651,8 +33656,8 @@
  },
  {
   "path": "TOOLS/build_release.py",
-  "size": 13329,
-  "sha256": "39e83f34b3fa7ec85ae57b2d41e9d25a30bbc8ddf89d643ba7a9153041a5048f"
+  "size": 13330,
+  "sha256": "bcff3012a8be5e2c1b0d1a623e8b7eaa4186408ba25bb671b103345d5d45fd7e"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -39096,8 +39101,8 @@
  },
  {
   "path": "docs/history/V8.25.0-CHANGELOG.md",
-  "size": 768,
-  "sha256": "08a52ca54a64611f3f5d7ddf9d7a54d311b6342238b46d85df20df4d71b13e4e"
+  "size": 981,
+  "sha256": "2f51d4549666ca76e6c776d54495365c1a51e149e19708d39f3c977402449c72"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

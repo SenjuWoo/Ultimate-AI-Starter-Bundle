@@ -369,12 +369,12 @@
         "owner": "SenjuWoo",
         "repo": "SkyrimForge"
       },
-      "release_tag": "v6.2.1",
-      "asset": "Skyrim-Forge-6.2.1.zip",
-      "offline_asset": "Skyrim-Forge-6.2.1.zip",
-      "sha256": "3d0aac570891526dfd64faface1273d1eac9dc089e1c1feb0184dd48a2a46fea",
+      "release_tag": "v6.3.1",
+      "asset": "Skyrim-Forge-6.3.1.zip",
+      "offline_asset": "Skyrim-Forge-6.3.1.zip",
+      "sha256": "ff6f4e04dcb362cd3ceb65d0d17292c4d2ed715e8558b093e3f635578d890fa4",
       "note": "Released from github.com/SenjuWoo/SkyrimForge. Installed only with the Skyrim pack. The installer verifies the pinned SHA-256 before extracting, resolves ONE versionless install root, migrates a version-stamped install onto it, preserves Workspaces and the virtualenv, wires selected providers, then proves the result runs with `forge doctor`. CI installs this exact release end to end.",
-      "version": "6.2.1"
+      "version": "6.3.1"
     },
     {
       "id": "code-review-skill",

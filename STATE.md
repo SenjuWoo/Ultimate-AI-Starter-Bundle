@@ -1,58 +1,21 @@
 # Bundle audit state
 
-## Final assurance audit requested 2026-10-27 (in progress)
+## Current handoff — 2026-10-27
 
-- New goal: audit all three owners; make WORKSPACE_OWNERSHIP.md an explicit,
-  reliably created project-root contract; default new work to local/private;
-  keep established repository maintenance/release work automatic within scope;
-  keep runtime mod/product ZIPs free of development ledgers and changelogs.
-- Baselines: bundle main 786deb0 (8.24.0), Forge main 5667637 (6.2.1),
-  Reverse main b89fa09 (1.4.1). All three trees clean at audit start.
-- Verified findings: general workspace skill specifies only a WORKSPACE.md map;
-  Initialize-Workspace.ps1 seeds examples but no project ownership record.
-  Forge release.py accepts CHANGELOG/STATE/ownership files; nexus.py writes
-  publication pages/audits directly into the mod release tree. Forge's product
-  ZIP and sdist builders use unrestricted rglob with exclusions, allowing
-  untracked files under otherwise valid paths. Reverse release construction
-  currently lives only in the previous task's recovery helper, not its repo.
-- Plan: (1) finish risk-focused audit/caller map; (2) reuse workspace seeding
-  with a safe canonical ownership creator and private-default instructions,
-  distinguishing workspace maps, existing aliases and existing repos;
-  (3) stage/validate runtime-only mod payloads and separate publication docs;
-  (4) use tracked/manifest allowlists for toolkit distributions and add a
-  reproducible owner builder for Reverse; (5) regression, extracted-product,
-  upgrade and privacy gates; (6) version/docs, exact-SHA CI/security and release
-  handoff. Toolkits keep runtime skills/templates/help and required licences.
-- Source edits only for now. Preserve installed settings, game/reference roots
-  and all last-good backups. Existing approved public repos remain public;
-  this task does not authorize publishing a newly created user project.
-- Implementation so far: canonical ownership creator plus four real-file tests
-  PASS; general/private-default skill and preamble rules updated, neutral
-  workspace instructions replace the old always-Skyrim example. Fanout/history
-  and instruction-contract validation are being finalized.
-- Forge source now rejects changelog/owner/progress/publication files and empty
-  payloads, avoids traversing rejected directories/links, streams only validated
-  files and rejects changed bytes or output inside the payload. Nexus publication
-  documents move to a sibling publication-docs folder. Targeted tests PASS (49)
-  (artifacts/final-assurance/forge-runtime-payload.log); product-source allowlists,
-  Reverse builder, versions/publication/live refresh remain unfinished.
-- Next: finish targeted regressions, then close raw-tree packaging leaks and
-  separate source-validation from product-delivery validation. No existing tag
-  or release has been replaced. Prior completed-release proof remains below.
+- Goal: finish the authorized final audit, releases and local deployment of three standalone cooperating owners. Existing public repositories retain their remotes/licences. New work stays local until requested publication; explicit GitHub means public/MIT for original work subject to rights/terms, Skyrim publication normally Nexus, with no duplicate source hosting for mods needing no compilation.
+- Live pre-publication gate PASS: Bundle 8.25.0 doctor 0 errors/0 warnings; Forge 6.3.1 native/self-test/doctor, 539 manifest files with 0 mismatches, descriptor MCP 53 tools; Reverse THIS! 1.5.0 doctor and 56 selected-tool refreshes/0 failures. Fifteen core MCP probes across the five selected providers and houseCARL 31-tool handshake pass. Kimi remains unselected.
+- All 13 model/permission/MoA fingerprints are unchanged. Canonical ownership helper matches five provider roots and four Hermes profiles. Strict historical inventories proved 13 stale generated Hermes Skyrim-profile copies; backed up and migrated through the Forge skill owner. General ai-tooling-stack retains bundle ownership. Private Forge workspace identity is unchanged; only installer-owned tools.ui_worker.version changed in its config.
+- Fresh settings backups: LOCALAPPDATA/Ultimate-AI-Starter-Bundle/backups/final-8.25.0. Previous Forge owner: LOCALAPPDATA/Skyrim-Tools/.forge-backup-e24f81ce5dba4f229bdd866b0cb7ab1d. Historical Hermes copies: LOCALAPPDATA/Skyrim-Forge/backups/verified-hermes-profile-a57bf791255949f8ad170cf080b506eb. Keep all prior release/rollback evidence.
+- Bundle candidate 8.25.0 is on codex/final-assurance at implementation commit df000d5 plus reviewed final caller/runtime-version/CI/pin changes. Runtime installs now read Forge VERSION.txt, independent of omitted source CURRENT.txt. Dual PowerShell version-marker gate and successful supported live install prove the fix. Latest public bundle remains 8.24.0; no 8.25.0 publication yet. Final companion pins are verified Forge 6.3.1 and Reverse THIS! 1.5.0.
+- Forge 6.3.1 published from exact green merge 533f399c7eded2fa75c0bc2dabd809ec999ccc50 after all checks/security passed. Two frozen Windows product builds exactly match the validated live candidate. All eight public assets match the CI build/GitHub digests/checksums. Public ZIP SHA256 ff6f4e04dcb362cd3ceb65d0d17292c4d2ed715e8558b093e3f635578d890fa4 (4,818,789 bytes); all 540 uncompressed files/metadata equal the Windows candidate and all 539 installed manifest files equal public bytes. Python-toolchain ZIP compression differs, explicitly recorded. Release guard verifies existing bytes and uploads only missing assets; no tag/assets were replaced.
+- Reverse THIS! public/live 1.5.0 is complete. Frozen tag ab9b842d8a5f7bfce7c128f5f94c1421e3933723; final source main f5c0da39501ac0257f2d58484e8f9d288caf3071, all seven checks pass and security flags clean. Both published assets match build bytes/GitHub digests/checksums. Product ZIP SHA256 5734af455687f5c4345a497f8ea672e6fb0d2249f060e79ada36628b09b8a7ca (64,217 bytes).
+- Evidence: artifacts/final-assurance/pre-publication-local-proof.local.json and the referenced doctor/MCP/ownership/config receipts. Forge live candidate ZIP SHA256 7e6441c9ac579a86938a2e7ddb63a17f81478cfadee567644d65a5fc5cc70cf5 (4,827,374 bytes). Successful bundle install logs: LOCALAPPDATA/Ultimate-AI-Starter-Bundle/logs/install-20261027-122557.log and details. Full unchanged compiler suite/shared Python 3.14.10 compile proof remains valid; no second base Python was installed.
+- Final local source gates PASS: all 151 release contracts, the full 19-section Windows pack gate, 7,882 manifest hashes and version consistency. The final installed-state doctor with the published companion pins passes with 0 errors/0 warnings (bundle825-final-installed-doctor.local.json).
+- Next: push and converge exact-SHA bundle CI/security. Build Core/Full twice from that green commit, publish 8.25.0 and download/verify all four assets. Record final source SHAs, releases and clean trees.
+- Run/build: START-HERE.bat; TESTS/Test-Pack.ps1 -TestPython artifacts/recovery/test-env-314/Scripts/python.exe; TOOLS/Build-Release.ps1. Frozen bundle helper: artifacts/final-assurance/build-frozen-bundle.py SHA. Keep installed settings intact and use supported per-process PowerShell ExecutionPolicy Bypass; machine policy is unchanged.
+- Exact limits: game/app GUI targets, guest Windows Sandbox, paid inference/API runtime and real absent-provider installations are untested. Reopen AI apps once to load refreshed instructions/MCP state. Compatibility holds remain evidence-based. No further broad audit or unchanged-input research is required.
 
-## Audit milestone 2026-10-27
-
-- User clarification preserved: no publication by default; explicit GitHub means public/MIT for original work subject to rights/terms; Skyrim generic publication normally means Nexus, without duplicate GitHub for mods needing no compilation.
-- Candidates 8.25.0 / 6.3.0 / 1.5.0. Root AUDIT.md records reviewed boundaries and evidence reuse. Five ownership tests and real product/fanout fixtures PASS; Reverse complete dual-shell installer/catalog gates PASS, including obsolete-file backup/retirement and personal-work preservation.
-- Forge affected 49 tests, native reproducibility/race/vet and MCP gates PASS; full suite exposed Windows source-byte normalization and is rerunning after correction. Bundle source contracts exposed the expected preamble/offline-version changes and cache staging; corrected; full source/product gates underway.
-- No new releases, tags or live installs yet. Next: converge remaining local gates, exact-SHA CI/security, publish and verify versioned product archives, then approved live refresh with preference proof.
-
-## Final audit validation checkpoint (2026-10-27)
-
-- General ownership/publication tests 7/7 PASS (real Windows junction included); product/fanout tests 2/2 PASS; all 151 bundle contracts PASS; full Windows pack gate PASS. Extracted Core: 7,574 manifest files verified, all seven skill trees and actual START-HERE help PASS.
-- Forge full local source/native/Go/race/reproducibility/packaging/MCP gate PASS, 209 tests. The CI-discovered short-path alias issue is fixed and tested using Windows GetShortPathNameW. Final Forge head 23dac616b48cb493ffef85f7c480171fbe128a0a full matrix green; merge/release in progress.
-- Reverse tag v1.5.0 frozen at ab9b842d8a5f7bfce7c128f5f94c1421e3933723. Exact merge checks and security clean; two builds byte-identical. Runtime SelfTest inputs moved to catalog; actual extracted SelfTest/Plan PASS. Public ZIP 64,217 bytes, SHA256 5734af455687f5c4345a497f8ea672e6fb0d2249f060e79ada36628b09b8a7ca; both public assets downloaded and verified.
-- Next: Forge exact-main green checks/release/public bytes, bundle pins and final exact-SHA CI/release, then approved live update and private preference/doctor proof. No new live mutations yet; last-good installations remain 8.24.0 / 6.2.1 / 1.4.1.
+## Historical completed work (superseded checkpoints below)
 
 ## Completed three-repository release (2026-10-27)
 

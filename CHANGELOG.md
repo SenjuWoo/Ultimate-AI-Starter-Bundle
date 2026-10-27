@@ -3,6 +3,8 @@
 - Canonical project ownership is created before edits, preserving source layout and human records across agents. New work stays local until requested publication; explicit GitHub means public/MIT for original work; Skyrim publication normally means Nexus without duplicate source hosting for mods needing no compilation.
 - Runtime product ZIPs use positive delivery inventories and separate development ledgers/changelogs from user payloads. Source CI and extracted-product gates remain distinct. Neutral workspace examples replace the Skyrim-only defaults.
 - 126 canonical skills total; six provider trees share the same ownership and publication contract. Forge and Reverse stay separate standalone owners.
+- Read the installed Forge runtime VERSION.txt for full and skills-only installs; keep source CURRENT/ledgers outside product ZIPs.
+- Pin verified Skyrim Forge 6.3.1 and Reverse THIS! 1.5.0 product archives; preserve independent existing owners.
 
 ## 8.24.0 (2026-10-26)
 

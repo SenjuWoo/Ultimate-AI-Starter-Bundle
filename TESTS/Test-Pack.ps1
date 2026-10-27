@@ -270,6 +270,8 @@ $ownershipOut=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Pa
 if ($LASTEXITCODE -eq 0 -and $ownershipOut -match 'OWNERSHIP GATE: PASS') { Good 'External skill preservation and source checkout ownership' } else { Bad $ownershipOut }
 $companionOut=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-Companions.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $companionOut -match 'COMPANION GATE: PASS') { Good 'Companion archive, owner reuse and failure boundaries' } else { Bad $companionOut }
+$runtimeVersionOut=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-ForgeRuntimeVersion.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $runtimeVersionOut -match 'FORGE RUNTIME VERSION GATE: PASS') { Good 'Forge runtime version marker works without source bookkeeping' } else { Bad $runtimeVersionOut }
 
 Section '6. Gate self-tests'
 $gateDir = Join-Path $PackRoot 'TOOLS\hooks'
