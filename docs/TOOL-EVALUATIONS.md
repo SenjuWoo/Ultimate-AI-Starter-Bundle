@@ -1,5 +1,44 @@
 # Tool evaluations
 
+## 2026-10-27 — taste-skill 2.1.5 and ECC 2.2.3 re-evaluated (v8.25.1)
+
+Both read from a shallow clone of the upstream default branch; nothing was run or installed.
+
+### taste-skill (`Leonxlnx/taste-skill`) v2.1.5, MIT — **not bundled; documented optional add-on**
+
+The earlier rejection (fourteen prompt skills, no release) no longer describes upstream. It is now
+one skill, `design-taste-frontend`, with tagged releases, a 40 KB `SKILL.md`, a 2.5 MB library of
+researched directions/palettes/section blueprints, and Node scripts (`inspect.mjs`, `lint.mjs`)
+that drive a real Chrome/Edge to screenshot and check a page. Needs Node 22+ and a Chromium
+browser; installs nothing else and needs no keys.
+
+- Overlap: Impeccable (bundled, ~10 KB router + references) already covers critique, polish,
+  hierarchy, accessibility and live iteration. taste-skill adds art-direction research data and a
+  look-and-fix loop that Impeccable does not ship.
+- Why not vendored: a 2.5 MB third-party data set with a mutable upstream, a second writer for the
+  same frontend judgment, and browser-profile management scripts the audit would have to
+  re-review each release. One extra description line is cheap; the maintenance is not.
+- Use it per user: `npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"`
+  (or its Claude/Codex plugin). Keep Impeccable as the default; load taste-skill for landing pages
+  and marketing sites when the result looks generic.
+
+### ECC (`affaan-m/ECC`, `ecc-universal`) v2.2.3, MIT — **not bundled; documented, do not stack**
+
+A full harness layer: 71 agents, 311 skills, 97 command shims, hooks, rules, memory and a
+security scanner (AgentShield), installed through its own wizard (`npx ecc-universal@2.2.3 setup`).
+
+- Conflicts with this bundle's boundaries: it installs its own hooks and rules into provider
+  settings (the bundle owns and preserves those), and 311 more skills would swamp the skill
+  index that Claude/Codex build from every description on every session. Upstream itself warns
+  that stacking install methods duplicates skills, commands and hooks.
+- Overlap is large: Superpowers (workflow), Ponytail (minimal code), the bundle's evidence,
+  review and release skills, and Headroom/RTK (context cost) already cover the same ground.
+- If wanted: install ECC alone through its native plugin with `--profile minimal` or `core`, run
+  `npx ecc-universal doctor --target <provider>`, and keep it out of providers the bundle manages
+  unless the hook profile is reviewed. Worth mining, not installing wholesale: its security
+  guidance and context-budget/continuous-learning skills as reading material for future
+  bundle skills.
+
 ## 2026-10-26 — held tools rechecked
 
 Perplexity MCP moves from 1.2.1 to 1.3.0 after npm integrity and registry

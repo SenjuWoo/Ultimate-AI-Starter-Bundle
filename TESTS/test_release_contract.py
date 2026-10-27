@@ -2295,7 +2295,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "e92ea2c4fefac24d68744d3b7003238b4516e33c1189601e84ba08b4c5d0eb8c", (
+    assert digest == "7c241d480d46a59710dfff59a85ba0b3dd50c02dab107013ed150ae50f138bca", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -6105,7 +6105,7 @@ def test_external_tool_installs_are_version_aware() -> None:
 
     pack = forge_read('integrations/skyrim-pack/INSTRUCTIONS.md')
     if pack is not None:
-        assert '## Ownership of Skyrim tooling' in pack
+        assert '## Skyrim pack' in pack
 
 
 def test_antigravity_is_a_first_class_provider() -> None:
