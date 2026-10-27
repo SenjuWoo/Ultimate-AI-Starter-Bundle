@@ -4,9 +4,11 @@ Apply when creating, finishing, or preparing a GitHub project for users. Keep th
 
 ## Decide completion before writing
 
+Default new projects to local/private. A generic "finish the project/mod" request is not a repository/publication request. Create a remote only when requested; New work stays local/private until publication is requested. "Put it on GitHub" means public and MIT for original work by default, subject to third-party rights and platform terms; preserve existing licences and explicit choices. Generic publication uses the appropriate destination (normally Nexus Mods for Skyrim). A mod needing no compilation does not get a duplicate GitHub repository by default; add source hosting when requested or needed for development. Preserve established remotes, visibility and release workflows. For scoped maintenance of an existing repo, update its README/changelog/version and complete authorized push/release work without asking again. Keep the canonical `WORKSPACE_OWNERSHIP.md` at the project root; a workspace map or progress file does not replace it.
+
 Record the intended user, supported platforms, install/run command, test/build commands, deliverable type, and evidence needed. Inspect existing files, default branch, licence, workflows, release history, and repository settings. Preserve personal changes. Select versions and commands from project metadata and current primary sources.
 
-Reuse existing permissions and prior approval. Prepare implementation, tests, documentation, release notes and packaging before stopping for missing publication approval. A request to create a repository is not automatically permission to publish a public release, change visibility/access rules, buy features, or assign a licence. Ask once at the final boundary only if that authority is actually missing; report exactly what is ready and what is pending. If publishing is already authorized, finish it without asking again.
+Reuse existing permissions and prior approval. Prepare implementation, tests, documentation, release notes and packaging before stopping for missing publication approval. An explicit GitHub publication request uses the public/MIT defaults above; it does not authorize changing existing access rules, buying features or relicensing third-party work. Separate release publication follows the requested scope. Ask once at the final boundary only if that authority is actually missing; report exactly what is ready and what is pending. If publishing is already authorized, finish it without asking again.
 
 ## Baseline and proof
 

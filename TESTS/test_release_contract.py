@@ -2285,7 +2285,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "7a4dc118d90b44f0b6b4a4bba849519e4bfab26128c06dd8c8b23e84d87e11dc", (
+    assert digest == "e92ea2c4fefac24d68744d3b7003238b4516e33c1189601e84ba08b4c5d0eb8c", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -5103,7 +5103,8 @@ def test_every_canonical_skill_reached_every_provider_tree() -> None:
     missing = []
     extra = []
     for skill_dir in sorted(p for p in CANON.iterdir() if p.is_dir()):
-        files = [p for p in skill_dir.rglob("*") if p.is_file()]
+        files = [p for p in skill_dir.rglob("*") if p.is_file()
+                 and '__pycache__' not in p.parts and p.suffix not in {'.pyc','.pyo'}]
         for prov in providers:
             dest = (ROOT / "1-TAILORED-PROVIDER-TREES" / prov /
                     "COPY-TO-SKILLS-DIRECTORY" / "skills" / skill_dir.name)

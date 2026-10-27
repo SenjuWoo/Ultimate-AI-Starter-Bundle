@@ -25,4 +25,6 @@ Weak agents often satisfy the literal noun but miss installation, packaging, ent
 
 ## Repository requests
 
-For "make/create a repo", "put this on GitHub", or "finish this project", route to `github-fleet-maintenance` and its repository completion contract. Include real CI, applicable security settings/scanning and Dependabot coverage, documentation, usable artifacts, and the `release-checklist` handoff. Publishing follows existing authorization; if approval is missing, prepare the concrete release first and identify only that pending step. Respect explicit empty-repository or prototype scope.
+"Finish this project" means a finished local artifact by default; it does not mean create or publish a public repository. Establish `WORKSPACE_OWNERSHIP.md` through `workspace-organization` and keep new work local/private.
+
+For an explicit repository/GitHub request or maintenance of an existing repository, use `github-fleet-maintenance` and its completion contract. Preserve existing remotes, visibility and licences; include appropriate README/changelog/version updates, tests and authorized commits, pushes and releases. "Put it on GitHub" means public with MIT for original work by default, subject to rights and platform terms. Generic publication uses the appropriate destination (normally Nexus for Skyrim); a mod needing no compilation does not need a duplicate GitHub repository. Follow `workspace-organization` for publication intent. Respect explicit empty-repository or prototype scope.

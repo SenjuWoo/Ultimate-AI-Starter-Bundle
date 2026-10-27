@@ -1,5 +1,59 @@
 # Bundle audit state
 
+## Final assurance audit requested 2026-10-27 (in progress)
+
+- New goal: audit all three owners; make WORKSPACE_OWNERSHIP.md an explicit,
+  reliably created project-root contract; default new work to local/private;
+  keep established repository maintenance/release work automatic within scope;
+  keep runtime mod/product ZIPs free of development ledgers and changelogs.
+- Baselines: bundle main 786deb0 (8.24.0), Forge main 5667637 (6.2.1),
+  Reverse main b89fa09 (1.4.1). All three trees clean at audit start.
+- Verified findings: general workspace skill specifies only a WORKSPACE.md map;
+  Initialize-Workspace.ps1 seeds examples but no project ownership record.
+  Forge release.py accepts CHANGELOG/STATE/ownership files; nexus.py writes
+  publication pages/audits directly into the mod release tree. Forge's product
+  ZIP and sdist builders use unrestricted rglob with exclusions, allowing
+  untracked files under otherwise valid paths. Reverse release construction
+  currently lives only in the previous task's recovery helper, not its repo.
+- Plan: (1) finish risk-focused audit/caller map; (2) reuse workspace seeding
+  with a safe canonical ownership creator and private-default instructions,
+  distinguishing workspace maps, existing aliases and existing repos;
+  (3) stage/validate runtime-only mod payloads and separate publication docs;
+  (4) use tracked/manifest allowlists for toolkit distributions and add a
+  reproducible owner builder for Reverse; (5) regression, extracted-product,
+  upgrade and privacy gates; (6) version/docs, exact-SHA CI/security and release
+  handoff. Toolkits keep runtime skills/templates/help and required licences.
+- Source edits only for now. Preserve installed settings, game/reference roots
+  and all last-good backups. Existing approved public repos remain public;
+  this task does not authorize publishing a newly created user project.
+- Implementation so far: canonical ownership creator plus four real-file tests
+  PASS; general/private-default skill and preamble rules updated, neutral
+  workspace instructions replace the old always-Skyrim example. Fanout/history
+  and instruction-contract validation are being finalized.
+- Forge source now rejects changelog/owner/progress/publication files and empty
+  payloads, avoids traversing rejected directories/links, streams only validated
+  files and rejects changed bytes or output inside the payload. Nexus publication
+  documents move to a sibling publication-docs folder. Targeted tests PASS (49)
+  (artifacts/final-assurance/forge-runtime-payload.log); product-source allowlists,
+  Reverse builder, versions/publication/live refresh remain unfinished.
+- Next: finish targeted regressions, then close raw-tree packaging leaks and
+  separate source-validation from product-delivery validation. No existing tag
+  or release has been replaced. Prior completed-release proof remains below.
+
+## Audit milestone 2026-10-27
+
+- User clarification preserved: no publication by default; explicit GitHub means public/MIT for original work subject to rights/terms; Skyrim generic publication normally means Nexus, without duplicate GitHub for mods needing no compilation.
+- Candidates 8.25.0 / 6.3.0 / 1.5.0. Root AUDIT.md records reviewed boundaries and evidence reuse. Five ownership tests and real product/fanout fixtures PASS; Reverse complete dual-shell installer/catalog gates PASS, including obsolete-file backup/retirement and personal-work preservation.
+- Forge affected 49 tests, native reproducibility/race/vet and MCP gates PASS; full suite exposed Windows source-byte normalization and is rerunning after correction. Bundle source contracts exposed the expected preamble/offline-version changes and cache staging; corrected; full source/product gates underway.
+- No new releases, tags or live installs yet. Next: converge remaining local gates, exact-SHA CI/security, publish and verify versioned product archives, then approved live refresh with preference proof.
+
+## Final audit validation checkpoint (2026-10-27)
+
+- General ownership/publication tests 7/7 PASS (real Windows junction included); product/fanout tests 2/2 PASS; all 151 bundle contracts PASS; full Windows pack gate PASS. Extracted Core: 7,574 manifest files verified, all seven skill trees and actual START-HERE help PASS.
+- Forge full local source/native/Go/race/reproducibility/packaging/MCP gate PASS, 209 tests. The CI-discovered short-path alias issue is fixed and tested using Windows GetShortPathNameW. Final Forge head 23dac616b48cb493ffef85f7c480171fbe128a0a full matrix green; merge/release in progress.
+- Reverse tag v1.5.0 frozen at ab9b842d8a5f7bfce7c128f5f94c1421e3933723. Exact merge checks and security clean; two builds byte-identical. Runtime SelfTest inputs moved to catalog; actual extracted SelfTest/Plan PASS. Public ZIP 64,217 bytes, SHA256 5734af455687f5c4345a497f8ea672e6fb0d2249f060e79ada36628b09b8a7ca; both public assets downloaded and verified.
+- Next: Forge exact-main green checks/release/public bytes, bundle pins and final exact-SHA CI/release, then approved live update and private preference/doctor proof. No new live mutations yet; last-good installations remain 8.24.0 / 6.2.1 / 1.4.1.
+
 ## Completed three-repository release (2026-10-27)
 
 - Goal completed: three standalone, mutually recommended owners with optional bundle orchestration and reuse/update of shared tools. Reverse THIS! stays separate; docs/COMPANION-ARCHITECTURE.md records the merge analysis and update boundaries.

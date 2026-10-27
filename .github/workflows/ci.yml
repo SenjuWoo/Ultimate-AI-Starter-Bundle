@@ -79,6 +79,10 @@ jobs:
       - name: Release contracts
         shell: powershell
         run: |
+          python TESTS/test_workspace_ownership.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_product_delivery.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_release_contract.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_shared_shell.py
@@ -98,7 +102,7 @@ jobs:
           python -m zipfile -e (Join-Path $PWD "artifacts\$prefix-Core.zip") $extract
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $coreRoot = Join-Path $extract $prefix
-          & (Join-Path $coreRoot 'TESTS\Test-Pack.ps1') -PackRoot $coreRoot
+          python (Join-Path $coreRoot 'TOOLS\verify_product.py')
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
   manifest:

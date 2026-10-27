@@ -299,7 +299,7 @@ if ($refreshRequired) {
   try {
     # Copy only declared release files, never a developer checkout's .git/venv/private files.
     $manifest=[IO.File]::ReadAllText((Join-Path $source 'MANIFEST.json')) | ConvertFrom-Json
-    $paths=@($manifest.files | ForEach-Object path) + @('MANIFEST.json','VALIDATION.json','BUILD-RECEIPT.json','SBOM.spdx.json','CHECKSUMS-SHA256.txt')
+    $paths=@($manifest.files | ForEach-Object path) + @('MANIFEST.json')
     foreach ($rel in @($paths | Select-Object -Unique)) {
       if ($rel -match '(^|[/\\])\.git([/\\]|$)' -or [IO.Path]::IsPathRooted($rel)) { throw "Unsafe Forge release path: $rel" }
       $from=Join-Path $source $rel; $to=Join-Path $stage $rel

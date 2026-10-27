@@ -21,13 +21,13 @@
  },
  {
   "path": ".github/scripts/verify_manifest.py",
-  "size": 1898,
-  "sha256": "786d1f4978dd5fc750d6748ff4f6e39b71364581b11c86326ce120c4da3259d4"
+  "size": 226,
+  "sha256": "7160d38024c5f42896cdedfcc36eb17a8f0c78016bf04a5c3c6fbd0401ead036"
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 9925,
-  "sha256": "cf65222b78ec1b3e34b2e2468944620edb24602f8daa8a9dd85357615eef622e"
+  "size": 10344,
+  "sha256": "93b2dc730e1c1833511e78ffa7ed853a7f19bc73aabfab48c312068b4ed321d7"
  },
  {
   "path": ".gitignore",
@@ -36,8 +36,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Compact.md",
-  "size": 3698,
-  "sha256": "19fda2010dd1f4341e038cdb9f7c01ad378a7317d06d49cc23a22fdcf78326c9"
+  "size": 4485,
+  "sha256": "6a19f285685c87a12b3587aad395ff10a4cb1497d605f3a2dc73e3a2b1800235"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web Light.md",
@@ -51,8 +51,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 9501,
-  "sha256": "d2b3bfc387d086b9bec0010775258e9935f5472223793104b9e56881a0b5a0d8"
+  "size": 10332,
+  "sha256": "5e9b4c195aafc842aba7fff387055f8068b30c3733020e68a45470423b4bfae0"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
@@ -206,8 +206,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/artifact-proof/SKILL.md",
-  "size": 1075,
-  "sha256": "a47d91d011b02aa797b20c79bbfdeddddb22c54ea5cf278d13db630e5e3f9770"
+  "size": 2009,
+  "sha256": "cfe76c49d3696e1bce3d83e963db077f006623c486cf972b1d487cf3ff671e90"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/artifact-provenance/SKILL.md",
@@ -916,8 +916,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 2263,
-  "sha256": "51e4c51f47aec18d70870efc8e14462bc8f854c4687194ae0697cec728ce5985"
+  "size": 3023,
+  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -1051,8 +1051,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-versioned-workspace.md",
-  "size": 1427,
-  "sha256": "f176cca52d7814fa937eda0054a741ce3c36ff6bec8f3cb89b771c13acffba23"
+  "size": 1971,
+  "sha256": "98bf357ac4d1f3d1621775ae405815866f07c68f547ff719e746f7934c65fda7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/garrys-mod.md",
@@ -1106,13 +1106,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 9047,
-  "sha256": "60a7b693ee3d270fff4295431b4e96abc9682d9432eb90ff1f2681dce0f0b24b"
+  "size": 9862,
+  "sha256": "836ca1e2b19d5748c56c4e13dae795d300263662e7d319ef6bc5272dd03af05b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 7719,
-  "sha256": "d48d1417351e748935c40770bdcce8dd2410e89899d3c217cb1414fd801802d1"
+  "size": 8744,
+  "sha256": "224f51d758c8923ff76f109ee9221d5317994911b986fc58471491d5d2acca10"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -3791,8 +3791,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/one-shot-completion/SKILL.md",
-  "size": 1753,
-  "sha256": "7231290451180b422e3f367a4f2aedcb3dde3337c1d7f115d9b2d23ee67a3336"
+  "size": 2160,
+  "sha256": "d53639c333526bf72fa95145ec6fa3ed8c03a08dada4bf85ed6e4e3f22ae56c7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/paradox-modding/SKILL.md",
@@ -4776,8 +4776,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 2954,
-  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
+  "size": 5823,
+  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
+  "size": 5061,
+  "sha256": "dfec80cc15572828e415208295016eb0d36b43add441519cb0d7721a9ab5c948"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -4886,8 +4891,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/artifact-proof/SKILL.md",
-  "size": 1075,
-  "sha256": "a47d91d011b02aa797b20c79bbfdeddddb22c54ea5cf278d13db630e5e3f9770"
+  "size": 2009,
+  "sha256": "cfe76c49d3696e1bce3d83e963db077f006623c486cf972b1d487cf3ff671e90"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/artifact-provenance/SKILL.md",
@@ -5596,8 +5601,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 2263,
-  "sha256": "51e4c51f47aec18d70870efc8e14462bc8f854c4687194ae0697cec728ce5985"
+  "size": 3023,
+  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -5731,8 +5736,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-versioned-workspace.md",
-  "size": 1427,
-  "sha256": "f176cca52d7814fa937eda0054a741ce3c36ff6bec8f3cb89b771c13acffba23"
+  "size": 1971,
+  "sha256": "98bf357ac4d1f3d1621775ae405815866f07c68f547ff719e746f7934c65fda7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/garrys-mod.md",
@@ -5786,13 +5791,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 9047,
-  "sha256": "60a7b693ee3d270fff4295431b4e96abc9682d9432eb90ff1f2681dce0f0b24b"
+  "size": 9862,
+  "sha256": "836ca1e2b19d5748c56c4e13dae795d300263662e7d319ef6bc5272dd03af05b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 7719,
-  "sha256": "d48d1417351e748935c40770bdcce8dd2410e89899d3c217cb1414fd801802d1"
+  "size": 8744,
+  "sha256": "224f51d758c8923ff76f109ee9221d5317994911b986fc58471491d5d2acca10"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -8471,8 +8476,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/one-shot-completion/SKILL.md",
-  "size": 1753,
-  "sha256": "7231290451180b422e3f367a4f2aedcb3dde3337c1d7f115d9b2d23ee67a3336"
+  "size": 2160,
+  "sha256": "d53639c333526bf72fa95145ec6fa3ed8c03a08dada4bf85ed6e4e3f22ae56c7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/paradox-modding/SKILL.md",
@@ -9456,8 +9461,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 2954,
-  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
+  "size": 5823,
+  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
+  "size": 5061,
+  "sha256": "dfec80cc15572828e415208295016eb0d36b43add441519cb0d7721a9ab5c948"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -9631,8 +9641,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/artifact-proof/SKILL.md",
-  "size": 1075,
-  "sha256": "a47d91d011b02aa797b20c79bbfdeddddb22c54ea5cf278d13db630e5e3f9770"
+  "size": 2009,
+  "sha256": "cfe76c49d3696e1bce3d83e963db077f006623c486cf972b1d487cf3ff671e90"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/artifact-provenance/SKILL.md",
@@ -10341,8 +10351,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 2263,
-  "sha256": "51e4c51f47aec18d70870efc8e14462bc8f854c4687194ae0697cec728ce5985"
+  "size": 3023,
+  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -10476,8 +10486,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-versioned-workspace.md",
-  "size": 1427,
-  "sha256": "f176cca52d7814fa937eda0054a741ce3c36ff6bec8f3cb89b771c13acffba23"
+  "size": 1971,
+  "sha256": "98bf357ac4d1f3d1621775ae405815866f07c68f547ff719e746f7934c65fda7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/garrys-mod.md",
@@ -10531,13 +10541,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 9047,
-  "sha256": "60a7b693ee3d270fff4295431b4e96abc9682d9432eb90ff1f2681dce0f0b24b"
+  "size": 9862,
+  "sha256": "836ca1e2b19d5748c56c4e13dae795d300263662e7d319ef6bc5272dd03af05b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 7719,
-  "sha256": "d48d1417351e748935c40770bdcce8dd2410e89899d3c217cb1414fd801802d1"
+  "size": 8744,
+  "sha256": "224f51d758c8923ff76f109ee9221d5317994911b986fc58471491d5d2acca10"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -13216,8 +13226,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/one-shot-completion/SKILL.md",
-  "size": 1753,
-  "sha256": "7231290451180b422e3f367a4f2aedcb3dde3337c1d7f115d9b2d23ee67a3336"
+  "size": 2160,
+  "sha256": "d53639c333526bf72fa95145ec6fa3ed8c03a08dada4bf85ed6e4e3f22ae56c7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/paradox-modding/SKILL.md",
@@ -14201,8 +14211,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 2954,
-  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
+  "size": 5823,
+  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
+  "size": 5061,
+  "sha256": "dfec80cc15572828e415208295016eb0d36b43add441519cb0d7721a9ab5c948"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -14361,8 +14376,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/artifact-proof/SKILL.md",
-  "size": 1075,
-  "sha256": "a47d91d011b02aa797b20c79bbfdeddddb22c54ea5cf278d13db630e5e3f9770"
+  "size": 2009,
+  "sha256": "cfe76c49d3696e1bce3d83e963db077f006623c486cf972b1d487cf3ff671e90"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/artifact-provenance/SKILL.md",
@@ -15071,8 +15086,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 2263,
-  "sha256": "51e4c51f47aec18d70870efc8e14462bc8f854c4687194ae0697cec728ce5985"
+  "size": 3023,
+  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -15206,8 +15221,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-versioned-workspace.md",
-  "size": 1427,
-  "sha256": "f176cca52d7814fa937eda0054a741ce3c36ff6bec8f3cb89b771c13acffba23"
+  "size": 1971,
+  "sha256": "98bf357ac4d1f3d1621775ae405815866f07c68f547ff719e746f7934c65fda7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/garrys-mod.md",
@@ -15261,13 +15276,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 9047,
-  "sha256": "60a7b693ee3d270fff4295431b4e96abc9682d9432eb90ff1f2681dce0f0b24b"
+  "size": 9862,
+  "sha256": "836ca1e2b19d5748c56c4e13dae795d300263662e7d319ef6bc5272dd03af05b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 7719,
-  "sha256": "d48d1417351e748935c40770bdcce8dd2410e89899d3c217cb1414fd801802d1"
+  "size": 8744,
+  "sha256": "224f51d758c8923ff76f109ee9221d5317994911b986fc58471491d5d2acca10"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -17946,8 +17961,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/one-shot-completion/SKILL.md",
-  "size": 1753,
-  "sha256": "7231290451180b422e3f367a4f2aedcb3dde3337c1d7f115d9b2d23ee67a3336"
+  "size": 2160,
+  "sha256": "d53639c333526bf72fa95145ec6fa3ed8c03a08dada4bf85ed6e4e3f22ae56c7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/paradox-modding/SKILL.md",
@@ -18931,8 +18946,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 2954,
-  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
+  "size": 5823,
+  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
+  "size": 5061,
+  "sha256": "dfec80cc15572828e415208295016eb0d36b43add441519cb0d7721a9ab5c948"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -19091,8 +19111,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/artifact-proof/SKILL.md",
-  "size": 1075,
-  "sha256": "a47d91d011b02aa797b20c79bbfdeddddb22c54ea5cf278d13db630e5e3f9770"
+  "size": 2009,
+  "sha256": "cfe76c49d3696e1bce3d83e963db077f006623c486cf972b1d487cf3ff671e90"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/artifact-provenance/SKILL.md",
@@ -19801,8 +19821,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 2263,
-  "sha256": "51e4c51f47aec18d70870efc8e14462bc8f854c4687194ae0697cec728ce5985"
+  "size": 3023,
+  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -19936,8 +19956,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-versioned-workspace.md",
-  "size": 1427,
-  "sha256": "f176cca52d7814fa937eda0054a741ce3c36ff6bec8f3cb89b771c13acffba23"
+  "size": 1971,
+  "sha256": "98bf357ac4d1f3d1621775ae405815866f07c68f547ff719e746f7934c65fda7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/garrys-mod.md",
@@ -19991,13 +20011,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 9047,
-  "sha256": "60a7b693ee3d270fff4295431b4e96abc9682d9432eb90ff1f2681dce0f0b24b"
+  "size": 9862,
+  "sha256": "836ca1e2b19d5748c56c4e13dae795d300263662e7d319ef6bc5272dd03af05b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 7719,
-  "sha256": "d48d1417351e748935c40770bdcce8dd2410e89899d3c217cb1414fd801802d1"
+  "size": 8744,
+  "sha256": "224f51d758c8923ff76f109ee9221d5317994911b986fc58471491d5d2acca10"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -22676,8 +22696,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/one-shot-completion/SKILL.md",
-  "size": 1753,
-  "sha256": "7231290451180b422e3f367a4f2aedcb3dde3337c1d7f115d9b2d23ee67a3336"
+  "size": 2160,
+  "sha256": "d53639c333526bf72fa95145ec6fa3ed8c03a08dada4bf85ed6e4e3f22ae56c7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/paradox-modding/SKILL.md",
@@ -23661,8 +23681,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 2954,
-  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
+  "size": 5823,
+  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
+  "size": 5061,
+  "sha256": "dfec80cc15572828e415208295016eb0d36b43add441519cb0d7721a9ab5c948"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -23896,8 +23921,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/artifact-proof/SKILL.md",
-  "size": 1075,
-  "sha256": "a47d91d011b02aa797b20c79bbfdeddddb22c54ea5cf278d13db630e5e3f9770"
+  "size": 2009,
+  "sha256": "cfe76c49d3696e1bce3d83e963db077f006623c486cf972b1d487cf3ff671e90"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/artifact-provenance/SKILL.md",
@@ -24606,8 +24631,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 2263,
-  "sha256": "51e4c51f47aec18d70870efc8e14462bc8f854c4687194ae0697cec728ce5985"
+  "size": 3023,
+  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -24741,8 +24766,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-versioned-workspace.md",
-  "size": 1427,
-  "sha256": "f176cca52d7814fa937eda0054a741ce3c36ff6bec8f3cb89b771c13acffba23"
+  "size": 1971,
+  "sha256": "98bf357ac4d1f3d1621775ae405815866f07c68f547ff719e746f7934c65fda7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/garrys-mod.md",
@@ -24796,13 +24821,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
-  "size": 9047,
-  "sha256": "60a7b693ee3d270fff4295431b4e96abc9682d9432eb90ff1f2681dce0f0b24b"
+  "size": 9862,
+  "sha256": "836ca1e2b19d5748c56c4e13dae795d300263662e7d319ef6bc5272dd03af05b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/references/repository-completion.md",
-  "size": 7719,
-  "sha256": "d48d1417351e748935c40770bdcce8dd2410e89899d3c217cb1414fd801802d1"
+  "size": 8744,
+  "sha256": "224f51d758c8923ff76f109ee9221d5317994911b986fc58471491d5d2acca10"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -27481,8 +27506,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/one-shot-completion/SKILL.md",
-  "size": 1753,
-  "sha256": "7231290451180b422e3f367a4f2aedcb3dde3337c1d7f115d9b2d23ee67a3336"
+  "size": 2160,
+  "sha256": "d53639c333526bf72fa95145ec6fa3ed8c03a08dada4bf85ed6e4e3f22ae56c7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/paradox-modding/SKILL.md",
@@ -28466,8 +28491,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 2954,
-  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
+  "size": 5823,
+  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
+  "size": 5061,
+  "sha256": "dfec80cc15572828e415208295016eb0d36b43add441519cb0d7721a9ab5c948"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/writing-plans/SKILL.md",
@@ -28655,6 +28685,11 @@
   "sha256": "9206bd69b46641d5e1d1c07559096d892a3d65b6757ed1c92171123ec44cf90d"
  },
  {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-5e4166cf0a1e.md",
+  "size": 9501,
+  "sha256": "d2b3bfc387d086b9bec0010775258e9935f5472223793104b9e56881a0b5a0d8"
+ },
+ {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-6d3b80be965b.md",
   "size": 10642,
   "sha256": "ee662f6efa63a1ea214d3526381f3af8c26f32087354d569b5be975ecb2b8f6f"
@@ -28735,19 +28770,24 @@
   "sha256": "5a777fa3f3e4605af3a163116c8b3056f39c14244b9765606f140778ac13cb2b"
  },
  {
+  "path": "AUDIT.md",
+  "size": 3484,
+  "sha256": "0a23eecbe180cc2c3196e06999e136905248e92d94137f0844187d1b480f856c"
+ },
+ {
   "path": "BOOTSTRAP.txt",
   "size": 2666,
   "sha256": "b11b208633ee69e5f7591538377813dd1de21b8a5f365a94631d1cd1e6a47be5"
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 61453,
-  "sha256": "4e05f1c2387f608e88ec25bc426c5b5820afaa43baa92da1aab06d3c53e72bb0"
+  "size": 61456,
+  "sha256": "4888039e0d1a1eca3fcd4a1dd260849349918f781999d54e322aca6c4bf2a081"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
-  "size": 1644,
-  "sha256": "8f25adb57ac83a2947ba4787fb493d534c949f9973303fa59d310f13a5ab3a66"
+  "size": 1643,
+  "sha256": "92c8decd7f56828b17a9600380ad6415a4dc38cdd83e52849f74167863aac849"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28757,7 +28797,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40536,
-  "sha256": "7a31d9286e367261e7197a8c47866cdfdaa2e72da52decd2e5cfd6a8225515ba"
+  "sha256": "c9f7477c3fd1100952cbff80b99f72f036f7c642e51145d086d4501c12c03b9c"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -28840,9 +28880,9 @@
   "sha256": "b5279d1d6d3333d739d276c263a745ae51d74dac1e2a7a50fd26fffbde7cfd8b"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/Reverse-This-1.4.1.zip",
-  "size": 108340,
-  "sha256": "76b7ce541f313defbecb832a14dac4b8934a5fa8fde2ca1724639244306f0826"
+  "path": "BUNDLED-TOOLS/offline/Reverse-This-1.5.0.zip",
+  "size": 64217,
+  "sha256": "5734af455687f5c4345a497f8ea672e6fb0d2249f060e79ada36628b09b8a7ca"
  },
  {
   "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.2.1.zip",
@@ -28891,8 +28931,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/optional-skills/melty-mashups/SKILL.md",
-  "size": 4409,
-  "sha256": "b30be79c5cb09dc8107ee5678e491e4e574ad2a7dbf02fc19a409bd8902fe30b"
+  "size": 4491,
+  "sha256": "d8fce57b8fce01049178840407009e9b9554117ba0e1128f915cd48864d02022"
  },
  {
   "path": "BUNDLED-TOOLS/packs/skyrim/legacy/039b9d9c81f0.md",
@@ -32836,23 +32876,23 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 234416,
-  "sha256": "6b225c3b0d493021755ca8fa93a91ea532709d68325244a7ad2113d395eb4d22"
+  "size": 238242,
+  "sha256": "0ee33750f1a2fd33df6ff601a6d1ef423b426a6ffc7cbbba35db3bec3d6ee555"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
-  "size": 4198,
-  "sha256": "942079a2b13af3c1f3be77cd09165860935acec0b4f2675fe67e8b830d4c774d"
+  "size": 2412,
+  "sha256": "5dbfa7098000fb045ba3600bb851cbc11da7f462e863506aebeca2408c519bba"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 9501,
-  "sha256": "d2b3bfc387d086b9bec0010775258e9935f5472223793104b9e56881a0b5a0d8"
+  "size": 10332,
+  "sha256": "5e9b4c195aafc842aba7fff387055f8068b30c3733020e68a45470423b4bfae0"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
-  "size": 4212,
-  "sha256": "04841e683bab8cd1ea11fd547ab8723a6084ca841a96c69742a4ca8c15bf859e"
+  "size": 2412,
+  "sha256": "5dbfa7098000fb045ba3600bb851cbc11da7f462e863506aebeca2408c519bba"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/.cbmignore",
@@ -32905,6 +32945,11 @@
   "sha256": "03fe079fa59b4895cfaf8ef4a9bb32e3bca84272178bef4ef7ebad4e7c2d8d7c"
  },
  {
+  "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/WORKSPACE_OWNERSHIP.md",
+  "size": 1453,
+  "sha256": "c234726f266ca876fbac85bcd6aba34ef3d59fa3fefcffe437e310f969688b12"
+ },
+ {
   "path": "GROK-MCP-TROUBLESHOOTING.md",
   "size": 11523,
   "sha256": "54831ba92293f97f9de1a24207bfa52b7e50314787e1f4fa309a88ad302ef38f"
@@ -32912,7 +32957,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 176615,
-  "sha256": "cb986c93fe86bc4b5a299c6a3a4b49bdaf3d37255aa77d5e6babab697990b7e6"
+  "sha256": "c3683c5c7063977948e202280feaf6fdd71f25a82f5668f3dffb63c8d1e96779"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -32971,8 +33016,8 @@
  },
  {
   "path": "README.md",
-  "size": 72118,
-  "sha256": "38d61ba9fb374e269a5ad861a2ade0827c94136f61d3e0feb94b9e010d8f0e75"
+  "size": 74672,
+  "sha256": "973c7efc782754c1d8fbcbba05409d337a6fc18e1804dabb0499e600458b1b0d"
  },
  {
   "path": "SECURITY.md",
@@ -32981,18 +33026,18 @@
  },
  {
   "path": "START-HERE.bat",
-  "size": 910,
-  "sha256": "298322c6de0e94b7a0a46dc9c82c3c522401dfa7f1cba714a3f0d9d07acdcdc0"
+  "size": 1053,
+  "sha256": "7a3c3e7c4f9b7eaed0b217f5e72b37b077e7654162a63f736ddf3be2d45fdde2"
  },
  {
   "path": "START-HERE.txt",
   "size": 12021,
-  "sha256": "4fd12cf7c492d72896f5196195f8bb117041b4bf1d4843b6f7853ec4493129c1"
+  "sha256": "25ecc33428d2bdd3af5dd044c326eb6b0ee79677ac9561c6ca3a5f04d0b2181b"
  },
  {
   "path": "STATE.md",
-  "size": 92720,
-  "sha256": "2659899d3723f96335d498b196cfd262ef31d0f4157c65fa31ff91f897844627"
+  "size": 97916,
+  "sha256": "05bf2392ba9cec9f5140044c77b389b943ae07256277fd07a1381c88f4509153"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -33370,9 +33415,14 @@
   "sha256": "33da350f229b19472a0909a88416744517c2d6ce6b1155b98fd4188f2319b061"
  },
  {
+  "path": "TESTS/test_product_delivery.py",
+  "size": 3487,
+  "sha256": "1f7fdfc2a4aef3c30c9663caab6401e1f66c99ca1c8aff95b1b9dae4832eb89a"
+ },
+ {
   "path": "TESTS/test_release_contract.py",
-  "size": 330261,
-  "sha256": "a4568a2e9f0a85d04c0ce399b11e304bf790417e97f8aab8acdd5b6fae047dac"
+  "size": 330347,
+  "sha256": "a848f9fe8c06f63e022e9b9ad51f4a291e9faeabe5e0a2e516cb381b9ff90247"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -33393,6 +33443,11 @@
   "path": "TESTS/test_universal_modder.py",
   "size": 5379,
   "sha256": "1a449a08232ab71607c145c716e33f4b60f0562e419f56ad6eb949855e914a76"
+ },
+ {
+  "path": "TESTS/test_workspace_ownership.py",
+  "size": 4734,
+  "sha256": "a0782eb504fb4d3c529fd44290020700dbb49d1c363c8d83f89b10a40b3038e7"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
@@ -33481,8 +33536,8 @@
  },
  {
   "path": "TOOLS/Install-SkyrimForge.ps1",
-  "size": 22558,
-  "sha256": "9f73a0dcded54333e3ee4dc4e52a2c53f0306f897a207892c1e9adf8528cc066"
+  "size": 22479,
+  "sha256": "12bd2bd5a5af3830b271d67885b5c790b737a1a63fcf10e843a9b7c79575d846"
  },
  {
   "path": "TOOLS/MCP-CONFIG-EXAMPLES.toml.txt",
@@ -33596,8 +33651,8 @@
  },
  {
   "path": "TOOLS/build_release.py",
-  "size": 11414,
-  "sha256": "9417d56c162050636517189bccd9f315ce0f66fb22b32e681064f51a7f0078b1"
+  "size": 13329,
+  "sha256": "39e83f34b3fa7ec85ae57b2d41e9d25a30bbc8ddf89d643ba7a9153041a5048f"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -33606,8 +33661,8 @@
  },
  {
   "path": "TOOLS/fanout_providers.py",
-  "size": 4880,
-  "sha256": "8cce7fbce046a824333c30c35f3e4b965e143cc9ef6b817cd2278790a93bb69d"
+  "size": 5046,
+  "sha256": "e59c62d3cba8b83e57be343268dea9bf05e467f624198a8151160c68e9baa460"
  },
  {
   "path": "TOOLS/generate_manifest.py",
@@ -33730,6 +33785,16 @@
   "sha256": "6aa6b68d227e506e056f1b7bc67a84587d03b726745c9ed9ba3cc1c1be6e92aa"
  },
  {
+  "path": "TOOLS/verify_manifest.py",
+  "size": 1881,
+  "sha256": "70d67aef1ceb7a3b9463f60c7d7f8390a88c38f6716d445c1b3efd4378cc6d66"
+ },
+ {
+  "path": "TOOLS/verify_product.py",
+  "size": 2685,
+  "sha256": "03226a4eba72a9bb9db219e9079f4e4d1a201daa5ebf7d74eee32d2faa12f85c"
+ },
+ {
   "path": "TOOLS/vision-canary/canary.json",
   "size": 868,
   "sha256": "eab6102ebe859b0443cac5a6c504f3b645825cf9907dd6a03eb65c3b5d8a0d15"
@@ -33741,8 +33806,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2575,
-  "sha256": "52511e630e3a6e69fb2548cfcb60be585bf26a24d67f84a111b42c94fcb70ee0"
+  "size": 2643,
+  "sha256": "fefdf579d919ad2d773087e10dca3a0384ce9448362f57e9b1332e3a46ec3c18"
  },
  {
   "path": "VALIDATION.md",
@@ -33752,7 +33817,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "757c6b20cf03e615522c343f85f4280387ccf96dc66f9537f9fd56e60e28917b"
+  "sha256": "3f514bd5566fddff4c8eb6b5b93f409c9caeb550e8154dc7f4d1a1002afed606"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -33763,6 +33828,11 @@
   "path": "WINDOWS-PATH-MAP.md",
   "size": 3179,
   "sha256": "fe8efffd7c03405cfe19dbe974ad9f35b107862dda6d9af9072071d9b5b08acf"
+ },
+ {
+  "path": "WORKSPACE_OWNERSHIP.md",
+  "size": 979,
+  "sha256": "c088cad33ef9c1bf098da60c9db56af22d02a82e0cc4aa4b2a6e5e52b9f06eb2"
  },
  {
   "path": "_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md",
@@ -33801,8 +33871,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/artifact-proof/SKILL.md",
-  "size": 1075,
-  "sha256": "a47d91d011b02aa797b20c79bbfdeddddb22c54ea5cf278d13db630e5e3f9770"
+  "size": 2009,
+  "sha256": "cfe76c49d3696e1bce3d83e963db077f006623c486cf972b1d487cf3ff671e90"
  },
  {
   "path": "_CANONICAL-SKILLS/artifact-provenance/SKILL.md",
@@ -34511,8 +34581,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/MODDING-LAWS.md",
-  "size": 2263,
-  "sha256": "51e4c51f47aec18d70870efc8e14462bc8f854c4687194ae0697cec728ce5985"
+  "size": 3023,
+  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/OFFICIAL-SOURCES.md",
@@ -34646,8 +34716,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/game-mod-versioned-workspace.md",
-  "size": 1427,
-  "sha256": "f176cca52d7814fa937eda0054a741ce3c36ff6bec8f3cb89b771c13acffba23"
+  "size": 1971,
+  "sha256": "98bf357ac4d1f3d1621775ae405815866f07c68f547ff719e746f7934c65fda7"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/garrys-mod.md",
@@ -34701,13 +34771,13 @@
  },
  {
   "path": "_CANONICAL-SKILLS/github-fleet-maintenance/SKILL.md",
-  "size": 9047,
-  "sha256": "60a7b693ee3d270fff4295431b4e96abc9682d9432eb90ff1f2681dce0f0b24b"
+  "size": 9862,
+  "sha256": "836ca1e2b19d5748c56c4e13dae795d300263662e7d319ef6bc5272dd03af05b"
  },
  {
   "path": "_CANONICAL-SKILLS/github-fleet-maintenance/references/repository-completion.md",
-  "size": 7719,
-  "sha256": "d48d1417351e748935c40770bdcce8dd2410e89899d3c217cb1414fd801802d1"
+  "size": 8744,
+  "sha256": "224f51d758c8923ff76f109ee9221d5317994911b986fc58471491d5d2acca10"
  },
  {
   "path": "_CANONICAL-SKILLS/github-fleet-maintenance/templates/ci-cpp-vcpkg.yml",
@@ -37386,8 +37456,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/one-shot-completion/SKILL.md",
-  "size": 1753,
-  "sha256": "7231290451180b422e3f367a4f2aedcb3dde3337c1d7f115d9b2d23ee67a3336"
+  "size": 2160,
+  "sha256": "d53639c333526bf72fa95145ec6fa3ed8c03a08dada4bf85ed6e4e3f22ae56c7"
  },
  {
   "path": "_CANONICAL-SKILLS/paradox-modding/SKILL.md",
@@ -38371,8 +38441,13 @@
  },
  {
   "path": "_CANONICAL-SKILLS/workspace-organization/SKILL.md",
-  "size": 2954,
-  "sha256": "e7f47f7e60a4614024f6509c516df9c1a50404d92772608fdd99ff497d302839"
+  "size": 5823,
+  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/workspace-organization/scripts/ensure_ownership.py",
+  "size": 5061,
+  "sha256": "dfec80cc15572828e415208295016eb0d36b43add441519cb0d7721a9ab5c948"
  },
  {
   "path": "_CANONICAL-SKILLS/writing-plans/SKILL.md",
@@ -39018,6 +39093,11 @@
   "path": "docs/history/V8.24.0-CHANGELOG.md",
   "size": 884,
   "sha256": "07919a696850d56f85a0dc7a1693244e04ab038133898f25e3fde67b93caba4f"
+ },
+ {
+  "path": "docs/history/V8.25.0-CHANGELOG.md",
+  "size": 768,
+  "sha256": "08a52ca54a64611f3f5d7ddf9d7a54d311b6342238b46d85df20df4d71b13e4e"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",
