@@ -28731,8 +28731,8 @@
  },
  {
   "path": "AIO-GUIDE.md",
-  "size": 4065,
-  "sha256": "06229e3f15ff6f33dcaefa8d5147526ba6dda6da8bd4d97caaae7d620ce52d69"
+  "size": 4367,
+  "sha256": "5a777fa3f3e4605af3a163116c8b3056f39c14244b9765606f140778ac13cb2b"
  },
  {
   "path": "BOOTSTRAP.txt",
@@ -28742,12 +28742,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 61453,
-  "sha256": "fae939be430d29ca84cf0d3ec97b8a5cce2effe8de578d7c4cbc6ba1a3f9b967"
+  "sha256": "4e05f1c2387f608e88ec25bc426c5b5820afaa43baa92da1aab06d3c53e72bb0"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1644,
-  "sha256": "149625e2f9f9ddb0f081058802505e729be05991c573e9d783668e6b99864dbd"
+  "sha256": "8f25adb57ac83a2947ba4787fb493d534c949f9973303fa59d310f13a5ab3a66"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28840,14 +28840,14 @@
   "sha256": "b5279d1d6d3333d739d276c263a745ae51d74dac1e2a7a50fd26fffbde7cfd8b"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/Reverse-This-1.4.0.zip",
-  "size": 108789,
-  "sha256": "4087251269e6da95ffa563837ad4b6c684b4d60d52fe9873b3a6874351d5c24b"
+  "path": "BUNDLED-TOOLS/offline/Reverse-This-1.4.1.zip",
+  "size": 108340,
+  "sha256": "76b7ce541f313defbecb832a14dac4b8934a5fa8fde2ca1724639244306f0826"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.2.0.zip",
-  "size": 5137601,
-  "sha256": "2c66c6bdf79473a68e95b749e12489e0fa14db876cc583184e77b20370d1b175"
+  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.2.1.zip",
+  "size": 5137963,
+  "sha256": "3d0aac570891526dfd64faface1273d1eac9dc089e1c1feb0184dd48a2a46fea"
  },
  {
   "path": "BUNDLED-TOOLS/offline/codebase-memory-mcp-windows-amd64.zip",
@@ -32836,8 +32836,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 234223,
-  "sha256": "8ea8ffdaf2395ecc9c6776908bf09a459cc4d53131658501f396ecf81b4ee09e"
+  "size": 234416,
+  "sha256": "6b225c3b0d493021755ca8fa93a91ea532709d68325244a7ad2113d395eb4d22"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -32972,7 +32972,7 @@
  {
   "path": "README.md",
   "size": 72118,
-  "sha256": "2fd1da571df6769b910ad54c00546fa67287d0f7363dcd1652ca4a6a261989a6"
+  "sha256": "38d61ba9fb374e269a5ad861a2ade0827c94136f61d3e0feb94b9e010d8f0e75"
  },
  {
   "path": "SECURITY.md",
@@ -32991,8 +32991,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 86493,
-  "sha256": "037c3a25483f51b7f2c7aa448411f6c8170ef4680c36fbbbb6f6b881487cb611"
+  "size": 87895,
+  "sha256": "1af025f41dc4de7311159bc30afd970d29233a43ac1d28339edaca930f6df521"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -33746,8 +33746,8 @@
  },
  {
   "path": "VALIDATION.md",
-  "size": 24129,
-  "sha256": "ae7620fcb3db88523c43d0c96bbea55a0f3e18a97040b488e3fcbe60112b75ee"
+  "size": 24355,
+  "sha256": "5d7d55683ebd66cf6c1ff9ee6161738708d61623c3ee34cf81350512e27fb4c7"
  },
  {
   "path": "VERSION.txt",

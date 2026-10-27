@@ -37,15 +37,15 @@
       "name": "Reverse THIS!",
       "kind": "product-release",
       "install": "manual",
-      "version": "1.4.0",
+      "version": "1.4.1",
       "github": {
         "owner": "SenjuWoo",
         "repo": "reverse-this"
       },
-      "release_tag": "v1.4.0",
-      "asset": "Reverse-This-1.4.0.zip",
-      "offline_asset": "Reverse-This-1.4.0.zip",
-      "sha256": "4087251269e6da95ffa563837ad4b6c684b4d60d52fe9873b3a6874351d5c24b",
+      "release_tag": "v1.4.1",
+      "asset": "Reverse-This-1.4.1.zip",
+      "offline_asset": "Reverse-This-1.4.1.zip",
+      "sha256": "76b7ce541f313defbecb832a14dac4b8934a5fa8fde2ca1724639244306f0826",
       "mcp": false,
       "auto_register": false,
       "note": "Optional reverse pack delegates source, tool selection, updates and doctor to this independent owner. The kit.json pointer is reused. No provider setup or duplicate specialist catalog."
@@ -369,12 +369,12 @@
         "owner": "SenjuWoo",
         "repo": "SkyrimForge"
       },
-      "release_tag": "v6.2.0",
-      "asset": "Skyrim-Forge-6.2.0.zip",
-      "offline_asset": "Skyrim-Forge-6.2.0.zip",
-      "sha256": "2c66c6bdf79473a68e95b749e12489e0fa14db876cc583184e77b20370d1b175",
+      "release_tag": "v6.2.1",
+      "asset": "Skyrim-Forge-6.2.1.zip",
+      "offline_asset": "Skyrim-Forge-6.2.1.zip",
+      "sha256": "3d0aac570891526dfd64faface1273d1eac9dc089e1c1feb0184dd48a2a46fea",
       "note": "Released from github.com/SenjuWoo/SkyrimForge. Installed only with the Skyrim pack. The installer verifies the pinned SHA-256 before extracting, resolves ONE versionless install root, migrates a version-stamped install onto it, preserves Workspaces and the virtualenv, wires selected providers, then proves the result runs with `forge doctor`. CI installs this exact release end to end.",
-      "version": "6.2.0"
+      "version": "6.2.1"
     },
     {
       "id": "code-review-skill",
