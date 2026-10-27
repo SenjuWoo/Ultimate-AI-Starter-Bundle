@@ -32,7 +32,7 @@ def _forge_pin(root:Path)->dict:
 # Product ZIPs are not repository exports. Templates/references are intentional product inputs.
 PRODUCT_ROOT_FILES={'START-HERE.bat','START-HERE.txt','INSTALL-AIO.ps1','INSTALL-REMOTE.ps1',
     'INSTALL-REMOTE.bat','BOOTSTRAP.txt','AIO-GUIDE.md','README.md','README-CORE.txt','LICENSE',
-    'VERSION.txt','MANIFEST.json','.cbmignore','GROK-MCP-TROUBLESHOOTING.md',
+    'VERSION.txt','MANIFEST.json','.cbmignore','.ignore','GROK-MCP-TROUBLESHOOTING.md',
     'WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md','WINDOWS-PATH-MAP.md'}
 PRODUCT_DIRS={'_CANONICAL-SKILLS','1-TAILORED-PROVIDER-TREES','0-UNRESTRAINT-PACKS',
     '2-OPTIONAL-MANUAL-OTHER-GAMES-MEGA-PACK','3-PREAMBLES','COPY-TO-YOUR-WORKSPACE',

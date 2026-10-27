@@ -871,6 +871,23 @@ function Get-UabsSkyrimToolDirectories {
   return @($roots | Where-Object { $_ -and (Test-Path -LiteralPath $_ -PathType Container) } | Select-Object -Unique)
 }
 
+function Remove-UabsRetiredUserEnv {
+  <# Drop user variables of tools the bundle retired, but only when they still
+     point inside the bundle-owned state root. Folders are never deleted here;
+     Clean-StaleState.ps1 previews and removes them. Returns the names cleared. #>
+  param([string]$StateRoot = (Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle'))
+  $cleared = @()
+  foreach ($name in @('SPOOKY_AUTOMOD_ROOT')) {
+    $value = [Environment]::GetEnvironmentVariable($name, 'User')
+    if ($value -and (Test-UabsPathWithin -Path $value -Root $StateRoot)) {
+      [Environment]::SetEnvironmentVariable($name, $null, 'User')
+      Remove-Item -LiteralPath ('Env:' + $name) -ErrorAction SilentlyContinue
+      $cleared += $name
+    }
+  }
+  return $cleared
+}
+
 function Find-UabsHouseCarlMcp([string]$ExcludeRoot = '') {
   <# Locate the best external housecarl-mcp.exe outside $ExcludeRoot,
      picking the highest binary version when multiple copies exist. #>
@@ -919,35 +936,6 @@ function Find-UabsHouseCarlMcp([string]$ExcludeRoot = '') {
     }
   }
   return $best
-}
-
-function Find-UabsSpookyAutomodRoot([string]$ExcludeRoot = '') {
-  <# Locate an external Spooky's AutoMod Toolkit root (folder with SpookysAutomod.sln). #>
-  foreach ($direct in @(
-    $env:SPOOKY_AUTOMOD_ROOT,
-    [Environment]::GetEnvironmentVariable('SPOOKY_AUTOMOD_ROOT', 'User')
-  )) {
-    if ($direct -and (Test-Path -LiteralPath (Join-Path $direct 'SpookysAutomod.sln') -PathType Leaf)) {
-      $rp = (Resolve-Path -LiteralPath $direct).Path
-      if (-not ($ExcludeRoot -and (Test-UabsPathWithin -Path $rp -Root $ExcludeRoot))) { return $rp }
-    }
-  }
-  foreach ($toolDir in @(Get-UabsSkyrimToolDirectories)) {
-    try {
-      $hit = Get-ChildItem -LiteralPath $toolDir -Directory -ErrorAction SilentlyContinue |
-        Where-Object { $_.Name -like 'spookys-automod*' } |
-        Sort-Object Name -Descending | Select-Object -First 1
-      if ($hit) {
-        foreach ($cand in @((Join-Path $hit.FullName 'spookys-automod-toolkit'), $hit.FullName)) {
-          if (Test-Path -LiteralPath (Join-Path $cand 'SpookysAutomod.sln') -PathType Leaf) {
-            $rp = (Resolve-Path -LiteralPath $cand).Path
-            if (-not ($ExcludeRoot -and (Test-UabsPathWithin -Path $rp -Root $ExcludeRoot))) { return $rp }
-          }
-        }
-      }
-    } catch {}
-  }
-  return $null
 }
 
 function Update-UabsGrokMcpBlock {

@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.25.0 -->
+<!-- Ultimate AI Starter Bundle v8.25.1 -->
 
 The bundle installs the common compiler suite by default: Go, Rust/Cargo, GCC, CMake/Ninja, Xmake, .NET SDK, MSVC C++ and the Windows SDK. Existing working installations and project pins are reused. Fresh installations may require several GB and Windows elevation; `-SkipBuildTools` skips this suite, and `-SkipRuntimes` skips all runtime/compiler provisioning. Run `TOOLS/Install-BuildTools.ps1 -CheckOnly` for compile-and-run verification. Logs: `%LOCALAPPDATA%/Ultimate-AI-Starter-Bundle/logs/build-tools.log`. Full-Offline caches the listed bundle payloads; missing shared runtimes/compilers still need vendor downloads. `-Mode BundledOnly` prevents compiler downloads and reports missing prerequisites.
 
@@ -10,7 +10,7 @@ Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tool
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.25.0
+# Ultimate AI Starter Bundle v8.25.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -963,120 +963,11 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
+**v8.25.1** - Duplicate-free operating contract, retired-tool cleanup, a 7 KB STATE.md and a ripgrep ignore for generated copies. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.25.1-CHANGELOG.md).
+
 **v8.25.0** - Project ownership, explicit public GitHub/MIT defaults, contextual mod publication and clean runtime archives. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.25.0-CHANGELOG.md).
 
-**v8.24.0** - 2026-10-26. Installs the common compiler suite by default and adds optional Forge/Reverse companion orchestration. The bundle owns 126 general skills and shared AI/build tooling; Forge independently owns 48 Skyrim skills and houseCARL, with edited-skill preservation and retained rollback backups. Reverse THIS! owns REA and reverse-engineering tools. The companions cooperate without rewriting one another’s settings or ownership ledgers. [Release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.24.0) · [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.24.0-CHANGELOG.md).
-**v8.22.0** - 2026-10-25. Updates `PROMPTS/START-AND-RESUME.md` and the AIO operating contract (`No Silent Fallbacks`, `Question Stale Patterns`), moves canonical ownership of the 48-skill Skyrim pack to `SenjuWoo/SkyrimForge`, retires `spookys-automod-toolkit` (`-68.6 MB`), upgrades `houseCARL` to `2.1.1` with cross-drive version-aware discovery, bumps `uabs-toolbox` to `1.0.3` with Codex isolated-env resolution, updates `rtk` to `1.1.0`, `blender-mcp` to `2.2.4`, and `rea` to `6.8.0`, and resolves 28 Dependabot lockfile alerts. [Release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.0) · [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.22.0-CHANGELOG.md).
-**v8.21.1** - 2026-10-23. A fresh Windows install that finds no supported app stops and asks which providers to set up, instead of installing all six. A missing Codex CLI installs with `npm install -g @openai/codex` after the old standalone installer URL started returning HTTP 404. Setup fills only missing workspace files, previews cleanup, and leaves unselected provider homes alone. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.21.1-CHANGELOG.md).
-**v8.21.0** - 2026-10-21. Hermes settings are now future-proof: no fallback chain, no pinned auxiliary or delegation models (everything follows your main model), vision follows the main model instead of a retired experimental endpoint, and compression fires at a 320k cap on the 1M-token window. The component updater respects catalog holds unless `-Force`. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.21.0-CHANGELOG.md).
-**v8.20.0** - 2026-10-21. New `game-mashup-passthrough` skill and a bigger mashup card from the project's full lessons (frame split, spike order, freeze/teleport traps; no machine paths). Universal Modder refreshed to `c1dff21` (new `um voidless`, ~20 game notes). Your `Tools` and `Modding` folders reviewed: nothing bundled, bench map and evaluations updated.
-**v8.19.2** - 2026-10-20. Faster, quieter installs: the Hermes profile migration reads each profile once (152 s to 7.6 s for an unchanged machine), skill fingerprints hash 4.8x faster, and plugin-owned skills are no longer copied and deleted again every run. Hermes starter defaults are checked in one process (65 s to 10 s). Fixes the live skill sync overwriting a preserved local skill, a final check that failed on a hand-installed optional tool, a Hermes read that could have written masked MCP secrets back, Spooky's toolkit re-updating itself every run, an unbounded `--version` probe, and Antigravity plugins that never refreshed. blender-mcp 2.2.2.
-**v8.19.1** - 2026-10-19. Melty is now explicitly opt-in: ordinary mods never default to a Melty folder, and the mashup route only applies to an explicit two-game fusion or publish on Melty. Context7 moved to 4.4.4 and its keyless tier now resolves library IDs only, so `query-docs` needs `CONTEXT7_API_KEY`; the catalog claim was re-measured rather than copied. REA 6.7.0, Serena 2.1.0 and shadcn-mcp 4.22.1. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.19.1-CHANGELOG.md).
-**v8.19.0** - 2026-10-18. Closes all 11 open GitHub CodeQL alerts (#235–#245) in Impeccable scripts, completes Antigravity provider integration across all MCP targets and doctor checks, repairs Windows PowerShell extensionless `npm` resolution with `Resolve-UabsExecutable`, resolves Hermes ponytail plugin loading with ponytail 5.3.2, refreshes Universal Modder to `6a8865a`, and updates catalog components (`context7` 4.4.2, `chrome-devtools-mcp` 1.11.0, `shadcn-mcp` 4.22.0, `super-mcp-router` 2.8.4). [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.19.0-CHANGELOG.md).
-
-**v8.18.1** - 2026-10-18. Fixes the Antigravity bootstrap probe: a GUI app has no `--version`, and the old code read `$LASTEXITCODE` outside the branch that ran a process, so a cold install aborted with "exit code .". The probe now only reads an exit code where a process actually ran. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.18.1-CHANGELOG.md).
-
-**v8.18.0** - 2026-10-18. Google Antigravity is a first-class provider: global rules in `~/.gemini/config/AGENTS.md`, 173 skills in `~/.gemini/config/skills/`, MCP servers in `~/.gemini/config/mcp_config.json`, all verified against the app's own guide and docs. The provider bootstrap no longer dies on an unknown provider name, and a stale codebase-memory earlier on PATH is now reconciled instead of silently shadowing the installed one. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.18.0-CHANGELOG.md).
-
-**v8.17.0** - 2026-10-17. External tool installs became version-aware: an older local copy of houseCARL, Spooky or codebase-memory is refreshed in place with a backup instead of being parked, and nothing is downgraded. Hermes can install ponytail natively (it now gets a `.hermes-plugin` manifest), Claude's stale marketplace paths are repaired, and the Skyrim pack gains verify-first wording plus an ownership section. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.17.0-CHANGELOG.md).
-
-**v8.16.1** - 2026-10-17. Ships the regenerated workspace AIO mirror (11,397 -> 9,083 B) so the archive matches the 8.16.0 notes; no rule changes.
-
-**v8.16.0** - 2026-10-17. Prompt layer rebuilt for capability, not prohibition:
-the soul drops the dead `--spicy`/`BREAK FREE` text (1,591 -> 735 B), the contract
-drops 11,418 -> 9,082 B, and the blanket "never invent a tool" becomes a
-discovery rule that tells the model to find the installer and use it. The
-private profile and machine map no longer land in any `SOUL.md` (the installer
-skips soul files), the four smaller variants lose two thirds of their weight,
-and the bundled tools move where the audit allows: codebase-memory 0.12.1,
-headroom 0.41.0, rtk 1.0.1, ponytail 5.3.2 - every offline asset re-hashed and
-the manifest rebuilt. houseCARL 1.9.0, unity-mcp 0.91.0 and impeccable 3.6.1
-stay on their documented holds rather than being bumped blind. Seven legacy
-soul copies and `docs/history/V5-CHANGELOG.md` are gone. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.16.0-CHANGELOG.md).
-
-**v8.15.2** - 2026-10-16. Tool refresh and companion review: Universal
-Modder is re-vendored from upstream `23902ef` with a rebuilt offline wheel, its
-bundle patches now re-apply during every refresh (including the rule that keeps
-the unbounded UE3 `unpack_upk.py` fallback out), REA moves to 6.5.0 with a fresh
-integrity-bound probe, a new `modding-bench` map documents the local game-modding
-tool bench by engine route, and CLI-Anything, anti-slop and jevgrep are documented
-as checked companions. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.15.2-CHANGELOG.md).
-
-**v8.15.1** - 2026-10-16. Prompt-layer cleanup: the soul every provider carries
-on every request drops the leftovers that instructed nothing (a fake `--spicy`
-flag line, two pep lines, a venting line, a duplicated recency rule, three
-consent paragraphs folded into one) - 1,380 -> 728 bytes, no instruction lost;
-provider files already carrying the old soul converge from `history/` on the
-next install. The Grok workspace template that still shipped the stale v6.0
-contract (18.9 KB) is now the provider-neutral workspace file Codex/Kimi use
-(5.3 KB). [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.15.1-CHANGELOG.md).
-
-**v8.15.0** - 2026-10-15. One click, nothing to type: overlapping installs no
-longer break the final check, the console shows one line per step (full output
-in a details log), and the new always-on toolbox lets your AI start any project
-tool in the same chat when a task needs it, so task servers no longer load in
-every chat. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.15.0-CHANGELOG.md).
-
-**v8.14.0** - 2026-10-15. Task-specific MCP servers are parked per project (the
-doctor now fails while one is machine-wide), the GitHub server is skipped where
-`gh` is signed in, npm launcher shadowing is fixed, chat history gets a copy-only
-backup and longer Claude retention, and project-intel lessons are recorded per
-workflow. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.14.0-CHANGELOG.md).
-
-**v8.12.1** - 2026-10-12. Preserve installed private profiles when new input
-is invalid, separate personal tuning from public defaults, and remove
-maintainer workspace paths from shipped skills. The privacy gate now checks
-those paths; stale preset notes are corrected. No model choices or MCP scope
-are changed. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.12.1-CHANGELOG.md).
-
-**v8.12.0** - 2026-10-12. Unrestraint-family hygiene: four retired upstream
-jailbreak collections removed after review (~3.6 MB, nothing durable lost —
-the AIO family carries the technique), orphaned web-text backup deleted,
-story-era residue trimmed from the web variants, and the live wires repaired
-to one identical `[profile block] + [SOUL] + [AIO]` composition on all 14
-targets. `SOUL.md` and the full AIO are byte-unchanged.
-[Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.12.0-CHANGELOG.md).
-
-**v8.11.1** - 2026-10-12. Index lifecycle, Unicode privacy scanning and usage
-accounting repairs, manifest-scoped pack audits, reviewed Universal Modder
-refresh and concise new-chat/resume prompts. Existing model choices and
-verified local skill overrides remain user-owned.
-[Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.11.1-CHANGELOG.md).
-
-**v8.11.0** - 2026-10-12. Codebase-memory lifecycle: the index setup tool gains
-`-Index` (apply ignores, index every project in scope, per-project table, exit
-code = failures), `-ExtraIgnore`, and custom-rule preservation so hand-tuned
-`.cbmignore` files survive re-runs. The `codebase-memory` skill documents the
-server's v0.11.0 `cli` maintenance mode, the registry-anchored purge discipline,
-and per-provider auto-routing. Measured after the rework: 45 projects /
-63,544 nodes, worst rebuild 90,546 -> 2,852 nodes. 173 canonical skills total.
-[Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.11.0-CHANGELOG.md).
-
-**v8.10.0** - 2026-10-12. Project intel: the operator's project history
-(318-conversation Claude/ChatGPT export plus the agent-log scans behind 8.9.0)
-is distilled into a `project-intel` skill - six on-demand cards, dated evidence,
-and an era rule that counts only frontier-era findings as current; older-model
-data is historical, never proof. Security work joins the contract: reverse
-engineering, cracking and exploit analysis are authorized on your own systems
-at full depth, with two hard lines - no malware, no targets without permission
-- and a verify-before-alarming procedure; every NSFW clause is untouched. The
-public repository now enforces its personal-data boundary: SECURITY.md policy,
-.gitignore patterns and a CI gate that scans every tracked file; two real
-findings were fixed on the spot. 173 canonical skills, no new always-on MCP.
-[Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.10.0-CHANGELOG.md).
-
-**v8.9.0** - 2026-10-11. The AIO operating contract is reworked around
-unrestraint and one-shot completion, after reading the operator's own agent
-histories first: agent surfaces measured ~zero content refusals, so the rework
-expands the explicit-content payload (reminder false-positives, banned
-evasions, body-physics craft, continuity) and the completion rules (deliver the
-artifact, make the obvious call). Universal Modder is refreshed to upstream
-2c22014 with its UABS deltas rebased and the offline wheel rebuilt. Impeccable's
-hold was reaffirmed by auditing engine 0.1.14 against the malformed-tag
-fixtures; CodeBurn moved to 0.9.27 after a clean probe and audit. 172 canonical
-skills, no new always-on MCP.
-[Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.8.0-CHANGELOG.md) ·
-[Latest published release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest).
+Earlier releases: [CHANGELOG.md](CHANGELOG.md) and one file per release under `docs/history/`.
 
 ## License
 

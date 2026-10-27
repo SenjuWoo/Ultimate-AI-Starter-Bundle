@@ -549,7 +549,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.25.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.25.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -1722,6 +1722,7 @@ if (-not $ToolsOnly) {
       if (Test-Path -LiteralPath $mine -PathType Leaf) { Write-UabsOk ('PROFILE.md already exists; template not copied over it: ' + $mine) }
       else { New-Item -ItemType Directory -Force -Path $profileDir | Out-Null; Copy-Item -LiteralPath $tpl -Destination $mine; Write-UabsOk ('profile seeded from ' + $ProfileTemplate + ': ' + $mine) }
     }
+    try { foreach ($retired in @(Remove-UabsRetiredUserEnv)) { Write-UabsOk ('cleared retired user variable: ' + $retired) } } catch { Write-UabsWarn ('retired variables: ' + $_.Exception.Message) }
     try { & (Join-Path $PackRoot 'TOOLS\Build-MachineMap.ps1') -ProfileRoot $profileDir -PackRoot $PackRoot } catch { Write-UabsWarn ('machine map: ' + $_.Exception.Message) }
     try { $profileText = Get-UabsProfileText -Root $profileDir; $profileReady = $true }
     catch { Write-UabsWarn ($_.Exception.Message + ' Existing profile blocks were preserved.') }
@@ -2694,7 +2695,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.25.0'
+version = '8.25.1'
   content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')

@@ -86,13 +86,13 @@ $roots = @()
 foreach ($scope in 'User', 'Process') {
   foreach ($kv in ([Environment]::GetEnvironmentVariables($scope)).GetEnumerator()) {
     $name = [string]$kv.Key; $value = [string]$kv.Value
-    if ($name -notmatch '(_ROOT|_HOME|_INSTANCE|_MCP)$' -or $name -match '(?i)token|key|secret|password') { continue }
+    if ($name -notmatch '(_ROOT|_HOME|_INSTANCE|_MCP)$' -or $name -match '(?i)token|key|secret|password|^SPOOKY_') { continue }
     if ($value -and (Test-Path -LiteralPath $value)) { $roots += ($name + '=' + (Short $value)) }
   }
 }
 Add 'Tool roots' ($roots | Sort-Object -Unique)
 $skyrimVaults = @(Get-UabsSkyrimToolDirectories | ForEach-Object { Short $_ })
-if ($skyrimVaults.Count) { Add 'Skyrim tool folders' $skyrimVaults }
+if ($skyrimVaults.Count) { Add 'Tool folders (UABS_TOOL_ROOTS hints and the Forge parent)' $skyrimVaults }
 
 # AI app homes that exist here.
 $homes = @()

@@ -34,3 +34,8 @@ integration does not remove another owner's content or personal edits.
 Update common tools with `TOOLS/Update-From-GitHub.ps1` or
 `TOOLS/Ensure-Tools.ps1`. Diagnostics are under
 `%LOCALAPPDATA%/Ultimate-AI-Starter-Bundle/logs` (compiler log: build-tools.log).
+
+Optional add-ons that stay user-owned (not installed by the bundle; evaluation in
+`docs/TOOL-EVALUATIONS.md`): taste-skill for research-driven landing-page design
+(`npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"`),
+and ECC alone, never stacked with another harness (`npx ecc-universal@2.2.3 install --profile minimal`).

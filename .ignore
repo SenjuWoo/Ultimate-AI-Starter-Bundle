@@ -1,0 +1,12 @@
+# Read by ripgrep (the agents' Grep tool). Keeps searches on source: git, the
+# installer and the manifest still use every file below.
+# Generated provider copies are identical to _CANONICAL-SKILLS apart from a tag.
+1-TAILORED-PROVIDER-TREES/*/COPY-TO-SKILLS-DIRECTORY/skills/
+MANIFEST.json
+VALIDATION.json
+artifacts/
+dist/
+docs/history/
+3-PREAMBLES/history/
+BUNDLED-TOOLS/packs/skyrim/legacy/
+BUNDLED-TOOLS/offline/
