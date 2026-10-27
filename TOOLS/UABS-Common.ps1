@@ -1,4 +1,4 @@
-# UABS-Common.ps1 - shared helpers for Ultimate AI Starter Bundle AIO installer
+﻿# UABS-Common.ps1 - shared helpers for Ultimate AI Starter Bundle AIO installer
 $script:UabsPackRoot = $null
 $script:UabsHeaders = @{ 'User-Agent' = 'Ultimate-AI-Starter-Bundle-AIO' }
 
@@ -860,52 +860,15 @@ function Find-UabsCodebaseMemoryExe {
 }
 
 function Get-UabsSkyrimToolDirectories {
-  <# Portable discovery of Skyrim modding tool vaults on fixed drives or
-     user-configured UABS_TOOL_ROOTS (e.g. Z:\Backup\!Skyrim\Skyrim tools,
-     S:\Apps\Skyrim Tools). Never hardcodes a user's drive letter. #>
-  $out = New-Object System.Collections.Generic.List[string]
-  $seen = @{}
-  $addDir = {
-    param([string]$p)
-    if ([string]::IsNullOrWhiteSpace($p)) { return }
-    try {
-      if (Test-Path -LiteralPath $p -PathType Container) {
-        $rp = (Resolve-Path -LiteralPath $p).Path.TrimEnd('\')
-        $key = $rp.ToLowerInvariant()
-        if (-not $seen.ContainsKey($key)) {
-          $seen[$key] = $true
-          [void]$out.Add($rp)
-        }
-      }
-    } catch {}
+  # Compatibility metadata only; specialist scanning belongs to Skyrim Forge.
+  $roots=@()
+  foreach ($scope in @('Process','User')) {
+    $hints=[Environment]::GetEnvironmentVariable('UABS_TOOL_ROOTS',$scope)
+    if ($hints) { $roots+=@($hints -split ';') }
+    $forge=[Environment]::GetEnvironmentVariable('SKYRIM_FORGE_ROOT',$scope)
+    if ($forge) { $roots+=Split-Path -Parent $forge }
   }
-  foreach ($scope in @('Process', 'User')) {
-    $val = [Environment]::GetEnvironmentVariable('UABS_TOOL_ROOTS', $scope)
-    if ($val) {
-      foreach ($part in ($val -split ';')) { & $addDir $part }
-    }
-  }
-  $tails = @(
-    'Backup\!Skyrim\Skyrim tools',
-    'Backup\!Skyrim\Skyrim Tools',
-    'Backup\Skyrim tools',
-    'Backup\Skyrim Tools',
-    '!Skyrim\Skyrim tools',
-    '!Skyrim\Skyrim Tools',
-    'Apps\Skyrim Tools',
-    'Skyrim Tools',
-    'Skyrim tools',
-    'Tools\Skyrim',
-    'Modding\Tools'
-  )
-  foreach ($letter in @('C','D','E','F','G','H','S','T','Z')) {
-    $drive = "${letter}:\"
-    if (-not (Test-Path -LiteralPath $drive)) { continue }
-    foreach ($tail in $tails) {
-      & $addDir (Join-Path $drive $tail)
-    }
-  }
-  return @($out)
+  return @($roots | Where-Object { $_ -and (Test-Path -LiteralPath $_ -PathType Container) } | Select-Object -Unique)
 }
 
 function Find-UabsHouseCarlMcp([string]$ExcludeRoot = '') {
@@ -938,14 +901,6 @@ function Find-UabsHouseCarlMcp([string]$ExcludeRoot = '') {
     $hcSub = Join-Path $toolDir 'houseCARL'
     if (Test-Path -LiteralPath $hcSub -PathType Container) { [void]$roots.Add($hcSub) }
     else { [void]$roots.Add($toolDir) }
-  }
-  foreach ($letter in @('C','D','E','F','G','H','S','T','Z')) {
-    $drive = "${letter}:\"
-    if (-not (Test-Path -LiteralPath $drive)) { continue }
-    foreach ($tail in @('Tools\houseCARL', 'houseCARL')) {
-      $c = Join-Path $drive $tail
-      if (Test-Path -LiteralPath $c -PathType Container) { [void]$roots.Add($c) }
-    }
   }
   foreach ($r in ($roots | Select-Object -Unique)) {
     if ($ExcludeRoot -and (Test-UabsPathWithin -Path $r -Root $ExcludeRoot)) { continue }
@@ -1150,6 +1105,9 @@ function Find-UabsPackEvidence {
   )
   $found = New-Object System.Collections.Generic.List[string]
   if (-not $Detect) { return @() }
+  foreach ($relative in @($Detect.local_state_files)) {
+    if ($relative -and (Test-Path -LiteralPath (Join-Path $env:LOCALAPPDATA $relative) -PathType Leaf)) { $found.Add('registered companion '+$relative) }
+  }
   if ($null -eq $SteamLibraries) {
     $SteamLibraries = @()
     $steam = $null
@@ -1296,7 +1254,12 @@ function Update-UabsInstructionPacks {
   foreach ($name in @($Enabled)) {
     $rel = [string]$catalog.packs.$name.instructions
     if (-not $rel) { continue }
-    $src = Join-Path $PackRoot ($rel.Replace('/', '\'))
+    $ownerRoot = $PackRoot
+    if ($catalog.packs.$name.owner -eq 'skyrim-forge') {
+      $ownerRoot = $env:SKYRIM_FORGE_ROOT
+      if (-not $ownerRoot) { throw 'Forge-owned instructions require SKYRIM_FORGE_ROOT. Install the optional Skyrim integration first.' }
+    }
+    $src = Join-Path $ownerRoot ($rel.Replace('/', '\'))
     if (-not (Test-Path -LiteralPath $src -PathType Leaf)) { throw ('pack instructions missing: ' + $src) }
     $body = ([IO.File]::ReadAllText($src)).Trim() -replace '\r?\n', $nl
     $blocks += ('<!-- UABS-PACK:' + $name + ' -->' + $nl + $body + $nl + '<!-- /UABS-PACK:' + $name + ' -->')
@@ -1475,7 +1438,8 @@ function Sync-UabsProviderSkills(
   [string]$From,
   [string]$To,
   [string]$Provider = '',
-  [string[]]$ExcludeNames = @()
+  [string[]]$ExcludeNames = @(),
+  [string[]]$ExternalNames = @()
 ) {
   <#
     Bundle-owned provider skills are content-authoritative.
@@ -1491,7 +1455,7 @@ function Sync-UabsProviderSkills(
     throw ('provider skill source missing: ' + $From)
   }
   $preserved = @(Get-UabsPreservedSkillNames -Provider $Provider -SkillsDir $To)
-  $ExcludeNames = @($ExcludeNames) + $preserved
+  $ExcludeNames = @($ExcludeNames) + $preserved + @($ExternalNames)
   foreach ($name in $preserved) { Write-UabsOk ($Provider + ': verified local skill override preserved: ' + $name) }
   New-Item -ItemType Directory -Force -Path $To | Out-Null
 
@@ -1513,6 +1477,8 @@ function Sync-UabsProviderSkills(
       try {
         $previous = [IO.File]::ReadAllText($ledgerPath) | ConvertFrom-Json
         foreach ($entry in @($previous.skills)) {
+          # Forge has already adopted these names; dropping our ledger entry is the ownership transfer.
+          if ($ExternalNames -contains [string]$entry.name) { continue }
           if ($preserved -contains [string]$entry.name) { continue }
           if ($currentNames -contains [string]$entry.name) { continue }
           $retired = Join-Path $To ([string]$entry.name)

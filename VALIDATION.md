@@ -1,3 +1,30 @@
+# v8.24.0 source validation (publication/live gates pending)
+
+- Full Windows PowerShell 5.1 pack gate PASS with shared Python 3.14.9 and
+  isolated test dependencies. Release contracts: 151 passed, zero failed.
+  Manifest: 7,865 files verified, zero missing/mismatch before this doc refresh.
+- Compiler fixtures and real offline compile/run PASS for Go, GCC, Rust, .NET,
+  CMake/Ninja/MSVC/Windows SDK and Xmake C++23. Existing project pins remain.
+- Companion ZIP/child-process boundaries, selected owner reuse, newer-version
+  preservation, source-checkout protection, rollback and native failures PASS.
+- Published Reverse 1.4.0 and Forge 6.2.0 passed exact merged-SHA CI/security.
+  All two/eight public assets were downloaded and checked against GitHub
+  digests and checksum files. Forge's HTTP-500 draft failure was recovered
+  without changing its tag; retry receipts differ, while its payload manifest
+  and wheel/sdist bytes are identical. Pins use actual public ZIP bytes.
+- Forge covers the supplied CLibDT GUI and distinct CommonLib source layouts;
+  it never runs or copies those supplied third-party binaries/library snapshots.
+  Xmake is shared; Nx/Turbo/Vite/webpack stay project-local documented choices.
+- Privacy boundary PASS. The corrected routing contract checks the specialist
+  owner and avoids obsolete fixed schema-cost promises in the general index.
+- Fresh thirteen-config backups/fingerprints exist. Live deployment is running,
+  currently waiting for Windows elevation of the .NET SDK installer. The older
+  failed live install is not reported as healthy. Kimi remains unselected.
+- Remaining: extracted candidate gates, exact-SHA bundle CI/security, final
+  deterministic build/public-byte verification, live owner doctors/fifteen MCP
+  proofs/preference comparison, and final repository handoff. Paid API/inference,
+  editor/game/guest runtimes and absent-provider installations are not certified.
+
 # v8.22.1 validation
 
 - Published `SenjuWoo/SkyrimForge` `v6.1.0` (`4a200b1913dd0300873b81df4c91619e678be857`): rebuilt `SkyrimForge.Native 6.1.0 go` for Windows x64 and Linux x64, updated `README.md`, `CHANGELOG.md`, `CHANGELOG.txt`, `STATE.md`, `PLAN.md`, `DECISIONS.md`, and `VALIDATION.md`, wired `Install-AI-Bridge.ps1` -> `Install-Skyrim-Pack.ps1` with `managed-skills/*.json` digest synchronization and Codex `~/.agents/skills` resolution, and connected the local `Skyrim-Forge` workspace to `origin/main`. Two-pass `validate_repository.py --scope full --write-reports` PASS (`errors=0`); GitHub Actions `CI` (`40227438934`, 10/10 jobs), `CodeQL` (`40227438862`), `Dependency Graph` (`40227444859`), `Release` (`40227557944`), and security flags (`clean`) PASS.

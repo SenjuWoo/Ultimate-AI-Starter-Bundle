@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Full v6 pack gate: skill health, PowerShell parseability, offline asset
   integrity, and registry sanity. Exits non-zero on any failure.
@@ -193,7 +193,6 @@ $deployed = @(
     '3-PREAMBLES\MANUAL-PASTE.txt'
     '1-TAILORED-PROVIDER-TREES\Hermes\config.yaml'
     '1-TAILORED-PROVIDER-TREES\Hermes\COPY-TO-PROVIDER-HOME\config.yaml'
-    '_CANONICAL-SKILLS\housecarl\.claude-plugin\plugin.json'
     'START-HERE.txt'
     'START-HERE.bat'
     'INSTALL-REMOTE.bat'
@@ -259,33 +258,18 @@ try {
     Bad ('release asset cache gate failed: ' + $_.Exception.Message)
 }
 
-Section '5. Evidence registry sanity'
-if ($py) {
-    $reg = Join-Path $PackRoot '_CANONICAL-SKILLS\skyrim-memory\references\ERROR-REGISTRY.json'
-    if (Test-Path $reg) {
-        # `sources` is required of NEW evidence at merge time (merge_registry.py
-        # enforces it). It is deliberately NOT required here: 29 v4.3-era rows
-        # were derived from documentation rather than a session citation, and
-        # they are otherwise complete. Structural check only.
-        $code = @'
-import json,sys,io
-d=json.load(io.open(sys.argv[1],encoding='utf-8-sig'))
-e=d['entries']
-req=('id','title','symptom','root_cause','prevention','evidence_status')
-bad=[x.get('id','?') for x in e if not all(x.get(f) for f in req)]
-ids=[x['id'] for x in e]
-dup=[i for i in set(ids) if ids.count(i)>1]
-nosrc=sum(1 for x in e if not x.get('sources'))
-print('entries=%d dup=%s incomplete=%s | %d legacy rows without sources (allowed)'
-      %(len(e),dup or 'none',bad or 'none',nosrc))
-sys.exit(1 if (dup or bad) else 0)
-'@
-        $tmp = Join-Path $env:TEMP 'v6regcheck.py'
-        Set-Content -Path $tmp -Value $code -Encoding utf8
-        $out = & $py.Source $tmp $reg 2>&1
-        if ($LASTEXITCODE -eq 0) { Good $out } else { Bad $out }
-    } else { Bad 'ERROR-REGISTRY.json not found' }
-}
+$buildOut=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-BuildTools.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $buildOut -match 'BUILD TOOLS GATE: PASS') { Good 'Compiler discovery, check-only and native failure propagation' } else { Bad $buildOut }
+
+Section '5. External Skyrim content ownership'
+$packCatalog=Get-UabsPackCatalog -PackRoot $PackRoot
+if ($packCatalog.packs.skyrim.owner -eq 'skyrim-forge' -and -not (Test-Path -LiteralPath (Join-Path $PackRoot '_CANONICAL-SKILLS\skyrim-memory'))) {
+    Good 'Skyrim content and registry validation belong to the pinned Forge release'
+} else { Bad 'Skyrim content still has duplicate ownership' }
+$ownershipOut=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-SkyrimOwnership.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $ownershipOut -match 'OWNERSHIP GATE: PASS') { Good 'External skill preservation and source checkout ownership' } else { Bad $ownershipOut }
+$companionOut=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-Companions.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $companionOut -match 'COMPANION GATE: PASS') { Good 'Companion archive, owner reuse and failure boundaries' } else { Bad $companionOut }
 
 Section '6. Gate self-tests'
 $gateDir = Join-Path $PackRoot 'TOOLS\hooks'
@@ -681,35 +665,24 @@ if ($grokStarter -match '(?m)^\s*skills\s*=\s*false\s*$') {
     Good 'Grok starter config.toml sets compat.claude skills = false'
 } else { Bad 'Grok starter config.toml missing skills = false' }
 
-Section '10. Framework truth lock runs (SPID/KID grammar anti-drift)'
-# This script pins the exact SPID/KID parser facts the pack refuses to let an
-# agent invent. Until now NO gate ran it, so when v7.7.8 consolidated
-# skyrim-spid-distribution / skyrim-kid-distribution into spid-authoring /
-# kid-authoring, it sat there raising FileNotFoundError on every invocation
-# and nothing noticed for a whole release. An unrun gate is not a gate.
-$truthLock = Join-Path $PackRoot '_CANONICAL-SKILLS\skyrim-distr-kid-validation\scripts\verify_framework_truth.py'
-if (-not (Test-Path -LiteralPath $truthLock)) {
-    Bad 'verify_framework_truth.py missing from the canonical tree'
-} elseif (-not $py) {
-    Bad 'python not found; framework truth lock skipped'
-} else {
-    $out = & $py.Source $truthLock 2>&1 | Out-String
-    if ($out -match 'FRAMEWORK TRUTH LOCK: PASS') {
-        Good 'framework truth lock PASS'
-    } else {
-        Bad ('framework truth lock failed: ' + ($out.Trim() -split "`n" | Select-Object -First 6 | Out-String))
-    }
-}
-# The five provider trees ship their own copy; a stale one there is the same
-# rot, just delivered to the user instead of caught here.
-$canonBytes = [IO.File]::ReadAllBytes($truthLock)
-foreach ($tree in (Get-ChildItem (Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES') -Directory)) {
-    $copy = Join-Path $tree.FullName 'COPY-TO-SKILLS-DIRECTORY\skills\skyrim-distr-kid-validation\scripts\verify_framework_truth.py'
-    if (-not (Test-Path -LiteralPath $copy)) { continue }
-    $a = [IO.File]::ReadAllText($copy) -replace "`r`n", "`n"
-    $b = [Text.Encoding]::UTF8.GetString($canonBytes) -replace "`r`n", "`n"
-    if ($a -eq $b) { Good ($tree.Name + ' truth lock copy matches canonical') }
-    else { Bad ($tree.Name + ' truth lock copy differs from canonical') }
+Section '10. Pinned Forge framework truth lock (SPID/KID grammar anti-drift)'
+# Full-Offline checks the owner's exact archive; Core delegates owner content.
+$forgePin=@((Get-UabsCatalog).components | Where-Object { $_.id -eq 'skyrim-forge' })[0]
+$forgeZip=Join-Path $PackRoot ('BUNDLED-TOOLS\offline\'+$forgePin.offline_asset)
+if (-not (Test-Path -LiteralPath $forgeZip)) { Good 'Core: Skyrim framework content check delegated to the pinned Forge release' }
+else {
+    $proofRoot=Join-Path ([IO.Path]::GetTempPath()) ('uabs-forge-proof-'+[guid]::NewGuid().ToString('N'))
+    try {
+        if ((Get-FileHash -LiteralPath $forgeZip -Algorithm SHA256).Hash -ine $forgePin.sha256) { throw 'Pinned Forge archive digest mismatch.' }
+        Expand-UabsZip -Zip $forgeZip -Dest $proofRoot
+        $ownerRoot=Resolve-UabsSingleRoot $proofRoot
+        $truthLock=Join-Path $ownerRoot 'integrations\skyrim-pack\skills\skyrim-distr-kid-validation\scripts\verify_framework_truth.py'
+        if (-not $py) { throw 'Python missing for framework truth checks.' }
+        $out=& $py.Source $truthLock 2>&1 | Out-String
+        if ($LASTEXITCODE -eq 0 -and $out -match 'FRAMEWORK TRUTH LOCK: PASS') { Good 'Pinned Forge framework truth and production-path fixtures PASS' }
+        else { Bad ('Owner framework truth lock failed: '+$out.Trim()) }
+    } catch { Bad ('Pinned Forge framework check failed: '+$_.Exception.Message) }
+    finally { if (Test-UabsPathWithin $proofRoot ([IO.Path]::GetTempPath())) { Remove-Item -LiteralPath $proofRoot -Recurse -Force -ErrorAction SilentlyContinue } }
 }
 
 Section '11. Forge install root is versionless (upgrade cannot orphan five MCP configs)'

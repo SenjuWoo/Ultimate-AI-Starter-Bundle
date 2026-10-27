@@ -6,6 +6,15 @@ Restart affected apps after wiring changes. Installed does not mean connected.
 See [quick start](README.md#quick-start) for remote install, modes and recovery.
 Web UIs use [MANUAL-PASTE.txt](3-PREAMBLES/MANUAL-PASTE.txt).
 
+## Independent companions
+
+Use `START-HERE.bat -Packs skyrim,reverse` for the recommended complete stack,
+or `-ExcludePacks skyrim,reverse` for general AI tooling only. Choices are
+remembered; registered companions are detected. Each specialist works alone,
+keeps its own tool catalog/state and reuses compatible shared prerequisites.
+Existing Reverse tools update before Forge refreshes its shared-tool bindings.
+See [ownership and merge analysis](docs/COMPANION-ARCHITECTURE.md).
+
 ## Let the task select the tools
 
 The shared `capability-profiles` recipes compose skills, CLIs and project MCPs

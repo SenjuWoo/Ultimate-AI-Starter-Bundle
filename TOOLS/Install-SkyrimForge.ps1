@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Install the pinned Skyrim Forge release and prove it runs.
 
@@ -45,10 +45,11 @@ param(
   # drive letter.
   [string]$ForgeRoot,
   [string[]]$Providers = @('Claude','Codex','Grok','Kimi','Hermes','Antigravity'),
-  # In the all-in-one bundle, provider skill content is owned by the bundle's
-  # tailored trees. Forge may add its per-machine INSTALLATION.json descriptor
-  # but must not replace that bundle-owned Forge skill with a second copy.
+  # Compatibility name: Forge owns skills; the bundle owns scoped MCP activation.
   [switch]$BundleOwnsProviderSkills,
+  [switch]$SkipProviderSkills,
+  [switch]$Offline,
+  [switch]$NoUpdate,
   # Resolve and print the install root, migrate a version-stamped install if one
   # is found, then stop. Path resolution is the part that has broken repeatedly,
   # so it has to be runnable on its own -- TESTS/Test-ForgeRootResolution.ps1
@@ -63,6 +64,7 @@ param(
 $ErrorActionPreference = 'Stop'
 if (-not $PackRoot) { $PackRoot = Split-Path -Parent $PSScriptRoot }
 $Providers = @($Providers | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+if ($SkipProviderSkills) { $Providers=@() }
 . (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1')
 
 $catalogPath = Join-Path $PackRoot 'BUNDLED-TOOLS\CATALOG.json'
@@ -96,6 +98,7 @@ function Resolve-ForgeSource {
     Write-Host "  ..  ignoring $candidate (SHA-256 does not match the pinned release)" -ForegroundColor DarkYellow
   }
   if (-not $zip) {
+    if ($Offline) { throw 'Pinned Forge archive is not cached; offline mode downloaded nothing.' }
     $repo = [string]$forgeEntry.github.owner + '/' + [string]$forgeEntry.github.repo
     $url = 'https://github.com/' + $repo + '/releases/download/' + [string]$forgeEntry.release_tag + '/' + $asset
     $part = Join-Path $downloads ($asset + '.part-' + [guid]::NewGuid().ToString('N'))
@@ -140,6 +143,7 @@ if ($source) {
 function Get-VersionlessRoot([string]$path) {
   if (-not $path) { return $null }
   $path = $path.TrimEnd('\', '/')
+  if (Test-Path -LiteralPath (Join-Path $path '.git')) { return $path }
   $leaf = Split-Path -Leaf $path
   $parent = Split-Path -Parent $path
   if ($parent -and $leaf -match '^(?<stem>.+?)-\d+(?:\.\d+)*$') { return (Join-Path $parent $Matches['stem']) }
@@ -190,6 +194,7 @@ foreach ($candidate in @($ForgeRoot, $declared, $default)) {
   $legacy = @()
   foreach ($dir in (Get-ChildItem -LiteralPath $parent -Directory -ErrorAction SilentlyContinue)) {
     if ($dir.Name -notmatch $stemRx) { continue }
+    if (Test-Path -LiteralPath (Join-Path $dir.FullName '.git')) { continue }
     # [version] needs at least two parts, so "6" would not parse on its own.
     $text = $Matches['ver']
     while (($text -split '\.').Count -lt 2) { $text = $text + '.0' }
@@ -217,11 +222,7 @@ if ($target -match '-\d+(?:\.\d+)*$') { throw "Refusing a version-stamped Forge 
 if ($ResolveOnly) { Write-Output $target; exit 0 }
 if ($migrationNote) { Write-Host $migrationNote -ForegroundColor DarkCyan }
 
-# ---- Stage the source tree ----------------------------------------------
-# Job staging defaults to <install root>\Workspaces, so a replace-in-place that
-# deleted the old directory would delete the user's mod work with it. These
-# survive an upgrade; everything else is shipped content and is replaced.
-$preserve = @('Workspaces', '.venv', 'REPORTS', 'config.toml')
+# ---- Stage fresh source or delegate the existing owner's preserving update.
 
 # VERSION.txt alone is not an upgrade key. v7.9.1 ships Forge as in-tree source,
 # and a bundle hotfix may legitimately change Forge scripts while keeping the
@@ -233,6 +234,16 @@ $script:KeptNewerForgeVersion = $null
 function Test-ForgeShippedContentCurrent {
   param([string]$SourceRoot, [string]$InstalledRoot)
   if (-not (Test-Path -LiteralPath $InstalledRoot -PathType Container)) { return $false }
+  if (Test-Path -LiteralPath (Join-Path $InstalledRoot '.git')) {
+    $versionFile = Join-Path $InstalledRoot 'VERSION.txt'
+    if (-not (Test-Path -LiteralPath $versionFile -PathType Leaf)) { throw 'Forge source checkout has no version; update its owner repository instead of replacing it.' }
+    $versionText = [IO.File]::ReadAllText($versionFile)
+    if ($versionText -notmatch '(?m)^Skyrim Forge\s+(?<ver>\d+\.\d+\.\d+)\s*$') { throw 'Forge source checkout has an invalid version; no files replaced.' }
+    $have = $Matches['ver']
+    if ([version]$have -lt [version]$forgeVersion) { throw "Forge source checkout $have needs a Git update to $forgeVersion or newer; no source files replaced: $InstalledRoot" }
+    $script:KeptNewerForgeVersion = $have
+    return $true
+  }
   $installedVersionPath = Join-Path $InstalledRoot 'VERSION.txt'
   if (Test-Path -LiteralPath $installedVersionPath -PathType Leaf) {
     $installedVerText = [IO.File]::ReadAllText($installedVersionPath)
@@ -268,76 +279,65 @@ function Test-ForgeShippedContentCurrent {
 }
 
 $refreshRequired = -not (Test-ForgeShippedContentCurrent -SourceRoot $source -InstalledRoot $target)
+if ($refreshRequired -and $NoUpdate -and (Test-Path -LiteralPath (Join-Path $target 'VERSION.txt'))) { throw 'Forge source needs an owner update; -NoToolUpdates preserved the installed version.' }
 if ($refreshRequired) {
   Write-Host '  .. Skyrim Forge shipped content differs from this bundle; refreshing source tree (same-version hotfixes included)' -ForegroundColor DarkCyan
+  if (Test-Path -LiteralPath (Join-Path $target 'MANIFEST.json') -PathType Leaf) {
+    # The owner preserves private trees and verifies its previous payload before replacing it.
+    $ownerUpdater=Join-Path $source 'Update-Forge.ps1'
+    if (-not (Test-Path -LiteralPath $ownerUpdater -PathType Leaf)) { throw 'Pinned Forge release lacks its preserving source updater.' }
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $ownerUpdater -Root $target -SourceDir $source -SkipSetup
+    if ($LASTEXITCODE -ne 0) { throw 'Forge owner source update failed.' }
+  } else {
+  if ((Test-Path -LiteralPath $target) -and @(Get-ChildItem -LiteralPath $target -Force).Count) {
+    throw "Existing Forge directory has no owner manifest; preserve it and repair its owner receipt before updating: $target"
+  }
   $base = Split-Path -Parent $target
   New-Item -ItemType Directory -Force -Path $base | Out-Null
   $stage = Join-Path $base ('.forge-stage-' + [guid]::NewGuid().ToString('N'))
-  $backup = $target + '.backup-' + (Get-Date -Format 'yyyyMMdd-HHmmss')
+  $backup = $target + '.backup-' + [guid]::NewGuid().ToString('N')
   try {
-    Copy-Item -LiteralPath $source -Destination $stage -Recurse -Force
-    if (-not (Test-Path -LiteralPath (Join-Path $stage 'Install-or-Update.ps1') -PathType Leaf)) { throw 'Staged Forge tree is incomplete.' }
-    if (Test-Path -LiteralPath $target -PathType Container) {
-      foreach ($keep in $preserve) {
-        $from = Join-Path $target $keep
-        if (-not (Test-Path -LiteralPath $from)) { continue }
-        $to = Join-Path $stage $keep
-        if (Test-Path -LiteralPath $to) { Remove-Item -LiteralPath $to -Recurse -Force }
-        Move-Item -LiteralPath $from -Destination $to
-      }
-      Move-Item -LiteralPath $target -Destination $backup
+    # Copy only declared release files, never a developer checkout's .git/venv/private files.
+    $manifest=[IO.File]::ReadAllText((Join-Path $source 'MANIFEST.json')) | ConvertFrom-Json
+    $paths=@($manifest.files | ForEach-Object path) + @('MANIFEST.json','VALIDATION.json','BUILD-RECEIPT.json','SBOM.spdx.json','CHECKSUMS-SHA256.txt')
+    foreach ($rel in @($paths | Select-Object -Unique)) {
+      if ($rel -match '(^|[/\\])\.git([/\\]|$)' -or [IO.Path]::IsPathRooted($rel)) { throw "Unsafe Forge release path: $rel" }
+      $from=Join-Path $source $rel; $to=Join-Path $stage $rel
+      if (-not (Test-UabsPathWithin $from $source) -or -not (Test-UabsPathWithin $to $stage)) { throw "Forge release path escapes root: $rel" }
+      if (-not (Test-Path -LiteralPath $from -PathType Leaf)) { throw "Forge release file missing: $rel" }
+      New-Item -ItemType Directory -Force -Path (Split-Path -Parent $to) | Out-Null
+      Copy-Item -LiteralPath $from -Destination $to -Force
     }
+    if (-not (Test-Path -LiteralPath (Join-Path $stage 'Install-or-Update.ps1') -PathType Leaf)) { throw 'Staged Forge tree is incomplete.' }
+    if (Test-Path -LiteralPath $target -PathType Container) { Move-Item -LiteralPath $target -Destination $backup }
     try { Move-Item -LiteralPath $stage -Destination $target }
     catch {
       if ((Test-Path -LiteralPath $backup) -and -not (Test-Path -LiteralPath $target)) { Move-Item -LiteralPath $backup -Destination $target }
       throw
     }
-    if (Test-Path -LiteralPath $backup) { Remove-Item -LiteralPath $backup -Recurse -Force }
+    if (Test-Path -LiteralPath $backup) { Write-Host ("  OK  Previous Forge deployment retained: " + $backup) }
   } finally { Remove-Item -LiteralPath $stage -Recurse -Force -ErrorAction SilentlyContinue }
+  }
 } elseif ($script:KeptNewerForgeVersion) {
   Write-Host ("  OK  Skyrim Forge parallel/external install kept ({0}, bundle has {1}): {2}" -f $script:KeptNewerForgeVersion, $forgeVersion, $target) -ForegroundColor Green
 } else {
   Write-Host '  OK  Skyrim Forge shipped content already matches this bundle exactly' -ForegroundColor Green
 }
 
-& (Join-Path $target 'Install-or-Update.ps1') -BootstrapPython
-
-if ($script:KeptNewerForgeVersion -and (Test-Path -LiteralPath (Join-Path $target 'Install-Skyrim-Pack.ps1') -PathType Leaf)) {
-  foreach ($prov in $Providers) {
-    & (Join-Path $target 'Install-Skyrim-Pack.ps1') -Provider $prov
-  }
+if (-not $Offline -and -not $NoUpdate) {
+  & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $target 'Install-or-Update.ps1') -BootstrapPython
+  if ($LASTEXITCODE -ne 0) { throw 'Forge setup failed.' }
 }
 
-$bundleCatalog = $null
-if ($BundleOwnsProviderSkills) {
-  $bundleCatalog = [IO.File]::ReadAllText($catalogPath) | ConvertFrom-Json
-}
-
+# Forge is the only writer of the optional Skyrim skills. The legacy switch
+# now means the bundle owns MCP activation, not the skill payload.
 foreach ($provider in $Providers) {
-  if ($BundleOwnsProviderSkills) {
-    # The all-in-one bundle already installed the canonical skill. Preserve that
-    # single writer and add only Forge's per-machine launch descriptor beside it.
-    $providerSkill = Join-Path (Get-UabsProviderSkillsDir -Provider $provider -Catalog $bundleCatalog) 'skyrim-forge'
-    $providerSkillMd = Join-Path $providerSkill 'SKILL.md'
-    if (-not (Test-Path -LiteralPath $providerSkillMd -PathType Leaf)) {
-      throw "Expected bundle-owned Forge skill is missing for ${provider}: $providerSkillMd"
-    }
-    $descriptorSource = Join-Path $target 'INSTALLATION.json'
-    if (-not (Test-Path -LiteralPath $descriptorSource -PathType Leaf)) {
-      throw "Forge installation descriptor missing after install: $descriptorSource"
-    }
-    Copy-Item -LiteralPath $descriptorSource -Destination (Join-Path $providerSkill 'INSTALLATION.json') -Force
-    Write-Host ("  OK  {0}: bundle-owned Forge skill preserved; descriptor refreshed" -f $provider) -ForegroundColor Green
-  } else {
-    & (Join-Path $target 'Install-Forge-Skill.ps1') -Provider $provider
+  & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $target 'Install-Skyrim-Pack.ps1') -Provider $provider
+  if ($LASTEXITCODE -ne 0) { throw "Forge skill installation failed for $provider." }
+  if (-not $BundleOwnsProviderSkills -and $provider -ne 'Antigravity') {
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $target 'Register-MCP.ps1') -Provider $provider -Yes -ReportPath (Join-Path $target ("REGISTER-$provider.json"))
+    if ($LASTEXITCODE -ne 0) { throw "Forge MCP registration failed for $provider." }
   }
-  if (-not $BundleOwnsProviderSkills) {
-    & (Join-Path $target 'Register-MCP.ps1') -Provider $provider -Yes -ReportPath (Join-Path $target ("REGISTER-$provider.json"))
-  }
-}
-
-if ($BundleOwnsProviderSkills) {
-  Write-Host '  OK  Skyrim Forge installed but not registered globally; the bundle game-skyrim profile owns MCP activation' -ForegroundColor Green
 }
 
 # ---- Prove it actually runs ---------------------------------------------

@@ -1,120 +1,35 @@
 ---
 name: ai-tooling-stack
-description: Map of Skyrim + AI coding tools (Forge, houseCARL, codebase-memory, Headroom, Superpowers, Ponytail, CodeBurn). Load to choose tools, wire MCP, or recommend installs when missing.
+description: Choose general AI, compiler and workspace tools or route a task to Skyrim Forge and Reverse THIS. Discover existing installations before installing or updating.
 metadata:
-  version: 5.1.0
+  version: 6.0.0
 ---
 
 # AI tooling stack
 
-This skill is the **cross-tool index**. Exact syntax lives in specialist skills. Paths are discovered via `tool-discovery` — never assumed.
+Use this general index to select the smallest useful tool set. Resolve actual
+paths with `tool-discovery`. A catalog is not proof that a tool is installed,
+enabled or healthy. Preserve models, reasoning, trust, credentials and settings.
 
-## Always-on baseline (Skyrim work)
-
-1. `skyrim-memory`
-2. `skyrim-tool-router`
-3. `tool-discovery` when any external binary/MCP might be needed
-4. `skyrim-versioned-workspace` before first write
-
-## Tool roles (do not collapse these)
-
-| Tool | Role | Skill(s) | If missing |
-|---|---|---|---|
-| **Skyrim Forge** | Typed automation broker: doctor, capabilities, Papyrus compile pipeline, FOMOD, release/nexus gates, tool-resolve | `skyrim-forge` | Bundle-managed; the AIO installs it. Continue with narrower tools if absent |
-| **houseCARL** | Live MO2 load-order MCP: true winners, conflict trees, reviewable patch ESPs, NIF/BSA tools, Nexus keyless lookup, VFS assets | `housecarl` + mutagen/spid/kid/skypatcher authoring helpers | Recommend houseCARL-Setup + .NET 10 Runtime + MCP register |
-| **codebase-memory-mcp** | Knowledge-graph code navigation (call graphs, impact) | `codebase-memory` | Recommend DeusData install + MCP wire |
-| **Headroom** | Context compression / retrieve / session stats MCP | `headroom` | Optional; recommend pip install when context thrash is real |
-| **Superpowers** | Process discipline (debug, TDD, plans, verification) | `using-superpowers` + family | Bundled skill text works; plugin optional |
-| **Ponytail** | Minimal-diff / anti-over-engineering mode | `ponytail` + family | Bundled skill text works; plugin optional |
-| **CodeBurn** | Local AI token/cost analytics | `codeburn` | Optional `npx codeburn` |
-
-## Capability and schema overhead
-
-Prefer an existing CLI when it fully answers the task. A dormant CLI adds
-**0 tokens of MCP schema**; commands, instructions and output still consume
-context when used. houseCARL is **MCP only -- no CLI**, and provides live
-MO2 load-order evidence that an offline plugin reader cannot replace.
-
-Historical schema estimates, not per-turn bills: Forge MCP 52 tools / 17,488
-bytes / ~4,372 tokens (bytes/4); houseCARL 2.1.1 Full 31 tools / 163,959 bytes /
-~40,989 (1.9.0 historical: 41,768); Lean 28 tools / 128,501 bytes / ~32,125; ReadOnly 17 tools / 75,075 bytes / ~18,768.
-Tool count alone is a poor size proxy.
-
-**Preferring a cheaper server you have already connected does not guarantee
-lower usage.** Scope, native filtering, deferred discovery, caching and actual
-calls decide what enters context. Start by **not registering** irrelevant
-servers. Codex supports `enabled_tools` / `disabled_tools`; Hermes supports
-`tools.include` / `tools.exclude`; Claude Code supports deferred Tool Search.
-Do not buy a new router for a capability already native to the provider.
-
-Use Forge CLI for typed engineering and offline plugin/asset pipelines,
-and houseCARL for live load-order truth, conflict trees, VFS, NIF/BSA inspection and keyless Nexus.
-See `capability-profiles` for setup and measurement boundaries.
-
-## Decision cheat-sheet
-
-| User need | Prefer |
+| Task | Owner and first route |
 |---|---|
-| "What wins this FormID in MY list?" | houseCARL - nothing else can answer it |
-| "Typed release / FOMOD / nexus policy / doctor" | Forge **CLI** (`forge release-build`, `forge doctor`) |
-| "Create ESL + quest + compile papyrus from CLI" | Forge CLI - zero MCP schema overhead |
-| "Read a record / query a plugin off disk" | Forge CLI `record-query` / `plugin-info` before houseCARL |
-| "Build or validate a patch plugin from a plan" | Forge CLI `plugin-build` / `plugin-plan-validate` |
-| "Edit what the LIVE load order resolves to" | houseCARL - Forge has no view of MO2 |
-| "SPID/KID/SkyPatcher line syntax" | `*-authoring` / dedicated V4 syntax skills — never invent |
-| "Who calls this function in the repo?" | codebase-memory |
-| "Context is huge / compress this log" | headroom |
-| "Stop over-engineering" | ponytail |
-| "How much did this AI session cost?" | codeburn |
-| "Bug / plan / verify before done" | superpowers process skills |
+| AI setup, general skills and workspace hygiene | Starter Bundle; `project-intel`, `capability-profiles`, `tool-discovery` |
+| Source navigation and impact | `codebase-memory`; index source, excluding assets and dependencies |
+| Current technical documentation | Context7 or primary vendor documentation |
+| Context and token management | `headroom`; measure actual usage, not schema bytes as billed tokens |
+| Coding, tests and releases | `coding-discipline`, `check-work`, `release-checklist`, authenticated `gh` |
+| Common compilers and shared Python/Node | Bundle prerequisite installer; reuse current tools and preserve project pins |
+| Skyrim records, Papyrus, assets and toolchains | [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge); `skyrim-tooling-stack`, memory and task router |
+| Game/app reverse engineering and binary tools | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this); installed manifest, shims and task guides |
+| General game recon and asset workflows | Existing `um` and `universal-modder`, plus the relevant engine skill |
 
-## Provider adaptation
+All three projects work independently and are recommended together. The bundle
+is the general setup entry point; specialists own their catalogs and updates.
+Read owner receipts before downloading another copy. App venvs and explicitly
+pinned project SDKs are legitimate isolation; reuse a compatible base runtime.
 
-- **Claude Code:** houseCARL ships as a Claude plugin; Superpowers/Ponytail/Headroom often install as plugins. Skills in this pack still work as plain `SKILL.md`.
-- **Grok Build:** register MCP servers in `%USERPROFILE%\.grok\config.toml`. Use pack script `TOOLS\Fix-Grok-Codebase-Memory-Direct.ps1` only after editing the exe path. Skills go in `%USERPROFILE%\.grok\skills`.
-- **Codex:** user skills in `%USERPROFILE%\.agents\skills`; `%CODEX_HOME%\skills` is legacy-only. MCP per Codex docs. houseCARL may ship a `codex\` skill stub — still require MCP binary.
-- **Kimi / Hermes / others:** copy provider-native skills; wire MCP if the harness supports it; otherwise say MCP unavailable and use CLI fallbacks.
-
-## Hard rules
-
-- Missing tool → recommend install with verify command; continue with fallback when safe.
-- Never claim houseCARL/Forge results without the tool actually responding.
-- Never launch xEdit/CK GUI.
-- Game Data / MO2 staging / saves remain read-only except via explicit owned project outputs.
-- houseCARL patches are new MO2 mods to review — originals untouched (default lane).
-- Tool outputs (DynDOLOD, ParallaxGen, Reqtificator, …) must not be frozen into hand patches — see `tool-output-awareness`.
-
-## Session tool report (optional once per session)
-
-```text
-TOOLS: forge=<found|missing> housecarl=<found|missing|mcp-down> codebase-memory=<found|missing|mcp-down> headroom=<found|missing> codeburn=<found|missing> mo2=<set|unset>
-```
-
-## houseCARL first-time / Vortex
-
-Never leave houseCARL "almost installed." Run pack automation:
-
-```text
-TOOLS\Setup-HouseCarl.ps1
-```
-
-- MO2 users → instance auto-detected or `-Mo2Instance`
-- Vortex users → shim auto-built at `%LOCALAPPDATA%\houseCARL-Shim`
-- Then full AI restart
-
----
-
-## AIO installer (pack)
-
-New users and missing-tool recovery:
-
-```powershell
-# Pack root
-.\INSTALL-AIO.ps1
-.\INSTALL-AIO.ps1 -Mode OnlineLatest
-.\TOOLS\Ensure-Tools.ps1
-.\TOOLS\Update-From-GitHub.ps1
-```
-
-Offline snapshots live in `BUNDLED-TOOLS\offline\`. Component registry: `BUNDLED-TOOLS\CATALOG.json`.
-After MCP changes the user must **fully restart** the AI application.
+Owner updates advance older managed tools to the supported current release,
+retain newer compatible tools, back up replacements and verify them. Unknown
+external versions or edited payloads need inspection. Never overwrite them or
+install another copy to hide uncertainty. Load only the selected task profile
+and MCP. Diagnose broken tools first; report a required host restart honestly.

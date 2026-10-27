@@ -1,8 +1,8 @@
 ---
 name: tool-discovery
-description: Resolve optional Skyrim and AI tooling on the current machine without assuming drive letters or usernames. Use at session start, when a tool path is unknown, or before recommending install.
+description: Resolve optional AI tooling on the current machine without assuming drive letters or usernames. Use at session start, when a tool path is unknown, or before recommending install.
 metadata:
-  version: 5.3.0
+  version: 6.0.0
 ---
 
 # Tool discovery (portable)
@@ -22,6 +22,9 @@ or a second skill-directory writer.
 For local image/video workflows, discover ComfyUI first and consult the
 optional [ComfyUI CLI](references/comfy-cli.md). It adds no standing MCP schemas.
 
+For Xmake, common compilers and project-local Nx/Turbo/Vite/webpack, read
+[shared build tool ownership](references/build-tools.md). Reuse the project lock.
+
 For binary/app analysis or unfamiliar-game reverse engineering, use
 [the RE routes](references/reverse-engineering.md): Universal Modder for recon,
 the existing Reverse THIS! bench for tools, REA CLI for structured evidence.
@@ -33,7 +36,7 @@ untouched.
 
 Never hardcode `C:\Users\<name>`, `S:\Apps`, or `Z:\Backup` as authority. Those may appear only as **example** paths on the pack author's machine.
 
-Treat pasted roots as hints. When the user says a path is "just suggestions" and pastes a Steam `Skyrim Special Edition` folder or a tools root (houseCARL, Skyrim Forge), those are step-5 conversation candidates, not install authority. Resolve via env, `PATH`, and the conversation path. Do not hardcode them as the game or tool root.
+Treat pasted roots as hints. When the user says a path is "just suggestions" and pastes a game folder or a tools root, those are step-5 conversation candidates, not install authority. Resolve via env, `PATH`, and the conversation path. Do not hardcode them as a game or tool root.
 
 ## Resolution order (every tool)
 
@@ -48,8 +51,9 @@ Treat pasted roots as hints. When the user says a path is "just suggestions" and
    "installed" and "enabled here" are different states. Recommending an install
    here tells the user to install something they already have.
 7. Only if the binary is genuinely absent from disk → **install it with the
-   pack's installer** (a fake or assumed install is still forbidden), then run
-   it. Only when no supported install exists, say so plainly.
+   pack's installer or the owning repository's installer** (a fake or assumed
+   install is still forbidden), then run it. Only when no supported install
+   exists, say so plainly.
 
 ## Two different failures, two different answers
 
@@ -71,35 +75,48 @@ ELSE:  only when no toolbox is connected, run it yourself:
        not pick up a new MCP server, so say the AI app needs a restart only then.
 ```
 
-Profiles worth naming: `game-skyrim-load-order` (houseCARL), `game-skyrim`
-(Skyrim Forge), `code-intel` (codebase-memory + serena), `web`
-(Chrome DevTools/shadcn when relevant; Playwright CLI is separate). `-List` marks each server `REGISTERED for the project above`
-or `ready, but NOT registered`; the second one is always one command away, on
-on providers with project scope. Kimi needs explicit global opt-in; Hermes
-uses native named profiles. See `capability-profiles` for supported activation.
+Profiles worth naming: `code-intel` (codebase-memory + serena), `web`
+(Chrome DevTools/shadcn when relevant; Playwright CLI is separate), and the
+game/engine profiles (`game-*`, `engine-*`) that activate a game's own Forge or
+editor MCP only inside a matching project. `-List` marks each server
+`REGISTERED for the project above` or `ready, but NOT registered`; the second
+one is always one command away, on providers with project scope. Kimi needs
+explicit global opt-in; Hermes uses native named profiles. See
+`capability-profiles` for supported activation.
 
 ### Missing-tool response template
 
 ```text
 TOOL MISSING: <name>
 WHY NEEDED: <one sentence>
-INSTALL: <official URL or pack section>
+INSTALL: <official URL, pack section, or the owning repository>
 VERIFY: <one command that must succeed>
 OPTIONAL: continue without it using <fallback>
 ```
 
 Only recommend tools that help the active task. Do not nag about every optional tool every turn.
 
+## Game-specific tools are not bundled
+
+Game toolchains (Skyrim Forge and houseCARL, RimWorldForge, RobloxForge,
+SaintsRowForge, AvatarForge ...) live in their own repositories and install
+themselves; the bundle only knows how to *activate* an installed one per
+project (`game-*` profiles, parked-server rules). When a game tool is absent,
+say which repository owns it and use the TOOL MISSING template; for Skyrim that
+is `https://github.com/SenjuWoo/SkyrimForge`
+(`Install-AI-Bridge.ps1 -Provider All -WithHouseCarl`). Look for the tool's own
+environment variable first (for example `SKYRIM_FORGE_ROOT`,
+`HOUSECARL_MCP`, `ROBLOX_FORGE_ROOT`) and its skill-local `INSTALLATION.json`.
+
 ## Environment variables (optional, user-set)
 
 | Variable | Tool |
 |---|---|
-| `SKYRIM_FORGE_ROOT` | Skyrim Forge product root |
-| `HOUSECARL_ROOT` | houseCARL install folder (contains `housecarl\` or `housecarl-mcp.exe`) |
-| `HOUSECARL_MCP` | Full path to `housecarl-mcp.exe` |
 | `CODEBASE_MEMORY_MCP` | Full path to `codebase-memory-mcp.exe` |
 | `HEADROOM_CMD` | `headroom` executable or `python -m headroom` entry |
-| `SKYRIM_MO2_INSTANCE` | MO2 instance folder containing `ModOrganizer.ini` |
+| `UABS_TOOLBOX_CMD` | `uabs-toolbox` executable |
+| `UABS_PYTHON` | The shared user Python the bundle reuses |
+| `UABS_TOOL_ROOTS` | `;`-separated extra folders where the user keeps tool checkouts |
 
 ## Discovery script
 
@@ -110,31 +127,9 @@ tool-discovery\scripts\discover_tools.ps1
 tool-discovery\scripts\discover_tools.ps1 -Json
 ```
 
-It prints FOUND / MISSING for each known tool and never modifies the system.
+It prints FOUND / MISSING for each general tool and never modifies the system.
 
 ## Per-tool checks (Windows)
-
-### Skyrim Forge
-
-- Env: `SKYRIM_FORGE_ROOT`
-- Skill descriptor: `skyrim-forge\INSTALLATION.json` → `root`, `cli`, `mcp`
-- Commands: `forge doctor`, or `python -m skyrim_forge doctor` from the product venv
-- Install: user product tree / Forge release; skill alone is not the product
-- Fallback: typed manual workflows + other tools; never write live Data
-
-### houseCARL
-
-- Env: `HOUSECARL_MCP`, `HOUSECARL_ROOT`
-- Defaults to search (existence only):  
-  `%LOCALAPPDATA%\houseCARL\**\housecarl-mcp.exe`  
-  `%LOCALAPPDATA%\Programs\houseCARL\**\housecarl-mcp.exe`  
-  `%USERPROFILE%\.housecarl\**\housecarl-mcp.exe`  
-  any path the user names
-- MCP must be registered in the **current** AI app (Claude plugin, Codex config, Grok `config.toml`, etc.)
-- Requirements: Windows x64, **.NET 10 Runtime**, MO2 instance (or Vortex shim)
-- Install: run `TOOLS\Setup-HouseCarl.ps1` or `houseCARL-Setup.exe` from the houseCARL distribution, fully restart the AI app, then set MO2 instance
-- Official product docs ship with the installer `START-HERE.txt` / `housecarl\README.md`
-- Fallback when MCP absent: read-only file inspection + Forge if present; do **not** pretend load-order winners
 
 ### codebase-memory-mcp
 
@@ -173,14 +168,8 @@ It prints FOUND / MISSING for each known tool and never modifies the system.
 
 - Verify: `npx codeburn --help` or `codeburn --help`
 - Install: https://github.com/getagentseal/codeburn — `npx codeburn` or `npm i -g codeburn` (Node 22.13+)
-- Purpose: local AI token/cost dashboards and waste scans — not a Skyrim mod compiler
+- Purpose: local AI token/cost dashboards and waste scans — not a build tool
 - Fallback: skip cost analytics
-
-### MO2 instance
-
-- Env: `SKYRIM_MO2_INSTANCE`
-- Marker file: `ModOrganizer.ini` in the instance root
-- Never assume a drive letter. Ask the user once and persist via houseCARL set-instance or project `STATE.md`.
 
 ## Provider MCP config pointers
 
@@ -197,27 +186,8 @@ After editing MCP config: **fully restart** the AI application.
 ## Safety
 
 - Discovery is read-only.
-- Never copy another user's absolute paths into a shareable mod release.
-- Never write to live Skyrim `Data`, MO2 overwrite, or saves while "just checking tools".
-
-## houseCARL setup automation
-
-If `housecarl-mcp` is FOUND but `SKYRIM_MO2_INSTANCE` / shim is unset, or MCP tools fail on missing instance:
-
-```powershell
-# Pack root:
-TOOLS\Setup-HouseCarl.ps1
-# Or skill-local:
-housecarl\scripts\Setup-HouseCarl.ps1
-```
-
-Supports **MO2** (native) and **Vortex** (automatic MO2-shaped shim). See `housecarl` skill and `TOOLS\housecarl\README.md`.
-
-State file after success:
-
-```text
-%LOCALAPPDATA%\houseCARL-data\uabs-setup-state.json
-```
+- Never copy another user's absolute paths into a shareable release.
+- Never write to a game's live `Data`, mod-manager overwrite, or saves while "just checking tools".
 
 ---
 

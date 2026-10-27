@@ -1,3 +1,23 @@
+## 8.24.0 (2026-10-26)
+
+126 canonical skills total, plus 48 independently owned Skyrim skills.
+
+- Keep three standalone tool owners with optional, remembered companion installation from one launcher.
+- Reuse registered tool roots and shared runtimes; update supported older tools automatically while protecting project pins and personal edits.
+- Delegate Skyrim source updates and skill migrations to Forge; remove the ai-tooling-stack ownership collision.
+- Add the Reverse THIS! front door without copying its specialist catalog or tool state.
+- Update Perplexity after an isolated protocol probe; retain incompatible or unvalidated optional upgrades with current evidence.
+- Document the repository merge analysis, tool coverage, update boundaries and remaining runtime limits.
+- Add Xmake shared provisioning/update and real C++23/MSVC proof; document project-local Nx, Turbo, Vite and webpack without duplicate global installations.
+
+## 8.23.0 (unreleased; superseded by 8.24.0)
+
+126 canonical skills total, plus 48 independently owned Skyrim skills.
+
+- Install and compile-check the common compiler suite by default. Reuse existing tools and project pins.
+- Delegate Skyrim skill/tool installation to Forge; preserve personal edits and independently managed skills.
+- Route REA and detailed reverse-engineering guidance to Reverse THIS!.
+
 ## 8.22.1
 
 - Pin `Skyrim Forge 6.1.0` (`SenjuWoo/SkyrimForge` `v6.1.0`, `Skyrim-Forge-6.1.0.zip`, `sha256: 7220f17a67e7d5828d9ad887d85ab970d5d5c2959e2e2a7d7e6f6f3b8d1ab2ec`) across `BUNDLED-TOOLS/CATALOG.json`, `BUNDLED-TOOLS/PROFILES.json`, `BUNDLED-TOOLS/OFFLINE-MANIFEST.json`, `INSTALL-AIO.ps1`, and `_CANONICAL-SKILLS/skyrim-forge/SKILL.md`.

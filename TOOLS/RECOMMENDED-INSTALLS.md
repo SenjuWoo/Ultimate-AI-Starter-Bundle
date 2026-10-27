@@ -1,37 +1,36 @@
-# Recommended installs (UABS AIO)
+# Recommended installs
 
-## Easiest
+Run `START-HERE.bat`. It configures the AI providers already installed on this
+machine; explicit provider selections remain supported.
 
-```powershell
-.\START-HERE.bat
-```
+The common compiler suite is installed by default: Go, Rust/Cargo, GCC,
+CMake/Ninja, Xmake, .NET SDK, MSVC C++ and the Windows SDK. Python, Node, Git and
+GitHub CLI support the shared agent tools. Existing working toolchains and
+project version pins are reused. Fresh setup may require several GB/elevation.
+Use `-SkipBuildTools` to skip compiler provisioning; `-SkipRuntimes` skips all
+runtime/compiler provisioning. `TOOLS/Install-BuildTools.ps1 -CheckOnly` compiles
+and runs small programs; it never installs or changes user PATH.
 
-## What you get
+General skills, codebase-memory, Headroom, Superpowers, Ponytail, CodeBurn,
+RTK, Universal Modder and the on-demand toolbox belong to this bundle.
 
-| Tool | Bundled offline | GitHub updates |
-|---|---|---|
-| Skills (all providers) | yes (pack) | pack updates |
-| houseCARL | yes zip | Avick3110/houseCARL |
-| codebase-memory-mcp | yes zip | DeusData/codebase-memory-mcp |
-| Headroom | yes wheel | headroomlabs-ai/headroom |
-| Superpowers | yes zip + plugins/ | obra/superpowers |
-| Ponytail | yes zip + plugins/ | DietrichGebert/ponytail |
-| CodeBurn | npx/npm | getagentseal/codeburn |
-| Skyrim Forge 6.0.1 | yes zip | SenjuWoo/SkyrimForge |
+[Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) owns Skyrim-only tools,
+houseCARL and 48 specialist skills. AIO installs the pinned release and proves
+`forge doctor` when Skyrim integration is enabled. `SKYRIM_FORGE_ROOT` and
+skill descriptors are generated automatically; no manual extraction is part
+of a fresh install. The deployed directory has a stable name, while Git source
+checkouts retain their chosen names and edits. Newer installations are preserved.
 
-## Later updates
+[Reverse THIS!](https://github.com/SenjuWoo/reverse-this) owns decompilers,
+debuggers and REA. Reuse its kit pointer/installed manifest and invoke its
+installer for specialist tools. It never changes provider settings.
 
-```powershell
-.\TOOLS\Update-From-GitHub.ps1
-.\TOOLS\Ensure-Tools.ps1
-```
+Use `START-HERE.bat -Packs skyrim,reverse` for all three. Existing registered
+companions are reused; their owners update supported older tools with retained
+backups. Project pins, personal edits and newer compatible versions remain.
+All three projects cooperate and update independently. Disabling bundle
+integration does not remove another owner's content or personal edits.
 
-## Runtimes (installer tries winget)
-
-- .NET 10 Runtime (houseCARL, when the Skyrim pack is active)
-- Python 3 (Headroom)
-- Node.js LTS (CodeBurn)
-
-## Bundle-managed
-
-Skyrim Forge 6.0.1 is released from `SenjuWoo/SkyrimForge` and is installed, health-checked with `forge doctor`, skill-wired, and MCP-registered by the AIO installer when the Skyrim pack is active. `SKYRIM_FORGE_ROOT` and the per-provider skill descriptor are generated automatically; no manual extraction is part of a fresh install. The install directory never carries a version suffix, so an upgrade cannot disconnect a provider whose MCP command is an absolute path.
+Update common tools with `TOOLS/Update-From-GitHub.ps1` or
+`TOOLS/Ensure-Tools.ps1`. Diagnostics are under
+`%LOCALAPPDATA%/Ultimate-AI-Starter-Bundle/logs` (compiler log: build-tools.log).

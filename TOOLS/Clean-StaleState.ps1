@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Remove what THIS pack left behind: retired skills and unbounded backups.
 
@@ -160,7 +160,9 @@ if (-not $SkipSkills -and $retired.Count) {
     $dir = $providerSkillDirs[$provider]
     if (-not (Test-Path -LiteralPath $dir -PathType Container)) { continue }
     $preserved = @(Get-UabsPreservedSkillNames -Provider $provider -SkillsDir $dir)
+    $external = @((Get-UabsPackCatalog -PackRoot $PackRoot).packs.PSObject.Properties | Where-Object { $_.Value.owner } | ForEach-Object { $_.Value.skills })
     foreach ($entry in $retired) {
+      if ($external -contains $entry.name) { continue }
       $name = [string]$entry.name
       if ($preserved -contains $name) {
         [void]$script:Reported.Add("$provider/$name has a verified local override - left alone")

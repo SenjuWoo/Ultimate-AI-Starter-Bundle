@@ -42,6 +42,7 @@ of every dependency. Preserve all included licences and attribution.
 | `playwright-cli` | [Playwright CLI](https://github.com/microsoft/playwright-cli) | Apache-2.0 |
 | `comfy-cli` | [ComfyUI CLI](https://github.com/Comfy-Org/comfy-cli) | GPL-3.0 |
 | `rea` | [REA](https://github.com/morluto/rea) | MIT; optional CLI, not a bundled tool suite |
+| `reverse-this` | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | Optional standalone analysis workbench; source MIT, individual payload licenses apply |
 | Reverse THIS! integration | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | MIT kit; each discovered tool retains its licence |
 
 Skyrim Forge is maintained by the bundle author at
