@@ -90,6 +90,8 @@ def main():
                                    "VALIDATION.json", got))
         if got != bare:
             problems.append("VALIDATION.json version is %s, expected %s" % (got, bare))
+        check("VALIDATION.json", r'"release_tag":\s*"([^"]+)"', "v" + bare,
+              "VALIDATION.json release_tag")
     except Exception as exc:
         problems.append("VALIDATION.json unreadable: %s" % exc)
 

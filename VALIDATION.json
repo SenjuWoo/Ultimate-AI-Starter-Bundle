@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
   "version": "8.25.0",
-  "generated": "2026-10-26",
-  "release_tag": "v8.22.0",
+  "generated": "2026-10-27",
+  "release_tag": "v8.25.0",
   "canonical_skills": 126,
   "provider_trees": 6,
   "registry_entries": 126,
@@ -47,8 +47,11 @@
     "TESTS/Test-OfflineUpdate.ps1",
     "TESTS/Test-BuildTools.ps1",
     "TESTS/Test-SkyrimOwnership.ps1",
-    "TESTS/Test-Companions.ps1"
+    "TESTS/Test-Companions.ps1",
+    "TESTS/test_workspace_ownership.py",
+    "TESTS/test_product_delivery.py",
+    "TESTS/Test-ForgeRuntimeVersion.ps1"
   ],
-  "runtime_status": "8.25.0 source Windows pack gate PASS; 151 release contracts PASS; 7 ownership/publication/junction tests and 2 real product/fanout tests PASS; extracted Core manifest, seven skill trees and actual START-HERE help PASS. Reverse 1.5.0 public bytes verified; Forge 6.3.0 final head matrix green. Final bundle exact-SHA CI/public bytes and approved live refresh pending. Paid inference, actual game/GUI/guest and absent-provider runtime remain untested.",
+  "runtime_status": "8.25.0 full Windows pack gate PASS; 151 release contracts PASS; 7 ownership/publication/junction tests and 2 real product/fanout tests PASS. Live bundle 8.25.0 doctor 0 errors/0 warnings; 15 core MCP probes, Forge 53-tool and houseCARL 31-tool probes PASS; 13 preference fingerprints unchanged. Forge 6.3.1 and Reverse 1.5.0 public assets verified, installed owners healthy. Bundle PR15 all ten checks passed; final exact-SHA CI, repeat frozen builds and public bytes pending. Game/GUI/guest, paid inference and real absent-provider runtime remain untested.",
   "notes": "General provider setup and shared AI/build tools belong to the bundle. Optional companion packs delegate specialist source/tools/ledgers to Forge and Reverse THIS!, update the existing Reverse selection before refreshing Forge bindings, and preserve newer/project-pinned/edited content. Runtime and dependency caches may require vendor downloads even with Full-Offline payload snapshots."
 }

@@ -3444,6 +3444,7 @@ def test_every_version_gate_accepts_the_shipped_version() -> None:
     whatever shape a future release picks.
     """
     bare = BARE
+    assert json.loads(read(ROOT / "VALIDATION.json"))["release_tag"] == "v" + bare
     # 1. The doctor's PowerShell guard.
     doctor = read(ROOT / "TOOLS" / "Test-Installed-State.ps1")
     m = re.search(r"if \(\$packBare -notmatch '([^']+)'\)", doctor)

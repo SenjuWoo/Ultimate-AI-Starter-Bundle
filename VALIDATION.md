@@ -1,3 +1,12 @@
+# v8.25.0 final source and installed validation
+
+- Full 19-section Windows PowerShell pack gate PASS; all 151 release contracts PASS; ownership/publication/junction tests 7/7 and real product/fanout tests 2/2 PASS. All 7,882 source manifest hashes and version declarations agree. The version checker also rejects a stale validation release tag.
+- GitHub PR15 checks all pass, including source and extracted Core on Windows Python 3.14/3.15, Linux Hermes physical symlink preservation and the pinned Forge end-to-end installation. Exact frozen release commit and downloaded-byte proof are recorded in STATE.md after publication.
+- Live versions: Bundle 8.25.0, Forge 6.3.1, Reverse THIS! 1.5.0. Final doctor with published companion pins: zero errors/warnings. Fifteen selected-provider core MCP probes, Forge 53-tool and houseCARL 31-tool handshakes pass. All thirteen saved model/permission/MoA fingerprints are unchanged; private workspace identity and general skill ownership are preserved.
+- Forge eight public assets and Reverse two public assets match their builds, GitHub digests and checksums. All 539 installed Forge manifest files match its public payload. Python compression toolchains produce different ZIP containers with identical payload bytes/metadata; each same-toolchain repeat build is identical.
+- Source-only release reports, ledgers and changelogs stay outside runtime ZIPs. Mod ZIP validation rejects publication paperwork; required licences and real toolkit help/templates remain. Existing installations and original shared compiler/Python compile evidence are reused with backups.
+- Security alerts are zero; unavailable code quality stays off. Game/app GUI targets, guest Sandbox, paid inference and actual absent-provider installations remain untested. Reopen AI apps to activate refreshed instructions/MCP state.
+
 # v8.24.0 verified source, live and public artifact validation
 
 - Full Windows PowerShell gate PASS on shared Python 3.14.10; release contracts 151 passed, zero failed. Final companion pins passed exact-commit CI and final extracted-manifest checks.

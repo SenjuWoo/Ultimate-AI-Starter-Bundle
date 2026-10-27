@@ -16,8 +16,8 @@
  },
  {
   "path": ".github/scripts/check_versions.py",
-  "size": 4961,
-  "sha256": "4b350942dc08b58adebda942fd5e01472072ae5c2f53689f09f8415d0dd317a0"
+  "size": 5082,
+  "sha256": "9429bb415553a606161050cdbfd172021a552e37cb4f8c2016dda98f283aa85a"
  },
  {
   "path": ".github/scripts/verify_manifest.py",
@@ -28771,8 +28771,8 @@
  },
  {
   "path": "AUDIT.md",
-  "size": 3484,
-  "sha256": "0a23eecbe180cc2c3196e06999e136905248e92d94137f0844187d1b480f856c"
+  "size": 3496,
+  "sha256": "465c88461af1eae599fbda78f838de4d7d033d6b4f0d9547b659abc87328cb0b"
  },
  {
   "path": "BOOTSTRAP.txt",
@@ -33036,8 +33036,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 97494,
-  "sha256": "2d922ef5937428f896c74d2b12fca2e3823a6e2049c798f8fc3a43d0c81000fc"
+  "size": 97767,
+  "sha256": "ac07f6d95ec1c453f0b2e22825358daea6f4b41715acd20f9fea865f07a8038c"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -33426,8 +33426,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 331455,
-  "sha256": "58c4c97ea4c38013b8e3e1fecd9927443f021d0c6e5736055ed98f1d4823b719"
+  "size": 331538,
+  "sha256": "721329bd98afeec2d474d2094d9cd36a83c9ce06a692a81e5da1059914f395ce"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -33811,13 +33811,13 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2643,
-  "sha256": "fefdf579d919ad2d773087e10dca3a0384ce9448362f57e9b1332e3a46ec3c18"
+  "size": 2872,
+  "sha256": "ddd565f5cd9d8d2139f537f3fbe66943b3387e7f0787c6899419f936d8708225"
  },
  {
   "path": "VALIDATION.md",
-  "size": 24990,
-  "sha256": "e7004198948e9c4049228374eda5d1bff0021321d8972d67947fdfe20ca64945"
+  "size": 26832,
+  "sha256": "7000335fd170cb1250c705d1195eb0958dea940d3969b825d5c9e6784b277012"
  },
  {
   "path": "VERSION.txt",
