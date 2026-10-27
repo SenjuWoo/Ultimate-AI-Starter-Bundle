@@ -28797,12 +28797,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 61456,
-  "sha256": "4790f800d602f9823ad7fd595bee6de5a4ff7df36f5f63225fe9164faf61d427"
+  "sha256": "626bcf45d41a4fab12e0b48b299ef1ffcb3a8c0c2658407e2728727a8a68bea5"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1643,
-  "sha256": "990477daf00a881191ce82d87fe0bbad12d312fd2d25834f88ccf6675ca7d298"
+  "sha256": "aa621e51b6f77b918f9d0d2e6da18bfe8f5ce7e3555c65041c2a78a76b522f9a"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28812,7 +28812,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39648,
-  "sha256": "c36ec20b26651e3f2c4fae4277bc29462dd0e1977e53ed02d8869cf258fc7e73"
+  "sha256": "7c9c274a743c4c99bf98a7dc529f2b744c2566e7967a3409c5707f45af92a268"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -28895,9 +28895,9 @@
   "sha256": "b5279d1d6d3333d739d276c263a745ae51d74dac1e2a7a50fd26fffbde7cfd8b"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/Reverse-This-1.5.0.zip",
-  "size": 64217,
-  "sha256": "5734af455687f5c4345a497f8ea672e6fb0d2249f060e79ada36628b09b8a7ca"
+  "path": "BUNDLED-TOOLS/offline/Reverse-This-1.6.0.zip",
+  "size": 64634,
+  "sha256": "38cf2df03f9de2daaeb8d7b45b4d8a31f1499e703ee5d1c08d23bff59a444199"
  },
  {
   "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.3.2.zip",
@@ -32891,8 +32891,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 239735,
-  "sha256": "cdf438b8a84a5d0bfc5035d3cc35452a330204471730c640cdd018fdb1323fdb"
+  "size": 240158,
+  "sha256": "001cd28219895b57f874fdbb125ed308106dc93d3d40a09f0a36e98894a4fe9c"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -32972,7 +32972,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 177322,
-  "sha256": "0ee2005fd51cbf3ed880ae712eda793849671fd2ad0842a1018da96297c22faf"
+  "sha256": "5124a105e91506107ace58d6342449f5ad3289f3e6e8af165f23b87dac660e58"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33031,8 +33031,8 @@
  },
  {
   "path": "README.md",
-  "size": 61850,
-  "sha256": "ffdae93155c4fce35b7b22369fc810c578963252f3fd164c329789994615de14"
+  "size": 62049,
+  "sha256": "fd46634f01e4fd97f3e7ebf34dd0e2cc1f6de5ce6ba625b2abe03b0331bf8a70"
  },
  {
   "path": "SECURITY.md",
@@ -33042,12 +33042,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "797b9380c5f5c5e09003162697c6aa925520fe7333702614f5de6c5490fb27f0"
+  "sha256": "eaab4dc2445004bcea315c624d9c5d29a9a2472e371fafd2d923650de80d7b06"
  },
  {
   "path": "START-HERE.txt",
   "size": 12021,
-  "sha256": "d2577151a2bc332929139486c375fc0c417d1ca12cdd81b302afb25dd39738ce"
+  "sha256": "aafd9fbcb88e5f590c0549f5a42bc83011f11be735960e7c3a1c79892564177a"
  },
  {
   "path": "STATE.md",
@@ -33576,8 +33576,8 @@
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
-  "size": 2571,
-  "sha256": "b95304fed7c46956effe3c995d8c3c6b728c95ad4857bc8436c737be6624acad"
+  "size": 2610,
+  "sha256": "32ff50754f6625d267e17d1632e5a6dfce8b0c2f7c4abeb9609e35ea4be4a4d1"
  },
  {
   "path": "TOOLS/Repair-McpPaths.ps1",
@@ -33827,7 +33827,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2963,
-  "sha256": "769d1c637c3c95490c05a39c0cee1cff492991fd1e8989789d5624edf200faef"
+  "sha256": "dbc92ec0d35c421054c8414f96e755ac7815a2c6bd87078bc2adb845828a929a"
  },
  {
   "path": "VALIDATION.md",
@@ -33837,7 +33837,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "7d66914f8169b59dc16e12ed6af905ce3c35969a4178d3433ace1609b17fe3c4"
+  "sha256": "595a8b8b2e9fc40bf9acd6f6f287399039b65614a1eb0c615e754509119eb0d0"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -38561,8 +38561,8 @@
  },
  {
   "path": "docs/TOOL-EVALUATIONS.md",
-  "size": 56320,
-  "sha256": "dd474cc52941e7a56c87d608f557469cf8fdd5c1f62f9deb19de952ac6b55705"
+  "size": 56617,
+  "sha256": "fe50725cd7b490adb520a33b33b7c8d4dbcfb51cab1c69fc833f15f0fb880b18"
  },
  {
   "path": "docs/USAGE-ECONOMY.md",
@@ -39128,6 +39128,11 @@
   "path": "docs/history/V8.25.1-CHANGELOG.md",
   "size": 1348,
   "sha256": "71adb5a0b38c8f27cea446faabb57bf3e00c8d9f515725efcaa5d5a2e96765ee"
+ },
+ {
+  "path": "docs/history/V8.25.2-CHANGELOG.md",
+  "size": 510,
+  "sha256": "e37df1088bfc1b997f46fac459f81cadb71a5effd31198b19154a888dba88f24"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

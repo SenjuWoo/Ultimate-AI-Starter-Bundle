@@ -1,3 +1,8 @@
+## 8.25.2 (2026-10-27)
+
+- Pins verified Reverse THIS! 1.6.0 (sha256 38cf2df0...4199; bytes match GitHub's digest and SHA256SUMS), which adds replica-skill as an opt-in source archive under its own sandbox. Skyrim Forge stays at 6.3.2. Bundle behaviour is unchanged; the replica-skill evaluation now points to Reverse as the supported route.
+- 126 canonical skills total, unchanged; Forge keeps its 48 independently.
+
 ## 8.25.1 (2026-10-27)
 
 - Operating contract: a doubled "stays local/private" sentence is merged and Skyrim-only wording (Papyrus, Nexus) is generic in the general bundle. The content-permission text is unchanged. The prefix hash is re-pinned and the superseded text is archived so installs converge.

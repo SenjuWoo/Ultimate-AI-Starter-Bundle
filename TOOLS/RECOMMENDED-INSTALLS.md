@@ -38,4 +38,4 @@ Update common tools with `TOOLS/Update-From-GitHub.ps1` or
 Optional add-ons that stay user-owned (not installed by the bundle; evaluation in
 `docs/TOOL-EVALUATIONS.md`): taste-skill for research-driven landing-page design
 (`npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"`),
-replica-skill for app-cloning projects (copy its `replica-*` folders into that project's `.claude/skills/`), and ECC alone, never stacked with another harness (`npx ecc-universal@2.2.3 install --profile minimal`).
+replica-skill for app-cloning projects (opt-in through Reverse THIS! 1.6.0, or copy its `replica-*` folders into that project's `.claude/skills/`), and ECC alone, never stacked with another harness (`npx ecc-universal@2.2.3 install --profile minimal`).
