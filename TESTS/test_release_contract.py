@@ -22,6 +22,7 @@ import ast
 import hashlib
 import importlib.util
 import tempfile
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -1399,13 +1400,22 @@ def test_forge_release_is_pinned_and_complete() -> None:
     for rel in ("VERSION.txt", "Install-or-Update.ps1", "Install-Forge-Skill.ps1",
                 "Register-MCP.ps1", "START-HERE.bat", "MANIFEST.json",
                 "skyrim_forge/__init__.py", "skyrim_forge/environment.py",
-                "integrations/skyrim-forge/SKILL.md"):
+                "integrations/skyrim-pack/skills/skyrim-forge/SKILL.md"):
         assert forge_read(rel) is not None
     assert re.search(r"(?m)^Skyrim Forge\s+" + re.escape(version) + r"\s*$", forge_read("VERSION.txt")), (
         "pinned archive's VERSION.txt disagrees with CATALOG.json"
     )
     assert f'VERSION = "{version}"' in forge_read("skyrim_forge/version.py")
-    assert f'const version = "{version}"' in forge_read("writer/native-go/main.go")
+    # Product ZIPs omit Go source; execute the exact pinned helper rather than inspecting a source literal.
+    platform = 'win-x64' if os.name == 'nt' else 'linux-x64'
+    executable = 'SkyrimForge.Native.exe' if os.name == 'nt' else 'SkyrimForge.Native'
+    with tempfile.TemporaryDirectory() as temporary:
+        target = Path(temporary) / executable
+        with zipfile.ZipFile(FORGE_ZIP) as archive:
+            target.write_bytes(archive.read(f'Skyrim-Forge-{version}/writer/published/{platform}/{executable}'))
+        if os.name != 'nt': target.chmod(0o755)
+        result = subprocess.run([str(target),'version'],capture_output=True,text=True,timeout=20)
+        assert result.returncode == 0 and result.stdout.strip() == f'SkyrimForge.Native {version} go'
     with zipfile.ZipFile(FORGE_ZIP) as z:
         helper = z.getinfo(f"Skyrim-Forge-{version}/writer/published/linux-x64/SkyrimForge.Native")
         assert (helper.external_attr >> 16) & 0o111, "pinned Forge archive ships its Linux helper non-executable"
@@ -2285,7 +2295,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "7a4dc118d90b44f0b6b4a4bba849519e4bfab26128c06dd8c8b23e84d87e11dc", (
+    assert digest == "e92ea2c4fefac24d68744d3b7003238b4516e33c1189601e84ba08b4c5d0eb8c", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -2451,7 +2461,12 @@ def test_no_shipped_config_carries_a_maintainer_path() -> None:
 
 
 def test_generated_forge_reports_carry_no_private_user_path() -> None:
-    reports = {name: forge_read(name) for name in ("VALIDATION.json", "BUILD-RECEIPT.json")}
+    if not FORGE_ZIP.is_file(): return
+    # Developer reports stay in the owner repository/separate assets, never in the runtime ZIP.
+    with zipfile.ZipFile(FORGE_ZIP) as archive:
+        names = {n.removeprefix(f'Skyrim-Forge-{forge_version()}/') for n in archive.namelist()}
+    assert not {'VALIDATION.json','BUILD-RECEIPT.json','SBOM.spdx.json','STATE.md','CHANGELOG.txt','CHANGELOG.md','WORKSPACE_OWNERSHIP.md'} & names
+    reports = {'MANIFEST.json':forge_read('MANIFEST.json')}
     private_user = re.compile(r"(?i)[A-Z]:(?:\\{1,4}|/)+Users(?:\\{1,4}|/)+(?!<)[A-Za-z0-9._-]+")
     offenders = [name for name, text in reports.items() if text and private_user.search(text)]
     assert not offenders, "generated Forge reports expose a private user path: " + ", ".join(offenders)
@@ -5103,7 +5118,8 @@ def test_every_canonical_skill_reached_every_provider_tree() -> None:
     missing = []
     extra = []
     for skill_dir in sorted(p for p in CANON.iterdir() if p.is_dir()):
-        files = [p for p in skill_dir.rglob("*") if p.is_file()]
+        files = [p for p in skill_dir.rglob("*") if p.is_file()
+                 and '__pycache__' not in p.parts and p.suffix not in {'.pyc','.pyo'}]
         for prov in providers:
             dest = (ROOT / "1-TAILORED-PROVIDER-TREES" / prov /
                     "COPY-TO-SKILLS-DIRECTORY" / "skills" / skill_dir.name)

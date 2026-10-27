@@ -62,12 +62,15 @@ def deploy(canon, dest, provider_tag, provider):
     if os.path.isdir(dest):
         shutil.rmtree(dest)
     n = skipped = 0
-    for dp, _, fs in os.walk(canon):
+    for dp, dirs, fs in os.walk(canon):
+        dirs[:] = [d for d in dirs if d not in {'__pycache__','.git','.venv','node_modules'}]
         rel_top = os.path.relpath(dp, canon).split(os.sep)[0]
         if rel_top in SCOPED and provider not in SCOPED[rel_top]:
             skipped += len(fs)
             continue
         for f in fs:
+            if f.endswith(('.pyc','.pyo')):
+                continue
             sp = os.path.join(dp, f)
             op = os.path.join(dest, os.path.relpath(sp, canon))
             os.makedirs(os.path.dirname(op), exist_ok=True)

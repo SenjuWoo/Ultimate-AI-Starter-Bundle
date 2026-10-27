@@ -549,7 +549,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.24.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.25.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -682,6 +682,16 @@ function Get-ComponentAssetPath {
   return $null
 }
 
+# CURRENT.txt is source bookkeeping; runnable Forge products identify themselves with VERSION.txt.
+function Get-UabsForgeRuntimeVersion([string]$Root) {
+  if (-not $Root) { return '0.0.0' }
+  $marker = Join-Path $Root 'VERSION.txt'
+  if (-not (Test-Path -LiteralPath $marker -PathType Leaf)) { throw 'Forge runtime VERSION.txt is missing; repair the confirmed owner.' }
+  $text = [IO.File]::ReadAllText($marker)
+  if ($text -notmatch '(?m)^Skyrim Forge\s+(?<version>\d+\.\d+\.\d+)\s*$') { throw 'Forge runtime VERSION.txt has an invalid product/version.' }
+  return $Matches['version']
+}
+
 $installed = [ordered]@{}
 # Companion tool ownership stays in Reverse THIS!; this pack only selects and delegates it.
 if (-not $SkillsOnly -and $packSel.Enabled -contains 'reverse') {
@@ -710,17 +720,18 @@ if (-not $SkillsOnly -and $skyrimPackOn) {
 
   $registeredRoot = [Environment]::GetEnvironmentVariable('SKYRIM_FORGE_ROOT','User')
   if ($registeredRoot) { $env:SKYRIM_FORGE_ROOT = $registeredRoot }
-  $installed['skyrim-forge'] = @{ status='installed'; version=([IO.File]::ReadAllText((Join-Path $registeredRoot 'CURRENT.txt'))).Trim(); root=$registeredRoot }
+  $installed['skyrim-forge'] = @{ status='installed'; version=(Get-UabsForgeRuntimeVersion $registeredRoot); root=$registeredRoot }
 }
 
 if ($SkillsOnly -and $skyrimPackOn) {
-  $ownerVersion = if ($env:SKYRIM_FORGE_ROOT -and (Test-Path -LiteralPath (Join-Path $env:SKYRIM_FORGE_ROOT 'CURRENT.txt'))) { ([IO.File]::ReadAllText((Join-Path $env:SKYRIM_FORGE_ROOT 'CURRENT.txt'))).Trim() } else { '0.0.0' }
+  $ownerVersion = Get-UabsForgeRuntimeVersion $env:SKYRIM_FORGE_ROOT
   if ([version]$ownerVersion -lt [version]$packSel.Catalog.packs.skyrim.minimum_version) { throw 'The preserving Forge skill writer requires a full install/refresh first.' }
   $ownerScript = Join-Path $env:SKYRIM_FORGE_ROOT 'Install-Skyrim-Pack.ps1'
   if (-not (Test-Path -LiteralPath $ownerScript -PathType Leaf)) { throw 'Skyrim skills belong to Forge; run a full install once to install its owner.' }
   foreach ($provider in $Providers) {
     if ((Invoke-UabsChildScript -Title 'Forge-owned Skyrim skills' -File $ownerScript -ArgList @('-Provider',$provider)) -ne 0) { throw 'Forge skill installation failed.' }
   }
+  $installed['skyrim-forge'] = @{ status='installed'; version=$ownerVersion; root=$env:SKYRIM_FORGE_ROOT }
 }
 
 # ---------- Skills ----------
@@ -2683,7 +2694,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.24.0'
+version = '8.25.0'
   content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')

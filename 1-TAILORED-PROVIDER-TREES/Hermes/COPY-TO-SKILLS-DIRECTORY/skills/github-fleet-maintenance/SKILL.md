@@ -5,6 +5,8 @@ description: Create, finish, or maintain GitHub repos with CI, Dependabot, code 
 
 # GitHub Fleet Maintenance
 
+New work is local/private by default. This skill does not turn a coding or modding request into permission to create a remote or publish it. New work stays local/private until publication is requested. "Put it on GitHub" means public and MIT for original work by default, subject to third-party rights and platform terms; preserve existing licences and explicit choices. Generic publication uses the appropriate destination (normally Nexus Mods for Skyrim). A mod needing no compilation does not get a duplicate GitHub repository by default; add source hosting when requested or needed for development. Preserve existing remotes/visibility and prior publication authorization; a release candidate alone is not authorization. Establish the canonical `WORKSPACE_OWNERSHIP.md` through `workspace-organization` first.
+
 For one new repository, read [the repository completion contract](references/repository-completion.md) first. "Make a repo" includes a usable project, tested CI, applicable security coverage, documentation, and a concrete release handoff. Do not stop at `gh repo create` or a push. When the user says push/code/release/readme, finish that contract from current source: rebuild the real binary or release archive; do not ship a stale exe or leftover dist zip from an older SHA. Respect an explicitly requested empty repository or prototype.
 
 Use the fleet loop only when multiple repositories are in scope. Reuse authenticated `gh` or the GitHub MCP; determine permissions from actual responses, never request or print credentials.

@@ -1,8 +1,10 @@
 # Versioned workspace and rollback
 
-## Mandatory version snapshot before the first edit
+## Ownership before the first edit; snapshots only for snapshot-based projects
 
-Every new mod starts at a semantic version such as `1.0.0`. Every update creates a new sibling folder by fully copying the current snapshot.
+Read/create WORKSPACE_OWNERSHIP.md through workspace-organization before substantive writes. Preserve the established owner and source layout across agents. Existing Git projects use commits/tags and their normal build directories; do not clone them into nested version folders. New work stays local until requested publication.
+
+For an established snapshot-based project, every update creates a new sibling folder by fully copying the current snapshot. The following layout and snapshot scripts apply only to that workflow.
 
 ```text
 <OwnerRoot>\<Mod Name>\
@@ -47,5 +49,4 @@ previous_snapshot_untouched=YES|NO
 RESULT=PASS|FAIL
 ```
 
-Use `scripts/new_version.py` to create the snapshot and
-`scripts/validate_project.py` to verify the structure.
+For snapshot-based projects only, use this reference folder's `new_version.py` to create the snapshot and `validate_project.py` to verify it. Keep changelogs, ownership and progress records outside runtime mod ZIPs; preserve required licences.

@@ -4,9 +4,9 @@ These applied to every skill in the source mega-pack. They had already
 drifted into two variants -- 20 of the 41 files had silently lost the
 Evidence ladder. This is the superset, stated once.
 
-## Mandatory version snapshot before the first write
+## Mandatory ownership before the first write
 
-Every update begins by fully duplicating the current semantic-version snapshot.
+Create/read WORKSPACE_OWNERSHIP.md via workspace-organization before substantive edits. Preserve Git source layouts and version them with commits/tags. The following copy workflow is for established snapshot-based projects only; it does not require moving or copying an existing Git project.
 
 ```text
 <OwnerRoot>\<Mod Name>\
@@ -63,3 +63,7 @@ discovery beyond what it actually proves.
   separate gates.
 - One writer owns each tightly coupled DLL, mod JAR, plugin, package, generated
   output set, or release archive.
+
+## Ownership and publication scope
+
+Preserve existing Git source layouts and use Git tags; the snapshot-copy rules apply only to snapshot-based projects. Before edits, create/read WORKSPACE_OWNERSHIP.md via workspace-organization. New work stays local until publication is requested; explicit GitHub means public/MIT for original work, subject to rights/terms and existing licences. Publish mods to their appropriate distribution site without duplicate GitHub hosting for mods needing no compilation. Keep source ledgers/changelogs outside runtime ZIPs.

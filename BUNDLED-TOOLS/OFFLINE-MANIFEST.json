@@ -1,11 +1,11 @@
 {
-  "generated": "2026-10-26",
-  "pack_version": "8.24.0",
+  "generated": "2026-10-27",
+  "pack_version": "8.25.0",
   "assets": [
     {
-      "file": "Skyrim-Forge-6.2.1.zip",
-      "size": 5137963,
-      "sha256": "3d0aac570891526dfd64faface1273d1eac9dc089e1c1feb0184dd48a2a46fea"
+      "file": "Skyrim-Forge-6.3.1.zip",
+      "size": 4818789,
+      "sha256": "ff6f4e04dcb362cd3ceb65d0d17292c4d2ed715e8558b093e3f635578d890fa4"
     },
     {
       "file": "codebase-memory-mcp-windows-amd64.zip",
@@ -43,9 +43,9 @@
       "sha256": "031e240d15ee6222507ca9a855988cb5faa29200d9ffbe6b02b242ccde6fbac1"
     },
     {
-      "file": "Reverse-This-1.4.1.zip",
-      "size": 108340,
-      "sha256": "76b7ce541f313defbecb832a14dac4b8934a5fa8fde2ca1724639244306f0826"
+      "file": "Reverse-This-1.5.0.zip",
+      "size": 64217,
+      "sha256": "5734af455687f5c4345a497f8ea672e6fb0d2249f060e79ada36628b09b8a7ca"
     }
   ],
   "updated": "2026-10-26"

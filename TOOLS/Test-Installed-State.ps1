@@ -413,8 +413,8 @@ if(-not $SkipForge){
     $py=Join-Path $forge '.venv\Scripts\python.exe'
     if(-not(Test-Path -LiteralPath $py -PathType Leaf)){Err 'Forge venv Python missing.'}
     else{
-      # Forge 6 is developed in this repository and intentionally removed the
-      # old cross-repository version-handshake command. Prove the installed copy
+      # Forge has an independent owner and no bundle-handshake command.
+      # Prove the installed copy
       # is runnable and read-only ready with the same health contract used by
       # Install-SkyrimForge.ps1.
       $prevEap=$ErrorActionPreference; $ErrorActionPreference='Continue'
