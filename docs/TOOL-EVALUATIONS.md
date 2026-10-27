@@ -22,6 +22,25 @@ browser; installs nothing else and needs no keys.
   (or its Claude/Codex plugin). Keep Impeccable as the default; load taste-skill for landing pages
   and marketing sites when the result looks generic.
 
+### replica-skill (`Jakeschincariol/replica-skill`), MIT — **not bundled; documented optional add-on**
+
+Eleven small skills (48 KB total, stdlib-only Python helpers, no network calls, 57 upstream tests
+pass) that run an app-cloning pipeline: recon map, architecture, design tokens, build, backend,
+test, parity diff, review-driven improvements, rebrand, launch, deploy. It states a clean-room
+rule (features and flows, never code, assets or content) and a public-sources-only rule.
+
+- Fit: useful when the job is "rebuild an app's behaviour"; it does not touch binaries, so it
+  complements Reverse THIS! rather than overlapping it. The bundle's own app, mod and reverse
+  work does not need an app-cloning pipeline by default.
+- Why not vendored: created 2026-10-03 as a single commit with no tag or release to pin, and
+  eleven more entries in the skill index of every session for a workflow most sessions never use.
+  Part-adoption was considered (`replica-recon`, `replica-diff`); recon duplicates what
+  Playwright MCP plus the bundle's reverse-engineering skills already do, and the parity scorer
+  is only valuable inside the full pipeline.
+- Use it per project, not globally: copy the `replica-*` folders into the project's
+  `.claude/skills/` (or `/plugin marketplace add Jakeschincariol/replica-skill`), so the index
+  cost applies only where it is used. Respect the target app's terms; the skills say so too.
+
 ### ECC (`affaan-m/ECC`, `ecc-universal`) v2.2.3, MIT — **not bundled; documented, do not stack**
 
 A full harness layer: 71 agents, 311 skills, 97 command shims, hooks, rules, memory and a
