@@ -56,8 +56,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 10132,
-  "sha256": "3f69e956fbc3541a59e9f75f399ca970d32a6003fb6a9c4dfe2a9ede4231a1cd"
+  "size": 10359,
+  "sha256": "b8e84fb6d61d67a6da25893c65c97d74e54349f7e5b88578bfe97c300988457b"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
@@ -28720,6 +28720,11 @@
   "sha256": "f0668c9ad1155517c1f0735ff64887ae25dc0f937a42f19c74bd84d3eac655e3"
  },
  {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-c3e934cbc397.md",
+  "size": 10132,
+  "sha256": "3f69e956fbc3541a59e9f75f399ca970d32a6003fb6a9c4dfe2a9ede4231a1cd"
+ },
+ {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-cd5f91ee9ef0.md",
   "size": 9083,
   "sha256": "649d8d278fe4b9d19d9932ace976039d0ad5fda663f93bd497f9557164d731de"
@@ -32886,8 +32891,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 239789,
-  "sha256": "5165d8319464412ea779a178c5279215da880693bac9017de3a814fb34debfe0"
+  "size": 239735,
+  "sha256": "cdf438b8a84a5d0bfc5035d3cc35452a330204471730c640cdd018fdb1323fdb"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -32896,8 +32901,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 10132,
-  "sha256": "3f69e956fbc3541a59e9f75f399ca970d32a6003fb6a9c4dfe2a9ede4231a1cd"
+  "size": 10359,
+  "sha256": "b8e84fb6d61d67a6da25893c65c97d74e54349f7e5b88578bfe97c300988457b"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
@@ -33437,7 +33442,7 @@
  {
   "path": "TESTS/test_release_contract.py",
   "size": 331522,
-  "sha256": "d5b95f71018df987453ab9cf1dbe8530cf5e80322ad50cc31e1cf38b6eaed4b9"
+  "sha256": "6de8b28c7a585f71c55178e2a5d83b05f2deaa2e8709069c7d68bfb3803d9120"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -33571,8 +33576,8 @@
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
-  "size": 2462,
-  "sha256": "4ef6f199df9fef334d04e5cfe6c022707e87644eb7e527d04da4d79eef5c45a1"
+  "size": 2571,
+  "sha256": "b95304fed7c46956effe3c995d8c3c6b728c95ad4857bc8436c737be6624acad"
  },
  {
   "path": "TOOLS/Repair-McpPaths.ps1",
@@ -38556,8 +38561,8 @@
  },
  {
   "path": "docs/TOOL-EVALUATIONS.md",
-  "size": 54897,
-  "sha256": "20481b7bb36007d271013b25c18823efdbe88dcde48e6252d61906f3aba20347"
+  "size": 56320,
+  "sha256": "dd474cc52941e7a56c87d608f557469cf8fdd5c1f62f9deb19de952ac6b55705"
  },
  {
   "path": "docs/USAGE-ECONOMY.md",
@@ -39121,8 +39126,8 @@
  },
  {
   "path": "docs/history/V8.25.1-CHANGELOG.md",
-  "size": 1402,
-  "sha256": "28ccf332e0bb6bd796ccfaee2c1042a69004f68676c7b2079e95e315ea1b8872"
+  "size": 1348,
+  "sha256": "71adb5a0b38c8f27cea446faabb57bf3e00c8d9f515725efcaa5d5a2e96765ee"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",
