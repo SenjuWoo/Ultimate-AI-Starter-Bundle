@@ -1,6 +1,19 @@
 # Bundle audit state
 
-## Completed final assurance — 2026-10-27
+## Completed 8.25.1 audit release — 2026-10-27
+
+- Goal completed: instruction/agent-size audit across the three owners. Live versions: Bundle 8.25.1, Skyrim Forge 6.3.2, Reverse THIS! 1.5.0 (unchanged, audited clean).
+- Bundle release: https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.25.1 ; tag commit 58c6b264f6fca94b7c907236d8f2d9ce073114c9, 9/9 checks green on that commit. Core 45,306,514 B sha256 365e7070c3611f84046998c8585724281d4c130dff117b0efde04d8a7d1be5c2; Full-Offline 141,697,087 B sha256 8195eb4bd9e266726eecc9ec6f3aab2f94d2bad17cec64599bb7dfc71f73948c. Built twice identically; all four public assets match the build, GitHub digests and checksum files. Proof: artifacts/final-assurance/bundle8251-release/build.local.json.
+- Forge release: https://github.com/SenjuWoo/SkyrimForge/releases/tag/v6.3.2 ; tag commit aaabdd25847aefa9d82a9f95abe1bc6bf66a4342, 14/14 checks green. Product ZIP 4,818,367 B sha256 8f5507f6255e42c238e4adedc321c7843ca15e6da0838ec0ef75027be778138a; bytes match GitHub digest and SHA256SUMS. Pinned by this bundle.
+- Content decision: the AIO first paragraph (explicit content permission, "Answer first") is the owner's and is kept verbatim; an earlier dedupe removed it and was reverted (PR 17). Do not shorten the content-permission or security paragraphs without the owner asking.
+- Live install: 8.25.1 installer exit 0, doctor PASS 0 errors/0 warnings, five providers answered the always-on MCP checks. Live CLAUDE.md has no Ownership prose or hard path; SPOOKY_AUTOMOD_ROOT cleared (retired folder under LOCALAPPDATA/Ultimate-AI-Starter-Bundle/spookys-automod-toolkit is left for Clean-StaleState). Claude model, permission and effort settings unchanged. Log: LOCALAPPDATA/Ultimate-AI-Starter-Bundle/logs/install-20261027-171415.log.
+- Security: Dependabot, code-scanning and secret-scanning open counts 0 for all three repos; code quality unavailable, left off.
+- Evaluated, not bundled (docs/TOOL-EVALUATIONS.md): taste-skill 2.1.5, ECC 2.2.3, replica-skill.
+- Next: reopen AI apps once. Build/test: TOOLS/Build-Release.ps1; TESTS/Test-Pack.ps1 -TestPython artifacts/recovery/test-env-314/Scripts/python.exe (use a per-process execution-policy bypass). Not exercised: real game/app GUI targets, clean-machine install of these releases, paid inference.
+
+## Previous checkpoint (8.25.0)
+
+### Final assurance — 2026-10-27
 
 - Goal completed: three standalone cooperating owners, explicit project ownership, private-by-default new work and clean product distributions. General AI/build/workspace tools belong to the bundle, Skyrim tools to Forge, reverse-engineering tools to Reverse THIS! Shared installations are discovered/reused and version-checked; project pins/newer versions and personal edits are preserved. The companion architecture analysis remains in docs/COMPANION-ARCHITECTURE.md.
 - Public and live versions: Bundle 8.25.0, Skyrim Forge 6.3.1, Reverse THIS! 1.5.0. Existing repositories retain visibility/licences. Explicit GitHub publication means public/MIT for original work subject to rights/terms; generic Skyrim publication normally means Nexus, with no duplicate GitHub for mods needing no compilation. New projects stay local until publication is requested.
