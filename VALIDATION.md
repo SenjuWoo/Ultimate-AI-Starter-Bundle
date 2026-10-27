@@ -1,14 +1,16 @@
-# v8.24.0 verified source and live validation (publication pending)
+# v8.24.0 verified source, live and public artifact validation
 
-- Full Windows PowerShell gate PASS on shared Python 3.14.10; release contracts 151 passed, zero failed. Final companion-pin manifest and exact-SHA CI are checked separately before publication.
+- Full Windows PowerShell gate PASS on shared Python 3.14.10; release contracts 151 passed, zero failed. Final companion pins passed exact-commit CI and final extracted-manifest checks.
 - Live 8.24.0 AIO exit 0 (install-20261026-222005.log). Installed-state doctor zero errors/warnings; fifteen Context7/headroom/toolbox checks answered across five selected providers. Thirteen saved model/permission/MoA fingerprints unchanged. Kimi untouched.
 - Shared compiler suite receipt 1.2.0 PASS with actual six-route compile/run; .NET SDK 10.0.403 and Python 3.14.10 installed in place. Completed compiler evidence reused; native plugin choices retained. AI apps need reopening for host MCP/environment refresh.
 - Forge 6.2.1 and Reverse 1.4.1 exact release commits passed CI/security. Their eight/two published assets matched successful CI or deterministic local builds, GitHub digests and checksums. Live Reverse update 56/0 plus doctor PASS; live Forge setup/native/import/doctor PASS and all 588 public file hashes match.
 - Real regressions prove the PS5.1 Python quote fix and stale timestamp-bytecode migration fix. Previous versions/backups retained; private venv/workspace trees and personal settings preserved.
 - Requested Xmake shared compile/run PASS; CLibDT/CommonLib and project build-system snapshots are discovered/documented according to owner and license, without copying supplied binaries/source snapshots.
-- Source privacy and ownership/rollback/native-failure boundaries PASS. Combined skills: 126 general + 48 independently owned Skyrim names. Earlier extracted Full candidate and Core CI proofs retained; final release bytes must be tied to exact green commit.
+- Source privacy and ownership/rollback/native-failure boundaries PASS. Combined skills: 126 general + 48 independently owned Skyrim names. Source/extracted Core CI and final extracted Full contract/byte proofs tie the release bytes to the exact green commit.
 - Security queries: Dependabot/code-scanning/secret-scanning zero; code quality unavailable and left off.
-- Remaining: final bundle exact-SHA CI/security, deterministic build/public-byte proof and final handoff. No game/GUI runtime, paid inference/API, guest Sandbox or absent-provider install certification. Tooling ship-gate report is in Forge VALIDATION.md; no plugin/Papyrus/FOMOD/game asset change.
+- Published tag v8.24.0 points to exact green 8dd5057ea252a83f6a0d21056422c245a7d1e3d4. Both variants built twice byte-identically from its Git archive. Final extracted Full passes all 151 contracts, manifest/version/companion gates outside Git. Both archives pass CRC/manifest/pin inspection.
+- All four downloaded public assets match local build bytes, GitHub digests and checksum files. Core 46,101,784 bytes SHA256 7c07b3fa44a9723523053558eb4f7e024b1c52c729a5cca749ee567fd646d563; Full 142,850,052 bytes SHA256 86311b0dbd79f1447c241f580eaa97fa1552f5ad1d1f77fbfc2efeee458b8da7.
+- Implementation, publication and approved live deployment complete. Later handoff changes documentation/integrity metadata only. No game/GUI runtime, paid inference/API, guest Sandbox or absent-provider install certification. Tooling ship-gate report is in Forge VALIDATION.md; no plugin/Papyrus/FOMOD/game asset change. Reopen AI apps once if not already done.
 
 # v8.22.1 validation
 

@@ -1,5 +1,38 @@
 # Bundle audit state
 
+## Completed three-repository release (2026-10-27)
+
+- Goal completed: three standalone, mutually recommended owners with optional bundle orchestration and reuse/update of shared tools. Reverse THIS! stays separate; docs/COMPANION-ARCHITECTURE.md records the merge analysis and update boundaries.
+- Published and live: Starter Bundle 8.24.0, Skyrim Forge 6.2.1, Reverse THIS! 1.4.1. GitHub CLI authentication remains persistent as SenjuWoo. Source trees had no unrelated edits at resume.
+- Bundle release/tag: https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.24.0 ; exact frozen commit 8dd5057ea252a83f6a0d21056422c245a7d1e3d4. All nine merged-commit checks passed before packaging; fresh security flags clean. Later handoff changes only documentation/integrity metadata and never moves the tag or replaces assets.
+- Two builds of Core and Full-Offline from that commit's Git archive were byte-identical. Both archives pass CRC/extracted-manifest checks; final Full-Offline outside Git passes all 151 contracts, version agreement and companion gates. All four public assets were downloaded and match local bytes, GitHub digests and checksums.
+- Core: 46,101,784 bytes; SHA256 7c07b3fa44a9723523053558eb4f7e024b1c52c729a5cca749ee567fd646d563.
+- Full-Offline: 142,850,052 bytes; SHA256 86311b0dbd79f1447c241f580eaa97fa1552f5ad1d1f77fbfc2efeee458b8da7.
+- Public proof: artifacts/split-recovery/bundle824-release/verified/final.local.json; build.local.json; bundle824-frozen-build.log; bundle824-delivery-contracts.log; bundle824-delivery-companions.log. Published archives/checksum files are retained with recovery evidence.
+- Companion source/release proof remains unchanged: Forge tag 7adcda288d551bf4de226b82679317087c053dc0, final documentation main 5667637e19ac2e137fafb525870c3484bb505092 (13 successful checks); Reverse tag b21a41427dd38cbb6f76cd00ddcca9df8808781e, final documentation main b89fa095fe57f272639569e1637732afdc1c48ff (six successful checks). All eight/two public assets verified.
+- Approved live AIO exit 0; installed-state doctor zero errors/warnings; fifteen core MCP checks answered across five selected providers; thirteen saved model/permission/MoA fingerprints unchanged. Reverse selected tools 56/0; Forge setup/native/import/doctor and 588 public file hashes PASS. Kimi untouched.
+- Shared Python 3.14.10 uses the same base path. Full compiler suite, including Xmake C++23/MSVC, passes real compile/run. Native plugin choices, project pins, private work, user settings and supplied reference folders preserved. Backups remain under installed-state backups/final-8.24.0 and owner rollback trees.
+- Security queries for all three repositories: zero open Dependabot, code-scanning or secret-scanning alerts. Code quality unavailable and left off. Final companion check/flag receipts: *-final-20261027-* under split-recovery.
+- Last good release/live versions: 8.24.0 / 6.2.1 / 1.4.1. Previous public releases and installed rollback backups retained. Next maintenance: START-HERE.bat when updates are wanted; no implementation, publication or live-deployment work remains.
+- Run/build: START-HERE.bat; TESTS/Test-Pack.ps1 with existing -TestPython artifacts/recovery/test-env-314/Scripts/python.exe; TOOLS/Build-Release.ps1. Final installed logs: LOCALAPPDATA/Ultimate-AI-Starter-Bundle/logs/install-20261026-222005.log and -details.log. Toggle verbose tool logging only when diagnosing.
+- Exact limits: reopen AI apps once if not already done to refresh active MCP/environment state. Paid API/inference, actual game/app GUI targets, guest Sandbox and real absent-provider installations remain untested; optional API keys were not invented. Tooling ship-gate report is in Forge VALIDATION.md; SSEEdit/CK not launched.
+
+## Historical publication checkpoint (2026-10-27)
+
+- PR #13 merged after all ten head checks and fresh security queries passed.
+  Frozen release commit: 8dd5057ea252a83f6a0d21056422c245a7d1e3d4 on main.
+  All three source trees were clean at resume; only this handoff is now edited.
+- GitHub CLI remains authenticated as SenjuWoo. The quota failure in approval
+  review is resolved after the user's usage reset. No 8.24.0 tag/release exists.
+  Previous GitHub Latest is 8.22.1; the recorded earlier rollback proof is 8.22.0.
+- All nine checks on the merged commit succeeded; fresh security flags clean.
+  Two builds from its Git archive snapshot are running; source and receipt
+  paths are recorded by artifacts/split-recovery/build-bundle824-frozen.py.
+- Next: finish the repeatable builds (exclude this later handoff), publish
+  and verify all four assets, then commit the final handoff and converge CI.
+- Reuse the verified live/compiler/companion evidence below. No implementation
+  or live-install retry is required unless new evidence shows a regression.
+
 ## Final three-repository update (2026-10-26)
 
 - Goal/decision: three standalone, mutually recommended owners with optional bundle orchestration; retain Reverse THIS! separately. See docs/COMPANION-ARCHITECTURE.md for the merge analysis, ownership and update policy. Reuse compatible shared tools; update older managed tools; preserve newer versions, project pins, private work and personal settings.
