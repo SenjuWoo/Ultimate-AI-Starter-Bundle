@@ -1,5 +1,27 @@
 # Tool evaluations
 
+## 2026-10-26 — held tools rechecked
+
+Perplexity MCP moves from 1.2.1 to 1.3.0 after npm integrity and registry
+signature verification plus an isolated initialize/tools-list exchange. A
+process-local dummy key and a network-blocking preload allowed the protocol
+surface to be measured without real credentials or paid API calls: four tools,
+7,821 compact UTF-8 schema bytes. Keyless initialization still fails. That is
+the existing key requirement, so it no longer serves as a version hold. Real
+authentication, provider API results and billing remain unverified.
+
+Impeccable stays at CLI 3.6.1 / skill 4.1.3. Verified official engines 0.1.16
+and 0.1.17, plus the signed skill-v4.7.0 bundle, were probed in isolation.
+Both engines passed the well-formed and visible-text controls and leaked both
+malformed script/style bodies in `TOOLS/audit-impeccable-engine.py`. The newer
+compiled engine still reintroduces the defect patched in the vendored CLI.
+
+Unity MCP stays at 0.91.0 pending a real project/editor check against upstream
+1.5.0 (released 2026-10-24). Its changed CLI/plugin install path, generated
+server/profile and skill behavior need to migrate together. OMNI stays an
+informational 0.7.11 pin; upstream 0.7.12 (released 2026-10-22) has no new
+runtime measurement here. Neither Unity nor OMNI was executed in this review.
+
 ## 2026-10-21 — owner's `Tools` and `Modding` folders reviewed (v8.20.0)
 
 Question: should anything in the new `Tools` and `Modding` folders be bundled?

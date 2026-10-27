@@ -4,18 +4,13 @@
       "id": "rea",
       "name": "REA (Reverse Engineer Anything)",
       "kind": "cli-optional",
-      "install": "npx-or-npm",
+      "install": "manual",
       "version": "6.8.0",
       "license": "MIT",
       "github": {
         "owner": "morluto",
         "repo": "rea"
       },
-      "npm_spec": "rea-agents@6.8.0",
-      "npm_integrity": "sha512-9QDeRnGqEDzABZyr04eLnBXBv/c6I9/TWu/6M0MD4pEfkySI/BIgwTODIbAReX3C1x6hjw9+Jlx4A2yUSPZ9ww==",
-      "npm_args": [
-        "--ignore-scripts"
-      ],
       "mcp": false,
       "auto_register": false,
       "offline_asset": null,
@@ -33,7 +28,27 @@
       "required_for": [
         "reverse-engineering-evidence"
       ],
-      "scope_note": "Optional CLI only; not part of default Components or MCP profiles. 2026-10-18 isolated Windows npm integrity-bound install of 6.5.0 with lifecycle scripts disabled (the 6.5.0 tarball sha512 matches the recorded pin) and a 2026-10-13 baseline of the same procedure on 6.4.0: help and execution-free JavaScript fixture analysis PASS (7-node fixture graph, no integrity contradictions), zero known production npm audit findings across 147 prod dependencies. Stdio transport probe exposed 207 tools and 3,087,942 compact UTF-8 schema bytes (170 tools / 1,954,683 bytes on 6.4.0), not loaded or billed tokens. No native Ghidra/runtime/GUI actions certified. Reuse Reverse THIS! shims and Universal Modder recon. No upstream setup/update or duplicate skill collection. See tool-discovery/references/reverse-engineering.md."
+      "scope_note": "Reverse THIS! owns the REA pin, installer and analysis guidance. The bundle supplies shared Node/Python/compilers and discovery only.",
+      "owner": "reverse-this",
+      "note": "Owned by SenjuWoo/reverse-this. Use its Install-Modkit.ps1 -Only rea; reuse a verified existing REA. Never run provider setup from the general bundle."
+    },
+    {
+      "id": "reverse-this",
+      "name": "Reverse THIS!",
+      "kind": "product-release",
+      "install": "manual",
+      "version": "1.4.0",
+      "github": {
+        "owner": "SenjuWoo",
+        "repo": "reverse-this"
+      },
+      "release_tag": "v1.4.0",
+      "asset": "Reverse-This-1.4.0.zip",
+      "offline_asset": "Reverse-This-1.4.0.zip",
+      "sha256": "4087251269e6da95ffa563837ad4b6c684b4d60d52fe9873b3a6874351d5c24b",
+      "mcp": false,
+      "auto_register": false,
+      "note": "Optional reverse pack delegates source, tool selection, updates and doctor to this independent owner. The kit.json pointer is reused. No provider setup or duplicate specialist catalog."
     },
     {
       "id": "universal-modder",
@@ -335,7 +350,7 @@
         "--ignore-scripts"
       ],
       "scope_note": "The cross-provider skill is vendored from the official skill-v4.1.3 universal.zip and bound to its published SHA-256. The executable detector is the actually published npm 3.6.1 package, pinned by npm integrity. Optional Puppeteer is omitted: Playwright/browser profiles already own live rendering, and downloading a second browser would be duplication. Lifecycle scripts are disabled. UABS removes upstream self-update/pin paths and generated hook cache so provider skill trees keep one writer. Zero MCP schemas, daemon, account or key.",
-      "compatibility_hold": "2026-09-18 audited with TOOLS/audit-impeccable-engine.py against engine 0.1.5 (the payload CLI 4.1.0 pins): the engine still leaks bodies of browser-valid malformed close tags (</script \t bogus>, </style bogus>) into text analysis - the exact gap UABS patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub whose payload is that engine: pinned via optionalDependencies, else first-use download into ~/.impeccable, and its install/link/update/check commands write skill trees. Retain audited CLI 3.6.1 / skill 4.1.3 until upstream closes the fixture or ships patchable source. Rechecked 2026-09-28 against official engine 0.1.6 (still leaking), and 2026-10-11 against engine 0.1.14 (cli-v4.5.2 pins it): well-formed/control fixtures PASS, malformed script/style fixtures still leak the tag body into analysis - hold reaffirmed; the vendored patched CLI 3.6.1 passes TESTS/impeccable-security-regressions.mjs.",
+      "compatibility_hold": "2026-09-18 audited with TOOLS/audit-impeccable-engine.py against engine 0.1.5 (the payload CLI 4.1.0 pins): the engine still leaks bodies of browser-valid malformed close tags (</script \t bogus>, </style bogus>) into text analysis - the exact gap UABS patched on 2026-09-02 - and a compiled engine cannot carry the patch. CLI 4.1.0 is a stub whose payload is that engine: pinned via optionalDependencies, else first-use download into ~/.impeccable, and its install/link/update/check commands write skill trees. Retain audited CLI 3.6.1 / skill 4.1.3 until upstream closes the fixture or ships patchable source. Rechecked 2026-09-28 against official engine 0.1.6 (still leaking), and 2026-10-11 against engine 0.1.14 (cli-v4.5.2 pins it): well-formed/control fixtures PASS, malformed script/style fixtures still leak the tag body into analysis - hold reaffirmed; the vendored patched CLI 3.6.1 passes TESTS/impeccable-security-regressions.mjs. Rechecked 2026-10-26 against signature/integrity-verified official engines 0.1.16 and 0.1.17 (CLI/skills 4.7.0): well-formed/control fixtures PASS; both malformed script/style fixtures still leak in both engines. CLI 3.6.1 / skill 4.1.3 remain held.",
       "skill_release_prefix": "skill-v"
     },
     {
@@ -354,12 +369,12 @@
         "owner": "SenjuWoo",
         "repo": "SkyrimForge"
       },
-      "release_tag": "v6.1.0",
-      "asset": "Skyrim-Forge-6.1.0.zip",
-      "offline_asset": "Skyrim-Forge-6.1.0.zip",
-      "sha256": "7220f17a67e7d5828d9ad887d85ab970d5d5c2959e2e2a7d7e6f6f3b8d1ab2ec",
+      "release_tag": "v6.2.0",
+      "asset": "Skyrim-Forge-6.2.0.zip",
+      "offline_asset": "Skyrim-Forge-6.2.0.zip",
+      "sha256": "2c66c6bdf79473a68e95b749e12489e0fa14db876cc583184e77b20370d1b175",
       "note": "Released from github.com/SenjuWoo/SkyrimForge. Installed only with the Skyrim pack. The installer verifies the pinned SHA-256 before extracting, resolves ONE versionless install root, migrates a version-stamped install onto it, preserves Workspaces and the virtualenv, wires selected providers, then proves the result runs with `forge doctor`. CI installs this exact release end to end.",
-      "version": "6.1.0"
+      "version": "6.2.0"
     },
     {
       "id": "code-review-skill",
@@ -446,7 +461,7 @@
         "session-memory"
       ],
       "offline_asset": null,
-      "scope_note": "CLAUDE CODE ONLY. Never install for Grok/Codex/Kimi/Hermes. Cross-session CONVERSATION memory (what was done, when, why) \u2014 does NOT replace codebase-memory-mcp (code structure graph) or skyrim-memory (verified Skyrim facts). Requires Bun on PATH (worker uses bun:sqlite). Worker port 37777. If red MCP errors: install Bun from https://bun.sh then restart Claude Code.",
+      "scope_note": "CLAUDE CODE ONLY. Never install for Grok/Codex/Kimi/Hermes. Cross-session CONVERSATION memory (what was done, when, why) — does NOT replace codebase-memory-mcp (code structure graph) or skyrim-memory (verified Skyrim facts). Requires Bun on PATH (worker uses bun:sqlite). Worker port 37777. If red MCP errors: install Bun from https://bun.sh then restart Claude Code.",
       "runtime_note": "Bun required for worker daemon (https://bun.sh). The AIO installs Bun when missing, disables claude-mem's default anonymous telemetry, and starts the worker before reporting success."
     },
     {
@@ -548,7 +563,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "@perplexity-ai/mcp-server@1.2.1"
+        "@perplexity-ai/mcp-server@1.3.0"
       ],
       "api_key_env": "PERPLEXITY_API_KEY",
       "api_key_optional": false,
@@ -568,10 +583,9 @@
         "web-research"
       ],
       "offline_asset": null,
-      "scope_note": "REQUIRES PERPLEXITY_API_KEY (paid). Not installed on a keyless machine. Current-information research (new SKSE/CommonLib releases, game patch news). Never a substitute for houseCARL on Nexus, codebase-memory on code, or skyrim-memory on verified Skyrim facts.",
+      "scope_note": "REQUIRES PERPLEXITY_API_KEY (paid). Not installed on a keyless machine. Current-information research (new SKSE/CommonLib releases, game patch news). Never a substitute for houseCARL on Nexus, codebase-memory on code, or skyrim-memory on verified Skyrim facts. 2026-10-26: registry integrity/signatures verified for 1.3.0; isolated initialize/tools-list PASS with a process-local dummy key and network blocked: 4 tools / 7,821 compact UTF-8 schema bytes (transport size, not billed tokens). Keyless initialization still fails as expected. Real authentication, provider API behavior and billing remain unverified; no real credentials or paid API calls were used.",
       "key_required": true,
-      "version": "1.2.1",
-      "compatibility_hold": "2026-09-28: candidate 1.3.0 refuses initialization without PERPLEXITY_API_KEY. Retain the evaluated 1.2.1 pin until a user-owned authenticated smoke test is available; do not read or invent a key."
+      "version": "1.3.0"
     },
     {
       "id": "context7",
@@ -794,7 +808,7 @@
         "unity-editor-control"
       ],
       "scope_note": "There is no machine-wide Unity MCP server. The executable is generated inside the project's Library folder by the Unity package, so the entry is project-scoped by construction and its command is the resolved absolute path for that one project. Until the package is installed the exe does not exist, and the profile refuses rather than writing a path that is not there.",
-      "compatibility_hold": "2026-09-28: 0.93.2 is current upstream but needs a real Unity project/editor compatibility check. Retain the evaluated 0.91.0 package pin; no Unity editor was launched or live project modified."
+      "compatibility_hold": "2026-10-26: upstream 1.5.0 (released 2026-10-24) requires a real Unity project/editor migration check, including its CLI/plugin install command, generated server path/profile and skill behavior. Retain the evaluated 0.91.0 package pin; no Unity editor was launched or live project modified."
     },
     {
       "id": "rtk",
@@ -857,7 +871,7 @@
         "tool-output-deduplication"
       ],
       "scope_note": "CLI + host hook, zero standing tokens -- same slot as rtk, different mechanism, so they stack rather than compete: rtk filters ONE command's output, OMNI remembers output across calls and returns a handle instead of resending what the agent already saw. USE THE README'S NUMBERS, NOT THE LANDING PAGE'S. The page headlines '97.2% off a file read twice' and '~24%'; the README's own corpus of 9,478 executions says '1.4% from the filters, 5.1% with the ledger'. 97.2% is a best case for one re-read, not an expected value -- treat 5% as the number and anything above it as a bonus. Ships a real x86_64-pc-windows-msvc binary with SHA256SUMS (v0.7.8, 2026-08-25), which is why it is here and lowfat is not: lowfat v0.8.0 publishes darwin and linux-gnu only and integrates through a POSIX shell eval hook, the same native-Windows degradation this catalog already documents for rtk's non-Hermes hooks. Full host rewrite on Claude Code, Codex CLI and Gemini CLI; Hermes is supported; MCP-only fallback elsewhere. Stores a local SQLite ledger (permanent project knowledge, 30-day working data, 7-day verbatim traces) -- it is a cache of your own tool output, so treat it as project data, not a temp file. REWIND CAP, measured 2026-08-26 at 0.7.8: output above 65,536 bytes is truncated and NOT archived -- the marker says `full output not archived` and those bytes are unrecoverable, which the README's byte-for-byte guarantee does not qualify. Below the cap the guarantee holds and is self-verifying: the retrieve handle IS the content's SHA-256 prefix, and a 33,453-byte diff came back byte-identical. Head-to-head on this repo's git corpus: rtk 85.2%, OMNI 71.2% headline but only 6.4% once the truncated rows are excluded -- consistent with OMNI's own published 8.8% on git. Its value is the ledger, not the filter; see docs/TOOL-EVALUATIONS.md. Not auto-installed: a 5% saving does not justify rewriting every tool result on a machine by default.",
-      "compatibility_hold": "2026-09-28: informational evaluation pin only, not installed or enabled by the bundle. Candidate 0.7.10 has not been remeasured; the historical ledger/rewind findings must not be presented as measurements of a newer binary."
+      "compatibility_hold": "2026-10-26: informational evaluation pin 0.7.11 only, not installed or enabled by the bundle. Upstream 0.7.12 (released 2026-10-22) has not been remeasured; the historical ledger/rewind findings must not be presented as measurements of 0.7.11 or 0.7.12."
     },
     {
       "id": "windows-mcp",
@@ -968,7 +982,7 @@
       "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings. 2026-10-22: 1.23.0 workflow-validation help PASS with PYTHONUTF8=1 and telemetry disabled. Default Windows cp1252 help reproduced a UnicodeEncodeError; UTF-8 is required for redirected output."
     }
   ],
-  "pack_version": "8.22.1",
+  "pack_version": "8.24.0",
   "updated_utc": "2026-10-18",
   "providers": {
     "Grok": {
@@ -1056,7 +1070,35 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.22.1",
-  "updated": "2026-10-25",
-  "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test."
+  "catalog_version": "8.24.0",
+  "updated": "2026-10-26",
+  "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test.",
+  "companions": [
+    {
+      "id": "skyrim-forge",
+      "repository": "https://github.com/SenjuWoo/SkyrimForge",
+      "purpose": "Skyrim authoring, validation and specialist skills"
+    },
+    {
+      "id": "reverse-this",
+      "repository": "https://github.com/SenjuWoo/reverse-this",
+      "purpose": "Reverse engineering tool workbench and REA"
+    }
+  ],
+  "build_tools": {
+    "default": true,
+    "installer": "TOOLS/Install-BuildTools.ps1",
+    "check": "TOOLS/Install-BuildTools.ps1 -CheckOnly",
+    "tools": [
+      "Go",
+      "Rust/Cargo",
+      "GCC",
+      "CMake",
+      "Ninja",
+      ".NET SDK",
+      "MSVC C++",
+      "Windows SDK"
+    ],
+    "policy": "Reuse installed toolchains and install missing capabilities. Update shared stable tools in place through their vendor updater or checksum-verified official Go archive; preserve newer/development SDKs, project pins and user settings. Go swaps retain the previous SDK and roll back a failed publish. -NoUpdate disables upgrades; -CheckOnly and -Offline do not install or update."
+  }
 }

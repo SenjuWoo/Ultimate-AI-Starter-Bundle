@@ -1,4 +1,4 @@
-Ultimate AI Starter Bundle V8.22.1 - ALL-IN-ONE STARTER
+Ultimate AI Starter Bundle V8.24.0 - ALL-IN-ONE STARTER
 ======================================================
 
 Not just Skyrim. A full multi-provider AI starter bundle: skills, MCP tools,
@@ -15,7 +15,7 @@ from GitHub, extracts it, runs the full installer):
 
     powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/SenjuWoo/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
 
-Or double-click INSTALL-REMOTE.bat. Re-running is a no-op.
+Or double-click INSTALL-REMOTE.bat. Re-running reuses current tools and updates supported older versions.
 
 Bundle already on disk - double-click the one canonical launcher:
 
@@ -49,6 +49,14 @@ SKYRIM PACK AND PERSONAL PROFILE
 Skyrim skills, Skyrim Forge and houseCARL install only when Skyrim is
 found on this PC (Steam/GOG, My Games, Vortex, tool variables). Force it:
     START-HERE.bat -Packs skyrim          (off: -ExcludePacks skyrim; remembered)
+Recommended complete stack (each product also works alone):
+    START-HERE.bat -Packs skyrim,reverse
+General AI tools only: -ExcludePacks skyrim,reverse. Choices are remembered.
+Reverse THIS! reuses its registered owner and updates its existing selection;
+it owns REA and the analysis catalog. No duplicate tool catalog lives here.
+See docs/COMPANION-ARCHITECTURE.md for the merge analysis and ownership contract.
+-NoToolUpdates preserves installed compiler/companion versions.
+
 Your own working preferences go in %USERPROFILE%\.uabs\profile\PROFILE.md; each
 install adds it, plus a generated map of this PC's game/mod/tool folders, to
 every AI app. Seed it once:

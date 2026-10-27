@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Content packs: detection, remembered choices, instruction blocks, skill retirement.
 
@@ -69,6 +69,12 @@ try {
   Assert $threw 'An unknown pack name was accepted.'
 
   # ---- instruction blocks ----
+  $owner=Join-Path $fx 'owner'
+  $ownerInstructions=Join-Path $owner 'integrations\skyrim-pack\INSTRUCTIONS.md'
+  New-Item -ItemType Directory -Force -Path (Split-Path $ownerInstructions -Parent) | Out-Null
+  [IO.File]::WriteAllText($ownerInstructions, '# Skyrim owner fixture: skyrim-tool-router')
+  $env:SKYRIM_FORGE_ROOT=$owner
+
   $general = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Claude\COPY-TO-PROVIDER-HOME\CLAUDE.md'
   $legacy = @(Get-ChildItem -LiteralPath (Join-Path $PackRoot 'BUNDLED-TOOLS\packs\skyrim\legacy') -Filter '*.md' | Sort-Object Name)[0]
   Assert $legacy 'No archived legacy Skyrim section to test against.'
@@ -141,6 +147,19 @@ try {
   Assert (-not (Test-Path -LiteralPath (Join-Path $hh 'profiles\code\skills\skyrim-memory'))) 'Moved skill is still indexed.'
   Assert ((Move-UabsSkillsAside -SkillsDir (Join-Path $hh 'profiles\code\skills') -Names @('skyrim-memory') -Label 'fixture').Backup -eq $null) 'A second move created an empty backup.'
 
+  # The pointer is a disposable fixture beneath fx/state, never the real user registration.
+  $reverseState=Join-Path $fx 'reverse-packs.json'
+  $receipt=Join-Path $fx 'state\ReverseThis\kit.json'
+  Assert (Test-UabsPathWithin -Path $receipt -Root $fx) 'Companion fixture escaped its temporary root.'
+  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $receipt) | Out-Null
+  [IO.File]::WriteAllText($receipt,'{"fixture":true}')
+  $sel=Resolve-UabsPackSelection -PackRoot $PackRoot -StatePath $reverseState -Excluded @('skyrim') -EvidenceArgs $ev
+  Assert ($sel.Enabled -contains 'reverse') 'Registered Reverse THIS! companion was not detected.'
+  $sel=Resolve-UabsPackSelection -PackRoot $PackRoot -StatePath $reverseState -Excluded @('reverse') -EvidenceArgs $ev
+  Assert ($sel.Disabled -contains 'reverse') 'Explicit companion exclusion did not win.'
+  $sel=Resolve-UabsPackSelection -PackRoot $PackRoot -StatePath $reverseState -EvidenceArgs $ev
+  Assert ($sel.Disabled -contains 'reverse') 'Companion exclusion was not remembered.'
+  Assert ([IO.File]::ReadAllText($receipt) -eq '{"fixture":true}') 'Detection rewrote another owner receipt.'
   Write-Host 'PACKS GATE: PASS'
 } finally {
   $env:LOCALAPPDATA = $savedLocal

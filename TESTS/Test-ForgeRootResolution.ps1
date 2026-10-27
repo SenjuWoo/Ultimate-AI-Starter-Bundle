@@ -133,8 +133,8 @@ try {
   # <install root>\Workspaces, so a replace-in-place would delete the user's mod
   # work; these names must survive the swap. CI proves it end to end by
   # downgrading VERSION.txt to force a re-stage and checking a marker file.
-  Check 'installer preserves Workspaces across an upgrade' `
-    (($srcText -match "(?m)^\s*\`$preserve\s*=\s*@\('Workspaces'").ToString()) 'True'
+  Check 'installer delegates preservation to the owner updater' `
+    (($srcText.Contains('-Root $target -SourceDir $source -SkipSetup')).ToString()) 'True'
 
   # The installer derives its version from the in-tree source tree. A
   # restated literal in CODE is how 7.8.0 ended up with '5.2.0' in four places;

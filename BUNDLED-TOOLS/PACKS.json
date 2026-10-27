@@ -1,15 +1,18 @@
 {
   "schema": 1,
-  "note": "A pack is content only some users need. It installs when the installer finds evidence for it on this machine or the user asks (-Packs name); -ExcludePacks name turns it off and is remembered. Skills of a disabled pack are not installed, and unmodified copies a previous install left behind are retired from the provider skill folders.",
+  "note": "The general bundle owns general skills. Skyrim content belongs to Forge; this optional integration delegates installation to its pinned release. Excluding it stops bundle integration while independently owned specialist content stays with its owner.",
   "packs": {
     "skyrim": {
       "title": "Skyrim SE/AE modding",
       "enable": "START-HERE.bat -Packs skyrim",
       "disable": "START-HERE.bat -ExcludePacks skyrim",
-      "instructions": "BUNDLED-TOOLS/packs/skyrim/INSTRUCTIONS.md",
-      "components": ["skyrim-forge", "housecarl"],
+      "instructions": "integrations/skyrim-pack/INSTRUCTIONS.md",
+      "components": [
+        "skyrim-forge",
+        "housecarl"
+      ],
       "skills": [
-        "ai-tooling-stack",
+        "skyrim-tooling-stack",
         "biped-slot-reference",
         "bulk-record-jobs",
         "dialogue-authoring",
@@ -59,11 +62,43 @@
         "tool-output-awareness"
       ],
       "detect": {
-        "steam_appids": ["489830", "611670"],
-        "my_games": ["Skyrim Special Edition", "Skyrim Special Edition GOG", "Skyrim VR"],
-        "vortex_games": ["skyrimse", "skyrimvr"],
-        "env": ["SKYRIM_FORGE_ROOT", "SKYRIM_MO2_INSTANCE", "HOUSECARL_ROOT"],
+        "steam_appids": [
+          "489830",
+          "611670"
+        ],
+        "my_games": [
+          "Skyrim Special Edition",
+          "Skyrim Special Edition GOG",
+          "Skyrim VR"
+        ],
+        "vortex_games": [
+          "skyrimse",
+          "skyrimvr"
+        ],
+        "env": [
+          "SKYRIM_FORGE_ROOT",
+          "SKYRIM_MO2_INSTANCE",
+          "HOUSECARL_ROOT"
+        ],
         "gog_game_name": "Skyrim"
+      },
+      "owner": "skyrim-forge",
+      "repository": "https://github.com/SenjuWoo/SkyrimForge",
+      "minimum_version": "6.2.0"
+    },
+    "reverse": {
+      "title": "Reverse THIS! analysis workbench",
+      "enable": "START-HERE.bat -Packs reverse",
+      "disable": "START-HERE.bat -ExcludePacks reverse",
+      "components": [],
+      "skills": [],
+      "owner": "reverse-this",
+      "repository": "https://github.com/SenjuWoo/reverse-this",
+      "minimum_version": "1.4.0",
+      "detect": {
+        "local_state_files": [
+          "ReverseThis/kit.json"
+        ]
       }
     }
   }

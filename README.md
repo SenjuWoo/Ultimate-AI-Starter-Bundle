@@ -1,11 +1,16 @@
-<!-- Ultimate AI Starter Bundle v8.22.1 -->
+<!-- Ultimate AI Starter Bundle v8.24.0 -->
+
+The bundle installs the common compiler suite by default: Go, Rust/Cargo, GCC, CMake/Ninja, Xmake, .NET SDK, MSVC C++ and the Windows SDK. Existing working installations and project pins are reused. Fresh installations may require several GB and Windows elevation; `-SkipBuildTools` skips this suite, and `-SkipRuntimes` skips all runtime/compiler provisioning. Run `TOOLS/Install-BuildTools.ps1 -CheckOnly` for compile-and-run verification. Logs: `%LOCALAPPDATA%/Ultimate-AI-Starter-Bundle/logs/build-tools.log`. Full-Offline caches the listed bundle payloads; missing shared runtimes/compilers still need vendor downloads. `-Mode BundledOnly` prevents compiler downloads and reports missing prerequisites.
+
+Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tools and 48 specialist skills; use [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) for reverse-engineering tools and REA. All three work together and retain independent installers, updates and settings. Disabling bundle integration leaves independently owned specialist content intact.
+
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
 </p>
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.22.1
+# Ultimate AI Starter Bundle v8.24.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -36,20 +41,24 @@ modding stack.
   <img src="assets/hero.svg" alt="Installed is not enabled: six providers, parked optional MCPs" width="100%">
 </p>
 
-**Current source:** one-click setup, 125 general skills plus a 49-skill Skyrim
+**Current source:** one-click setup, 126 general skills plus a 48-skill Skyrim
 pack that installs only where Skyrim is, a small MCP core and project-specific
 tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest),
 [the changelog](CHANGELOG.md) and [evaluated component pins](BUNDLED-TOOLS/CATALOG.json).
 
-The [v8.22.1 release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.1)
-includes the fresh-Windows bootstrap, Hermes profile repairs, and the Skyrim Forge
-6.1.0 parallel-development split. Setup preserves
-existing model, permission and personal MoA settings; inherited retired MoA
-defaults are disabled only when the entire block matches the vendor baseline.
-Windows CI covers Python 3.14/3.15 and extracted Core packages. Live verification
-covered five installed providers and thirteen unchanged preference fingerprints;
-provider inference and Hermes native-plugin activation under the copied-skills
-fallback remain outside that proof. See [validation](VALIDATION.md).
+The current candidate separates general tooling, Skyrim tooling and reverse
+engineering into independent owners. Install the recommended stack with
+`START-HERE.bat -Packs skyrim,reverse`; install only general AI tools with
+`-ExcludePacks skyrim,reverse`. Explicit pack choices are remembered. Existing
+registered companions are detected and reused; the owner updates its existing
+tool selection. No specialist MCP is enabled globally by this selection.
+
+See the [architecture analysis](docs/COMPANION-ARCHITECTURE.md) for why the
+repositories remain separate, the tool ownership boundaries and update policy.
+`-NoToolUpdates` preserves installed compiler/companion versions;
+`-Mode BundledOnly` blocks uncached prerequisite downloads. Project pins,
+personal source edits and settings remain protected. See [validation](VALIDATION.md)
+for measured coverage and remaining runtime gaps.
 
 ### Universal Modder without extra background servers
 
@@ -66,6 +75,8 @@ are evidence candidates, not automatic deletion or guaranteed usage savings.
 The default installer provides `um` plus the same `universal-modder` skill to all six providers. Its twelve upstream guides are on-demand references, not twelve additional skill-index entries. `um comfy` adds key-free local ComfyUI image generation. Use `um --version`, `um scan "<verified game folder>" --json`, or the relevant subcommand's `--help`. The packaged knowledge base works offline; its examples must be rechecked against your actual game. Existing engine/Skyrim skills remain the implementation specialists.
 
 The bundle does not install the upstream fal MCP or its session hooks. Paid fal generation is optional and needs the user's own setup. Video requires an installed FFmpeg; 3D-to-sprite rendering requires Blender. Core carries vendored source; Full-Offline also carries the wheel. Python/runtime and dependency setup can still need network access when they are not already cached.
+
+See [shared build tools and project dependencies](_CANONICAL-SKILLS/tool-discovery/references/build-tools.md) for Xmake and the supplied Nx/Turbo/Vite/webpack routes. The bundle provisions shared tools; project package managers retain dependency pins. CLibDT and CommonLib development guidance belong to Forge.
 
 ### Creating a complete GitHub project
 
@@ -90,7 +101,7 @@ One distinction explains almost everything about how this pack behaves:
 | **INSTALLED** | A CLI/server payload exists on disk | A disconnected server adds no MCP schema; installed skills/plugins have separate discovery and hook behavior. |
 | **ENABLED** | Registered in a provider's config | Available in that scope after trust/connection checks; schema loading and billing depend on the provider. |
 
-The 125 general **skills** (plus 48 with the Skyrim pack) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
+The 126 general **skills** (plus 48 with the Skyrim pack) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters. houseCARL's historical ~41,768 figure estimates its full schema at bytes/4; it is not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
 
 ### What's ON after install
 
@@ -353,7 +364,7 @@ for diagnostics, validation scope and persistent GitHub setup.
 ### Google Antigravity (Gemini 4 Argon)
 
 Antigravity is a first-class provider: the same SOUL + AIO contract, the same
-125 general skills (plus 49 with the Skyrim pack) and the pack's always-on MCP servers, written where Antigravity
+126 general skills (plus 49 with the Skyrim pack) and the pack's always-on MCP servers, written where Antigravity
 actually reads them — verified against the app's own `agy-customizations` guide
 and `antigravity.google/docs/rules|skills|mcp`, not recalled:
 
@@ -361,7 +372,7 @@ and `antigravity.google/docs/rules|skills|mcp`, not recalled:
 |---|---|---|
 | Global rules | `~/.gemini/config/AGENTS.md` | also read: `~/.gemini/AGENTS.md`; 24,000-byte cap per file, 20,000-token shared budget, so the bundle stays near 14 KB and leaves detail in skills |
 | Workspace rules | — | `AGENTS.md`, `GEMINI.md`, `.agents/AGENTS.md`, `.agents/rules/*.md` in your projects; the installer never writes there |
-| Global skills | `~/.gemini/config/skills/<name>/SKILL.md` | 125 general skills, plus 49 with the Skyrim pack, one level deep, exactly the layout its scanner expects |
+| Global skills | `~/.gemini/config/skills/<name>/SKILL.md` | 126 general skills, plus 49 with the Skyrim pack, one level deep, exactly the layout its scanner expects |
 | MCP servers | `~/.gemini/config/mcp_config.json` | `mcpServers`, stdio or Streamable HTTP; legacy SSE is unsupported — plus per-project `.agents/mcp_config.json`, untouched |
 
 ```powershell
@@ -712,7 +723,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-- **Provider skills** — 125 general skills per AI (Claude, Codex, Grok, Kimi, Hermes, Antigravity), plus 48 with the Skyrim pack, all generated from one canonical tree.
+- **Provider skills** — 126 general skills per AI (Claude, Codex, Grok, Kimi, Hermes, Antigravity), plus 48 with the Skyrim pack, all generated from one canonical tree.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7 and Headroom are the always-on core (the official GitHub server too, where `gh` is not signed in); servers a tool's own installer registers machine-wide are parked per project. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup (Skyrim pack)
@@ -729,11 +740,28 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ### Skyrim Forge
 
-**Skyrim Forge 6.1.0** is released from [SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge) and installed by this bundle only with the Skyrim pack. CATALOG.json pins the release tag, archive and SHA-256; the installer takes the Full-Offline copy or downloads it, refuses an archive whose digest differs before extracting, installs into ONE versionless root (migrating a version-stamped install, preserving `Workspaces` and the virtualenv), refreshes the provider descriptors, sets `SKYRIM_FORGE_ROOT`, and proves the result with `forge doctor`. This repository's CI installs that exact release end to end, which is the check v7.8.0 lacked when the two repositories drifted. Its 52-tool MCP is not global: `game-skyrim` activates it only for matching Claude/Grok/trusted Codex projects; Kimi/Hermes use the CLI through the skill. Choose where it lands with `-ForgeRoot`; the default is `%LOCALAPPDATA%\Skyrim-Tools\Skyrim-Forge`.
+**Skyrim Forge 6.2.0** ([source](https://github.com/SenjuWoo/SkyrimForge)) is installed
+only with the Skyrim pack. CATALOG.json pins its tag, archive and SHA-256.
+The bundle verifies the archive and delegates existing deployments to Forge's
+preserving updater. Private workspace trees move intact, edited owner files
+are refused, and the previous owner payload remains recoverable. Git source
+checkouts and newer compatible deployments are preserved. `forge doctor`
+verifies the deployed code; CI exercises the pinned installer and upgrade.
+Its MCP remains task scoped. `-ForgeRoot` selects the deployment directory;
+the default is `%LOCALAPPDATA%/Skyrim-Tools/Skyrim-Forge`.
 
-**Who owns what (parallel development).** The Skyrim toolchain and the 48-skill Skyrim pack (`integrations/skyrim-pack/`) are owned by [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge), while the general bundle owns provider-agnostic AI tooling, prompt preambles, MCP profiles, and the 125 general skills. Both repositories can be developed and installed in parallel without drift or downgrades:
-- Running `Install-AI-Bridge.ps1` or `Install-Skyrim-Pack.ps1` inside `SkyrimForge` deploys the 48 Skyrim skills to Claude, Codex (`~/.agents/skills`), Grok, Kimi, Hermes, and Antigravity and automatically updates the bundle's `managed-skills/*.json` ledgers so `Test-Installed-State.ps1` stays green.
-- Running `INSTALL-AIO.ps1` or `TOOLS\Install-SkyrimForge.ps1` in the bundle checks `VERSION.txt` on any existing or parallel `Skyrim-Forge` install as well as external tools (`houseCARL`, `xEdit`/`SSEEdit`, `LOOT`, the Creation Kit, and the user's own tool root such as `S:\Apps\Skyrim Tools`): an older copy is refreshed in place after a timestamped backup under `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups`, a same-or-newer copy is preserved untouched (and its newer `Install-Skyrim-Pack.ps1` is invoked so newer Skyrim skills win), and nothing is ever downgraded. None of it is required for AI boost, coding, or modding other engines - leave the pack switched off and nothing Skyrim-related is installed.
+Forge alone writes its 48 specialist skills and ownership ledgers. The bundle
+alone writes 126 general skills and its own ledgers. Legacy ownership proof is
+read without rewriting another product's state. The general `ai-tooling-stack`
+and Skyrim-specific `skyrim-tooling-stack` have distinct names; only digest-proven
+managed legacy copies migrate automatically. Edited copies are preserved.
+
+Skyrim-specific third-party tools are discovered, imported or documented by
+Forge according to their actual capabilities and distribution rights. A tool
+catalog does not imply every GUI tool can run headlessly or be redistributed.
+See Forge's local-tool coverage and standalone setup guides. The
+[architecture analysis](docs/COMPANION-ARCHITECTURE.md) explains how Forge,
+Reverse THIS! and the bundle remain independent while sharing installed tools.
 
 ## Update tools later
 
@@ -818,6 +846,7 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | `playwright-cli` | [Playwright CLI](https://github.com/microsoft/playwright-cli) | Default CLI; browser installation separate |
 | `comfy-cli` | [ComfyUI CLI](https://github.com/Comfy-Org/comfy-cli) | Optional user-managed tool; not installed by default |
 | `rea` | [REA](https://github.com/morluto/rea) | Optional pinned CLI; no global MCP or setup writes |
+| `reverse-this` | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | Optional standalone analysis workbench; source MIT, individual payload licenses apply |
 | Reverse THIS! | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | Reuses an existing discovered tool bench; no duplicate installation |
 | CLI-Anything | [HKUDS/CLI-Anything](https://github.com/HKUDS/CLI-Anything) | Companion hub of per-app agent CLIs (Blender, FreeCAD, GIMP, Audacity, Godot, ComfyUI, browsers...). `pip install cli-anything-hub`, install the harnesses you need. Apache-2.0; v0.4.0 checked 2026-10-16. Not redistributed or installed by the pack. |
 | anti-slop | [miqdadbadjuber/anti-slop](https://github.com/miqdadbadjuber/anti-slop) | MIT rules filter against generic AI UI, filler copy and AI-shaped code (`rules/antislop.md` plus a CLI). Overlaps the bundled `impeccable` and `humanizer` skills; use it as an extra filter. v3.2.21 checked 2026-10-16. |
@@ -934,7 +963,7 @@ Source validation is not a substitute for local runtime proof.
 
 ## Version
 
-**v8.22.1** - 2026-10-25. Pins `Skyrim Forge 6.1.0` (`SenjuWoo/SkyrimForge` `v6.1.0`) and hardens parallel development between `SkyrimForge` and `Ultimate-AI-Starter-Bundle`: `Install-SkyrimForge.ps1` compares semantic versions before extracting so a newer parallel `Skyrim-Forge` install is preserved untouched and its newer `Install-Skyrim-Pack.ps1` wins, while `SkyrimForge`'s `Install-Skyrim-Pack.ps1` updates the bundle's `managed-skills/*.json` ledgers and resolves Codex's `~/.agents/skills` root. [Release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.1) · [Changes](docs/history/V8.22.1-CHANGELOG.md).
+**v8.24.0** - 2026-10-26. Installs the common compiler suite by default and adds optional Forge/Reverse companion orchestration. The bundle owns 126 general skills and shared AI/build tooling; Forge independently owns 48 Skyrim skills and houseCARL, with edited-skill preservation and retained rollback backups. Reverse THIS! owns REA and reverse-engineering tools. The companions cooperate without rewriting one another’s settings or ownership ledgers. [Release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.24.0) · [Changes](docs/history/V8.24.0-CHANGELOG.md).
 **v8.22.0** - 2026-10-25. Updates `PROMPTS/START-AND-RESUME.md` and the AIO operating contract (`No Silent Fallbacks`, `Question Stale Patterns`), moves canonical ownership of the 48-skill Skyrim pack to `SenjuWoo/SkyrimForge`, retires `spookys-automod-toolkit` (`-68.6 MB`), upgrades `houseCARL` to `2.1.1` with cross-drive version-aware discovery, bumps `uabs-toolbox` to `1.0.3` with Codex isolated-env resolution, updates `rtk` to `1.1.0`, `blender-mcp` to `2.2.4`, and `rea` to `6.8.0`, and resolves 28 Dependabot lockfile alerts. [Release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.22.0) · [Changes](docs/history/V8.22.0-CHANGELOG.md).
 **v8.21.1** - 2026-10-23. A fresh Windows install that finds no supported app stops and asks which providers to set up, instead of installing all six. A missing Codex CLI installs with `npm install -g @openai/codex` after the old standalone installer URL started returning HTTP 404. Setup fills only missing workspace files, previews cleanup, and leaves unselected provider homes alone. [Changes](docs/history/V8.21.1-CHANGELOG.md).
 **v8.21.0** - 2026-10-21. Hermes settings are now future-proof: no fallback chain, no pinned auxiliary or delegation models (everything follows your main model), vision follows the main model instead of a retired experimental endpoint, and compression fires at a 320k cap on the 1M-token window. The component updater respects catalog holds unless `-Force`. [Changes](docs/history/V8.21.0-CHANGELOG.md).

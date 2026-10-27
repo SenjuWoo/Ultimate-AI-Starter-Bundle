@@ -1,5 +1,74 @@
 # Bundle audit state
 
+## Final three-repository update (2026-10-26, in progress)
+
+- Goal: three standalone, mutually recommended owners; reuse shared tools and
+  update supported older installations while preserving project pins, newer
+  compatible versions, personal edits/settings and private work.
+- Decision: retain independent repositories and optional bundle orchestration,
+  not a Reverse source/catalog merge. docs/COMPANION-ARCHITECTURE.md records
+  the analysis. Use -Packs skyrim,reverse or remembered exclusions.
+- Targets/current source: bundle 8.24.0 on codex/skyrim-pack-ownership at
+  85f82b9 plus intended staged split; Forge 6.2.0 on clean main aefa1a2d222801a4953e6fe39b65983750dc7997;
+  Reverse 1.4.0 on clean main 979fa17c7a9b7687a433e4f6a1e4689940d3b756.
+- Reverse PR #7 merged after fixed-head and main CI/security passed. Release
+  v1.4.0 is public from 979fa17. Both public assets downloaded and verified
+  against local bytes, GitHub digests and checksum file. ZIP: 108,789 bytes,
+  SHA256 4087251269e6da95ffa563837ad4b6c684b4d60d52fe9873b3a6874351d5c24b.
+  Receipt: artifacts/split-recovery/reverse14-release/final.local.json.
+- Forge PR #16 merged the standalone updater/migration; PR #17 added requested
+  tool coverage. Exact aefa1a2 main has all 13 attached checks successful and
+  security flags clean. Tag v6.2.0 points there. Release workflow 40421709024
+  passed on retry after a GitHub HTTP-500 publication failure. All eight
+  public assets verified against GitHub digests/checksums; the bundle now pins
+  the public ZIP: 5,137,601 bytes, SHA256
+  2c66c6bdf79473a68e95b749e12489e0fa14db876cc583184e77b20370d1b175. Earlier
+  03ea6af had an unrerunnable GitHub graph backend failure; no release used it.
+- Source review fixed private-tree copy/junction risk, edited-source overwrite,
+  update locking/rollback, newer Java/Node shim binding and a source-version
+  race. Regression negative controls proved the race/Node fixes. Reverse CI
+  also exposed hidden AppData probes and expected-child exit leakage; fixed
+  and tested under actual GitHub-style PS5.1/7 invocation.
+- General bundle: 126 canonical skills, generated 933 files/provider. Forge
+  independently owns 48; its index is skyrim-tooling-stack, while the general
+  ai-tooling-stack stays in the bundle. Legacy migration requires digest proof.
+- New tool intake: installed Xmake 3.1.2 and supplied installer digest verified
+  against upstream; shared provisioning/owner updates and real offline C++23/
+  MSVC compile/run PASS. Nx/Vite/webpack sources and Turbo binary are documented
+  as general project dependencies, not copied/global-installed. Forge discovers
+  CLibDT 6.0 without launching it. CommonLib main is libxse/Xmake with an empty
+  archive submodule; dev README matches powerof3/CMake, not its stale dann1 badge.
+  Libraries remain pinned per plugin project; reference snapshots untouched.
+- Gates so far: full Forge validator PASS after additions; dual-shell Reverse
+  source/actual-shell/extracted-archive gates PASS; compiler recovery/Xmake and
+  real compile/run PASS; pack/root/companion boundaries PASS; privacy PASS.
+  Corrected bundle full Windows gate PASS and all 151 release contracts PASS.
+  Extracted candidate gates remain pending.
+- Currency evidence: artifacts/split-recovery/currency-20261026.json and
+  compatibility-20261026/. Perplexity 1.3 transport/four schemas pass with
+  network blocked (real API/paid use untested). Impeccable .16/.17 engines still
+  fail malformed script/style probes; compatibility holds remain documented.
+- User approved full compilers by default and live deployments with backups.
+  Reverse LIVE remains 1.3.0 (58 installed records); Forge LIVE remains 6.1.1.
+  Last bundle live run FAILED five old skill-name ownership checks; do not
+  call it healthy. Kimi is outside the live selected provider set.
+- Fresh 13-config backup/fingerprints: final-8240-settings.local.json under
+  artifacts/split-recovery; backup under installed-state backups/final-8.24.0.
+  Compare with preserve-live-8240.py after deployment. Older split-8.23 backups
+  and last-good releases remain available. A stale empty Git index lock was
+  retained under split-recovery after confirming no active Git process/handle.
+- Live update is now running from the validated 8.24.0 source. It currently
+  awaits Windows UAC for the .NET 10.0.403 installer; user action requested
+  asynchronously. Do not bypass or claim installation success while it waits.
+- Next smallest step: extracted gates against public companion bytes; push/merge exact-SHA CI/
+  security; build/publish/verify 8.24.0; approved live deployment plus owner
+  doctors, shared binding refresh, fifteen MCP proofs and thirteen unchanged
+  preference fingerprints; final all-repository STATE/clean-tree handoff.
+- Last good bundle public version: 8.22.0. Build/test: TESTS/Test-Pack.ps1 with
+  existing -TestPython artifacts/recovery/test-env-314/Scripts/python.exe;
+  TOOLS/Build-Release.ps1. Run START-HERE.bat. Installer/build logs:
+  %LOCALAPPDATA%/Ultimate-AI-Starter-Bundle/logs. Evidence: artifacts/split-recovery.
+
 ## v8.22.1 parallel-development split & SkyrimForge v6.1.0 (2026-10-25)
 
 - **Goal**: Release `SenjuWoo/SkyrimForge` `v6.1.0` with updated documentation and bidirectional parallel-development scripts (`Install-AI-Bridge.ps1`, `Install-Skyrim-Pack.ps1`), connect the local `Skyrim-Forge` folder as a live git repository, and release `SenjuWoo/Ultimate-AI-Starter-Bundle` `v8.22.1` pinning `Skyrim-Forge-6.1.0.zip` with version-aware preservation in `TOOLS/Install-SkyrimForge.ps1` so both repos can be worked on and installed in parallel without drift or downgrades.

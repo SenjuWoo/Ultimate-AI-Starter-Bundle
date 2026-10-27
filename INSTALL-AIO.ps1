@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Ultimate AI Starter Bundle - All-In-One installer for skills, plugins, MCP tools, and houseCARL (MO2/Vortex).
 
@@ -84,6 +84,8 @@ param(
   # SKYRIM_FORGE_ROOT is honoured without this. Never version-stamped.
   [string]$ForgeRoot = '',
   [switch]$SkipRuntimes,
+  [switch]$SkipBuildTools,
+  [switch]$NoToolUpdates,
   [switch]$SkipHouseCarlSetup,
   [switch]$SkipMcpWire,
   [switch]$SkillsOnly,
@@ -547,7 +549,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.22.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.24.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -598,6 +600,14 @@ if (-not $SkipRuntimes -and -not $SkillsOnly) {
     $env:PATH = (Split-Path $bunExe -Parent) + ';' + $env:PATH
     Write-UabsOk ("Bun " + (& $bunExe --version))
   }
+}
+
+# Common compilers are provider-independent and enabled on a fresh machine.
+if (-not $SkipRuntimes -and -not $SkipBuildTools -and -not $SkillsOnly) {
+  $buildArgs=if ($Mode -eq 'BundledOnly') { @('-Offline') } else { @() }
+  if ($NoToolUpdates) { $buildArgs += '-NoUpdate' }
+  if ((Invoke-UabsChildScript -Title 'Common compiler suite' -File (Join-Path $PackRoot 'TOOLS\Install-BuildTools.ps1') -ArgList $buildArgs) -ne 0) { throw 'Common compiler suite failed; see logs\build-tools.log.' }
+  Refresh-ProcessPath
 }
 
 # Fresh-machine provider bootstrap. Existing commands are preserved; only missing
@@ -672,6 +682,47 @@ function Get-ComponentAssetPath {
   return $null
 }
 
+$installed = [ordered]@{}
+# Companion tool ownership stays in Reverse THIS!; this pack only selects and delegates it.
+if (-not $SkillsOnly -and $packSel.Enabled -contains 'reverse') {
+  $reverseArgs=@('-PackRoot',$PackRoot)
+  if ($Mode -eq 'BundledOnly') { $reverseArgs+='-Offline' }
+  if ($NoToolUpdates) { $reverseArgs+='-NoUpdate' }
+  if ((Invoke-UabsChildScript -Title 'Reverse THIS! companion' -File (Join-Path $PackRoot 'TOOLS\Install-ReverseThis.ps1') -ArgList $reverseArgs) -ne 0) { throw 'Reverse THIS! companion update failed; its owner logs contain the cause.' }
+  $installed['reverse-this']=@{status='owner-managed';pointer=(Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json')}
+}
+
+
+if (-not $SkillsOnly -and $skyrimPackOn) {
+  $forgeInstaller = Join-Path $PackRoot 'TOOLS\Install-SkyrimForge.ps1'
+  if (-not (Test-Path -LiteralPath $forgeInstaller -PathType Leaf)) { throw 'TOOLS\Install-SkyrimForge.ps1 missing from pack.' }
+  $forgeEntry = @($catalog.components | Where-Object { $_.id -eq 'skyrim-forge' }) | Select-Object -First 1
+  $forgeSourceVersion = if ($forgeEntry) { [string]$forgeEntry.version } else { 'unknown' }
+  $forgeArgs = @('-PackRoot',$PackRoot,'-BundleOwnsProviderSkills')
+  if ($Mode -eq 'BundledOnly') { $forgeArgs+='-Offline' }
+  if ($NoToolUpdates) { $forgeArgs+='-NoUpdate' }
+  if ($ToolsOnly) { $forgeArgs += '-SkipProviderSkills' } else { $forgeArgs += @('-Providers',($Providers -join ',')) }
+  if ($ForgeRoot) { $forgeArgs += @('-ForgeRoot', $ForgeRoot) }
+  Write-UabsStep 'Skyrim Forge'
+  $forgeCode = Invoke-UabsChildScript -Title 'Skyrim Forge install' -File $forgeInstaller -ArgList $forgeArgs
+  if ($forgeCode -ne 0) { throw "Skyrim Forge installation failed with exit code $forgeCode." }
+  Write-UabsOk ("Skyrim Forge $forgeSourceVersion ready")
+
+  $registeredRoot = [Environment]::GetEnvironmentVariable('SKYRIM_FORGE_ROOT','User')
+  if ($registeredRoot) { $env:SKYRIM_FORGE_ROOT = $registeredRoot }
+  $installed['skyrim-forge'] = @{ status='installed'; version=([IO.File]::ReadAllText((Join-Path $registeredRoot 'CURRENT.txt'))).Trim(); root=$registeredRoot }
+}
+
+if ($SkillsOnly -and $skyrimPackOn) {
+  $ownerVersion = if ($env:SKYRIM_FORGE_ROOT -and (Test-Path -LiteralPath (Join-Path $env:SKYRIM_FORGE_ROOT 'CURRENT.txt'))) { ([IO.File]::ReadAllText((Join-Path $env:SKYRIM_FORGE_ROOT 'CURRENT.txt'))).Trim() } else { '0.0.0' }
+  if ([version]$ownerVersion -lt [version]$packSel.Catalog.packs.skyrim.minimum_version) { throw 'The preserving Forge skill writer requires a full install/refresh first.' }
+  $ownerScript = Join-Path $env:SKYRIM_FORGE_ROOT 'Install-Skyrim-Pack.ps1'
+  if (-not (Test-Path -LiteralPath $ownerScript -PathType Leaf)) { throw 'Skyrim skills belong to Forge; run a full install once to install its owner.' }
+  foreach ($provider in $Providers) {
+    if ((Invoke-UabsChildScript -Title 'Forge-owned Skyrim skills' -File $ownerScript -ArgList @('-Provider',$provider)) -ne 0) { throw 'Forge skill installation failed.' }
+  }
+}
+
 # ---------- Skills ----------
 if (-not $ToolsOnly) {
   Write-UabsStep "Installing provider skills"
@@ -731,10 +782,11 @@ if (-not $ToolsOnly) {
     # Skills of a disabled pack are left out; the managed-skill ledger then
     # retires the unmodified copies an earlier install put here.
     $baseExclude = @($codexBuiltins) + @($packSel.ExcludedSkills)
-    $script:UabsSkillSyncArgs[$prov] = @{ From = $srcSkills; To = $destSkills; Exclude = $baseExclude }
+    $externalNames = @($packSel.Catalog.packs.skyrim.skills)
+    $script:UabsSkillSyncArgs[$prov] = @{ From = $srcSkills; To = $destSkills; Exclude = $baseExclude; External = $externalNames }
     $ownedSkip = @()
     if ($script:UabsOwnedSkip.ContainsKey($prov)) { $ownedSkip = @($script:UabsOwnedSkip[$prov].Values | ForEach-Object { $_ }) }
-    Sync-UabsProviderSkills -From $srcSkills -To $destSkills -Provider $prov -ExcludeNames ($baseExclude + $ownedSkip)
+    Sync-UabsProviderSkills -From $srcSkills -To $destSkills -Provider $prov -ExcludeNames ($baseExclude + $ownedSkip) -ExternalNames $externalNames
     $null = Sync-UabsOptionalSkills -SourceRoot (Join-Path $PackRoot 'BUNDLED-TOOLS\optional-skills') -SkillsDir $destSkills -Provider $prov -Requested $OptionalSkills
     if ($prov -eq 'Hermes') {
       # A Hermes profile clones the default skills folder when it is created
@@ -747,8 +799,8 @@ if (-not $ToolsOnly) {
         $profileSkills = Join-Path $pf.FullName 'skills'
         $notHere = if ($pf.Name -eq 'skyrim') { @($packSel.ExcludedSkills) } else { $allPackSkills }
         try {
-          Sync-UabsProviderSkills -From $srcSkills -To $profileSkills -Provider ('Hermes.' + $pf.Name) -ExcludeNames (@($notHere) + $hermesOverrides)
-          $aside = Move-UabsSkillsAside -SkillsDir $profileSkills -Names $notHere -Label ('hermes-profile-' + $pf.Name + '-pack-skills')
+          Sync-UabsProviderSkills -From $srcSkills -To $profileSkills -Provider ('Hermes.' + $pf.Name) -ExternalNames $externalNames -ExcludeNames (@($notHere) + $hermesOverrides)
+          $aside = Move-UabsSkillsAside -SkillsDir $profileSkills -Names @($notHere | Where-Object { $externalNames -notcontains $_ }) -Label ('hermes-profile-' + $pf.Name + '-pack-skills')
           if ($aside.Moved.Count) { Write-UabsOk ("Hermes profile {0}: {1} pack skill(s) moved out of its index -> {2}" -f $pf.Name, $aside.Moved.Count, $aside.Backup) }
           Write-UabsOk ("Hermes profile {0}: skills refreshed" -f $pf.Name)
         } catch { Write-UabsWarn ("Hermes profile {0} skills: {1}" -f $pf.Name, $_.Exception.Message) }
@@ -1768,9 +1820,22 @@ if ($WorkspaceRoot) {
 }
 
 # ---------- Tools ----------
-$installed = [ordered]@{}
 if (-not $SkillsOnly) {
   foreach ($id in $Components) {
+    if ($id -eq 'housecarl') {
+      $owner = Join-Path $env:SKYRIM_FORGE_ROOT 'Install-HouseCarl.ps1'
+      if (-not (Test-Path -LiteralPath $owner)) { throw 'houseCARL belongs to Forge; install the optional Skyrim integration first.' }
+      $ownerArgs=@(); $hcZip=Join-Path $offline 'houseCARL-2.1.1.zip'
+      if (Test-Path -LiteralPath $hcZip) { $ownerArgs+=@('-SourceZip',$hcZip) }
+      if ($SkipHouseCarlSetup -or $ToolsOnly) { $ownerArgs+='-SkipSetup' }
+      if ((Invoke-UabsChildScript -Title 'Forge-owned houseCARL' -File $owner -ArgList $ownerArgs) -ne 0) { throw 'Forge houseCARL installer failed.' }
+      foreach ($name in @('HOUSECARL_MCP','HOUSECARL_ROOT','SKYRIM_MO2_INSTANCE')) {
+        $value=[Environment]::GetEnvironmentVariable($name,'User'); if ($value) { Set-Item -Path ('Env:'+ $name) -Value $value }
+      }
+      $installed[$id]=@{status='owner-managed';root=$env:HOUSECARL_ROOT;mcp=$env:HOUSECARL_MCP}
+      continue
+    }
+
     $comp = $catalog.components | Where-Object { $_.id -eq $id } | Select-Object -First 1
     if (-not $comp) { Write-UabsWarn "skip unknown $id"; continue }
     Write-UabsStep "Component: $($comp.name) [$id]"
@@ -1981,63 +2046,7 @@ if (-not $SkillsOnly) {
         try {
           Expand-UabsZip -Zip $asset -Dest $stage
           $rootExtract = Resolve-UabsSingleRoot $stage
-          # houseCARL zip layout: may contain housecarl\server or server
-          if ($id -eq 'housecarl') {
-            $existingMcp = Find-UabsHouseCarlMcp -ExcludeRoot $target
-            if ($existingMcp -and (Test-Path $existingMcp) -and -not (Test-UabsPathWithin $existingMcp $target)) {
-              $existingRoot = if ($env:HOUSECARL_ROOT -and (Test-Path $env:HOUSECARL_ROOT) -and (Test-UabsPathWithin $existingMcp $env:HOUSECARL_ROOT)) { $env:HOUSECARL_ROOT } else { Split-Path (Split-Path $existingMcp -Parent) -Parent }
-              $want = [string]$comp.version
-              $have = Get-UabsBinaryVersion $existingMcp
-              $cmp = if ($have) { Compare-UabsDottedVersion $have $want } else { $null }
-              # An external install belongs to the user, but it is still the
-              # bundle's job to keep it current: refresh it when it is behind the
-              # bundled version, leave it alone when it is level or ahead, and
-              # never downgrade a newer copy the user installed themselves.
-              if ($null -ne $cmp -and $cmp -lt 0) {
-                $backupRoot = Join-Path $env:LOCALAPPDATA ('Ultimate-AI-Starter-Bundle\backups\houseCARL-' + (Get-Date -Format 'yyyyMMdd-HHmmss'))
-                New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
-                Copy-Item -LiteralPath $existingRoot -Destination $backupRoot -Recurse -Force
-                $srcMcp = Find-UabsFileUnder $rootExtract 'housecarl-mcp.exe' 8
-                if (-not $srcMcp) { throw 'housecarl-mcp.exe not in zip' }
-                $destServer = Join-Path $existingRoot 'server'
-                New-Item -ItemType Directory -Force -Path $destServer | Out-Null
-                Copy-UabsRoboSafe -From (Split-Path $srcMcp -Parent) -To $destServer -CriticalFiles @('housecarl-mcp.exe')
-                $now = Get-UabsBinaryVersion $existingMcp
-                Set-UabsUserEnv 'HOUSECARL_MCP' $existingMcp
-                Set-UabsUserEnv 'HOUSECARL_ROOT' $existingRoot
-                $installed[$id] = @{ status='external-updated'; mcp=$existingMcp; root=$existingRoot; from=$have; to=$now }
-                Write-UabsOk ("houseCARL external install updated {0} -> {1}: {2} (backup: {3})" -f $have, $now, $existingMcp, $backupRoot)
-              }
-              else {
-                Set-UabsUserEnv 'HOUSECARL_MCP' $existingMcp
-                Set-UabsUserEnv 'HOUSECARL_ROOT' $existingRoot
-                $installed[$id] = @{ status='external-current'; mcp=$existingMcp; root=$existingRoot; version=$have }
-                $label = if ($have) { "v$have" } else { 'version unknown' }
-                Write-UabsOk ("houseCARL external install kept ({0}, bundle has v{1}): {2}" -f $label, $want, $existingMcp)
-              }
-            }
-            else {
-              $mcp = Find-UabsFileUnder $rootExtract 'housecarl-mcp.exe' 8
-              if (-not $mcp) { throw "housecarl-mcp.exe not in zip" }
-              $serverDir = Split-Path $mcp -Parent
-              $productRoot = Split-Path $serverDir -Parent
-              # Install to LOCALAPPDATA\houseCARL
-              New-Item -ItemType Directory -Force -Path $target | Out-Null
-              Copy-UabsRoboSafe -From $productRoot -To $target -CriticalFiles @('server\housecarl-mcp.exe')
-              # If setup exe present at outer folder
-              $setup = Find-UabsFileUnder $rootExtract 'houseCARL-Setup.exe' 4
-              if ($setup) {
-                Copy-Item $setup (Join-Path $target 'houseCARL-Setup.exe') -Force
-              }
-              $mcpFinal = Join-Path $target 'server\housecarl-mcp.exe'
-              if (-not (Test-Path $mcpFinal)) { $mcpFinal = Find-UabsFileUnder $target 'housecarl-mcp.exe' 5 }
-              Set-UabsUserEnv 'HOUSECARL_MCP' $mcpFinal
-              Set-UabsUserEnv 'HOUSECARL_ROOT' $target
-              $installed[$id] = @{ status='installed-or-updated'; mcp=$mcpFinal; root=$target }
-              Write-UabsOk "houseCARL installed/updated -> $target"
-            }
-          }
-          elseif ($id -eq 'codebase-memory') {
+          if ($id -eq 'codebase-memory') {
             $existing = Find-UabsCodebaseMemoryExe
             if ($existing -and -not (Test-UabsPathWithin $existing $target)) {
               $want = [string]$comp.version
@@ -2538,24 +2547,6 @@ if (-not $SkillsOnly -and ($Providers -contains 'Grok')) {
     Write-UabsWarn 'TOOLS\Ensure-Headroom-Grok.ps1 missing from pack'
   }
 }
-# ---------- houseCARL MO2/Vortex ----------
-if (-not $SkipHouseCarlSetup -and -not $SkillsOnly -and $skyrimPackOn) {
-  $setup = Join-Path $PackRoot 'TOOLS\Setup-HouseCarl.ps1'
-  if (Test-Path $setup) {
-    Write-UabsStep "houseCARL MO2/Vortex setup"
-    try {
-      # In-process: later steps read the env vars it sets in this process.
-      & $setup -WireGrok:$false -WireCodex:$false -Quiet
-      if ($LASTEXITCODE -and $LASTEXITCODE -ne 0) { Write-UabsWarn "houseCARL setup finished with code $LASTEXITCODE (see the lines above)" }
-      else { Write-UabsOk 'houseCARL load-order access is set up (your AI refreshes it after Vortex changes)' }
-      $installed['housecarl-setup'] = @{ status='ran' }
-    } catch {
-      Write-UabsWarn "Setup-HouseCarl: $($_.Exception.Message)"
-      $installed['housecarl-setup'] = @{ status='error'; error=$_.Exception.Message }
-    }
-  }
-}
-
 # ---------- Skyrim Forge (Skyrim pack) ----------
 # Forge is released from github.com/SenjuWoo/SkyrimForge again. CATALOG.json
 # pins the release tag, asset and SHA-256; the installer uses the Full-Offline
@@ -2568,18 +2559,6 @@ if (-not $ToolsOnly -and -not $SkillsOnly -and -not $skyrimPackOn) {
   $installed['skyrim-forge'] = @{ status='skipped'; reason='skyrim pack off' }
 }
 if (-not $ToolsOnly -and -not $SkillsOnly -and $skyrimPackOn) {
-  $forgeInstaller = Join-Path $PackRoot 'TOOLS\Install-SkyrimForge.ps1'
-  if (-not (Test-Path -LiteralPath $forgeInstaller -PathType Leaf)) { throw 'TOOLS\Install-SkyrimForge.ps1 missing from pack.' }
-  $forgeEntry = @($catalog.components | Where-Object { $_.id -eq 'skyrim-forge' }) | Select-Object -First 1
-  $forgeSourceVersion = if ($forgeEntry) { [string]$forgeEntry.version } else { 'unknown' }
-  $forgeArgs = @('-PackRoot',$PackRoot,'-Providers',($Providers -join ','),'-BundleOwnsProviderSkills')
-  if ($ForgeRoot) { $forgeArgs += @('-ForgeRoot', $ForgeRoot) }
-  Write-UabsStep 'Skyrim Forge'
-  $forgeCode = Invoke-UabsChildScript -Title 'Skyrim Forge install' -File $forgeInstaller -ArgList $forgeArgs
-  if ($forgeCode -ne 0) { throw "Skyrim Forge installation failed with exit code $forgeCode." }
-  Write-UabsOk ("Skyrim Forge $forgeSourceVersion ready")
-  $installed['skyrim-forge'] = @{ status='installed'; version=$forgeSourceVersion; root=$env:SKYRIM_FORGE_ROOT }
-
   # Earlier bundles owned these machine-wide entries. Keep the tools and
   # skills installed, but migrate their schemas out of unrelated sessions.
   $cleaned = @(Remove-UabsGlobalMcpRegistration -Ids @('skyrim-forge','housecarl','codebase-memory-mcp') -FromProviders $Providers)
@@ -2704,7 +2683,8 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.22.1'
+version = '8.24.0'
+  content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
   mode = $Mode

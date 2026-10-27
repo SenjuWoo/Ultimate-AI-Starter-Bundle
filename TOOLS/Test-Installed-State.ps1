@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Final fail-closed installed-state doctor for Ultimate AI Starter Bundle.
 #>
@@ -394,6 +394,17 @@ if(-not $SkipSkills){
       }
     }
   }
+}
+# Verify optional skills through their owner rather than treating them as general copies.
+if (-not $SkipForge -and -not $SkipSkills -and $state -and (@($state.content_packs) -contains 'skyrim')) {
+  $ownerRoot=[Environment]::GetEnvironmentVariable('SKYRIM_FORGE_ROOT','User')
+  if (-not $ownerRoot) { $ownerRoot=$env:SKYRIM_FORGE_ROOT }
+  $owner=if($ownerRoot){Join-Path $ownerRoot 'Install-Skyrim-Pack.ps1'}else{$null}
+  if (-not $owner -or -not (Test-Path -LiteralPath $owner)) { Err 'Forge-owned skill checker missing.' }
+  else { foreach ($provider in $Providers) {
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $owner -Provider $provider -Check | Out-Host
+    if ($LASTEXITCODE -ne 0) { Err "$provider Forge-owned skill check failed." }
+  } }
 }
 if(-not $SkipForge){
   $forge=[Environment]::GetEnvironmentVariable('SKYRIM_FORGE_ROOT','User'); if(-not $forge){$forge=$env:SKYRIM_FORGE_ROOT}

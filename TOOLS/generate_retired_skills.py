@@ -28,6 +28,7 @@ import json
 import os
 import subprocess
 import sys
+from pathlib import Path
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CANON = os.path.join(ROOT, "_CANONICAL-SKILLS")
@@ -163,7 +164,9 @@ def main() -> int:
     current = {d for d in os.listdir(CANON)
                if os.path.isdir(os.path.join(CANON, d))}
     # Derived history plus declared absorptions; both are stale on a machine.
-    retired = sorted((ever | set(ABSORBED)) - current)
+    packs = json.loads((Path(ROOT) / 'BUNDLED-TOOLS/PACKS.json').read_text(encoding='utf-8-sig'))
+    external = {name for pack in packs['packs'].values() if pack.get('owner') for name in pack['skills']}
+    retired = sorted(((ever | set(ABSORBED)) - current) - external)
 
     # A name that is both retired and current is a contradiction; guard rather
     # than emit a list that would delete a shipped skill.
