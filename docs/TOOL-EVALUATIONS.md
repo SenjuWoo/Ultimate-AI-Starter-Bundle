@@ -37,6 +37,9 @@ rule (features and flows, never code, assets or content) and a public-sources-on
   Part-adoption was considered (`replica-recon`, `replica-diff`); recon duplicates what
   Playwright MCP plus the bundle's reverse-engineering skills already do, and the parity scorer
   is only valuable inside the full pipeline.
+- Reverse THIS! 1.6.0 now offers it as an opt-in source archive under its own `sandbox/tools` (the install
+  receipt records the upstream commit; nothing is loaded globally). That is the supported way to get it
+  alongside the other reverse tools; the bundle still neither bundles nor enables it.
 - Use it per project, not globally: copy the `replica-*` folders into the project's
   `.claude/skills/` (or `/plugin marketplace add Jakeschincariol/replica-skill`), so the index
   cost applies only where it is used. Respect the target app's terms; the skills say so too.

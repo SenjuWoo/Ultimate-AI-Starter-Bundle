@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.25.1 -->
+<!-- Ultimate AI Starter Bundle v8.25.2 -->
 
 The bundle installs the common compiler suite by default: Go, Rust/Cargo, GCC, CMake/Ninja, Xmake, .NET SDK, MSVC C++ and the Windows SDK. Existing working installations and project pins are reused. Fresh installations may require several GB and Windows elevation; `-SkipBuildTools` skips this suite, and `-SkipRuntimes` skips all runtime/compiler provisioning. Run `TOOLS/Install-BuildTools.ps1 -CheckOnly` for compile-and-run verification. Logs: `%LOCALAPPDATA%/Ultimate-AI-Starter-Bundle/logs/build-tools.log`. Full-Offline caches the listed bundle payloads; missing shared runtimes/compilers still need vendor downloads. `-Mode BundledOnly` prevents compiler downloads and reports missing prerequisites.
 
@@ -10,7 +10,7 @@ Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tool
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.25.1
+# Ultimate AI Starter Bundle v8.25.2
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -962,6 +962,8 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.25.2** - Pins Reverse THIS! 1.6.0 (opt-in replica-skill pack); Forge stays 6.3.2. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.25.2-CHANGELOG.md).
 
 **v8.25.1** - Duplicate-free operating contract, retired-tool cleanup, a 7 KB STATE.md and a ripgrep ignore for generated copies. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.25.1-CHANGELOG.md).
 

@@ -1,6 +1,6 @@
 {
   "generated": "2026-10-27",
-  "pack_version": "8.25.1",
+  "pack_version": "8.25.2",
   "assets": [
     {
       "file": "Skyrim-Forge-6.3.2.zip",
@@ -43,9 +43,9 @@
       "sha256": "031e240d15ee6222507ca9a855988cb5faa29200d9ffbe6b02b242ccde6fbac1"
     },
     {
-      "file": "Reverse-This-1.5.0.zip",
-      "size": 64217,
-      "sha256": "5734af455687f5c4345a497f8ea672e6fb0d2249f060e79ada36628b09b8a7ca"
+      "file": "Reverse-This-1.6.0.zip",
+      "size": 64634,
+      "sha256": "38cf2df03f9de2daaeb8d7b45b4d8a31f1499e703ee5d1c08d23bff59a444199"
     }
   ],
   "updated": "2026-10-26"
