@@ -1,6 +1,6 @@
 ---
 name: impeccable
-description: Use when the user wants to design, redesign, critique, audit, polish, or improve any frontend UI, including websites, landing pages, dashboards, apps, components, forms, onboarding, settings, and empty states. Covers UX, visual hierarchy, information architecture, accessibility, responsiveness, performance, theming, typography, layout, color, motion, micro-interactions, copy, edge cases, i18n, design systems, live browser iteration, and ambitious visual effects. Also use to make bland work bolder or loud work quieter. Not for backend-only or non-UI tasks.
+description: "Design, critique or improve frontend UI: UX, visual design, accessibility, responsive behavior and live browser iteration. Not for backend-only work."
 metadata:
   version: 4.1.3
 ---

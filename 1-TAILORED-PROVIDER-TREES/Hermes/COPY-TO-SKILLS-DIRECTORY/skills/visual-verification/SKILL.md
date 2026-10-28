@@ -1,6 +1,6 @@
 ---
 name: visual-verification
-description: Use when creating, changing, debugging, or claiming completion of anything whose correctness includes how it LOOKS - a website, web or desktop UI, game, HUD, menu, rendered 3D scene, Blender/Unity/Godot output, generated image, icon, chart, responsive layout, gallery or preview. Also use on "make this UI better", "finish this app", "make it polished", "this button does nothing", "the preview is gray/blank", "fix the images", "it looks wrong/broken/ugly", or before saying a visual change is done.
+description: Inspect real rendered pixels and interactions before accepting visual UI, game, 3D, image, chart or preview changes; diagnose blank or broken output.
 ---
 
 # Visual Verification

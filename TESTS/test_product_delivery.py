@@ -14,6 +14,26 @@ spec.loader.exec_module(builder)
 
 
 class ProductTests(unittest.TestCase):
+    def test_fanout_preserves_external_names_and_refuses_two_source_owners(self):
+        spec = importlib.util.spec_from_file_location('fanout', ROOT/'TOOLS/fanout_providers.py')
+        fanout = importlib.util.module_from_spec(spec); spec.loader.exec_module(fanout)
+        names = fanout.external_skill_names(str(ROOT))
+        self.assertIn('skyrim-forge', names)
+        with tempfile.TemporaryDirectory() as td:
+            source, target = Path(td)/'canonical', Path(td)/'provider'
+            (source/'general').mkdir(parents=True)
+            (source/'general/SKILL.md').write_text('# general')
+            (target/'skyrim-forge').mkdir(parents=True)
+            owner_file = target/'skyrim-forge/SKILL.md'
+            owner_file.write_bytes(b'independently owned')
+            fanout.deploy(str(source), str(target), 'codex', 'Codex', names)
+            self.assertEqual(owner_file.read_bytes(), b'independently owned')
+            (source/'skyrim-forge').mkdir()
+            (source/'skyrim-forge/SKILL.md').write_text('# accidental second owner')
+            with self.assertRaisesRegex(ValueError, 'Forge-owned skills'):
+                fanout.deploy(str(source), str(target), 'codex', 'Codex', names)
+            self.assertEqual(owner_file.read_bytes(), b'independently owned')
+
     def test_fanout_does_not_copy_interpreter_cache(self):
         spec = importlib.util.spec_from_file_location('fanout', ROOT/'TOOLS/fanout_providers.py')
         fanout = importlib.util.module_from_spec(spec); spec.loader.exec_module(fanout)

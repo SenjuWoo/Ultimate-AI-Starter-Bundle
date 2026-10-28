@@ -10,6 +10,7 @@ import json
 import os
 import re
 import sys
+import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -17,6 +18,19 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 def read(rel):
     with io.open(os.path.join(ROOT, rel), encoding="utf-8-sig") as fh:
         return fh.read()
+
+
+def validate_skyrim_claims(text, expected):
+    """Check every public wording against the pinned specialist inventory."""
+    pattern = (r"\b(\d+)\s+specialist\s+skills\b|\b(\d+)-skill\s+Skyrim\b|"
+               r"\b(\d+)\s+with\s+the\s+Skyrim\s+pack\b|"
+               r"\bskyrim`?\s*\((\d+)\s+skills\b")
+    problems = []
+    for match in re.finditer(pattern, text, re.I):
+        count = next(int(value) for value in match.groups() if value is not None)
+        if count != expected:
+            problems.append("claims %s Skyrim skills; pinned Forge has %s" % (count, expected))
+    return problems
 
 
 def main():
@@ -65,6 +79,26 @@ def main():
                                    "BUNDLED-TOOLS/CATALOG.json", got))
         if got != bare:
             problems.append("CATALOG.json pack_version is %s, expected %s" % (got, bare))
+        packs = json.loads(read("BUNDLED-TOOLS/PACKS.json"))["packs"]
+        expected_skills = set(packs["skyrim"]["skills"])
+        pin = next(c for c in catalog["components"] if c["id"] == "skyrim-forge")
+        archive = os.path.join(ROOT, "BUNDLED-TOOLS", "offline", pin["asset"])
+        with zipfile.ZipFile(archive) as payload:
+            names = {p.split("/skills/", 1)[1].split("/", 1)[0] for p in payload.namelist()
+                     if "/integrations/skyrim-pack/skills/" in p and p.endswith("/SKILL.md")
+                     and p.split("/skills/", 1)[1].count("/") == 1}
+            # Contract, not bytes: INSTALL reads doctor.result and doctor.read_only_ready.
+            env = [payload.read(p).decode("utf-8", "replace") for p in payload.namelist()
+                   if p.endswith("/skyrim_forge/environment.py")]
+            for field in ('"result"', '"read_only_ready"'):
+                if not env or field not in env[0]:
+                    problems.append("pinned Forge doctor no longer emits %s, which TOOLS/Install-SkyrimForge.ps1 reads" % field)
+        if names != expected_skills:
+            problems.append("PACKS.json Skyrim inventory differs from pinned Forge canonical tree")
+        for rel in ("README.md", "START-HERE.txt", "AIO-GUIDE.md"):
+            problems.extend("%s %s" % (rel, error)
+                            for error in validate_skyrim_claims(read(rel), len(names)))
+        print("  ok       Skyrim skill inventory             %s" % len(names))
     except Exception as exc:
         problems.append("CATALOG.json unreadable: %s" % exc)
 

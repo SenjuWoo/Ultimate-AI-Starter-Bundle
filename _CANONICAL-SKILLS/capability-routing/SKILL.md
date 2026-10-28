@@ -1,6 +1,6 @@
 ---
 name: capability-routing
-description: Use before writing a crawler, scraper, parser, browser-automation layer, API client, or any wrapper around work an installed tool already does; when a fetch returns a challenge page, login wall, empty JS shell, 403/429, or content that is visibly missing from what was extracted; when choosing between a native tool, an MCP server, and a few lines of shell/Python/Node; and when the same approach has already failed twice.
+description: Use when choosing tools for a crawler, parser, browser automation or API wrapper instead of shell/Python/Node; when fetches are blocked or incomplete, or an approach failed twice.
 ---
 
 # Capability routing

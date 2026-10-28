@@ -1030,6 +1030,18 @@ $headroomCleanupOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -N
 if ($LASTEXITCODE -eq 0) { Good 'Headroom scheduled-task retirement preserves non-bundle tasks' }
 else { Bad ('Headroom task cleanup regression failed:' + [Environment]::NewLine + $headroomCleanupOut) }
 
+Section '20. Maintainer lifecycle and documentation contracts'
+& (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-GitHubVerdict.ps1')
+if ($LASTEXITCODE -eq 0) { Good 'exact-SHA CI verdicts and bounded waiting pass' }
+else { Bad 'GitHub verdict regression failed' }
+if ($py) {
+    foreach ($gate in @('TOOLS\verify_docs.py','TESTS\test_maintainer_contract.py')) {
+        & $py.Source (Join-Path $PackRoot $gate)
+        if ($LASTEXITCODE -eq 0) { Good ($gate + ' passed') }
+        else { Bad ($gate + ' failed') }
+    }
+}
+
 Write-Host ''
 if ($fail -eq 0) {
     Write-Host "PACK GATE: PASS" -ForegroundColor Green

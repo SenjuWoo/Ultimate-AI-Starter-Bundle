@@ -1,3 +1,19 @@
+## 8.26.0 (2026-10-28)
+
+- Exact-commit CI verdicts distinguish green, red, pending, no CI and unknown; bounded polling and logs.
+- Shared lifecycle/branch contract, conservative merged-branch cleanup and reproducible main protection.
+- Generated maintainer index, docs-path/index/count gates and Python 3.12–3.15 full CI matrix.
+- Seven shorter skill descriptions save 2,272 index characters without removing capabilities.
+- Optional specialist owners remain separate; companion SDK safety and handoff corrections ship in their own releases.
+- Releases publish themselves: `.github/workflows/release.yml` runs after CI passes on a main commit whose version has no tag, waits for every other check on that SHA, builds twice, requires identical bytes, publishes and re-downloads to compare. PRs enable auto-merge (squash, delete branch) once required checks pass.
+- Pins verified Skyrim Forge 6.4.1 (SDK fetch staging safety) and Reverse THIS! 1.6.1; both archives match GitHub's digests.
+- `UABS_PYTHON` is documented as the shared-runtime contract the companions read; README RTK and Forge versions corrected to the pinned catalog.
+
+## 8.25.3 (2026-10-27)
+
+- Pins verified Skyrim Forge 6.4.0 (sha256 7a946a8b...8681; bytes match GitHub's digest and SHA256SUMS, 15/15 checks on its tagged commit): pinned SDK vault with approval-gated installs and the maintained CommonLibSSE-NG native scaffold. Reverse THIS! stays 1.6.0. Bundle behaviour is unchanged; CommonLib source remains pinned per plugin project.
+- 126 canonical skills total, unchanged; Forge keeps its 48 independently.
+
 ## 8.25.2 (2026-10-27)
 
 - Pins verified Reverse THIS! 1.6.0 (sha256 38cf2df0...4199; bytes match GitHub's digest and SHA256SUMS), which adds replica-skill as an opt-in source archive under its own sandbox. Skyrim Forge stays at 6.3.2. Bundle behaviour is unchanged; the replica-skill evaluation now points to Reverse as the supported route.

@@ -4,6 +4,7 @@
   "packs": {
     "skyrim": {
       "title": "Skyrim SE/AE modding",
+      "auto_detect": false,
       "enable": "START-HERE.bat -Packs skyrim",
       "disable": "START-HERE.bat -ExcludePacks skyrim",
       "instructions": "integrations/skyrim-pack/INSTRUCTIONS.md",

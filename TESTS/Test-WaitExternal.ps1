@@ -47,8 +47,8 @@ exit 3
 
 $r = Invoke-Waiter @('-GitHubRun', '1', '-WhatIf')
 $text = $r.Output -join "`n"
-if ($r.Code -eq 0 -and $text -match 'gh run watch 1 --compact --exit-status' -and $text -notmatch 'refreshing') {
-    Good 'GitHub -WhatIf prints the watch command and does not call gh'
+if ($r.Code -eq 0 -and $text -match 'Read exact-SHA GitHub Actions runs, check-runs and statuses' -and $text -notmatch 'refreshing') {
+    Good 'GitHub -WhatIf prints its read-only plan and does not call gh'
 } else { Bad ("GitHub -WhatIf returned $($r.Code): $text") }
 
 foreach ($code in @(259, -1)) {

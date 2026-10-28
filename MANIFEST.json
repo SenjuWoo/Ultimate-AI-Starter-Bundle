@@ -16,8 +16,8 @@
  },
  {
   "path": ".github/scripts/check_versions.py",
-  "size": 5082,
-  "sha256": "9429bb415553a606161050cdbfd172021a552e37cb4f8c2016dda98f283aa85a"
+  "size": 7204,
+  "sha256": "fc3c433a21fd0f5ec18abc26ce11d7132c633099c6b0ba1645db5168a1c887fc"
  },
  {
   "path": ".github/scripts/verify_manifest.py",
@@ -26,8 +26,13 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 10344,
-  "sha256": "c5d883198313045255d5447dc78fdb2ea385d78d4f2b7fcb558ef87a6b297cef"
+  "size": 10530,
+  "sha256": "ca2c187220998f299567cc409f5a82163910ef86232073d2997b308cb9876203"
+ },
+ {
+  "path": ".github/workflows/release.yml",
+  "size": 5325,
+  "sha256": "4e52b9fc873e4c19bf898ff8f36270632c25173ee06afdd26a780bb7cfc71cd3"
  },
  {
   "path": ".gitignore",
@@ -56,8 +61,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 10359,
-  "sha256": "b8e84fb6d61d67a6da25893c65c97d74e54349f7e5b88578bfe97c300988457b"
+  "size": 10527,
+  "sha256": "0c9cdcdb8792782359606f462371560497e81d6f7fbb60069e0093c62cacb2dd"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
@@ -286,8 +291,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/SKILL.md",
-  "size": 19783,
-  "sha256": "e772d7ea7193ca146d69b519be86d498a4386f1ec3bb4bc9bd35eebf0ac9cb8d"
+  "size": 19471,
+  "sha256": "def85e21b4ff54f1854d9b5246029ce91387e2608a566cf25084a5cc0f370ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/references/abuse-protection.md",
@@ -321,8 +326,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/SKILL.md",
-  "size": 12305,
-  "sha256": "ab27d1103e7be75d75b99d717cc5b3017c24e398f949959f75638e45974083e8"
+  "size": 11946,
+  "sha256": "5b91c2bd18e576d87f850f736ee7cff781a034f71b7e5733cb3bb2a661012f16"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/references/auth.md",
@@ -366,8 +371,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/SKILL.md",
-  "size": 8066,
-  "sha256": "e1b5b3a01e62d40c5a0ba5777654e1b65fa10c5c2aff995747000c6b7fb8d74f"
+  "size": 7786,
+  "sha256": "684ff26a779c84291ce9f3f8b18af5037bbeb92e3257c949089c3a2babbbafe5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/references/local-security.md",
@@ -401,8 +406,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10704,
-  "sha256": "98ebe86179328ffd242619ecc08b8dd563a84776e7c20ccab40887e7d287ff75"
+  "size": 10461,
+  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -411,8 +416,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3138,
-  "sha256": "f1282e61a54742f8d8c126791bbc19b501d5aea0314b860f6af71500e4c9b999"
+  "size": 3483,
+  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
+  "size": 1938,
+  "sha256": "11ac89756a7c7cec917f53ad3759a1b374f952b839aa761ed86e559a351ed77c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -2741,8 +2751,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/SKILL.md",
-  "size": 10367,
-  "sha256": "0193416119479a1fee8de144bc8a2016d1a22ccded91cbea867323bceaf1976c"
+  "size": 9957,
+  "sha256": "39a6876f990f1350c2569f6feac5517057d324a9bd7abf581a74bd236900b63b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/agents/impeccable_asset_producer.toml",
@@ -3771,8 +3781,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-cli/SKILL.md",
-  "size": 3183,
-  "sha256": "b54257cdc0e5d04488b35b0c797bfe427b24359f0848d3c73924dcacf8da6358"
+  "size": 2867,
+  "sha256": "73fb26e3b130cd05a6089e3b7a43e24d124aaf07e9a48ce3010a933f5822367c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-markdown/SKILL.md",
@@ -3956,8 +3966,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9630,
-  "sha256": "5b78bb9dd8d669cf3926eecda06297332566b7228e66a31ce2eb13a788c59672"
+  "size": 9979,
+  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -4376,8 +4386,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6093,
-  "sha256": "352c60d8191c26ac077cbe0dee640ac059641cb94ab1506b1db19427c7416d0c"
+  "size": 6121,
+  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -4746,8 +4756,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/visual-verification/SKILL.md",
-  "size": 5917,
-  "sha256": "ee35b0b17d100e239fa862b48d74c310847547357925627736ccd2121da30cf9"
+  "size": 5566,
+  "sha256": "b700077f817c430cd35130e7f626bd8db71fd5b78fb9875dba853adf852e08f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/win64-native-builds/SKILL.md",
@@ -4971,8 +4981,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/SKILL.md",
-  "size": 19783,
-  "sha256": "e772d7ea7193ca146d69b519be86d498a4386f1ec3bb4bc9bd35eebf0ac9cb8d"
+  "size": 19471,
+  "sha256": "def85e21b4ff54f1854d9b5246029ce91387e2608a566cf25084a5cc0f370ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/references/abuse-protection.md",
@@ -5006,8 +5016,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/SKILL.md",
-  "size": 12305,
-  "sha256": "ab27d1103e7be75d75b99d717cc5b3017c24e398f949959f75638e45974083e8"
+  "size": 11946,
+  "sha256": "5b91c2bd18e576d87f850f736ee7cff781a034f71b7e5733cb3bb2a661012f16"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/references/auth.md",
@@ -5051,8 +5061,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/SKILL.md",
-  "size": 8066,
-  "sha256": "e1b5b3a01e62d40c5a0ba5777654e1b65fa10c5c2aff995747000c6b7fb8d74f"
+  "size": 7786,
+  "sha256": "684ff26a779c84291ce9f3f8b18af5037bbeb92e3257c949089c3a2babbbafe5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/references/local-security.md",
@@ -5086,8 +5096,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10704,
-  "sha256": "98ebe86179328ffd242619ecc08b8dd563a84776e7c20ccab40887e7d287ff75"
+  "size": 10461,
+  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -5096,8 +5106,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3138,
-  "sha256": "f1282e61a54742f8d8c126791bbc19b501d5aea0314b860f6af71500e4c9b999"
+  "size": 3483,
+  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
+  "size": 1938,
+  "sha256": "11ac89756a7c7cec917f53ad3759a1b374f952b839aa761ed86e559a351ed77c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -7426,8 +7441,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/SKILL.md",
-  "size": 10367,
-  "sha256": "0193416119479a1fee8de144bc8a2016d1a22ccded91cbea867323bceaf1976c"
+  "size": 9957,
+  "sha256": "39a6876f990f1350c2569f6feac5517057d324a9bd7abf581a74bd236900b63b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/agents/impeccable_asset_producer.toml",
@@ -8456,8 +8471,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-cli/SKILL.md",
-  "size": 3183,
-  "sha256": "b54257cdc0e5d04488b35b0c797bfe427b24359f0848d3c73924dcacf8da6358"
+  "size": 2867,
+  "sha256": "73fb26e3b130cd05a6089e3b7a43e24d124aaf07e9a48ce3010a933f5822367c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-markdown/SKILL.md",
@@ -8641,8 +8656,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9630,
-  "sha256": "5b78bb9dd8d669cf3926eecda06297332566b7228e66a31ce2eb13a788c59672"
+  "size": 9979,
+  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -9061,8 +9076,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6093,
-  "sha256": "352c60d8191c26ac077cbe0dee640ac059641cb94ab1506b1db19427c7416d0c"
+  "size": 6121,
+  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -9431,8 +9446,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/visual-verification/SKILL.md",
-  "size": 5917,
-  "sha256": "ee35b0b17d100e239fa862b48d74c310847547357925627736ccd2121da30cf9"
+  "size": 5566,
+  "sha256": "b700077f817c430cd35130e7f626bd8db71fd5b78fb9875dba853adf852e08f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/win64-native-builds/SKILL.md",
@@ -9721,8 +9736,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/SKILL.md",
-  "size": 19783,
-  "sha256": "e772d7ea7193ca146d69b519be86d498a4386f1ec3bb4bc9bd35eebf0ac9cb8d"
+  "size": 19471,
+  "sha256": "def85e21b4ff54f1854d9b5246029ce91387e2608a566cf25084a5cc0f370ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/references/abuse-protection.md",
@@ -9756,8 +9771,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/SKILL.md",
-  "size": 12305,
-  "sha256": "ab27d1103e7be75d75b99d717cc5b3017c24e398f949959f75638e45974083e8"
+  "size": 11946,
+  "sha256": "5b91c2bd18e576d87f850f736ee7cff781a034f71b7e5733cb3bb2a661012f16"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/references/auth.md",
@@ -9801,8 +9816,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/SKILL.md",
-  "size": 8066,
-  "sha256": "e1b5b3a01e62d40c5a0ba5777654e1b65fa10c5c2aff995747000c6b7fb8d74f"
+  "size": 7786,
+  "sha256": "684ff26a779c84291ce9f3f8b18af5037bbeb92e3257c949089c3a2babbbafe5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/references/local-security.md",
@@ -9836,8 +9851,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10704,
-  "sha256": "98ebe86179328ffd242619ecc08b8dd563a84776e7c20ccab40887e7d287ff75"
+  "size": 10461,
+  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -9846,8 +9861,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3138,
-  "sha256": "f1282e61a54742f8d8c126791bbc19b501d5aea0314b860f6af71500e4c9b999"
+  "size": 3483,
+  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
+  "size": 1938,
+  "sha256": "11ac89756a7c7cec917f53ad3759a1b374f952b839aa761ed86e559a351ed77c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -12176,8 +12196,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/SKILL.md",
-  "size": 10367,
-  "sha256": "0193416119479a1fee8de144bc8a2016d1a22ccded91cbea867323bceaf1976c"
+  "size": 9957,
+  "sha256": "39a6876f990f1350c2569f6feac5517057d324a9bd7abf581a74bd236900b63b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/agents/impeccable_asset_producer.toml",
@@ -13206,8 +13226,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-cli/SKILL.md",
-  "size": 3183,
-  "sha256": "b54257cdc0e5d04488b35b0c797bfe427b24359f0848d3c73924dcacf8da6358"
+  "size": 2867,
+  "sha256": "73fb26e3b130cd05a6089e3b7a43e24d124aaf07e9a48ce3010a933f5822367c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-markdown/SKILL.md",
@@ -13391,8 +13411,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9630,
-  "sha256": "5b78bb9dd8d669cf3926eecda06297332566b7228e66a31ce2eb13a788c59672"
+  "size": 9979,
+  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -13811,8 +13831,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6093,
-  "sha256": "352c60d8191c26ac077cbe0dee640ac059641cb94ab1506b1db19427c7416d0c"
+  "size": 6121,
+  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -14181,8 +14201,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/visual-verification/SKILL.md",
-  "size": 5917,
-  "sha256": "ee35b0b17d100e239fa862b48d74c310847547357925627736ccd2121da30cf9"
+  "size": 5566,
+  "sha256": "b700077f817c430cd35130e7f626bd8db71fd5b78fb9875dba853adf852e08f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/win64-native-builds/SKILL.md",
@@ -14456,8 +14476,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/SKILL.md",
-  "size": 19783,
-  "sha256": "e772d7ea7193ca146d69b519be86d498a4386f1ec3bb4bc9bd35eebf0ac9cb8d"
+  "size": 19471,
+  "sha256": "def85e21b4ff54f1854d9b5246029ce91387e2608a566cf25084a5cc0f370ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/references/abuse-protection.md",
@@ -14491,8 +14511,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/SKILL.md",
-  "size": 12305,
-  "sha256": "ab27d1103e7be75d75b99d717cc5b3017c24e398f949959f75638e45974083e8"
+  "size": 11946,
+  "sha256": "5b91c2bd18e576d87f850f736ee7cff781a034f71b7e5733cb3bb2a661012f16"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/references/auth.md",
@@ -14536,8 +14556,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/SKILL.md",
-  "size": 8066,
-  "sha256": "e1b5b3a01e62d40c5a0ba5777654e1b65fa10c5c2aff995747000c6b7fb8d74f"
+  "size": 7786,
+  "sha256": "684ff26a779c84291ce9f3f8b18af5037bbeb92e3257c949089c3a2babbbafe5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/references/local-security.md",
@@ -14571,8 +14591,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10704,
-  "sha256": "98ebe86179328ffd242619ecc08b8dd563a84776e7c20ccab40887e7d287ff75"
+  "size": 10461,
+  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -14581,8 +14601,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3138,
-  "sha256": "f1282e61a54742f8d8c126791bbc19b501d5aea0314b860f6af71500e4c9b999"
+  "size": 3483,
+  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
+  "size": 1938,
+  "sha256": "11ac89756a7c7cec917f53ad3759a1b374f952b839aa761ed86e559a351ed77c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -16911,8 +16936,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/SKILL.md",
-  "size": 10367,
-  "sha256": "0193416119479a1fee8de144bc8a2016d1a22ccded91cbea867323bceaf1976c"
+  "size": 9957,
+  "sha256": "39a6876f990f1350c2569f6feac5517057d324a9bd7abf581a74bd236900b63b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/agents/impeccable_asset_producer.toml",
@@ -17941,8 +17966,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-cli/SKILL.md",
-  "size": 3183,
-  "sha256": "b54257cdc0e5d04488b35b0c797bfe427b24359f0848d3c73924dcacf8da6358"
+  "size": 2867,
+  "sha256": "73fb26e3b130cd05a6089e3b7a43e24d124aaf07e9a48ce3010a933f5822367c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-markdown/SKILL.md",
@@ -18126,8 +18151,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9630,
-  "sha256": "5b78bb9dd8d669cf3926eecda06297332566b7228e66a31ce2eb13a788c59672"
+  "size": 9979,
+  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -18546,8 +18571,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6093,
-  "sha256": "352c60d8191c26ac077cbe0dee640ac059641cb94ab1506b1db19427c7416d0c"
+  "size": 6121,
+  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -18916,8 +18941,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/visual-verification/SKILL.md",
-  "size": 5917,
-  "sha256": "ee35b0b17d100e239fa862b48d74c310847547357925627736ccd2121da30cf9"
+  "size": 5566,
+  "sha256": "b700077f817c430cd35130e7f626bd8db71fd5b78fb9875dba853adf852e08f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/win64-native-builds/SKILL.md",
@@ -19191,8 +19216,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/SKILL.md",
-  "size": 19783,
-  "sha256": "e772d7ea7193ca146d69b519be86d498a4386f1ec3bb4bc9bd35eebf0ac9cb8d"
+  "size": 19471,
+  "sha256": "def85e21b4ff54f1854d9b5246029ce91387e2608a566cf25084a5cc0f370ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/references/abuse-protection.md",
@@ -19226,8 +19251,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/SKILL.md",
-  "size": 12305,
-  "sha256": "ab27d1103e7be75d75b99d717cc5b3017c24e398f949959f75638e45974083e8"
+  "size": 11946,
+  "sha256": "5b91c2bd18e576d87f850f736ee7cff781a034f71b7e5733cb3bb2a661012f16"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/references/auth.md",
@@ -19271,8 +19296,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/SKILL.md",
-  "size": 8066,
-  "sha256": "e1b5b3a01e62d40c5a0ba5777654e1b65fa10c5c2aff995747000c6b7fb8d74f"
+  "size": 7786,
+  "sha256": "684ff26a779c84291ce9f3f8b18af5037bbeb92e3257c949089c3a2babbbafe5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/references/local-security.md",
@@ -19306,8 +19331,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10704,
-  "sha256": "98ebe86179328ffd242619ecc08b8dd563a84776e7c20ccab40887e7d287ff75"
+  "size": 10461,
+  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -19316,8 +19341,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3138,
-  "sha256": "f1282e61a54742f8d8c126791bbc19b501d5aea0314b860f6af71500e4c9b999"
+  "size": 3483,
+  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
+  "size": 1938,
+  "sha256": "11ac89756a7c7cec917f53ad3759a1b374f952b839aa761ed86e559a351ed77c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -21646,8 +21676,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/SKILL.md",
-  "size": 10367,
-  "sha256": "0193416119479a1fee8de144bc8a2016d1a22ccded91cbea867323bceaf1976c"
+  "size": 9957,
+  "sha256": "39a6876f990f1350c2569f6feac5517057d324a9bd7abf581a74bd236900b63b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/agents/impeccable_asset_producer.toml",
@@ -22676,8 +22706,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-cli/SKILL.md",
-  "size": 3183,
-  "sha256": "b54257cdc0e5d04488b35b0c797bfe427b24359f0848d3c73924dcacf8da6358"
+  "size": 2867,
+  "sha256": "73fb26e3b130cd05a6089e3b7a43e24d124aaf07e9a48ce3010a933f5822367c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-markdown/SKILL.md",
@@ -22861,8 +22891,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9630,
-  "sha256": "5b78bb9dd8d669cf3926eecda06297332566b7228e66a31ce2eb13a788c59672"
+  "size": 9979,
+  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -23281,8 +23311,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6093,
-  "sha256": "352c60d8191c26ac077cbe0dee640ac059641cb94ab1506b1db19427c7416d0c"
+  "size": 6121,
+  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -23651,8 +23681,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/visual-verification/SKILL.md",
-  "size": 5917,
-  "sha256": "ee35b0b17d100e239fa862b48d74c310847547357925627736ccd2121da30cf9"
+  "size": 5566,
+  "sha256": "b700077f817c430cd35130e7f626bd8db71fd5b78fb9875dba853adf852e08f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/win64-native-builds/SKILL.md",
@@ -24001,8 +24031,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/SKILL.md",
-  "size": 19783,
-  "sha256": "e772d7ea7193ca146d69b519be86d498a4386f1ec3bb4bc9bd35eebf0ac9cb8d"
+  "size": 19471,
+  "sha256": "def85e21b4ff54f1854d9b5246029ce91387e2608a566cf25084a5cc0f370ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-app/references/abuse-protection.md",
@@ -24036,8 +24066,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/SKILL.md",
-  "size": 12305,
-  "sha256": "ab27d1103e7be75d75b99d717cc5b3017c24e398f949959f75638e45974083e8"
+  "size": 11946,
+  "sha256": "5b91c2bd18e576d87f850f736ee7cff781a034f71b7e5733cb3bb2a661012f16"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/build-mcp-server/references/auth.md",
@@ -24081,8 +24111,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/SKILL.md",
-  "size": 8066,
-  "sha256": "e1b5b3a01e62d40c5a0ba5777654e1b65fa10c5c2aff995747000c6b7fb8d74f"
+  "size": 7786,
+  "sha256": "684ff26a779c84291ce9f3f8b18af5037bbeb92e3257c949089c3a2babbbafe5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/references/local-security.md",
@@ -24116,8 +24146,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10704,
-  "sha256": "98ebe86179328ffd242619ecc08b8dd563a84776e7c20ccab40887e7d287ff75"
+  "size": 10461,
+  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -24126,8 +24156,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3138,
-  "sha256": "f1282e61a54742f8d8c126791bbc19b501d5aea0314b860f6af71500e4c9b999"
+  "size": 3483,
+  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
+  "size": 1938,
+  "sha256": "11ac89756a7c7cec917f53ad3759a1b374f952b839aa761ed86e559a351ed77c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.gitignore",
@@ -26456,8 +26491,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/SKILL.md",
-  "size": 10367,
-  "sha256": "0193416119479a1fee8de144bc8a2016d1a22ccded91cbea867323bceaf1976c"
+  "size": 9957,
+  "sha256": "39a6876f990f1350c2569f6feac5517057d324a9bd7abf581a74bd236900b63b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/agents/impeccable_asset_producer.toml",
@@ -27486,8 +27521,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-cli/SKILL.md",
-  "size": 3183,
-  "sha256": "b54257cdc0e5d04488b35b0c797bfe427b24359f0848d3c73924dcacf8da6358"
+  "size": 2867,
+  "sha256": "73fb26e3b130cd05a6089e3b7a43e24d124aaf07e9a48ce3010a933f5822367c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/obsidian-markdown/SKILL.md",
@@ -27671,8 +27706,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9630,
-  "sha256": "5b78bb9dd8d669cf3926eecda06297332566b7228e66a31ce2eb13a788c59672"
+  "size": 9979,
+  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -28091,8 +28126,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6093,
-  "sha256": "352c60d8191c26ac077cbe0dee640ac059641cb94ab1506b1db19427c7416d0c"
+  "size": 6121,
+  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -28461,8 +28496,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/visual-verification/SKILL.md",
-  "size": 5917,
-  "sha256": "ee35b0b17d100e239fa862b48d74c310847547357925627736ccd2121da30cf9"
+  "size": 5566,
+  "sha256": "b700077f817c430cd35130e7f626bd8db71fd5b78fb9875dba853adf852e08f2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/win64-native-builds/SKILL.md",
@@ -28730,6 +28765,11 @@
   "sha256": "649d8d278fe4b9d19d9932ace976039d0ad5fda663f93bd497f9557164d731de"
  },
  {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-d8af751852a3.md",
+  "size": 10359,
+  "sha256": "b8e84fb6d61d67a6da25893c65c97d74e54349f7e5b88578bfe97c300988457b"
+ },
+ {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-df55099e4bc3.md",
   "size": 9890,
   "sha256": "29af02601d36d960d6956a6b3da81600b11a70101e33b3d38ebf68a5d323d180"
@@ -28797,22 +28837,22 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 61456,
-  "sha256": "626bcf45d41a4fab12e0b48b299ef1ffcb3a8c0c2658407e2728727a8a68bea5"
+  "sha256": "f9a22f09939dddcb303bed7c01c40061792d7921cac3fe4065c11a6a709e7fa8"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1643,
-  "sha256": "aa621e51b6f77b918f9d0d2e6da18bfe8f5ce7e3555c65041c2a78a76b522f9a"
+  "sha256": "14cf192c858a16a1028457de89e8541f5bfa2fb08286028c43f2494d5f6598bf"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
-  "size": 3224,
-  "sha256": "3e779709d54d77a6bbbe4af1ec5d84a9ed7a1dd9881a31f90ed4323144f52915"
+  "size": 3252,
+  "sha256": "5e7735dd8a87553ef7dc12378b116d5c07f1f3997243ea559ffc7ede9181ccfc"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39648,
-  "sha256": "7c9c274a743c4c99bf98a7dc529f2b744c2566e7967a3409c5707f45af92a268"
+  "sha256": "12b7c8196ef14694d83ac74fe37afcb8404dd137640f37e30a4b1c3f83edd99f"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -28895,14 +28935,14 @@
   "sha256": "b5279d1d6d3333d739d276c263a745ae51d74dac1e2a7a50fd26fffbde7cfd8b"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/Reverse-This-1.6.0.zip",
-  "size": 64634,
-  "sha256": "38cf2df03f9de2daaeb8d7b45b4d8a31f1499e703ee5d1c08d23bff59a444199"
+  "path": "BUNDLED-TOOLS/offline/Reverse-This-1.6.1.zip",
+  "size": 64697,
+  "sha256": "c71b497ac846cb7d51458fa6e00480a94ad4fc6424bbe3b48cd06d23fabcfc7b"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.3.2.zip",
-  "size": 4818367,
-  "sha256": "8f5507f6255e42c238e4adedc321c7843ca15e6da0838ec0ef75027be778138a"
+  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.4.1.zip",
+  "size": 4832140,
+  "sha256": "764724c68862c502be655406ea90b362c5191e9318daa0207e163edd2239d8a4"
  },
  {
   "path": "BUNDLED-TOOLS/offline/codebase-memory-mcp-windows-amd64.zip",
@@ -32891,8 +32931,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 240158,
-  "sha256": "001cd28219895b57f874fdbb125ed308106dc93d3d40a09f0a36e98894a4fe9c"
+  "size": 241757,
+  "sha256": "a4e453dd627623721dffc7f4404aa41b8e40279fd3c794c2e49e9b729bea1eb5"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -32972,7 +33012,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 177322,
-  "sha256": "5124a105e91506107ace58d6342449f5ad3289f3e6e8af165f23b87dac660e58"
+  "sha256": "c3dac7bd20effde283252817d191b8575bbea81b01954f38ef65ad89b6daa892"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -32988,6 +33028,11 @@
   "path": "LICENSE",
   "size": 1065,
   "sha256": "7129faa6d1f36b8a602d64e31b9120c6eb413c169f475ddaf279607be2ff96c5"
+ },
+ {
+  "path": "MEMORY.md",
+  "size": 60310,
+  "sha256": "1658a1bd644e3706a12957aa526eb23dd05debedac5db9479a17c3abafe7d06e"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -33031,8 +33076,8 @@
  },
  {
   "path": "README.md",
-  "size": 62049,
-  "sha256": "fd46634f01e4fd97f3e7ebf34dd0e2cc1f6de5ce6ba625b2abe03b0331bf8a70"
+  "size": 64407,
+  "sha256": "b22788b9d1328bfa9e98f353b355dbf937696760297bbbef3772c1a899ee44ba"
  },
  {
   "path": "SECURITY.md",
@@ -33042,17 +33087,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "eaab4dc2445004bcea315c624d9c5d29a9a2472e371fafd2d923650de80d7b06"
+  "sha256": "14d29cf8cd43ac42a8d18d6c9f530a168e4a606f50e64ac7e115937ff1f114f5"
  },
  {
   "path": "START-HERE.txt",
   "size": 12021,
-  "sha256": "aafd9fbcb88e5f590c0549f5a42bc83011f11be735960e7c3a1c79892564177a"
+  "sha256": "6639655d31df87773d1288bcab29b61cdfee1a01f3de80f3522892c1687f60c8"
  },
  {
   "path": "STATE.md",
-  "size": 9162,
-  "sha256": "bb6445498e750a8acbeea16537d0d5b6d0f79bf5f209542f1e1d7f93f946257f"
+  "size": 11257,
+  "sha256": "d0bdfeb373e9f0ff44be10357ea67f04b48d5a6fbf909d18fcb578c33e7e929f"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -33103,6 +33148,11 @@
   "path": "TESTS/Test-GitHubFlags.ps1",
   "size": 6923,
   "sha256": "e8d7145a0a6fb56bf4810968187035fece626d4d30e16db9a7b19b48adeae5d6"
+ },
+ {
+  "path": "TESTS/Test-GitHubVerdict.ps1",
+  "size": 12700,
+  "sha256": "3add2b4c4a7d220fb04c4fa0ac22aa7a2509d4e102859bc2f5abe34f96db9700"
  },
  {
   "path": "TESTS/Test-GrokHookRepair.ps1",
@@ -33166,13 +33216,13 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 66411,
-  "sha256": "0c40124be3368f71424efd9d95d8b6efd09d329a4f505c4657be0cd42f7806c5"
+  "size": 67014,
+  "sha256": "ca466f71840e2d1d621d546a1be7744e28ceb683dfceda5bf50db42e4bd533ed"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
-  "size": 13889,
-  "sha256": "4921ed3d0ae454e256bb31739226cc647ff14593c060aae19c65a86e2efc783f"
+  "size": 14084,
+  "sha256": "a93f7ad2d90c83d789bd442d9831e53c3b6e9233d44098e4764dcb24cc8bb74d"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -33241,8 +33291,8 @@
  },
  {
   "path": "TESTS/Test-WaitExternal.ps1",
-  "size": 3178,
-  "sha256": "2b21ddcdd285f49fb6341d9d6cae541f7e85d1b4e2102c3fc84a1ad8678413e9"
+  "size": 3200,
+  "sha256": "75c0d4da6b9e0010275021b9940570eddb10ea7bc7bca43598923c3f5d062e21"
  },
  {
   "path": "TESTS/Test-WorkspaceSeeding.ps1",
@@ -33425,6 +33475,11 @@
   "sha256": "c4d142b5fe5616b5870199d4b3dc759b7c9e12c5413448298fcfb5cba9dfc86e"
  },
  {
+  "path": "TESTS/test_maintainer_contract.py",
+  "size": 17308,
+  "sha256": "5a55424e4f94443b11f972d9580fd8976ad3fcc63d8978e107e6b2503609f87e"
+ },
+ {
   "path": "TESTS/test_mcp_protocol.py",
   "size": 2964,
   "sha256": "76423a64cea77e6200df41661c8e963b21f49225c487fe0698e021eb6713961f"
@@ -33436,13 +33491,13 @@
  },
  {
   "path": "TESTS/test_product_delivery.py",
-  "size": 3487,
-  "sha256": "1f7fdfc2a4aef3c30c9663caab6401e1f66c99ca1c8aff95b1b9dae4832eb89a"
+  "size": 4781,
+  "sha256": "34c8d623aceccb5ad151f878c467546c14e040f8b79964e89f2cb67acd646b98"
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 331522,
-  "sha256": "6de8b28c7a585f71c55178e2a5d83b05f2deaa2e8709069c7d68bfb3803d9120"
+  "size": 332825,
+  "sha256": "58111ecab9f750b61e8cf843b2c30deffbb142d8ff963627175e34bc3571a32f"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -33493,6 +33548,11 @@
   "path": "TOOLS/Build-Toolbelt.ps1",
   "size": 5779,
   "sha256": "f0f0fc4606c06b8ee77d087ea5044654f80c1ba993a72ffdad98b6b2229e1e21"
+ },
+ {
+  "path": "TOOLS/Clean-MergedBranches.ps1",
+  "size": 3221,
+  "sha256": "83c6330ad75a6fe1432cbb5af5d9ab286d0b798db05ca8b536d9bc8f4a1ac170"
  },
  {
   "path": "TOOLS/Clean-StaleState.ps1",
@@ -33585,6 +33645,11 @@
   "sha256": "551f66ec3db63ec1cbef7c99bc9d1b38cdc4e9ae064749cda4ff19c5a7421fec"
  },
  {
+  "path": "TOOLS/Set-GitHubProtection.ps1",
+  "size": 6487,
+  "sha256": "b979cabd88d1a6a2cc077f5f43114a7e78f4c846a90a4d0292e1a08ad8f68e53"
+ },
+ {
   "path": "TOOLS/Set-HermesSharedPython.ps1",
   "size": 7512,
   "sha256": "7b901f414263234875c1f88d4189551fb159e47affc87913e92e50b7eee767c9"
@@ -33626,8 +33691,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 160639,
-  "sha256": "66cf27cb57e44f8dfb4ce5fc7f48c4d12fe9d9fc722c40799ccc5c52e17bf721"
+  "size": 160702,
+  "sha256": "77474fdbd536af13ce9421c2fb691a5c31292c55392e93631a0d5ccb3db4d690"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
@@ -33645,9 +33710,14 @@
   "sha256": "61df0012803dbeef0b4d432f67c359dbbcd8a79d38941696566fdb4f2128829c"
  },
  {
+  "path": "TOOLS/Update-MemoryIndex.ps1",
+  "size": 515,
+  "sha256": "cbc36ff893d8853e22e410c0876d6e0b534044ddedf8786bb8a87a32445cbf89"
+ },
+ {
   "path": "TOOLS/Wait-External.ps1",
-  "size": 1938,
-  "sha256": "060aa683a86d5486e29211398f8239dd79d74922d8bf1376932298f0807d030e"
+  "size": 14870,
+  "sha256": "622a310df1cbc07d7a767bf0e86af8013a7a24040af44c3c40339f5cbb992be2"
  },
  {
   "path": "TOOLS/audit-impeccable-engine.py",
@@ -33681,8 +33751,8 @@
  },
  {
   "path": "TOOLS/fanout_providers.py",
-  "size": 5046,
-  "sha256": "e59c62d3cba8b83e57be343268dea9bf05e467f624198a8151160c68e9baa460"
+  "size": 6756,
+  "sha256": "97578ffbe6070bd8c92434a517975f0007ab396522aecf97559e373b74818c74"
  },
  {
   "path": "TOOLS/generate_manifest.py",
@@ -33800,9 +33870,19 @@
   "sha256": "9df8b84669df8fbc97c5cca1fde6cd40beac9206e52ce1ee6da2fc72d0947f32"
  },
  {
+  "path": "TOOLS/update_memory_index.py",
+  "size": 5827,
+  "sha256": "dbcc8f41d620258d5777f576b95a4bea3339732f2a0e2edd5b8a71846cf36444"
+ },
+ {
   "path": "TOOLS/usage_report.py",
   "size": 12214,
   "sha256": "6aa6b68d227e506e056f1b7bc67a84587d03b726745c9ed9ba3cc1c1be6e92aa"
+ },
+ {
+  "path": "TOOLS/verify_docs.py",
+  "size": 4307,
+  "sha256": "187a55c80fc2ac09fe2e6b5cadb76dbf37fe2a406fee90b7d40e3589523c6def"
  },
  {
   "path": "TOOLS/verify_manifest.py",
@@ -33827,7 +33907,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2963,
-  "sha256": "dbc92ec0d35c421054c8414f96e755ac7815a2c6bd87078bc2adb845828a929a"
+  "sha256": "911d2678245dd4640fc9af4ad40c280e556234fc8bf534da948d07b6a6c96eb8"
  },
  {
   "path": "VALIDATION.md",
@@ -33837,7 +33917,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "595a8b8b2e9fc40bf9acd6f6f287399039b65614a1eb0c615e754509119eb0d0"
+  "sha256": "78d3d5278baf3baed77fe493f01d6c150defa098f0b9fc45841e25bf43bc0972"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -33966,8 +34046,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/build-mcp-app/SKILL.md",
-  "size": 19783,
-  "sha256": "e772d7ea7193ca146d69b519be86d498a4386f1ec3bb4bc9bd35eebf0ac9cb8d"
+  "size": 19471,
+  "sha256": "def85e21b4ff54f1854d9b5246029ce91387e2608a566cf25084a5cc0f370ca3"
  },
  {
   "path": "_CANONICAL-SKILLS/build-mcp-app/references/abuse-protection.md",
@@ -34001,8 +34081,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/build-mcp-server/SKILL.md",
-  "size": 12305,
-  "sha256": "ab27d1103e7be75d75b99d717cc5b3017c24e398f949959f75638e45974083e8"
+  "size": 11946,
+  "sha256": "5b91c2bd18e576d87f850f736ee7cff781a034f71b7e5733cb3bb2a661012f16"
  },
  {
   "path": "_CANONICAL-SKILLS/build-mcp-server/references/auth.md",
@@ -34046,8 +34126,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/build-mcpb/SKILL.md",
-  "size": 8066,
-  "sha256": "e1b5b3a01e62d40c5a0ba5777654e1b65fa10c5c2aff995747000c6b7fb8d74f"
+  "size": 7785,
+  "sha256": "e86ea1fb1f5eda60f9484486ae34e6ce120b6fdd8f30205275d463ee7ea95f45"
  },
  {
   "path": "_CANONICAL-SKILLS/build-mcpb/references/local-security.md",
@@ -34081,8 +34161,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/capability-routing/SKILL.md",
-  "size": 10704,
-  "sha256": "98ebe86179328ffd242619ecc08b8dd563a84776e7c20ccab40887e7d287ff75"
+  "size": 10461,
+  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
  },
  {
   "path": "_CANONICAL-SKILLS/check-work/SKILL.md",
@@ -34091,8 +34171,13 @@
  },
  {
   "path": "_CANONICAL-SKILLS/ci-convergence/SKILL.md",
-  "size": 3138,
-  "sha256": "f1282e61a54742f8d8c126791bbc19b501d5aea0314b860f6af71500e4c9b999"
+  "size": 3483,
+  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/ci-convergence/references/github-alerts.md",
+  "size": 1938,
+  "sha256": "11ac89756a7c7cec917f53ad3759a1b374f952b839aa761ed86e559a351ed77c"
  },
  {
   "path": "_CANONICAL-SKILLS/code-review-skill/.gitignore",
@@ -36421,8 +36506,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/SKILL.md",
-  "size": 10367,
-  "sha256": "0193416119479a1fee8de144bc8a2016d1a22ccded91cbea867323bceaf1976c"
+  "size": 9957,
+  "sha256": "39a6876f990f1350c2569f6feac5517057d324a9bd7abf581a74bd236900b63b"
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/agents/impeccable_asset_producer.toml",
@@ -37451,8 +37536,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/obsidian-cli/SKILL.md",
-  "size": 3183,
-  "sha256": "b54257cdc0e5d04488b35b0c797bfe427b24359f0848d3c73924dcacf8da6358"
+  "size": 2867,
+  "sha256": "73fb26e3b130cd05a6089e3b7a43e24d124aaf07e9a48ce3010a933f5822367c"
  },
  {
   "path": "_CANONICAL-SKILLS/obsidian-markdown/SKILL.md",
@@ -37636,8 +37721,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/SKILL.md",
-  "size": 9630,
-  "sha256": "5b78bb9dd8d669cf3926eecda06297332566b7228e66a31ce2eb13a788c59672"
+  "size": 9979,
+  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -38056,8 +38141,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/token-efficiency/SKILL.md",
-  "size": 6093,
-  "sha256": "352c60d8191c26ac077cbe0dee640ac059641cb94ab1506b1db19427c7416d0c"
+  "size": 6121,
+  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
  },
  {
   "path": "_CANONICAL-SKILLS/token-efficiency/references/shell-output-compression.md",
@@ -38426,8 +38511,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/visual-verification/SKILL.md",
-  "size": 5917,
-  "sha256": "ee35b0b17d100e239fa862b48d74c310847547357925627736ccd2121da30cf9"
+  "size": 5566,
+  "sha256": "b700077f817c430cd35130e7f626bd8db71fd5b78fb9875dba853adf852e08f2"
  },
  {
   "path": "_CANONICAL-SKILLS/win64-native-builds/SKILL.md",
@@ -39133,6 +39218,16 @@
   "path": "docs/history/V8.25.2-CHANGELOG.md",
   "size": 510,
   "sha256": "e37df1088bfc1b997f46fac459f81cadb71a5effd31198b19154a888dba88f24"
+ },
+ {
+  "path": "docs/history/V8.25.3-CHANGELOG.md",
+  "size": 541,
+  "sha256": "77130c6088026e7720dfcf69243ac9798b6cbc086ec8aedd479dc581a542d13e"
+ },
+ {
+  "path": "docs/history/V8.26.0-CHANGELOG.md",
+  "size": 1704,
+  "sha256": "55b95955a384ad5753bd55e301c49e75a37eec1bd8e5f49641bd90ba395c2ebb"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

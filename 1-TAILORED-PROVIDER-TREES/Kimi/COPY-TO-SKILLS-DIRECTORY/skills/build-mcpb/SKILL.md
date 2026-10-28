@@ -1,6 +1,6 @@
 ---
 name: build-mcpb
-description: This skill should be used when the user wants to "package an MCP server", "bundle an MCP", "make an MCPB", "ship a local MCP server", "distribute a local MCP", discusses ".mcpb files", mentions bundling a Node or Python runtime with their MCP server, or needs an MCP server that interacts with the local filesystem, desktop apps, or OS and must be installable without the user having Node/Python set up.
+description: Package a local MCP server as .mcpb, including optional bundled runtimes and access to local files, desktop apps or the OS.
 version: 0.1.0
 ---
 

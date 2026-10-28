@@ -1,6 +1,6 @@
 ---
 name: build-mcp-app
-description: This skill should be used when the user wants to build an "MCP app", add "interactive UI" or "widgets" to an MCP server, "render components in chat", build "MCP UI resources", make a tool that shows a "form", "picker", "dashboard" or "confirmation dialog" inline in the conversation, or mentions "apps SDK" in the context of MCP. Use AFTER the build-mcp-server skill has settled the deployment model, or when the user already knows they want UI widgets.
+description: "Add interactive in-chat UI resources or widgets to MCP tools after deployment is settled: forms, pickers, dashboards and inline components."
 version: 0.1.0
 ---
 
