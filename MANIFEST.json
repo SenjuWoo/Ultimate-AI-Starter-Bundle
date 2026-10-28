@@ -28797,12 +28797,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 61456,
-  "sha256": "626bcf45d41a4fab12e0b48b299ef1ffcb3a8c0c2658407e2728727a8a68bea5"
+  "sha256": "916d010a42e04e986b3b98d5dcffee63e52117e82e9d3085ee1987485148b01c"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1643,
-  "sha256": "aa621e51b6f77b918f9d0d2e6da18bfe8f5ce7e3555c65041c2a78a76b522f9a"
+  "sha256": "e2468049f85546b9a50f377f82e5b4f750afb5b7d66e2d35bec6f76fb6166f49"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28812,7 +28812,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39648,
-  "sha256": "7c9c274a743c4c99bf98a7dc529f2b744c2566e7967a3409c5707f45af92a268"
+  "sha256": "845f132d1d99da4c4508c1b32c008fa1e2ca7f210911dba4f34fc91ef2db52a5"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -28900,9 +28900,9 @@
   "sha256": "38cf2df03f9de2daaeb8d7b45b4d8a31f1499e703ee5d1c08d23bff59a444199"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.3.2.zip",
-  "size": 4818367,
-  "sha256": "8f5507f6255e42c238e4adedc321c7843ca15e6da0838ec0ef75027be778138a"
+  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.4.0.zip",
+  "size": 4832023,
+  "sha256": "7a946a8bc858dd0db6730afe70c15cecf1fc5cf4e11e0280d2f90758e3aa8681"
  },
  {
   "path": "BUNDLED-TOOLS/offline/codebase-memory-mcp-windows-amd64.zip",
@@ -32891,8 +32891,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 240158,
-  "sha256": "001cd28219895b57f874fdbb125ed308106dc93d3d40a09f0a36e98894a4fe9c"
+  "size": 240611,
+  "sha256": "3bb27e18e29ceecbad12088070785df9e8b6375f67c0f217b632659a0f71a354"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -32972,7 +32972,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 177322,
-  "sha256": "5124a105e91506107ace58d6342449f5ad3289f3e6e8af165f23b87dac660e58"
+  "sha256": "27b54f89b04ebe3a737de50a300dcf08393409281502c5a2994a281bf28401d4"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33031,8 +33031,8 @@
  },
  {
   "path": "README.md",
-  "size": 62049,
-  "sha256": "fd46634f01e4fd97f3e7ebf34dd0e2cc1f6de5ce6ba625b2abe03b0331bf8a70"
+  "size": 62259,
+  "sha256": "dd2b2c723080e1698f48f3c3c85c45d35966d3f130c98da15d4870d75e265d59"
  },
  {
   "path": "SECURITY.md",
@@ -33042,12 +33042,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "eaab4dc2445004bcea315c624d9c5d29a9a2472e371fafd2d923650de80d7b06"
+  "sha256": "cd954ccbb34ca79ac5b4125b9f2cb48f7b57a9f8960bb737cf0e703d1cce8cc5"
  },
  {
   "path": "START-HERE.txt",
   "size": 12021,
-  "sha256": "aafd9fbcb88e5f590c0549f5a42bc83011f11be735960e7c3a1c79892564177a"
+  "sha256": "b38695b29d0ad3bfa360d86bef916614f1b2f86b69e20131d18ff8a7a08a8ef6"
  },
  {
   "path": "STATE.md",
@@ -33827,7 +33827,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2963,
-  "sha256": "dbc92ec0d35c421054c8414f96e755ac7815a2c6bd87078bc2adb845828a929a"
+  "sha256": "2c5f3b6597507527908e2bf2b72d90c6028454d25dcca8e9ae05d816c2aeb4dc"
  },
  {
   "path": "VALIDATION.md",
@@ -33837,7 +33837,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "595a8b8b2e9fc40bf9acd6f6f287399039b65614a1eb0c615e754509119eb0d0"
+  "sha256": "751cbc08f6aeb336376e2c75788b4d258501bc366517356b30ca20bd2bc061c4"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -39133,6 +39133,11 @@
   "path": "docs/history/V8.25.2-CHANGELOG.md",
   "size": 510,
   "sha256": "e37df1088bfc1b997f46fac459f81cadb71a5effd31198b19154a888dba88f24"
+ },
+ {
+  "path": "docs/history/V8.25.3-CHANGELOG.md",
+  "size": 541,
+  "sha256": "77130c6088026e7720dfcf69243ac9798b6cbc086ec8aedd479dc581a542d13e"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

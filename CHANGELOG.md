@@ -1,3 +1,8 @@
+## 8.25.3 (2026-10-27)
+
+- Pins verified Skyrim Forge 6.4.0 (sha256 7a946a8b...8681; bytes match GitHub's digest and SHA256SUMS, 15/15 checks on its tagged commit): pinned SDK vault with approval-gated installs and the maintained CommonLibSSE-NG native scaffold. Reverse THIS! stays 1.6.0. Bundle behaviour is unchanged; CommonLib source remains pinned per plugin project.
+- 126 canonical skills total, unchanged; Forge keeps its 48 independently.
+
 ## 8.25.2 (2026-10-27)
 
 - Pins verified Reverse THIS! 1.6.0 (sha256 38cf2df0...4199; bytes match GitHub's digest and SHA256SUMS), which adds replica-skill as an opt-in source archive under its own sandbox. Skyrim Forge stays at 6.3.2. Bundle behaviour is unchanged; the replica-skill evaluation now points to Reverse as the supported route.

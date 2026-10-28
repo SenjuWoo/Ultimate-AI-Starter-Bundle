@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.25.2 -->
+<!-- Ultimate AI Starter Bundle v8.25.3 -->
 
 The bundle installs the common compiler suite by default: Go, Rust/Cargo, GCC, CMake/Ninja, Xmake, .NET SDK, MSVC C++ and the Windows SDK. Existing working installations and project pins are reused. Fresh installations may require several GB and Windows elevation; `-SkipBuildTools` skips this suite, and `-SkipRuntimes` skips all runtime/compiler provisioning. Run `TOOLS/Install-BuildTools.ps1 -CheckOnly` for compile-and-run verification. Logs: `%LOCALAPPDATA%/Ultimate-AI-Starter-Bundle/logs/build-tools.log`. Full-Offline caches the listed bundle payloads; missing shared runtimes/compilers still need vendor downloads. `-Mode BundledOnly` prevents compiler downloads and reports missing prerequisites.
 
@@ -10,7 +10,7 @@ Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tool
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.25.2
+# Ultimate AI Starter Bundle v8.25.3
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -740,7 +740,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ### Skyrim Forge
 
-**Skyrim Forge 6.3.2** ([source](https://github.com/SenjuWoo/SkyrimForge)) is installed
+**Skyrim Forge 6.4.0** ([source](https://github.com/SenjuWoo/SkyrimForge)) is installed
 only with the Skyrim pack. CATALOG.json pins its tag, archive and SHA-256.
 The bundle verifies the archive and delegates existing deployments to Forge's
 preserving updater. Private workspace trees move intact, edited owner files
@@ -962,6 +962,8 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.25.3** - Pins Skyrim Forge 6.4.0 (SDK vault, CommonLibSSE-NG scaffold); Reverse stays 1.6.0. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.25.3-CHANGELOG.md).
 
 **v8.25.2** - Pins Reverse THIS! 1.6.0 (opt-in replica-skill pack); Forge stays 6.3.2. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.25.2-CHANGELOG.md).
 

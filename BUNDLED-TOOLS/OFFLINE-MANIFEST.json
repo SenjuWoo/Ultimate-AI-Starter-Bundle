@@ -1,11 +1,11 @@
 {
   "generated": "2026-10-27",
-  "pack_version": "8.25.2",
+  "pack_version": "8.25.3",
   "assets": [
     {
-      "file": "Skyrim-Forge-6.3.2.zip",
-      "size": 4818367,
-      "sha256": "8f5507f6255e42c238e4adedc321c7843ca15e6da0838ec0ef75027be778138a"
+      "file": "Skyrim-Forge-6.4.0.zip",
+      "size": 4832023,
+      "sha256": "7a946a8bc858dd0db6730afe70c15cecf1fc5cf4e11e0280d2f90758e3aa8681"
     },
     {
       "file": "codebase-memory-mcp-windows-amd64.zip",
