@@ -1146,9 +1146,8 @@ function Find-UabsPackEvidence {
 
 function Resolve-UabsPackSelection {
   <# Decide which packs install. Precedence: -ExcludePacks, -Packs, a choice
-     remembered from an earlier explicit run, then evidence on this machine.
-     Only explicit choices are remembered; detection runs again every time,
-     so installing the game later turns its pack on by itself. #>
+     remembered from an earlier explicit run, then the catalog's detection policy.
+     Opt-in packs stay off even when their game or tools are detected. #>
   param(
     [string]$PackRoot,
     [string[]]$Requested = @(),
@@ -1168,7 +1167,7 @@ function Resolve-UabsPackSelection {
     try {
       $doc = [IO.File]::ReadAllText($StatePath) | ConvertFrom-Json
       foreach ($p in @($doc.packs.PSObject.Properties)) { $remembered[$p.Name] = [bool]$p.Value.enabled }
-    } catch { Write-UabsWarn ('pack choices unreadable; detecting again: ' + $_.Exception.Message) }
+    } catch { Write-UabsWarn ('pack choices unreadable; using catalog defaults: ' + $_.Exception.Message) }
   }
   $changed = $false
   foreach ($name in $names) {
@@ -1176,6 +1175,7 @@ function Resolve-UabsPackSelection {
     if ($Excluded -contains $name) { $on = $false; $why = 'excluded (-ExcludePacks)'; if ($remembered[$name] -ne $false) { $remembered[$name] = $false; $changed = $true } }
     elseif ($Requested -contains $name) { $on = $true; $why = 'requested (-Packs)'; if ($remembered[$name] -ne $true) { $remembered[$name] = $true; $changed = $true } }
     elseif ($remembered.ContainsKey($name)) { $on = $remembered[$name]; $why = 'your earlier choice' }
+    elseif ($pack.auto_detect -eq $false) { $on = $false; $why = 'optional; enable explicitly with -Packs ' + $name }
     else {
       $evidence = @(Find-UabsPackEvidence -Detect $pack.detect @EvidenceArgs)
       $on = $evidence.Count -gt 0

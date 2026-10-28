@@ -2295,7 +2295,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "ca1346aaa44eb1600bc729f24fc26fd2dcbd9aaff7b19fb2354164eebbb4206f", (
+    assert digest == "cce3b8c70fdf0cc490653b1fa34831113d8279b74af4e539cec86da0a02617c0", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -2887,6 +2887,7 @@ def main() -> int:
         test_portable_skill_routing_does_not_require_superpowers_prefix,
         test_toolbox_wheel_is_the_shipped_source,
         test_game_mashup_passthrough_knowledge_is_wired_and_private,
+        test_release_workflow_publishes_only_a_green_untagged_main_sha,
     ]
     failed = []
     skipped = []
@@ -6174,6 +6175,27 @@ def test_provider_bootstrap_never_inherits_a_stale_exit_code() -> None:
     assert body.count("$probeExit = $LASTEXITCODE") == 2, (
         "probe exit code must be read exactly twice, inside the branches that ran a process"
     )
+
+
+def test_release_workflow_publishes_only_a_green_untagged_main_sha() -> None:
+    """A version bump on main is the release request; everything else is a no-op.
+
+    The workflow must gate on the exact SHA, wait for every other check, build
+    twice byte-identically and compare the re-downloaded assets. It must never
+    delete or replace a published release.
+    """
+    wf = read(ROOT / ".github" / "workflows" / "release.yml")
+    for needle in ("workflow_run:", "workflows: [CI]", "branches: [main]",
+                   "conclusion == 'success'", "event == 'push'",
+                   'if [ "$main" != "$SHA" ]', "git ls-remote --tags origin",
+                   'r["name"] != "Publish release"', "build-a", "build-b",
+                   '--target "$SHA"', "gh release download", "cancel-in-progress: false"):
+        assert needle in wf, f"release workflow lost its gate: {needle}"
+    for forbidden in ("gh release delete", "--clobber", "git push --force", "git tag -f"):
+        assert forbidden not in wf, f"release workflow can replace published bytes: {forbidden}"
+    for line in wf.splitlines():
+        if "uses:" in line:
+            assert re.search(r"@[0-9a-f]{40}\b", line), f"unpinned action: {line.strip()}"
 
 
 if __name__ == "__main__":

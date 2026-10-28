@@ -1,5 +1,15 @@
 # Bundle audit state
 
+## 8.26.0 tri-repo sync — 2026-10-28 (in progress on release/8.26.0)
+
+- Goal: three cooperating owners with one ownership model, proven drift gates, Skyrim optional, hands-off releases.
+- Ownership model (unchanged, verified): Forge and Reverse THIS! are the source of truth for their code and release their own semver; the bundle pins one release of each in BUNDLED-TOOLS/CATALOG.json (tag, asset, SHA-256) and ships those archives in BUNDLED-TOOLS/offline for Full-Offline. A vendored source tree was rejected: it would duplicate Forge's CI/CodeQL gate and reintroduce two editable copies.
+- Gates proven to fail on tampered copies: Forge skill inventory (PACKS.json vs pinned archive), offline archive digest (one flipped byte), doctor contract (pinned Forge must emit `result` and `read_only_ready`, which Install-SkyrimForge.ps1 reads).
+- Brief items found already true at start: Forge repo description current; no "developed in this repository"/"no handshake" claims; no ShugokiFable in any tree; Skyrim count 48 everywhere; houseCARL 1.9.0 table labelled historical with 2.1.1 measured in capability-profiles; Skyrim pack auto_detect=false (opt-in) and fanout refuses Forge-owned names; Reverse documents and tests UABS_PYTHON; Forge 6.4.1 fixed SDK staging deletion.
+- Kept as is, with reason: Reverse THIS! VERSION/CURRENT.txt naming (the bundle reads `VERSION` explicitly; renaming is churn with no consumer).
+- Done this pass: GPT's uncommitted 8.26.0 work verified and kept (line-ending churn on three files reverted); Forge 6.4.1 and Reverse 1.6.1 pins match GitHub digests; README Forge/RTK drift fixed; UABS_PYTHON contract documented; .github/workflows/release.yml (CI-gated, double build, re-download compare) with contract test; bundle main protection (6 required checks, no force-push/deletion); auto-delete merged branches and auto-merge allowed on all three repos; Reverse README states the doctor's digest scope (PR 18, auto-merge).
+- Next: full Windows gate, PR with auto-merge, release workflow's first run publishes 8.26.0, verify bytes, live install, branch triage.
+
 ## Completed 8.25.1 audit release — 2026-10-27
 
 - Goal completed: instruction/agent-size audit across the three owners. Live versions: Bundle 8.25.1, Skyrim Forge 6.3.2, Reverse THIS! 1.5.0 (unchanged, audited clean).

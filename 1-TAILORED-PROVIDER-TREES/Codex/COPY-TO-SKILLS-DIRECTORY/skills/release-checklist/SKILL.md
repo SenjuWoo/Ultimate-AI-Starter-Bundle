@@ -102,15 +102,17 @@ Record the exact pushed SHA and keep it as the release identity:
 Do not use "latest on main" as a proxy. Query workflow/check state for that
 **exact pushed SHA**. GitHub CLI examples:
 
-    gh run list --commit "$SHA" --json databaseId,headSha,status,conclusion,workflowName
-    powershell -NoProfile -File TOOLS/Wait-External.ps1 -GitHubRun <run-id>
-    gh api repos/{owner}/{repo}/commits/$SHA/check-runs
+    powershell -NoProfile -ExecutionPolicy Bypass -File TOOLS/Wait-External.ps1 -GitHubRun auto -Repo OWNER/REPO -Sha FULL_SHA
 
-`Wait-External.ps1` runs `gh run watch --compact --exit-status` and returns
-the failed-step log only when the run fails. It does not call a model.
+`ci-convergence` owns the verdict truth table, branch policy and lifecycle.
+`Wait-External.ps1` prints explicit evidence for both green and red, reads
+check-runs and external statuses, and bounds waiting and failure output.
+Proceed only on `verdict=pass` / exit 0. `none` (no CI) and `unknown` (query
+failure) block publication just like pending/failing evidence; a gh error is
+not a failed check. Open the PR or dispatch CI when no run exists.
 
 Wait through queued/in-progress states. Every required check must reach a
-terminal successful/skipped state according to branch policy. If any required
+terminal successful state according to branch policy. If any required
 check fails, inspect its job/log, fix the root cause, commit and push a NEW SHA,
 and restart this section from that new SHA. Never tag, build a release, or end
 the release task while the chosen SHA is pending or red.
@@ -150,9 +152,11 @@ After the GitHub release is proven, hand the user what they paste and upload:
   installed to the new one (several versions combined if the site skipped
   some), one block per project. No markdown headers or tables; mod-site editors
   mangle them.
-- **Upload archive:** only what users need: the program (exe, readme,
-  changelog) or the mod's `Data` layout/FOMOD. No build scripts, tests, root
-  README or PowerShell files inside a mod archive. A full new version unless the
+- **Upload archive:** runtime product files, required licences, and the mod's
+  `Data` layout/FOMOD where applicable. Keep changelogs and development/publication
+  paperwork outside the archive. Toolkits retain actual installers, help, skills
+  and templates. No build scripts, tests, root README or unrelated PowerShell
+  files inside a mod archive. A full new version unless the
   user asked for a patch.
 - **Source:** push the matching source to GitHub with the release; published
   binaries without published source invite tampering accusations.

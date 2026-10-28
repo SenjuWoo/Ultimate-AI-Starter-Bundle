@@ -14,6 +14,7 @@ target.
     python fanout_providers.py <canonical-dir> <pack-root>
 """
 import io
+import json
 import os
 import re
 import shutil
@@ -27,6 +28,29 @@ REL = os.path.join('COPY-TO-SKILLS-DIRECTORY', 'skills')
 # a future, genuinely provider-specific skill has one explicit source of truth;
 # it is intentionally empty for the current all-provider install policy.
 SCOPED = {}
+
+
+def external_skill_names(root):
+    """Specialist names come from the explicit pack ownership list, never a prefix guess."""
+    with io.open(os.path.join(root, 'BUNDLED-TOOLS', 'PACKS.json'), encoding='utf-8-sig') as source:
+        packs = json.load(source)['packs']
+    names = set()
+    for pack in packs.values():
+        if pack.get('owner') == 'skyrim-forge':
+            for name in pack['skills']:
+                if not re.fullmatch(r'[a-z0-9][a-z0-9-]*', name) or name in names:
+                    raise ValueError('Invalid or duplicate external skill name: ' + name)
+                names.add(name)
+    if not names:
+        raise ValueError('The Forge-owned skill list is missing')
+    return names
+
+
+def check_ownership(canon, external_names):
+    overlap = sorted(name for name in os.listdir(canon)
+                     if name.casefold() in external_names and os.path.isdir(os.path.join(canon, name)))
+    if overlap:
+        raise ValueError('Forge-owned skills cannot be authored in the general bundle: ' + ', '.join(overlap))
 
 
 def retag(path, provider_tag):
@@ -58,9 +82,18 @@ def source_newline(path):
     return '\r\n' if raw.count(b'\r\n') > raw.count(b'\n') - raw.count(b'\r\n') else '\n'
 
 
-def deploy(canon, dest, provider_tag, provider):
+def deploy(canon, dest, provider_tag, provider, external_names=()):
+    check_ownership(canon, external_names)
+    if os.path.lexists(dest) and (os.path.islink(dest) or getattr(os.lstat(dest), 'st_file_attributes', 0) & 0x400):
+        raise ValueError('Refusing a linked provider tree: ' + dest)
     if os.path.isdir(dest):
-        shutil.rmtree(dest)
+        for entry in os.scandir(dest):
+            if entry.name.casefold() in external_names:
+                continue
+            if entry.is_dir(follow_symlinks=False):
+                shutil.rmtree(entry.path)
+            else:
+                os.unlink(entry.path)
     n = skipped = 0
     for dp, dirs, fs in os.walk(canon):
         dirs[:] = [d for d in dirs if d not in {'__pycache__','.git','.venv','node_modules'}]
@@ -85,6 +118,8 @@ def deploy(canon, dest, provider_tag, provider):
 
 def main():
     canon, root = sys.argv[1], sys.argv[2]
+    external_names = external_skill_names(root)
+    check_ownership(canon, external_names)  # Fail before touching any generated provider tree.
     total = 0
     # v7.6.6: the 2-OPTIONAL-SHARED-GENERIC tree was removed from the pack -
     # 97% byte-identical to the tailored tree and never read by the installer.
@@ -94,7 +129,7 @@ def main():
             if not os.path.isdir(os.path.dirname(os.path.dirname(dest))):
                 print('  skip (no tree): %s/%s' % (family, prov))
                 continue
-            n, skipped = deploy(canon, dest, tag_of(prov), prov)
+            n, skipped = deploy(canon, dest, tag_of(prov), prov, external_names)
             total += n
             note = ''
             if skipped:

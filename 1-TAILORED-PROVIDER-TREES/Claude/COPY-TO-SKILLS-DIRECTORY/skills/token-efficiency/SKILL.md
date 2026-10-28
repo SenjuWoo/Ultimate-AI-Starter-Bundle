@@ -40,9 +40,9 @@ Time spent waiting in a process does not itself generate model tokens, though
 tool notifications, hosted execution and later model calls may have costs.
 
 For GitHub releases, record the exact pushed SHA, discover its required runs,
-and wait with `TOOLS/Wait-External.ps1 -GitHubRun <run-id>`. It runs
-`gh run watch <run-id> --compact --exit-status` and, on failure, fetches
-`gh run view <run-id> --log-failed` once. Verify every required check
+and wait with `TOOLS/Wait-External.ps1 -GitHubRun auto -Repo OWNER/REPO -Sha FULL_SHA`.
+It reports the explicit verdict for that SHA with bounded polling and failure
+tails; `ci-convergence` owns the truth table. Verify every required check
 succeeded on that SHA before publishing.
 No runs, failed/cancelled runs, or a different SHA are not success.
 Respect the host's wait limits and keep the user informed without busy polling.

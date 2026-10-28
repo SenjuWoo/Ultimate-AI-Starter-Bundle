@@ -1,10 +1,10 @@
 ﻿<#
 .SYNOPSIS
-  Content packs: detection, remembered choices, instruction blocks, skill retirement.
+  Content packs: opt-in defaults, remembered choices, instruction blocks, skill retirement.
 
 .DESCRIPTION
   The Skyrim pack used to install for everyone. These cases pin the rules that
-  replaced that: evidence turns a pack on, an explicit choice wins and is
+  replaced that: Skyrim is opt-in, an explicit choice wins and is
   remembered, the marked instruction block follows the selection, an exact copy
   of an older bundle's long Skyrim section is replaced (anything else in the
   file is kept), and a disabled pack's unmodified skills are retired.
@@ -44,13 +44,14 @@ try {
     foreach ($d in @((Join-Path $docs 'My Games'), (Join-Path $appData 'Vortex'))) { if (Test-Path -LiteralPath $d) { Remove-Item -LiteralPath $d -Recurse -Force } }
     & $case.make
     $sel = Resolve-UabsPackSelection -PackRoot $PackRoot -StatePath $state -EvidenceArgs $ev
-    Assert ($sel.Enabled -contains 'skyrim') ("Evidence was not detected: " + $case.name)
-    Assert ($sel.ExcludedSkills.Count -eq 0) ("Enabled pack still excluded skills: " + $case.name)
+    Assert ($sel.Disabled -contains 'skyrim') ("Game detection opted into Skyrim: " + $case.name)
+    Assert ($sel.ExcludedSkills.Count -eq @($catalog.packs.skyrim.skills).Count) ("Default-off pack did not exclude its skills: " + $case.name)
+    Assert (@(Find-UabsPackEvidence -Detect $catalog.packs.skyrim.detect @ev).Count -gt 0) ("Evidence fixture was not detected: " + $case.name)
   }
   $toolDir = Join-Path $fx 'Forge'; New-Item -ItemType Directory -Force -Path $toolDir | Out-Null
   Get-ChildItem -LiteralPath (Join-Path $appData 'Vortex') | Remove-Item -Recurse -Force
   $env:SKYRIM_FORGE_ROOT = $toolDir
-  Assert ((Resolve-UabsPackSelection -PackRoot $PackRoot -StatePath $state -EvidenceArgs $ev).Enabled -contains 'skyrim') 'A tool env var pointing at a real folder is evidence.'
+  Assert ((Resolve-UabsPackSelection -PackRoot $PackRoot -StatePath $state -EvidenceArgs $ev).Disabled -contains 'skyrim') 'An existing tool must not silently opt into Skyrim.'
   $env:SKYRIM_FORGE_ROOT = Join-Path $fx 'missing'
   Assert ((Resolve-UabsPackSelection -PackRoot $PackRoot -StatePath $state -EvidenceArgs $ev).Enabled.Count -eq 0) 'A stale env var pointing nowhere was taken as evidence.'
   $env:SKYRIM_FORGE_ROOT = $null

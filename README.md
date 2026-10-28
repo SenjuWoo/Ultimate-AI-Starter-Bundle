@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.25.3 -->
+<!-- Ultimate AI Starter Bundle v8.26.0 -->
 
 The bundle installs the common compiler suite by default: Go, Rust/Cargo, GCC, CMake/Ninja, Xmake, .NET SDK, MSVC C++ and the Windows SDK. Existing working installations and project pins are reused. Fresh installations may require several GB and Windows elevation; `-SkipBuildTools` skips this suite, and `-SkipRuntimes` skips all runtime/compiler provisioning. Run `TOOLS/Install-BuildTools.ps1 -CheckOnly` for compile-and-run verification. Logs: `%LOCALAPPDATA%/Ultimate-AI-Starter-Bundle/logs/build-tools.log`. Full-Offline caches the listed bundle payloads; missing shared runtimes/compilers still need vendor downloads. `-Mode BundledOnly` prevents compiler downloads and reports missing prerequisites.
 
@@ -10,7 +10,7 @@ Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tool
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.25.3
+# Ultimate AI Starter Bundle v8.26.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -107,7 +107,7 @@ The 126 general **skills** (plus 48 with the Skyrim pack) use a compact discover
 
 The always-on core is `context7` (library docs; keyless resolves library IDs only, `CONTEXT7_API_KEY` unlocks `query-docs`), `headroom` (context compression) and the bundle's `toolbox` (three small tools: `find`, `describe`, `call`). The official `github` server joins them only where the `gh` CLI is not signed in: `gh` covers repos, PRs, Actions and releases with no tool list, so the server would sit unused in every chat. Everything task-specific stays out of every chat until a task needs it, **including servers a tool's own installer registered machine-wide** (RimWorldForge, AvatarForge, Melty): the installer saves an exact copy and removes the machine-wide entry. Keep one machine-wide on purpose with `UABS_KEEP_GLOBAL_MCP=<id>`. Other independently configured servers are preserved. Schema bytes are not per-turn bills: filtering, deferred discovery, caching and tool calls determine actual usage.
 
-**You do not switch anything on.** When a task needs a project tool (Skyrim Forge, houseCARL, RimWorldForge, Blender, Unity, Godot, a browser, the GitHub API ...), your AI asks the toolbox, which starts that server in the same chat: no restart, no command, no config edit. The tool's own CLI keeps working too. For a project you use daily, the agent can also wire it natively with `Set-McpProfile.ps1 -Auto -Path <project>`; that copy loads in the next chat opened there.
+**You do not switch anything on.** When a task needs a project tool (Skyrim Forge, houseCARL, RimWorldForge, Blender, Unity, Godot, a browser, the GitHub API ...), your AI asks the toolbox, which starts that server in the same chat: no restart, no command, no config edit. The tool's own CLI keeps working too. For a project you use daily, the agent can also wire it natively with `TOOLS/Set-McpProfile.ps1 -Auto -Path <project>`; that copy loads in the next chat opened there.
 
 When the matching local tool is installed, Hermes also gets native named profiles without loading them into default: `code` adds codebase-memory, `roblox` adds the official Roblox Studio MCP, and `skyrim` connects houseCARL while Skyrim Forge remains available through its routed skill/CLI. Forge MCP compatibility is explicit.
 
@@ -312,8 +312,16 @@ runtimes stay with their app. A package/version conflict is reported instead
 of silently installing another interpreter. After replacing Python, run
 `TOOLS\Set-SharedPython.ps1 -Apply` and reopen agent apps.
 
-RTK OSS is deliberately pinned to **1.0.0** in both the installer and component
-updater: the narrow rewrite hook and measurements are version-specific. A
+Shared-runtime contract (read by Skyrim Forge and Reverse THIS! too): `UABS_PYTHON`
+names the shared base interpreter. Setup writes it at User scope together with
+`UV_PYTHON` and `UV_PYTHON_DOWNLOADS=never`; a Process value wins over User. When
+it is unset, consumers fall back to their own validated discovery (PATH, then the
+official install manager); when it is set but invalid, they refuse rather than
+guess. Node/npm is discovered from PATH; no variable is exported for it.
+`TESTS/Test-SharedPython.ps1` proves the export and the refusal.
+
+RTK OSS is deliberately pinned in CATALOG.json (currently **1.1.0**) for both the
+installer and component updater: the narrow rewrite hook and measurements are version-specific. A
 new upstream release is not automatically treated as tested. RTK fallback
 archives must match the shipped SHA-256 manifest; a rejected replacement
 leaves the previous executable intact. Successful replacements retain a
@@ -364,7 +372,7 @@ for diagnostics, validation scope and persistent GitHub setup.
 ### Google Antigravity (Gemini 4 Argon)
 
 Antigravity is a first-class provider: the same SOUL + AIO contract, the same
-126 general skills (plus 49 with the Skyrim pack) and the pack's always-on MCP servers, written where Antigravity
+126 general skills (plus 48 with the Skyrim pack) and the pack's always-on MCP servers, written where Antigravity
 actually reads them — verified against the app's own `agy-customizations` guide
 and `antigravity.google/docs/rules|skills|mcp`, not recalled:
 
@@ -372,7 +380,7 @@ and `antigravity.google/docs/rules|skills|mcp`, not recalled:
 |---|---|---|
 | Global rules | `~/.gemini/config/AGENTS.md` | also read: `~/.gemini/AGENTS.md`; 24,000-byte cap per file, 20,000-token shared budget, so the bundle stays near 14 KB and leaves detail in skills |
 | Workspace rules | — | `AGENTS.md`, `GEMINI.md`, `.agents/AGENTS.md`, `.agents/rules/*.md` in your projects; the installer never writes there |
-| Global skills | `~/.gemini/config/skills/<name>/SKILL.md` | 126 general skills, plus 49 with the Skyrim pack, one level deep, exactly the layout its scanner expects |
+| Global skills | `~/.gemini/config/skills/<name>/SKILL.md` | 126 general skills, plus 48 with the Skyrim pack, one level deep, exactly the layout its scanner expects |
 | MCP servers | `~/.gemini/config/mcp_config.json` | `mcpServers`, stdio or Streamable HTTP; legacy SSE is unsupported — plus per-project `.agents/mcp_config.json`, untouched |
 
 ```powershell
@@ -740,7 +748,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ### Skyrim Forge
 
-**Skyrim Forge 6.4.0** ([source](https://github.com/SenjuWoo/SkyrimForge)) is installed
+**Skyrim Forge 6.4.1** ([source](https://github.com/SenjuWoo/SkyrimForge)) is installed
 only with the Skyrim pack. CATALOG.json pins its tag, archive and SHA-256.
 The bundle verifies the archive and delegates existing deployments to Forge's
 preserving updater. Private workspace trees move intact, edited owner files
@@ -806,7 +814,7 @@ Historical notes describe their release, not the current installation policy.
 
 Skills teach **portable discovery**. Paths are resolved from env vars, `LOCALAPPDATA`, and `PATH` — never hardcoded drive letters or usernames.
 
-If a tool is missing, the AI should recommend `INSTALL-AIO.ps1`, `Ensure-Tools.ps1`, or `Update-From-GitHub.ps1` — not invent paths or fake MCP results.
+If a tool is missing, the AI should recommend `INSTALL-AIO.ps1`, `TOOLS/Ensure-Tools.ps1`, or `TOOLS/Update-From-GitHub.ps1` — not invent paths or fake MCP results.
 
 ## Third-party components
 
@@ -922,6 +930,26 @@ mode that works.
 
 ## What's new
 
+**v8.26.0** makes CI status explicit for the exact commit, bounds waiting and
+failure logs, and adds a generated [maintainer index](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/MEMORY.md) plus a docs
+gate. Companion tools remain independently owned; Skyrim stays optional.
+
+Maintainers: [ci-convergence](_CANONICAL-SKILLS/ci-convergence/SKILL.md) owns
+the lifecycle and branch policy. Releases remain manual after green main CI,
+through `TOOLS/Build-Release.ps1`; pushing a tag does not publish this bundle.
+`TOOLS/Clean-MergedBranches.ps1` reports before any `-Apply` deletion.
+`TOOLS/Set-GitHubProtection.ps1` plans the six observed required checks;
+`-Apply` reproduces protection while retaining existing review restrictions.
+Regenerate `MEMORY.md` through `TOOLS/Update-MemoryIndex.ps1` after changing
+source tool/catalog/skill routing; `python TOOLS/verify_docs.py` rejects drift.
+
+The full pack CI targets Windows PowerShell 5.1 Desktop and Python 3.12–3.15.
+PowerShell 7 is checked locally for changed scripts. Tool-specific isolated
+environments retain their own runtime requirements and project pins. Node
+tools require a supported LTS release, with 22.12 as the minimum where required;
+the local audit used Node 24.22.1. New upstream runtimes are not certified merely
+because an installer can discover them. See the [Node release schedule](https://nodejs.org/en/about/previous-releases).
+
 [CHANGELOG.md](CHANGELOG.md) is the release history. Detailed measurements and
 old decisions live in [docs/history/](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/), not a second README changelog.
 
@@ -962,6 +990,8 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.26.0** - Exact-SHA lifecycle, bounded diagnostics and gated maintainer documentation. [Changes](docs/history/V8.26.0-CHANGELOG.md).
 
 **v8.25.3** - Pins Skyrim Forge 6.4.0 (SDK vault, CommonLibSSE-NG scaffold); Reverse stays 1.6.0. [Changes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.25.3-CHANGELOG.md).
 

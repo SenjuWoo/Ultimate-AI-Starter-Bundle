@@ -46,7 +46,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: ["3.14", "3.15"]
+        python: ["3.12", "3.13", "3.14", "3.15"]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -138,7 +138,11 @@ jobs:
 
       - name: Check declared versions
         shell: powershell
-        run: python .github/scripts/check_versions.py
+        run: |
+          python .github/scripts/check_versions.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TOOLS/verify_docs.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
   # Skyrim Forge is developed and released in github.com/SenjuWoo/SkyrimForge,
   # which runs Forge's own matrix (Python, native Go writer, reproducible
