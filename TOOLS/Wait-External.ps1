@@ -187,8 +187,11 @@ if ($GitHubRun -or $Sha) {
             $delay = [Math]::Min(30, $delay * 2)
         } while ($clock.Elapsed.TotalSeconds -lt $TimeoutSeconds)
     } catch {
-        $snapshot.Verdict = 'unknown'
-        $snapshot.Reason = $_.Exception.Message
+        # The deadline landing inside a re-poll keeps the last complete observation (pending), not unknown.
+        if (-not ($snapshot.Verdict -eq 'pending' -and $_.Exception.Message -in @('GitHub request timeout', 'GitHub output timeout'))) {
+            $snapshot.Verdict = 'unknown'
+            $snapshot.Reason = $_.Exception.Message
+        }
     }
 
     $passed = @($snapshot.Checks | Where-Object { $_.State -eq 'passed' }).Count

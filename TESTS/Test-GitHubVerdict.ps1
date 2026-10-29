@@ -75,6 +75,7 @@ public class GhFixture {
             string countFile = Path.Combine(root, "polls.txt");
             int count = File.Exists(countFile) ? Int32.Parse(File.ReadAllText(countFile)) : 0;
             File.WriteAllText(countFile, (count + 1).ToString());
+            if (count > 0 && File.Exists(Path.Combine(root, "hang-repoll"))) Thread.Sleep(30000);
             if (count > 0 && File.Exists(Path.Combine(root, "runs-next.json"))) {
                 File.Copy(Path.Combine(root, "runs-next.json"), Path.Combine(root, "runs.json"), true);
                 File.Copy(Path.Combine(root, "checks-next.json"), Path.Combine(root, "checks.json"), true);
@@ -131,6 +132,10 @@ public class GhFixture {
     if ([int]([IO.File]::ReadAllText((Join-Path $root 'polls.txt')).Trim()) -lt 2 -or $r.Text -notmatch 'url=https://example.invalid/runs/100') { throw 'Pending did not poll or retain URL' }
 
     Reset-Fixture 'pending'
+    [IO.File]::WriteAllText((Join-Path $root 'hang-repoll'), '')
+    $null = Invoke-Case 'deadline inside a re-poll keeps the observed pending' 8 'pending' @() 4
+
+    Reset-Fixture 'pending'
     $run = @{ id = 100; workflow_id = 1; event = 'push'; name = 'CI'; head_sha = $sha; status = 'completed'; conclusion = 'success'; html_url = 'https://example.invalid/runs/100' }
     Write-FixtureJson 'runs-next.json' @(@{ workflow_runs = @($run) })
     Write-FixtureJson 'checks-next.json' @(@{ check_runs = @(@{ id = 200; name = 'gate'; app = @{ id = 1 }; head_sha = $sha; status = 'completed'; conclusion = 'success' }) })
@@ -182,7 +187,7 @@ public class GhFixture {
     Reset-Fixture
     [IO.File]::WriteAllText((Join-Path $root 'hang'), '')
     $null = Invoke-Case 'hung gh request respects overall deadline' 3 'unknown' @() 3
-    Write-Host 'GITHUB VERDICT GATE: PASS (18 cases)'
+    Write-Host 'GITHUB VERDICT GATE: PASS (19 cases)'
 } finally {
     $env:PATH = $savedPath
     $env:UABS_CI_FIXTURE = $savedFixture
