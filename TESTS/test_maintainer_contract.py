@@ -160,6 +160,25 @@ class MaintainerTests(unittest.TestCase):
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn(new_tip, git("ls-remote", "--heads", "origin", "merged"))
 
+    def test_tool_roots_hint_is_read_and_missing_folders_dropped(self):
+        # UABS_TOOL_ROOTS is the shared ';'-separated "extra tool folders" hint that
+        # Forge and Reverse THIS! read too; the machine map lists what it resolves.
+        with tempfile.TemporaryDirectory(prefix="Tool roots ") as td:
+            present = Path(td) / "my tools"
+            present.mkdir()
+            missing = Path(td) / "gone"
+            script = "; ".join([
+                ". '%s'" % (ROOT / "TOOLS" / "UABS-Common.ps1"),
+                "(Get-UabsSkyrimToolDirectories) -join '|'",
+            ])
+            env = dict(os.environ, UABS_TOOL_ROOTS="%s;%s;" % (missing, present))
+            result = subprocess.run(["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", script],
+                                    env=env, capture_output=True, text=True, timeout=120)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            found = [Path(p) for p in result.stdout.strip().split("|") if p]
+            self.assertIn(present, found, "an existing UABS_TOOL_ROOTS folder was not read")
+            self.assertNotIn(missing, found, "a missing UABS_TOOL_ROOTS folder was reported")
+
     def test_rulesets_block_rewrites_for_everyone_and_gate_only_merges(self):
         required = ["Pack gate (Windows PowerShell 5.1, Python 3.14)", "Version strings agree"]
         mock_source = r'''import json, os, pathlib, sys

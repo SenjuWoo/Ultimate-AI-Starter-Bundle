@@ -1,21 +1,20 @@
 # Bundle audit state
 
-## 8.27.0 independence pass — 2026-10-29 (in progress)
+## Completed 8.27.0 independence pass — 2026-10-29
 
-- Goal: the three repos develop and release independently; the bundle never needs a release because Forge or Reverse THIS! released.
-- Root cause found: the bundle pinned exact companion versions/digests in CATALOG.json, committed their zips to git (9 Forge zips in the last 43 commits) and gated on a copied Forge skill list, so every companion release forced a bundle release.
-- Plan (one line per workstream):
-  1. Trunk flow in all three: maintainer pushes to main after the local gate; CI on the exact SHA; release.yml self-publishes an untagged VERSION; rulesets block force-push/deletion for everyone and gate only PR merges; Dependabot PRs auto-merge when green.
-  2. Bundle tracks the latest companion releases: CATALOG floor (min_version) + online latest with API digest and SHA256SUMS verification, bundled copy only for offline; installed newer kept; runtime contract checks; weekly CI against latest.
-  3. Companion zips leave git; Full-Offline fetches and verifies them at release build; third-party payloads stay pinned in git (reason recorded).
-  4. Forge skill list decoupled: frozen legacy names for migration plus the installed Forge's own tree at runtime; no copied inventory gate.
-  5. Release provenance: SHA256SUMS, BUILD-RECEIPT, SBOM (SPDX), VALIDATION (observed checks), MANIFEST and GitHub build attestation, generated in release.yml.
-  6. One version source: `check_versions.py --set` rewrites every declared spot; README stops restating companion versions/counts.
-  7. Claims and metadata: descriptions/homepages, ShugokiFable URLs in release notes, houseCARL table, rtk corpus row, single ownership section linked from Forge and Reverse THIS! (anchor gated).
-  8. Skyrim cost proof: default install adds zero skills/MCP/instruction bytes; numbers for pack on/off; triple-install ownership diff.
-  9. Forge final pass: auto-release on main, admin-bypass removed from integrity rule, version-free skill text, historical README sections labelled.
-  10. Reverse THIS! final pass: doctor re-verifies recorded file digests (changed/unverified states), auto-release with build receipt, homepage.
-  11. Release all three from green SHAs, verify downloaded bytes, live install, STATE handoff.
+- Goal completed: the three repositories develop and release independently. The bundle pins no companion version (CATALOG.json holds a floor); a Forge or Reverse THIS! release never needs a bundle release. Proven live: bundle 8.27.0's Full-Offline picked up Forge 6.5.0 and Reverse 1.7.0, both released minutes earlier, and the live install then moved Forge 6.4.2 -> 6.5.1 with no bundle change.
+- Releases (each published by its own `release.yml` from the exact pushed SHA, no human tag; downloaded, `sha256sum -c` clean, GitHub build attestation verified to `release.yml` on `main`):
+  - Bundle https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.27.0 at d3599f3a73665700802ec940e8bfce64ea3754a8: Core 45,347,809 B sha256 df7812fa7fbef37a8b111ab35d85fb72c8a2d50d43d8bad6bafbe7d491d3e3a5; Full-Offline 141,753,844 B sha256 018069817734d37387b92d26bb405ea8e9948506fd0afb02579ab66040fd400a; plus SHA256SUMS, BUILD-RECEIPT (run 40815582771, win25-vs2026, Python 3.14.9), SBOM (SPDX 2.3, 33 packages), VALIDATION (11 observed checks, all success), MANIFEST.
+  - Forge https://github.com/SenjuWoo/SkyrimForge/releases/tag/v6.5.1 at 012765ba9f62e12fc00bb4c1d69db7fdd6d28d52 (6.5.0 at 1cf795b the same day): self-publishing workflow, version-free skill, README history labelled, personal path and drive-letter scan removed, Forge-side contract tests. Skyrim-Forge-6.5.1.zip sha256 5b7314f708e52b60b87598ead503e12ebbb0a83de31a7e45b39713c13231f82f.
+  - Reverse THIS! https://github.com/SenjuWoo/reverse-this/releases/tag/v1.7.0 at acee844903b04dffb70e3a444907c104c60cbd85: doctor re-hashes receipt files (CHANGED/UNVERIFIED states; all 59 live tools verify), self-publishing workflow. Reverse-This-1.7.0.zip sha256 32da083f29b03a8921a419de415354fe48013ee7a554adb2cd337c3a9968a747.
+- Trunk flow live on all three: rulesets `integrity` (no force-push/deletion, no bypass) and `checks` (PR merges wait for CI, admins push directly; bundle requires 8 checks incl. "Bundle installs latest companions end to end"); classic protection retired; Dependabot auto-merge workflow; Wait-External reads effective rules. One red push per repo during the pass (bundle `$LASTEXITCODE` after an in-process script; Forge 8.3 short path in a new test) — both release workflows refused the red SHA and were fixed forward.
+- Gates: `check_versions.py --set` bumps every declaration (caught the README first-line comment it missed) and rejects restated companion versions/Skyrim counts; `#ownership` anchor guarded; workspace AIO copy guarded (it had drifted); release contracts 153/0 run against the latest fetched companions; full Windows pack gate PASS; CI weekly against latest companions.
+- Skyrim cost (pack off, the default): 0 skill index entries, 0 MCP servers, 0 instruction bytes (pack blocks only for enabled packs; Forge writes its skills only when on; global Forge MCP entries retired). Pack on (this machine): +48 Forge skills (6,859 index chars), +1,808-byte instruction block per provider file, 0 global MCP servers (Forge/houseCARL start through the toolbox in Skyrim projects). Discoverability: the installer prints "enable explicitly with -Packs skyrim"; README says the same.
+- Ownership proof (W14): bundle install -> Forge Install-Skyrim-Pack (5 providers) -> bundle install left all 7,819 provider skill files byte-identical; 8.26.1 -> 8.27.0 changed exactly ci-convergence, Setup-HouseCarl, skyrim-forge SKILL/INSTALLATION x5 providers.
+- Live: install exit 0 twice, doctor PASS 8.27.0 0/0, Forge 6.5.1, Reverse 1.7.0 (git checkout clean; the superseded uncommitted 1.6.2 plan is kept in its sandbox/backups), CLAUDE.md content paragraph intact and new trunk line present, Claude settings.json and Codex model/effort unchanged, no global skyrim-forge entry.
+- Metadata: bundle description lists six providers; Forge and Reverse homepages set; ShugokiFable URLs fixed in 14 release notes; no ShugokiFable in any tree.
+- Deliberately not changed: tracked MANIFEST.json (deeply wired into the builder and verifier, cheap in packed history); third-party offline payloads stay in git (reason in docs/COMPANION-ARCHITECTURE.md); git history not rewritten (it would move every published tag); Forge's own STATE "Next" lines follow its next-release convention.
+- Next: nothing pending. Push to main after `TESTS/Test-Pack.ps1`; bump with `python .github/scripts/check_versions.py --set X.Y.Z` plus the changelog sections; the push publishes itself. Not exercised: game/GUI targets, clean-machine install, paid inference.
 
 ## Completed 8.26.1 Forge/bundle MCP ownership fix — 2026-10-29
 
