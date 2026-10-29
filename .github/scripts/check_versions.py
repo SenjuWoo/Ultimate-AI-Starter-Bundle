@@ -93,6 +93,14 @@ def main():
             for field in ('"result"', '"read_only_ready"'):
                 if not env or field not in env[0]:
                     problems.append("pinned Forge doctor no longer emits %s, which TOOLS/Install-SkyrimForge.ps1 reads" % field)
+            # Contract: standalone Forge registration defers to the toolbox catalog INSTALL-AIO copies
+            # to toolbox-profiles.json; without it each installer undoes the other's MCP entries.
+            reg = [payload.read(p).decode("utf-8-sig", "replace") for p in payload.namelist()
+                   if p.endswith("/Register-MCP.ps1") and p.count("/") == 1]
+            if not reg or "toolbox-profiles.json" not in reg[0] or "DEFERRED" not in reg[0]:
+                problems.append("pinned Forge Register-MCP.ps1 does not defer to the bundle toolbox (toolbox-profiles.json)")
+        if "toolbox-profiles.json" not in read("INSTALL-AIO.ps1"):
+            problems.append("INSTALL-AIO.ps1 no longer writes toolbox-profiles.json, which Forge Register-MCP.ps1 reads")
         if names != expected_skills:
             problems.append("PACKS.json Skyrim inventory differs from pinned Forge canonical tree")
         for rel in ("README.md", "START-HERE.txt", "AIO-GUIDE.md"):

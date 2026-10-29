@@ -2356,7 +2356,8 @@ def test_hermes_forge_probe_bypasses_cli_startup_and_hook_prompts() -> None:
     register = forge_read("Register-MCP.ps1")
     if register is None:
         return  # Core: no pinned archive
-    hermes = register.split("'Hermes' {", 1)[1].split("\n            }", 1)[0]
+    # Scope to the registration switch; earlier helpers may also branch on 'Hermes'.
+    hermes = register.split("function Invoke-Registration", 1)[1].split("'Hermes' {", 1)[1].split("\n            }", 1)[0]
     assert "_probe_single_server" in hermes, (
         "Hermes Forge verification must use the direct MCP probe instead of starting the full Hermes CLI"
     )
