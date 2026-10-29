@@ -1,5 +1,12 @@
 # Bundle audit state
 
+## 8.26.1 Forge/bundle MCP ownership fix — 2026-10-29 (in progress)
+
+- Problem: Forge's standalone `Register-MCP.ps1` wrote a global `skyrim-forge` entry and the bundle installer removed it (toolbox serves Forge on demand), so each installer undid the other.
+- Forge 6.4.2 (PR 30, tag at 9a568aa196d4eafbb9049deaab35ebf284a884a7, 14/14 checks): registration reports `DEFERRED` per provider whose MCP config has the bundle `toolbox` entry while the bundle catalog `toolbox-profiles.json` lists `skyrim-forge`; `-Global` overrides. Bridge suite 9/9 including a real Kimi deferral/`-Global` run; full Forge validator PASS. Release asset Skyrim-Forge-6.4.2.zip 4,833,006 B sha256 4bb55d67d44b2c3ac0593c56d4db5dd6d3fae0ce3f5a88a3454e447953d3d496 matches GitHub digest and SHA256SUMS.
+- Bundle 8.26.1 pins it; `check_versions.py` fails if the pinned Forge stops deferring or INSTALL-AIO stops writing `toolbox-profiles.json` (proven failing on the 6.4.1 pin). The Hermes probe contract now scopes to `Invoke-Registration`.
+- Next: CI, hands-off v8.26.1 release, byte check, live install, then confirm a standalone Forge registration defers on this machine.
+
 ## Completed 8.26.0 tri-repo sync — 2026-10-29
 
 - Goal completed: three cooperating owners, proven drift gates, Skyrim optional, hands-off releases, stale branches cleared. Live versions: Bundle 8.26.0, Skyrim Forge 6.4.1, Reverse THIS! 1.6.1.

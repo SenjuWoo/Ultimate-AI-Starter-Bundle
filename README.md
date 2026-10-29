@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.26.0 -->
+<!-- Ultimate AI Starter Bundle v8.26.1 -->
 
 The bundle installs the common compiler suite by default: Go, Rust/Cargo, GCC, CMake/Ninja, Xmake, .NET SDK, MSVC C++ and the Windows SDK. Existing working installations and project pins are reused. Fresh installations may require several GB and Windows elevation; `-SkipBuildTools` skips this suite, and `-SkipRuntimes` skips all runtime/compiler provisioning. Run `TOOLS/Install-BuildTools.ps1 -CheckOnly` for compile-and-run verification. Logs: `%LOCALAPPDATA%/Ultimate-AI-Starter-Bundle/logs/build-tools.log`. Full-Offline caches the listed bundle payloads; missing shared runtimes/compilers still need vendor downloads. `-Mode BundledOnly` prevents compiler downloads and reports missing prerequisites.
 
@@ -10,7 +10,7 @@ Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tool
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.26.0
+# Ultimate AI Starter Bundle v8.26.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -748,7 +748,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ### Skyrim Forge
 
-**Skyrim Forge 6.4.1** ([source](https://github.com/SenjuWoo/SkyrimForge)) is installed
+**Skyrim Forge 6.4.2** ([source](https://github.com/SenjuWoo/SkyrimForge)) is installed
 only with the Skyrim pack. CATALOG.json pins its tag, archive and SHA-256.
 The bundle verifies the archive and delegates existing deployments to Forge's
 preserving updater. Private workspace trees move intact, edited owner files
@@ -990,6 +990,8 @@ Source validation is not a substitute for local runtime proof.
   connected-editor behavior, paid inference quality or GPU performance.
 
 ## Version
+
+**v8.26.1** - Pins Skyrim Forge 6.4.2: Forge's MCP registration defers to the bundle toolbox, so the two installers stop undoing each other. [Changes](docs/history/V8.26.1-CHANGELOG.md).
 
 **v8.26.0** - Exact-SHA lifecycle, bounded diagnostics and gated maintainer documentation. [Changes](docs/history/V8.26.0-CHANGELOG.md).
 
