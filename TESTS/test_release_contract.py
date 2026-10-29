@@ -6290,6 +6290,9 @@ def test_release_workflow_publishes_only_a_green_untagged_main_sha() -> None:
         assert needle in wf, f"release workflow lost its gate: {needle}"
     for forbidden in ("gh release delete", "--clobber", "git push --force", "git tag -f"):
         assert forbidden not in wf, f"release workflow can replace published bytes: {forbidden}"
+    # A skipped run is filed under main's newest commit and fails its exact-SHA verdict.
+    assert "\n    if: github.event.workflow_run" not in wf, "the release job can be skipped instead of deciding to no-op"
+    assert 'if [ "$CI_GREEN" != "true" ]' in wf, "a non-green CI trigger does not stop publication"
     for line in wf.splitlines():
         if "uses:" in line:
             assert re.search(r"@[0-9a-f]{40}\b", line), f"unpinned action: {line.strip()}"

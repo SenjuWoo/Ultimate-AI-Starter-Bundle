@@ -36,8 +36,8 @@
  },
  {
   "path": ".github/workflows/release.yml",
-  "size": 7673,
-  "sha256": "2613fd30c83435be02d4d5ed06dbff0423fc09f91e37d83140d835efad18e2b1"
+  "size": 8116,
+  "sha256": "d27db18faeb98651492aa7824ef65f1048bb15a30920286b7595cc74569ec518"
  },
  {
   "path": ".gitignore",
@@ -33061,8 +33061,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 22326,
-  "sha256": "897d21138019967d76ac7c0bcf59c5640aadd6ac7b75caca043b3dbf97acf163"
+  "size": 22694,
+  "sha256": "d99fc18a4254d6061d63f5866de7f842c175435f58bd3db60876bc63cfdf942e"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -33461,8 +33461,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 340414,
-  "sha256": "02a869a1c69e43986a2a7996552635036628415477c2c846ee24f6dec28d54da"
+  "size": 340725,
+  "sha256": "0df432d7c59d2526c01be80d9e7e418d6722e2c36db61269e8805b4af3c9ed82"
  },
  {
   "path": "TESTS/test_release_provenance.py",
