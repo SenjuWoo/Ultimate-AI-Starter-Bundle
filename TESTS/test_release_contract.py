@@ -34,22 +34,34 @@ BARE = VERSION.lstrip("vV")                                               # 7.9.
 
 
 def forge_pin() -> dict:
-    """The one Skyrim Forge release this bundle installs (CATALOG.json)."""
+    """Skyrim Forge's CATALOG.json entry: a floor and an asset template, never a pinned release."""
     cat = json.loads((ROOT / "BUNDLED-TOOLS" / "CATALOG.json").read_text(encoding="utf-8-sig"))
     rows = [c for c in cat["components"] if c["id"] == "skyrim-forge"]
-    assert len(rows) == 1, "CATALOG.json must pin exactly one Skyrim Forge release"
+    assert len(rows) == 1, "CATALOG.json must declare Skyrim Forge exactly once"
     return rows[0]
 
 
-FORGE_ZIP = ROOT / "BUNDLED-TOOLS" / "offline" / str(forge_pin().get("asset", ""))
+def fetched(component: str) -> dict | None:
+    """The latest release TOOLS/Get-Companions.ps1 fetched (CI runs it before these
+    contracts, release.yml before building), or None where nothing was fetched."""
+    index = ROOT / "BUNDLED-TOOLS" / "offline" / "companions.json"
+    if not index.is_file():
+        return None
+    rows = [r for r in json.loads(index.read_text(encoding="utf-8-sig")).get("companions", []) if r.get("id") == component]
+    return rows[0] if rows else None
+
+
+FORGE = fetched("skyrim-forge")
+FORGE_ZIP = ROOT / "BUNDLED-TOOLS" / "offline" / (FORGE["asset"] if FORGE else "Skyrim-Forge-not-fetched.zip")
 
 
 def forge_read(rel: str) -> str | None:
-    """A file from the pinned Forge archive, or None where the archive is absent.
+    """A file from the latest Forge release CI fetched, or None where nothing was fetched.
 
-    Forge is released from github.com/SenjuWoo/SkyrimForge again. Full-Offline
-    and the git checkout carry the exact pinned archive; Core does not, and a
-    Core run skips the checks that need Forge's own files.
+    Forge releases on its own; the bundle pins no version. These contracts read
+    whatever Forge released last, so a Forge release that breaks what the bundle
+    consumes turns the bundle's CI red (it also runs weekly). Core and offline
+    runs skip the checks that need Forge's own files.
     """
     if not FORGE_ZIP.is_file():
         return None
@@ -73,9 +85,9 @@ def ps_code(path: Path) -> str:
 
 
 def forge_version() -> str:
-    """The pinned Forge version, declared once in CATALOG.json."""
-    version = str(forge_pin().get("version", ""))
-    assert re.fullmatch(r"\d+\.\d+\.\d+", version), "CATALOG.json skyrim-forge version is not X.Y.Z"
+    """The Forge release these contracts check: the fetched latest, else the catalog floor."""
+    version = str(FORGE["version"] if FORGE else forge_pin().get("min_version", ""))
+    assert re.fullmatch(r"\d+\.\d+\.\d+", version), "Forge version or floor is not X.Y.Z"
     return version
 
 
@@ -237,9 +249,9 @@ def test_documented_skill_counts() -> None:
     assert not missing, f"PACKS.json names skills the tree does not have: {missing}"
     skyrim = len(packs["skyrim"]["skills"])
     general = actual - len({s for p in packs.values() if not p.get("owner") for s in p["skills"]})
-    assert f"{general} general skills per AI" in readme and f"plus {skyrim} with the Skyrim pack" in readme, (
-        "README skill count drift"
-    )
+    assert f"{general} general skills per AI" in readme, "README skill count drift"
+    # Forge owns its pack's size; a restated number goes stale on Forge's next release.
+    assert skyrim and not re.search(r"plus \d+ with the Skyrim pack", readme), "README restates Forge's skill count"
     assert f"{actual} canonical skills total" in changelog, "CHANGELOG skill count drift"
     assert str(actual) in history, "release history does not state the shipped skill count"
     assert validation.get("canonical_skills") == actual, "VALIDATION canonical skill count drift"
@@ -1368,45 +1380,78 @@ def test_readme_model_guidance_matches_the_shipped_config() -> None:
             "that alias" % alias)
 
 
-def test_forge_release_is_pinned_and_complete() -> None:
-    """Forge is released from its own repository; this bundle pins one release.
+def test_reverse_latest_release_keeps_the_interface_the_bundle_calls() -> None:
+    """TOOLS/Install-ReverseThis.ps1 calls Reverse THIS!'s own updater and installer.
 
-    Two repositories are how 7.8.0 shipped an installer that called a contract
-    field Forge never emitted. The pin (tag, asset, SHA-256) makes the version
-    single-sourced, and CI's forge-bundle-install job installs exactly that
-    archive and runs `forge doctor`.
+    Reverse THIS! releases on its own; the bundle pins no version. These are the
+    entry points and parameters the bundle invokes, checked against the latest
+    release CI fetched, so a release that renames one turns the bundle red.
+    """
+    entry = next(c for c in json.loads(read(ROOT / "BUNDLED-TOOLS" / "CATALOG.json"))["components"] if c["id"] == "reverse-this")
+    assert entry.get("install") == "latest-release" and entry.get("asset_template") == "Reverse-This-{version}.zip"
+    wrapper = read(ROOT / "TOOLS" / "Install-ReverseThis.ps1")
+    for call in ("-Destination $target -Archive $zip -Sha256 $digest", "'-Doctor'", "'-Only'", "'-InstallRoot'", "'-NoUpdate'", "'-Offline'"):
+        assert call in wrapper, f"Install-ReverseThis.ps1 no longer passes {call}"
+    release = fetched("reverse-this")
+    if not release:
+        return  # nothing fetched (Core, offline run)
+    archive = ROOT / "BUNDLED-TOOLS" / "offline" / release["asset"]
+    assert hashlib.sha256(archive.read_bytes()).hexdigest() == release["sha256"], "fetched Reverse THIS! differs from companions.json"
+    prefix = f"Reverse-This-{release['version']}/"
+    with zipfile.ZipFile(archive) as z:
+        assert z.read(prefix + "VERSION").decode("utf-8-sig").strip() == release["version"]
+        updater = z.read(prefix + "Update-ReverseThis.ps1").decode("utf-8-sig")
+        installer = z.read(prefix + "Install-Modkit.ps1").decode("utf-8-sig")
+    for name in ("$Destination", "$Archive", "$Sha256"):
+        assert name in updater.split("param(", 1)[1].split("$ErrorActionPreference", 1)[0], f"Reverse THIS! updater dropped {name}"
+    params = installer.split("param(", 1)[1].split("\n)", 1)[0]
+    for name in ("$Doctor", "$Only", "$InstallRoot", "$NoUpdate", "$Offline"):
+        assert name in params, f"Reverse THIS! installer dropped {name}"
+
+
+def test_forge_tracks_its_latest_release_and_is_complete() -> None:
+    """Forge releases from its own repository; the bundle pins no version.
+
+    Pinning made every Forge release force a bundle release. The catalog keeps a
+    floor and an asset template; the installer takes Forge's latest release,
+    verified against GitHub's digest and SHA256SUMS, and CI installs that latest
+    release end to end and re-runs weekly. 7.8.0 is why a contract field the
+    installer reads is still checked against the release that actually ships.
     """
     pin = forge_pin()
     version = forge_version()
-    assert pin.get("install") == "pinned-release" and pin.get("pack") == "skyrim"
+    assert pin.get("install") == "latest-release" and pin.get("pack") == "skyrim"
     assert pin.get("github") == {"owner": "SenjuWoo", "repo": "SkyrimForge"}
-    assert pin.get("release_tag") == f"v{version}", "Forge release tag does not match the pinned version"
-    assert pin.get("asset") == pin.get("offline_asset") == f"Skyrim-Forge-{version}.zip"
-    assert re.fullmatch(r"[0-9a-f]{64}", str(pin.get("sha256", ""))), "Forge pin has no SHA-256"
+    assert pin.get("asset_template") == "Skyrim-Forge-{version}.zip"
+    assert re.fullmatch(r"\d+\.\d+\.\d+", str(pin.get("min_version", ""))), "Forge has no version floor"
+    assert not set(pin) & {"version", "release_tag", "asset", "sha256", "offline_asset"}, "Forge is pinned again"
     assert not (ROOT / "BUNDLED-TOOLS" / "skyrim-forge").exists(), "vendored Forge source is back"
     root_ci = read(ROOT / ".github" / "workflows" / "ci.yml")
-    assert "  forge-bundle-install:" in root_ci, "CI no longer installs the pinned Forge end to end"
+    assert "  companions:" in root_ci and "Get-Companions.ps1" in root_ci, "CI no longer installs and fetches the latest companions"
+    assert "schedule:" in root_ci, "CI no longer re-tests the latest companions without a bundle change"
     for job in ("forge-python", "forge-native", "forge-repository-validation", "forge-windows-installer"):
         assert f"  {job}:" not in root_ci, f"{job} belongs to the SkyrimForge repository now"
-    assert "does not match the pinned release" in root_ci, "CI does not prove a tampered Forge archive is refused"
+    assert "does not match -SourceSha256" in root_ci, "CI does not prove a tampered Forge archive is refused"
 
     stray = [p.name for p in (ROOT / "BUNDLED-TOOLS" / "offline").glob("Skyrim-Forge-*.zip") if p != FORGE_ZIP]
-    assert not stray, f"offline carries Forge archives the catalog does not pin: {stray}"
+    assert not stray, f"offline carries Forge archives companions.json does not list: {stray}"
     if not FORGE_ZIP.is_file():
-        return  # Core: no payloads; the installer downloads and verifies the pin
-    assert hashlib.sha256(FORGE_ZIP.read_bytes()).hexdigest() == pin["sha256"], (
-        "offline Forge archive does not match the pinned SHA-256"
+        return  # nothing fetched (Core, offline run): the installer resolves and verifies the latest release
+    assert hashlib.sha256(FORGE_ZIP.read_bytes()).hexdigest() == FORGE["sha256"], (
+        "fetched Forge archive differs from companions.json"
     )
+    floor = tuple(int(x) for x in pin["min_version"].split("."))
+    assert tuple(int(x) for x in version.split(".")) >= floor, "Forge's latest release is below the catalog floor"
     for rel in ("VERSION.txt", "Install-or-Update.ps1", "Install-Forge-Skill.ps1",
                 "Register-MCP.ps1", "START-HERE.bat", "MANIFEST.json",
                 "skyrim_forge/__init__.py", "skyrim_forge/environment.py",
                 "integrations/skyrim-pack/skills/skyrim-forge/SKILL.md"):
         assert forge_read(rel) is not None
     assert re.search(r"(?m)^Skyrim Forge\s+" + re.escape(version) + r"\s*$", forge_read("VERSION.txt")), (
-        "pinned archive's VERSION.txt disagrees with CATALOG.json"
+        "Forge archive's VERSION.txt disagrees with its release"
     )
     assert f'VERSION = "{version}"' in forge_read("skyrim_forge/version.py")
-    # Product ZIPs omit Go source; execute the exact pinned helper rather than inspecting a source literal.
+    # Product ZIPs omit Go source; execute the shipped helper rather than inspecting a source literal.
     platform = 'win-x64' if os.name == 'nt' else 'linux-x64'
     executable = 'SkyrimForge.Native.exe' if os.name == 'nt' else 'SkyrimForge.Native'
     with tempfile.TemporaryDirectory() as temporary:
@@ -1418,7 +1463,7 @@ def test_forge_release_is_pinned_and_complete() -> None:
         assert result.returncode == 0 and result.stdout.strip() == f'SkyrimForge.Native {version} go'
     with zipfile.ZipFile(FORGE_ZIP) as z:
         helper = z.getinfo(f"Skyrim-Forge-{version}/writer/published/linux-x64/SkyrimForge.Native")
-        assert (helper.external_attr >> 16) & 0o111, "pinned Forge archive ships its Linux helper non-executable"
+        assert (helper.external_attr >> 16) & 0o111, "Forge archive ships its Linux helper non-executable"
 
 
 
@@ -1455,10 +1500,12 @@ def test_offline_manifest_complete() -> None:
     if not offline_dir.is_dir():
         return
     declared = {a["file"] for a in m.get("assets", [])}
-    actual = {p.name for p in offline_dir.iterdir() if p.is_file()}
+    # Fetched companion releases sit beside the tracked payloads but are never tracked.
+    companion_files = {"companions.json"} | {r["asset"] for r in (fetched("skyrim-forge"), fetched("reverse-this")) if r}
+    actual = {p.name for p in offline_dir.iterdir() if p.is_file()} - companion_files
     assert declared == actual, f"offline manifest coverage mismatch declared-only={sorted(declared-actual)} actual-only={sorted(actual-declared)}"
-    assert [f for f in declared if f.startswith("Skyrim-Forge-")] == [forge_pin()["asset"]], (
-        "offline inventory must declare exactly the pinned Forge archive"
+    assert not [f for f in declared if f.startswith(("Skyrim-Forge-", "Reverse-This-"))], (
+        "offline inventory declares a companion archive; companions are fetched at their latest release"
     )
     # A declared size/hash that does not match the bytes on disk is worse than
     # no manifest: the installer trusts it.
@@ -1489,7 +1536,7 @@ def test_release_builder_contract() -> None:
         "testzip", "unicode", "sha256",
     ):
         assert token.lower() in text.lower(), f"release builder missing {token} gate"
-    assert "_forge_pin" in text, "release builder does not verify the pinned Forge archive"
+    assert "def companions(" in text and "--require-companions" in text, "release builder does not verify the fetched companions"
 
     # A Core archive intentionally omits most BUNDLED-TOOLS/offline payloads,
     # so it cannot ship the Full tree's MANIFEST.json unchanged. Prove the
@@ -1576,6 +1623,30 @@ def test_release_builder_contract() -> None:
         module.verify(full, fake)
         with zipfile.ZipFile(full) as z:
             assert set(z.namelist()) == {prefix + rel for rel in required} | {prefix + "MANIFEST.json"}
+        # Fetched companions are untracked: Full-Offline carries exactly what companions.json
+        # lists, Core carries none, and bytes that differ from the index stop the build.
+        companion = fake / "BUNDLED-TOOLS" / "offline" / "Reverse-This-9.9.9.zip"
+        companion.write_bytes(b"reverse")
+        index = fake / "BUNDLED-TOOLS" / "offline" / "companions.json"
+        index.write_text(json.dumps({"companions": [{"id": "reverse-this", "version": "9.9.9", "asset": companion.name,
+                                                     "sha256": hashlib.sha256(b"reverse").hexdigest()}]}), encoding="utf-8")
+        with_companions = Path(td) / "Full-companions.zip"
+        module.build(fake, with_companions, False)
+        module.verify(with_companions, fake)
+        with zipfile.ZipFile(with_companions) as z:
+            assert {prefix + "BUNDLED-TOOLS/offline/" + n for n in (companion.name, "companions.json")} <= set(z.namelist())
+        core_again = Path(td) / "Core-companions.zip"
+        module.build(fake, core_again, True)
+        with zipfile.ZipFile(core_again) as z:
+            assert not [n for n in z.namelist() if "Reverse-This-" in n or n.endswith("companions.json")], "Core ships companions"
+        companion.write_bytes(b"tampered")
+        try:
+            module.build(fake, Path(td) / "Full-tampered.zip", False)
+        except RuntimeError as exc:
+            assert "differs from companions.json" in str(exc)
+        else:
+            raise AssertionError("a companion that differs from companions.json was packed")
+        companion.unlink(); index.unlink()
         # Verification must also reject a ZIP containing an unrecorded file.
         with zipfile.ZipFile(full, "a") as z:
             z.writestr(prefix + "personal-notes.txt", "fixture-private-state")
@@ -1613,8 +1684,7 @@ def test_current_forge_docs_contract() -> None:
         assert "extract it as" not in text.lower(), f"{p}: still tells fresh users to install Forge manually"
         assert "5.1.5+" not in text, f"{p}: stale pre-bundle Forge floor"
     readme = read(ROOT / "README.md").lower()
-    shipped = forge_version()
-    assert shipped in readme and "bundle" in readme, f"README does not describe bundle-managed Forge {shipped}"
+    assert "skyrim forge" in readme and "latest release" in readme, "README does not describe the bundle installing Forge's latest release"
     for stale in ("skyrim forge** is not redistributed", "install it yourself", "### not bundled"):
         assert stale not in readme, f"README contradicts bundle-managed Forge with stale instruction: {stale}"
     current_launch_docs = [
@@ -1721,12 +1791,12 @@ def test_hermes_mcp_registration_is_noninteractive_and_bounded() -> None:
     assert "'y' | & $hx mcp add" not in reasoning, "reasoning-MCP wiring still hides Hermes interactive prompts"
 
 def test_linux_helpers_keep_their_execute_bit() -> None:
-    """Forge's Linux helper ships inside the pinned Forge archive now.
+    """Forge's Linux helper ships inside the Forge release archive now.
 
     CI once died with PermissionError because the helper was committed 0644
     from Windows. The SkyrimForge repository owns that file again; this tree
-    must not carry a copy, and test_forge_release_is_pinned_and_complete checks
-    the mode inside the pinned archive.
+    must not carry a copy, and test_forge_tracks_its_latest_release_and_is_complete checks
+    the mode inside the fetched release archive.
     """
     helpers = [p for p in shipped_files() if p.as_posix().endswith("/linux-x64/SkyrimForge.Native")]
     assert not helpers, f"a vendored Forge native helper is back in the tree: {helpers}"
@@ -1747,11 +1817,11 @@ def test_version_sources() -> None:
     assert cat.get("catalog_version") == BARE, "catalog schema/release version drift"
     forge = next(c for c in cat["components"] if c["id"] == "skyrim-forge")
     assert forge.get("source_dir") is None, "catalog still points Forge at vendored source"
-    assert forge.get("offline_asset") == f"Skyrim-Forge-{forge_version()}.zip"
+    assert "offline_asset" not in forge, "Forge is an offline payload in git again"
     readme = read(ROOT / "README.md")
-    assert f"Skyrim Forge {forge_version()}" in readme, "README Forge version drifted from the pinned release"
+    assert not re.search(r"Skyrim Forge\**\s+\d+\.\d+", readme), "README restates a Forge version that goes stale on Forge's next release"
     assert "bundle-managed and contract-checked" not in readme, "README still documents the removed cross-repo Forge contract"
-    assert f"## Version\n\n**{VERSION}**" in readme, "README Version section does not lead with the current release"
+    assert "## Version\n\nThe version is in [VERSION.txt](VERSION.txt)" in readme, "README Version section restates releases again"
     assert forge.get("install") not in ("manual-user-product", None)
 
 
@@ -1833,7 +1903,9 @@ def test_no_skill_documents_an_unshipped_product() -> None:
     forge_skill = read(CANON / "skyrim-forge" / "SKILL.md")
     assert "bundle-contract" not in forge_skill, "current Forge skill still instructs the removed 5.x handshake"
     forge_series = ".".join(forge_version().split(".")[:2])
-    assert f"# Skyrim Forge {forge_series}" in forge_skill, f"current Forge skill does not match the pinned {forge_series} series"
+    # Version-free (Forge reports itself through `forge version`) or the series actually fetched; never a stale one.
+    heading = re.search(r"^# Skyrim Forge(.*)$", forge_skill, re.M)
+    assert heading and heading.group(1).strip() in ("", forge_series), f"current Forge skill heading does not match the {forge_series} series"
     assert "Skyrim-Forge-<version>" not in forge_skill, "current Forge skill still teaches the removed version-stamped install layout"
     assert not (CANON / "skyrim-forge-bridge").exists(), "skyrim-forge-bridge is back"
     dead = ("SKYRIM_FORGE_BRIDGE_ROOT", "skyrim-forge-bridge", "Forge Bridge")
@@ -2295,12 +2367,16 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "cce3b8c70fdf0cc490653b1fa34831113d8279b74af4e539cec86da0a02617c0", (
+    assert digest == "5ef53a9d57d46d6b91d52177d40a115b825ab2181e38f8bf89465827b5919cd5", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
     assert "$targets = @($targets | Where-Object" in read(ROOT / "INSTALL-AIO.ps1"), (
         "the installer can still write the private profile block into a SOUL.md"
+    )
+    # GPT once updated only the canonical contract; the workspace copy users paste drifted.
+    assert read(ROOT / "COPY-TO-YOUR-WORKSPACE" / "AIO-INSTRUCTION.txt").strip() == aio, (
+        "the workspace AIO copy drifted from 0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md"
     )
     assert "MACHINE-MAP.md" in block, (
         "the preamble no longer tells the model where machine paths are recorded"
@@ -2784,7 +2860,8 @@ def main() -> int:
         test_every_defined_contract_is_actually_run,
         test_hermes_native_profile_migration_contract,
         test_same_version_forge_hotfix_refreshes_shipped_content,
-        test_forge_release_is_pinned_and_complete,
+        test_forge_tracks_its_latest_release_and_is_complete,
+        test_reverse_latest_release_keeps_the_interface_the_bundle_calls,
         test_every_shipped_instruction_text_is_archived,
         test_offline_manifest_complete,
         test_capability_profiles_are_not_registered_globally,
@@ -6190,7 +6267,12 @@ def test_release_workflow_publishes_only_a_green_untagged_main_sha() -> None:
                    "conclusion == 'success'", "event == 'push'",
                    'if [ "$main" != "$SHA" ]', "git ls-remote --tags origin",
                    'r["name"] != "Publish release"', "build-a", "build-b",
-                   '--target "$SHA"', "gh release download", "cancel-in-progress: false"):
+                   '--target "$SHA"', "gh release download", "cancel-in-progress: false",
+                   # Full-Offline carries verified latest companions; the release carries
+                   # its provenance and a GitHub build attestation, all re-verified after upload.
+                   "Get-Companions.ps1", "--require-companions", "release_provenance.py",
+                   "actions/attest-build-provenance@", "id-token: write", "attestations: write",
+                   "sha256sum -c SHA256SUMS.txt"):
         assert needle in wf, f"release workflow lost its gate: {needle}"
     for forbidden in ("gh release delete", "--clobber", "git push --force", "git tag -f"):
         assert forbidden not in wf, f"release workflow can replace published bytes: {forbidden}"

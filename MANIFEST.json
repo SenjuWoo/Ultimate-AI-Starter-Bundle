@@ -16,8 +16,8 @@
  },
  {
   "path": ".github/scripts/check_versions.py",
-  "size": 7984,
-  "sha256": "8627e9e4b2396e39218c28a4b40b2e8bb590a4bea66ce5ee7dbf71f0f387017a"
+  "size": 8406,
+  "sha256": "66a0ff89629c7930273a304dae6bcec4ddff1a145d4c131b51d31a107635d108"
  },
  {
   "path": ".github/scripts/verify_manifest.py",
@@ -26,18 +26,23 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 10530,
-  "sha256": "ca2c187220998f299567cc409f5a82163910ef86232073d2997b308cb9876203"
+  "size": 11312,
+  "sha256": "a405677f8dfb3ba6b9e6b169e11e9813d4da9ff44336d75597713a92f56918bb"
+ },
+ {
+  "path": ".github/workflows/dependabot-auto-merge.yml",
+  "size": 792,
+  "sha256": "04de79b4fa9117d723caa9a6daf456db7ccc172af927701d4d5daa28a3e63b16"
  },
  {
   "path": ".github/workflows/release.yml",
-  "size": 5325,
-  "sha256": "4e52b9fc873e4c19bf898ff8f36270632c25173ee06afdd26a780bb7cfc71cd3"
+  "size": 7158,
+  "sha256": "6f343955a8afe86581623452edd0f784eb42139a17a0e18e4c90b44ccd03a7f2"
  },
  {
   "path": ".gitignore",
-  "size": 2207,
-  "sha256": "4a676a1fb47845cb863af40f2664621cf01814f23714a182c996ff998c3c3215"
+  "size": 2423,
+  "sha256": "5721c7f119a38dd57cdee64513069ff0cfc2fbeef0b3a0e53336c72b7fde3bdf"
  },
  {
   "path": ".ignore",
@@ -61,8 +66,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 10527,
-  "sha256": "0c9cdcdb8792782359606f462371560497e81d6f7fbb60069e0093c62cacb2dd"
+  "size": 10582,
+  "sha256": "d85fdefb2267a829dae57aec6509e71c77cef9567981f623efad4aff79fdd4e7"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
@@ -416,8 +421,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3483,
-  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+  "size": 3571,
+  "sha256": "5b23d30e7eaba8950db57b9c4264b819aeae180b2b5972d82b46a87aae75911f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
@@ -5106,8 +5111,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3483,
-  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+  "size": 3571,
+  "sha256": "5b23d30e7eaba8950db57b9c4264b819aeae180b2b5972d82b46a87aae75911f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
@@ -9861,8 +9866,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3483,
-  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+  "size": 3571,
+  "sha256": "5b23d30e7eaba8950db57b9c4264b819aeae180b2b5972d82b46a87aae75911f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
@@ -14601,8 +14606,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3483,
-  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+  "size": 3571,
+  "sha256": "5b23d30e7eaba8950db57b9c4264b819aeae180b2b5972d82b46a87aae75911f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
@@ -19341,8 +19346,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3483,
-  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+  "size": 3571,
+  "sha256": "5b23d30e7eaba8950db57b9c4264b819aeae180b2b5972d82b46a87aae75911f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
@@ -24156,8 +24161,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/SKILL.md",
-  "size": 3483,
-  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+  "size": 3571,
+  "sha256": "5b23d30e7eaba8950db57b9c4264b819aeae180b2b5972d82b46a87aae75911f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ci-convergence/references/github-alerts.md",
@@ -28765,6 +28770,11 @@
   "sha256": "649d8d278fe4b9d19d9932ace976039d0ad5fda663f93bd497f9557164d731de"
  },
  {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-d68d7d9cd705.md",
+  "size": 10527,
+  "sha256": "0c9cdcdb8792782359606f462371560497e81d6f7fbb60069e0093c62cacb2dd"
+ },
+ {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-d8af751852a3.md",
   "size": 10359,
   "sha256": "b8e84fb6d61d67a6da25893c65c97d74e54349f7e5b88578bfe97c300988457b"
@@ -28836,13 +28846,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 61456,
-  "sha256": "9924d75c9cbff571c207262ce44011f5030d7bfb5c92202ca29ca9f78c21ebc1"
+  "size": 61302,
+  "sha256": "7a502e851c1666a1fcbb25708a0d310ff2b5fc25f35f7f1a2ae538daf86a6b76"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
-  "size": 1643,
-  "sha256": "4131b0f249100c9d7470e6c60c366373917a4512fc2651056d004cb38c60c0c2"
+  "size": 1327,
+  "sha256": "d36631c98ae0159199aa7c73efb02e56373a318793e9c1f4d5b8b7587df97d42"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28852,7 +28862,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39648,
-  "sha256": "44eeb064b724fa5a7a31f35e70c7269927054109ea7db1eb5e4fcaa244f56497"
+  "sha256": "4e4ea651b044d62c66f065b7e16a9e0611491ced2f0c73cd5abbefc46b141f7d"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -28933,16 +28943,6 @@
   "path": "BUNDLED-TOOLS/lm-studio/config-presets/SillyTavern.preset.json",
   "size": 764,
   "sha256": "b5279d1d6d3333d739d276c263a745ae51d74dac1e2a7a50fd26fffbde7cfd8b"
- },
- {
-  "path": "BUNDLED-TOOLS/offline/Reverse-This-1.6.1.zip",
-  "size": 64697,
-  "sha256": "c71b497ac846cb7d51458fa6e00480a94ad4fc6424bbe3b48cd06d23fabcfc7b"
- },
- {
-  "path": "BUNDLED-TOOLS/offline/Skyrim-Forge-6.4.2.zip",
-  "size": 4833006,
-  "sha256": "4bb55d67d44b2c3ac0593c56d4db5dd6d3fae0ce3f5a88a3454e447953d3d496"
  },
  {
   "path": "BUNDLED-TOOLS/offline/codebase-memory-mcp-windows-amd64.zip",
@@ -32931,8 +32931,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 242671,
-  "sha256": "17021be3a70a9715417642c21dbac723ffaa566f73043d0e85d34d4526840864"
+  "size": 245188,
+  "sha256": "0f51ca8b293830187764234f3db40bc99d4ceb2fdf0cb5fb372514df5939533a"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -32941,8 +32941,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 10359,
-  "sha256": "b8e84fb6d61d67a6da25893c65c97d74e54349f7e5b88578bfe97c300988457b"
+  "size": 10582,
+  "sha256": "d85fdefb2267a829dae57aec6509e71c77cef9567981f623efad4aff79fdd4e7"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
@@ -33011,8 +33011,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 177322,
-  "sha256": "f5b23556d0eeb825cc92d980026c7f907908aaaa13c7d5229b6f9fac0bcc8b82"
+  "size": 177560,
+  "sha256": "a0575928599de272f92e4dfd3d34ec5dd416d883aff00db42ec5fde93dac7bfa"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33031,8 +33031,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 60312,
-  "sha256": "a9020afc5a5b7c4a44f7e474d2234483c73f63bfbd67eb51a7a38ec5ef03c455"
+  "size": 60825,
+  "sha256": "4c236f326bc40e457a0ab5f0b002c4d3a0ce9cae26919c2fadf04ab55a120b7d"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -33076,8 +33076,8 @@
  },
  {
   "path": "README.md",
-  "size": 64595,
-  "sha256": "0aaf848874fab33ca77ba172cb93048c839eb7e8b2473d7e3e7304f9c332361e"
+  "size": 65972,
+  "sha256": "29fda5fb6735d773114c21126084f056e15ef5a5881576c9f03649c61ebbe19e"
  },
  {
   "path": "SECURITY.md",
@@ -33087,17 +33087,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "4b9dcf60c86a94f01133212913b27615c9cd59370f6e363db819008cbddfbbb9"
+  "sha256": "4e36a6b3b814f5e7fbb29b2f0856016d5b3b868b40b1d368879ea647eedeff3c"
  },
  {
   "path": "START-HERE.txt",
   "size": 12021,
-  "sha256": "698fbb1e4d711c7a3c0a84049a4e53bab7d95b3390eb0e327d0d889b9d014d48"
+  "sha256": "63639b82a95c257973f06cc84ab23e1bfc24564d215d9b1f0b01510085c6747b"
  },
  {
   "path": "STATE.md",
-  "size": 15063,
-  "sha256": "ef0a79cb546ac950826dd948731d921881998e1e83c80b062c7ff21b856c6559"
+  "size": 17336,
+  "sha256": "90fe7c9023cb57982367debb6d5e99d55f0a52bdbea8b1aabe69d7c98d2d224e"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -33126,8 +33126,8 @@
  },
  {
   "path": "TESTS/Test-Companions.ps1",
-  "size": 7671,
-  "sha256": "2dedf6676e4d1c5c2987678848589c23929e1a300d9cb9ad733f18148eff839b"
+  "size": 9567,
+  "sha256": "9fb9a02be4b76aae7befb8c08185ef1454cabc2b99541429936897192123acda"
  },
  {
   "path": "TESTS/Test-DoctorProviderScope.ps1",
@@ -33151,8 +33151,8 @@
  },
  {
   "path": "TESTS/Test-GitHubVerdict.ps1",
-  "size": 12989,
-  "sha256": "45cdb0e702c19b605ad4685aa950d6c71ca7d79623c2bbb37fa3ab7dd00ce6be"
+  "size": 13935,
+  "sha256": "ae690212ab6919bf58a0f627dd29fdd2f68fb889edbb0a58ca7a291d6f9bc3dd"
  },
  {
   "path": "TESTS/Test-GrokHookRepair.ps1",
@@ -33216,8 +33216,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 67014,
-  "sha256": "ca466f71840e2d1d621d546a1be7744e28ceb683dfceda5bf50db42e4bd533ed"
+  "size": 67815,
+  "sha256": "2812ea3238d449a49038691bac9a93516a748718b941401fa3e1b3cbe1f47cd1"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -33476,8 +33476,8 @@
  },
  {
   "path": "TESTS/test_maintainer_contract.py",
-  "size": 17430,
-  "sha256": "01b343a72fe28ae75534633979e750611648a0f6e52de0ca0a8ab398fdfab658"
+  "size": 17201,
+  "sha256": "62094ce851ff510d61ed04cf484b69b5f945d7bdbb821a7b3ff6a69745d4fc9d"
  },
  {
   "path": "TESTS/test_mcp_protocol.py",
@@ -33496,8 +33496,13 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 332954,
-  "sha256": "3601d76437e3ba3e84aacce9f8a5ff089a62b9cec8471d51ca6afcefa64b59dc"
+  "size": 339210,
+  "sha256": "1c85f5d502ecfe8e34e236e1f4a44f15b32fad7028c11ae16e372bc88093af8d"
+ },
+ {
+  "path": "TESTS/test_release_provenance.py",
+  "size": 4606,
+  "sha256": "52663e2d28bae3f5c2b4151de4f505f978e806f3a7026ea5a43d3563f7658a61"
  },
  {
   "path": "TESTS/test_rtk_candidate.py",
@@ -33580,6 +33585,11 @@
   "sha256": "06600724855125fbabfb356251fe09037220e740f60bb28d268eaeac14ec5b7c"
  },
  {
+  "path": "TOOLS/Get-Companions.ps1",
+  "size": 1932,
+  "sha256": "4711d63e3abe72a2b37898544419c3bc763f4da3dec9a334488f218dc4dabac4"
+ },
+ {
   "path": "TOOLS/Get-GitHubFlags.ps1",
   "size": 8514,
   "sha256": "19aed6e3f4468c0989fd7690fe61e5ca6a1063bc461a9884bd7ccbb9ed4f492b"
@@ -33606,8 +33616,8 @@
  },
  {
   "path": "TOOLS/Install-ReverseThis.ps1",
-  "size": 6781,
-  "sha256": "85da464690104c24ef61225d8975563c5b99bca5522fab03b7b0dc345dd445fc"
+  "size": 6983,
+  "sha256": "0d37e6cca3344b764d11cadb7825cd7c7c616dfa6b2810964f74de505efa66a2"
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
@@ -33616,8 +33626,8 @@
  },
  {
   "path": "TOOLS/Install-SkyrimForge.ps1",
-  "size": 22479,
-  "sha256": "12bd2bd5a5af3830b271d67885b5c790b737a1a63fcf10e843a9b7c79575d846"
+  "size": 22026,
+  "sha256": "d0516c2fd56569177431a2750bfa2575e91a890be71156d9ff9d49614f3eea50"
  },
  {
   "path": "TOOLS/MCP-CONFIG-EXAMPLES.toml.txt",
@@ -33646,8 +33656,8 @@
  },
  {
   "path": "TOOLS/Set-GitHubProtection.ps1",
-  "size": 6599,
-  "sha256": "f6de644e7ff08c0e6696c15c9f5e6d0205f02cbf759121d75063d21aa3ee1522"
+  "size": 6656,
+  "sha256": "e8737be9167f9c338ccff4e660e0a46a261d5bb7467adf6bf05a8e885aa01424"
  },
  {
   "path": "TOOLS/Set-HermesSharedPython.ps1",
@@ -33691,8 +33701,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 160702,
-  "sha256": "77474fdbd536af13ce9421c2fb691a5c31292c55392e93631a0d5ccb3db4d690"
+  "size": 168192,
+  "sha256": "f89b883d06d68c9b983ec3ca5214b0a059723dda94a03f0715560eea57963afe"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
@@ -33716,8 +33726,8 @@
  },
  {
   "path": "TOOLS/Wait-External.ps1",
-  "size": 15133,
-  "sha256": "990eafa3cdb7fab02e0c3f3751b5a40d0f4ae4648335d121ca000c07cd32a691"
+  "size": 16089,
+  "sha256": "92f0c41a8554558050b3e948ccbdd8cf898f5d8ac637c39653075beab25b72b7"
  },
  {
   "path": "TOOLS/audit-impeccable-engine.py",
@@ -33741,8 +33751,8 @@
  },
  {
   "path": "TOOLS/build_release.py",
-  "size": 13340,
-  "sha256": "de177114bc1b16ea2c5122caa57226548148356ddb57d4f715591ff8effc3218"
+  "size": 14251,
+  "sha256": "ac881177eeb25a7842fcbaa195148a0b87df5edf527343205b2a1a45ffd67abf"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -33860,6 +33870,11 @@
   "sha256": "7eaafa38fef7db0c53d0c956f7c6a98ddac1f4fc3fdb94102bf047e4e1837739"
  },
  {
+  "path": "TOOLS/release_provenance.py",
+  "size": 7716,
+  "sha256": "45a995d3f7188c13754a7b2b80192dc86f264a49eea2937fb2c5fb836bf79bf2"
+ },
+ {
   "path": "TOOLS/uabs_hermes_openrouter_catalog.py",
   "size": 4780,
   "sha256": "7de69182c7599d961b22565dae4f8ddc49f1367c83e1b1a241c410c49c0fb342"
@@ -33906,18 +33921,18 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2963,
-  "sha256": "dfc451914d350052c93cc41bdae6f85cc5114a094f2c270661b2a7385acb85ea"
+  "size": 2671,
+  "sha256": "a29180907e3b48c7984f67ea52578b7bafb45bc8000ee5c45a82f3f6b6690eff"
  },
  {
   "path": "VALIDATION.md",
-  "size": 27038,
-  "sha256": "3e04f5954f3aa32f58edc17c0218268852810393fd6d2225b7f7c346f473f633"
+  "size": 27238,
+  "sha256": "115f649d54d877a330038cfa4e16f7952f5b9262975ba863033b23c36840fa84"
  },
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "fcc4dd7f0bbc88faaa441eb654f49845322d170cc4373ced4b6f89017e9e40bf"
+  "sha256": "58770718ad8c69617fd34b9eb37d11e1c2d07cbb09e60358b7ff14390d138c4d"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -34171,8 +34186,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/ci-convergence/SKILL.md",
-  "size": 3483,
-  "sha256": "9c0de3fb06ef6d7873cfe7064618cfdca9a91e64a7498eca6ad14d18b5c135b0"
+  "size": 3571,
+  "sha256": "5b23d30e7eaba8950db57b9c4264b819aeae180b2b5972d82b46a87aae75911f"
  },
  {
   "path": "_CANONICAL-SKILLS/ci-convergence/references/github-alerts.md",
@@ -38626,8 +38641,8 @@
  },
  {
   "path": "docs/COMPANION-ARCHITECTURE.md",
-  "size": 17619,
-  "sha256": "8cc7cbca298de3fa4cf6187f565b0a1175f4f4d896b8baeaf2067cd24055cffb"
+  "size": 18548,
+  "sha256": "a1e808ac8bfe1a197b4a07f26da2c383f32e39935bf3b221e22396dd9ca0b815"
  },
  {
   "path": "docs/HERMES-MODELS.md",
@@ -39233,6 +39248,11 @@
   "path": "docs/history/V8.26.1-CHANGELOG.md",
   "size": 799,
   "sha256": "00a6c684e04b22f7c72f1c36de01ad7c5fdc21c4d8dbfde253869c3b17385816"
+ },
+ {
+  "path": "docs/history/V8.27.0-CHANGELOG.md",
+  "size": 2635,
+  "sha256": "94cb6986df69c2415babcbc956f9d543a64dc2c93be62efc500e4e5031083b39"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

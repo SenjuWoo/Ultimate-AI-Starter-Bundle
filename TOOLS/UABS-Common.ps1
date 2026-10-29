@@ -504,10 +504,19 @@ function Get-UabsProviderSkillsDir([string]$Provider, $Catalog) {
   return (Join-Path (Get-UabsProviderHome -Provider $Provider -Catalog $Catalog) 'skills')
 }
 
+function Get-UabsGitHubApiHeaders {
+  # GH_TOKEN/GITHUB_TOKEN only lifts api.github.com's anonymous rate limit (CI
+  # runners share addresses). It is sent to that host alone, never to downloads.
+  $headers = @{} + $script:UabsHeaders
+  $token = if ($env:GH_TOKEN) { $env:GH_TOKEN } elseif ($env:GITHUB_TOKEN) { $env:GITHUB_TOKEN } else { $null }
+  if ($token) { $headers['Authorization'] = 'Bearer ' + $token }
+  return $headers
+}
+
 function Invoke-UabsGitHubLatest {
   param([string]$Owner, [string]$Repo)
   $uri = "https://api.github.com/repos/$Owner/$Repo/releases/latest"
-  return Invoke-RestMethod -Uri $uri -Headers $script:UabsHeaders -TimeoutSec 60
+  return Invoke-RestMethod -Uri $uri -Headers (Get-UabsGitHubApiHeaders) -TimeoutSec 60
 }
 
 function Get-UabsBundleUpdatePlan {
@@ -626,7 +635,7 @@ function Get-UabsComponentGitHubRelease {
   }
   if ($tag -notmatch '^[A-Za-z0-9][A-Za-z0-9._-]*$') { throw 'Catalog release_tag is invalid.' }
   $uri = "https://api.github.com/repos/$($Comp.github.owner)/$($Comp.github.repo)/releases/tags/$tag"
-  $release = Invoke-RestMethod -Uri $uri -Headers $script:UabsHeaders -TimeoutSec 60
+  $release = Invoke-RestMethod -Uri $uri -Headers (Get-UabsGitHubApiHeaders) -TimeoutSec 60
   if ($release.tag_name -ne $tag) { throw "$($Comp.id) release tag mismatch: expected $tag" }
   return $release
 }
@@ -764,6 +773,108 @@ function Save-UabsReleaseAsset {
     return $OutFile
   } finally {
     Remove-Item -LiteralPath $part -Force -ErrorAction SilentlyContinue
+  }
+}
+
+function Get-UabsCompanionLatest {
+  <# A companion product's latest GitHub release (CATALOG install 'latest-release'),
+     verified before use: a semantic version at or above the catalog floor, the exact
+     asset name, GitHub's sha256 digest and, when the release publishes one, its
+     SHA256SUMS line. -OutDir downloads the archive (a verified cached copy is reused).
+     The bundle pins no companion version, so an owner release never needs a bundle
+     release. #>
+  param($Comp, [string]$OutDir)
+  $release = Invoke-UabsGitHubLatest -Owner $Comp.github.owner -Repo $Comp.github.repo
+  $version = ([string]$release.tag_name).TrimStart('v', 'V')
+  if ($version -notmatch '^\d+\.\d+\.\d+$') { throw "$($Comp.id) latest release tag is not a version: $($release.tag_name)" }
+  if ([version]$version -lt [version]$Comp.min_version) { throw "$($Comp.id) latest release $version is older than the supported floor $($Comp.min_version)." }
+  $name = ([string]$Comp.asset_template).Replace('{version}', $version)
+  $asset = @($release.assets | Where-Object { $_.name -ceq $name }) | Select-Object -First 1
+  if (-not $asset) { throw "$($Comp.id) $version has no release asset $name." }
+  $digest = [regex]::Match([string]$asset.digest, '^sha256:([0-9a-fA-F]{64})$')
+  if (-not $digest.Success) { throw "$($Comp.id) asset $name carries no GitHub sha256 digest." }
+  $record = [ordered]@{ id = [string]$Comp.id; version = $version; tag = [string]$release.tag_name; asset = $name
+    size = [long]$asset.size; sha256 = $digest.Groups[1].Value.ToLowerInvariant(); url = [string]$asset.browser_download_url; path = $null; source = 'online' }
+  $sums = @($release.assets | Where-Object { $_.name -in @('SHA256SUMS.txt', 'SHA256SUMS') }) | Select-Object -First 1
+  if ($sums) {
+    $text = (Invoke-WebRequest -Uri $sums.browser_download_url -Headers $script:UabsHeaders -UseBasicParsing -TimeoutSec 60).Content
+    if ($text -is [byte[]]) { $text = [Text.Encoding]::UTF8.GetString($text) }
+    if ($text -notmatch ('(?im)^' + $record.sha256 + '\s+\*?' + [regex]::Escape($name) + '\s*$')) { throw "$($Comp.id) SHA256SUMS does not list $name with GitHub's digest." }
+  }
+  if ($OutDir) {
+    $record.path = Join-Path $OutDir $name
+    [void](Save-UabsReleaseAsset -Asset $asset -OutFile $record.path -ReuseValid)
+  }
+  return [pscustomobject]$record
+}
+
+function Get-UabsForgePackSkillNames {
+  # The skills the installed Forge ships in its pack. Forge owns that list, so the
+  # bundle reads it at install time instead of keeping a copy that goes stale.
+  $root = $env:SKYRIM_FORGE_ROOT
+  if (-not $root) { $root = [Environment]::GetEnvironmentVariable('SKYRIM_FORGE_ROOT', 'User') }
+  if (-not $root) { return @() }
+  $pack = Join-Path $root 'integrations\skyrim-pack\skills'
+  if (-not (Test-Path -LiteralPath $pack -PathType Container)) { return @() }
+  return @(Get-ChildItem -LiteralPath $pack -Directory | Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'SKILL.md') -PathType Leaf } | ForEach-Object Name)
+}
+
+function Get-UabsCompanionRecord {
+  <# A verified archive listed in a companions.json index -- the one Full-Offline
+     carries (written by TOOLS\Get-Companions.ps1 at release build) or the one kept
+     beside verified downloads -- or $null. Listed bytes that differ are an error,
+     never a silent substitute. #>
+  param($Comp, [string]$Index, [string]$Source)
+  if (-not (Test-Path -LiteralPath $Index -PathType Leaf)) { return $null }
+  $row = @(([IO.File]::ReadAllText($Index) | ConvertFrom-Json).companions | Where-Object { $_.id -eq $Comp.id }) | Select-Object -First 1
+  if (-not $row) { return $null }
+  if ([string]$row.asset -notmatch '^[A-Za-z0-9._-]+\.zip$' -or [string]$row.sha256 -notmatch '^[0-9a-f]{64}$' -or [string]$row.version -notmatch '^\d+\.\d+\.\d+$') { throw "$Index row for $($Comp.id) is malformed." }
+  $path = Join-Path (Split-Path -Parent $Index) $row.asset
+  if (-not (Test-Path -LiteralPath $path -PathType Leaf) -or (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash -ne $row.sha256) { throw "$($row.asset) is missing or does not match $Index." }
+  if ([version]$row.version -lt [version]$Comp.min_version) { throw "$($Comp.id) $($row.version) in $Index is older than the supported floor $($Comp.min_version)." }
+  return [pscustomobject]@{ id = [string]$Comp.id; version = [string]$row.version; asset = [string]$row.asset; sha256 = [string]$row.sha256; path = $path; source = $Source }
+}
+
+function Save-UabsCompanionRecord {
+  # Upsert one verified download into the index beside it, so a later offline run
+  # can reuse it the way the old pinned digest allowed.
+  param($Record, [string]$Index)
+  $rows = @()
+  if (Test-Path -LiteralPath $Index -PathType Leaf) {
+    try { $rows = @(([IO.File]::ReadAllText($Index) | ConvertFrom-Json).companions | Where-Object { $_ -and $_.id -ne $Record.id }) } catch { $rows = @() }
+  }
+  $rows += [pscustomobject]@{ id = $Record.id; version = $Record.version; asset = $Record.asset; size = $Record.size; sha256 = $Record.sha256 }
+  $json = [ordered]@{ schema = 1; companions = @($rows | Sort-Object id) } | ConvertTo-Json -Depth 5
+  [IO.File]::WriteAllText($Index, $json, (New-Object Text.UTF8Encoding($false)))
+}
+
+function Resolve-UabsCompanionArchive {
+  <# One decision for every companion installer. Online (default): the owner's latest
+     release, falling back with a warning to the newest verified local copy (bundled
+     or an earlier download) when GitHub cannot be reached. -Offline: local copies
+     only. -PreferBundled: the Full-Offline copy when present. #>
+  param($Comp, [string]$PackRoot, [string]$Downloads, [switch]$Offline, [switch]$PreferBundled)
+  if ([string]$Comp.min_version -notmatch '^\d+\.\d+\.\d+$' -or -not ([string]$Comp.asset_template).Contains('{version}')) { throw "CATALOG.json $($Comp.id) needs min_version and asset_template." }
+  $bundled = Get-UabsCompanionRecord -Comp $Comp -Index (Join-Path $PackRoot 'BUNDLED-TOOLS\offline\companions.json') -Source 'bundled'
+  $cacheIndex = Join-Path $Downloads 'companions.json'
+  $cached = $null
+  try { $cached = Get-UabsCompanionRecord -Comp $Comp -Index $cacheIndex -Source 'verified earlier download' }
+  catch { Write-UabsWarn ("Ignoring the download cache: " + $_.Exception.Message) }
+  $local = @($bundled, $cached | Where-Object { $_ } | Sort-Object { [version]$_.version } -Descending) | Select-Object -First 1
+  if ($PreferBundled -and $bundled) { return $bundled }
+  if ($Offline) {
+    if (-not $local) { throw "$($Comp.name) has no verified local copy; offline mode downloaded nothing." }
+    return $local
+  }
+  try {
+    New-Item -ItemType Directory -Force -Path $Downloads | Out-Null
+    $latest = Get-UabsCompanionLatest -Comp $Comp -OutDir $Downloads
+    Save-UabsCompanionRecord -Record $latest -Index $cacheIndex
+    return $latest
+  } catch {
+    if (-not $local) { throw }
+    Write-UabsWarn ("$($Comp.name): latest release check failed ($($_.Exception.Message)); using the $($local.source) $($local.version).")
+    return $local
   }
 }
 

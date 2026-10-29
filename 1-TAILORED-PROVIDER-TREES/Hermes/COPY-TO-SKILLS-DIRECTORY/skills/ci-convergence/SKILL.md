@@ -11,48 +11,51 @@ the latest run for the required checks of the pushed SHA.
 
 ## One lifecycle
 
-Local change -> commit -> push -> exact-SHA CI -> pass -> squash merge to main
--> main-SHA CI -> pass -> build/tag/publish -> download and verify shipped bytes.
-Update README/changelog before the release commit; query security after every
-push and before publication. `release-checklist` owns packaging/tag/publication
-mechanics; this skill owns convergence.
+Local change -> full local gate -> commit -> push to main -> exact-SHA CI -> pass
+-> build/tag/publish that SHA (automated where a release workflow exists) ->
+download and verify shipped bytes. Put changelog/version in the commit that is
+the release; query security after every push and before publication.
+`release-checklist` owns packaging/publication mechanics; this skill owns convergence.
 
 Run `powershell -NoProfile -ExecutionPolicy Bypass -File TOOLS/Wait-External.ps1 -GitHubRun auto -Repo OWNER/REPO -Sha FULL_SHA`.
-`-Sha` defaults to HEAD; a numeric `-GitHubRun` must target it. All workflows,
-check-runs, commit statuses and protected required contexts count. Polling has
-backoff and a hard timeout; failure logs are capped.
+It reads workflows, check-runs, commit statuses and the checks rulesets or
+classic protection require; polling and logs are bounded.
 
 | Verdict | Exit | Action |
 |---|---|---|
-| pass | 0 | Every required check reached a terminal successful state; tag/publish only that green main SHA. |
-| fail | 1 | Inspect failing job/status; fix the cause, push a NEW SHA, re-converge. |
-| pending | 8 | Wait to timeout, then report URL; never tag. |
-| none | 2 | NO CI RAN. Do not release. Open PR or trigger supported CI. |
+| pass | 0 | Every required check reached a terminal successful state; release only that green SHA. |
+| fail | 1 | Inspect the failing job/status; fix the cause, push a NEW SHA, re-converge. |
+| pending | 8 | Wait to timeout, then report the URL; never tag. |
+| none | 2 | NO CI RAN. Do not release. Push or dispatch the supported CI. |
 | unknown | 3 | Report command, bounded stderr and what settles it; never tag. |
 
-A gh error is not a red check. Missing gh, auth, bad IDs, rate limits, network
-and unreadable policy are unknown. `gh pr checks` also exits 8 for pending
-(verify with `gh pr checks --help`). Skipped/neutral evidence requires policy
-review; never silently accept cancelled, skipped, missing, stale or unknown checks.
+A gh error is not a red check: missing gh, auth, bad IDs, rate limits, network
+and unreadable policy are unknown. Never silently accept cancelled, skipped,
+missing, stale or unknown checks.
 
 ## Branch policy
 
-`main` is the only long-lived branch. Fetch/pull main; reuse the task's ONE
-branch or create `type/short-slug`. Right after opening the PR, enable
-`gh pr merge --auto --squash --delete-branch` so it merges itself once the required checks pass. Squash-merge
-and delete it, or name its unfinished branch/PR and blocker at turn end. Never
-merge red or force-push history. `TOOLS/Clean-MergedBranches.ps1` reports first;
-`-Apply` deletes only proven merged branches, with conditional remote deletion.
-Squash/superseded work requires PR/patch review, never forced deletion.
+`main` is the only long-lived branch. On a repository you maintain, pull main,
+run the full local gate and push to main; a red main is fixed forward with a new
+SHA, never force-pushed. Use one `type/short-slug` branch only where pull
+requests are required (repositories you do not own, shared policy) or for work
+that cannot land green in one push: right after opening its PR run
+`gh pr merge --auto --squash --delete-branch`, and name any unfinished
+branch/PR and blocker at turn end. Never merge red.
 
-Prove ancestry with `git merge-base --is-ancestor BRANCH main` or inspect
-`git log BRANCH --not main`; the reversed log legitimately contains later main
-commits. Run the full gate on resulting main. Bundle releases publish themselves:
-`.github/workflows/release.yml` runs after CI passes on a main commit whose
-`VERSION.txt` has no tag yet, waits for every other check on that SHA, builds
-twice, requires identical bytes, tags, publishes and re-downloads to compare.
-A version bump is therefore the release request. Manual fallback:
-`TOOLS/Build-Release.ps1`. Query security alerts after it publishes.
+`TOOLS/Set-GitHubProtection.ps1` writes two rulesets: `integrity` blocks
+force-push and deletion for everyone; `checks` makes pull-request merges
+(Dependabot, contributors) wait for CI while admins push directly. Dependabot
+PRs merge themselves when green. `TOOLS/Clean-MergedBranches.ps1` reports first
+and `-Apply` deletes only proven merged branches; prove ancestry with
+`git merge-base --is-ancestor BRANCH main`. Squash/superseded work needs patch
+review, never forced deletion.
+
+Bundle releases publish themselves: `.github/workflows/release.yml` runs after
+CI passes on a main commit whose `VERSION.txt` has no tag yet, waits for every
+other check, builds twice, requires identical bytes, attaches checksums, a build
+receipt, an SBOM and the observed checks, attests, publishes and re-downloads to
+compare. Manual fallback: `TOOLS/Build-Release.ps1`.
 
 ## Security gate
 

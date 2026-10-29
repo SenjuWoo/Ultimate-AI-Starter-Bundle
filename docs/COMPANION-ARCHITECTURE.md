@@ -59,8 +59,9 @@ The current boundaries already support most of this design:
   delegates REA ownership. The [RE task recipe](../_CANONICAL-SKILLS/capability-profiles/references/task-recipes.json)
   and [discovery guide](../_CANONICAL-SKILLS/tool-discovery/references/reverse-engineering.md)
   route to the existing kit pointer and owner instructions.
-- [Install-SkyrimForge.ps1](../TOOLS/Install-SkyrimForge.ps1) verifies a pinned
-  archive, preserves newer deployments and Git source checkouts, stages
+- [Install-SkyrimForge.ps1](../TOOLS/Install-SkyrimForge.ps1) installs Forge's
+  latest release at or above the catalog floor (GitHub digest and SHA256SUMS
+  verified), preserves newer deployments and Git source checkouts, stages
   replacement files, and retains a previous deployment. Its doctor invokes
   Forge rather than reproducing Forge validation in the bundle.
 - Forge's `scripts/Provider-Skills.ps1` has its own preservation ledger,
@@ -81,6 +82,19 @@ explicit pinned/newer comparisons and transactional owner updates. Validation
 below remains a contract; actual verdicts belong in each owner's VALIDATION.md
 and release records. An unknown external binary is preserved and reported,
 rather than guessed to be current or silently replaced.
+
+## Companion versions and payloads in git (decided 2026-10-29)
+
+The bundle no longer pins companion releases. Pinning made each Forge or
+Reverse THIS! release force a bundle release, and committing their archives grew
+history by about 5 MB per Forge release (nine Forge archives in the last 43
+commits; the repository reached ~570 MB). CATALOG.json now holds a floor per
+companion; the installer and the release build fetch the owner's latest release
+and verify it, and companion archives are never committed. Third-party offline
+payloads stay pinned in git: Full-Offline must reproduce exactly what the bundle
+reviewed, they change rarely, and two of them are wheels built here from pinned
+source. Existing history is not rewritten, because that would move every
+published tag; maintainers who need a light clone use `git clone --filter=blob:none`.
 
 ## Options considered
 

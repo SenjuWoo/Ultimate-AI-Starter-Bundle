@@ -20,14 +20,23 @@ def _prefix(root:Path)->str:
 EXCLUDE_PARTS={'.git','.worktrees','.venv','venv','__pycache__','node_modules','.pytest_cache','.mypy_cache','.ruff_cache','.tox','.nox','htmlcov','cache','dist','artifacts'}
 EXCLUDE_SUFFIXES={'.pyc','.pyo','.log'}
 EXCLUDE_NAMES={'INSTALLATION.json','.DS_Store','.coverage','coverage.xml','config.MAINTAINER.yaml'}
-# Skyrim Forge is released from github.com/SenjuWoo/SkyrimForge again and is
-# pinned in CATALOG.json by tag, asset and SHA-256. Full-Offline carries that
-# exact archive; Core downloads it, and only for users with the Skyrim pack.
-def _forge_pin(root:Path)->dict:
-    cat=json.loads((root/'BUNDLED-TOOLS'/'CATALOG.json').read_text(encoding='utf-8-sig'))
-    rows=[c for c in cat.get('components',[]) if c.get('id')=='skyrim-forge']
-    if len(rows)!=1: raise SystemExit('CATALOG.json must pin exactly one skyrim-forge release')
-    return rows[0]
+# Companion products (Skyrim Forge, Reverse THIS!) are released by their owners and
+# never committed here. TOOLS/Get-Companions.ps1 fetches each latest release, verifies
+# it and lists it in companions.json; Full-Offline carries exactly those files, Core
+# carries none and the installer downloads what an enabled pack needs.
+COMPANIONS=PurePosixPath('BUNDLED-TOOLS/offline/companions.json')
+def companions(root:Path)->list[tuple[Path,Path]]:
+    index=root/COMPANIONS
+    if not index.is_file(): return []
+    out=[(index,Path(COMPANIONS))]
+    for row in json.loads(index.read_text(encoding='utf-8-sig')).get('companions',[]):
+        name=str(row.get('asset',''))
+        if not re.fullmatch(r'[A-Za-z0-9._-]+\.zip',name): raise RuntimeError(f'unsafe companion asset name: {name!r}')
+        rel=Path('BUNDLED-TOOLS/offline')/name; p=root/rel
+        if not p.is_file() or hashlib.sha256(p.read_bytes()).hexdigest()!=str(row.get('sha256','')).lower():
+            raise RuntimeError(f'companion {name} is missing or differs from companions.json')
+        out.append((p,rel))
+    return out
 
 # Product ZIPs are not repository exports. Templates/references are intentional product inputs.
 PRODUCT_ROOT_FILES={'START-HERE.bat','START-HERE.txt','INSTALL-AIO.ps1','INSTALL-REMOTE.ps1',
@@ -59,8 +68,8 @@ CORE_NOTE=(
     'installed from source or downloaded when absent. Full-Offline carries\n'
     'archive/wheel snapshots; uncached runtimes and dependencies may need network.\n'
     '\n'
-    'Skyrim Forge is one of those payloads: it is downloaded from its pinned\n'
-    'GitHub release (SHA-256 checked) only when the Skyrim pack is on.\n'
+    'Skyrim Forge and Reverse THIS! are released by their owners: the installer\n'
+    'downloads each latest release (SHA-256 checked) only for an enabled pack.\n'
 ).encode('utf-8')
 
 def files(root:Path, core:bool):
@@ -90,6 +99,8 @@ def files(root:Path, core:bool):
         if core and len(rel.parts)>=2 and rel.parts[0]=='BUNDLED-TOOLS' and rel.parts[1]=='offline':
             continue
         yield p,rel
+    if not core:
+        yield from companions(root)
 
 def _row(rel:Path,data:bytes)->dict[str,object]:
     return {'path':rel.as_posix(),'size':len(data),'sha256':hashlib.sha256(data).hexdigest()}
@@ -180,16 +191,15 @@ def verify(path:Path,root:Path)->None:
             top=Path(td)/_prefix(root)
             for rel in ('START-HERE.bat','INSTALL-AIO.ps1','BUNDLED-TOOLS/CATALOG.json','VERSION.txt'):
                 if not (top/rel).is_file(): raise RuntimeError(f'extracted required file missing: {rel}')
-            # Full-Offline must carry the exact pinned Forge archive; Core must not.
-            pin=_forge_pin(root)
-            forge_zip=top/'BUNDLED-TOOLS'/'offline'/str(pin['asset'])
             if (top/'BUNDLED-TOOLS'/'skyrim-forge').exists():
                 raise RuntimeError('archive still carries vendored Forge source')
-            if forge_zip.is_file():
-                if hashlib.sha256(forge_zip.read_bytes()).hexdigest()!=str(pin['sha256']).lower():
-                    raise RuntimeError('offline Forge archive does not match the pinned SHA-256')
-            elif json.loads((top/'BUNDLED-TOOLS/OFFLINE-MANIFEST.json').read_text(encoding='utf-8-sig')).get('variant')!='Core':
-                raise RuntimeError(f"Full-Offline archive has no {pin['asset']}")
+            # Full-Offline carries exactly the verified companions the build fetched; Core none.
+            core_variant=json.loads((top/'BUNDLED-TOOLS/OFFLINE-MANIFEST.json').read_text(encoding='utf-8-sig')).get('variant')=='Core'
+            shipped=companions(top)
+            if core_variant and shipped:
+                raise RuntimeError('Core archive carries companion payloads')
+            if not core_variant and [rel for _,rel in shipped]!=[rel for _,rel in companions(root)]:
+                raise RuntimeError('Full-Offline companions differ from the fetched companions.json')
             if (top/'VERSION.txt').read_text(encoding='utf-8-sig').strip().lstrip('vV')!=_pack_version(root):
                 raise RuntimeError('extracted VERSION.txt does not match the archive name')
             manifest=top/'MANIFEST.json'
@@ -217,7 +227,11 @@ def sha256(path:Path)->str:
 def main()->int:
     ap=argparse.ArgumentParser(); ap.add_argument('--root',type=Path,default=Path(__file__).resolve().parent.parent); ap.add_argument('--outdir',type=Path,default=Path.cwd())
     mode=ap.add_mutually_exclusive_group(); mode.add_argument('--core-only',action='store_true'); mode.add_argument('--full-only',action='store_true')
+    # Releases pass this: a Full-Offline without the companions would install nothing offline.
+    ap.add_argument('--require-companions',action='store_true')
     a=ap.parse_args(); root=a.root.resolve(); outdir=a.outdir.resolve(); outdir.mkdir(parents=True,exist_ok=True)
+    if a.require_companions and not a.core_only and len(companions(root))<2:
+        raise SystemExit('Full-Offline needs the fetched companions: run TOOLS/Get-Companions.ps1 first')
     outputs=[]
     variants=(('Core',True),) if a.core_only else ((('Full-Offline',False),) if a.full_only else (('Core',True),('Full-Offline',False)))
     for label,core in variants:

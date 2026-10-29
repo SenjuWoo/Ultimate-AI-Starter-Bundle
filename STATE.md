@@ -1,5 +1,22 @@
 # Bundle audit state
 
+## 8.27.0 independence pass — 2026-10-29 (in progress)
+
+- Goal: the three repos develop and release independently; the bundle never needs a release because Forge or Reverse THIS! released.
+- Root cause found: the bundle pinned exact companion versions/digests in CATALOG.json, committed their zips to git (9 Forge zips in the last 43 commits) and gated on a copied Forge skill list, so every companion release forced a bundle release.
+- Plan (one line per workstream):
+  1. Trunk flow in all three: maintainer pushes to main after the local gate; CI on the exact SHA; release.yml self-publishes an untagged VERSION; rulesets block force-push/deletion for everyone and gate only PR merges; Dependabot PRs auto-merge when green.
+  2. Bundle tracks the latest companion releases: CATALOG floor (min_version) + online latest with API digest and SHA256SUMS verification, bundled copy only for offline; installed newer kept; runtime contract checks; weekly CI against latest.
+  3. Companion zips leave git; Full-Offline fetches and verifies them at release build; third-party payloads stay pinned in git (reason recorded).
+  4. Forge skill list decoupled: frozen legacy names for migration plus the installed Forge's own tree at runtime; no copied inventory gate.
+  5. Release provenance: SHA256SUMS, BUILD-RECEIPT, SBOM (SPDX), VALIDATION (observed checks), MANIFEST and GitHub build attestation, generated in release.yml.
+  6. One version source: `check_versions.py --set` rewrites every declared spot; README stops restating companion versions/counts.
+  7. Claims and metadata: descriptions/homepages, ShugokiFable URLs in release notes, houseCARL table, rtk corpus row, single ownership section linked from Forge and Reverse THIS! (anchor gated).
+  8. Skyrim cost proof: default install adds zero skills/MCP/instruction bytes; numbers for pack on/off; triple-install ownership diff.
+  9. Forge final pass: auto-release on main, admin-bypass removed from integrity rule, version-free skill text, historical README sections labelled.
+  10. Reverse THIS! final pass: doctor re-verifies recorded file digests (changed/unverified states), auto-release with build receipt, homepage.
+  11. Release all three from green SHAs, verify downloaded bytes, live install, STATE handoff.
+
 ## Completed 8.26.1 Forge/bundle MCP ownership fix — 2026-10-29
 
 - Problem fixed: Forge's standalone `Register-MCP.ps1` wrote a global `skyrim-forge` entry and the bundle installer removed it (the toolbox serves Forge on demand), so each installer undid the other.

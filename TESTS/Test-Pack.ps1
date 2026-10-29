@@ -247,6 +247,15 @@ if (-not (Test-Path $manPath)) {
         else { Good "$($a.file)" }
     }
 }
+# Companion releases are fetched (TOOLS\Get-Companions.ps1), never tracked; when present they must match their index.
+$companionIndex = Join-Path $PackRoot 'BUNDLED-TOOLS\offline\companions.json'
+$companionRows = @()
+if (Test-Path -LiteralPath $companionIndex -PathType Leaf) { $companionRows = @(([IO.File]::ReadAllText($companionIndex) | ConvertFrom-Json).companions) }
+foreach ($c in $companionRows) {
+    $p = Join-Path $PackRoot "BUNDLED-TOOLS\offline\$($c.asset)"
+    if ((Test-Path -LiteralPath $p -PathType Leaf) -and (Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash -eq $c.sha256) { Good "$($c.asset) (latest $($c.id) release)" }
+    else { Bad "$($c.asset) is missing or differs from companions.json" }
+}
 
 Section '4b. Release asset cache validates reused filenames'
 $releaseCacheGate = Join-Path $PackRoot 'TESTS\Test-ReleaseAssetCache.ps1'
@@ -264,7 +273,7 @@ if ($LASTEXITCODE -eq 0 -and $buildOut -match 'BUILD TOOLS GATE: PASS') { Good '
 Section '5. External Skyrim content ownership'
 $packCatalog=Get-UabsPackCatalog -PackRoot $PackRoot
 if ($packCatalog.packs.skyrim.owner -eq 'skyrim-forge' -and -not (Test-Path -LiteralPath (Join-Path $PackRoot '_CANONICAL-SKILLS\skyrim-memory'))) {
-    Good 'Skyrim content and registry validation belong to the pinned Forge release'
+    Good 'Skyrim content and registry validation belong to Forge'
 } else { Bad 'Skyrim content still has duplicate ownership' }
 $ownershipOut=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-SkyrimOwnership.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $ownershipOut -match 'OWNERSHIP GATE: PASS') { Good 'External skill preservation and source checkout ownership' } else { Bad $ownershipOut }
@@ -667,23 +676,23 @@ if ($grokStarter -match '(?m)^\s*skills\s*=\s*false\s*$') {
     Good 'Grok starter config.toml sets compat.claude skills = false'
 } else { Bad 'Grok starter config.toml missing skills = false' }
 
-Section '10. Pinned Forge framework truth lock (SPID/KID grammar anti-drift)'
-# Full-Offline checks the owner's exact archive; Core delegates owner content.
-$forgePin=@((Get-UabsCatalog).components | Where-Object { $_.id -eq 'skyrim-forge' })[0]
-$forgeZip=Join-Path $PackRoot ('BUNDLED-TOOLS\offline\'+$forgePin.offline_asset)
-if (-not (Test-Path -LiteralPath $forgeZip)) { Good 'Core: Skyrim framework content check delegated to the pinned Forge release' }
+Section '10. Forge framework truth lock (SPID/KID grammar anti-drift)'
+# Runs against the latest Forge release Get-Companions.ps1 fetched; Core and offline runs delegate to Forge.
+$forgeRow=@($companionRows | Where-Object { $_.id -eq 'skyrim-forge' }) | Select-Object -First 1
+$forgeZip=if ($forgeRow) { Join-Path $PackRoot ('BUNDLED-TOOLS\offline\'+$forgeRow.asset) } else { $null }
+if (-not $forgeZip -or -not (Test-Path -LiteralPath $forgeZip)) { Good 'Skyrim framework content check delegated to Forge (no fetched release)' }
 else {
     $proofRoot=Join-Path ([IO.Path]::GetTempPath()) ('uabs-forge-proof-'+[guid]::NewGuid().ToString('N'))
     try {
-        if ((Get-FileHash -LiteralPath $forgeZip -Algorithm SHA256).Hash -ine $forgePin.sha256) { throw 'Pinned Forge archive digest mismatch.' }
+        if ((Get-FileHash -LiteralPath $forgeZip -Algorithm SHA256).Hash -ine $forgeRow.sha256) { throw 'Fetched Forge archive differs from companions.json.' }
         Expand-UabsZip -Zip $forgeZip -Dest $proofRoot
         $ownerRoot=Resolve-UabsSingleRoot $proofRoot
         $truthLock=Join-Path $ownerRoot 'integrations\skyrim-pack\skills\skyrim-distr-kid-validation\scripts\verify_framework_truth.py'
         if (-not $py) { throw 'Python missing for framework truth checks.' }
         $out=& $py.Source $truthLock 2>&1 | Out-String
-        if ($LASTEXITCODE -eq 0 -and $out -match 'FRAMEWORK TRUTH LOCK: PASS') { Good 'Pinned Forge framework truth and production-path fixtures PASS' }
+        if ($LASTEXITCODE -eq 0 -and $out -match 'FRAMEWORK TRUTH LOCK: PASS') { Good ('Forge ' + $forgeRow.version + ' framework truth and production-path fixtures PASS') }
         else { Bad ('Owner framework truth lock failed: '+$out.Trim()) }
-    } catch { Bad ('Pinned Forge framework check failed: '+$_.Exception.Message) }
+    } catch { Bad ('Forge framework check failed: '+$_.Exception.Message) }
     finally { if (Test-UabsPathWithin $proofRoot ([IO.Path]::GetTempPath())) { Remove-Item -LiteralPath $proofRoot -Recurse -Force -ErrorAction SilentlyContinue } }
 }
 

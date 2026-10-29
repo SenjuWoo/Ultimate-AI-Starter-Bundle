@@ -160,109 +160,109 @@ class MaintainerTests(unittest.TestCase):
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn(new_tip, git("ls-remote", "--heads", "origin", "merged"))
 
-    def test_protection_preserves_app_bindings_reviews_and_restrictions(self):
-        required = ["Hermes YAML and physical symlink preservation", "Pack gate (Windows PowerShell 5.1, Python 3.12)",
-                    "Pack gate (Windows PowerShell 5.1, Python 3.13)", "Pack gate (Windows PowerShell 5.1, Python 3.14)",
-                    "Pack gate (Windows PowerShell 5.1, Python 3.15)", "MANIFEST verifies against the tree",
-                    "Version strings agree", "Bundle installs pinned Forge end to end"]
+    def test_rulesets_block_rewrites_for_everyone_and_gate_only_merges(self):
+        required = ["Pack gate (Windows PowerShell 5.1, Python 3.14)", "Version strings agree"]
+        mock_source = r'''import json, os, pathlib, sys
+root = pathlib.Path(__file__).parent
+state_path = root / "state.json"
+state = json.loads(state_path.read_text())
+args = sys.argv[1:]
+method = args[args.index("-X") + 1] if "-X" in args else "GET"
+endpoint = [a for a in args if a.startswith("repos/")][0]
+body = json.loads(pathlib.Path(args[args.index("--input") + 1]).read_text()) if "--input" in args else None
+def save(): state_path.write_text(json.dumps(state))
+def out(value): print(json.dumps(value)); raise SystemExit(0)
+base = "repos/fixture/repo"
+if endpoint == base: out({"default_branch": "main"})
+if endpoint == base + "/commits/main": out({"sha": "a" * 40})
+if "/check-runs?" in endpoint:
+    names = state["observed"]
+    out({"check_runs": [{"name": n, "conclusion": "success", "app": {"id": 99}} for n in names]})
+if endpoint == base + "/branches/main/protection":
+    if method == "DELETE":
+        state["classic"] = None; save(); out({})
+    if not state["classic"]:
+        sys.stderr.write("gh: Branch not protected (HTTP 404)"); raise SystemExit(1)
+    out(state["classic"])
+if endpoint == base + "/rulesets":
+    if method == "POST":
+        body["id"] = len(state["rulesets"]) + 100; state["rulesets"].append(body); state["writes"].append(body["name"]); save(); out(body)
+    out([{"id": r["id"], "name": r["name"], "target": r["target"]} for r in state["rulesets"]])
+if endpoint.startswith(base + "/rulesets/"):
+    rid = int(endpoint.rsplit("/", 1)[1])
+    match = [r for r in state["rulesets"] if r["id"] == rid][0]
+    if method == "PUT":
+        body["id"] = rid; state["rulesets"] = [body if r["id"] == rid else r for r in state["rulesets"]]; state["writes"].append(body["name"]); save(); out(body)
+    out(match)
+if endpoint == base + "/rules/branches/main":
+    rules = [dict(rule, ruleset_id=r["id"]) for r in state["rulesets"] if r.get("enforcement") == "active" for rule in r["rules"]]
+    if os.environ.get("UABS_DROP_RULE"): rules = [x for x in rules if x["type"] != "non_fast_forward"]
+    out(rules)
+raise SystemExit("Unexpected API call: " + method + " " + endpoint)
+'''
+        unrelated = {"id": 7, "name": "tags", "target": "tag", "enforcement": "active", "rules": [{"type": "deletion"}], "bypass_actors": []}
         for shell in filter(None, (shutil.which(x) for x in ("powershell.exe", "pwsh.exe"))):
             with self.subTest(shell=shell), tempfile.TemporaryDirectory(prefix="Protection ") as td:
                 root = Path(td)
-                accounts = {"users": [{"login": "alice"}], "teams": [{"slug": "core"}], "apps": [{"slug": "bot"}]}
-                existing = {"required_status_checks": {"strict": False, "contexts": ["custom"], "checks": [{"context": "custom", "app_id": 42}]},
-                            "required_pull_request_reviews": {"required_approving_review_count": 2, "dismiss_stale_reviews": True,
-                                                              "require_code_owner_reviews": True, "require_last_push_approval": True,
-                                                              "dismissal_restrictions": accounts, "bypass_pull_request_allowances": accounts},
-                            "restrictions": accounts, "required_linear_history": {"enabled": True}}
-                (root / "existing.json").write_text(json.dumps(existing), encoding="utf-8")
-                (root / "required.json").write_text(json.dumps(required), encoding="utf-8")
-                mock = root / "mock.py"
-                mock.write_text('''import json, os, pathlib, sys
-root = pathlib.Path(__file__).parent
-args = sys.argv[1:]
-capture = root / "capture.json"
-if "--input" in args:
-    payload = pathlib.Path(args[args.index("--input") + 1]).read_text(encoding="utf-8")
-    fields = json.loads(payload)["required_status_checks"]
-    if "contexts" in fields and "checks" in fields:
-        raise SystemExit("HTTP 422: contexts/checks are mutually exclusive")
-    capture.write_text(payload, encoding="utf-8")
-    print("{}")
-    raise SystemExit(0)
-endpoint = args[-1]
-if endpoint.endswith("/commits/main"):
-    result = {"sha": "a" * 40}
-elif "/check-runs?" in endpoint:
-    names = json.loads((root / "required.json").read_text())
-    if os.environ.get("UABS_MISSING_CHECK"): names = names[:-1]
-    result = {"check_runs": [{"name": name, "conclusion": "success", "app": {"id": 99}} for name in names]}
-elif endpoint.endswith("/branches/main"):
-    result = {"protected": True}
-elif endpoint.endswith("/protection"):
-    result = json.loads((root / "existing.json").read_text())
-    if capture.exists():
-        result = json.loads(capture.read_text())
-        result["required_status_checks"]["contexts"] = [x["context"] for x in result["required_status_checks"]["checks"]]
-        if os.environ.get("UABS_TAMPER_BINDING"):
-            result["required_status_checks"]["checks"][0]["app_id"] = 500
-        for key in ("allow_force_pushes", "allow_deletions", "required_linear_history"):
-            if key in result: result[key] = {"enabled": result[key]}
-        def objects(value):
-            return {k: [{"login" if k == "users" else "slug": x} for x in v] for k, v in value.items()}
-        result["restrictions"] = objects(result["restrictions"])
-        for key in ("dismissal_restrictions", "bypass_pull_request_allowances"):
-            result["required_pull_request_reviews"][key] = objects(result["required_pull_request_reviews"][key])
-else:
-    raise SystemExit("Unexpected API endpoint: " + endpoint)
-print(json.dumps(result))
-''', encoding="utf-8")
-                (root / "gh.cmd").write_text(f'@"{sys.executable}" "{mock}" %*\n', encoding="utf-8")
+                (root / "mock.py").write_text(mock_source, encoding="utf-8")
+                (root / "gh.cmd").write_text(f'@"{sys.executable}" "{root / "mock.py"}" %*\n', encoding="utf-8")
                 env = dict(os.environ, PATH=str(root) + os.pathsep + os.environ["PATH"])
                 helper = str(ROOT / "TOOLS/Set-GitHubProtection.ps1")
-                base = [shell, "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", helper, "-Repo", "fixture/repo"]
-                plan = subprocess.run(base, env=env, capture_output=True, text=True, timeout=60)
-                self.assertEqual(plan.returncode, 0, plan.stderr)
-                self.assertFalse((root / "capture.json").exists())
-                applied = subprocess.run(base + ["-Apply"], env=env, capture_output=True, text=True, timeout=60)
-                self.assertEqual(applied.returncode, 0, applied.stderr)
-                policy = json.loads((root / "capture.json").read_text())
-                self.assertNotIn("contexts", policy["required_status_checks"], "Use the checks variant exclusively")
-                bindings = {x["context"]: x["app_id"] for x in policy["required_status_checks"]["checks"]}
-                self.assertEqual(bindings["custom"], 42)
-                self.assertTrue(all(bindings[name] == 99 for name in required))
-                self.assertEqual(policy["required_pull_request_reviews"]["required_approving_review_count"], 2)
-                expected_accounts = {"users": ["alice"], "teams": ["core"], "apps": ["bot"]}
-                self.assertEqual(policy["required_pull_request_reviews"]["dismissal_restrictions"], expected_accounts)
-                self.assertEqual(policy["required_pull_request_reviews"]["bypass_pull_request_allowances"], expected_accounts)
-                self.assertEqual(policy["restrictions"], expected_accounts)
-                self.assertTrue(policy["required_linear_history"])
-                (root / "capture.json").unlink()
-                tampered = subprocess.run(base + ["-Apply"], env=dict(env, UABS_TAMPER_BINDING="1"), capture_output=True, text=True, timeout=60)
-                self.assertNotEqual(tampered.returncode, 0, "Ignored app binding must fail verification")
-                missing = subprocess.run(base, env=dict(env, UABS_MISSING_CHECK="1"), capture_output=True, text=True, timeout=60)
+                base = [shell, "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", helper, "-Repo", "fixture/repo", "-Checks", ";".join(required)]
+
+                def run(state, *extra, **more):
+                    (root / "state.json").write_text(json.dumps(state), encoding="utf-8")
+                    result = subprocess.run(base + list(extra), env=dict(env, **more), capture_output=True, text=True, timeout=120)
+                    return result, json.loads((root / "state.json").read_text(encoding="utf-8"))
+
+                fresh = {"observed": required, "classic": {"required_status_checks": {"strict": True}}, "rulesets": [unrelated], "writes": []}
+                plan, after = run(fresh)
+                self.assertEqual(plan.returncode, 0, plan.stdout + plan.stderr)
+                self.assertEqual(after["writes"], [], "Plan mode must not write")
+                wanted = {r["name"]: r for r in json.loads(plan.stdout)}
+                self.assertEqual(wanted["integrity"]["bypass_actors"], [], "Force-push/deletion must bind every actor")
+                self.assertEqual({r["type"] for r in wanted["integrity"]["rules"]}, {"deletion", "non_fast_forward"})
+                self.assertEqual([a["actor_type"] for a in wanted["checks"]["bypass_actors"]], ["RepositoryRole"])
+                checks = wanted["checks"]["rules"][0]["parameters"]["required_status_checks"]
+                self.assertEqual({(c["context"], c["integration_id"]) for c in checks}, {(n, 99) for n in required})
+
+                applied, after = run(fresh, "-Apply")
+                self.assertEqual(applied.returncode, 0, applied.stdout + applied.stderr)
+                self.assertIn("PROTECTION: PASS", applied.stdout)
+                self.assertIsNone(after["classic"], "Compatible classic protection was not retired")
+                self.assertIn(unrelated, after["rulesets"], "An unrelated ruleset was changed")
+                again, after = run(after, "-Apply")
+                self.assertEqual(again.returncode, 0, again.stdout + again.stderr)
+                self.assertEqual(sorted(r["name"] for r in after["rulesets"]), ["checks", "integrity", "tags"], "Re-apply duplicated a ruleset")
+
+                reviewed = dict(fresh, classic={"required_pull_request_reviews": {"required_approving_review_count": 1}})
+                refused, after = run(reviewed, "-Apply")
+                self.assertNotEqual(refused.returncode, 0, "Reviewer policy would be silently dropped")
+                self.assertEqual(after["writes"], [])
+                missing, _ = run(dict(fresh, observed=required[:-1]))
                 self.assertNotEqual(missing.returncode, 0, "Never require an unobserved job name")
+                tampered, _ = run(fresh, "-Apply", UABS_DROP_RULE="1")
+                self.assertNotEqual(tampered.returncode, 0, "Verification must read the effective rules")
 
-
-class SkyrimSkillCounts(unittest.TestCase):
-    def test_every_actual_readme_count_mutation_fails(self):
+class CompanionClaims(unittest.TestCase):
+    def test_restated_companion_numbers_fail_the_version_gate(self):
         import importlib.util
-        import re
         spec = importlib.util.spec_from_file_location("bundle_versions", ROOT / ".github/scripts/check_versions.py")
         versions = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(versions)
-        count = len(json.loads((ROOT / "BUNDLED-TOOLS/PACKS.json").read_text(encoding="utf-8-sig"))["packs"]["skyrim"]["skills"])
+        # Forge and Reverse THIS! release on their own: the README states neither their
+        # versions nor Forge's skill count, and putting one back fails the gate.
         text = (ROOT / "README.md").read_text(encoding="utf-8-sig")
-        self.assertEqual(versions.validate_skyrim_claims(text, count), [])
-        # Mutate actual published prose/table counts, rather than copying the parser's pattern.
-        sites = list(re.finditer(r"(?<![\w.])" + str(count) + r"(?![\w.])", text))
-        self.assertTrue(sites, "README no longer identifies its specialist inventory")
-        for site in sites:
-            with self.subTest(line=text.count("\n", 0, site.start()) + 1):
-                changed = text[:site.start()] + str(count + 1) + text[site.end():]
-                self.assertTrue(versions.validate_skyrim_claims(changed, count))
+        self.assertEqual(versions.validate_skyrim_claims(text), [])
+        self.assertEqual(versions.validate_companion_claims(text), [])
+        for claim in ("plus 48 with the Skyrim pack", "its 48 specialist skills", "a 48-skill Skyrim pack", "`skyrim` (48 skills"):
+            with self.subTest(claim=claim):
+                self.assertTrue(versions.validate_skyrim_claims(text + "\n" + claim))
+        for claim in ("**Skyrim Forge 6.4.2**", "Reverse THIS! 1.6.1", "Skyrim Forge v7.0"):
+            with self.subTest(claim=claim):
+                self.assertTrue(versions.validate_companion_claims(text + "\n" + claim))
         changed = text.replace("126 general", "127 general")
-        self.assertEqual(versions.validate_skyrim_claims(changed, count), [], "General counts are a separate inventory")
-
+        self.assertEqual(versions.validate_skyrim_claims(changed), [], "General counts are a separate inventory")
 
 if __name__ == "__main__":
     unittest.main()

@@ -74,3 +74,8 @@ chat.html
 memories/
 *.local.md
 *.local.json
+
+# Companion releases fetched by TOOLS/Get-Companions.ps1 (release build, CI); never committed.
+BUNDLED-TOOLS/offline/companions.json
+BUNDLED-TOOLS/offline/Skyrim-Forge-*.zip
+BUNDLED-TOOLS/offline/Reverse-This-*.zip

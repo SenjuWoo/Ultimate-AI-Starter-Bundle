@@ -8,15 +8,19 @@ name: CI
 # different language, so those jobs are windows-latest and use
 # `shell: powershell` (Windows PowerShell 5.1), never `pwsh` (PowerShell 7+).
 #
-# Skyrim Forge lives in github.com/SenjuWoo/SkyrimForge again, with its own
-# matrix. This repo pins one Forge release and proves, end to end, that the
-# bundle installer installs exactly that release and that it runs.
+# Skyrim Forge and Reverse THIS! are released by their own repositories; this
+# bundle pins no companion version. CI fetches their latest releases before the
+# release contracts, installs the latest Forge end to end, and runs weekly so a
+# companion release that breaks the contract turns this repository red without
+# any bundle change.
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    - cron: "17 6 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -70,6 +74,14 @@ jobs:
           python -m pip install --disable-pip-version-check mcp==1.30.0 PyYAML==6.0.3 ruamel.yaml==0.18.16
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
+      - name: Fetch the latest companion releases
+        shell: powershell
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          .\TOOLS\Get-Companions.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
       - name: Pack gate
         shell: powershell
         run: |
@@ -82,6 +94,8 @@ jobs:
           python TESTS/test_workspace_ownership.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_product_delivery.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_release_provenance.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_release_contract.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -151,10 +165,12 @@ jobs:
   # read a contract field Forge never emitted, so this job installs the exact
   # pinned release with the real installer on a clean machine, runs
   # `forge doctor`, and proves an upgrade keeps the user's Workspaces.
-  forge-bundle-install:
-    name: Bundle installs pinned Forge end to end
+  companions:
+    name: Bundle installs latest companions end to end
     runs-on: windows-latest
     timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -163,7 +179,7 @@ jobs:
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.13"
-      - name: Install the pinned Forge release exactly as the AIO does
+      - name: Install Forge's latest release exactly as the AIO does
         shell: powershell
         run: |
           $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
@@ -172,10 +188,11 @@ jobs:
           $root = Join-Path $env:RUNNER_TEMP 'Skyrim Tools\Skyrim-Forge'
           .\TOOLS\Install-SkyrimForge.ps1 -ForgeRoot $root -Providers Claude
           if ($LASTEXITCODE -ne 0) { throw "Install-SkyrimForge.ps1 exited $LASTEXITCODE" }
-          $pin = (Get-Content -Raw BUNDLED-TOOLS\CATALOG.json | ConvertFrom-Json).components | Where-Object { $_.id -eq 'skyrim-forge' }
+          $latest = (gh api repos/SenjuWoo/SkyrimForge/releases/latest --jq .tag_name).TrimStart('v')
           $target = [IO.File]::ReadAllText((Join-Path $root 'VERSION.txt'))
-          if ($target -notmatch ('(?m)^Skyrim Forge\s+' + [regex]::Escape($pin.version) + '\s*$')) { throw "Installed '$target'; CATALOG pins $($pin.version)" }
-          Write-Host "installed $($pin.version) -> $root"
+          if ($target -notmatch ('(?m)^Skyrim Forge\s+' + [regex]::Escape($latest) + '\s*$')) { throw "Installed '$target'; Forge's latest release is $latest" }
+          [IO.File]::AppendAllText($env:GITHUB_ENV, "FORGE_LATEST=$latest`n", $utf8NoBom)
+          Write-Host "installed $latest -> $root"
 
       # Job staging defaults to <install root>\Workspaces, and the installer
       # replaces the install directory to upgrade it. Before 7.9.1 that deleted
@@ -196,24 +213,26 @@ jobs:
           $marker = Join-Path $root 'Workspaces\MyMod\keep-me.txt'
           if (-not (Test-Path -LiteralPath $marker -PathType Leaf)) { throw 'The upgrade deleted the user Workspaces.' }
           if ([IO.File]::ReadAllText($marker) -ne 'user data') { throw 'The upgrade corrupted the user Workspaces.' }
-          $pin = (Get-Content -Raw BUNDLED-TOOLS\CATALOG.json | ConvertFrom-Json).components | Where-Object { $_.id -eq 'skyrim-forge' }
           $after = [IO.File]::ReadAllText((Join-Path $root 'VERSION.txt'))
-          if ($after -notmatch ('(?m)^Skyrim Forge\s+' + [regex]::Escape($pin.version) + '\s*$')) { throw "Downgraded install was not re-staged: '$after'" }
-          Write-Host "re-staged $($pin.version), Workspaces intact"
+          if ($after -notmatch ('(?m)^Skyrim Forge\s+' + [regex]::Escape($env:FORGE_LATEST) + '\s*$')) { throw "Downgraded install was not re-staged: '$after'" }
+          Write-Host "re-staged $env:FORGE_LATEST, Workspaces intact"
 
       # A tampered archive must stop the install before anything is extracted.
       - name: A digest mismatch is refused
         shell: powershell
         run: |
-          $bad = Join-Path $env:RUNNER_TEMP 'tampered.zip'
-          Copy-Item BUNDLED-TOOLS\offline\Skyrim-Forge-*.zip $bad
+          .\TOOLS\Get-Companions.ps1
+          if ($LASTEXITCODE -ne 0) { throw "Get-Companions.ps1 exited $LASTEXITCODE" }
+          $row = ([IO.File]::ReadAllText('BUNDLED-TOOLS\offline\companions.json') | ConvertFrom-Json).companions | Where-Object { $_.id -eq 'skyrim-forge' }
+          $bad = Join-Path $env:RUNNER_TEMP $row.asset
+          Copy-Item (Join-Path 'BUNDLED-TOOLS\offline' $row.asset) $bad
           [IO.File]::AppendAllText($bad, 'x')
           $root = Join-Path $env:RUNNER_TEMP 'Tampered\Skyrim-Forge'
           $ErrorActionPreference = 'Continue'
-          $out = & powershell -NoProfile -ExecutionPolicy Bypass -File .\TOOLS\Install-SkyrimForge.ps1 -ForgeRoot $root -Providers Claude -SourceZip $bad 2>&1 | Out-String
+          $out = & powershell -NoProfile -ExecutionPolicy Bypass -File .\TOOLS\Install-SkyrimForge.ps1 -ForgeRoot $root -Providers Claude -SourceZip $bad -SourceSha256 $row.sha256 2>&1 | Out-String
           $code = $LASTEXITCODE
           Write-Host $out
           if ($code -eq 0) { throw 'A tampered archive was installed.' }
-          if ($out -notmatch 'does not match the pinned release') { throw 'The digest refusal was not reported.' }
+          if ($out -notmatch 'does not match -SourceSha256') { throw 'The digest refusal was not reported.' }
           if (Test-Path -LiteralPath (Join-Path $root 'VERSION.txt')) { throw 'Files were installed from a tampered archive.' }
           exit 0

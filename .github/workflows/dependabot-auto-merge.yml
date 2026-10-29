@@ -1,0 +1,23 @@
+name: Dependabot auto-merge
+
+# Dependabot pull requests merge themselves (squash) once the checks the "checks"
+# ruleset requires have passed; GitHub's auto-merge waits for them. The step runs
+# only for Dependabot's own pull requests, and the job still succeeds for every
+# other pull request so it never shows as a skipped check.
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Enable auto-merge for Dependabot
+        if: github.event.pull_request.user.login == 'dependabot[bot]' && github.actor == 'dependabot[bot]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --auto --squash "$PR"

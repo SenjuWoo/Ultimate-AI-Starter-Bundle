@@ -5,8 +5,9 @@ $ErrorActionPreference='Stop'
 if (-not $PackRoot) { $PackRoot=Split-Path -Parent $PSScriptRoot }
 function Assert($ok,[string]$why) { if (-not $ok) { throw $why } }
 $catalog=[IO.File]::ReadAllText((Join-Path $PackRoot 'BUNDLED-TOOLS\CATALOG.json')) | ConvertFrom-Json
-$releasePin=@($catalog.components | Where-Object id -eq 'reverse-this')
-Assert ($releasePin.Count -eq 1 -and $releasePin[0].sha256 -match '^[a-f0-9]{64}$' -and $releasePin[0].release_tag -eq ('v'+$releasePin[0].version)) 'Companion catalog lacks its verified release identity.'
+$entry=@($catalog.components | Where-Object id -eq 'reverse-this')
+Assert ($entry.Count -eq 1 -and $entry[0].install -eq 'latest-release' -and $entry[0].min_version -match '^\d+\.\d+\.\d+$' -and ([string]$entry[0].asset_template).Contains('{version}')) 'Companion catalog lacks its floor and asset template.'
+Assert (-not ($entry[0].PSObject.Properties.Name | Where-Object { $_ -in @('version','release_tag','asset','sha256','offline_asset') })) 'Companion catalog pins a release again; an owner release would need a bundle release.'
 $packs=[IO.File]::ReadAllText((Join-Path $PackRoot 'BUNDLED-TOOLS\PACKS.json')) | ConvertFrom-Json
 Assert ($packs.packs.reverse.owner -eq 'reverse-this' -and @($packs.packs.reverse.skills).Count -eq 0) 'Reverse payload ownership leaked into bundle skills.'
 $fixture=Join-Path ([IO.Path]::GetTempPath()) ('uabs-companions-'+[guid]::NewGuid().ToString('N'))
@@ -40,17 +41,32 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'VERSION'),(Join-Path $PSScriptR
 '@)
     $zip=Join-Path $fixture 'Reverse-This-1.4.0.zip'
     Compress-Archive -LiteralPath $release -DestinationPath $zip
-    $pin=@{id='reverse-this';version='1.4.0';asset='Reverse-This-1.4.0.zip';sha256=(Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash}
-    [IO.File]::WriteAllText((Join-Path $fixture 'BUNDLED-TOOLS\CATALOG.json'),(@{components=@($pin)} | ConvertTo-Json -Depth 5))
+    $sha=(Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
+    $comp=@{id='reverse-this';name='Reverse THIS!';install='latest-release';min_version='1.4.0';asset_template='Reverse-This-{version}.zip';github=@{owner='fixture';repo='reverse-this'}}
+    [IO.File]::WriteAllText((Join-Path $fixture 'BUNDLED-TOOLS\CATALOG.json'),(@{components=@($comp)} | ConvertTo-Json -Depth 5))
     $target=Join-Path $fixture 'owner'
     $result=Run-Companion @('-KitRoot',$target,'-Offline')
-    Assert ($result.code -ne 0 -and $result.output -match 'not cached') 'Offline missing archive did not fail clearly.'
+    Assert ($result.code -ne 0 -and $result.output -match 'no verified local copy') 'Offline missing archive did not fail clearly.'
     Assert (-not (Test-Path -LiteralPath $target)) 'Offline missing archive created an owner.'
-    $bad=Join-Path $fixture 'bad.zip'; [IO.File]::WriteAllText($bad,'tampered')
-    $result=Run-Companion @('-KitRoot',$target,'-SourceZip',$bad)
-    Assert ($result.code -ne 0 -and $result.output -match 'pinned SHA-256') 'Tampered companion archive was accepted.'
+    New-Item -ItemType Directory -Force -Path (Join-Path $fixture 'tampered') | Out-Null
+    $bad=Join-Path $fixture 'tampered\Reverse-This-1.4.0.zip'; [IO.File]::WriteAllText($bad,'tampered')
+    $result=Run-Companion @('-KitRoot',$target,'-SourceZip',$bad,'-SourceSha256',$sha)
+    Assert ($result.code -ne 0 -and $result.output -match 'does not match its verified SHA-256') 'Tampered companion archive was accepted.'
     Assert (-not (Test-Path -LiteralPath $target)) 'Tampered archive wrote installed source.'
-    $result=Run-Companion @('-KitRoot',$target,'-SourceZip',$zip,'-Offline')
+    $result=Run-Companion @('-KitRoot',$target,'-SourceZip',$zip)
+    Assert ($result.code -ne 0 -and $result.output -match 'needs -SourceSha256') 'An archive with no reference digest was trusted.'
+    # Full-Offline's bundled copy: listed in companions.json and verified before use.
+    $offline=Join-Path $fixture 'BUNDLED-TOOLS\offline'; New-Item -ItemType Directory -Force -Path $offline | Out-Null
+    Copy-Item -LiteralPath $zip -Destination $offline
+    [IO.File]::WriteAllText((Join-Path $offline 'companions.json'),(@{schema=1;companions=@(@{id='reverse-this';version='1.4.0';asset='Reverse-This-1.4.0.zip';sha256=$sha})} | ConvertTo-Json -Depth 5))
+    $bundledOwner=Join-Path $fixture 'bundled-owner'
+    $result=Run-Companion @('-KitRoot',$bundledOwner,'-Offline')
+    Assert ($result.code -eq 0 -and (Test-Path -LiteralPath (Join-Path $bundledOwner 'VERSION'))) ('Bundled companion was not installed offline: '+$result.output)
+    [IO.File]::AppendAllText((Join-Path $offline 'Reverse-This-1.4.0.zip'),'x')
+    $result=Run-Companion @('-KitRoot',(Join-Path $fixture 'corrupt-owner'),'-Offline')
+    Assert ($result.code -ne 0 -and $result.output -match 'does not match') 'A bundled copy that differs from companions.json was used.'
+    Remove-Item -LiteralPath $offline -Recurse -Force
+    $result=Run-Companion @('-KitRoot',$target,'-SourceZip',$zip,'-SourceSha256',$sha,'-Offline')
     Assert ($result.code -eq 0) ('Fresh verified owner delegation failed: '+$result.output)
     $calls=@(Get-Content -LiteralPath (Join-Path $target 'calls.jsonl') | ForEach-Object { $_ | ConvertFrom-Json })
     Assert ($calls.Count -eq 2 -and $calls[0].offline -and $calls[1].doctor) 'Offline/Doctor options did not reach the owner.'
@@ -71,7 +87,7 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'VERSION'),(Join-Path $PSScriptR
     Assert (([IO.File]::ReadAllText((Join-Path $target 'VERSION'))) -eq '9.0.0') 'Newer companion source was downgraded.'
     Assert ((Get-FileHash -LiteralPath $pointerPath -Algorithm SHA256).Hash -eq $before) 'Wrapper rewrote another owner pointer.'
     $isolated=Join-Path $fixture 'isolated'
-    $result=Run-Companion @('-KitRoot',$isolated,'-SourceZip',$zip)
+    $result=Run-Companion @('-KitRoot',$isolated,'-SourceZip',$zip,'-SourceSha256',$sha)
     Assert ($result.code -eq 0) ('Explicit isolated companion failed: '+$result.output)
     $isolatedCalls=@(Get-Content -LiteralPath (Join-Path $isolated 'calls.jsonl') | ForEach-Object { $_ | ConvertFrom-Json })
     Assert ($isolatedCalls.Count -eq 2 -and $isolatedCalls[0].root -eq $isolated -and $isolatedCalls[1].root -eq $isolated) 'Explicit source root updated a different registered tool owner.'

@@ -36,16 +36,14 @@
       "id": "reverse-this",
       "name": "Reverse THIS!",
       "kind": "product-release",
-      "install": "manual",
-      "version": "1.6.1",
+      "install": "latest-release",
+      "license": "MIT",
+      "min_version": "1.6.1",
+      "asset_template": "Reverse-This-{version}.zip",
       "github": {
         "owner": "SenjuWoo",
         "repo": "reverse-this"
       },
-      "release_tag": "v1.6.1",
-      "asset": "Reverse-This-1.6.1.zip",
-      "offline_asset": "Reverse-This-1.6.1.zip",
-      "sha256": "c71b497ac846cb7d51458fa6e00480a94ad4fc6424bbe3b48cd06d23fabcfc7b",
       "mcp": false,
       "auto_register": false,
       "note": "Optional reverse pack delegates source, tool selection, updates and doctor to this independent owner. The kit.json pointer is reused. No provider setup or duplicate specialist catalog."
@@ -354,7 +352,8 @@
       "skill_release_prefix": "skill-v"
     },
     {
-      "install": "pinned-release",
+      "install": "latest-release",
+      "license": "MIT",
       "id": "skyrim-forge",
       "kind": "product-release",
       "mcp": true,
@@ -369,12 +368,9 @@
         "owner": "SenjuWoo",
         "repo": "SkyrimForge"
       },
-      "release_tag": "v6.4.2",
-      "asset": "Skyrim-Forge-6.4.2.zip",
-      "offline_asset": "Skyrim-Forge-6.4.2.zip",
-      "sha256": "4bb55d67d44b2c3ac0593c56d4db5dd6d3fae0ce3f5a88a3454e447953d3d496",
-      "note": "Released from github.com/SenjuWoo/SkyrimForge. Installed only with the Skyrim pack. The installer verifies the pinned SHA-256 before extracting, resolves ONE versionless install root, migrates a version-stamped install onto it, preserves Workspaces and the virtualenv, wires selected providers, then proves the result runs with `forge doctor`. CI installs this exact release end to end.",
-      "version": "6.4.2"
+      "min_version": "6.4.2",
+      "asset_template": "Skyrim-Forge-{version}.zip",
+      "note": "Released independently from github.com/SenjuWoo/SkyrimForge; the bundle pins no Forge version. Installed only with the Skyrim pack: the installer takes Forge's latest release at or above min_version (GitHub sha256 digest and SHA256SUMS verified before extracting), keeps a newer install, resolves ONE versionless install root, preserves Workspaces and the virtualenv, then proves the result runs with `forge doctor`. CI installs the latest release end to end every week."
     },
     {
       "id": "code-review-skill",
@@ -982,7 +978,7 @@
       "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings. 2026-10-22: 1.23.0 workflow-validation help PASS with PYTHONUTF8=1 and telemetry disabled. Default Windows cp1252 help reproduced a UnicodeEncodeError; UTF-8 is required for redirected output."
     }
   ],
-  "pack_version": "8.26.1",
+  "pack_version": "8.27.0",
   "updated_utc": "2026-10-18",
   "providers": {
     "Grok": {
@@ -1070,7 +1066,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.26.1",
+  "catalog_version": "8.27.0",
   "updated": "2026-10-26",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test.",
   "companions": [

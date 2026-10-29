@@ -1,3 +1,14 @@
+## 8.27.0 (2026-10-29)
+
+- The bundle pins no companion version any more. Skyrim Forge and Reverse THIS! release on their own; CATALOG.json keeps a minimum version per companion, the installer takes each owner's latest release at or above it (GitHub sha256 digest and the release's SHA256SUMS verified before extraction), keeps a newer install, and falls back loudly to a verified bundled or earlier-downloaded copy only when GitHub cannot be reached. A companion release no longer needs a bundle release.
+- Companion archives leave git (they grew history about 5 MB per Forge release). `TOOLS/Get-Companions.ps1` fetches and verifies the latest releases for CI and for Full-Offline, which now records them in `companions.json`; Core carries none. Third-party offline payloads stay pinned in git, reason recorded in docs/COMPANION-ARCHITECTURE.md.
+- Forge's skill list is no longer copied: the installer reads the installed Forge's own pack plus a frozen list of names older bundles installed. The copied-inventory gate is gone; release contracts now check the latest Forge and Reverse THIS! releases CI fetched, and CI re-runs weekly so a breaking companion release turns this repository red without a bundle change.
+- Releases carry provenance generated in `release.yml`: SHA256SUMS.txt, BUILD-RECEIPT.json (commit, workflow run, runner, toolchain, inputs, outputs), SBOM.spdx.json (SPDX 2.3), VALIDATION.json (the check runs observed on the exact SHA), MANIFEST.json and a GitHub build attestation (`gh attestation verify`); every asset is re-downloaded and compared.
+- Trunk flow: the maintainer pushes to main after the local gate and CI runs once on that SHA. Rulesets replace classic protection: `integrity` blocks force-push and deletion for everyone, `checks` gates only pull-request merges, and Dependabot pull requests merge themselves when green. Wait-External reads the effective rules, so ruleset-required checks still count.
+- `check_versions.py --set X.Y.Z` bumps every declared version in one command; the gate also rejects restated companion versions or Skyrim skill counts and guards the `#ownership` anchor the companion READMEs link to. README states ownership once, describes the opt-in Skyrim pack correctly, and drops the stale houseCARL table and the restated release list.
+- Fixed in passing: the workspace AIO copy had drifted from the canonical contract (now guarded), and a GitHub token only ever reaches api.github.com.
+- 126 canonical skills total; Forge keeps its own pack.
+
 ## 8.26.1 (2026-10-29)
 
 - Pins verified Skyrim Forge 6.4.2 (sha256 4bb55d67...d496; bytes match GitHub's digest and SHA256SUMS). Forge's `Register-MCP.ps1` now defers to the bundle toolbox for every provider whose MCP config already has a `toolbox` entry, so a standalone Forge registration and a bundle install no longer undo each other's global `skyrim-forge` entry. `-Global` keeps a machine-wide registration available.

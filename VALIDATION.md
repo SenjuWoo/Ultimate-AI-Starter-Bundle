@@ -1,3 +1,5 @@
+Historical narrative. From 8.27.0 every release carries a generated VALIDATION.json asset (the check runs observed on its exact SHA), with BUILD-RECEIPT.json, SBOM.spdx.json and a build attestation.
+
 # v8.25.0 final source and installed validation
 
 - Full 19-section Windows PowerShell pack gate PASS; all 151 release contracts PASS; ownership/publication/junction tests 7/7 and real product/fanout tests 2/2 PASS. All 7,882 source manifest hashes and version declarations agree. The version checker also rejects a stale validation release tag.

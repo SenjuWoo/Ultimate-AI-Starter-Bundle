@@ -549,7 +549,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.26.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.27.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -696,7 +696,7 @@ $installed = [ordered]@{}
 # Companion tool ownership stays in Reverse THIS!; this pack only selects and delegates it.
 if (-not $SkillsOnly -and $packSel.Enabled -contains 'reverse') {
   $reverseArgs=@('-PackRoot',$PackRoot)
-  if ($Mode -eq 'BundledOnly') { $reverseArgs+='-Offline' }
+  if ($Mode -eq 'BundledOnly') { $reverseArgs+='-Offline' } elseif ($Mode -eq 'BundledFirst') { $reverseArgs+='-PreferBundled' }
   if ($NoToolUpdates) { $reverseArgs+='-NoUpdate' }
   if ((Invoke-UabsChildScript -Title 'Reverse THIS! companion' -File (Join-Path $PackRoot 'TOOLS\Install-ReverseThis.ps1') -ArgList $reverseArgs) -ne 0) { throw 'Reverse THIS! companion update failed; its owner logs contain the cause.' }
   $installed['reverse-this']=@{status='owner-managed';pointer=(Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json')}
@@ -706,20 +706,17 @@ if (-not $SkillsOnly -and $packSel.Enabled -contains 'reverse') {
 if (-not $SkillsOnly -and $skyrimPackOn) {
   $forgeInstaller = Join-Path $PackRoot 'TOOLS\Install-SkyrimForge.ps1'
   if (-not (Test-Path -LiteralPath $forgeInstaller -PathType Leaf)) { throw 'TOOLS\Install-SkyrimForge.ps1 missing from pack.' }
-  $forgeEntry = @($catalog.components | Where-Object { $_.id -eq 'skyrim-forge' }) | Select-Object -First 1
-  $forgeSourceVersion = if ($forgeEntry) { [string]$forgeEntry.version } else { 'unknown' }
   $forgeArgs = @('-PackRoot',$PackRoot,'-BundleOwnsProviderSkills')
-  if ($Mode -eq 'BundledOnly') { $forgeArgs+='-Offline' }
+  if ($Mode -eq 'BundledOnly') { $forgeArgs+='-Offline' } elseif ($Mode -eq 'BundledFirst') { $forgeArgs+='-PreferBundled' }
   if ($NoToolUpdates) { $forgeArgs+='-NoUpdate' }
   if ($ToolsOnly) { $forgeArgs += '-SkipProviderSkills' } else { $forgeArgs += @('-Providers',($Providers -join ',')) }
   if ($ForgeRoot) { $forgeArgs += @('-ForgeRoot', $ForgeRoot) }
   Write-UabsStep 'Skyrim Forge'
   $forgeCode = Invoke-UabsChildScript -Title 'Skyrim Forge install' -File $forgeInstaller -ArgList $forgeArgs
   if ($forgeCode -ne 0) { throw "Skyrim Forge installation failed with exit code $forgeCode." }
-  Write-UabsOk ("Skyrim Forge $forgeSourceVersion ready")
-
   $registeredRoot = [Environment]::GetEnvironmentVariable('SKYRIM_FORGE_ROOT','User')
   if ($registeredRoot) { $env:SKYRIM_FORGE_ROOT = $registeredRoot }
+  Write-UabsOk ("Skyrim Forge " + (Get-UabsForgeRuntimeVersion $registeredRoot) + " ready")
   $installed['skyrim-forge'] = @{ status='installed'; version=(Get-UabsForgeRuntimeVersion $registeredRoot); root=$registeredRoot }
 }
 
@@ -793,7 +790,7 @@ if (-not $ToolsOnly) {
     # Skills of a disabled pack are left out; the managed-skill ledger then
     # retires the unmodified copies an earlier install put here.
     $baseExclude = @($codexBuiltins) + @($packSel.ExcludedSkills)
-    $externalNames = @($packSel.Catalog.packs.skyrim.skills)
+    $externalNames = @(@($packSel.Catalog.packs.skyrim.skills) + @(Get-UabsForgePackSkillNames) | Select-Object -Unique)
     $script:UabsSkillSyncArgs[$prov] = @{ From = $srcSkills; To = $destSkills; Exclude = $baseExclude; External = $externalNames }
     $ownedSkip = @()
     if ($script:UabsOwnedSkip.ContainsKey($prov)) { $ownedSkip = @($script:UabsOwnedSkip[$prov].Values | ForEach-Object { $_ }) }
@@ -804,7 +801,7 @@ if (-not $ToolsOnly) {
       # and nothing refreshes it afterwards: measured 26-47 stale bundle skills
       # per profile and ~72 retired ones in three of them. Refresh the profiles
       # this bundle manages; Skyrim pack skills belong only in `skyrim`.
-      $allPackSkills = @($packSel.Catalog.packs.PSObject.Properties | ForEach-Object { @($_.Value.skills) })
+      $allPackSkills = @(@($packSel.Catalog.packs.PSObject.Properties | ForEach-Object { @($_.Value.skills) }) + @($externalNames) | Select-Object -Unique)
       $hermesOverrides = @(Get-UabsPreservedSkillNames -Provider 'Hermes' -SkillsDir $destSkills)
       foreach ($pf in @(Get-UabsHermesManagedProfiles -HermesHome $providerHome -SoulFile (Join-Path $PackRoot '3-PREAMBLES\SOUL.md') -RequireSkills)) {
         $profileSkills = Join-Path $pf.FullName 'skills'
@@ -1837,8 +1834,9 @@ if (-not $SkillsOnly) {
     if ($id -eq 'housecarl') {
       $owner = Join-Path $env:SKYRIM_FORGE_ROOT 'Install-HouseCarl.ps1'
       if (-not (Test-Path -LiteralPath $owner)) { throw 'houseCARL belongs to Forge; install the optional Skyrim integration first.' }
-      $ownerArgs=@(); $hcZip=Join-Path $offline 'houseCARL-2.1.1.zip'
-      if (Test-Path -LiteralPath $hcZip) { $ownerArgs+=@('-SourceZip',$hcZip) }
+      $hcAsset=[string](@($catalog.components | Where-Object { $_.id -eq 'housecarl' }) | Select-Object -First 1).offline_asset
+      $ownerArgs=@(); $hcZip=if ($hcAsset) { Join-Path $offline $hcAsset } else { $null }
+      if ($hcZip -and (Test-Path -LiteralPath $hcZip)) { $ownerArgs+=@('-SourceZip',$hcZip) }
       if ($SkipHouseCarlSetup -or $ToolsOnly) { $ownerArgs+='-SkipSetup' }
       if ((Invoke-UabsChildScript -Title 'Forge-owned houseCARL' -File $owner -ArgList $ownerArgs) -ne 0) { throw 'Forge houseCARL installer failed.' }
       foreach ($name in @('HOUSECARL_MCP','HOUSECARL_ROOT','SKYRIM_MO2_INSTANCE')) {
@@ -2695,7 +2693,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.26.1'
+version = '8.27.0'
   content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')

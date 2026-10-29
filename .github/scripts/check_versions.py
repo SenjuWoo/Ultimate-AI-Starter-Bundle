@@ -4,15 +4,48 @@ The version is restated in files that cannot read each other: an installer
 banner, a JSON catalog, two docs and a validation report. Restating is
 unavoidable; drifting silently is not. v7.5.3 shipped with CATALOG.json still
 declaring 6.8.0 -- seven minor versions behind -- because nothing checked.
+
+`--set X.Y.Z` rewrites every declaration below in place (one command per
+release); the changelog sections stay hand-written and are still checked.
+
+Companion products (Skyrim Forge, Reverse THIS!) release on their own. The
+bundle declares only a floor for each, so it must never restate their versions
+or skill counts: a restated number is a claim that goes stale on their next
+release. Their contracts are tested against the latest release CI fetches.
 """
 import io
 import json
 import os
 import re
 import sys
-import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+V = r"((?:[0-9]+\.)+[0-9]+)"
+# (file, pattern whose group 1 is the bare version, label)
+DECLARATIONS = [
+    ("README.md", r"^<!-- Ultimate AI Starter Bundle v" + V + r" -->", "README.md (first line)"),
+    ("README.md", r"^# Ultimate AI Starter Bundle v" + V, "README.md (title)"),
+    ("START-HERE.txt", r"^Ultimate AI Starter Bundle V" + V, "START-HERE.txt"),
+    ("INSTALL-AIO.ps1", r"Ultimate AI Starter Bundle v" + V + r" - ALL-IN-ONE INSTALLER", "INSTALL-AIO.ps1 (banner)"),
+    ("INSTALL-AIO.ps1", r"version = '" + V + r"'", "INSTALL-AIO.ps1 (state)"),
+    # The console title is the first thing a fresh user sees; it sat at v7.8.0
+    # for a whole release before it was checked.
+    ("START-HERE.bat", r"^title Ultimate AI Starter Bundle v" + V, "START-HERE.bat (title)"),
+    ("BUNDLED-TOOLS/CATALOG.json", r'"pack_version":\s*"' + V + '"', "CATALOG.json pack_version"),
+    ("BUNDLED-TOOLS/CATALOG.json", r'"catalog_version":\s*"' + V + '"', "CATALOG.json catalog_version"),
+    ("BUNDLED-TOOLS/OFFLINE-MANIFEST.json", r'"pack_version":\s*"' + V + '"', "OFFLINE-MANIFEST.json pack_version"),
+    # PROFILES.json is a file users open to understand the MCP cost model; it
+    # sat at 8.0.0 through 8.6.x because nothing read it. An unread version is
+    # still a claim.
+    ("BUNDLED-TOOLS/PROFILES.json", r'"pack_version":\s*"' + V + '"', "PROFILES.json pack_version"),
+    ("BUNDLED-TOOLS/PROFILES.json", r'"catalog_version":\s*"' + V + '"', "PROFILES.json catalog_version"),
+    ("VALIDATION.json", r'"version":\s*"' + V + '"', "VALIDATION.json version"),
+    ("VALIDATION.json", r'"release_tag":\s*"v' + V + '"', "VALIDATION.json release_tag"),
+]
+LIVE_DOCS = ("README.md", "START-HERE.txt", "AIO-GUIDE.md")
+COMPANION_VERSION = re.compile(r"\b(Skyrim Forge|Reverse THIS!?)\*{0,2}\s+v?\d+\.\d+(?:\.\d+)?\b")
+SKYRIM_COUNT = re.compile(r"\b(\d+)\s+specialist\s+skills\b|\b(\d+)-skill\s+Skyrim\b|"
+                          r"\b(\d+)\s+with\s+the\s+Skyrim\s+pack\b|\bskyrim`?\s*\((\d+)\s+skills\b", re.I)
 
 
 def read(rel):
@@ -20,134 +53,96 @@ def read(rel):
         return fh.read()
 
 
-def validate_skyrim_claims(text, expected):
-    """Check every public wording against the pinned specialist inventory."""
-    pattern = (r"\b(\d+)\s+specialist\s+skills\b|\b(\d+)-skill\s+Skyrim\b|"
-               r"\b(\d+)\s+with\s+the\s+Skyrim\s+pack\b|"
-               r"\bskyrim`?\s*\((\d+)\s+skills\b")
-    problems = []
-    for match in re.finditer(pattern, text, re.I):
-        count = next(int(value) for value in match.groups() if value is not None)
-        if count != expected:
-            problems.append("claims %s Skyrim skills; pinned Forge has %s" % (count, expected))
-    return problems
+def validate_skyrim_claims(text):
+    """Forge owns its skill count; any number here goes stale on its next release."""
+    return ["restates a Skyrim skill count (%s); link Forge instead" % m.group(0) for m in SKYRIM_COUNT.finditer(text)]
 
 
-def main():
+def validate_companion_claims(text):
+    return ["restates a companion version (%s); Forge and Reverse THIS! release on their own" % m.group(0)
+            for m in COMPANION_VERSION.finditer(text)]
+
+
+def set_version(bare):
+    """Rewrite every declaration in place, preserving each file's bytes otherwise."""
+    if not re.fullmatch(V, bare):
+        raise SystemExit("--set needs a dotted version such as 8.27.0, got %r" % bare)
+    for rel in sorted({rel for rel, _, _ in DECLARATIONS} | {"VERSION.txt"}):
+        path = os.path.join(ROOT, rel)
+        raw = open(path, "rb").read()
+        bom = raw.startswith(b"\xef\xbb\xbf")
+        text = raw.decode("utf-8-sig")
+        if rel == "VERSION.txt":
+            text = re.sub(r"v?" + V, "v" + bare, text, count=1)
+        for _, pattern, label in (d for d in DECLARATIONS if d[0] == rel):
+            text, count = re.subn(pattern, lambda m: m.group(0).replace(m.group(1), bare, 1), text, count=1, flags=re.M)
+            if not count:
+                raise SystemExit("%s: no declaration matched for %s" % (rel, label))
+        open(path, "wb").write((b"\xef\xbb\xbf" if bom else b"") + text.encode("utf-8"))
+    print("Declared versions set to %s; add '## %s' to CHANGELOG.md and docs/history/V%s-CHANGELOG.md." % (bare, bare, bare))
+
+
+def main(argv):
+    if len(argv) == 2 and argv[0] == "--set":
+        set_version(argv[1].lstrip("vV"))
     version = read("VERSION.txt").strip()          # e.g. "v7.6.2"
     bare = version.lstrip("vV")                    # e.g. "7.6.2"
     print("VERSION.txt declares %s" % version)
-
     problems = []
 
-    def check(rel, pattern, expected, label=None):
+    # Versions are dot-separated integers with three or more parts; the declared
+    # copy must equal VERSION.txt exactly.
+    for rel, pattern, label in DECLARATIONS:
         try:
-            text = read(rel)
+            found = re.search(pattern, read(rel), re.M)
         except OSError as exc:
             problems.append("%s: unreadable (%s)" % (rel, exc))
-            return
-        found = re.search(pattern, text, re.M)
+            continue
         if not found:
             problems.append("%s: no version declaration matched %r" % (rel, pattern))
-            return
+            continue
         got = found.group(1)
-        status = "ok" if got == expected else "MISMATCH"
-        print("  %-8s %-34s %s" % (status, label or rel, got))
-        if got != expected:
-            problems.append("%s declares %s, expected %s" % (rel, got, expected))
-
-    # Versions are dot-separated integers with three or more parts (3-part
-    # normal releases, 4-part point releases such as 7.9.8.5). The declared
-    # copy must equal VERSION.txt exactly either way.
-    check("README.md", r"^# Ultimate AI Starter Bundle v((?:[0-9]+\.)+[0-9]+)", bare)
-    check("START-HERE.txt", r"^Ultimate AI Starter Bundle V((?:[0-9]+\.)+[0-9]+)", bare)
-    check("INSTALL-AIO.ps1",
-          r"Ultimate AI Starter Bundle v((?:[0-9]+\.)+[0-9]+) - ALL-IN-ONE INSTALLER", bare,
-          "INSTALL-AIO.ps1 (banner)")
-    check("INSTALL-AIO.ps1", r"version = '((?:[0-9]+\.)+[0-9]+)'", bare,
-          "INSTALL-AIO.ps1 (state)")
-    # The two console titles are the first thing a fresh user sees. Nothing
-    # checked them before 7.9.0, so both sat at v7.8.0 for the whole release.
-    check("START-HERE.bat",
-          r"^title Ultimate AI Starter Bundle v((?:[0-9]+\.)+[0-9]+)", bare,
-          "START-HERE.bat (title)")
+        print("  %-8s %-38s %s" % ("ok" if got == bare else "MISMATCH", label, got))
+        if got != bare:
+            problems.append("%s declares %s, expected %s" % (label, got, bare))
 
     try:
         catalog = json.loads(read("BUNDLED-TOOLS/CATALOG.json"))
-        got = catalog.get("pack_version")
-        print("  %-8s %-34s %s" % ("ok" if got == bare else "MISMATCH",
-                                   "BUNDLED-TOOLS/CATALOG.json", got))
-        if got != bare:
-            problems.append("CATALOG.json pack_version is %s, expected %s" % (got, bare))
-        packs = json.loads(read("BUNDLED-TOOLS/PACKS.json"))["packs"]
-        expected_skills = set(packs["skyrim"]["skills"])
-        pin = next(c for c in catalog["components"] if c["id"] == "skyrim-forge")
-        archive = os.path.join(ROOT, "BUNDLED-TOOLS", "offline", pin["asset"])
-        with zipfile.ZipFile(archive) as payload:
-            names = {p.split("/skills/", 1)[1].split("/", 1)[0] for p in payload.namelist()
-                     if "/integrations/skyrim-pack/skills/" in p and p.endswith("/SKILL.md")
-                     and p.split("/skills/", 1)[1].count("/") == 1}
-            # Contract, not bytes: INSTALL reads doctor.result and doctor.read_only_ready.
-            env = [payload.read(p).decode("utf-8", "replace") for p in payload.namelist()
-                   if p.endswith("/skyrim_forge/environment.py")]
-            for field in ('"result"', '"read_only_ready"'):
-                if not env or field not in env[0]:
-                    problems.append("pinned Forge doctor no longer emits %s, which TOOLS/Install-SkyrimForge.ps1 reads" % field)
-            # Contract: standalone Forge registration defers to the toolbox catalog INSTALL-AIO copies
-            # to toolbox-profiles.json; without it each installer undoes the other's MCP entries.
-            reg = [payload.read(p).decode("utf-8-sig", "replace") for p in payload.namelist()
-                   if p.endswith("/Register-MCP.ps1") and p.count("/") == 1]
-            if not reg or "toolbox-profiles.json" not in reg[0] or "DEFERRED" not in reg[0]:
-                problems.append("pinned Forge Register-MCP.ps1 does not defer to the bundle toolbox (toolbox-profiles.json)")
-        if "toolbox-profiles.json" not in read("INSTALL-AIO.ps1"):
-            problems.append("INSTALL-AIO.ps1 no longer writes toolbox-profiles.json, which Forge Register-MCP.ps1 reads")
-        if names != expected_skills:
-            problems.append("PACKS.json Skyrim inventory differs from pinned Forge canonical tree")
-        for rel in ("README.md", "START-HERE.txt", "AIO-GUIDE.md"):
-            problems.extend("%s %s" % (rel, error)
-                            for error in validate_skyrim_claims(read(rel), len(names)))
-        print("  ok       Skyrim skill inventory             %s" % len(names))
+        companions = [c for c in catalog["components"] if c.get("install") == "latest-release"]
+        if {c["id"] for c in companions} != {"skyrim-forge", "reverse-this"}:
+            problems.append("CATALOG.json must track skyrim-forge and reverse-this as latest-release companions")
+        for comp in companions:
+            pinned = sorted(set(comp) & {"version", "release_tag", "asset", "sha256", "offline_asset"})
+            if pinned:
+                problems.append("CATALOG.json %s pins %s; an owner release would need a bundle release" % (comp["id"], ", ".join(pinned)))
+            if not re.fullmatch(r"\d+\.\d+\.\d+", str(comp.get("min_version", ""))) or "{version}" not in str(comp.get("asset_template", "")):
+                problems.append("CATALOG.json %s needs min_version and asset_template" % comp["id"])
+        print("  ok       companions track latest releases       %s" % ", ".join(
+            "%s>=%s" % (c["id"], c.get("min_version")) for c in companions))
     except Exception as exc:
         problems.append("CATALOG.json unreadable: %s" % exc)
-
-    # PROFILES.json carries its own pack_version/catalog_version. Nothing reads
-    # them, which is exactly why they rotted: the file sat at 8.0.0 while the
-    # pack shipped through 8.6.x, and it is a file users open to understand the
-    # MCP cost model. An unread version string is still a claim.
-    try:
-        profiles = json.loads(read("BUNDLED-TOOLS/PROFILES.json"))
-        for field in ("pack_version", "catalog_version"):
-            got = profiles.get(field)
-            print("  %-8s %-34s %s" % ("ok" if got == bare else "MISMATCH",
-                                       "BUNDLED-TOOLS/PROFILES.json:" + field, got))
-            if got != bare:
-                problems.append("PROFILES.json %s is %s, expected %s" % (field, got, bare))
-    except Exception as exc:
-        problems.append("PROFILES.json unreadable: %s" % exc)
-
-    try:
-        validation = json.loads(read("VALIDATION.json"))
-        got = validation.get("version")
-        print("  %-8s %-34s %s" % ("ok" if got == bare else "MISMATCH",
-                                   "VALIDATION.json", got))
-        if got != bare:
-            problems.append("VALIDATION.json version is %s, expected %s" % (got, bare))
-        check("VALIDATION.json", r'"release_tag":\s*"([^"]+)"', "v" + bare,
-              "VALIDATION.json release_tag")
-    except Exception as exc:
-        problems.append("VALIDATION.json unreadable: %s" % exc)
+    # Forge's standalone Register-MCP.ps1 defers to the toolbox catalog INSTALL-AIO
+    # copies to toolbox-profiles.json; without it each installer undoes the other.
+    if "toolbox-profiles.json" not in read("INSTALL-AIO.ps1"):
+        problems.append("INSTALL-AIO.ps1 no longer writes toolbox-profiles.json, which Forge Register-MCP.ps1 reads")
+    # Skyrim Forge and Reverse THIS! link to this anchor instead of restating the
+    # ownership model; renaming it would break their links silently.
+    if '<a id="ownership"></a>' not in read("README.md"):
+        problems.append("README.md lost the #ownership anchor the companion READMEs link to")
+    for rel in LIVE_DOCS:
+        text = read(rel)
+        problems.extend("%s %s" % (rel, error) for error in validate_skyrim_claims(text) + validate_companion_claims(text))
 
     changelog = read("CHANGELOG.md")
     if not re.search(r"^## %s\b" % re.escape(bare), changelog, re.M):
         problems.append("CHANGELOG.md has no '## %s' section" % bare)
     else:
-        print("  %-8s %-34s ## %s" % ("ok", "CHANGELOG.md", bare))
-
+        print("  %-8s %-38s ## %s" % ("ok", "CHANGELOG.md", bare))
     history = os.path.join(ROOT, "docs", "history", "V%s-CHANGELOG.md" % bare)
     if not os.path.isfile(history):
         problems.append("docs/history/V%s-CHANGELOG.md is missing" % bare)
     else:
-        print("  %-8s %-34s present" % ("ok", "docs/history/V%s-CHANGELOG.md" % bare))
+        print("  %-8s %-38s present" % ("ok", "docs/history/V%s-CHANGELOG.md" % bare))
 
     if problems:
         print("\nVersion drift:")
@@ -159,4 +154,4 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))

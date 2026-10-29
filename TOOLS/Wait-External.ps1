@@ -119,12 +119,24 @@ if ($GitHubRun -or $Sha) {
         if ($null -eq $branch.protected) { throw 'Branch protection state is unknown' }
         $required = @()
         if ($branch.protected) {
-            # Unreadable/ruleset-only policy is unknown, never permission to omit expected checks.
-            $protection = Invoke-CiNative $gh.Source @('api', ($branchEndpoint + '/protection')) | ConvertFrom-Json
-            $required = @($protection.required_status_checks.checks | Where-Object { $_ })
-            foreach ($context in @($protection.required_status_checks.contexts | Where-Object { $_ })) {
-                if (-not @($required | Where-Object { $_.context -ceq $context }).Count) {
-                    $required += [pscustomobject]@{ context = [string]$context; app_id = -1 }
+            # Rulesets (effective rules, readable without admin) and classic protection both
+            # name required checks; an unreadable policy is unknown, never permission to omit them.
+            $rulesEndpoint = 'repos/' + $Repo + '/rules/branches/' + [Uri]::EscapeDataString([string]$repository.default_branch)
+            # Desktop emits the JSON array as one object; assignment then @() reads both editions alike.
+            $rules = Invoke-CiNative $gh.Source @('api', $rulesEndpoint) | ConvertFrom-Json
+            foreach ($rule in @(@($rules) | Where-Object { $_.type -eq 'required_status_checks' })) {
+                foreach ($check in @($rule.parameters.required_status_checks | Where-Object { $_ })) {
+                    $app = if ($null -ne $check.integration_id) { [long]$check.integration_id } else { -1 }
+                    $required += [pscustomobject]@{ context = [string]$check.context; app_id = $app }
+                }
+            }
+            if ($branch.protection.enabled) {
+                $protection = Invoke-CiNative $gh.Source @('api', ($branchEndpoint + '/protection')) | ConvertFrom-Json
+                $required += @($protection.required_status_checks.checks | Where-Object { $_ })
+                foreach ($context in @($protection.required_status_checks.contexts | Where-Object { $_ })) {
+                    if (-not @($required | Where-Object { $_.context -ceq $context }).Count) {
+                        $required += [pscustomobject]@{ context = [string]$context; app_id = -1 }
+                    }
                 }
             }
         }

@@ -2,10 +2,11 @@ name: Release
 
 # Publishes the bundle with no human step once CI is green on main.
 # A VERSION.txt bump that reaches main IS the release request; a main commit
-# whose version already has a tag (docs or handoff merges) publishes nothing.
+# whose version already has a tag (docs or handoff pushes) publishes nothing.
 # Fail-closed order: exact SHA is still main -> every other check on that SHA
-# finished successful -> two builds byte-identical -> publish -> re-download
-# and compare. A published release is never deleted or replaced here.
+# finished successful -> latest companions fetched and verified -> two builds
+# byte-identical -> provenance and build attestation -> publish -> re-download
+# and compare every asset. A published release is never deleted or replaced here.
 
 on:
   workflow_run:
@@ -15,6 +16,8 @@ on:
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 concurrency:
   group: release
@@ -56,7 +59,7 @@ jobs:
           # ls-remote fails the job on a network error instead of reading it as "no tag".
           if [ -n "$(git ls-remote --tags origin "refs/tags/$tag")" ]; then echo "$tag exists: nothing to publish"; echo "publish=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           test -f "docs/history/V$version-CHANGELOG.md"
-          { echo "publish=true"; echo "tag=$tag"; echo "version=$version"; } >> "$GITHUB_OUTPUT"
+          { echo "publish=true"; echo "tag=$tag"; echo "version=$version"; echo "commit_time=$(git show -s --format=%cI HEAD)"; } >> "$GITHUB_OUTPUT"
 
       - name: Wait for every other check on this SHA
         if: steps.decide.outputs.publish == 'true'
@@ -78,22 +81,47 @@ jobs:
               waiting += [s["context"] for s in status["statuses"] if s["state"] == "pending"]
               if runs and not waiting:
                   print("all %d check runs and %d statuses passed on %s" % (len(runs), len(status["statuses"]), sha))
+                  observed = {"checks": sorted(({"name": r["name"], "conclusion": r["conclusion"], "url": r["html_url"]} for r in runs), key=lambda r: r["name"]),
+                              "statuses": sorted(({"context": s["context"], "state": s["state"]} for s in status["statuses"]), key=lambda s: s["context"])}
+                  with open(os.path.join(os.environ["RUNNER_TEMP"], "checks.json"), "w", encoding="utf-8") as fh:
+                      json.dump(observed, fh, indent=2)
                   break
               if time.monotonic() > deadline:
                   sys.exit("still pending after 60 min: %s" % (", ".join(waiting) or "no checks reported"))
               time.sleep(30)
           EOF
 
+      - name: Fetch and verify the latest companion releases
+        if: steps.decide.outputs.publish == 'true'
+        shell: powershell
+        run: |
+          .\TOOLS\Get-Companions.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
       - name: Build twice and require identical bytes
         if: steps.decide.outputs.publish == 'true'
         run: |
           set -euo pipefail
-          python TOOLS/build_release.py --root . --outdir "$RUNNER_TEMP/build-a"
-          python TOOLS/build_release.py --root . --outdir "$RUNNER_TEMP/build-b"
+          python TOOLS/build_release.py --root . --outdir "$RUNNER_TEMP/build-a" --require-companions
+          python TOOLS/build_release.py --root . --outdir "$RUNNER_TEMP/build-b" --require-companions
           ls "$RUNNER_TEMP/build-a" | sort > a.txt; ls "$RUNNER_TEMP/build-b" | sort > b.txt; cmp a.txt b.txt
           test "$(wc -l < a.txt)" -eq 4
           while read -r f; do cmp "$RUNNER_TEMP/build-a/$f" "$RUNNER_TEMP/build-b/$f"; done < a.txt
           (cd "$RUNNER_TEMP/build-a" && sha256sum *.zip)
+
+      - name: Write provenance (receipt, SBOM, observed checks, checksums)
+        if: steps.decide.outputs.publish == 'true'
+        run: |
+          set -euo pipefail
+          python TOOLS/release_provenance.py --dist "$RUNNER_TEMP/build-a" --checks "$RUNNER_TEMP/checks.json" \
+            --commit "$SHA" --commit-time "${{ steps.decide.outputs.commit_time }}" --repo "$REPO"
+          test "$(ls "$RUNNER_TEMP/build-a" | wc -l)" -eq 9
+
+      - name: Attest the build
+        if: steps.decide.outputs.publish == 'true'
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: ${{ runner.temp }}/build-a/*.zip
 
       - name: Publish and verify the published bytes
         if: steps.decide.outputs.publish == 'true'
@@ -106,5 +134,7 @@ jobs:
           gh release create "$TAG" --repo "$REPO" --target "$SHA" --title "$TAG" --notes-file "$RUNNER_TEMP/notes.md" --latest "$RUNNER_TEMP"/build-a/*
           test "$(gh api "repos/$REPO/commits/$TAG" --jq .sha)" = "$SHA"
           gh release download "$TAG" --repo "$REPO" --dir "$RUNNER_TEMP/published"
+          test "$(ls "$RUNNER_TEMP/published" | wc -l)" -eq "$(ls "$RUNNER_TEMP/build-a" | wc -l)"
           for f in "$RUNNER_TEMP"/build-a/*; do cmp "$f" "$RUNNER_TEMP/published/$(basename "$f")"; done
-          echo "published $TAG at $SHA; downloaded assets equal the build"
+          (cd "$RUNNER_TEMP/published" && sha256sum -c SHA256SUMS.txt)
+          echo "published $TAG at $SHA; every downloaded asset equals the build"

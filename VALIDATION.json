@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.26.1",
-  "generated": "2026-10-27",
-  "release_tag": "v8.26.1",
+  "version": "8.27.0",
+  "generated": "2026-10-29",
+  "release_tag": "v8.27.0",
   "canonical_skills": 126,
   "provider_trees": 6,
   "registry_entries": 126,
@@ -52,6 +52,6 @@
     "TESTS/test_product_delivery.py",
     "TESTS/Test-ForgeRuntimeVersion.ps1"
   ],
-  "runtime_status": "8.25.0 source/local/CI/product/public gates PASS. Full 19-section Windows pack gate and 151 release contracts pass; 7 ownership/publication/junction and 2 product/fanout tests pass. Exact release commit ed26acc6d7fa78fbbf181e3364f777911d5c4977 has nine successful checks. Core/Full each rebuilt identically twice and all four downloaded public assets match build bytes, GitHub digests and checksums. Live 8.25.0 doctor 0 errors/0 warnings; 15 core MCP probes, Forge53 and houseCARL31 pass; 13 preferences unchanged. Forge6.3.1/Reverse1.5.0 public/live proof complete. Game/GUI/guest, paid inference and real absent-provider runtime remain untested.",
-  "notes": "General provider setup and shared AI/build tools belong to the bundle. Optional companion packs delegate specialist source/tools/ledgers to Forge and Reverse THIS!, update the existing Reverse selection before refreshing Forge bindings, and preserve newer/project-pinned/edited content. Runtime and dependency caches may require vendor downloads even with Full-Offline payload snapshots."
+  "runtime_status": "Per-release evidence is generated, not written here: each GitHub release carries VALIDATION.json (this file plus the check runs observed on the exact release SHA), BUILD-RECEIPT.json, SBOM.spdx.json, SHA256SUMS.txt and a GitHub build attestation. Game/GUI targets, guest sandboxes, paid inference and absent-provider installs remain outside CI.",
+  "notes": "General provider setup and shared AI/build tools belong to the bundle. Skyrim Forge and Reverse THIS! release independently; the bundle installs their latest releases at or above the catalog floor, delegates specialist source/tools/ledgers to them and preserves newer/project-pinned/edited content. Runtime and dependency caches may require vendor downloads even with Full-Offline payload snapshots."
 }

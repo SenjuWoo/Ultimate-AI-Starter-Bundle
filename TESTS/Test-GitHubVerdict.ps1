@@ -27,7 +27,8 @@ function Reset-Fixture([string]$State = 'success') {
     Write-FixtureJson 'checks.json' @(@{ check_runs = @($check) })
     Write-FixtureJson 'statuses.json' @(@())
     Write-FixtureJson 'repository.json' @{ default_branch = 'main' }
-    Write-FixtureJson 'branch.json' @{ protected = $false }
+    Write-FixtureJson 'branch.json' @{ protected = $false; protection = @{ enabled = $false } }
+    Write-FixtureJson 'rules.json' @(,@())
     Write-FixtureJson 'protection.json' @{ required_status_checks = @{ checks = @(); contexts = @() } }
     [IO.File]::WriteAllText((Join-Path $root 'log.txt'), ((1..300 | ForEach-Object { 'LINE-' + $_ }) -join "`n"))
 }
@@ -85,6 +86,7 @@ public class GhFixture {
         else if (command.Contains("/check-runs?")) file = "checks.json";
         else if (command.Contains("/statuses?")) file = "statuses.json";
         else if (command.EndsWith("/branches/main/protection")) file = "protection.json";
+        else if (command.EndsWith("/rules/branches/main")) file = "rules.json";
         else if (command.EndsWith("/branches/main")) file = "branch.json";
         else if (command.EndsWith("repos/fixture/repo")) file = "repository.json";
         else { Console.Error.WriteLine("unexpected fixture command"); return 2; }
@@ -158,15 +160,23 @@ public class GhFixture {
     $null = Invoke-Case 'latest rerun supersedes the old result for the same workflow' 0 'pass'
 
     Reset-Fixture
-    Write-FixtureJson 'branch.json' @{ protected = $true }
+    Write-FixtureJson 'branch.json' @{ protected = $true; protection = @{ enabled = $true } }
     Write-FixtureJson 'protection.json' @{ required_status_checks = @{ checks = @(@{ context = 'not reported'; app_id = 1 }); contexts = @('not reported') } }
     $r = Invoke-Case 'missing protected context cannot silently become green' 8 'pending' @() 3
     if ($r.Text -notmatch 'Required checks have not reported: not reported') { throw 'Missing protected context was not explained' }
 
     Reset-Fixture
-    Write-FixtureJson 'branch.json' @{ protected = $true }
+    Write-FixtureJson 'branch.json' @{ protected = $true; protection = @{ enabled = $true } }
     Write-FixtureJson 'protection.json' @{ required_status_checks = @{ checks = @(@{ context = 'gate'; app_id = 999 }); contexts = @('gate') } }
     $null = Invoke-Case 'same check name from the wrong App cannot satisfy protection' 8 'pending' @() 3
+
+    Reset-Fixture
+    Write-FixtureJson 'branch.json' @{ protected = $true; protection = @{ enabled = $false } }
+    Write-FixtureJson 'rules.json' @(,@(@{ type = 'deletion' }, @{ type = 'required_status_checks'; parameters = @{ required_status_checks = @(@{ context = 'ruleset gate'; integration_id = 1 }) } }))
+    $r = Invoke-Case 'a ruleset-required check that never reported stays pending' 8 'pending' @() 3
+    if ($r.Text -notmatch 'Required checks have not reported: ruleset gate') { throw 'Ruleset requirement was not read' }
+    $requests = [IO.File]::ReadAllText((Join-Path $root 'requests.txt'))
+    if ($requests -match '/protection') { throw 'Classic protection was queried although none is enabled' }
 
     Reset-Fixture
     Write-FixtureJson 'runs.json' @(@{ workflow_runs = @(@{ id = 101; workflow_id = 2; event = 'push'; name = 'security'; head_sha = $sha; status = 'in_progress'; conclusion = $null; html_url = 'https://example.invalid/runs/101' }, @{ id = 100; workflow_id = 1; event = 'push'; name = 'CI'; head_sha = $sha; status = 'completed'; conclusion = 'success'; html_url = 'https://example.invalid/runs/100' }) })
@@ -187,7 +197,7 @@ public class GhFixture {
     Reset-Fixture
     [IO.File]::WriteAllText((Join-Path $root 'hang'), '')
     $null = Invoke-Case 'hung gh request respects overall deadline' 3 'unknown' @() 3
-    Write-Host 'GITHUB VERDICT GATE: PASS (19 cases)'
+    Write-Host 'GITHUB VERDICT GATE: PASS (20 cases)'
 } finally {
     $env:PATH = $savedPath
     $env:UABS_CI_FIXTURE = $savedFixture
