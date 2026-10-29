@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "note": "The general bundle owns general skills. Skyrim content belongs to Forge; this optional integration delegates installation to its pinned release. Excluding it stops bundle integration while independently owned specialist content stays with its owner.",
+  "note": "The general bundle owns general skills. Skyrim content belongs to Forge; this optional integration installs Forge's latest release. Excluding it stops bundle integration while independently owned specialist content stays with its owner.",
   "packs": {
     "skyrim": {
       "title": "Skyrim SE/AE modding",

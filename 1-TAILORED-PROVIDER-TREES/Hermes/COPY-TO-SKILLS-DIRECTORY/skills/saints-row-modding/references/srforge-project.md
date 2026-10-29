@@ -1,6 +1,6 @@
 # srforge project state
 
-Repo: `S:\Apps\Saints Row Tools\SaintsRowForge` · public: github.com/SenjuWoo/SaintsRowForge (MIT)
+Repo: github.com/SenjuWoo/SaintsRowForge (MIT); find a local checkout with `tool-discovery`
 Installed copy: `%LOCALAPPDATA%\SaintsRowForge` — run from there; refresh with
 `powershell -File Update.ps1` from repo root (robocopy /MIR).
 Releases v0.1.0 + v0.2.0 with source-zip assets; CI runs the test suite on every push.
@@ -8,7 +8,7 @@ Releases v0.1.0 + v0.2.0 with source-zip assets; CI runs the test suite on every
 ## Status: SHIPPED (2026-08-22)
 
 - Real-install validated: doctor sees both Steam installs
-  (`S:\SteamLibrary\steamapps\common\Saints Row {the Third,IV}`);
+  (`<Steam library>\steamapps\common\Saints Row {the Third,IV}`);
   SRTT indexed ~21k files, SRIV ~23k; E2E mod build verified on real weapons.xtbl.
 - Formats: vpp.py (v0A read/write), vpp06.py (SRTT native reader+writer),
   asm.py (0x0B/0x0C byte-perfect vs vanilla asm_pc), xtbl.py (multi-tag dup
@@ -35,9 +35,11 @@ Runtime behavior always needs an in-game test; receipts say verified_static.
 
 ## Session setup
 
+Steam library from MACHINE-MAP.md:
+
 ```bash
-export SRFORGE_GAME_SRTT="S:\SteamLibrary\steamapps\common\Saints Row the Third"
-export SRFORGE_GAME_SRIV="S:\SteamLibrary\steamapps\common\Saints Row IV"
+export SRFORGE_GAME_SRTT="<Steam library>\steamapps\common\Saints Row the Third"
+export SRFORGE_GAME_SRIV="<Steam library>\steamapps\common\Saints Row IV"
 ```
 
 ## Possible next (only when asked)

@@ -130,7 +130,12 @@ jobs:
           VERSION: ${{ steps.decide.outputs.version }}
         run: |
           set -euo pipefail
-          tail -n +2 "docs/history/V$VERSION-CHANGELOG.md" > "$RUNNER_TEMP/notes.md"
+          # A new user lands here first: say which file to take before the changelog.
+          {
+            echo "**Which file?** Most people: \`Ultimate-AI-Starter-Bundle-$TAG-Full-Offline.zip\` (everything in one file). Smaller download: \`Ultimate-AI-Starter-Bundle-$TAG-Core.zip\` (the installer fetches the rest). Unzip it, double-click \`START-HERE.bat\`, then reopen your AI apps. The other files are checksums and build records for verifying the zip."
+            echo
+            tail -n +2 "docs/history/V$VERSION-CHANGELOG.md"
+          } > "$RUNNER_TEMP/notes.md"
           gh release create "$TAG" --repo "$REPO" --target "$SHA" --title "$TAG" --notes-file "$RUNNER_TEMP/notes.md" --latest "$RUNNER_TEMP"/build-a/*
           test "$(gh api "repos/$REPO/commits/$TAG" --jq .sha)" = "$SHA"
           gh release download "$TAG" --repo "$REPO" --dir "$RUNNER_TEMP/published"

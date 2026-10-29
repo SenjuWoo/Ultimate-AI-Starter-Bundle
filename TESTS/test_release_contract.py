@@ -92,7 +92,7 @@ def forge_version() -> str:
 
 
 def doctor_fields() -> set[str] | None:
-    """Exactly the keys `forge doctor` returns, parsed from the pinned release."""
+    """Exactly the keys `forge doctor` returns, parsed from the fetched latest release."""
     source = forge_read("skyrim_forge/environment.py")
     if source is None:
         return None
@@ -1547,6 +1547,9 @@ def test_release_builder_contract() -> None:
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
+    # GitHub shows the tracked note; the Core archive writes CORE_NOTE. The tracked
+    # copy still described a pinned Forge after the archive note was corrected.
+    assert (ROOT / "README-CORE.txt").read_bytes() == module.CORE_NOTE, "README-CORE.txt differs from the note Core ships"
     with tempfile.TemporaryDirectory(prefix="uabs-core-manifest-") as td:
         fake = Path(td) / "root"
         offline = fake / "BUNDLED-TOOLS" / "offline"
@@ -2957,6 +2960,7 @@ def main() -> int:
         test_outdated_hermes_npm_duplicates_are_removed_only_after_current_install,
         test_global_scope_guard_is_safe_and_wired,
         test_history_backup_never_deletes_and_retention_is_raised,
+        test_claude_starter_keeps_skill_descriptions_listed,
         test_local_security_boundaries_stay_hardened,
         test_catalog_freshness_auditor_self_checks,
         test_release_assets_are_digest_checked_before_cache_reuse,
@@ -4772,9 +4776,7 @@ def test_retired_marketplaces_are_unregistered_not_just_undeployed() -> None:
     # add it and the cleanup pass remove it again, producing backup litter on
     # every identical rerun. The opt-in component may still register it when
     # explicitly requested; defaults may not.
-    starter_candidates = _starter_templates() + [
-        ROOT / "1-TAILORED-PROVIDER-TREES" / "Claude" / "settings.json"
-    ]
+    starter_candidates = _starter_templates()
     for entry in retired:
         needles = (entry["marketplace"].lower(), entry["url"].lower())
         bad = [
@@ -5719,6 +5721,16 @@ def test_history_backup_never_deletes_and_retention_is_raised() -> None:
     assert "Backup-AiHistory.ps1" in ps_code(ROOT / "INSTALL-AIO.ps1"), "the installer never runs the history backup"
 
 
+def test_claude_starter_keeps_skill_descriptions_listed() -> None:
+    """Claude Code keeps every skill name but drops descriptions past 1% of the context
+    window, least-used first. On the maintainer's machine that budget listed only 97
+    of 165 descriptions; skyrim-crash-diagnostics and tool-discovery lost theirs."""
+    settings = json.loads(read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Claude" / "COPY-TO-PROVIDER-HOME" / "settings.json"))
+    fraction = settings.get("skillListingBudgetFraction")
+    assert isinstance(fraction, (int, float)) and 0.02 <= fraction <= 0.05, f"Claude skill listing budget is {fraction!r}"
+    assert "skillListingBudgetFraction" in read(ROOT / "README.md"), "README does not explain the raised skill listing budget"
+
+
 def test_batch_launchers_drop_incompatible_powershell_module_roots() -> None:
     """A cmd boundary must not feed PowerShell 7 modules to Windows PowerShell."""
     batches = sorted(ROOT.glob("*.bat"))
@@ -6272,7 +6284,9 @@ def test_release_workflow_publishes_only_a_green_untagged_main_sha() -> None:
                    # its provenance and a GitHub build attestation, all re-verified after upload.
                    "Get-Companions.ps1", "--require-companions", "release_provenance.py",
                    "actions/attest-build-provenance@", "id-token: write", "attestations: write",
-                   "sha256sum -c SHA256SUMS.txt"):
+                   "sha256sum -c SHA256SUMS.txt",
+                   # New users read the release page first: notes open with which zip to take.
+                   "**Which file?**", "-Full-Offline.zip", "START-HERE.bat"):
         assert needle in wf, f"release workflow lost its gate: {needle}"
     for forbidden in ("gh release delete", "--clobber", "git push --force", "git tag -f"):
         assert forbidden not in wf, f"release workflow can replace published bytes: {forbidden}"

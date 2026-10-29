@@ -277,7 +277,10 @@ class CompanionClaims(unittest.TestCase):
         for claim in ("plus 48 with the Skyrim pack", "its 48 specialist skills", "a 48-skill Skyrim pack", "`skyrim` (48 skills"):
             with self.subTest(claim=claim):
                 self.assertTrue(versions.validate_skyrim_claims(text + "\n" + claim))
-        for claim in ("**Skyrim Forge 6.4.2**", "Reverse THIS! 1.6.1", "Skyrim Forge v7.0"):
+        for claim in ("**Skyrim Forge 6.4.2**", "Reverse THIS! 1.6.1", "Skyrim Forge v7.0",
+                      "Skyrim Forge is downloaded from its pinned GitHub release",
+                      "[SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge) and pinned by digest",
+                      "Skyrim skills install only when Skyrim is found on this PC"):
             with self.subTest(claim=claim):
                 self.assertTrue(versions.validate_companion_claims(text + "\n" + claim))
         changed = text.replace("126 general", "127 general")

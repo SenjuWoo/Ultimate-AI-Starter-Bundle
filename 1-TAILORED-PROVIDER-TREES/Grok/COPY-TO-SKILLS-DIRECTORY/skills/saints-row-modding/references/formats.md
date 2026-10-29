@@ -2,8 +2,8 @@
 
 All facts below were verified against ThomasJepp.SaintsRow source (rev133
 source zip, Packfiles/Version0A + AssetAssembler/Version0B/0C) and the
-Volition SDK. The Python ports live in
-`S:\Apps\Saints Row Tools\SaintsRowForge\src\srforge\formats\`.
+Volition SDK. The Python ports live in SaintsRowForge's
+`src\srforge\formats\`.
 
 ## VPP packfile v0x0A (.vpp_pc / .str2_pc)
 

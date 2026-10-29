@@ -42,8 +42,12 @@ DECLARATIONS = [
     ("VALIDATION.json", r'"version":\s*"' + V + '"', "VALIDATION.json version"),
     ("VALIDATION.json", r'"release_tag":\s*"v' + V + '"', "VALIDATION.json release_tag"),
 ]
-LIVE_DOCS = ("README.md", "START-HERE.txt", "AIO-GUIDE.md")
+LIVE_DOCS = ("README.md", "START-HERE.txt", "AIO-GUIDE.md", "README-CORE.txt", "BUNDLED-TOOLS/PACKS.json")
 COMPANION_VERSION = re.compile(r"\b(Skyrim Forge|Reverse THIS!?)\*{0,2}\s+v?\d+\.\d+(?:\.\d+)?\b")
+# Companions install at their latest release and the Skyrim pack is opt-in; these
+# phrasings describe the retired pinned and auto-detected behaviour.
+STALE_COMPANION = re.compile(r"(?:Forge|Reverse THIS!?|companion)[^\n]{0,80}\bpinned\b|\bpinned\b[^\n]{0,30}(?:Forge|companion)|"
+                             r"\bwhen Skyrim is (?:found|detected)\b", re.I)
 SKYRIM_COUNT = re.compile(r"\b(\d+)\s+specialist\s+skills\b|\b(\d+)-skill\s+Skyrim\b|"
                           r"\b(\d+)\s+with\s+the\s+Skyrim\s+pack\b|\bskyrim`?\s*\((\d+)\s+skills\b", re.I)
 
@@ -59,8 +63,10 @@ def validate_skyrim_claims(text):
 
 
 def validate_companion_claims(text):
-    return ["restates a companion version (%s); Forge and Reverse THIS! release on their own" % m.group(0)
-            for m in COMPANION_VERSION.finditer(text)]
+    return (["restates a companion version (%s); Forge and Reverse THIS! release on their own" % m.group(0)
+             for m in COMPANION_VERSION.finditer(text)]
+            + ["describes the retired pinned or auto-detected companion (%s)" % m.group(0)
+               for m in STALE_COMPANION.finditer(text)])
 
 
 def set_version(bare):

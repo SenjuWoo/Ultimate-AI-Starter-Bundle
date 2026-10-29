@@ -1,230 +1,83 @@
-Ultimate AI Starter Bundle V8.27.0 - ALL-IN-ONE STARTER
-======================================================
+Ultimate AI Starter Bundle V8.27.1 - START HERE
+================================================
 
-Not just Skyrim. A full multi-provider AI starter bundle: skills, MCP tools,
-plugins, and offline installers - with a deep optional Skyrim SE/AE modding
-stack built in.
+WHAT THIS IS
+------------
+A one-click setup for AI coding apps on Windows. Claude Code, Codex, Grok,
+Kimi, Hermes and Google Antigravity get the same skills, tools and
+instructions, and learn where your games, mods and tools live.
 
-Providers: Claude, Codex, Grok, Kimi, Hermes, Antigravity.
+
+WHAT YOU NEED
+-------------
+- Windows 10 or 11 and an internet connection.
+- At least one of those AI apps already installed. The installer finds them.
+- Free disk space: the compiler suite it adds can take several GB.
+  Skip it with: START-HERE.bat -SkipBuildTools
 
 
-NEW USERS - ONE COMMAND
------------------------
-Fresh machine, nothing installed - one command (downloads the latest release
-from GitHub, extracts it, runs the full installer):
-
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/SenjuWoo/Ultimate-AI-Starter-Bundle/main/INSTALL-REMOTE.ps1 | iex"
-
-Or double-click INSTALL-REMOTE.bat. Re-running reuses current tools and updates supported older versions.
-
-Bundle already on disk - double-click the one canonical launcher:
-
-    START-HERE.bat
-
-Or from PowerShell in this folder:
-
-    powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
-
-Then FULLY restart your AI app(s).
-
-Run these from a normal window, not from inside an AI chat: the installer
-closes and relaunches Hermes desktop, so a chat that launched it ends with it.
-
-THE TWO .BAT FILES
+INSTALL IN 3 STEPS
 ------------------
-    START-HERE.bat      you already have this folder - double-click it.
-                        That is the install.
-                        It first checks GitHub for a newer bundle release:
-                        a clean git clone fast-forwards, a release copy
-                        installs the new release (SHA-256 checked), and an
-                        offline or failed check installs this copy as-is.
-                        Opt out: -SkipSelfUpdate or set UABS_NO_SELF_UPDATE=1.
-    INSTALL-REMOTE.bat  you have nothing yet - downloads the latest release,
-                        then runs START-HERE.bat for you.
+1. Unzip the release you downloaded (you are probably reading this inside it).
+2. Double-click START-HERE.bat.
+   If Windows warns about the file, choose Run (or More info, then Run anyway).
+   Allow administrator rights if it asks.
+3. When the window says INSTALL COMPLETE, close and reopen your AI apps.
 
-Nothing else needs running.
+That is all. Then tell your AI what you want to build or mod; it starts the
+project tools a task needs by itself.
 
-SKYRIM PACK AND PERSONAL PROFILE
---------------------------------
-Skyrim skills, Skyrim Forge and houseCARL install only when Skyrim is
-found on this PC (Steam/GOG, My Games, Vortex, tool variables). Force it:
-    START-HERE.bat -Packs skyrim          (off: -ExcludePacks skyrim; remembered)
-Recommended complete stack (each product also works alone):
-    START-HERE.bat -Packs skyrim,reverse
-General AI tools only: -ExcludePacks skyrim,reverse. Choices are remembered.
-Reverse THIS! reuses its registered owner and updates its existing selection;
-it owns REA and the analysis catalog. No duplicate tool catalog lives here.
-See docs/COMPANION-ARCHITECTURE.md for the merge analysis and ownership contract.
--NoToolUpdates preserves installed compiler/companion versions.
-
-Your own working preferences go in %USERPROFILE%\.uabs\profile\PROFILE.md; each
-install adds it, plus a generated map of this PC's game/mod/tool folders, to
-every AI app. Seed it once:
-    START-HERE.bat -ProfileTemplate autonomous-builder      (off: -SkipProfile)
+Run the installer from a normal window, not from inside an AI chat: it
+closes and reopens Hermes desktop, which would end that chat.
 
 
-WHICH PROVIDERS GET CONFIGURED
-------------------------------
-A plain run configures the supported apps/CLIs you ACTUALLY HAVE. Detection
-includes native paths, desktop apps and current-user Store registrations.
-Leftover configuration folders alone never count as installed providers.
+AFTER INSTALLING
+----------------
+Update ............... double-click START-HERE.bat again. It installs a newer
+                       release first (SHA-256 checked) and keeps your settings.
+Skyrim modding pack .. START-HERE.bat -Packs skyrim
+                       (Skyrim Forge, houseCARL, Skyrim skills; off by default)
+Turn it off again .... START-HERE.bat -ExcludePacks skyrim
+Reverse engineering .. START-HERE.bat -Packs skyrim,reverse   (Reverse THIS!)
+Only some apps ....... START-HERE.bat -Providers Claude,Codex
+Check the install .... run START-HERE.bat again; its last step checks
+                       everything it installed and prints PASS or the problem.
 
-If nothing is detected, setup asks for an explicit provider choice before
-installing runtimes/providers. Example: START-HERE.bat -Providers Claude,Codex.
+Pack choices are remembered for the next run.
 
-Options:
-    .\INSTALL-AIO.ps1                        # wire what is installed
-    .\INSTALL-AIO.ps1 -AllProviders          # explicitly select all six
-    .\INSTALL-AIO.ps1 -Providers Grok,Claude # exactly these
-    .\INSTALL-AIO.ps1 -Mode OnlineLatest
-    .\INSTALL-AIO.ps1 -CoreOnly       # smaller core only
-    .\INSTALL-AIO.ps1 -WithClaudeMem  # adds Bun + a background worker
-    .\INSTALL-AIO.ps1 -WorkspaceRoot "D:\My\AI-Workspace"
-    .\INSTALL-AIO.ps1 -SkipPreamble          (no SOUL/AIO wiring)
+Your own settings, instructions and model choices are kept, and config files
+are backed up before any change. There is no one-click uninstaller yet.
 
 
-WHY V8 EXISTS (read this one bit)
----------------------------------
-v5.2.5 shipped 7 skills whose descriptions never loaded. A UTF-8 BOM sat before
-the opening "---" of each SKILL.md, so the YAML frontmatter never opened and the
-description - the ONLY thing an agent matches on to decide whether to load a
-skill - was lost. The skills were installed, listed, and invisible.
-
-Two of them were skyrim-memory and skyrim-tool-router: the skills your
-instructions tell every agent to load FIRST.
-
-v6 fixes that, rebuilds the canonical tree from the install that actually works,
-and ships gates so it cannot happen again. Details: V6-CHANGELOG.md
+IF SOMETHING GOES WRONG
+-----------------------
+- The window shows [ERROR]. Open this file to see what failed:
+      %LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\logs\INSTALL-FAILED.txt
+  Fix that, then run START-HERE.bat again.
+- Grok shows an "unknown" model:
+      powershell -NoProfile -ExecutionPolicy Bypass -File .\TOOLS\Ensure-Headroom-Grok.ps1 -Repair
+- More fixes: README.md, section "Troubleshooting".
 
 
-VERIFY YOUR INSTALL
--------------------
-    python TOOLS\audit_skills.py "%USERPROFILE%\.claude\skills"
+OPTIONAL
+--------
+Personal profile: write how you like to work in
+%USERPROFILE%\.uabs\profile\PROFILE.md. Each install adds it, plus a map of
+this PC's game, mod and tool folders, to every AI app. Start from a template:
+    START-HERE.bat -ProfileTemplate autonomous-builder
 
-Expect: RESULT: PASS (0 fail, N warn)
-Warnings are context-budget advice, not failures.
+Web chats with no instruction file (ChatGPT, Gemini): paste
+3-PREAMBLES\MANUAL-PASTE.txt into the custom-instructions box.
 
-Full pack self-test (skills + PowerShell parse + asset hashes + registry):
-
-    powershell -NoProfile -ExecutionPolicy Bypass -File .\TESTS\Test-Pack.ps1
-    ... -IncludeLiveInstalls   (also audits your installed provider homes)
-
-
-TWO ENCODING RULES THAT BITE (both shipped as bugs before)
-----------------------------------------------------------
-  SKILL.md    -> UTF-8, NO BOM. A BOM removes the description entirely.
-  .ps1 / .bat -> KEEP the BOM (or stay pure ASCII). Without it PowerShell 5.1
-                 decodes as ANSI, and one em dash becomes a stray quote that
-                 breaks the parse.
-
-They are opposites. Do not apply one blanket encoding policy to both.
-Registry entries SKILL-BOM-001 and PS-BOM-001.
+Nothing here yet? INSTALL-REMOTE.bat downloads the latest release, then
+installs it.
 
 
-CODEBASE-MEMORY (important)
----------------------------
-MCP stdio only. Keep args = [] in EVERY provider config.
-
---ui and --port are persisted into the tool's OWN GLOBAL config, not into one
-agent's MCP entry - so passing them from one provider changes behaviour for all
-of them. That is the usual reason the dashboard "randomly" disappears. The
-dashboard is also served by a process that exits when its stdin closes, so it
-only lives as long as the client that started it.
-
-    codebase-memory-mcp --ui=true      # enable  (persisted globally)
-    codebase-memory-mcp --ui=false     # disable (persisted globally)
-    codebase-memory-mcp config set auto_index false
-    codebase-memory-mcp config set auto_watch false
-
-Index on demand with the index_repository tool.
-
-
-HEADROOM + GROK (MCP only - do NOT wrap Grok inference)
--------------------------------------------------------
-Headroom MCP tools are fine. Do NOT route a subscription/OIDC Grok login through
-headroom wrap / GROK_MODELS_BASE_URL - the model shows as "unknown" and chat
-401s. Only an XAI_API_KEY login can be wrapped.
-
-    .\TOOLS\Ensure-Headroom-Grok.ps1
-    .\TOOLS\Ensure-Headroom-Grok.ps1 -Repair
-    .\TOOLS\Ensure-Headroom-Grok.ps1 -CheckOnly
-
-claude-mem is Claude Code only. V8 installs Bun automatically when needed.
-It is not installed for Grok/Codex/Kimi/Hermes.
-
-
-MCP 2026-07-28
---------------
-The protocol is now stateless: no initialize handshake, no Mcp-Session-Id,
-routing headers required, list results cacheable, Roots/Sampling/Logging
-deprecated on a 12-month window. Every MCP server this pack wires is local
-stdio, so NOTHING here needs to change.
-
-
-AI PREAMBLE - INSTALLED AUTOMATICALLY (v8.0.3)
-----------------------------------------------
-The installer wires the SOUL + AIO preamble into every agent:
-Claude Code (~/.claude/CLAUDE.md), Codex (~/.codex/AGENTS.md), Kimi
-(~/.kimi-code/AGENTS.md), Grok (~/.grok/AGENTS.md) and Hermes (home SOUL.md).
-Idempotent, backup-first. Opt out with INSTALL-AIO.ps1 -SkipPreamble.
-
-Web UIs (ChatGPT/Gemini) have no instruction file - paste
-
-    3-PREAMBLES\MANUAL-PASTE.txt
-
-into the custom-instructions box. See 3-PREAMBLES\README.md for the full map.
-
-The pack-root AIO-INSTRUCTION.txt is the operating contract (truth-seeking
-process, no yes-man, verify-don't-assume).
-
-
-READ NEXT
-----------
-    docs\history\V8.7.27-CHANGELOG.md  preamble history convergence
-    docs\history\V8.7.26-CHANGELOG.md  preservation fixes + release guidance
-    docs\history\V8.7.24-CHANGELOG.md  version-proof public copy rule + enforcement
-    docs\history\V8.7.23-CHANGELOG.md  preamble markers removed + soul duplication fixed; ox-alpha retired; 8 catalog pins refreshed
-    docs\history\V8.7.22-CHANGELOG.md  workspace-organization + scratch-hygiene skills; default release flow; Hermes tuning synced
-    docs\history\V8.7.21-CHANGELOG.md  creative profile: Blender + Unity MCPs; Blender pin refreshed to 2.0.0; pack-gate Actions SHA-pinned
-    docs\history\V8.0.4-CHANGELOG.md  Hermes install-time MCP preservation: app closed during install, relaunched after config is final
-    docs\history\V7.9.8.5-CHANGELOG.md  cbm dashboard zeros: upstream #1663 + workaround; point-release versions pass the gate
-  docs\history\V7.7.9-CHANGELOG.md  AIO keeps existing tool installs; Hermes compression tuned
-  docs\history\V7.7.8-CHANGELOG.md  skill tree dedupe: dead modules pruned; KID/SPID owners consolidated
-  docs\history\V7.7.7-CHANGELOG.md  Hermes keeps plugin skill copies: /using-superpowers slash commands + autofill work again
-  docs\history\V7.7.6-CHANGELOG.md  MCP cliff guard parse fix: $((if(...)) -> $(if(...); no more 'if not recognized' error
-  docs\history\V7.6.7-CHANGELOG.md  root folders renumbered 0-1-2-3; names say what they are
-  docs\history\V7.6.6-CHANGELOG.md  dead skill tree removed; unrestraint cleanup; MCP sweep
-  docs\history\V7.6.5-CHANGELOG.md  hook hang stunlocked Grok: drive probe + hard watchdog
-  docs\history\V7.6.4-CHANGELOG.md  Grok hooks parse error: PowerShell needs the & call operator
-  docs\history\V7.6.2-CHANGELOG.md  repair-tool JSON escaping; first CI workflow
-  docs\history\V7.6.1-CHANGELOG.md  swept 25 ANSI-decoding reads; gate section 7b
-  docs\history\V7.6.0-CHANGELOG.md  provider identity in SOUL.md; mojibake at the source
-  docs\history\V7.5.6-CHANGELOG.md  PS 5.1 native-stderr fix; mojibake sweep
-  docs\history\V7.5.5-CHANGELOG.md  Hermes config.yaml wiring; complete What's new
-  docs\history\V7.5.4-CHANGELOG.md  unrestraint-packs is a common provider skill
-  docs\history\V7.5.3-CHANGELOG.md  houseCARL "path C" single-MO2 bug
-  docs\history\V7.5.2-CHANGELOG.md  version drift; pinned install tag; root declutter
-  docs\history\V7.5.1-CHANGELOG.md  three installer bugs from the first real run
-  docs\history\V7.5.0-CHANGELOG.md  SOUL for every agent; install from zero
-  docs\history\V7.4.3-CHANGELOG.md  limit is 8 RUNNING servers; a Claude plugin eats a slot
-  docs\history\V7.4.2-CHANGELOG.md  MCP DOES work in Grok (its "5 servers" figure superseded)
-  docs\history\V7.4.1-CHANGELOG.md  installer applies the Grok fix (MCP-off part superseded)
-  docs\history\V7.4.0-CHANGELOG.md  Grok softlock measured: inherited hooks + MCP that never attaches
-  docs\history\V7.3.1-CHANGELOG.md  SUPERSEDED by 7.4.0 (orphan-fleet theory was wrong)
-  docs\history\V7.3.0-CHANGELOG.md  Grok hang forensics; troubleshooting doc; pin-every-npx rule
-  docs\history\V7.2.2-CHANGELOG.md  MCP cold-start fixes; dashboard truth for cbm 0.10.5
-  docs\history\V7.2.1-CHANGELOG.md  Forge venv trap documented with repair recipe
-  docs\history\V7.2.0-CHANGELOG.md  fanout/installer fixes; V6->V7 rename completed
-  docs\history\V7.0.0-CHANGELOG.md  codebase-memory indexing discipline; .cbmignore + setup tool
-  docs\history\V6.9.3-CHANGELOG.md  Hermes unrestraint skill; all providers verified live
-  docs\history\V6.9.2-CHANGELOG.md  ULTIMATE unrestraint update: 0-UNRESTRAINT-PACKS
-  docs\history\V6.9.1-CHANGELOG.md  caption + sheet skills; jail kits not imported
-  docs\history\V6.9.0-CHANGELOG.md  adult-fiction in scope; no jailbreak layer
-  docs\history\V6.8.2-CHANGELOG.md  stop-assuming: assumption gate + verify-first
-  docs\history\V6-CHANGELOG.md      what changed and why, with the evidence
-  AIO-GUIDE.md      user + AI contract
-  README.md            layout
-  WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md
-
-## 0-UNRESTRAINT-PACKS (v6.9.2)
-No-holds prompt library: operator kit + 4 upstream jailbreak sources, per-model guides, leaked system prompts, image caption kits. Start at 0-UNRESTRAINT-PACKS/README.md. Adults only.
+WHAT IS IN THIS FOLDER
+----------------------
+    START-HERE.bat        the installer - the only thing you need to run
+    INSTALL-REMOTE.bat    downloads the latest release first, then installs
+    README.md             full guide and reference
+    BOOTSTRAP.txt         a prompt that lets an AI agent install this for you
+    0-UNRESTRAINT-PACKS\  no-holds prompt library, adults only (start at its README.md)
+    TOOLS\                the scripts the installer uses

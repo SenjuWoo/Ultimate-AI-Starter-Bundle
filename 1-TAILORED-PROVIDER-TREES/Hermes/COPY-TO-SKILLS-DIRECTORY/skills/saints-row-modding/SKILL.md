@@ -71,17 +71,17 @@ Details + struct layouts: `references/formats.md`. Headlines:
 - Legacy FBX converter needs Python 2.6 + wxPython + FBX SDK 2014 — isolate
   or defer; classic MANUAL ACTION REQUIRED dependency.
 
-## srforge workbench (this machine)
+## srforge workbench
 
-**Run from the installed copy**: `%LOCALAPPDATA%\SaintsRowForge` — source
-repo `S:\Apps\Saints Row Tools\SaintsRowForge` (GitHub: SenjuWoo/SaintsRowForge,
-releases v0.1/v0.2, CI-protected). After changing repo code refresh the
+**Run from the installed copy**: `%LOCALAPPDATA%\SaintsRowForge`. Source:
+GitHub SenjuWoo/SaintsRowForge (CI-protected); find a local checkout with
+`tool-discovery`, never a guessed drive. After changing repo code refresh the
 install: `powershell -File Update.ps1` from repo root (robocopy /MIR).
 
-Session setup:
+Session setup (Steam library from MACHINE-MAP.md):
 ```bash
-export SRFORGE_GAME_SRTT="S:\SteamLibrary\steamapps\common\Saints Row the Third"
-export SRFORGE_GAME_SRIV="S:\SteamLibrary\steamapps\common\Saints Row IV"
+export SRFORGE_GAME_SRTT="<Steam library>\steamapps\common\Saints Row the Third"
+export SRFORGE_GAME_SRIV="<Steam library>\steamapps\common\Saints Row IV"
 ```
 
 - Native readers/writers: `src/srforge/formats/{vpp,vpp06,asm,xtbl,strings,crc,lua}.py`

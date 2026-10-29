@@ -74,10 +74,10 @@ Supports `--args-file <json>` and stdin JSON for scripted batches.
 folders, roots that were moved or deleted, and unmodified third-party tool
 installs (SSEEdit/DynDOLOD-class binaries). Tool SOURCE trees the operator
 works on (houseCARL, Skyrim-Forge, Grabber) DO get indexed.
-The registry at
-`!!!SkyrimAEaiWorkspace/_AI-SHARED-MEMORY/locations/CODEBASE-MEMORY-PROJECTS.md`
+A workspace registry of indexed projects (for example
+`_AI-SHARED-MEMORY/locations/CODEBASE-MEMORY-PROJECTS.md`), where one exists,
 is the authority on what is indexed and why — check it before deleting
-anything (a 2026-10-12 over-eager purge of five registry-listed tools had to be
+anything (an over-eager purge of five registry-listed tools once had to be
 reverted). Never index personal exports: the graph is queryable and has no
 backup.
 

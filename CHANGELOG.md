@@ -1,3 +1,14 @@
+## 8.27.1 (2026-10-29)
+
+- README opens with **Start here**: what the bundle is, what you need, three install steps, which release zip to take, an after-install table (update, Skyrim pack, reverse tools, some apps only, checking, fixing) and a Troubleshooting section. The dense maintainer notes that sat above the logo and before the install steps moved into the reference sections below; no content was dropped.
+- START-HERE.txt is a short plain guide. It no longer claims the Skyrim pack installs when Skyrim is found (the pack is opt-in) and no longer carries v5-v8 history, encoding rules or 50 changelog links.
+- Release notes open with which file to download; the other assets are named as verification records.
+- Claude starter settings add `"skillListingBudgetFraction": 0.03`. Claude Code keeps every skill name but drops descriptions past 1% of the context window, least-used first; on the maintainer's machine 68 of 165 skills had lost their descriptions, including skyrim-crash-diagnostics and tool-discovery. A value you set yourself is kept.
+- Public skills no longer carry the maintainer's machine layout: saints-row-modding and its references use `<Steam library>` and `tool-discovery` instead of fixed drives, and codebase-memory no longer names a private workspace. The privacy gate now rejects drive-letter Steam library paths. The Forge 5.x verification reference was removed; Forge owns its own diagnostics.
+- README-CORE.txt matches the note the Core archive ships (it still described a pinned Forge) and the builder contract checks they agree. The PACKS.json note and an installer comment no longer describe a pinned or auto-detected Forge, and the version gate now rejects that wording in README, START-HERE, the AIO guide, README-CORE and PACKS.json.
+- Removed an unused duplicate Claude settings template; nothing installed it.
+- 126 canonical skills total; Forge keeps its own pack.
+
 ## 8.27.0 (2026-10-29)
 
 - The bundle pins no companion version any more. Skyrim Forge and Reverse THIS! release on their own; CATALOG.json keeps a minimum version per companion, the installer takes each owner's latest release at or above it (GitHub sha256 digest and the release's SHA256SUMS verified before extraction), keeps a newer install, and falls back loudly to a verified bundled or earlier-downloaded copy only when GitHub cannot be reached. A companion release no longer needs a bundle release.

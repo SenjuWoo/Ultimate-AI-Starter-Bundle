@@ -1,6 +1,7 @@
 {
   "cleanupPeriodDays": 365,
   "effortLevel": "xhigh",
+  "skillListingBudgetFraction": 0.03,
   "enabledPlugins": {
     "claude-code-setup@claude-plugins-official": true,
     "headroom@headroom-marketplace": true,

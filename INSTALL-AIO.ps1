@@ -363,7 +363,7 @@ $catalog = Get-UabsCatalog
 # ---------- Content packs ----------
 # Skyrim content used to install for everyone: 49 skills (~2.7k tokens of skill
 # descriptions in every request), a 24 KB instruction section, Forge, houseCARL
-# and Spooky. It now installs where Skyrim is found or asked for.
+# and Spooky. It now installs only when asked for (-Packs skyrim).
 $packSel = Resolve-UabsPackSelection -PackRoot $PackRoot -Requested $Packs -Excluded $ExcludePacks
 foreach ($packName in @($packSel.Reasons.Keys)) {
   $packMeta = $packSel.Catalog.packs.$packName
@@ -549,7 +549,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.27.0 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.27.1 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -2693,7 +2693,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.27.0'
+version = '8.27.1'
   content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')

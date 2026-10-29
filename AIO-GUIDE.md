@@ -3,7 +3,7 @@
 Run `START-HERE.bat` from the extracted pack. It selects detected providers,
 installs default tools/skills, merges owned settings and checks core MCPs.
 Restart affected apps after wiring changes. Installed does not mean connected.
-See [quick start](README.md#quick-start) for remote install, modes and recovery.
+See [install options](README.md#install-options) for remote install, modes and recovery.
 Web UIs use [MANUAL-PASTE.txt](3-PREAMBLES/MANUAL-PASTE.txt).
 
 ## Independent companions
