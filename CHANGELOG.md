@@ -7,6 +7,7 @@
 - Optional specialist owners remain separate; companion SDK safety and handoff corrections ship in their own releases.
 - Releases publish themselves: `.github/workflows/release.yml` runs after CI passes on a main commit whose version has no tag, waits for every other check on that SHA, builds twice, requires identical bytes, publishes and re-downloads to compare. PRs enable auto-merge (squash, delete branch) once required checks pass.
 - Pins verified Skyrim Forge 6.4.1 (SDK fetch staging safety) and Reverse THIS! 1.6.1; both archives match GitHub's digests.
+- Exact-SHA waiter: a deadline landing inside a re-poll keeps the last observed `pending` instead of reporting `unknown` (a CI-runner timing flake); all four Python pack-gate legs are required checks.
 - `UABS_PYTHON` is documented as the shared-runtime contract the companions read; README RTK and Forge versions corrected to the pinned catalog.
 
 ## 8.25.3 (2026-10-27)

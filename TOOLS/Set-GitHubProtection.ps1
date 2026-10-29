@@ -1,4 +1,4 @@
-# Reproduce this bundle's six required checks, after observing real main CI.
+# Reproduce this bundle's eight required checks, after observing real main CI.
 # Default is a JSON plan; -Apply preserves existing review/restriction policy.
 [CmdletBinding(SupportsShouldProcess=$true)]
 param([ValidatePattern('^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$')][string]$Repo = 'SenjuWoo/Ultimate-AI-Starter-Bundle', [switch]$Apply)
@@ -34,6 +34,8 @@ function Assert-Policy($Wanted, $Actual, [string]$Path) {
     } elseif ($Wanted -ne $Actual) { throw "Policy changed at $Path" }
 }
 $required = @('Hermes YAML and physical symlink preservation',
+    'Pack gate (Windows PowerShell 5.1, Python 3.12)',
+    'Pack gate (Windows PowerShell 5.1, Python 3.13)',
     'Pack gate (Windows PowerShell 5.1, Python 3.14)',
     'Pack gate (Windows PowerShell 5.1, Python 3.15)',
     'MANIFEST verifies against the tree', 'Version strings agree',

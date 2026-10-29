@@ -161,7 +161,8 @@ class MaintainerTests(unittest.TestCase):
                 self.assertIn(new_tip, git("ls-remote", "--heads", "origin", "merged"))
 
     def test_protection_preserves_app_bindings_reviews_and_restrictions(self):
-        required = ["Hermes YAML and physical symlink preservation", "Pack gate (Windows PowerShell 5.1, Python 3.14)",
+        required = ["Hermes YAML and physical symlink preservation", "Pack gate (Windows PowerShell 5.1, Python 3.12)",
+                    "Pack gate (Windows PowerShell 5.1, Python 3.13)", "Pack gate (Windows PowerShell 5.1, Python 3.14)",
                     "Pack gate (Windows PowerShell 5.1, Python 3.15)", "MANIFEST verifies against the tree",
                     "Version strings agree", "Bundle installs pinned Forge end to end"]
         for shell in filter(None, (shutil.which(x) for x in ("powershell.exe", "pwsh.exe"))):
