@@ -1,11 +1,13 @@
 # Bundle audit state
 
-## 8.26.1 Forge/bundle MCP ownership fix — 2026-10-29 (in progress)
+## Completed 8.26.1 Forge/bundle MCP ownership fix — 2026-10-29
 
-- Problem: Forge's standalone `Register-MCP.ps1` wrote a global `skyrim-forge` entry and the bundle installer removed it (toolbox serves Forge on demand), so each installer undid the other.
-- Forge 6.4.2 (PR 30, tag at 9a568aa196d4eafbb9049deaab35ebf284a884a7, 14/14 checks): registration reports `DEFERRED` per provider whose MCP config has the bundle `toolbox` entry while the bundle catalog `toolbox-profiles.json` lists `skyrim-forge`; `-Global` overrides. Bridge suite 9/9 including a real Kimi deferral/`-Global` run; full Forge validator PASS. Release asset Skyrim-Forge-6.4.2.zip 4,833,006 B sha256 4bb55d67d44b2c3ac0593c56d4db5dd6d3fae0ce3f5a88a3454e447953d3d496 matches GitHub digest and SHA256SUMS.
-- Bundle 8.26.1 pins it; `check_versions.py` fails if the pinned Forge stops deferring or INSTALL-AIO stops writing `toolbox-profiles.json` (proven failing on the 6.4.1 pin). The Hermes probe contract now scopes to `Invoke-Registration`.
-- Next: CI, hands-off v8.26.1 release, byte check, live install, then confirm a standalone Forge registration defers on this machine.
+- Problem fixed: Forge's standalone `Register-MCP.ps1` wrote a global `skyrim-forge` entry and the bundle installer removed it (the toolbox serves Forge on demand), so each installer undid the other.
+- Forge 6.4.2: https://github.com/SenjuWoo/SkyrimForge/releases/tag/v6.4.2 (PR 30; tag at 9a568aa196d4eafbb9049deaab35ebf284a884a7 after 14/14 checks; release run success). Registration reports `DEFERRED` per provider whose MCP config has the bundle `toolbox` entry while `toolbox-profiles.json` lists `skyrim-forge`; `-Global` overrides. Bridge suite 9/9 including a real Kimi deferral/`-Global` round trip; full Forge validator PASS twice plus idempotence. Skyrim-Forge-6.4.2.zip 4,833,006 B sha256 4bb55d67d44b2c3ac0593c56d4db5dd6d3fae0ce3f5a88a3454e447953d3d496 matches GitHub digest and SHA256SUMS.
+- Bundle 8.26.1: https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.26.1 published by release.yml at 8f13d795b1afabd5a015c44e335f5e8fb1020e7c (PR 24). Re-downloaded: Core 45,333,697 B sha256 087e797068d16dd371d6b581d0f26d6daa39cfb73d5f9429a6183e27e35ebfda; Full-Offline 141,738,906 B sha256 ed5a2d417ce708a6abc89f597580cfe3da84db3bbee4bdd8d607af5843cf67f5; both match GitHub digests and .sha256 files. New drift gate: `check_versions.py` fails if the pinned Forge stops deferring or INSTALL-AIO stops writing `toolbox-profiles.json` (proven failing on the 6.4.1 pin).
+- Live: install exit 0, doctor PASS 8.26.1 0/0, Forge 6.4.2, five providers answer the always-on MCP checks, CLAUDE.md content paragraph intact, Claude settings.json unchanged. Proof on this machine: installed Forge `Register-MCP.ps1 -Provider All -Yes` reported DEFERRED for Codex, Claude, Grok and Hermes (Kimi not installed) and left every provider config byte-identical.
+- Security: open Dependabot/code-scanning/secret-scanning 0 on all three repos; each has only `main`.
+- Forge's own STATE.md still reads "Next: full gate…" for 6.4.2; per Forge's convention it is refreshed with its next release (a docs-only edit there regenerates its hashed reports).
 
 ## Completed 8.26.0 tri-repo sync — 2026-10-29
 
