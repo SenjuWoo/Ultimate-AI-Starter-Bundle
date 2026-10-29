@@ -26,8 +26,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 11312,
-  "sha256": "a405677f8dfb3ba6b9e6b169e11e9813d4da9ff44336d75597713a92f56918bb"
+  "size": 11246,
+  "sha256": "3d55d08da362481a9e90de4e90e972eb69d4ddea0dc56d52e716c806eed3981e"
  },
  {
   "path": ".github/workflows/dependabot-auto-merge.yml",
@@ -36,8 +36,8 @@
  },
  {
   "path": ".github/workflows/release.yml",
-  "size": 7158,
-  "sha256": "6f343955a8afe86581623452edd0f784eb42139a17a0e18e4c90b44ccd03a7f2"
+  "size": 7180,
+  "sha256": "4817d5506f9b01c7454f1a59369f4f6fd279dbacc4769295ecc13076c888b782"
  },
  {
   "path": ".gitignore",

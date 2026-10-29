@@ -95,8 +95,8 @@ jobs:
         if: steps.decide.outputs.publish == 'true'
         shell: powershell
         run: |
+          # In-process: the script throws on any failure, which fails the step.
           .\TOOLS\Get-Companions.ps1
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Build twice and require identical bytes
         if: steps.decide.outputs.publish == 'true'

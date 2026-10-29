@@ -79,8 +79,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # In-process: the script throws on any failure, which fails the step.
           .\TOOLS\Get-Companions.ps1
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Pack gate
         shell: powershell
@@ -222,7 +222,6 @@ jobs:
         shell: powershell
         run: |
           .\TOOLS\Get-Companions.ps1
-          if ($LASTEXITCODE -ne 0) { throw "Get-Companions.ps1 exited $LASTEXITCODE" }
           $row = ([IO.File]::ReadAllText('BUNDLED-TOOLS\offline\companions.json') | ConvertFrom-Json).companions | Where-Object { $_.id -eq 'skyrim-forge' }
           $bad = Join-Path $env:RUNNER_TEMP $row.asset
           Copy-Item (Join-Path 'BUNDLED-TOOLS\offline' $row.asset) $bad
