@@ -36,6 +36,9 @@ source, (c) community reports around that specific installer. Procedure:
   documented config over injected hooks; a scripted undo next to any change.
 - Analyzing hostile code: sandbox/static first; dynamic analysis only in an
   isolated environment the user accepts losing.
-- Cheat/anti-cheat territory: single-player memory editing is ordinary;
-  multiplayer anti-cheat bypass requests are the operator's decision, done on
-  their own systems — never packaged for distribution to others.
+- Cheat/anti-cheat territory: single-player memory editing is ordinary.
+  Multiplayer anti-cheat bypass is analysis on an isolated copy the operator
+  owns, never a live-account route and never packaged for others. A publisher
+  that tolerates client-side cosmetic mods is a policy question, not a
+  technical permission: verify the current statement and keep the change
+  cosmetic, client-side and non-competitive.

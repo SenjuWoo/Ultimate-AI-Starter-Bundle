@@ -25,14 +25,20 @@ writing code.
 |---|---|
 | Native decompile | `ghidra.cmd` or `analyzeHeadless.cmd` |
 | .NET decompile / debug | `ilspycmd.cmd`, `dnspy.cmd` |
-| PE triage / hex / strings | `pe-bear.cmd`, `diec.cmd`, `imhex.cmd` |
+| PE triage / hex / strings | `pe-bear.cmd`, `diec.cmd`, `imhex.cmd`, `floss.cmd` |
 | Dynamic trace | `frida.cmd` |
-| Capability/rule scan | `capa.cmd` |
-| Game/engine extract | `assetripper.cmd`, `fmodel.cmd`, `repak.cmd`, `retoc.cmd` |
+| Scripted / rule analysis | `rizin.cmd`, `rz-bin.cmd`, `yara.cmd`, `capa.cmd` |
+| Debugger / handles | `x64dbg.cmd`, `systeminformer.cmd` |
+| PE fingerprint / AOB / Ghidra MCP | `pe-recon.cmd`, `aob-gen.cmd`, `ghidra-mcp-up.cmd` |
+| Game/engine extract | `assetripper.cmd`, `fmodel.cmd`, `repak.cmd`, `retoc.cmd`, `uassetgui.cmd` |
+| Capture | `renderdoccmd.cmd` |
+| Android | `jadx.cmd` |
 | REA evidence workflow | `rea.cmd` |
 
-The full map is `<kit_root>\AGENTS.md`. Universal Modder (`um scan`) owns game
-and engine recon; Skyrim records belong to the Skyrim skills and Forge.
+`AGENTS.md` carries the full catalog (Source, REDengine, FromSoftware,
+GameMaker, Total War and the rest). `installed.json` decides which of these are
+actually present; call only what it names. Universal Modder (`um scan`) owns
+game and engine recon; Skyrim records belong to the Skyrim skills and Forge.
 
 ## Look up before you build
 
@@ -41,10 +47,13 @@ host has that library. If it returns "not found", read the local fallback at
 `%ENCYCLOPEDIA_ROOT%` (default `<kit_root>\encyclopedia`):
 
 - `ROUTING.md` - the 6-tier ladder, stop rules and downstream-sink protocol.
+- `CLAIMS.md` - scope every limit to the named tool, version and mechanism.
+- `anticheat-risk.md` - publisher policy, injection vs cosmetic, account risk.
 - `engines/` - axes, units, depth conventions and proxy DLLs.
 - `blueprints/` - IPC seqlock and offline harness sources.
 - `games/` - version-pinned field notes, when present.
-- `ERROR-REGISTRY.json` - error signature to cause, when present.
+- `re-recipes/` - worked routes and their evidence.
+- `ERROR-REGISTRY.json` - error signature to cause.
 
 If neither source is available, say so and use the target's own documentation;
 do not invent a route, offset or signature.
@@ -67,7 +76,20 @@ leaf call; hook the function the sink actually uses.
   fires on every `CreateFileW` is a bug even when it appears to work.
 - Never strip `FILE_FLAG_NO_BUFFERING`. Hook for path redirection and preserve
   the flags and alignment in any replacement handle.
-- Never patch or hook anti-cheat. Tier 4-6 work is single-player only.
+- Anti-cheat is a risk boundary, not a blanket ban. Never bypass, disable,
+  spoof or evade it, and never inject into a protected multiplayer process to
+  gain an advantage. Some multiplayer titles leave room for client-side
+  cosmetic mods even with anti-cheat running (Marvel Rivals' October 2026
+  policy preserves customization while banning memory injection and
+  fairness-altering mods; Monster Hunter Wilds' warning targets modified
+  quests/data, and cosmetic mods are community-tolerated, not guaranteed).
+  The policy is the publisher's, changes by patch, and usually turns on how the
+  mod works: memory injection and patched game files are what trigger
+  detection, while an official loader or a purely visual asset swap may not.
+  Verify the current official statement and the mod's method, keep the change
+  client-side and cosmetic, and tell the user the account risk before they run
+  it. If the policy is unknown or the mod affects gameplay, progression,
+  economy, matchmaking or other players, do not ship it.
 - Measure the tool's RAM and cache cost before a scan or decompile; a full-disk
   Ghidra import is not a recon step.
 
@@ -87,8 +109,9 @@ leaf call; hook the function the sink actually uses.
 
 The Ghidra-side HTTP server defaults to `127.0.0.1:8080`; the MCP bridge is a
 separate process and defaults to `127.0.0.1:8081/mcp` (streamable-http). Probe
-both and confirm the bridge is running before configuring a client. Do not
-assume the kit installed or started it.
+both and confirm the bridge is running before configuring a client. The kit's
+`sandbox\bin\ghidra-mcp-up.cmd` starts or checks it when that tool is selected;
+do not assume the kit installed or started it.
 
 ## Handoff
 

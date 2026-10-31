@@ -180,10 +180,10 @@ delegation:
   max_concurrent_children: 2
   max_spawn_depth: 1
 moa:
-  # Ships OFF. Hermes' own default enables MoA with a gpt-5.5 advisor and an
-  # Opus 4.8 aggregator; that is expensive, and the advisor fails wherever
-  # Codex is not signed in. If you turn it on, both slots below are cheap
-  # OpenRouter models that need no extra provider login.
+  # Ships OFF. Hermes' own default enables MoA with a premium advisor and an
+  # expensive aggregator; that is costly, and the advisor fails wherever Codex
+  # is not signed in. If you turn it on, both slots below are cheap OpenRouter
+  # models that need no extra provider login.
   presets:
     default:
       reference_models:

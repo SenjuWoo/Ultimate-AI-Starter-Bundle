@@ -1,5 +1,26 @@
 # Bundle audit state
 
+## In progress 8.28.0 modular foundation — 2026-10-31
+
+- Goal: the bundle is the base layer (general skills, work hygiene, GitHub/CI,
+  visuals, efficiency, compiling, base tools); Reverse THIS! and Skyrim Forge
+  are optional owners on top. No hard blockers, no duplicate installs, no
+  stale model pins.
+- Done: `reverse-engineering` skill with the 6-tier ladder and
+  `CLAIMS.md`/`anticheat-risk.md`/`re-recipes` lookup; no-hard-blocker rule in
+  the SOUL, manual paste and `coding-discipline`; Hermes model policy
+  (deepseek 4.1 flash / auto, stale MoA advisors removed); anti-cheat risk
+  tiers instead of a blanket ban; houseCARL falls back to the default Forge
+  root; README "three layers" and corrected `-Packs reverse`.
+- Live checks: Skyrim Forge 6.6.0 at the default root, `forge doctor` warnings
+  empty, 48/48 pack skills in the archive and the `skyrim` profile, houseCARL
+  MCP starts; Reverse THIS! 1.9.2 source kit, encyclopedia present, Context7
+  library not indexed yet (local fallback documented).
+- Gates: release contracts 155/0, canonical audit PASS, manifest 7,913 files
+  verified, docs/version gates PASS, full Windows pack gate PASS.
+- Next: commit and push 8.28.0, wait for CI, publish the release, then replace
+  this section with the published SHAs and asset hashes.
+
 ## Completed 8.27.1 new-user audit — 2026-10-29
 
 - Goal completed: full audit of the public bundle and the live install after 8.27.0. Nine misses from the 8.27.0 pass were found and fixed: START-HERE.txt still claimed the Skyrim pack installs when Skyrim is found; README-CORE.txt, PACKS.json and one README line still described a pinned Forge; public skills carried the maintainer's drive-letter Steam library and tools paths (saints-row-modding) and a private workspace name (codebase-memory); a stale Forge 5.x verification reference remained; README restated a wrong body-budget skill count; README buried install steps at line 215; Claude Code listed 68 of 165 live skills without descriptions (1% listing budget).

@@ -21,8 +21,10 @@ any publishing platform (publishing is a separate, explicit request).
    player's own installs into a local cache; nothing from either game ships.
 2. Loading foreign cooked assets into the host is a dead end (engine-version
    mismatch, no runtime mesh API, Unity content can never load in Unreal).
-3. Check anti-cheat and DRM before anything else. A title with anti-cheat is
-   not an injection target. Solo only. Never bypass DRM.
+3. Check anti-cheat and DRM before anything else. An injected passthrough is
+   not a candidate for a protected online title. A purely client-side cosmetic
+   route may be tolerated; verify the publisher's current policy and warn about
+   the account risk. Never bypass or disable anti-cheat or DRM.
 4. Exclude censored variants and any child-like or age-ambiguous character by
    name before extraction, not after.
 

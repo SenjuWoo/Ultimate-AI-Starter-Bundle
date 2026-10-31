@@ -954,7 +954,10 @@ def test_tool_routing_stays_scoped_and_preserves_evidence_boundaries() -> None:
     if skill is None:
         raise unittest.SkipTest("Specialist routing is checked against the owner archive in Full-Offline")
     assert "Forge CLI" in skill and "forge capabilities" in skill
-    assert "houseCARL MCP" in skill and "no general CLI replacement" in skill
+    assert "houseCARL MCP" in skill and (
+        "no general CLI replacement" in skill
+        or "no field schema, no VFS asset view" in skill
+    ), "specialist lost the houseCARL/Forge CLI evidence boundary"
     assert "Installed and enabled are different states" in skill and "project path" in skill
     assert "general `ai-tooling-stack` skill belongs" in skill
 
@@ -1258,6 +1261,13 @@ def test_hermes_starter_aux_models_follow_the_main_model() -> None:
 
     assert re.search(r"(?m)^  default: deepseek/deepseek-v4\.1-flash-1017$", text), (
         "the starter default moved; update this contract and docs/HERMES-MODELS.md together")
+
+    moa = re.search(r"(?ms)^moa:\r?\n(.*?)(?=^[a-z_]+:|\Z)", text)
+    assert moa, "the starter lost its MoA block"
+    for retired in ("gpt-5.5", "claude-opus-4.8", "claude-opus-4-8", "deepseek-v4-pro"):
+        assert retired not in moa.group(1), (
+            "the starter MoA block pins the retired advisor %r; use the main "
+            "deepseek model or a current flash model" % retired)
 
 
 def test_hermes_starter_carries_no_machine_state() -> None:
@@ -1923,6 +1933,21 @@ def test_no_skill_documents_an_unshipped_product() -> None:
     assert not offenders, f"skills still reference the removed Forge Bridge: {offenders}"
 
 
+def test_no_hard_blocker_principle_is_shipped() -> None:
+    """A future edit must not quietly restore refusal-by-default.
+
+    The bundle's value is that a better model can finish the job. The SOUL,
+    the manual-paste persona and the operating contract carry the rule; this
+    keeps one of them from losing it.
+    """
+    soul = read(ROOT / "3-PREAMBLES" / "SOUL.md").lower()
+    manual = read(ROOT / "3-PREAMBLES" / "MANUAL-PASTE.txt").lower()
+    coding = read(CANON / "coding-discipline" / "SKILL.md").lower()
+    assert "never design a hard blocker" in soul
+    assert "never design a hard blocker" in manual
+    assert "## no hard blockers" in coding
+
+
 def test_no_skill_script_hardcodes_a_machine_path() -> None:
     """A skill script with someone else's drive letter in it cannot run."""
     bad = []
@@ -2370,7 +2395,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "5ef53a9d57d46d6b91d52177d40a115b825ab2181e38f8bf89465827b5919cd5", (
+    assert digest == "b10a654d3d302ef053ef3783b440a929da860d0df9684e087d31487e0a10594c", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -2895,6 +2920,7 @@ def main() -> int:
         test_forge_install_directory_is_never_version_stamped,
         test_forge_health_check_reads_fields_forge_emits,
         test_no_skill_documents_an_unshipped_product,
+        test_no_hard_blocker_principle_is_shipped,
         test_no_skill_script_hardcodes_a_machine_path,
         test_every_v5_helper_called_actually_exists,
         test_provider_skill_sync_is_content_authoritative,

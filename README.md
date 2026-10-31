@@ -43,6 +43,19 @@ modding stack.
 Codex, Grok, Kimi, Hermes and Google Antigravity get the same skills, tools and
 instructions, and learn where your games, mods and tools live.
 
+**Three layers, use any combination:**
+
+| Layer | Gives you | Turn it on |
+|---|---|---|
+| This bundle (base) | general skills, work hygiene, GitHub/CI, visuals, efficiency, compiling, base MCPs and tools | default |
+| Reverse THIS! | optional reverse-engineering workbench: Ghidra, Frida, decompilers, REA | `-Packs reverse` |
+| Skyrim Forge | optional Skyrim tools, its 48-skill pack and houseCARL | `-Packs skyrim` |
+
+The bundle owns the base and never installs a second copy of an owner's tools.
+Each optional layer is detected through its own receipt, updated by its own
+installer, skipped when the installed copy is current or newer, and left intact
+when you turn the pack off.
+
 **What you need:** Windows 10 or 11, an internet connection and at least one of
 those apps. The default install also adds a compiler suite that can take several
 GB; `-SkipBuildTools` skips it.
@@ -71,7 +84,7 @@ task needs by itself.
 |---|---|
 | Update | Double-click `START-HERE.bat` again; it installs a newer release first and keeps your settings. |
 | Add the Skyrim modding pack | `START-HERE.bat -Packs skyrim` (off again: `-ExcludePacks skyrim`) |
-| Add reverse-engineering tools | `START-HERE.bat -Packs skyrim,reverse` |
+| Add reverse-engineering tools | `START-HERE.bat -Packs reverse` |
 | Set up only some apps | `START-HERE.bat -Providers Claude,Codex` |
 | Check the install | Run `START-HERE.bat` again; its last step checks everything and prints PASS or the problem. |
 | Fix a failed install | See [Troubleshooting](#troubleshooting). |

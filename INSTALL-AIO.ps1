@@ -1832,8 +1832,19 @@ if ($WorkspaceRoot) {
 if (-not $SkillsOnly) {
   foreach ($id in $Components) {
     if ($id -eq 'housecarl') {
-      $owner = Join-Path $env:SKYRIM_FORGE_ROOT 'Install-HouseCarl.ps1'
-      if (-not (Test-Path -LiteralPath $owner)) { throw 'houseCARL belongs to Forge; install the optional Skyrim integration first.' }
+      # Resolve the owner root from the environment, then the default install
+      # location; a missing env var must not skip an installed Forge.
+      $forgeRoot = $env:SKYRIM_FORGE_ROOT
+      if (-not $forgeRoot) {
+        $defaultForge = Join-Path $env:LOCALAPPDATA 'Skyrim-Tools\Skyrim-Forge'
+        if (Test-Path -LiteralPath (Join-Path $defaultForge 'Install-HouseCarl.ps1') -PathType Leaf) { $forgeRoot = $defaultForge }
+      }
+      $owner = if ($forgeRoot) { Join-Path $forgeRoot 'Install-HouseCarl.ps1' } else { $null }
+      if (-not $owner -or -not (Test-Path -LiteralPath $owner)) {
+        Write-UabsWarn 'houseCARL belongs to Forge; skipping it. Enable the Skyrim pack (-Packs skyrim) to install its owner.'
+        $installed[$id]=@{status='skipped';reason='Forge not installed'}
+        continue
+      }
       $hcAsset=[string](@($catalog.components | Where-Object { $_.id -eq 'housecarl' }) | Select-Object -First 1).offline_asset
       $ownerArgs=@(); $hcZip=if ($hcAsset) { Join-Path $offline $hcAsset } else { $null }
       if ($hcZip -and (Test-Path -LiteralPath $hcZip)) { $ownerArgs+=@('-SourceZip',$hcZip) }

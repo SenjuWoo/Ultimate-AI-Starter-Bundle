@@ -96,9 +96,15 @@ target's own documentation. Never invent an offset, signature or route.
 | 6 | Concurrent shared-memory passthrough | Two runtimes must coexist frame-by-frame and no in-engine route exists | Offline IPC harness passes; live frames align without torn reads |
 
 Stop at the lowest tier that can deliver the feature. Tier 4-6 needs the
-offline harness first; never test them online or against anti-cheat. For Tier 6
-use `game-mashup-passthrough`; the encyclopedia holds the seqlock and D3D11
-harness sources.
+offline harness first; never test them in a protected online session. A
+multiplayer title with anti-cheat is a risk decision, not an automatic no:
+some publishers tolerate client-side cosmetic mods, but memory injection and
+patched game files are what trigger detection, the policy changes by patch, and
+the account risk is the user's. Verify the current official statement and
+`%ENCYCLOPEDIA_ROOT%\anticheat-risk.md`, keep the change cosmetic and
+client-side, and never bypass or disable the anti-cheat.
+For Tier 6 use `game-mashup-passthrough`; the encyclopedia holds the seqlock and
+D3D11 harness sources.
 
 ## Contract and first slice
 

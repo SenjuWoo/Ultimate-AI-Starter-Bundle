@@ -26,8 +26,10 @@ a lesson; it only holds for the workflow it was observed in.
 | Run the games side by side and stream state | Rejected | Only the character models are needed, not the other games running. |
 | **Passthrough renderer** | Chosen | The host keeps AI, animation, hitboxes and ragdoll. A script mod hides the host mesh and names the body to draw; a native overlay draws the companion body skinned to the host's live skeleton, depth-tested against the host's depth buffer; a one-time extractor builds a local cache from the **player's own installs** (nothing from any game ships). |
 
-Guardrails that decided scope: check anti-cheat first (a title with it is not a
-DLL-injection target); never touch or bypass DRM; solo only (other players would
+Guardrails that decided scope: check anti-cheat first (an injected overlay is
+not a candidate for a protected online title; a purely client-side cosmetic
+route still needs the publisher's current policy and the user's informed
+acceptance); never touch or bypass DRM; solo only (other players would
 not see the bodies); exclude censored variants and any child-like or
 age-ambiguous character by name.
 

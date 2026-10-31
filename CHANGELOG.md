@@ -19,6 +19,25 @@
 - The Ghidra MCP endpoint is documented as `127.0.0.1:8081/mcp` with the
   Ghidra-side HTTP server on `8080`, matching reverse-this's own validation of
   the draft. The draft's single `8080/mcp` was wrong.
+- Add the no-hard-blocker rule to `3-PREAMBLES/SOUL.md`,
+  `3-PREAMBLES/MANUAL-PASTE.txt` and `coding-discipline`: a gate may require
+  evidence, not forbid a method; probe the version, fall back when an optional
+  tool is missing, and scope a real block to its element. `code-review-skill`
+  now reviews for future-proofing, and a release contract keeps the rule
+  shipped.
+- `INSTALL-AIO.ps1` no longer aborts when `housecarl` is selected without
+  Forge: it warns, records the skip and continues. The Skyrim pack remains the
+  only path that installs it.
+- Hermes model policy: the starter's MoA advisors and aggregator point at
+  `deepseek/deepseek-v4.1-flash-1017` (plus the current `gemini-3.7-flash`
+  second slot), auxiliary tasks stay `provider: auto` with an empty model, and
+  the explanatory comment no longer names the retired gpt-5.5/Opus 4.8
+  defaults. A release contract rejects those ids if they come back.
+- Anti-cheat guidance is a risk boundary, not a blanket ban:
+  `reverse-engineering`, `MODDING-LAWS`, `game-mashup-passthrough`, the Melty
+  notes and `security-re` now distinguish a publisher-tolerated client-side
+  cosmetic mod (verify the current policy, keep it visual and non-competitive)
+  from memory injection, patched game files and any bypass, which stay out.
 
 ## 8.27.1 (2026-10-29)
 

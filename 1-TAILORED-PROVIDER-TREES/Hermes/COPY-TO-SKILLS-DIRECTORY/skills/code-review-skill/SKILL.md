@@ -76,6 +76,8 @@ Transform code reviews from gatekeeping to knowledge sharing through constructiv
 - Documentation and comments
 - API design and naming
 - Architectural fit
+- Future-proofing: a hard-coded version, path, tool name or "only X" rule that
+  would refuse a valid newer route
 
 **What Not to Review Manually:**
 - Code formatting (use Prettier, Black, etc.)

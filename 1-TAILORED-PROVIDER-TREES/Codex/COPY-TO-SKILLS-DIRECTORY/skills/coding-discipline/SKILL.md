@@ -56,6 +56,27 @@ in Papyrus/INI, `--` in Lua/SQL, `<!-- -->` in XML/HTML, `'`/`Rem` in batch/VB).
 
 Anything you build also gets a toggleable debug log (`observability-first`) and a `STATE.md` recovery note (`state-resumption`, "Handoff for what you build").
 
+## No hard blockers
+
+A gate may require evidence; it may not forbid a method. A newer model, tool
+or route the author did not foresee must still be able to finish the job.
+
+- Prefer a capability probe to an exact version or path. Accept a newer or
+  unknown version with a warning after the probe passes; never fail only
+  because the pin is older than what is installed.
+- Treat a missing optional dependency, tool or MCP as a fallback, not an abort:
+  skip it, say what degraded, and continue the work that does not need it.
+- Do not encode "only X", "must use Y" or "never Z" for a capability the task
+  can reach another way. If the user asked for that constraint, keep it and say
+  why; otherwise record the preferred route and let evidence choose.
+- Scope a real block to the narrow element it covers. The rest of the task runs
+  at full depth. "Blocked" is not a status for the whole request.
+- Irreversible or destructive actions still need confirmation; that is a safety
+  boundary, not a capability block.
+- A test asserts the required behavior or evidence, not a tool name or a
+  sentence that will rot. A test that fails only because a dependency improved
+  is a hard blocker and must be fixed.
+
 ## Validation
 
 - Review the diff, not only the final files.
