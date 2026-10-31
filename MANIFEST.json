@@ -39260,6 +39260,11 @@
   "sha256": "ae23ff663e5ebf19952d2dd57402b06f172f798ff01d048ad4d3847435979df6"
  },
  {
+  "path": "docs/history/V8.28.1-CHANGELOG.md",
+  "size": 745,
+  "sha256": "37dd54a1f6f6b142c619d688834dc6d90ea29a6341ee4dd79db9b590ceff94b8"
+ },
+ {
   "path": "docs/history/V8.3.0-CHANGELOG.md",
   "size": 7237,
   "sha256": "e6ee3d455d53759df921742204cb33930cc0ec38515bd151596e1b48d486b31e"
