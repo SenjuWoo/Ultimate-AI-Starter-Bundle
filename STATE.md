@@ -1,5 +1,36 @@
 # Bundle audit state
 
+## Completed 8.28.4 final doctor fix and local install — 2026-10-31
+
+- 8.28.4 fixed the last false install check: a default
+  `Test-Installed-State.ps1` run required every provider name, so a machine
+  where Kimi was intentionally not installed failed with "Kimi executable
+  missing after provider bootstrap". The recorded `install-state.json`
+  `providers` list is now authoritative; a recorded provider with no
+  executable still fails.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.28.4
+  at `0d47ded2e9d05e63a2187d3926489b15c0df271f`; CI 41237530662 and CodeQL
+  41237530412 succeeded, Release 41238163181 published. Core 45,381,882 B
+  sha256 `0eb88989eb6fa2f3f6b4bb7760aba1a86928c3bcb4988f002e69263579466160`;
+  Full-Offline 141,902,753 B sha256
+  `7d8e83123f75542a7be5172dee382e0b16b781833b0b5bf477b0c793c89267ab`.
+  All nine assets downloaded and `sha256sum -c SHA256SUMS.txt` is clean.
+- Local install: 8.28.4 Full-Offline installed with
+  `INSTALL-AIO.ps1 -Mode BundledOnly -SkipSelfUpdate -Packs skyrim,reverse
+  -SkipHouseCarlSetup`; exit 0. Direct `Test-Installed-State.ps1 -PackRoot .`
+  PASS with 0 errors and 0 warnings; doctor 8.28.4; 9 project tools; recorded
+  providers Claude/Codex/Grok/Hermes/Antigravity.
+- Live state: root/code/skyrim/blender/unity/creative/web use
+  `deepseek/deepseek-v4.1-flash-1017` on OpenRouter with MoA off;
+  `sillytavern` keeps its local LM Studio model and MoA by design. No
+  `claude-code-imports` tree. Skyrim Forge 6.6.0 doctor warnings empty, 50
+  tools, 48/48 pack skills; houseCARL MCP present; Reverse THIS! kit 1.9.4.
+- Remaining: Ponytail is enabled and healthy at 5.3.2 while the catalog lists
+  5.3.3; the live gateway deferred its native refresh and the local bridge has
+  no remote, so the bundled copy must be re-staged before it can update. The
+  third-party catalog audit still reports 10 stale pins. Context7 does not
+  index `/senjuwoo/reverse-this`; live game/GUI targets were not exercised.
+
 ## Completed 8.28.3 final audit and local install — 2026-10-31
 
 - Goal: final audit for errors, bloat and outdated info, then a clean release
