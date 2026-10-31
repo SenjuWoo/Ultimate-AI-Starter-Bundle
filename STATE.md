@@ -1,5 +1,35 @@
 # Bundle audit state
 
+## Completed 8.29.1 final audit and stable local install — 2026-10-31
+
+- Reaudit found one real safety bug: `workspace_doctor.py` scanned only the
+  first 400 text files for references, so a large project could move a
+  referenced file outside that window. It now reports the cap and disables
+  automatic moves when the scan is incomplete. `TESTS/test_workspace_tools.py`
+  covers it.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.1
+  at `9588b8b7b570c89350a30fcdc475420ab922fb9c`; CI 41249241579 and CodeQL
+  41249241857 succeeded, Release 41249801690 published. Core 45,470,933 B
+  sha256 `4a107b3634fe89b4a6145fe85821ebdebe267c17405f5cb355f9b1c4ddedf4c4`;
+  Full-Offline 142,020,326 B sha256
+  `5ea30e90e22cd3701b6132e687a58a5aab1077b24a59f892d44e6d853fa1e935`.
+  All nine assets downloaded and `sha256sum -c SHA256SUMS.txt` is clean.
+- Local install without closing any app: the 8.29.1 Full-Offline tree is at
+  `%USERPROFILE%\Apps\Ultimate-AI-Starter-Bundle\8.29.1`; `install-state.json`
+  and `MACHINE-MAP.md` point there instead of the old Temp extraction.
+  `Test-Installed-State.ps1 -PackRoot .` PASS with 0 errors and 0 warnings;
+  doctor 8.29.1; `code` has 143 skills (129 general plus extras), `skyrim` 193;
+  both new skills and both tools are present. No application was stopped or
+  restarted.
+- `workspace_doctor.py` from the stable tree on `NemesisCombatAI`: root FOMOD
+  `2.0.4` vs `CURRENT.txt` `3.0.0`, two snapshots, five nested caches, reference
+  scan cap reached, **0 automatic moves**. Read-only; the example was not
+  modified.
+- Known gaps: 10 third-party catalog pins remain stale by deliberate
+  evaluation policy (houseCARL, Headroom, Ponytail, Playwright, Firecrawl,
+  shadcn, Blender MCP, ComfyUI CLI, Universal Modder source); Context7 does not
+  index `/senjuwoo/reverse-this`; live game/GUI targets were not exercised.
+
 ## Completed 8.29.0 mod workspace repair and presentation — 2026-10-31
 
 - New `mod-workspace-organization` skill and `TOOLS/workspace_doctor.py`:
