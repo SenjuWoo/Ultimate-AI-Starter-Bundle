@@ -1,3 +1,13 @@
+## 8.28.3 (2026-10-31)
+
+- The installer now defers the Hermes native plugin refresh when the gateway
+  has a live chat session instead of aborting the whole install. The copied
+  skills stay, the state records `deferred-live-gateway`, and the next restart
+  can finish the refresh.
+- The general `toolbox` MCP receives the Skyrim environment variables only
+  when `SKYRIM_FORGE_ROOT` exists, so a disabled Skyrim pack leaves no Skyrim
+  state on a general tool server.
+
 ## 8.28.2 (2026-10-31)
 
 - Fix the User-scope shared-Python binding: after writing the persisted PATH,

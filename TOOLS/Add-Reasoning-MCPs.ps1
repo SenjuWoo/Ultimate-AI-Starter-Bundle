@@ -192,10 +192,17 @@ $toolboxCmd = [Environment]::GetEnvironmentVariable('UABS_TOOLBOX_CMD', 'User')
 if (-not $toolboxCmd) { try { $toolboxCmd = (Get-Command uabs-toolbox -ErrorAction SilentlyContinue).Source } catch { } }
 if ($toolboxCmd -and (Test-Path -LiteralPath $toolboxCmd -PathType Leaf)) {
   $toolboxEnvNames = @(
-    'HOUSECARL_MCP', 'HOUSECARL_ROOT', 'SKYRIM_MO2_INSTANCE', 'HouseCarl__Mo2InstanceDir',
-    'SKYRIM_FORGE_ROOT', 'CODEBASE_MEMORY_MCP', 'UABS_PYTHON',
+    'CODEBASE_MEMORY_MCP', 'UABS_PYTHON',
     'ROBLOX_FORGE_ROOT', 'SAINTSROW_FORGE_ROOT'
   )
+  # Skyrim paths only when its owner is installed; a disabled pack must not
+  # leave Skyrim state on a general toolbox server.
+  if ($env:SKYRIM_FORGE_ROOT -and (Test-Path -LiteralPath $env:SKYRIM_FORGE_ROOT -PathType Container)) {
+    $toolboxEnvNames = @(
+      'HOUSECARL_MCP', 'HOUSECARL_ROOT', 'SKYRIM_MO2_INSTANCE',
+      'HouseCarl__Mo2InstanceDir', 'SKYRIM_FORGE_ROOT'
+    ) + $toolboxEnvNames
+  }
   foreach ($envName in $toolboxEnvNames) {
     if (-not [Environment]::GetEnvironmentVariable($envName, 'Process')) {
       $uVal = [Environment]::GetEnvironmentVariable($envName, 'User')

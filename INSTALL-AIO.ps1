@@ -549,7 +549,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.28.2 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.28.3 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -1098,9 +1098,20 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
         $gatewayStatus = Get-UabsNativeOutput -Exe $hermesExe -CmdArgs @('gateway', 'status')
         $gatewayWasRunning = $gatewayStatus -match '(?i)running' -and $gatewayStatus -notmatch '(?i)not running'
         if ($gatewayWasRunning) {
-          if (-not (Invoke-UabsNative $hermesExe @('gateway', 'stop'))) { throw 'Hermes gateway could not be stopped for plugin refresh' }
-          $script:UabsHermesGatewayWasRunning = $true
-          Write-UabsOk 'Hermes gateway stopped for native plugin refresh; it stays down until config writes finish'
+          if (Invoke-UabsNative $hermesExe @('gateway', 'stop')) {
+            $script:UabsHermesGatewayWasRunning = $true
+            Write-UabsOk 'Hermes gateway stopped for native plugin refresh; it stays down until config writes finish'
+          } else {
+            # A live chat session is using the gateway. Stopping it would kill
+            # that session, so defer the plugin refresh instead of failing the
+            # whole install; the copied skills stay and the next restart can
+            # finish it.
+            Write-UabsWarn 'Hermes gateway has a live session; native plugin refresh deferred. Restart Hermes and run START-HERE again to finish it.'
+            foreach ($pluginId in @('superpowers', 'ponytail')) {
+              $pstate.plugins[$pluginId] = New-UabsPluginStateEntry -Status 'deferred-live-gateway' -Reason 'gateway has a live session; copied skills stay'
+            }
+            break
+          }
         }
         # Hermes desktop (Hermes.exe) loads config.yaml once at startup and
         # persists ITS in-memory copy on later saves. Left running, it rewrites
@@ -2704,7 +2715,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.28.2'
+version = '8.28.3'
   content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
