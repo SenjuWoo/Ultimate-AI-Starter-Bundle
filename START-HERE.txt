@@ -1,4 +1,4 @@
-Ultimate AI Starter Bundle V8.28.4 - START HERE
+Ultimate AI Starter Bundle V8.28.5 - START HERE
 ================================================
 
 WHAT THIS IS
@@ -35,10 +35,11 @@ AFTER INSTALLING
 ----------------
 Update ............... double-click START-HERE.bat again. It installs a newer
                        release first (SHA-256 checked) and keeps your settings.
-Skyrim modding pack .. START-HERE.bat -Packs skyrim
-                       (Skyrim Forge, houseCARL, Skyrim skills; off by default)
+Skyrim modding pack .. automatic when Skyrim, a mod manager or Forge is found
+                       (Skyrim Forge, houseCARL, 48 Skyrim skills)
 Turn it off again .... START-HERE.bat -ExcludePacks skyrim
-Reverse engineering .. START-HERE.bat -Packs skyrim,reverse   (Reverse THIS!)
+Reverse engineering .. automatic when Reverse THIS! is already registered
+Force a layer on ..... START-HERE.bat -Packs skyrim,reverse
 Only some apps ....... START-HERE.bat -Providers Claude,Codex
 Check the install .... run START-HERE.bat again; its last step checks
                        everything it installed and prints PASS or the problem.

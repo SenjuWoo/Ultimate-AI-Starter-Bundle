@@ -1,3 +1,18 @@
+## 8.28.5 (2026-10-31)
+
+- One-click install: the specialist packs now auto-detect instead of requiring
+  a flag. Skyrim turns on when the game, a mod manager or an existing Forge is
+  found; Reverse THIS! turns on when its kit receipt exists. A machine without
+  that evidence gets neither. `-Packs` still forces a layer on, `-ExcludePacks`
+  keeps it off, and both choices are remembered.
+- The AI is now told to start project MCP servers itself through the toolbox
+  `find`/`describe`/`call` (or the owning CLI) and never ask the user to start
+  a tool, server or installer. A host restart is the only step it may request,
+  and only to index a new skill mid-session.
+- `game-modding` tells the AI to run the Skyrim pack installer itself and use
+  Forge immediately, instead of asking the user to restart before starting.
+- README and START-HERE document automatic pack detection.
+
 ## 8.28.4 (2026-10-31)
 
 - `TOOLS/Test-Installed-State.ps1` no longer reports a provider the installer

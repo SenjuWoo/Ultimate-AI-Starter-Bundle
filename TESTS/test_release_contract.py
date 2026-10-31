@@ -233,6 +233,22 @@ def test_all_descriptions_under_budget() -> None:
     assert not offenders, "oversized always-loaded descriptions: %r" % offenders
 
 
+def test_specialist_packs_auto_detect_for_one_click_install() -> None:
+    """A machine with Skyrim or Reverse evidence gets the layer without a flag."""
+    packs = json.loads(read(ROOT / "BUNDLED-TOOLS" / "PACKS.json"))["packs"]
+    assert packs["skyrim"].get("auto_detect") is True, (
+        "Skyrim reverted to opt-in; a one-click install would skip a Skyrim machine"
+    )
+    assert packs["reverse"].get("auto_detect") is not False, "Reverse reverted to opt-in"
+    readme = read(ROOT / "README.md")
+    assert "automatic when Skyrim or Forge is found" in readme
+    assert "automatic when its kit is found" in readme
+    aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md")
+    assert "never ask the user to start a tool, server or installer" in aio, (
+        "the preamble no longer tells the AI to start project tools itself"
+    )
+
+
 def test_documented_skill_counts() -> None:
     actual = len(list(CANON.glob("*/SKILL.md")))
     # No pinned number here: the count is whatever the tree holds, and every
@@ -2395,7 +2411,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "b10a654d3d302ef053ef3783b440a929da860d0df9684e087d31487e0a10594c", (
+    assert digest == "86b33aa616e432569ba00d483c92f4718f8ce454ebc4e7fc273781a3454b78cb", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -2851,6 +2867,7 @@ def main() -> int:
         test_no_skill_restates_the_pack_version,
         test_skills,
         test_all_descriptions_under_budget,
+        test_specialist_packs_auto_detect_for_one_click_install,
         test_documented_skill_counts,
         test_bootstrap,
         test_release_checklist_exact_sha_contract,

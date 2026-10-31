@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.28.4 -->
+<!-- Ultimate AI Starter Bundle v8.28.5 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.28.4
+# Ultimate AI Starter Bundle v8.28.5
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -48,13 +48,14 @@ instructions, and learn where your games, mods and tools live.
 | Layer | Gives you | Turn it on |
 |---|---|---|
 | This bundle (base) | general skills, work hygiene, GitHub/CI, visuals, efficiency, compiling, base MCPs and tools | default |
-| Reverse THIS! | optional reverse-engineering workbench: Ghidra, Frida, decompilers, REA | `-Packs reverse` |
-| Skyrim Forge | optional Skyrim tools, its 48-skill pack and houseCARL | `-Packs skyrim` |
+| Reverse THIS! | optional reverse-engineering workbench: Ghidra, Frida, decompilers, REA | automatic when its kit is found |
+| Skyrim Forge | optional Skyrim tools, its 48-skill pack and houseCARL | automatic when Skyrim or Forge is found |
 
 The bundle owns the base and never installs a second copy of an owner's tools.
 Each optional layer is detected through its own receipt, updated by its own
 installer, skipped when the installed copy is current or newer, and left intact
-when you turn the pack off.
+when you turn the pack off. `-Packs` forces a layer on, `-ExcludePacks` keeps it
+off, and both choices are remembered.
 
 **What you need:** Windows 10 or 11, an internet connection and at least one of
 those apps. The default install also adds a compiler suite that can take several
@@ -83,8 +84,8 @@ task needs by itself.
 | You want to | Do this |
 |---|---|
 | Update | Double-click `START-HERE.bat` again; it installs a newer release first and keeps your settings. |
-| Add the Skyrim modding pack | `START-HERE.bat -Packs skyrim` (off again: `-ExcludePacks skyrim`) |
-| Add reverse-engineering tools | `START-HERE.bat -Packs reverse` |
+| Add the Skyrim modding pack | nothing: it installs when Skyrim or Forge is found. Skip it with `-ExcludePacks skyrim`; force it with `-Packs skyrim`. |
+| Add reverse-engineering tools | nothing: it installs when Reverse THIS! is registered. Force it with `-Packs reverse`. |
 | Set up only some apps | `START-HERE.bat -Providers Claude,Codex` |
 | Check the install | Run `START-HERE.bat` again; its last step checks everything and prints PASS or the problem. |
 | Fix a failed install | See [Troubleshooting](#troubleshooting). |
@@ -156,12 +157,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\INSTALL-AIO.ps1
 ### Packs: content only some users need
 
 `BUNDLED-TOOLS\PACKS.json` lists them: `skyrim` (Forge's skill pack, an
-instruction block, Skyrim Forge, houseCARL) and `reverse` (Reverse THIS!). The
-Skyrim pack is opt-in: a default install adds no Skyrim skill, MCP server or
-instruction text, so general users pay nothing for it on any request, and the
-installer prints how to turn it on. `-Packs skyrim` / `-ExcludePacks skyrim`
-are remembered. Turning it off retires the unmodified Skyrim skills and keeps
-any you edited. Reverse THIS! turns on where its kit is already registered.
+instruction block, Skyrim Forge, houseCARL) and `reverse` (Reverse THIS!). Both
+auto-detect: Skyrim turns on when the game, a mod manager or an existing Forge is
+found; Reverse THIS! turns on when its kit receipt exists. Nothing is forced on a
+machine without that evidence. `-Packs skyrim,reverse` forces a layer on,
+`-ExcludePacks skyrim` keeps it off, and both choices are remembered. Turning
+Skyrim off retires the unmodified Skyrim skills and keeps any you edited.
 
 ### Personal profile
 

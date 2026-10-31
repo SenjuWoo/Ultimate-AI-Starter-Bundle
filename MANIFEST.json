@@ -66,8 +66,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 10582,
-  "sha256": "d85fdefb2267a829dae57aec6509e71c77cef9567981f623efad4aff79fdd4e7"
+  "size": 10845,
+  "sha256": "237ec88e68b05de095a46b9f178c0a313a5a0d3a7ae4cfda202c7e34df38cbd6"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
@@ -916,8 +916,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5055,
-  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
+  "size": 5163,
+  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -5606,8 +5606,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5055,
-  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
+  "size": 5163,
+  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -10356,8 +10356,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5055,
-  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
+  "size": 5163,
+  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -15096,8 +15096,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5055,
-  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
+  "size": 5163,
+  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -19836,8 +19836,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5055,
-  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
+  "size": 5163,
+  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -24651,8 +24651,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5055,
-  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
+  "size": 5163,
+  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -28735,6 +28735,11 @@
   "sha256": "ee662f6efa63a1ea214d3526381f3af8c26f32087354d569b5be975ecb2b8f6f"
  },
  {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-7516c2a21dcc.md",
+  "size": 10582,
+  "sha256": "d85fdefb2267a829dae57aec6509e71c77cef9567981f623efad4aff79fdd4e7"
+ },
+ {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-992154f29409.md",
   "size": 10332,
   "sha256": "5e9b4c195aafc842aba7fff387055f8068b30c3733020e68a45470423b4bfae0"
@@ -28795,6 +28800,11 @@
   "sha256": "603e7e252e217ef27872af04cb83aa971e9ca363dffa7f1a16a4404b12ccffef"
  },
  {
+  "path": "3-PREAMBLES/history/SOUL-34a5484e0691.md",
+  "size": 735,
+  "sha256": "cbb03e767d90bff537795da3fc7caf8c4d44d42da3d94dd1d971e071324c5046"
+ },
+ {
   "path": "3-PREAMBLES/history/SOUL-8195833736f4.md",
   "size": 1380,
   "sha256": "cc78c53511ecc131843b2429313be9560c448cba286740053d481a282748e38b"
@@ -28842,22 +28852,22 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 61302,
-  "sha256": "f1eb8cfcb9ea60ebf4862191c481a18131493e68eac8b7aefa16950278c780ba"
+  "sha256": "f765824a55cba97ac8b8c3c7179af2459673b788226cbc87b9f95a4dbf983a99"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1327,
-  "sha256": "cbe6b270d7c9abbb02ab7022b19385bf6f724d18063c240b8aafb206d75cca4a"
+  "sha256": "38599a2999ca018c225bd2e49211fcd1b0379bdc3be64a76de2c9ea979e2ea7a"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
-  "size": 3239,
-  "sha256": "0ff3501e2b85d5fc37a22a7829a265192394e30ff3be388374007221953c5e08"
+  "size": 3238,
+  "sha256": "9cab78dc1cc89176b642f7f2bf90dcc0ccf48f1a26a2d49c881c2d83abda7bf2"
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39648,
-  "sha256": "87da376c3584328cff59ba9cf530db47a890f79cbabe88fced0664552011e499"
+  "sha256": "6c54cd0be820a741ec575786d05b4393c0d7c190eb72c03c00628f38aa0a7c75"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -32926,8 +32936,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 251167,
-  "sha256": "c20d5b10f246a5e3f9283c76f41d1bc4fd0ece0db15ac23d814369d96e4e1ccf"
+  "size": 252066,
+  "sha256": "d77339853426dda928f88b37538547a99e85d576f4c9c8de58d03a9e9b4a6fa3"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -32936,8 +32946,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 10582,
-  "sha256": "d85fdefb2267a829dae57aec6509e71c77cef9567981f623efad4aff79fdd4e7"
+  "size": 10845,
+  "sha256": "237ec88e68b05de095a46b9f178c0a313a5a0d3a7ae4cfda202c7e34df38cbd6"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
@@ -33007,7 +33017,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 178807,
-  "sha256": "dee7f4e46983a910266e1fac7a265183d6ea0a0d4b7f6e05057448059bb244e1"
+  "sha256": "90a711a020fd682323e2bf26eb5c3414e02a3aabad5f6c7133590517ae075686"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33071,8 +33081,8 @@
  },
  {
   "path": "README.md",
-  "size": 69708,
-  "sha256": "ff66a4d791d317b10cdcc1ebe710473e50712c0cbbdc0ff805973d1439735f9c"
+  "size": 69951,
+  "sha256": "acf7f4fd2ff2477ebe706dadb12045e01a56d63c87b9fdbd3f7f866245762eb3"
  },
  {
   "path": "SECURITY.md",
@@ -33082,12 +33092,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "d5da2ae41ee8fe361c1496c237dd0a4b4f970c3e2befa70a38439a9a4e7683d7"
+  "sha256": "943021851c79422eff82c999139506a2f9acddd38d716195acfd45d9bf5c1b37"
  },
  {
   "path": "START-HERE.txt",
-  "size": 3433,
-  "sha256": "56d22a63b25cc93b291bee6910a31be473c60638ee6dd523726fda8ff2ab5bb9"
+  "size": 3502,
+  "sha256": "aa5b55c8ecaa657b96dd05613947b673941046f80b8fe082d662b14580cec3e4"
  },
  {
   "path": "STATE.md",
@@ -33216,8 +33226,8 @@
  },
  {
   "path": "TESTS/Test-Packs.ps1",
-  "size": 14084,
-  "sha256": "a93f7ad2d90c83d789bd442d9831e53c3b6e9233d44098e4764dcb24cc8bb74d"
+  "size": 14069,
+  "sha256": "7b47c17f7c358da8abdcb87e8e479556b36ac6ad307b6b7d6eb136ceda6d6ccd"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -33491,8 +33501,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 341969,
-  "sha256": "6af71a2287edcc27d4560975155d43fb69f5f8b2bb4f8ecaf4361b338b5cb444"
+  "size": 342890,
+  "sha256": "aefb3fb251e479cd4ee8493eb7cab7dff8b013bf6d41b04aa889cbebb46ba6f6"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -33917,7 +33927,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2671,
-  "sha256": "7e325269bd90ff6e9e8fdbd222005baf526871529c3438caa48a5e6fb4e4ccb5"
+  "sha256": "fbb713c1dbbc1df5c4b514c994a98ef074ee0ac8506bec630a661276a813c144"
  },
  {
   "path": "VALIDATION.md",
@@ -33927,7 +33937,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "feb32cc266d89249b882ba7c9b484bfffda62d905534bd8f9c2b27f35cd2d28e"
+  "sha256": "dd0c192f82d4b44e2eca039bb74a51ae87ecdd5b87fb2794dadd21da326f450e"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -34676,8 +34686,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/SKILL.md",
-  "size": 5055,
-  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
+  "size": 5163,
+  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/ERROR-REGISTRY.json",
@@ -39278,6 +39288,11 @@
   "path": "docs/history/V8.28.4-CHANGELOG.md",
   "size": 819,
   "sha256": "71659c54cb794fc19382c65fd79cf3396ee16fbf96a090a046563913bcc51dbc"
+ },
+ {
+  "path": "docs/history/V8.28.5-CHANGELOG.md",
+  "size": 1507,
+  "sha256": "0a7ba25498a370a2e6dab4980d43897baf40aa893d48b2d4a08541f0363bd1e4"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

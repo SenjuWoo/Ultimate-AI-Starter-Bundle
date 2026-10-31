@@ -12,9 +12,10 @@ never-invent rules that every game below depends on.
 For Skyrim use the `skyrim-*` skills instead -- they are deeper and this
 skill deliberately does not duplicate them. If they are not installed, the
 bundle's Skyrim pack is off on this machine: run the bundle's
-`START-HERE.bat -Packs skyrim` (path in the machine map, if present), which
-adds those skills plus Skyrim Forge and houseCARL, then ask the user to
-restart the AI app.
+`START-HERE.bat -Packs skyrim` yourself (path in the machine map, if present).
+It adds those skills plus Skyrim Forge and houseCARL. Use the Forge MCP/CLI
+immediately; only a host restart is needed to index the new skills, and that is
+the one step you may ask the user to do.
 
 ## Look up the route before you build
 
