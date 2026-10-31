@@ -1,3 +1,10 @@
+## 8.28.1 (2026-10-31)
+
+- Correct the README's Hermes model sentence to the shipped default
+  `deepseek/deepseek-v4.1-flash-1017`. The shorter
+  `deepseek/deepseek-v4.1-flash` is the `v4.1-flash` alias target, not the
+  default; `docs/HERMES-MODELS.md` already named the correct id.
+
 ## 8.28.0
 
 127 canonical skills total; Forge keeps its own pack.

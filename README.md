@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.28.0 -->
+<!-- Ultimate AI Starter Bundle v8.28.1 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.28.0
+# Ultimate AI Starter Bundle v8.28.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -475,7 +475,7 @@ Run `hermes model` outside a chat to configure a provider; `/model` switches
 within an existing chat. Use `hermes model --refresh` when its cached catalog
 looks stale. [Official provider guide](https://hermes-agent.nousresearch.com/docs/integrations/providers).
 
-The portable starter uses `deepseek/deepseek-v4.1-flash` through OpenRouter.
+The portable starter uses `deepseek/deepseek-v4.1-flash-1017` through OpenRouter.
 This is a shipped default, not a claim that it is the newest or best model.
 Existing main-model choices are preserved. See [the dated live-catalog review](docs/HERMES-MODELS.md)
 for current candidates, legacy aliases, free fallbacks and local options.
