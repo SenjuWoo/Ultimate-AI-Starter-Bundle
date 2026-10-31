@@ -1,5 +1,45 @@
 # Bundle audit state
 
+## Completed 8.28.3 final audit and local install — 2026-10-31
+
+- Goal: final audit for errors, bloat and outdated info, then a clean release
+  and a working local install.
+- Audit: 127 canonical skills PASS (the two pre-existing token-budget
+  warnings in `img2threejs` and `skill-creator` remain); README Hermes model
+  corrected to `deepseek/deepseek-v4.1-flash-1017` in 8.28.1; the third-party
+  catalog audit still reports 10 stale pins that are not bundle-owned.
+- 8.28.2 fixed the User-scope shared-Python check: an installer launched from
+  an agent venv inherited that venv's `python`, failed verification and rolled
+  back. `Set-SharedPython.ps1` now puts the chosen base interpreter first in
+  the process PATH before checking.
+- 8.28.3 fixed two install-scope issues: the Hermes native plugin refresh is
+  deferred with a warning when the gateway has a live chat session instead of
+  aborting the whole install, and the general `toolbox` MCP only receives the
+  Skyrim environment variables when `SKYRIM_FORGE_ROOT` exists.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.28.3
+  at `0b4baa32fe73c61c8e4adcf47bfa7d743c0deede`; CI 41234029767 and CodeQL
+  41234029580 succeeded, Release 41234673865 published. Core 45,381,755 B
+  sha256 `639cd487948b7d8e19ebd806276e45bed0d86db801bf02afdb964819d307d8cd`;
+  Full-Offline 141,902,624 B sha256
+  `4f18a6382168ca5b7c16c1e309b9d656d1465b790ceb61ab55f193c784ecb671`.
+  All nine assets downloaded and `sha256sum -c SHA256SUMS.txt` is clean.
+- Local install: 8.28.3 Full-Offline extracted and installed with
+  `INSTALL-AIO.ps1 -Mode BundledOnly -SkipSelfUpdate -Packs skyrim,reverse
+  -SkipHouseCarlSetup`; exit 0, doctor PASS 8.28.3 with 0 errors and 0
+  warnings, 9 project tools. Root/code/skyrim/blender/unity/creative/web use
+  `deepseek/deepseek-v4.1-flash-1017` on OpenRouter, MoA off; `sillytavern`
+  keeps its local LM Studio model and MoA by design. No
+  `claude-code-imports` tree remains. Skyrim Forge 6.6.0 doctor warnings
+  empty, 50 tools, 48/48 pack skills in the `skyrim` profile; houseCARL MCP
+  present; Reverse THIS! kit 1.9.4.
+- Deferred: the live gateway prevented the Hermes native plugin refresh, so
+  Ponytail stays at 5.3.2 (enabled, `hermes plugins doctor` OK) while the
+  catalog lists 5.3.3; its local bridge has no remote. The next restart can
+  finish the refresh, but the bridge must be re-staged from a newer bundled
+  copy first.
+- Not exercised: live game/GUI targets; Context7 still does not index
+  `/senjuwoo/reverse-this` (local encyclopedia fallback documented).
+
 ## Completed 8.28.0 modular foundation — 2026-10-31
 
 - Goal: the bundle is the base layer (general skills, work hygiene, GitHub/CI,
