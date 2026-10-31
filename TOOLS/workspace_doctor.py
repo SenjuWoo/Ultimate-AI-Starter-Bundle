@@ -155,7 +155,7 @@ def _classify(root: Path, path: Path) -> tuple[str, str]:
     return "unknown", "unclassified"
 
 
-def _text_files(root: Path, limit: int = 400) -> list[Path]:
+def _text_files(root: Path, limit: int = 400) -> tuple[list[Path], bool]:
     out = []
     skip = {".git", "node_modules", "vcpkg", "build", "dist", "bin", "obj",
             ".venv", "venv", "__pycache__", ".cache"}
@@ -170,8 +170,8 @@ def _text_files(root: Path, limit: int = 400) -> list[Path]:
                 except OSError:
                     pass
             if len(out) >= limit:
-                return out
-    return out
+                return out, False
+    return out, True
 
 
 def _referenced(name: str, texts: list[Path], root: Path, owner: Path) -> bool:
@@ -189,7 +189,7 @@ def analyze(root: Path) -> dict:
     root = root.resolve()
     current, current_src = _detect_current_version(root)
     fomod = _fomod_version(root)
-    texts = _text_files(root)
+    texts, scan_complete = _text_files(root)
     entries = []
     for child in sorted(root.iterdir(), key=lambda p: p.name.lower()):
         if child.name in {".git"}:
@@ -239,6 +239,9 @@ def analyze(root: Path) -> dict:
         elif kind == "unknown":
             action, confidence = "review", "low"
             note = reason
+        if action == "move" and not scan_complete:
+            action, confidence = "review", "low"
+            note += "; reference scan hit its 400-file cap, review before moving"
         entries.append({
             "name": child.name,
             "path": str(child.relative_to(root)).replace("\\", "/"),
@@ -276,6 +279,8 @@ def analyze(root: Path) -> dict:
         warnings.append(f"{len(snapshots)} version snapshots share the root; keep one current package")
     if nested_caches:
         warnings.append(f"{len(nested_caches)} nested cache folder(s); ignore or relocate them, never ship them")
+    if not scan_complete:
+        warnings.append("reference scan hit its 400-file cap; automatic moves are disabled")
     moves = [e for e in entries if e["action"] == "move"]
     reviews = [e for e in entries if e["action"] == "review"]
     ignored = [e for e in entries if e["action"] == "ignore"]
@@ -288,6 +293,7 @@ def analyze(root: Path) -> dict:
         "fomod_version": fomod,
         "entries": entries,
         "nested_caches": nested_caches,
+        "reference_scan_complete": scan_complete,
         "warnings": warnings,
         "summary": {
             "entries": len(entries),

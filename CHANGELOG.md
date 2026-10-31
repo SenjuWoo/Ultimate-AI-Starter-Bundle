@@ -1,3 +1,10 @@
+## 8.29.1 (2026-10-31)
+
+- `TOOLS/workspace_doctor.py` now reports when its reference scan hits the
+  400-file cap and disables automatic moves in that case. On a large project a
+  referenced file outside the scan could otherwise have been moved as if it
+  were safe. `TESTS/test_workspace_tools.py` covers the cap.
+
 ## 8.29.0 (2026-10-31)
 
 - New `mod-workspace-organization` skill and `TOOLS/workspace_doctor.py`:

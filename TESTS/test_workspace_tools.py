@@ -12,6 +12,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / "TOOLS"
+sys.path.insert(0, str(TOOLS))
+import workspace_doctor  # noqa: E402
 
 
 def png(path: Path, width: int, height: int, rgb: tuple[int, int, int] = (32, 96, 160)) -> None:
@@ -114,10 +116,17 @@ def test_presentation_check_requires_visual_proof(tmp: Path) -> None:
     assert "character-closeup" in r.stdout and "FAIL" in r.stdout
 
 
+def test_reference_scan_cap_is_reported(tmp: Path) -> None:
+    root = workspace_fixture(tmp)
+    texts, complete = workspace_doctor._text_files(root, limit=1)
+    assert texts and not complete
+
+
 def main() -> int:
     with tempfile.TemporaryDirectory(prefix="uabs-workspace-tools-") as d:
         tmp = Path(d)
         test_workspace_doctor_plans_safely(tmp / "workspace")
+        test_reference_scan_cap_is_reported(tmp / "cap")
         test_presentation_check_requires_visual_proof(tmp / "presentation")
     print("WORKSPACE TOOLS GATE: PASS")
     return 0
