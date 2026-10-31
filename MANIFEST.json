@@ -33666,8 +33666,8 @@
  },
  {
   "path": "TOOLS/Set-SharedPython.ps1",
-  "size": 5722,
-  "sha256": "969066cb802e434808d8d10450484eb3b17ee3961379e39bd3ed1539af9dcffc"
+  "size": 5742,
+  "sha256": "044902cec30a7260e0347ff157047d53e1c4459f10de85d44247030baafeb988"
  },
  {
   "path": "TOOLS/Setup-CodebaseMemory-Index.ps1",
