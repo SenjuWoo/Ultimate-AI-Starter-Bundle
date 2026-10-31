@@ -978,7 +978,7 @@
       "scope_note": "No MCP registration, daemon, extra skill index, or default installation. Isolated Windows version/help and offline graph-inspection tests only; GPU generation and live-server workflow validation remain unverified. See tool-discovery/references/comfy-cli.md. 2026-10-02 refresh: 1.22.0: isolated Windows version and workflow validate help PASS with telemetry disabled. GPU and live workflow submission unverified. Schema bytes are transport measurements, not billed-token savings. 2026-10-22: 1.23.0 workflow-validation help PASS with PYTHONUTF8=1 and telemetry disabled. Default Windows cp1252 help reproduced a UnicodeEncodeError; UTF-8 is required for redirected output."
     }
   ],
-  "pack_version": "8.28.1",
+  "pack_version": "8.28.2",
   "updated_utc": "2026-10-18",
   "providers": {
     "Grok": {
@@ -1066,7 +1066,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.28.1",
+  "catalog_version": "8.28.2",
   "updated": "2026-10-26",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test.",
   "companions": [

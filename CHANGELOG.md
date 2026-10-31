@@ -1,3 +1,11 @@
+## 8.28.2 (2026-10-31)
+
+- Fix the User-scope shared-Python binding: after writing the persisted PATH,
+  `TOOLS/Set-SharedPython.ps1` now puts the chosen base interpreter first in
+  the process PATH before verification. An installer launched from an agent
+  venv could otherwise see that venv's `python`, fail the check and roll back
+  the whole install. `TESTS/Test-SharedPython.ps1` still passes.
+
 ## 8.28.1 (2026-10-31)
 
 - Correct the README's Hermes model sentence to the shipped default

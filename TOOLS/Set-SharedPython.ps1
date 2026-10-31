@@ -66,6 +66,12 @@ if ($Scope -eq 'User') {
 try {
   foreach ($key in $desired.Keys) { [Environment]::SetEnvironmentVariable($key, $desired[$key], $Scope) }
   if ($Scope -eq 'User') { Refresh-ProcessPath }
+  # An installer launched from an agent venv still has that venv ahead of the
+  # persisted user PATH. Put the chosen base first for this process so the
+  # verification and every child see the shared interpreter.
+  $env:Path = (@($base) + @($env:Path -split ';' | Where-Object {
+    $_ -and $_.TrimEnd('\') -ine $base.TrimEnd('\')
+  })) -join ';'
   foreach ($key in @('UABS_PYTHON','UV_PYTHON','UV_PYTHON_DOWNLOADS','PYTHONUTF8','PYTHON_MANAGER_AUTOMATIC_INSTALL')) {
     [Environment]::SetEnvironmentVariable($key, $desired[$key], 'Process')
   }
