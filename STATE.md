@@ -1,6 +1,6 @@
 # Bundle audit state
 
-## In progress 8.28.0 modular foundation — 2026-10-31
+## Completed 8.28.0 modular foundation — 2026-10-31
 
 - Goal: the bundle is the base layer (general skills, work hygiene, GitHub/CI,
   visuals, efficiency, compiling, base tools); Reverse THIS! and Skyrim Forge
@@ -18,8 +18,19 @@
   library not indexed yet (local fallback documented).
 - Gates: release contracts 155/0, canonical audit PASS, manifest 7,913 files
   verified, docs/version gates PASS, full Windows pack gate PASS.
-- Next: commit and push 8.28.0, wait for CI, publish the release, then replace
-  this section with the published SHAs and asset hashes.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.28.0
+  at `6cff110452e1ba876f89a95e87f4f6aeb5c35503`, self-published by
+  `release.yml` (run 41225055840) after CI 41224428043 and CodeQL 41224428221
+  both succeeded. Core 45,381,347 B sha256
+  `d7629abe98e3f9e03cc88dd96759f9921ec92ab13161e219aa327dc32c38d38e`;
+  Full-Offline 141,900,771 B sha256
+  `d23160cf836ebf5dc4ab263ce74eed8673acf65345416f8dc44c5b4787daf8ba`.
+- Downloaded all nine assets; `sha256sum -c SHA256SUMS.txt` is clean, the
+  release target is the exact pushed SHA, and the notes open with
+  "**Which file?**". Open Dependabot, code-scanning and secret-scanning
+  alerts: 0/0/0.
+- Next: nothing pending. Reopen AI apps once to load the refreshed skills,
+  instructions and model settings.
 
 ## Completed 8.27.1 new-user audit — 2026-10-29
 
