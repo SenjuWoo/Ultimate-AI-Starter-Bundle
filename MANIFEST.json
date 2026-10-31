@@ -916,8 +916,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 4297,
-  "sha256": "9e73c66aab8b06cc3b73dfd550272868f4f215a2c34112e9caa02950bbdd5a39"
+  "size": 5055,
+  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -936,8 +936,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 3023,
-  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
+  "size": 7390,
+  "sha256": "0b9e605fdfd25f2f0e4e17ed8b8ada0bf5d729ceab3f19488d4c61506d16e781"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -1061,8 +1061,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1263,
-  "sha256": "03a22b7bcf06eeda0487eddd27f55b99bf219b41f9b5a47b9cbe566a8c124ffc"
+  "size": 1663,
+  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -4010,6 +4010,11 @@
   "sha256": "61db5bdbd46d3fbb4a347d059e3df08bec9fd77ade0f0b91d7761a86ded1d349"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/reverse-engineering/SKILL.md",
+  "size": 4793,
+  "sha256": "2eb55a3441798a46008f471ce3fbfc2197a44689c5f8a970d7002c04f3a310b1"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/roblox-game-development/SKILL.md",
   "size": 3316,
   "sha256": "6f21a80a11ee7dca91785af0851b833ecacdc738f49c820d855843e310252de4"
@@ -5601,8 +5606,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 4297,
-  "sha256": "9e73c66aab8b06cc3b73dfd550272868f4f215a2c34112e9caa02950bbdd5a39"
+  "size": 5055,
+  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -5621,8 +5626,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 3023,
-  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
+  "size": 7390,
+  "sha256": "0b9e605fdfd25f2f0e4e17ed8b8ada0bf5d729ceab3f19488d4c61506d16e781"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -5746,8 +5751,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1263,
-  "sha256": "03a22b7bcf06eeda0487eddd27f55b99bf219b41f9b5a47b9cbe566a8c124ffc"
+  "size": 1663,
+  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -8695,6 +8700,11 @@
   "sha256": "61db5bdbd46d3fbb4a347d059e3df08bec9fd77ade0f0b91d7761a86ded1d349"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/reverse-engineering/SKILL.md",
+  "size": 4793,
+  "sha256": "2eb55a3441798a46008f471ce3fbfc2197a44689c5f8a970d7002c04f3a310b1"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/roblox-game-development/SKILL.md",
   "size": 3316,
   "sha256": "6f21a80a11ee7dca91785af0851b833ecacdc738f49c820d855843e310252de4"
@@ -10346,8 +10356,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 4297,
-  "sha256": "9e73c66aab8b06cc3b73dfd550272868f4f215a2c34112e9caa02950bbdd5a39"
+  "size": 5055,
+  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -10366,8 +10376,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 3023,
-  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
+  "size": 7390,
+  "sha256": "0b9e605fdfd25f2f0e4e17ed8b8ada0bf5d729ceab3f19488d4c61506d16e781"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -10491,8 +10501,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1263,
-  "sha256": "03a22b7bcf06eeda0487eddd27f55b99bf219b41f9b5a47b9cbe566a8c124ffc"
+  "size": 1663,
+  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -13440,6 +13450,11 @@
   "sha256": "61db5bdbd46d3fbb4a347d059e3df08bec9fd77ade0f0b91d7761a86ded1d349"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/reverse-engineering/SKILL.md",
+  "size": 4793,
+  "sha256": "2eb55a3441798a46008f471ce3fbfc2197a44689c5f8a970d7002c04f3a310b1"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/roblox-game-development/SKILL.md",
   "size": 3316,
   "sha256": "6f21a80a11ee7dca91785af0851b833ecacdc738f49c820d855843e310252de4"
@@ -15081,8 +15096,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 4297,
-  "sha256": "9e73c66aab8b06cc3b73dfd550272868f4f215a2c34112e9caa02950bbdd5a39"
+  "size": 5055,
+  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -15101,8 +15116,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 3023,
-  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
+  "size": 7390,
+  "sha256": "0b9e605fdfd25f2f0e4e17ed8b8ada0bf5d729ceab3f19488d4c61506d16e781"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -15226,8 +15241,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1263,
-  "sha256": "03a22b7bcf06eeda0487eddd27f55b99bf219b41f9b5a47b9cbe566a8c124ffc"
+  "size": 1663,
+  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -18175,6 +18190,11 @@
   "sha256": "61db5bdbd46d3fbb4a347d059e3df08bec9fd77ade0f0b91d7761a86ded1d349"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/reverse-engineering/SKILL.md",
+  "size": 4793,
+  "sha256": "2eb55a3441798a46008f471ce3fbfc2197a44689c5f8a970d7002c04f3a310b1"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/roblox-game-development/SKILL.md",
   "size": 3316,
   "sha256": "6f21a80a11ee7dca91785af0851b833ecacdc738f49c820d855843e310252de4"
@@ -19816,8 +19836,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 4297,
-  "sha256": "9e73c66aab8b06cc3b73dfd550272868f4f215a2c34112e9caa02950bbdd5a39"
+  "size": 5055,
+  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -19836,8 +19856,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 3023,
-  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
+  "size": 7390,
+  "sha256": "0b9e605fdfd25f2f0e4e17ed8b8ada0bf5d729ceab3f19488d4c61506d16e781"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -19961,8 +19981,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1263,
-  "sha256": "03a22b7bcf06eeda0487eddd27f55b99bf219b41f9b5a47b9cbe566a8c124ffc"
+  "size": 1663,
+  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -22910,6 +22930,11 @@
   "sha256": "61db5bdbd46d3fbb4a347d059e3df08bec9fd77ade0f0b91d7761a86ded1d349"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/reverse-engineering/SKILL.md",
+  "size": 4793,
+  "sha256": "2eb55a3441798a46008f471ce3fbfc2197a44689c5f8a970d7002c04f3a310b1"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/roblox-game-development/SKILL.md",
   "size": 3316,
   "sha256": "6f21a80a11ee7dca91785af0851b833ecacdc738f49c820d855843e310252de4"
@@ -24626,8 +24651,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 4297,
-  "sha256": "9e73c66aab8b06cc3b73dfd550272868f4f215a2c34112e9caa02950bbdd5a39"
+  "size": 5055,
+  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -24646,8 +24671,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 3023,
-  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
+  "size": 7390,
+  "sha256": "0b9e605fdfd25f2f0e4e17ed8b8ada0bf5d729ceab3f19488d4c61506d16e781"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -24771,8 +24796,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1263,
-  "sha256": "03a22b7bcf06eeda0487eddd27f55b99bf219b41f9b5a47b9cbe566a8c124ffc"
+  "size": 1663,
+  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -27720,6 +27745,11 @@
   "sha256": "61db5bdbd46d3fbb4a347d059e3df08bec9fd77ade0f0b91d7761a86ded1d349"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/reverse-engineering/SKILL.md",
+  "size": 4793,
+  "sha256": "2eb55a3441798a46008f471ce3fbfc2197a44689c5f8a970d7002c04f3a310b1"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/roblox-game-development/SKILL.md",
   "size": 3316,
   "sha256": "6f21a80a11ee7dca91785af0851b833ecacdc738f49c820d855843e310252de4"
@@ -28812,12 +28842,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 61302,
-  "sha256": "8941f6a3f58a0b9faba33a2b611d75b828bf37034f416cef89f642f447b48964"
+  "sha256": "8aedcb56e21b5c50a4e37d170a69dbff1feb0fc42c7b92eeaca1c6000f7eefbc"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1327,
-  "sha256": "cc54178f2d06c8d10adf2c65d6e49506f7a9a30c25faf64056939fdb47a7bacc"
+  "sha256": "05b86b2b9c17eb6af408d145dffa9d968c9bf6618d60e56ad50861d1316d8f57"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28827,7 +28857,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39648,
-  "sha256": "928be95d1e752100ad5b59a3b61031960eb74dfedd0bae7300d8087a77b29f43"
+  "sha256": "4719601ea499cc0009ba7a5767d20169430ebfd84dbf25a809c0c66d4da4805b"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -28841,8 +28871,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/RETIRED-SKILLS.json",
-  "size": 7520,
-  "sha256": "b377bc0065208fc6cdeefa2c2d7e4d5440f7e6001fa87e4ac2b0b1295b369261"
+  "size": 8245,
+  "sha256": "745d95bf2cd60d70e5493217546e39dd96e2962ba9cefdebed697e837c02f556"
  },
  {
   "path": "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md",
@@ -32896,8 +32926,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 247110,
-  "sha256": "4975a72b0aa8a73a49227bf6f3bf67fa0de99be701847f9491156ec942585b21"
+  "size": 248292,
+  "sha256": "38fc192b461c627fb72a4935ca126628ce25f29fda8c98caf7843cb076b642e2"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -32977,7 +33007,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 177561,
-  "sha256": "4a0ece6e76b8748405db0db135820e28c935e71f8b4057e82ec5962fac9123b5"
+  "sha256": "28bbce69018d0e39cdc1ed4f39e2506ddd4a587da889ca237ec6f621f1b87826"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -32996,8 +33026,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 60825,
-  "sha256": "4c236f326bc40e457a0ab5f0b002c4d3a0ce9cae26919c2fadf04ab55a120b7d"
+  "size": 61270,
+  "sha256": "2b1760713522aa9a4624a44c32bdcf4816ccaa7417f0b8fcfff8913622403bba"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -33042,7 +33072,7 @@
  {
   "path": "README.md",
   "size": 69025,
-  "sha256": "15bd3f4e23b0b04300a4bdbe792e5bc6cf8609d7131a21b8499914fb19800370"
+  "sha256": "9be4827a82ad75267b0ac82a1eea7fb689f708d7a125ad13a2c03d8719c497d1"
  },
  {
   "path": "SECURITY.md",
@@ -33052,12 +33082,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "cd7101627bfba7812c596f89c784f9698d908854a4d464df3637843264ebfa9d"
+  "sha256": "9084bf91a29c3c7740b822836769f2f3153794ac3f711a0ac79fbaf1620a9ff7"
  },
  {
   "path": "START-HERE.txt",
   "size": 3433,
-  "sha256": "8276a85de2ee528110af444f5f1bae6b913e8be4da61e47e0216e171e54c1d37"
+  "sha256": "e66cc4af446db67a6d4f38140eccfa635ec92a717eb774c3eef4aa94b23c173d"
  },
  {
   "path": "STATE.md",
@@ -33721,8 +33751,8 @@
  },
  {
   "path": "TOOLS/discover_tools.ps1",
-  "size": 4569,
-  "sha256": "88aa936a048f7a4c4445e6f1aa98221f967a088a0abe770bd3a856c5c4e65b9d"
+  "size": 6135,
+  "sha256": "d3f9b58326612a94fc514761688b77510452e6604695034cc63fd11011613d0a"
  },
  {
   "path": "TOOLS/fanout_providers.py",
@@ -33887,7 +33917,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2671,
-  "sha256": "bfa907a6d2873ad6537d15f1dbea1a083b764e846b243046fdd51270be5ed093"
+  "sha256": "c95226446f12363763eb3867edc96dbcb2be813f8610c4a16519b5184a7c9e04"
  },
  {
   "path": "VALIDATION.md",
@@ -33897,7 +33927,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "1702ce62c20d63e2954a4059d54834278f3f3a0a7e79be964fcb4e8888d9d889"
+  "sha256": "bb4f9cb937358e55492774d6ee551344a96ea008c5c7eaeed4339a190258e8a0"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -33906,8 +33936,8 @@
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
-  "size": 3179,
-  "sha256": "fe8efffd7c03405cfe19dbe974ad9f35b107862dda6d9af9072071d9b5b08acf"
+  "size": 4138,
+  "sha256": "ce1e08a4842de155d61bad573982f59588cb36388665b826d70b3eee48fa073d"
  },
  {
   "path": "WORKSPACE_OWNERSHIP.md",
@@ -34646,8 +34676,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/SKILL.md",
-  "size": 4297,
-  "sha256": "9e73c66aab8b06cc3b73dfd550272868f4f215a2c34112e9caa02950bbdd5a39"
+  "size": 5055,
+  "sha256": "c5904a9bfa19de08a29af1f48f2edc4ca3d7ddb7b7a7ad29bb7f2fd444b0dabb"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/ERROR-REGISTRY.json",
@@ -34666,8 +34696,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/MODDING-LAWS.md",
-  "size": 3023,
-  "sha256": "1d82498fb526b8d4a922e031f0332dd7c4ad0e4c5cf63458a6a267f33f890524"
+  "size": 7390,
+  "sha256": "0b9e605fdfd25f2f0e4e17ed8b8ada0bf5d729ceab3f19488d4c61506d16e781"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/OFFICIAL-SOURCES.md",
@@ -34791,8 +34821,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/game-mod-ship-gate.md",
-  "size": 1263,
-  "sha256": "03a22b7bcf06eeda0487eddd27f55b99bf219b41f9b5a47b9cbe566a8c124ffc"
+  "size": 1663,
+  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -37740,6 +37770,11 @@
   "sha256": "61db5bdbd46d3fbb4a347d059e3df08bec9fd77ade0f0b91d7761a86ded1d349"
  },
  {
+  "path": "_CANONICAL-SKILLS/reverse-engineering/SKILL.md",
+  "size": 4793,
+  "sha256": "2eb55a3441798a46008f471ce3fbfc2197a44689c5f8a970d7002c04f3a310b1"
+ },
+ {
   "path": "_CANONICAL-SKILLS/roblox-game-development/SKILL.md",
   "size": 3316,
   "sha256": "6f21a80a11ee7dca91785af0851b833ecacdc738f49c820d855843e310252de4"
@@ -39218,6 +39253,11 @@
   "path": "docs/history/V8.27.1-CHANGELOG.md",
   "size": 1934,
   "sha256": "86448e07cba41dad3ed3e3f06bad62357049bac33a9cb4fba61440f3e29ae1d9"
+ },
+ {
+  "path": "docs/history/V8.28.0-CHANGELOG.md",
+  "size": 1962,
+  "sha256": "5c497183b45f224e7f8a95ce0b4f19c889cd826f53533e65448ae868fc09faa6"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

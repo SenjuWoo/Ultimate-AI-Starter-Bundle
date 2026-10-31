@@ -67,3 +67,81 @@ discovery beyond what it actually proves.
 ## Ownership and publication scope
 
 Preserve existing Git source layouts and use Git tags; the snapshot-copy rules apply only to snapshot-based projects. Before edits, create/read WORKSPACE_OWNERSHIP.md via workspace-organization. New work stays local until publication is requested; explicit GitHub means public/MIT for original work, subject to rights/terms and existing licences. Publish mods to their appropriate distribution site without duplicate GitHub hosting for mods needing no compilation. Keep source ledgers/changelogs outside runtime ZIPs.
+
+## Look up before you build
+
+Before blind binary recon or a custom hook, shader or proxy:
+
+1. Query Context7 for `/senjuwoo/reverse-this` (max 3 calls per turn) when the
+   host has the library; if it returns "not found", read the local encyclopedia
+   at `%ENCYCLOPEDIA_ROOT%` (default `<reverse-this kit>\encyclopedia`).
+2. Read `ROUTING.md` and take the lowest route tier that can deliver the
+   behavior. A higher tier is not more impressive; it is more expensive and
+   harder to verify.
+3. Read the engine card for axes, units, depth convention and proxy DLL before
+   writing a conversion or a hook.
+
+If neither the library nor the encyclopedia is present, say so and use the
+target's own documentation. Never invent an offset, signature or route.
+
+## Route ladder
+
+| Tier | Route | Use when | Minimum proof |
+|---|---|---|---|
+| 1 | Data overrides (loose files, plugin records, INI/CVAR, pak patch) | The engine loads the value from a replaceable source | Changed value appears and survives a restart |
+| 2 | Loader APIs (SKSE, BepInEx 5, MelonLoader, UE4SS, ScriptHookV, ASI, Fabric, SMAPI, tModLoader, REFramework) | A supported script/plugin surface exists | Loader log shows the plugin; a downstream sink fires |
+| 3 | Managed patching (Harmony, MonoMod, Fabric Mixin, IL2CPP detour) | The behavior is managed or has a stable managed entry | Patched method runs; disabling restores the original behavior |
+| 4 | Native proxy DLL / module-scoped IAT hook / inline detour | No supported surface, or the behavior is native | Hook fires under a debugger; unhook restores the bytes |
+| 5 | Headless simulation or decompiler library (Ghidra headless, Unicorn, reimplementation) | You must understand or replay without the game | Reimplementation matches recorded input/output traces |
+| 6 | Concurrent shared-memory passthrough | Two runtimes must coexist frame-by-frame and no in-engine route exists | Offline IPC harness passes; live frames align without torn reads |
+
+Stop at the lowest tier that can deliver the feature. Tier 4-6 needs the
+offline harness first; never test them online or against anti-cheat. For Tier 6
+use `game-mashup-passthrough`; the encyclopedia holds the seqlock and D3D11
+harness sources.
+
+## Contract and first slice
+
+No live game executable until the project has:
+
+- `docs/CONTRACT.md` with the goal, non-goals, target build, loader version,
+  route tier, downstream sink and rollback plan;
+- an offline harness that passes: `fake_host_d3d11` for depth/pixel math and
+  `ipc_link_test` for shared memory (the encyclopedia blueprints are the
+  starting point);
+- a save backup and a SHA256 recovery manifest for every file the mod replaces.
+
+For Tier 6 the first slice is deliberately small: log one line from the host
+plugin, then pass one `float` (`player.x`) plus a synchronized frame counter
+across shared memory. Do not attempt framebuffer compositing until that slice
+passes with aligned frames and no torn reads.
+
+## Three-agent split
+
+Complex mods use three roles; one agent may hold two roles only when the task
+is small enough to keep the evidence in one place.
+
+- `mod-orchestrator` owns `docs/CONTRACT.md`, the route choice and the audit.
+  It checks worker claims against files on disk and log timestamps, never
+  against a worker's summary.
+- `mod-offline-worker` is air-gapped from the game: writes code, shaders and
+  harnesses, and runs only synthetic offline tests.
+- `mod-game-worker` backs up saves first, deploys the built artifacts, runs
+  windowed probes, polls the file/socket command bridge (for example a Z-floor
+  safety teleport) and captures the verification logs.
+
+Only the game worker touches a live game. The orchestrator never accepts
+"it works" without the sink log, frame numbers or a diff image.
+
+## Post-mortem encyclopedia sync
+
+At `game-mod-ship-gate.md`, before the release is called done:
+
+1. Write or update the version-pinned field note under
+   `%ENCYCLOPEDIA_ROOT%\games\<game>.md` (build hash, loader version, route
+   tier, sink, evidence, unresolved risks).
+2. Add the error signature to `%ENCYCLOPEDIA_ROOT%\ERROR-REGISTRY.json` when the
+   file exists, or record it in the project and propose the upstream addition.
+3. If the encyclopedia is not present, keep the same content in the project's
+   `STATE.md` and say the sync is pending. Never invent a hash or a registry
+   entry.

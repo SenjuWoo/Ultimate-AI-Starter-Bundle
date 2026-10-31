@@ -25,12 +25,28 @@ the portable baseline.
 | Skyrim Forge | `SKYRIM_FORGE_ROOT` pointing at a **versionless** `Skyrim-Forge` folder (default `%LOCALAPPDATA%\Skyrim-Tools\Skyrim-Forge`). The installer migrates a `Skyrim-Forge-x.y.z` folder onto that name, because a version in the folder disconnects every provider's absolute MCP path on upgrade. Never Documents. |
 | houseCARL MCP | `HOUSECARL_MCP` / `HOUSECARL_ROOT` / search `housecarl-mcp.exe` |
 | Spooky toolkit | `SPOOKY_AUTOMOD_ROOT` (folder with `SpookysAutomod.sln`) |
+| Reverse THIS! | `%LOCALAPPDATA%\ReverseThis\kit.json` -> `kit_root`, `bin`, `installed_json`; default `%LOCALAPPDATA%\ReverseThis\kit`. Shims in `sandbox\bin`; encyclopedia at `<kit_root>\encyclopedia`. Ghidra MCP bridge defaults to `http://127.0.0.1:8081/mcp`; the Ghidra-side HTTP server is `127.0.0.1:8080`. Probe both. |
 | codebase-memory-mcp | `CODEBASE_MEMORY_MCP` or `%LOCALAPPDATA%\Programs\codebase-memory-mcp\` |
 | Headroom | `headroom` on PATH or `HEADROOM_CMD` |
 | CodeBurn | `codeburn` or `npx codeburn` |
 | MO2 instance | `SKYRIM_MO2_INSTANCE` (folder with `ModOrganizer.ini`) |
 
 Run `TOOLS\discover_tools.ps1` after install.
+
+## Reverse THIS! paths
+
+Read the owner pointer; do not scan drives or install a second kit.
+
+| Variable | Value |
+|---|---|
+| `REVERSE_THIS_ROOT` | `kit.json` `kit_root`, or an explicit one-task override |
+| `REVERSE_THIS_BIN` | `kit.json` `bin`, normally `<root>\sandbox\bin` |
+| `ENCYCLOPEDIA_ROOT` | `<root>\encyclopedia` when present |
+| `GHIDRA_MCP_URL` | `http://127.0.0.1:8081/mcp` (bridge default; `8080` is the Ghidra-side HTTP server) |
+
+`TOOLS\discover_tools.ps1 -Json` reports the four values without writing
+anything. The kit pointer stays the source of truth; do not persist a copy
+that can go stale.
 
 ## Workspace
 

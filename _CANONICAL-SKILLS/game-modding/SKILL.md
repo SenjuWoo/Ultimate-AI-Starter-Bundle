@@ -16,6 +16,21 @@ bundle's Skyrim pack is off on this machine: run the bundle's
 adds those skills plus Skyrim Forge and houseCARL, then ask the user to
 restart the AI app.
 
+## Look up the route before you build
+
+Before blind binary recon or a custom hook, shader or proxy:
+
+1. Query Context7 for `/senjuwoo/reverse-this` (max 3 calls per turn) when the
+   host has it; if it returns "not found", read the local encyclopedia at
+   `%ENCYCLOPEDIA_ROOT%` (default `<reverse-this kit>\encyclopedia`).
+2. Read `ROUTING.md` and take the lowest tier that can deliver the behavior.
+   A higher tier is more expensive, more fragile and harder to verify.
+3. Tier 4-6 needs `docs/CONTRACT.md` and a passing offline harness before a
+   live game executable. Tier 6 starts with `game-mashup-passthrough`.
+
+`references/MODDING-LAWS.md` carries the full ladder, the first-slice gate,
+the three-agent split and the post-mortem encyclopedia sync.
+
 ## Pick the family first
 
 | Game family | Skill |

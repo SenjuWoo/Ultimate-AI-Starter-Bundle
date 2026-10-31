@@ -11,10 +11,17 @@ PACKAGE ROOTS: PASS|FAIL
 UPGRADE/UNINSTALL: PASS|FAIL
 SAVE/MULTIPLAYER: PASS|FAIL|UNTESTED
 RUNTIME STATUS: user-confirmed-runtime | runtime-evidenced | tool-validated | assistant-claimed | contradicted
+ENCYCLOPEDIA SYNC: PASS|PENDING|N/A
 UNRESOLVED: none | exact risks
 ```
 
 Never collapse `UNTESTED` into `PASS`.
+
+`ENCYCLOPEDIA SYNC` is PASS only when the version-pinned field note under
+`%ENCYCLOPEDIA_ROOT%\games\<game>.md` and the error-registry entry are written.
+`PENDING` with the reason is acceptable when the encyclopedia is absent, and
+the same content must be carried in the project's `STATE.md`. Never invent a
+build hash or a registry entry to make this line PASS.
 
 
 ## Non-negotiable laws

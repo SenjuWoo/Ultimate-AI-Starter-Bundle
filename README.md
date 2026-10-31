@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.27.1 -->
+<!-- Ultimate AI Starter Bundle v8.28.0 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.27.1
+# Ultimate AI Starter Bundle v8.28.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -218,7 +218,7 @@ One distinction explains almost everything about how this pack behaves:
 | **INSTALLED** | A CLI/server payload exists on disk | A disconnected server adds no MCP schema; installed skills/plugins have separate discovery and hook behavior. |
 | **ENABLED** | Registered in a provider's config | Available in that scope after trust/connection checks; schema loading and billing depend on the provider. |
 
-The 126 general **skills** (plus Forge's pack when Skyrim is on) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters; the installer measures houseCARL's schema live, and schema bytes are not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
+The 127 general **skills** (plus Forge's pack when Skyrim is on) use a compact discovery index and load their bodies on demand. MCPs can also support deferred discovery or native filters; the installer measures houseCARL's schema live, and schema bytes are not a measured charge per turn. Profiles keep optional capabilities relevant and the default surface small.
 
 Claude Code always lists every skill name but drops descriptions past a budget
 of 1% of the context window, least-used skills first, and a skill without its
@@ -372,7 +372,7 @@ for diagnostics, validation scope and persistent GitHub setup.
 ### Google Antigravity (Gemini 4 Argon)
 
 Antigravity is a first-class provider: the same SOUL + AIO contract, the same
-126 general skills (plus Forge's pack when Skyrim is on) and the pack's always-on MCP servers, written where Antigravity
+127 general skills (plus Forge's pack when Skyrim is on) and the pack's always-on MCP servers, written where Antigravity
 actually reads them — verified against the app's own `agy-customizations` guide
 and `antigravity.google/docs/rules|skills|mcp`, not recalled:
 
@@ -380,7 +380,7 @@ and `antigravity.google/docs/rules|skills|mcp`, not recalled:
 |---|---|---|
 | Global rules | `~/.gemini/config/AGENTS.md` | also read: `~/.gemini/AGENTS.md`; 24,000-byte cap per file, 20,000-token shared budget, so the bundle stays near 14 KB and leaves detail in skills |
 | Workspace rules | — | `AGENTS.md`, `GEMINI.md`, `.agents/AGENTS.md`, `.agents/rules/*.md` in your projects; the installer never writes there |
-| Global skills | `~/.gemini/config/skills/<name>/SKILL.md` | 126 general skills (plus Forge's Skyrim pack when on), one level deep, exactly the layout its scanner expects |
+| Global skills | `~/.gemini/config/skills/<name>/SKILL.md` | 127 general skills (plus Forge's Skyrim pack when on), one level deep, exactly the layout its scanner expects |
 | MCP servers | `~/.gemini/config/mcp_config.json` | `mcpServers`, stdio or Streamable HTTP; legacy SSE is unsupported — plus per-project `.agents/mcp_config.json`, untouched |
 
 ```powershell
@@ -728,7 +728,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 ## What gets installed
 
-**Current source:** one-click setup, 126 general skills plus Forge's opt-in
+**Current source:** one-click setup, 127 general skills plus Forge's opt-in
 Skyrim skill pack, a small MCP core and project-specific tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest),
 [the changelog](CHANGELOG.md) and [evaluated component pins](BUNDLED-TOOLS/CATALOG.json).
 
@@ -748,7 +748,7 @@ for measured coverage and remaining runtime gaps.
 
 Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tools and its specialist skill pack; use [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) for reverse-engineering tools and REA. All three release independently: the bundle installs each companion's latest release, so a companion release never needs a bundle release. See [who owns what](#ownership). Disabling bundle integration leaves independently owned specialist content intact.
 
-- **Provider skills** — 126 general skills per AI (Claude, Codex, Grok, Kimi, Hermes, Antigravity), generated from one canonical tree; Forge writes its own Skyrim pack when that pack is on.
+- **Provider skills** — 127 general skills per AI (Claude, Codex, Grok, Kimi, Hermes, Antigravity), generated from one canonical tree; Forge writes its own Skyrim pack when that pack is on.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7 and Headroom are the always-on core (the official GitHub server too, where `gh` is not signed in); servers a tool's own installer registers machine-wide are parked per project. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup (Skyrim pack)
@@ -804,7 +804,7 @@ Its MCP remains task scoped. `-ForgeRoot` selects the deployment directory;
 the default is `%LOCALAPPDATA%/Skyrim-Tools/Skyrim-Forge`.
 
 Forge alone writes its specialist skills and ownership ledgers. The bundle
-alone writes 126 general skills and its own ledgers. Legacy ownership proof is
+alone writes 127 general skills and its own ledgers. Legacy ownership proof is
 read without rewriting another product's state. The general `ai-tooling-stack`
 and Skyrim-specific `skyrim-tooling-stack` have distinct names; only digest-proven
 managed legacy copies migrate automatically. Edited copies are preserved.
@@ -1000,7 +1000,7 @@ breaking companion release shows up here without a bundle change.
 
 | Owner | Owns | Release |
 |---|---|---|
-| Ultimate AI Starter Bundle | general AI tooling, the 126 general skills, provider instruction/MCP config, the toolbox, the shared runtime | `main` → CI → `release.yml` |
+| Ultimate AI Starter Bundle | general AI tooling, the 127 general skills, provider instruction/MCP config, the toolbox, the shared runtime | `main` → CI → `release.yml` |
 | [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) | Skyrim tools and its skill pack, houseCARL setup, the `skyrim-forge` MCP | its own releases |
 | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | the RE tool bench, `sandbox/bin`, its tool selection | its own releases |
 

@@ -67,6 +67,36 @@ $rtk = Find-FirstFile @((Join-Path $env:USERPROFILE '.local\bin\rtk.exe'))
 if (-not $rtk) { $rtk = Find-OnPath 'rtk' }
 $report['rtk'] = @{ status = $(if ($rtk) {'FOUND'} else {'MISSING'}); path = $rtk; install = 'Run START-HERE.bat from the Ultimate-AI-Starter-Bundle' }
 
+# reverse-this: resolve the owner's kit pointer, never scan drives. kit.json is
+# authoritative; REVERSE_THIS_ROOT only overrides for one task. Read-only.
+$rtRoot = Get-EnvAnyScope 'REVERSE_THIS_ROOT'
+if (-not $rtRoot) {
+  $kitPointer = Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json'
+  if (Test-Path -LiteralPath $kitPointer -PathType Leaf) {
+    try {
+      $kit = [IO.File]::ReadAllText($kitPointer) | ConvertFrom-Json
+      if ($kit.kit_root) { $rtRoot = [string]$kit.kit_root }
+    } catch {}
+  }
+}
+if (-not $rtRoot) { $rtRoot = Join-Path $env:LOCALAPPDATA 'ReverseThis\kit' }
+$rtBin = Get-EnvAnyScope 'REVERSE_THIS_BIN'
+if (-not $rtBin) { $rtBin = Join-Path $rtRoot 'sandbox\bin' }
+$encRoot = Get-EnvAnyScope 'ENCYCLOPEDIA_ROOT'
+if (-not $encRoot) { $encRoot = Join-Path $rtRoot 'encyclopedia' }
+$rtOk = (Test-Path -LiteralPath $rtRoot -PathType Container) -and (Test-Path -LiteralPath $rtBin -PathType Container)
+$report['reverse-this'] = @{
+  status = $(if ($rtOk) {'FOUND'} else {'MISSING'})
+  path = $(if ($rtOk) {$rtRoot} else {$null})
+  bin = $(if (Test-Path -LiteralPath $rtBin -PathType Container) {$rtBin} else {$null})
+  encyclopedia = $(if (Test-Path -LiteralPath $encRoot -PathType Container) {$encRoot} else {$null})
+  # Ghidra MCP is optional: 8080 is the Ghidra-side HTTP server, 8081/mcp is
+  # the bridge default. Probe both; the kit does not start it for you.
+  ghidra_mcp_url = 'http://127.0.0.1:8081/mcp'
+  ghidra_http_url = 'http://127.0.0.1:8080'
+  install = 'https://github.com/SenjuWoo/reverse-this (owner kit; do not duplicate)'
+}
+
 # Runtimes the stack leans on
 foreach ($rt in @(@('python','https://www.python.org/downloads/'), @('node','https://nodejs.org/'), @('git','https://git-scm.com/'), @('gh','https://cli.github.com/'), @('uv','https://docs.astral.sh/uv/'))) {
   $p = Find-OnPath $rt[0]

@@ -1,3 +1,25 @@
+## 8.28.0
+
+127 canonical skills total; Forge keeps its own pack.
+
+- Add `reverse-engineering`: resolve the Reverse THIS! kit through
+  `%LOCALAPPDATA%\ReverseThis\kit.json`, look up the Context7 encyclopedia
+  first, and enforce the downstream-sink, narrow-predicate and
+  hardware-provenance laws. The skill routes to reverse-this's own tool docs
+  instead of copying them.
+- `game-modding` and `references/MODDING-LAWS.md` now require the
+  encyclopedia/Context7 lookup before blind recon, the lowest viable route
+  tier, `docs/CONTRACT.md` plus an offline harness before Tier 4-6, a
+  three-role split for complex mods, and a field-note/ERROR-REGISTRY sync at
+  the ship gate.
+- `TOOLS/discover_tools.ps1` reports the Reverse THIS! root, bin, encyclopedia
+  and both Ghidra endpoints without writing anything;
+  `WINDOWS-PATH-MAP.md` documents the derived paths. The owner's kit pointer
+  stays authoritative, so no duplicated env copy can go stale.
+- The Ghidra MCP endpoint is documented as `127.0.0.1:8081/mcp` with the
+  Ghidra-side HTTP server on `8080`, matching reverse-this's own validation of
+  the draft. The draft's single `8080/mcp` was wrong.
+
 ## 8.27.1 (2026-10-29)
 
 - README opens with **Start here**: what the bundle is, what you need, three install steps, which release zip to take, an after-install table (update, Skyrim pack, reverse tools, some apps only, checking, fixing) and a Troubleshooting section. The dense maintainer notes that sat above the logo and before the install steps moved into the reference sections below; no content was dropped.
