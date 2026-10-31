@@ -1,5 +1,27 @@
 # Bundle audit state
 
+## Completed 8.29.2 stale-pin closure and cleanup — 2026-10-31
+
+- Closed the catalog audit without blind upgrades: the 10 newer optional or
+  owner-controlled tools now carry explicit `compatibility_hold` reasons
+  (Forge ownership, unmeasured upstream, a local security patch, or a pinned
+  source rebuild). Audit: **current=13, held=14, stale=0, skipped=1, error=0**.
+- Removed the test-only workspace audit reports and genericized the workspace
+  fixture name; no user project is part of bundle work.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.2
+  at `37f60eac048c27f8472e9094df85e61df8733298`; CI 41252528004 and CodeQL
+  41252528135 succeeded, Release 41253091954 published. Core 45,471,262 B
+  sha256 `241cf132c15d7c03f069e910e1806224cdf0730b36c236fd2b993bb9dfeea916`;
+  Full-Offline 142,020,653 B sha256
+  `180f42cd0aaa2d9c4ed6f6f6010ce58c50b96d81ad19f9c3114f73cbf32c0ff2`.
+  All nine assets downloaded and `sha256sum -c SHA256SUMS.txt` is clean.
+- Local install: 8.29.2 tree at
+  `%USERPROFILE%\Apps\Ultimate-AI-Starter-Bundle\8.29.2`; `install-state.json`
+  and `MACHINE-MAP.md` point there; doctor 8.29.2 with 0 errors and 0 warnings.
+  No application was stopped or restarted.
+- No bundle work is pending. Context7 indexing of `/senjuwoo/reverse-this`
+  remains external; the local encyclopedia fallback is documented.
+
 ## Completed 8.29.1 final audit and stable local install — 2026-10-31
 
 - Reaudit found one real safety bug: `workspace_doctor.py` scanned only the
