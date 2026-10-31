@@ -21,14 +21,14 @@
   doctor 8.29.1; `code` has 143 skills (129 general plus extras), `skyrim` 193;
   both new skills and both tools are present. No application was stopped or
   restarted.
-- `workspace_doctor.py` from the stable tree on `NemesisCombatAI`: root FOMOD
-  `2.0.4` vs `CURRENT.txt` `3.0.0`, two snapshots, five nested caches, reference
-  scan cap reached, **0 automatic moves**. Read-only; the example was not
-  modified.
-- Known gaps: 10 third-party catalog pins remain stale by deliberate
-  evaluation policy (houseCARL, Headroom, Ponytail, Playwright, Firecrawl,
-  shadcn, Blender MCP, ComfyUI CLI, Universal Modder source); Context7 does not
-  index `/senjuwoo/reverse-this`; live game/GUI targets were not exercised.
+- `workspace_doctor.py` from the stable tree on a large read-only mod workspace:
+  stale root FOMOD, two snapshots, five nested caches, reference scan cap
+  reached, **0 automatic moves**. The project was not modified.
+- Maintenance: the catalog audit is now **0 stale / 14 held**. Each hold records
+  why the evaluated version remains (owner, unmeasured upstream, or a local
+  security patch); no dependency is silently behind. Context7 indexing of
+  `/senjuwoo/reverse-this` is external and the local encyclopedia fallback
+  remains. No bundle work is pending.
 
 ## Completed 8.29.0 mod workspace repair and presentation — 2026-10-31
 
@@ -44,14 +44,11 @@
   shot (face, angles, wide/detail, motion, installer/menu). A text-only public
   page fails. Wired into `game-modding`, `MODDING-LAWS`, the ship gate,
   `workspace-organization` and `public-copy-durability`; 129 canonical skills.
-- Real `NemesisCombatAI` audit (read-only): 18 root entries; root FOMOD `2.0.4`
-  while `CURRENT.txt` says `3.0.0`; two version snapshots; five nested caches
-  including `github-repo/build` 1.15 GB and `TOOLS/vcpkg` 554 MB; no
-  high-confidence automatic moves because the FOMOD root and snapshots are
-  path-dependent. Report: `artifacts/workspace-audit/NemesisCombatAI-plan.md`.
-- Presentation check on the same folder: FAIL, 0 images; its own media plan
-  already says presentation is incomplete. This is the gap the new gate exposes,
-  not a fabricated result.
+- A large read-only mod workspace exercised the doctor: stale root FOMOD, two
+  version snapshots, five nested caches, and no high-confidence automatic
+  moves because the FOMOD root and snapshots are path-dependent.
+- The presentation checker also fails a text-only page by design; that is the
+  gap the gate exposes, not a fabricated result.
 - Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.0
   at `2c574e7a9aaf522bd4117943b51afdb4b8c83d26`; CI 41246082727 and CodeQL
   41246082537 succeeded, Release 41246730300 published. Core 45,470,840 B

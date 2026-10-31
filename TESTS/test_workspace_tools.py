@@ -34,14 +34,14 @@ def run(*args: str) -> subprocess.CompletedProcess:
 
 
 def workspace_fixture(tmp: Path) -> Path:
-    root = tmp / "NemesisCombatAI"
+    root = tmp / "FixtureMod"
     (root / "fomod").mkdir(parents=True)
     (root / "fomod" / "info.xml").write_text("<fomod><Version>2.0.4</Version></fomod>", encoding="utf-8")
     (root / "fomod" / "ModuleConfig.xml").write_text("<config/>", encoding="utf-8")
-    (root / "CURRENT.txt").write_text("NemesisCombatAI 3.0.0\n", encoding="utf-8")
+    (root / "CURRENT.txt").write_text("FixtureMod 3.0.0\n", encoding="utf-8")
     (root / "00 Core").mkdir()
     (root / "00 Core" / "mod.esp").write_bytes(b"TES4")
-    current = root / "NemesisCombatAI 3.0.0"
+    current = root / "FixtureMod 3.0.0"
     (current / "fomod").mkdir(parents=True)
     (current / "fomod" / "info.xml").write_text("<fomod><Version>3.0.0</Version></fomod>", encoding="utf-8")
     (current / "VERSION.txt").write_text("3.0.0\n", encoding="utf-8")
@@ -68,7 +68,7 @@ def test_workspace_doctor_plans_safely(tmp: Path) -> None:
     by_name = {e["name"]: e for e in data["entries"]}
     assert any("root FOMOD is 2.0.4" in w for w in data["warnings"])
     assert by_name["fomod"]["action"] == "review"
-    assert by_name["NemesisCombatAI 3.0.0"]["action"] == "keep"
+    assert by_name["FixtureMod 3.0.0"]["action"] == "keep"
     assert by_name["TOOLS"]["kind"] == "tooling"
     assert any("TOOLS/vcpkg" == c["path"] for c in data["nested_caches"])
     assert by_name["notes"]["action"] == "move"

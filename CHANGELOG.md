@@ -1,3 +1,14 @@
+## 8.29.2 (2026-10-31)
+
+- Closed the stale-pin audit without blind upgrades: the 10 newer optional or
+  owner-controlled tools now carry an explicit `compatibility_hold` reason
+  (Forge ownership, unmeasured upstream, a local security patch, or a pinned
+  source rebuild). `audit_catalog_versions.py --fail-on-stale` is now
+  **0 stale / 14 held / 0 error**.
+- Removed the test-only workspace audit artifacts and genericized the test
+  fixture names; no user project is referenced as bundle work.
+- No runtime behavior change.
+
 ## 8.29.1 (2026-10-31)
 
 - `TOOLS/workspace_doctor.py` now reports when its reference scan hits the
@@ -19,10 +30,11 @@
   animation, installer/menu for tools). A text-only public page fails.
 - Wired into `game-modding`, `MODDING-LAWS`, the mod ship gate,
   `workspace-organization` and `public-copy-durability`; 129 canonical skills total.
-- The workspace doctor was exercised on the real `NemesisCombatAI` folder:
-  root FOMOD `2.0.4` versus `CURRENT.txt` `3.0.0`, two version snapshots, and
-  5 nested caches including a 1.15 GB `github-repo/build` and 554 MB
-  `TOOLS/vcpkg`. The report is in `artifacts/workspace-audit/` locally.
+- The workspace doctor was exercised against a large read-only mod workspace:
+  a stale root FOMOD, two version snapshots, and five nested caches including a
+  1.15 GB build tree and a 554 MB vcpkg cache. It correctly made no automatic
+  moves because those paths are load-bearing. The test fixture covers the same
+  cases.
 
 ## 8.28.5 (2026-10-31)
 
