@@ -106,9 +106,9 @@ No live game executable until the project has:
 
 - `docs/CONTRACT.md` with the goal, non-goals, target build, loader version,
   route tier, downstream sink and rollback plan;
-- an offline harness that passes: `fake_host_d3d11` for depth/pixel math and
-  `ipc_link_test` for shared memory (the encyclopedia blueprints are the
-  starting point);
+- an offline harness that passes: `ipc_link_test` for shared memory and a
+  fake D3D11 host for depth/pixel math (the encyclopedia's `blueprints/`
+  holds the harnesses it ships; use `fake_host_d3d11` when present);
 - a save backup and a SHA256 recovery manifest for every file the mod replaces.
 
 For Tier 6 the first slice is deliberately small: log one line from the host
