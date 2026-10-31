@@ -1,5 +1,43 @@
 # Bundle audit state
 
+## Completed 8.29.0 mod workspace repair and presentation — 2026-10-31
+
+- New `mod-workspace-organization` skill and `TOOLS/workspace_doctor.py`:
+  source/package/release/state separation, one version source, stale root FOMOD
+  detection, version-snapshot and nested-cache counts, and a narrow `--apply`
+  that moves only high-confidence unreferenced clutter with a backup manifest.
+  FOMOD roots, snapshots, nested Git repositories and game/binary assets are
+  never moved automatically.
+- New `mod-presentation` skill, `TOOLS/presentation_check.py` and
+  README/Nexus/plan templates: a public page needs a real 16:9 cover, three
+  gallery stills, three local README images with alt text, and a kind-specific
+  shot (face, angles, wide/detail, motion, installer/menu). A text-only public
+  page fails. Wired into `game-modding`, `MODDING-LAWS`, the ship gate,
+  `workspace-organization` and `public-copy-durability`; 129 canonical skills.
+- Real `NemesisCombatAI` audit (read-only): 18 root entries; root FOMOD `2.0.4`
+  while `CURRENT.txt` says `3.0.0`; two version snapshots; five nested caches
+  including `github-repo/build` 1.15 GB and `TOOLS/vcpkg` 554 MB; no
+  high-confidence automatic moves because the FOMOD root and snapshots are
+  path-dependent. Report: `artifacts/workspace-audit/NemesisCombatAI-plan.md`.
+- Presentation check on the same folder: FAIL, 0 images; its own media plan
+  already says presentation is incomplete. This is the gap the new gate exposes,
+  not a fabricated result.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.0
+  at `2c574e7a9aaf522bd4117943b51afdb4b8c83d26`; CI 41246082727 and CodeQL
+  41246082537 succeeded, Release 41246730300 published. Core 45,470,840 B
+  sha256 `1d4d171002e7fc0dca24ebd48fd075ebe53fc067c56f29e0c12c8bd848331629`;
+  Full-Offline 142,020,227 B sha256
+  `6d4cb17f34cc2c08dc695a73500be6dc16c888e6a9294508cad001d622790ea9`.
+  All nine assets downloaded and `sha256sum -c SHA256SUMS.txt` is clean.
+- Local install: 8.29.0 Full-Offline installed with no `-Packs`; packs
+  auto-detected Skyrim and Reverse; exit 0; doctor 8.29.0 with 0 errors and 0
+  warnings; 129 general skills plus the two new ones in the `code` profile;
+  models stay `deepseek/deepseek-v4.1-flash-1017`.
+- Remaining: the example still needs a decision on the stale 2.0.4 root package
+  and real captures; Ponytail stays 5.3.2 pending a bundled re-stage; 10
+  third-party catalog pins remain stale; Context7 does not index
+  `/senjuwoo/reverse-this`.
+
 ## Completed 8.28.5 one-click packs and AI-started tools — 2026-10-31
 
 - One-click install now covers the specialist layers: `PACKS.json` auto-detects
