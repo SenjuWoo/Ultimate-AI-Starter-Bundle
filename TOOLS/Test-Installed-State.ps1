@@ -111,7 +111,16 @@ if ($Providers -contains 'Grok') {
 if(-not $SkipSkills){
   foreach($provider in $Providers){
     $exe=Resolve-Exe $provider
-    if(-not $exe){Err "$provider executable missing after provider bootstrap.";continue}
+    if(-not $exe){
+      # A provider the installer never bootstrapped is not a failure of this
+      # install. The recorded provider list is authoritative; a provider that
+      # IS recorded but has no executable is still an error.
+      if ($state -and $state.providers -and (@($state.providers) -notcontains $provider)) {
+        Write-UabsInfo "$provider is not part of the recorded install; skipped."
+        continue
+      }
+      Err "$provider executable missing after provider bootstrap.";continue
+    }
     # Hermes 0.21's --version performs an upstream git fetch. A local doctor
     # must not become a network health check (or wait minutes when GitHub is
     # slow), so use its local argparse help path as the executable probe.

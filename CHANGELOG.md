@@ -1,3 +1,11 @@
+## 8.28.4 (2026-10-31)
+
+- `TOOLS/Test-Installed-State.ps1` no longer reports a provider the installer
+  never bootstrapped as a failure. The recorded `providers` list is
+  authoritative; a provider that is recorded but has no executable is still an
+  error. This removes the false "Kimi executable missing" failure on a machine
+  where Kimi was intentionally not installed.
+
 ## 8.28.3 (2026-10-31)
 
 - The installer now defers the Hermes native plugin refresh when the gateway
