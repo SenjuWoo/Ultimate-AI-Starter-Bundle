@@ -1,5 +1,40 @@
 # Bundle audit state
 
+## Completed 8.28.5 one-click packs and AI-started tools — 2026-10-31
+
+- One-click install now covers the specialist layers: `PACKS.json` auto-detects
+  Skyrim from the game, a mod manager or an existing Forge, and Reverse THIS!
+  from its kit receipt. `-Packs` still forces a layer, `-ExcludePacks` keeps it
+  off, and both choices are remembered.
+- The preamble now tells every provider's AI to start project MCP servers
+  itself through the toolbox `find`/`describe`/`call` or the owning CLI, never
+  to ask the user to start a tool, server or installer. A host restart is the
+  only step it may request, and only to index a new skill. `game-modding` runs
+  the Skyrim pack installer itself and uses Forge immediately.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.28.5
+  at `8eb08d4e4f046a20806b76aea930d95ad15e6663`; CI 41241265014 and CodeQL
+  41241264792 succeeded, Release 41241908203 published. Core 45,388,747 B
+  sha256 `40e19cb00b880ea2a31b84d41674a60e72391cf6c3ee2b469ce7a601b046eb81`;
+  Full-Offline 141,909,619 B sha256
+  `3aa0fa7e846a05f5f7a94e800bf474b2a814d03a511fc9814747d56d83b2a04d`.
+  All nine assets downloaded and `sha256sum -c SHA256SUMS.txt` is clean.
+- Local one-click proof: deleted `packs.json`, then ran
+  `INSTALL-AIO.ps1 -Mode BundledOnly -SkipSelfUpdate -SkipHouseCarlSetup` with
+  no `-Packs`; the log reports `Pack 'skyrim' on: found steam app 489830, My
+  Games\Skyrim Special Edition, Vortex skyrimse, SKYRIM_FORGE_ROOT,
+  SKYRIM_MO2_INSTANCE, HOUSECARL_ROOT` and `Pack 'reverse' on: found registered
+  companion ReverseThis/kit.json`. Install exit 0, doctor 8.28.5 with 0 errors
+  and 0 warnings, 9 project tools.
+- Live: preamble with the no-manual-start rule is in the root and five profile
+  `SOUL.md` files; 48/48 Skyrim pack skills in the `skyrim` profile; models stay
+  `deepseek/deepseek-v4.1-flash-1017` on OpenRouter. A live toolbox `find
+  "skyrim mod"` returned Forge's 56 tools without the user starting anything.
+- Remaining: Ponytail is enabled and healthy at 5.3.2 while the catalog lists
+  5.3.3; the live gateway deferred its native refresh and the local bridge has
+  no remote, so the bundled copy must be re-staged before it can update. The
+  third-party catalog audit still reports 10 stale pins. Context7 does not
+  index `/senjuwoo/reverse-this`; live game/GUI targets were not exercised.
+
 ## Completed 8.28.4 final doctor fix and local install — 2026-10-31
 
 - 8.28.4 fixed the last false install check: a default
