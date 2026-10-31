@@ -916,8 +916,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5163,
-  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
+  "size": 5535,
+  "sha256": "c0b26078b66ecc87e4e2dd69599633d48a57dd1f3011161483ef88eb514b631f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -936,8 +936,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 7873,
-  "sha256": "5b60dd217522fe98429f0887233654999328360413681e473c64e8c8ac0e2e76"
+  "size": 9014,
+  "sha256": "534e86d54eb3a63643c5120ef7afe0b6a25a83f4d9ac44f50a2b057744a93ff8"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -1061,8 +1061,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1663,
-  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
+  "size": 2436,
+  "sha256": "22bd32b7c40304b6170ae55a66d2463e021d13c15f015454b3c98ce5319bd2ac"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -3755,6 +3755,31 @@
   "sha256": "e669c2e9fe5c0cedc92997d55cd8c38f6dcaba9ac8ae67340c5b5337c355f6ca"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/SKILL.md",
+  "size": 5952,
+  "sha256": "8d7d3a545b275e142ae07dcee9eee2aa6e01ef05c675d256aac0cc5a06ab11d6"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/MOD-README.md",
+  "size": 1096,
+  "sha256": "8505dc1ea38619c759dbc76e33e371dfacd255b976a6826f29a62e2dc9461024"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/NEXUS-BBCODE.txt",
+  "size": 1180,
+  "sha256": "da4e8c97e8840748a3dd5e78b7f38ab8bc2710676f3c69fff1780e92d0fe4dbe"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/PRESENTATION-PLAN.md",
+  "size": 1260,
+  "sha256": "b523a87abab3110863cce937d5a882bdf240145150ac4bdd2215461a9731287e"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/mod-workspace-organization/SKILL.md",
+  "size": 5766,
+  "sha256": "970c453480d27477cd6c1c8403f0bb146900dade90b06da22c87d358060d1f48"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/numerical-sanity-check/SKILL.md",
   "size": 1029,
   "sha256": "db5fb8a691b42b12ca74f99683b7a857530ef14ea321f1cc210d0a2d22b4a0ed"
@@ -3941,8 +3966,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3010,
-  "sha256": "0563a516d77b0708b75f727b238968e2cc78125f6487bb3fc6304a905624f249"
+  "size": 3136,
+  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/real-boundary-testing/SKILL.md",
@@ -4796,8 +4821,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 5823,
-  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+  "size": 5998,
+  "sha256": "8fc7dae26a0f4977737cfdbba18223b072dbbb7429da76af6fbe43d570640ace"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
@@ -5606,8 +5631,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5163,
-  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
+  "size": 5535,
+  "sha256": "c0b26078b66ecc87e4e2dd69599633d48a57dd1f3011161483ef88eb514b631f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -5626,8 +5651,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 7873,
-  "sha256": "5b60dd217522fe98429f0887233654999328360413681e473c64e8c8ac0e2e76"
+  "size": 9014,
+  "sha256": "534e86d54eb3a63643c5120ef7afe0b6a25a83f4d9ac44f50a2b057744a93ff8"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -5751,8 +5776,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1663,
-  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
+  "size": 2436,
+  "sha256": "22bd32b7c40304b6170ae55a66d2463e021d13c15f015454b3c98ce5319bd2ac"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -8445,6 +8470,31 @@
   "sha256": "e669c2e9fe5c0cedc92997d55cd8c38f6dcaba9ac8ae67340c5b5337c355f6ca"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/SKILL.md",
+  "size": 5952,
+  "sha256": "8d7d3a545b275e142ae07dcee9eee2aa6e01ef05c675d256aac0cc5a06ab11d6"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/MOD-README.md",
+  "size": 1096,
+  "sha256": "8505dc1ea38619c759dbc76e33e371dfacd255b976a6826f29a62e2dc9461024"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/NEXUS-BBCODE.txt",
+  "size": 1180,
+  "sha256": "da4e8c97e8840748a3dd5e78b7f38ab8bc2710676f3c69fff1780e92d0fe4dbe"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/PRESENTATION-PLAN.md",
+  "size": 1260,
+  "sha256": "b523a87abab3110863cce937d5a882bdf240145150ac4bdd2215461a9731287e"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/mod-workspace-organization/SKILL.md",
+  "size": 5766,
+  "sha256": "970c453480d27477cd6c1c8403f0bb146900dade90b06da22c87d358060d1f48"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/numerical-sanity-check/SKILL.md",
   "size": 1029,
   "sha256": "db5fb8a691b42b12ca74f99683b7a857530ef14ea321f1cc210d0a2d22b4a0ed"
@@ -8631,8 +8681,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3010,
-  "sha256": "0563a516d77b0708b75f727b238968e2cc78125f6487bb3fc6304a905624f249"
+  "size": 3136,
+  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/real-boundary-testing/SKILL.md",
@@ -9486,8 +9536,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 5823,
-  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+  "size": 5998,
+  "sha256": "8fc7dae26a0f4977737cfdbba18223b072dbbb7429da76af6fbe43d570640ace"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
@@ -10356,8 +10406,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5163,
-  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
+  "size": 5535,
+  "sha256": "c0b26078b66ecc87e4e2dd69599633d48a57dd1f3011161483ef88eb514b631f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -10376,8 +10426,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 7873,
-  "sha256": "5b60dd217522fe98429f0887233654999328360413681e473c64e8c8ac0e2e76"
+  "size": 9014,
+  "sha256": "534e86d54eb3a63643c5120ef7afe0b6a25a83f4d9ac44f50a2b057744a93ff8"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -10501,8 +10551,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1663,
-  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
+  "size": 2436,
+  "sha256": "22bd32b7c40304b6170ae55a66d2463e021d13c15f015454b3c98ce5319bd2ac"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -13195,6 +13245,31 @@
   "sha256": "e669c2e9fe5c0cedc92997d55cd8c38f6dcaba9ac8ae67340c5b5337c355f6ca"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/SKILL.md",
+  "size": 5952,
+  "sha256": "8d7d3a545b275e142ae07dcee9eee2aa6e01ef05c675d256aac0cc5a06ab11d6"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/MOD-README.md",
+  "size": 1096,
+  "sha256": "8505dc1ea38619c759dbc76e33e371dfacd255b976a6826f29a62e2dc9461024"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/NEXUS-BBCODE.txt",
+  "size": 1180,
+  "sha256": "da4e8c97e8840748a3dd5e78b7f38ab8bc2710676f3c69fff1780e92d0fe4dbe"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/PRESENTATION-PLAN.md",
+  "size": 1260,
+  "sha256": "b523a87abab3110863cce937d5a882bdf240145150ac4bdd2215461a9731287e"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/mod-workspace-organization/SKILL.md",
+  "size": 5766,
+  "sha256": "970c453480d27477cd6c1c8403f0bb146900dade90b06da22c87d358060d1f48"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/numerical-sanity-check/SKILL.md",
   "size": 1029,
   "sha256": "db5fb8a691b42b12ca74f99683b7a857530ef14ea321f1cc210d0a2d22b4a0ed"
@@ -13381,8 +13456,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3010,
-  "sha256": "0563a516d77b0708b75f727b238968e2cc78125f6487bb3fc6304a905624f249"
+  "size": 3136,
+  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/real-boundary-testing/SKILL.md",
@@ -14236,8 +14311,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 5823,
-  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+  "size": 5998,
+  "sha256": "8fc7dae26a0f4977737cfdbba18223b072dbbb7429da76af6fbe43d570640ace"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
@@ -15096,8 +15171,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5163,
-  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
+  "size": 5535,
+  "sha256": "c0b26078b66ecc87e4e2dd69599633d48a57dd1f3011161483ef88eb514b631f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -15116,8 +15191,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 7873,
-  "sha256": "5b60dd217522fe98429f0887233654999328360413681e473c64e8c8ac0e2e76"
+  "size": 9014,
+  "sha256": "534e86d54eb3a63643c5120ef7afe0b6a25a83f4d9ac44f50a2b057744a93ff8"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -15241,8 +15316,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1663,
-  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
+  "size": 2436,
+  "sha256": "22bd32b7c40304b6170ae55a66d2463e021d13c15f015454b3c98ce5319bd2ac"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -17935,6 +18010,31 @@
   "sha256": "e669c2e9fe5c0cedc92997d55cd8c38f6dcaba9ac8ae67340c5b5337c355f6ca"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/SKILL.md",
+  "size": 5952,
+  "sha256": "8d7d3a545b275e142ae07dcee9eee2aa6e01ef05c675d256aac0cc5a06ab11d6"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/MOD-README.md",
+  "size": 1096,
+  "sha256": "8505dc1ea38619c759dbc76e33e371dfacd255b976a6826f29a62e2dc9461024"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/NEXUS-BBCODE.txt",
+  "size": 1180,
+  "sha256": "da4e8c97e8840748a3dd5e78b7f38ab8bc2710676f3c69fff1780e92d0fe4dbe"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/PRESENTATION-PLAN.md",
+  "size": 1260,
+  "sha256": "b523a87abab3110863cce937d5a882bdf240145150ac4bdd2215461a9731287e"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/mod-workspace-organization/SKILL.md",
+  "size": 5766,
+  "sha256": "970c453480d27477cd6c1c8403f0bb146900dade90b06da22c87d358060d1f48"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/numerical-sanity-check/SKILL.md",
   "size": 1029,
   "sha256": "db5fb8a691b42b12ca74f99683b7a857530ef14ea321f1cc210d0a2d22b4a0ed"
@@ -18121,8 +18221,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3010,
-  "sha256": "0563a516d77b0708b75f727b238968e2cc78125f6487bb3fc6304a905624f249"
+  "size": 3136,
+  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/real-boundary-testing/SKILL.md",
@@ -18976,8 +19076,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 5823,
-  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+  "size": 5998,
+  "sha256": "8fc7dae26a0f4977737cfdbba18223b072dbbb7429da76af6fbe43d570640ace"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
@@ -19836,8 +19936,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5163,
-  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
+  "size": 5535,
+  "sha256": "c0b26078b66ecc87e4e2dd69599633d48a57dd1f3011161483ef88eb514b631f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -19856,8 +19956,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 7873,
-  "sha256": "5b60dd217522fe98429f0887233654999328360413681e473c64e8c8ac0e2e76"
+  "size": 9014,
+  "sha256": "534e86d54eb3a63643c5120ef7afe0b6a25a83f4d9ac44f50a2b057744a93ff8"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -19981,8 +20081,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1663,
-  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
+  "size": 2436,
+  "sha256": "22bd32b7c40304b6170ae55a66d2463e021d13c15f015454b3c98ce5319bd2ac"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -22675,6 +22775,31 @@
   "sha256": "e669c2e9fe5c0cedc92997d55cd8c38f6dcaba9ac8ae67340c5b5337c355f6ca"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/SKILL.md",
+  "size": 5952,
+  "sha256": "8d7d3a545b275e142ae07dcee9eee2aa6e01ef05c675d256aac0cc5a06ab11d6"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/MOD-README.md",
+  "size": 1096,
+  "sha256": "8505dc1ea38619c759dbc76e33e371dfacd255b976a6826f29a62e2dc9461024"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/NEXUS-BBCODE.txt",
+  "size": 1180,
+  "sha256": "da4e8c97e8840748a3dd5e78b7f38ab8bc2710676f3c69fff1780e92d0fe4dbe"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/PRESENTATION-PLAN.md",
+  "size": 1260,
+  "sha256": "b523a87abab3110863cce937d5a882bdf240145150ac4bdd2215461a9731287e"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/mod-workspace-organization/SKILL.md",
+  "size": 5766,
+  "sha256": "970c453480d27477cd6c1c8403f0bb146900dade90b06da22c87d358060d1f48"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/numerical-sanity-check/SKILL.md",
   "size": 1029,
   "sha256": "db5fb8a691b42b12ca74f99683b7a857530ef14ea321f1cc210d0a2d22b4a0ed"
@@ -22861,8 +22986,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3010,
-  "sha256": "0563a516d77b0708b75f727b238968e2cc78125f6487bb3fc6304a905624f249"
+  "size": 3136,
+  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/real-boundary-testing/SKILL.md",
@@ -23716,8 +23841,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 5823,
-  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+  "size": 5998,
+  "sha256": "8fc7dae26a0f4977737cfdbba18223b072dbbb7429da76af6fbe43d570640ace"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
@@ -24651,8 +24776,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5163,
-  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
+  "size": 5535,
+  "sha256": "c0b26078b66ecc87e4e2dd69599633d48a57dd1f3011161483ef88eb514b631f"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -24671,8 +24796,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/MODDING-LAWS.md",
-  "size": 7873,
-  "sha256": "5b60dd217522fe98429f0887233654999328360413681e473c64e8c8ac0e2e76"
+  "size": 9014,
+  "sha256": "534e86d54eb3a63643c5120ef7afe0b6a25a83f4d9ac44f50a2b057744a93ff8"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/OFFICIAL-SOURCES.md",
@@ -24796,8 +24921,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-ship-gate.md",
-  "size": 1663,
-  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
+  "size": 2436,
+  "sha256": "22bd32b7c40304b6170ae55a66d2463e021d13c15f015454b3c98ce5319bd2ac"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -27490,6 +27615,31 @@
   "sha256": "e669c2e9fe5c0cedc92997d55cd8c38f6dcaba9ac8ae67340c5b5337c355f6ca"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/SKILL.md",
+  "size": 5952,
+  "sha256": "8d7d3a545b275e142ae07dcee9eee2aa6e01ef05c675d256aac0cc5a06ab11d6"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/MOD-README.md",
+  "size": 1096,
+  "sha256": "8505dc1ea38619c759dbc76e33e371dfacd255b976a6826f29a62e2dc9461024"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/NEXUS-BBCODE.txt",
+  "size": 1180,
+  "sha256": "da4e8c97e8840748a3dd5e78b7f38ab8bc2710676f3c69fff1780e92d0fe4dbe"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/mod-presentation/templates/PRESENTATION-PLAN.md",
+  "size": 1260,
+  "sha256": "b523a87abab3110863cce937d5a882bdf240145150ac4bdd2215461a9731287e"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/mod-workspace-organization/SKILL.md",
+  "size": 5766,
+  "sha256": "970c453480d27477cd6c1c8403f0bb146900dade90b06da22c87d358060d1f48"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/numerical-sanity-check/SKILL.md",
   "size": 1029,
   "sha256": "db5fb8a691b42b12ca74f99683b7a857530ef14ea321f1cc210d0a2d22b4a0ed"
@@ -27676,8 +27826,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3010,
-  "sha256": "0563a516d77b0708b75f727b238968e2cc78125f6487bb3fc6304a905624f249"
+  "size": 3136,
+  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/real-boundary-testing/SKILL.md",
@@ -28531,8 +28681,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/SKILL.md",
-  "size": 5823,
-  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+  "size": 5998,
+  "sha256": "8fc7dae26a0f4977737cfdbba18223b072dbbb7429da76af6fbe43d570640ace"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/workspace-organization/scripts/ensure_ownership.py",
@@ -28852,12 +29002,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 61302,
-  "sha256": "f765824a55cba97ac8b8c3c7179af2459673b788226cbc87b9f95a4dbf983a99"
+  "sha256": "8fb36c661131aa7e45c287173659492b3ff0b072cecacc132edef1a24ca4c4df"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1327,
-  "sha256": "38599a2999ca018c225bd2e49211fcd1b0379bdc3be64a76de2c9ea979e2ea7a"
+  "sha256": "e361e344dd6807107e6eaf3052722dd64ec9c8ed9ffa41e28b6683c3324e46f1"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28867,7 +29017,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39648,
-  "sha256": "6c54cd0be820a741ec575786d05b4393c0d7c190eb72c03c00628f38aa0a7c75"
+  "sha256": "bb12349a0ecb095bb3e54db029630f98535a0c83b8d700172f42886ea62da79c"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -28882,7 +29032,7 @@
  {
   "path": "BUNDLED-TOOLS/RETIRED-SKILLS.json",
   "size": 8245,
-  "sha256": "745d95bf2cd60d70e5493217546e39dd96e2962ba9cefdebed697e837c02f556"
+  "sha256": "4784f0dee971e191286b8ec04d6d752fd3c745f51bfd58b504c43369a918a76d"
  },
  {
   "path": "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md",
@@ -32936,8 +33086,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 252066,
-  "sha256": "d77339853426dda928f88b37538547a99e85d576f4c9c8de58d03a9e9b4a6fa3"
+  "size": 253304,
+  "sha256": "1746abdfe85399833e1172099cb8d45d2c62e07fde0313fd17ffeb99041993ee"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -33017,7 +33167,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 178807,
-  "sha256": "90a711a020fd682323e2bf26eb5c3414e02a3aabad5f6c7133590517ae075686"
+  "sha256": "10a25f3d87f59ad2aeb4a580fce5a3021e5affc2a4d34c7468408cc1002a54d5"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33081,8 +33231,8 @@
  },
  {
   "path": "README.md",
-  "size": 69951,
-  "sha256": "acf7f4fd2ff2477ebe706dadb12045e01a56d63c87b9fdbd3f7f866245762eb3"
+  "size": 70285,
+  "sha256": "e6114e9530cbb871139ec05179372d6abfe965734336980b775552df2ba84ecb"
  },
  {
   "path": "SECURITY.md",
@@ -33092,12 +33242,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "943021851c79422eff82c999139506a2f9acddd38d716195acfd45d9bf5c1b37"
+  "sha256": "321569ff0e536305c832c74d61f9fbdfbbe28114d7da2e88679dfc47cd2becf8"
  },
  {
   "path": "START-HERE.txt",
   "size": 3502,
-  "sha256": "aa5b55c8ecaa657b96dd05613947b673941046f80b8fe082d662b14580cec3e4"
+  "sha256": "482746d5cc12d06ccd58bc635ac1f4ec5594c359f8199e994548c52e3d292234"
  },
  {
   "path": "STATE.md",
@@ -33221,8 +33371,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 67815,
-  "sha256": "2812ea3238d449a49038691bac9a93516a748718b941401fa3e1b3cbe1f47cd1"
+  "size": 68030,
+  "sha256": "0456de6e0fc7397e1017d40ecdca9af18da75179dc15d005b6be50d0206c606a"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -33501,8 +33651,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 342890,
-  "sha256": "aefb3fb251e479cd4ee8493eb7cab7dff8b013bf6d41b04aa889cbebb46ba6f6"
+  "size": 343941,
+  "sha256": "6a7fac7be3108f387c34cc02e88b2a29799132935900a1227c3a7d5a099af9ae"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -33533,6 +33683,11 @@
   "path": "TESTS/test_workspace_ownership.py",
   "size": 4734,
   "sha256": "a0782eb504fb4d3c529fd44290020700dbb49d1c363c8d83f89b10a40b3038e7"
+ },
+ {
+  "path": "TESTS/test_workspace_tools.py",
+  "size": 5493,
+  "sha256": "a072d496398971a65beb80340bbc41e5fd776bda3d9d8c01ba299bd6d682636c"
  },
  {
   "path": "TOOLS/Add-Reasoning-MCPs.ps1",
@@ -33870,6 +34025,11 @@
   "sha256": "d6e93f2cbf59e4353c097f1a0345a5a451a5a3633793beb3b5cf4ebe975b7a57"
  },
  {
+  "path": "TOOLS/presentation_check.py",
+  "size": 9734,
+  "sha256": "b77a79b3bc768c3528d16cbfc4a0ed5b82a500abce92dd44a75e44e1dfad32fa"
+ },
+ {
   "path": "TOOLS/refresh_universal_modder.py",
   "size": 18182,
   "sha256": "7eaafa38fef7db0c53d0c956f7c6a98ddac1f4fc3fdb94102bf047e4e1837739"
@@ -33925,9 +34085,14 @@
   "sha256": "b73f6ea89b90ac1f950b2661c20f344e1b2b24325ab51b7f123ad8e07e841338"
  },
  {
+  "path": "TOOLS/workspace_doctor.py",
+  "size": 17625,
+  "sha256": "edaf640e1c14437b780df1f8bf3d659888a4ec3e289447a1b771f3c6a1f898a7"
+ },
+ {
   "path": "VALIDATION.json",
   "size": 2671,
-  "sha256": "fbb713c1dbbc1df5c4b514c994a98ef074ee0ac8506bec630a661276a813c144"
+  "sha256": "cc84528577f7c80378d1c115f8a8426803faf350fbcebaf41c217722300b3127"
  },
  {
   "path": "VALIDATION.md",
@@ -33937,7 +34102,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "dd0c192f82d4b44e2eca039bb74a51ae87ecdd5b87fb2794dadd21da326f450e"
+  "sha256": "31d3269a9b3694b49e6c1845d868c4db6a1d0d5c1cb9984c2199d2573be9c3da"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -34686,8 +34851,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/SKILL.md",
-  "size": 5163,
-  "sha256": "837614e591ab5f868a49b5556d7a714e0b4650358f0415801ffc3c9db8a6ca09"
+  "size": 5535,
+  "sha256": "c0b26078b66ecc87e4e2dd69599633d48a57dd1f3011161483ef88eb514b631f"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/ERROR-REGISTRY.json",
@@ -34706,8 +34871,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/MODDING-LAWS.md",
-  "size": 7873,
-  "sha256": "5b60dd217522fe98429f0887233654999328360413681e473c64e8c8ac0e2e76"
+  "size": 9014,
+  "sha256": "534e86d54eb3a63643c5120ef7afe0b6a25a83f4d9ac44f50a2b057744a93ff8"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/OFFICIAL-SOURCES.md",
@@ -34831,8 +34996,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/game-mod-ship-gate.md",
-  "size": 1663,
-  "sha256": "8de6c7f2da1e041239a5e7ad69bb6e02ab4d565c2446fe1ab690cabd3515ac71"
+  "size": 2436,
+  "sha256": "22bd32b7c40304b6170ae55a66d2463e021d13c15f015454b3c98ce5319bd2ac"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/game-mod-unknown-game-fallback.md",
@@ -37525,6 +37690,31 @@
   "sha256": "e669c2e9fe5c0cedc92997d55cd8c38f6dcaba9ac8ae67340c5b5337c355f6ca"
  },
  {
+  "path": "_CANONICAL-SKILLS/mod-presentation/SKILL.md",
+  "size": 5952,
+  "sha256": "8d7d3a545b275e142ae07dcee9eee2aa6e01ef05c675d256aac0cc5a06ab11d6"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/mod-presentation/templates/MOD-README.md",
+  "size": 1096,
+  "sha256": "8505dc1ea38619c759dbc76e33e371dfacd255b976a6826f29a62e2dc9461024"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/mod-presentation/templates/NEXUS-BBCODE.txt",
+  "size": 1180,
+  "sha256": "da4e8c97e8840748a3dd5e78b7f38ab8bc2710676f3c69fff1780e92d0fe4dbe"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/mod-presentation/templates/PRESENTATION-PLAN.md",
+  "size": 1260,
+  "sha256": "b523a87abab3110863cce937d5a882bdf240145150ac4bdd2215461a9731287e"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/mod-workspace-organization/SKILL.md",
+  "size": 5766,
+  "sha256": "970c453480d27477cd6c1c8403f0bb146900dade90b06da22c87d358060d1f48"
+ },
+ {
   "path": "_CANONICAL-SKILLS/numerical-sanity-check/SKILL.md",
   "size": 1029,
   "sha256": "db5fb8a691b42b12ca74f99683b7a857530ef14ea321f1cc210d0a2d22b4a0ed"
@@ -37711,8 +37901,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/public-copy-durability/SKILL.md",
-  "size": 3010,
-  "sha256": "0563a516d77b0708b75f727b238968e2cc78125f6487bb3fc6304a905624f249"
+  "size": 3136,
+  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
  },
  {
   "path": "_CANONICAL-SKILLS/real-boundary-testing/SKILL.md",
@@ -38566,8 +38756,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/workspace-organization/SKILL.md",
-  "size": 5823,
-  "sha256": "3babdab39a0766be9cd11e7ca1b4714a663b72deaaa4eba01242a404d7e39e56"
+  "size": 5998,
+  "sha256": "8fc7dae26a0f4977737cfdbba18223b072dbbb7429da76af6fbe43d570640ace"
  },
  {
   "path": "_CANONICAL-SKILLS/workspace-organization/scripts/ensure_ownership.py",
@@ -39293,6 +39483,11 @@
   "path": "docs/history/V8.28.5-CHANGELOG.md",
   "size": 1507,
   "sha256": "0a7ba25498a370a2e6dab4980d43897baf40aa893d48b2d4a08541f0363bd1e4"
+ },
+ {
+  "path": "docs/history/V8.29.0-CHANGELOG.md",
+  "size": 2282,
+  "sha256": "008695537af9b7d3da31160e6ad5f5127914adf450a9ccafe4a60170e62c980e"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

@@ -1,0 +1,48 @@
+[center][size=6][b]{Mod Name}[/b][/size]
+[size=4]{One-line hook}[/size]
+
+[img]{https://absolute-url/hero.png}[/img][/center]
+
+[b][size=4]What it does[/size][/b]
+{Two or three sentences. Lead with the player-visible change.}
+
+[list]
+[*][b]{Change one}.[/b] {Detail}
+[*][b]{Change two}.[/b] {Detail}
+[*][b]{Change three}.[/b] {Detail}
+[/list]
+
+[b][size=4]Gallery[/size][/b]
+[img]{https://absolute-url/gallery-01.png}[/img]
+[i]{What this proves}[/i]
+
+[img]{https://absolute-url/gallery-02.png}[/img]
+[i]{What this proves}[/i]
+
+[img]{https://absolute-url/gallery-03.png}[/img]
+[i]{What this proves}[/i]
+
+[b][size=4]Requirements[/size][/b]
+[list]
+[*]{Game build / storefront}
+[*]{Framework or dependency, with version}
+[/list]
+
+[b][size=4]Installation[/size][/b]
+[list=1]
+[*]{Installer step}
+[*]{FOMOD choice}
+[*]{Upgrade or uninstall note}
+[/list]
+
+[b][size=4]Compatibility[/size][/b]
+{Conflicts, patches, what is untouched.}
+
+[b][size=4]Credits and permissions[/size][/b]
+{Author / asset / tool, with licence. Reuse terms.}
+
+[b][size=4]Changelog[/size][/b]
+{Version and date. Link the full changelog.}
+
+[b][size=4]Support[/size][/b]
+{Log location, issue tracker, or support thread.}

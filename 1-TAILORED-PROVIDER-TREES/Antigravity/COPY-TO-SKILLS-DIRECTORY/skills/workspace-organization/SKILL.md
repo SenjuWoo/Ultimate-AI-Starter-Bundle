@@ -83,6 +83,9 @@ propose one path, label it as a proposal, and keep it easy to move.
 - Paths with `!`, junctions and MSYS quoting are covered by
   `windows-workspace-ops`.
 - Temporary work never lands in the workspace at all - see `scratch-hygiene`.
+- Game mods add a package/release layer and path-dependent FOMOD folders: use
+  `mod-workspace-organization` and `TOOLS/workspace_doctor.py <root>` before
+  reorganizing one.
 
 ## The workspace memory file
 

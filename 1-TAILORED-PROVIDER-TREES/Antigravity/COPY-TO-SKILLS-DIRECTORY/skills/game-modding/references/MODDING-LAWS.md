@@ -139,6 +139,25 @@ is small enough to keep the evidence in one place.
 Only the game worker touches a live game. The orchestrator never accepts
 "it works" without the sink log, frame numbers or a diff image.
 
+## Workspace layout and public presentation
+
+- A mod project separates **source**, **package**, **release** and **state**.
+  Read `mod-workspace-organization`; run `TOOLS/workspace_doctor.py <root>`
+  before reorganizing a messy tree.
+- A FOMOD root is path-dependent. Never move or rename `fomod/`, `00 Core/`,
+  `01 .../` or a game asset to "tidy" the folder; the installer will break.
+- Keep one version source. If `CURRENT.txt`, `VERSION`, `fomod/info.xml` and
+  `publication/<ver>` disagree, stop and reconcile before shipping. Archive old
+  packages under `dist/versions/<ver>/` only after checking references.
+- Caches (`build/`, `vcpkg/`, `ForgeVault/`, `ghidra-cache/`) are ignored or
+  outside the package; they never ship.
+- A public page needs real visual proof: a 16:9 cover, at least three gallery
+  stills, at least three local README images with alt text, and the
+  kind-specific shot (face for characters, angles for armor, wide/detail for
+  environments, motion for animation, installer/menu for tools). Run
+  `TOOLS/presentation_check.py <root> --kind <kind>`. A text-only page is a
+  release defect, not a style choice.
+
 ## Post-mortem encyclopedia sync
 
 At `game-mod-ship-gate.md`, before the release is called done:

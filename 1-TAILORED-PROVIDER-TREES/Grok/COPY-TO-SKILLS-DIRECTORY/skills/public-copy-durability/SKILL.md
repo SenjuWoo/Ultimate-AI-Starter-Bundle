@@ -5,6 +5,9 @@ description: Use when writing public-facing copy that outlives a release - mod p
 
 # Public copy that survives releases
 
+For the visual layer of a mod page - cover, gallery, screenshots, motion - use
+`mod-presentation`; copy alone is not a page.
+
 Public copy splits by one question: **can an agent edit it later?**
 
 | surface | editable later | what belongs there |

@@ -1,3 +1,22 @@
+## 8.29.0 (2026-10-31)
+
+- New `mod-workspace-organization` skill and `TOOLS/workspace_doctor.py`:
+  separate source, package, release and state; flag a stale root FOMOD; count
+  version snapshots and nested caches; apply only high-confidence, unreferenced
+  moves with a backup manifest. FOMOD roots, version snapshots, nested Git
+  repositories and game/binary assets are never moved automatically.
+- New `mod-presentation` skill, `TOOLS/presentation_check.py` and README/Nexus
+  templates: a public page needs a real 16:9 cover, three gallery stills, three
+  local README images with alt text, and a kind-specific shot (face for
+  characters, angles for armor, wide/detail for environments, motion for
+  animation, installer/menu for tools). A text-only public page fails.
+- Wired into `game-modding`, `MODDING-LAWS`, the mod ship gate,
+  `workspace-organization` and `public-copy-durability`; 129 canonical skills total.
+- The workspace doctor was exercised on the real `NemesisCombatAI` folder:
+  root FOMOD `2.0.4` versus `CURRENT.txt` `3.0.0`, two version snapshots, and
+  5 nested caches including a 1.15 GB `github-repo/build` and 554 MB
+  `TOOLS/vcpkg`. The report is in `artifacts/workspace-audit/` locally.
+
 ## 8.28.5 (2026-10-31)
 
 - One-click install: the specialist packs now auto-detect instead of requiring

@@ -88,6 +88,9 @@ if ($py) {
     & $py.Source (Join-Path $PackRoot 'TESTS\test_universal_modder.py')
     if ($LASTEXITCODE -ne 0) { Bad 'Universal Modder offline CLI and routing check failed' }
     else { Good 'Universal Modder offline CLI and all-provider routing' }
+    & $py.Source (Join-Path $PackRoot 'TESTS\test_workspace_tools.py')
+    if ($LASTEXITCODE -ne 0) { Bad 'Workspace doctor or presentation check failed' }
+    else { Good 'Workspace doctor and presentation gate' }
     # The toolbox gate drives the real server over stdio, so it needs the MCP SDK
     # (CI installs the version the wheel pins).
     $mcpPython = $py.Source

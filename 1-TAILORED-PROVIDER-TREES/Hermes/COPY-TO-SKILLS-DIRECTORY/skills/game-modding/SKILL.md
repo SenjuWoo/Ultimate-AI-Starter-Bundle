@@ -9,6 +9,12 @@ Read `references/MODDING-LAWS.md` before the first write. It is not optional:
 it carries the version-snapshot workflow, the evidence ladder, and the
 never-invent rules that every game below depends on.
 
+For a new or messy project, read `mod-workspace-organization` before the first
+write. Run `TOOLS/workspace_doctor.py <root>` before reorganizing anything; a
+FOMOD package root and every game/binary asset are path-dependent. Before a
+public release, read `mod-presentation` and run
+`TOOLS/presentation_check.py <root> --kind <character|armor|environment|animation|tool>`.
+
 For Skyrim use the `skyrim-*` skills instead -- they are deeper and this
 skill deliberately does not duplicate them. If they are not installed, the
 bundle's Skyrim pack is off on this machine: run the bundle's

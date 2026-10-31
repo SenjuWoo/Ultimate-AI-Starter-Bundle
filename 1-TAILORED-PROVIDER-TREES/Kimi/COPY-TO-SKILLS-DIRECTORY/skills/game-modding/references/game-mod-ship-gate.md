@@ -2,6 +2,7 @@
 
 ```text
 VERSION SNAPSHOT: PASS|FAIL
+WORKSPACE LAYOUT: PASS|FAIL|N/A
 SOURCE INVENTORY: PASS|FAIL
 BUILD: PASS|FAIL|N/A
 FRAMEWORK VALIDATION: PASS|FAIL|N/A
@@ -11,11 +12,25 @@ PACKAGE ROOTS: PASS|FAIL
 UPGRADE/UNINSTALL: PASS|FAIL
 SAVE/MULTIPLAYER: PASS|FAIL|UNTESTED
 RUNTIME STATUS: user-confirmed-runtime | runtime-evidenced | tool-validated | assistant-claimed | contradicted
+PRESENTATION: PASS|FAIL|N/A
 ENCYCLOPEDIA SYNC: PASS|PENDING|N/A
 UNRESOLVED: none | exact risks
 ```
 
 Never collapse `UNTESTED` into `PASS`.
+
+`WORKSPACE LAYOUT` is PASS only when one current version source exists, the
+current package root agrees with it, old snapshots are archived rather than
+scattered, and caches are outside the package. Run
+`TOOLS/workspace_doctor.py <root>` and resolve its stale-root warning. `N/A`
+only for a project with no package or version state.
+
+`PRESENTATION` is PASS only for a public release and only when
+`TOOLS/presentation_check.py <root> --kind <kind>` passes: real cover, at least
+three gallery stills, three local README images with alt text, and the
+kind-specific shot (face, angles, wide/detail, motion, or menu). `N/A` is for a
+private build that is not being published; never mark a text-only public page
+PASS.
 
 `ENCYCLOPEDIA SYNC` is PASS only when the version-pinned field note under
 `%ENCYCLOPEDIA_ROOT%\games\<game>.md` and the error-registry entry are written.

@@ -249,6 +249,25 @@ def test_specialist_packs_auto_detect_for_one_click_install() -> None:
     )
 
 
+def test_mod_presentation_and_workspace_repair_are_wired() -> None:
+    """A public mod page and a messy workspace have an owner and a gate."""
+    for rel in (
+        "_CANONICAL-SKILLS/mod-workspace-organization/SKILL.md",
+        "_CANONICAL-SKILLS/mod-presentation/SKILL.md",
+        "_CANONICAL-SKILLS/mod-presentation/templates/MOD-README.md",
+        "_CANONICAL-SKILLS/mod-presentation/templates/NEXUS-BBCODE.txt",
+        "TOOLS/workspace_doctor.py",
+        "TOOLS/presentation_check.py",
+    ):
+        assert (ROOT / rel).is_file(), f"missing {rel}"
+    gm = read(ROOT / "_CANONICAL-SKILLS" / "game-modding" / "SKILL.md")
+    assert "mod-workspace-organization" in gm and "workspace_doctor.py" in gm
+    assert "mod-presentation" in gm and "presentation_check.py" in gm
+    gate = read(ROOT / "_CANONICAL-SKILLS" / "game-modding" / "references" / "game-mod-ship-gate.md")
+    assert "WORKSPACE LAYOUT: PASS|FAIL|N/A" in gate
+    assert "PRESENTATION: PASS|FAIL|N/A" in gate
+
+
 def test_documented_skill_counts() -> None:
     actual = len(list(CANON.glob("*/SKILL.md")))
     # No pinned number here: the count is whatever the tree holds, and every
@@ -2868,6 +2887,7 @@ def main() -> int:
         test_skills,
         test_all_descriptions_under_budget,
         test_specialist_packs_auto_detect_for_one_click_install,
+        test_mod_presentation_and_workspace_repair_are_wired,
         test_documented_skill_counts,
         test_bootstrap,
         test_release_checklist_exact_sha_contract,
