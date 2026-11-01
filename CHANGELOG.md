@@ -5,7 +5,11 @@
   timeout verdict; the child kill is best-effort. This was the Python 3.15 pack
   gate failure on the 8.29.4 docs commit; `Test-GitHubVerdict.ps1` now passes all
   20 cases locally.
-- No runtime or dependency changes beyond that waiter hardening.
+- Serena 2.1.0 is now part of the default `code-intel` profile and the Hermes
+  `code` profile when installed. It advertises 3 tools / 4,225 bytes / ~1,056
+  tokens; with CBM the fixed surface is ~6,260, under 10k. `Ensure-SerenaHermes.ps1`
+  covers the live-gateway install path. No global registration.
+- No runtime or dependency changes beyond those.
 
 ## 8.29.4 (2026-10-31)
 

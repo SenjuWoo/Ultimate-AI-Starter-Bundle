@@ -51,7 +51,9 @@ graph of animation files that costs tokens on every query and answers nothing. R
 `ingest_traces`
 
 Measured on 0.12.1 (2026-10-31): 17 tools, 20,814 schema bytes, about 5,204
-schema tokens (bytes/4, not measured billing). Use Claude/Grok/trusted Codex project scope or Hermes' native
+schema tokens (bytes/4, not measured billing). The Hermes `code` profile adds
+Serena when installed (3 tools, 4,225 bytes, ~1,056 tokens), so the combined
+fixed surface is ~6,260. Use Claude/Grok/trusted Codex project scope or Hermes' native
 `code` profile; do not register it globally just because the executable exists.
 
 ## First check: does the graph point at the current checkout?

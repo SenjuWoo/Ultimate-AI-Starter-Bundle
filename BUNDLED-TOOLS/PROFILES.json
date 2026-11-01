@@ -182,7 +182,7 @@
         "navigate"
       ],
       "scope": "project",
-      "why": "Serena provides language-server-backed symbol navigation and editing; codebase-memory provides repository graph queries. Claude, Grok and trusted Codex projects receive them only through code-intel. Hermes uses its separate native code profile; Kimi requires explicit -Global. Keep small text-only tasks on grep. code-intel replaces the old code-deep profile id.",
+      "why": "Serena provides language-server-backed symbol navigation and editing; codebase-memory provides repository graph queries. Claude, Grok and trusted Codex projects receive them only through code-intel. Hermes uses its separate native code profile (CBM plus Serena when installed); Kimi requires explicit -Global. Keep small text-only tasks on grep. code-intel replaces the old code-deep profile id.",
       "detect": {
         "files": [
           "pyproject.toml",

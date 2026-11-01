@@ -253,7 +253,7 @@ The always-on core is `context7` (library docs; keyless resolves library IDs onl
 
 **You do not switch anything on.** When a task needs a project tool (Skyrim Forge, houseCARL, RimWorldForge, Blender, Unity, Godot, a browser, the GitHub API ...), your AI asks the toolbox, which starts that server in the same chat: no restart, no command, no config edit. The tool's own CLI keeps working too. For a project you use daily, the agent can also wire it natively with `TOOLS/Set-McpProfile.ps1 -Auto -Path <project>`; that copy loads in the next chat opened there.
 
-When the matching local tool is installed, Hermes also gets native named profiles without loading them into default: `code` adds codebase-memory, `roblox` adds the official Roblox Studio MCP, and `skyrim` connects houseCARL while Skyrim Forge remains available through its routed skill/CLI. Forge MCP compatibility is explicit.
+When the matching local tool is installed, Hermes also gets native named profiles without loading them into default: `code` adds codebase-memory and Serena (when installed), `roblox` adds the official Roblox Studio MCP, and `skyrim` connects houseCARL while Skyrim Forge remains available through its routed skill/CLI. Forge MCP compatibility is explicit.
 
 ### Profiles do not expire automatically
 
@@ -770,9 +770,10 @@ Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tool
 
 - **Provider skills** — 129 general skills per AI (Claude, Codex, Grok, Kimi, Hermes, Antigravity), generated from one canonical tree; Forge writes its own Skyrim pack when that pack is on.
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
-- **MCP servers** — context7 and Headroom are the always-on core (the official GitHub server too, where `gh` is not signed in); servers a tool's own installer registers machine-wide are parked per project. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
+- **MCP servers** — context7 and Headroom are the always-on core (the official GitHub server too, where `gh` is not signed in); servers a tool's own installer registers machine-wide are parked per project. Hermes isolates codebase-memory and Serena in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup (Skyrim pack)
 - **codebase-memory-mcp** — installed by default; `-CoreOnly` skips it, and `-Components codebase-memory` forces it back. When present it is enabled only by Claude/Grok/trusted Codex project-scoped `code-intel` or Hermes' native `code` profile; `.cbmignore` + `TOOLS/Setup-CodebaseMemory-Index.ps1` keep the graph on source, not asset trees. Its code-profile schema is ~5,204 tokens (bytes/4), under the 10k budget and not a default-chat cost. The optional dashboard is `TOOLS/Start-CodebaseMemory-UI.ps1` (http://127.0.0.1:9749/); MCP works without it.
+- **Serena** — LSP symbol navigation/editing in the same `code-intel` and Hermes `code` profiles. 2.1.0 advertises 3 tools / 4,225 bytes / ~1,056 tokens; combined with CBM the fixed cost is ~6,260, still under 10k. Its REPL exposes the rest dynamically. It overlaps CBM deliberately: graph/architecture vs symbol resolution and body edits.
 - **Headroom** (context compression, registered as an MCP server — see [Headroom + Grok](#headroom--grok))
 - **Superpowers** + **Ponytail** plugins/skills
 - **CodeBurn** CLI (installed by default, invoked when needed)
@@ -971,7 +972,7 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | `perplexity-mcp` | [Perplexity MCP](https://github.com/perplexityai/modelcontextprotocol) | Credential-gated MCP |
 | `context7` | [Context7](https://github.com/upstash/context7) | Core documentation MCP |
 | `github-mcp-server` | [GitHub MCP Server](https://github.com/github/github-mcp-server) | Official offline binary; core MCP |
-| `serena` | [Serena](https://github.com/oraios/serena) | Code-intel profile; language-server navigation |
+| `serena` | [Serena](https://github.com/oraios/serena) | Code-intel / Hermes code profile; LSP navigation and symbol edits |
 | `chrome-devtools-mcp` | [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) | Scoped browser inspection |
 | `shadcn-mcp` | [shadcn MCP](https://github.com/shadcn-ui/ui) | Matching project registry profile |
 | `blender-mcp` | [Blender MCP](https://github.com/ahujasid/mcp-for-blender) | Editor profile; Blender/addon prerequisite |

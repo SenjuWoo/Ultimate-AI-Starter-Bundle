@@ -262,9 +262,8 @@ Reuse Reverse THIS! specialist tools and Universal Modder game recon.
 Native Ghidra, GUI, runtime capture and paid inference were not exercised.
 
 Context7 4.4.1: two tools / 5,221 bytes; production npm audit clean. Serena
-2.0.0/Python 3.13: claude-code, codex and grok contexts all connected with the
-dashboard disabled (23 tools; 26,312 / 30,038 / 29,440 bytes respectively).
-RTK 1.0.0 Apache-2.0 OSS asset: verified official SHA-256, exact short status,
+2.1.0/Python 3.14: 3 advertised tools / 4,225 bytes in the agent context;
+the REPL exposes the rest dynamically. RTK 1.0.0 Apache-2.0 OSS asset: verified official SHA-256, exact short status,
 rewrite exit-3 protocol and unchanged four-row pinned corpus. No broad hook,
 pipeline rewrite or daemon. Ponytail 5.2.0: 136 root + 31 pi-extension tests
 passed in a real Windows Python/Git Bash environment, retaining local security
@@ -294,7 +293,7 @@ filter tools, so the active surface is usually smaller.
 | Context7 4.3.0 | always-on | 2 | 5,231 | 1,308 |
 | GitHub MCP 2.0.2 (five toolsets) | always-on | 47 | 129,679 | 32,420 |
 | codebase-memory 0.12.1 | `code-intel` profile | 17 | 20,814 | 5,204 |
-| Serena 1.7.0 (`agent` context) | `code-intel` profile | 28 | 36,553 | 9,138 |
+| Serena 2.1.0 (`agent` context) | `code-intel` / Hermes `code` | 3 | 4,225 | 1,056 |
 | Playwright MCP 0.0.83 | `web` profile | 25 | 20,286 | 5,072 |
 | Chrome DevTools MCP 1.10.1 | `web` profile | 30 | 26,388 | 6,597 |
 | shadcn 4.21.4 | `web` profile | 7 | 4,495 | 1,124 |

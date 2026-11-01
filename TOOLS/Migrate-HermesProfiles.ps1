@@ -221,6 +221,7 @@ function Test-UabsServerFamily($Entry, [string]$Family) {
     'github' { return $text.Contains('github-mcp-server') }
     'headroom' { return $text.Contains('headroom') -and $text.Contains('mcp') }
     'codebase-memory' { return $text.Contains('codebase-memory-mcp') }
+    'serena' { return $text.Contains('serena') }
     'roblox' { return $text.Contains('roblox') -and ($text.Contains('studiomcp') -or $text.Contains('mcp.bat')) }
     'housecarl' { return $text.Contains('housecarl-mcp') }
     'skyrim-forge' { return $text.Contains('skyrim-forge') -or $text.Contains('skyrim_forge') }
@@ -887,6 +888,10 @@ try {
   if (-not $codebaseMemory) { $codebaseMemory = [Environment]::GetEnvironmentVariable('CODEBASE_MEMORY_MCP', 'User') }
   if (-not $codebaseMemory) { $codebaseMemory = Join-Path $env:LOCALAPPDATA 'Programs\codebase-memory-mcp\codebase-memory-mcp.exe' }
   $codeAvailable = Test-Path -LiteralPath $codebaseMemory -PathType Leaf
+  # Serena is the LSP half of code-intel. It is 3 advertised tools / ~1,056
+  # schema tokens on 2.1.0; add it beside CBM when the owner installed it.
+  $serena = Join-Path $env:USERPROFILE '.local\bin\serena.exe'
+  $serenaAvailable = Test-Path -LiteralPath $serena -PathType Leaf
   $robloxBat = Join-Path $env:LOCALAPPDATA 'Roblox\mcp.bat'
   $robloxAvailable = Test-Path -LiteralPath $robloxBat -PathType Leaf
   $houseCarl = [Environment]::GetEnvironmentVariable('HOUSECARL_MCP', 'Process')
@@ -1011,6 +1016,11 @@ try {
   }
   $codebaseSpec = @{
     command = $codebaseMemory; args = @(); enabled = $true; connect_timeout = 90
+  }
+  $serenaSpec = @{
+    command = $serena
+    args = @('start-mcp-server', '--context', 'agent', '--enable-web-dashboard', 'false', '--project-from-cwd')
+    enabled = $true; connect_timeout = 90
   }
 
   # Preserve the existing combined creative profile. New task profiles isolate
@@ -1140,10 +1150,14 @@ try {
   if ($codeAvailable) {
     Ensure-UabsServer 'code' $maps['code'] 'codebase-memory-mcp' $codebaseSpec 'codebase-memory'
     Normalize-UabsAliases 'code' $maps['code'] 'codebase-memory-mcp' @('codebase-memory') 'codebase-memory'
+    if ($serenaAvailable) {
+      Ensure-UabsServer 'code' $maps['code'] 'serena' $serenaSpec 'serena'
+    }
     foreach ($profile in @('default', 'roblox', 'skyrim') | Where-Object { $managedProfiles -contains $_ }) {
       foreach ($id in @('codebase-memory-mcp', 'codebase-memory')) {
         Remove-UabsServer $profile $maps[$profile] $id 'codebase-memory'
       }
+      Remove-UabsServer $profile $maps[$profile] 'serena' 'serena'
     }
   }
 

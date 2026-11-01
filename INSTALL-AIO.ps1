@@ -2886,6 +2886,15 @@ if (-not $ToolsOnly) {
         Write-UabsWarn 'codebase-memory-mcp Hermes registration failed; run TOOLS\Ensure-CodebaseMemoryHermes.ps1 after restart'
       }
     }
+    $ensureSerena = Join-Path $PackRoot 'TOOLS\Ensure-SerenaHermes.ps1'
+    if (Test-Path -LiteralPath $ensureSerena -PathType Leaf) {
+      $ensureSerenaCode = Invoke-UabsChildScript -Title 'Serena Hermes entry' -File $ensureSerena -ArgList @()
+      if ($ensureSerenaCode -eq 0) {
+        Write-UabsOk 'Serena registered in the Hermes code profile'
+      } else {
+        Write-UabsWarn 'Serena Hermes registration failed; run TOOLS\Ensure-SerenaHermes.ps1 after restart'
+      }
+    }
   }
 
   $sillyGateway = Join-Path $PackRoot 'TOOLS\Install-SillyTavernGateway.ps1'
