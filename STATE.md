@@ -1,5 +1,27 @@
 # Bundle audit state
 
+## Completed 8.29.11 free game/app starter — 2026-11-01
+
+- Added `game-dev-starter` (130 canonical skills): free-first stack choice,
+  procedural asset generators, CC0 libraries, asset pipeline and real
+  headless/build harnesses. Added `TOOLS/free_game_tools.py` (no network) and
+  its contract tests; README/START-HERE point new projects at it.
+- Fanout to all six provider trees; live skills installed in Claude, Codex,
+  Grok, Kimi, Hermes and Antigravity.
+- Local state 8.29.11: doctor **0 errors / 0 warnings**, after refreshing two
+  provider-tailored skills and parking the RobloxForge server machine-wide
+  entries (parked, not uninstalled; restore with `Set-McpProfile.ps1 -Unpark`).
+- Hermes profiles: `particle-ai/particle-1` with `agent.reasoning_effort: high`;
+  CBM 17 tools and Serena 3 tools connect in `code`.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.11
+  at `15702181a300ae1ac707316a00b64a70234e9ca1`; CI 41337774860, CodeQL
+  41337773240. Core 45,541,156 B sha256
+  `91ebaed9d48336a209502401c3453c88cea03bc45f0294d9e6ed9455b2691930`;
+  Full-Offline 142,113,170 B sha256
+  `f35f3cfa0838fa00bdec80814663d411ffed130856bd2b207b08476c9a4adbf1`.
+  All nine assets verified.
+- Open alerts: Dependabot 0, code-scanning 0, secret-scanning 0.
+
 ## Completed 8.29.10 live-gateway install deferral — 2026-11-01
 
 - `Migrate-HermesProfiles.ps1` now accepts `-DeferLiveGateway`: a running Hermes
