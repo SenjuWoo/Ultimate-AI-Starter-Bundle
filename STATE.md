@@ -1,5 +1,23 @@
 # Bundle audit state
 
+## Completed 8.29.6 default Serena install — 2026-11-01
+
+- `TOOLS/Ensure-SerenaHermes.ps1` now installs `serena-agent==2.1.0` with
+  `uv tool install --force` when the executable is missing, then registers the
+  Hermes `code` profile. `INSTALL-AIO.ps1` calls it unless `-CoreOnly`.
+- Verified by removing the Serena tool environment, confirming the executable
+  was gone, running the ensure script, and checking 2.1.0 plus 3 Hermes tools.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.6
+  at `a1a83a7c8e9f223828acf6baaa971a82dc1db0bc`; CI 41271054418, CodeQL
+  41271054127, Release 41272136840. Core 45,483,552 B sha256
+  `c5326d3b8aacd12783e7586b8c3618af0f5f80a08369cee1dc2f780dc21c0668`;
+  Full-Offline 142,035,190 B sha256
+  `40f73ebf226352e36a77b7af5ccb222c0945372515be643c3319648c5b39eacf`.
+  All nine assets verified with `sha256sum -c SHA256SUMS.txt`.
+- Local install: repository checkout, `install-state.json` 8.29.6; doctor
+  **0 errors / 0 warnings**; Serena 2.1.0 connected with 3 tools.
+- Open alerts: Dependabot 0, code-scanning 0, secret-scanning 0.
+
 ## Completed 8.29.5 Serena default and waiter hardening — 2026-11-01
 
 - Serena 2.1.0 is now part of the default `code-intel` profile and the Hermes
