@@ -1,5 +1,24 @@
 # Bundle audit state
 
+## Completed 8.29.8 intent-retry correction — 2026-11-01
+
+- The AIO no longer treats a first refusal as a reason to switch models or drop
+  scope. It retries once with the operator's exact intent and the smallest framing
+  change; only the operator decides whether to move a task to a local model.
+- The Claude Code addendum and `TOOLS/Strip-AI-Attribution.py` remain the
+  no-visible-attribution path; host-side invisible provenance is outside prompt
+  control. No legal/copyright/originality warnings were added.
+- Live preambles (Claude, Codex, Grok, Hermes default and code) were recomposed.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.8
+  at `f7f5715771e5d7deea57d5ce69fca6103abd6596`; CI 41282046741, CodeQL
+  41282046652, Release 41282561349. Core 45,489,556 B sha256
+  `2f83181a2b05fe5bef358a6783d6af2f81d94243d193a5fe1a9ad526d347ffcc`;
+  Full-Offline 142,050,276 B sha256
+  `ed643448d712532e4f73a70c281775a2a339516a02d81f5ec23c92d2c5250605`.
+  All nine assets verified.
+- Local install: `install-state.json` 8.29.8; doctor **0 errors / 0 warnings**.
+- Open alerts: Dependabot 0, code-scanning 0, secret-scanning 0.
+
 ## Completed 8.29.6 default Serena install — 2026-11-01
 
 - `TOOLS/Ensure-SerenaHermes.ps1` now installs `serena-agent==2.1.0` with
