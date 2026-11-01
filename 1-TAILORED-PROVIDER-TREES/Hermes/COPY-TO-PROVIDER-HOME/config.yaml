@@ -1,7 +1,7 @@
 # Portable Hermes starter config. Ships provider/model preferences only;
 # MCP servers and hooks are wired per-machine by INSTALL-AIO.ps1.
 model:
-  default: deepseek/deepseek-v4.1-flash-1017
+  default: particle-ai/particle-1
   provider: openrouter
   base_url: https://openrouter.ai/api/v1
   aliases:
@@ -46,7 +46,7 @@ agent:
   max_verify_nudges: 3
   verify_on_stop: true
   verbose: false
-  reasoning_effort: max
+  reasoning_effort: high
   personalities: {}
 terminal:
   backend: local
@@ -188,27 +188,27 @@ moa:
     default:
       reference_models:
         - provider: openrouter
-          model: deepseek/deepseek-v4.1-flash-1017
+          model: particle-ai/particle-1
           enabled: false
         - provider: openrouter
           model: google/gemini-3.7-flash
           enabled: false
       aggregator:
         provider: openrouter
-        model: deepseek/deepseek-v4.1-flash-1017
+        model: particle-ai/particle-1
       enabled: false
       degraded_reference_policy: loud
       fanout: user_turn
   reference_models:
     - provider: openrouter
-      model: deepseek/deepseek-v4.1-flash-1017
+      model: particle-ai/particle-1
       enabled: false
     - provider: openrouter
       model: google/gemini-3.7-flash
       enabled: false
   aggregator:
     provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
+    model: particle-ai/particle-1
   degraded_reference_policy: loud
   max_tokens: 4096
   fanout: user_turn

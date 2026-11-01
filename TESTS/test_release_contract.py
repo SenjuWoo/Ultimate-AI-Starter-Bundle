@@ -495,7 +495,7 @@ def test_hermes_cost_contract() -> None:
         # so keep Hermes' whole-request retry layer bounded.
         for token in (
             "max_turns: null",
-            "reasoning_effort: max",
+            "reasoning_effort: high",
             "api_max_retries: 2",
             "tool_use_enforcement: true",
             "execution_guidance: true",
@@ -1303,7 +1303,7 @@ def test_hermes_starter_aux_models_follow_the_main_model() -> None:
     assert "provider: auto" in delegation and re.search(r"(?m)^  model: ''\s*$", delegation), (
         "delegation still pins a dated model instead of following the main model")
 
-    assert re.search(r"(?m)^  default: deepseek/deepseek-v4\.1-flash-1017$", text), (
+    assert re.search(r"(?m)^  default: particle-ai/particle-1$", text), (
         "the starter default moved; update this contract and docs/HERMES-MODELS.md together")
 
     moa = re.search(r"(?ms)^moa:\r?\n(.*?)(?=^[a-z_]+:|\Z)", text)
@@ -3511,7 +3511,7 @@ def test_hermes_readme_matches_the_shipped_starter() -> None:
 
     # Each claim in the README that names a config value must match the file.
     for key, value, section in (
-        ("reasoning_effort", "max", "agent"),
+        ("reasoning_effort", "high", "agent"),
         ("max_turns", "null", "agent"),
         ("threshold_tokens", "320000", "compression"),
     ):

@@ -6,7 +6,7 @@ below is checked against the actual file by TESTS/test_release_contract.py
 said "Empty mcp_servers" while the starter shipped five live servers, and
 nothing was watching.
 
-- Main model: DeepSeek V4.1 Flash, reasoning_effort: max, max_turns: null (unlimited)
+- Main model: Particle-1, reasoning_effort: high, max_turns: null (unlimited)
 - Compression threshold_tokens: 320000, lean tail (tool-result prune from 80000)
 - Auxiliary tasks (vision, compression, approvals, curator): provider auto, no pinned model
 - No fallback_providers chain ships; a weaker text-only model must not silently replace the main one

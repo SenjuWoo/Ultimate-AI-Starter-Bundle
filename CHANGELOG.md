@@ -1,3 +1,12 @@
+## 8.29.9 (2026-11-01)
+
+- Hermes templates and the migration fallback now default to
+  `particle-ai/particle-1` on OpenRouter with `agent.reasoning_effort: high`.
+  Auxiliary tasks keep `provider: auto`, delegation stays `auto`/empty, and the
+  local `sillytavern` profile is untouched.
+- MoA reference/aggregator slots use the same model; MoA remains off.
+- 129 canonical skills total; no catalog or dependency change.
+
 ## 8.29.8 (2026-11-01)
 
 - Refined the provider-boundary rule: a refused request is retried once with the

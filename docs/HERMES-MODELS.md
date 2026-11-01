@@ -11,10 +11,10 @@ evidence, not a quality benchmark or guaranteed availability.
 `hermes model` opens the provider/model picker. `hermes model --refresh` clears
 its cache and refetches catalogs; `/model` switches inside a chat. Compare task
 accuracy, latency, modalities and budget, not release date alone. The starter
-default is `deepseek/deepseek-v4.1-flash-1017`: 1,048,576-token context,
-$0.15 / $0.60 per 1M input/output tokens, and text plus image input on
-OpenRouter's listing. Upgrades do not replace an existing main or auxiliary
-choice with a newer paid model.
+default is `particle-ai/particle-1` with `agent.reasoning_effort: high`;
+verify its current context, price and modality listing on OpenRouter before
+quoting a number. Upgrades do not replace an existing main or auxiliary choice
+with a newer paid model.
 
 Currently listed candidates for deliberate comparison:
 

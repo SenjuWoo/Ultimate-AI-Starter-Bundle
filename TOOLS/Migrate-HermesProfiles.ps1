@@ -614,7 +614,7 @@ $script:UabsInheritedMoaReferences = @(
 # the pack's alias list, so a later `moa on` cannot reach a premium endpoint or
 # a provider the user never authenticated.
 $script:UabsMoaReferenceModels = @(
-  @{ provider = 'openrouter'; model = 'deepseek/deepseek-v4.1-flash-1017'; enabled = $true }
+  @{ provider = 'openrouter'; model = 'particle-ai/particle-1'; enabled = $true }
   @{ provider = 'openrouter'; model = 'google/gemini-3.7-flash'; enabled = $true }
 )
 
@@ -662,7 +662,7 @@ function Get-MoaMigrationPlan([object]$Moa, [bool]$IsVendorDefault = $false, [st
 
   $provider = if ($MainProvider) { $MainProvider } else { 'openrouter' }
   $model = Get-MoaModelId $MainModel
-  if (-not $model) { $model = 'deepseek/deepseek-v4.1-flash-1017' }
+  if (-not $model) { $model = 'particle-ai/particle-1' }
   return @{
     disable = $true
     aggregator = @{ provider = $provider; model = $model }
