@@ -16,8 +16,21 @@ if (-not $HermesExe -or -not (Test-Path -LiteralPath $HermesExe -PathType Leaf))
 }
 if (-not $SerenaExe) { $SerenaExe = Join-Path $env:USERPROFILE '.local\bin\serena.exe' }
 if (-not (Test-Path -LiteralPath $SerenaExe -PathType Leaf)) {
-  Write-Host 'Serena is not installed; skipping Hermes registration.'
-  exit 0
+  $uv = Get-Command uv -ErrorAction SilentlyContinue
+  if (-not $uv) {
+    Write-Host 'Serena is not installed and uv is unavailable; skipping Serena registration.'
+    exit 0
+  }
+  Write-Host 'Installing Serena 2.1.0...'
+  & $uv.Source tool install --force 'serena-agent==2.1.0'
+  if ($LASTEXITCODE -ne 0) { throw "uv tool install serena-agent==2.1.0 exited $LASTEXITCODE" }
+  Refresh-ProcessPath
+  if (-not (Test-Path -LiteralPath $SerenaExe -PathType Leaf)) {
+    $SerenaExe = Join-Path $env:USERPROFILE '.local\bin\serena.exe'
+  }
+}
+if (-not (Test-Path -LiteralPath $SerenaExe -PathType Leaf)) {
+  throw "Serena was not found after installation at $SerenaExe"
 }
 
 $listed = (& $HermesExe -p code mcp list 2>&1 | Out-String)

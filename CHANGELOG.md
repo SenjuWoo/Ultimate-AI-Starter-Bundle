@@ -1,3 +1,13 @@
+## 8.29.6 (2026-11-01)
+
+- The default install now installs Serena 2.1.0 itself, not only registering it
+  when it already exists. `TOOLS/Ensure-SerenaHermes.ps1` runs
+  `uv tool install --force serena-agent==2.1.0` when the executable is absent,
+  then registers the Hermes `code` profile entry. `-CoreOnly` skips it.
+- This closes the fresh-install gap: CBM and Serena are both present after a
+  normal install, and the code profile exposes them at ~6,260 fixed tokens.
+- No schema, skill or runtime change beyond the installer path.
+
 ## 8.29.5 (2026-11-01)
 
 - `TOOLS/Wait-External.ps1` no longer fails its own timeout path when Windows
