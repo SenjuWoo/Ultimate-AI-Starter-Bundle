@@ -1,5 +1,22 @@
 # Bundle audit state
 
+## Completed 8.29.10 live-gateway install deferral — 2026-11-01
+
+- `Migrate-HermesProfiles.ps1` now accepts `-DeferLiveGateway`: a running Hermes
+  desktop or gateway produces a warning and exit 0 instead of a failed native-profile
+  step. `INSTALL-AIO.ps1` passes it; CBM/Serena fallbacks still run.
+- A full local install completed at 8.29.10: doctor **0 errors / 0 warnings**;
+  Hermes profiles report `particle-ai/particle-1` / high; CBM 17 tools and
+  Serena 3 tools connect in the `code` profile.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.10
+  at `8899d7d1bb6eb511a82f73cf0444c4e4a9e543ba`; CI 41323973486, CodeQL
+  41323973377. Core 45,504,935 B sha256
+  `bd54b8fc49ce8b2444a1824379fd4c0854f92b7bc597d458fe82c18404bfb816`;
+  Full-Offline 142,065,664 B sha256
+  `9a37ea5edfac88be6aaab5a6caa0c620f24b215791760b4d762d224d2e83c537`.
+  All nine assets verified.
+- Open alerts: Dependabot 0, code-scanning 0, secret-scanning 0.
+
 ## Completed 8.29.9 particle-1 high Hermes default — 2026-11-01
 
 - Hermes starter templates and migration fallback now use
