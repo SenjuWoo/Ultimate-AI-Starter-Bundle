@@ -1,5 +1,23 @@
 # Bundle audit state
 
+## Completed 8.29.9 particle-1 high Hermes default — 2026-11-01
+
+- Hermes starter templates and migration fallback now use
+  `particle-ai/particle-1` on OpenRouter with `agent.reasoning_effort: high`.
+  Auxiliary tasks remain `provider: auto` with empty models; delegation remains
+  `auto`; `sillytavern` stays `local-model`; MoA stays off.
+- Live profiles switched by `hermes config set`: default, code, blender, creative,
+  skyrim, unity and web report particle-1 and high.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.9
+  at `5ecb457b39669dd8e2d6c2c91b168697cf3f8151`; CI 41284583701, CodeQL
+  41284583649. Core 45,489,560 B sha256
+  `de64067fdd1b98097fc46795af326c87ef9d8c47ae5c9d0b2502260cd57d0e0d`;
+  Full-Offline 142,050,283 B sha256
+  `bf25f7b25ba9535cf0f617ce6866a7e611991c96d92ffe5b85f6689adffb2c90`.
+  All nine assets verified.
+- Local install: `install-state.json` 8.29.9; doctor **0 errors / 0 warnings**.
+- Open alerts: Dependabot 0, code-scanning 0, secret-scanning 0.
+
 ## Completed 8.29.8 intent-retry correction — 2026-11-01
 
 - The AIO no longer treats a first refusal as a reason to switch models or drop
