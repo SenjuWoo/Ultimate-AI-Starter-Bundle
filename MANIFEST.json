@@ -33681,8 +33681,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 344404,
-  "sha256": "4206d0cd614cef57a6ccb0ab8bee240166e05b043721980af81b153a16c6dc77"
+  "size": 344425,
+  "sha256": "916bece4bd271ca0e0966b06bf00fae0dd40297a13b510c6ad93dda5ed8315ff"
  },
  {
   "path": "TESTS/test_release_provenance.py",
