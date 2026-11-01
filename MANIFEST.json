@@ -33740,6 +33740,11 @@
   "sha256": "e83f8dc293e6dfa3959e0e730c074ed178e0df85e120b4788bab3dac308e285d"
  },
  {
+  "path": "TOOLS/Ensure-SerenaHermes.ps1",
+  "size": 1986,
+  "sha256": "df6eb1b941abd235ded9e8393261d9c0e32fbb981ff400a47b5007ec58dd04c0"
+ },
+ {
   "path": "TOOLS/Ensure-Tools.ps1",
   "size": 1687,
   "sha256": "277d16634b653577cda37f8590ade7350265cdfd2e7dd6998247c97d391c616c"
