@@ -553,7 +553,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.29.9 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.29.10 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -2719,7 +2719,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.29.9'
+version = '8.29.10'
   content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
@@ -2858,7 +2858,7 @@ if (-not $ToolsOnly) {
         $hermesUp | Stop-Process -Force -ErrorAction SilentlyContinue
         Start-Sleep -Milliseconds 500
       }
-      $profileArgs = @('-Apply')
+      $profileArgs = @('-Apply', '-DeferLiveGateway')
       # Resolve the REAL Hermes home, not the active profile: Hermes desktop
       # exports HERMES_HOME as profiles\<name> for everything it launches, and
       # an installer started from inside a session would otherwise migrate one

@@ -1,3 +1,14 @@
+## 8.29.10 (2026-11-01)
+
+- `Migrate-HermesProfiles.ps1` accepts `-DeferLiveGateway`. When the Hermes
+  desktop or gateway is live, the installer now defers the profile migration
+  with a warning and exit 0 instead of reporting a failed native-profile step;
+  the CBM/Serena fallbacks still run and the profiles that already exist remain
+  usable. A restart lets the next run apply the queued profile changes.
+- `INSTALL-AIO.ps1` passes the defer switch. Local install verified at 8.29.10
+  with doctor 0/0; Hermes default remains particle-1/high.
+- No catalog or dependency change; 129 canonical skills total.
+
 ## 8.29.9 (2026-11-01)
 
 - Hermes templates and the migration fallback now default to

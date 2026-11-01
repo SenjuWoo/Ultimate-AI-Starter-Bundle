@@ -628,7 +628,7 @@ def test_hermes_native_profile_migration_contract() -> None:
         "the codebase-memory doctor cost no longer matches the measured 0.12.1 tools/list surface"
     )
     assert "Migrate-HermesProfiles.ps1" in installer, "the installer no longer runs the profile migration"
-    assert "$profileArgs = @('-Apply')" in installer and "-File $hermesProfiles -ArgList $profileArgs" in installer, (
+    assert "$profileArgs = @('-Apply', '-DeferLiveGateway')" in installer and "-File $hermesProfiles -ArgList $profileArgs" in installer, (
         "the installer no longer applies the migration; a dry run writes nothing "
         "and the profile topology never lands"
     )

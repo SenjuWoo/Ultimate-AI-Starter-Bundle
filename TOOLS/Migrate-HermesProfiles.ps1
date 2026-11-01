@@ -40,7 +40,8 @@ param(
   [ValidateSet('Full', 'Lean', 'ReadOnly')]
   [string]$SkyrimToolset = 'Lean',
   [string]$HermesHome,
-  [string]$HermesExe
+  [string]$HermesExe,
+  [switch]$DeferLiveGateway
 )
 
 $ErrorActionPreference = 'Stop'
@@ -1332,12 +1333,20 @@ try {
   }
 
   if (Get-Process -Name 'Hermes' -ErrorAction SilentlyContinue) {
+    if ($DeferLiveGateway) {
+      Write-UabsWarn 'Hermes is running; profile migration deferred until the next restart. MCP fallbacks still run.'
+      return
+    }
     throw 'Hermes is running. Close the desktop app before applying this migration so it cannot save stale config over the changes.'
   }
   $gwPrev = $ErrorActionPreference
   $ErrorActionPreference = 'Continue'
   try { $gwText = (& $HermesExe gateway status 2>&1 | Out-String) } finally { $ErrorActionPreference = $gwPrev }
   if ($gwText -match '(?i)running' -and $gwText -notmatch '(?i)not running') {
+    if ($DeferLiveGateway) {
+      Write-UabsWarn 'Hermes gateway is running; profile migration deferred until the next restart. MCP fallbacks still run.'
+      return
+    }
     throw 'Hermes gateway is running. Stop it before applying this migration so it cannot save the pre-migration config back over the file.'
   }
 
