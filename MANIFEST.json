@@ -10,6 +10,16 @@
   "sha256": "3d6ca1e92ab8f2d7dfb32bd50698c2851b5d4a6a07b99b958ff8c72440d5e36a"
  },
  {
+  "path": ".github/ISSUE_TEMPLATE/bug_report.yml",
+  "size": 1360,
+  "sha256": "e268b86d12c4062e0c670122968fca276247fe136628095e7b85f5489fdff486"
+ },
+ {
+  "path": ".github/PULL_REQUEST_TEMPLATE.md",
+  "size": 414,
+  "sha256": "172fe2daaa2b26c0db8c6786a4825f1baa8fb4b801c0a8527cf0cb22a671956a"
+ },
+ {
   "path": ".github/dependabot.yml",
   "size": 1103,
   "sha256": "32c2b0ed7e776e9d49d25fbd4ce64dac82d4c510604f0a82be7d4dc00ec64015"
