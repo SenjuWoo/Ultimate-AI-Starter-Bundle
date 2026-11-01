@@ -19,11 +19,10 @@
   Full-Offline 142,022,180 B sha256
   `c5dcbdfe25f6242a3424b574cb29fb8aed21d55fdcb5a55b409012d70e3eb905`.
   All nine assets verified by `sha256sum -c SHA256SUMS.txt`.
-- Local install is the repository itself at
-  `Z:\Backup\Ai documentation\Ultimate-AI-Starter-Bundle`; the temporary
-  `%USERPROFILE%\Apps\...` copies and Temp extracts were removed. `install-state.json`
-  and `MACHINE-MAP.md` point at the repository; doctor 8.29.3 is 0 errors / 0
-  warnings. No application was stopped.
+- Local install is the repository checkout itself; `install-state.json` and
+  `MACHINE-MAP.md` point at it. The temporary `%USERPROFILE%\Apps\...` copies
+  and Temp extracts were removed. Doctor 8.29.3 is 0 errors / 0 warnings. No
+  application was stopped.
 - Open alerts: Dependabot 0, code-scanning 0, secret-scanning 0.
 
 ## Completed 8.29.2 stale-pin closure and cleanup — 2026-10-31
