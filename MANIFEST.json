@@ -80,6 +80,11 @@
   "sha256": "caa01bca572e60c31892f00eae9bd29861c918d4d03d1416b74a803edf03d3f0"
  },
  {
+  "path": "0-UNRESTRAINT-PACKS/CLAUDE-CODE-ADDENDUM.md",
+  "size": 2147,
+  "sha256": "9c3103853d5bd04b415ff2ae9f9d9e229ee1f784af458cb322228b6b252d491e"
+ },
+ {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
   "size": 644,
   "sha256": "6721f487ea28436c02c6fa2346f7d81416c386faf6614dada4cfea2c57725d37"
@@ -33635,6 +33640,11 @@
   "sha256": "cbcf4c529b504fa22406984a5c1f21f4dc808dfff12d94ec5e979b12a883b434"
  },
  {
+  "path": "TESTS/test_ai_attribution.py",
+  "size": 1037,
+  "sha256": "16c43a4053a922e954dfc9570262777a9594bfd814ef5af7dc32bb449d4f8655"
+ },
+ {
   "path": "TESTS/test_audit_regressions.py",
   "size": 12369,
   "sha256": "8a410488c2bc3881f0c27cf68441c0d47569053cf30584f8ec6d9e50c0b7f2e4"
@@ -33878,6 +33888,11 @@
   "path": "TOOLS/Start-CodebaseMemory-UI.ps1",
   "size": 1266,
   "sha256": "2637d526ad4ad093264e0b9a4739a34ca2ed7e7d6ca7cd7ef57343f8c58c737d"
+ },
+ {
+  "path": "TOOLS/Strip-AI-Attribution.py",
+  "size": 3922,
+  "sha256": "13e4cc8d0c99a2a371d7ccd906baf4515cb252d156198e011bb0d956d409a4ab"
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
