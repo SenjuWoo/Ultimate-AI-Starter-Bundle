@@ -1,5 +1,23 @@
 # Tool evaluations
 
+## 2026-11-01 — seven external tools triaged (none bundled)
+
+Reviewed the upstream README, license and repository metadata; nothing was installed or run.
+`AssetRipper` was additionally checked against the local Reverse THIS! kit, where it is already
+owned.
+
+| Tool | License | Decision | Why |
+|---|---|---|---|
+| [ARDY](https://github.com/nv-tlabs/ardy) | Apache-2.0 code; checkpoints separate | Document only, optional animation research | Text/constraint-driven human motion. Needs PyTorch 2.4+, CUDA, an RTX-class GPU and a gated Meta Llama 3 8B token; Linux/4090 is the tested path and there is no release. Not a modding or RE tool, and too heavy for a one-click bundle. |
+| [MotionBricks](https://github.com/NVlabs/motionbricks) | Apache-2.0 code, CC-BY-4.0 docs/assets; models/sample data separate | Document only, optional animation research | Real-time motion in-betweening with ONNX/TensorRT/Warp/Newton. NVIDIA GPU runtime, early (two commits), no release. Same creative niche as ARDY; neither belongs in the default tool layer. |
+| [Co-op Anything](https://github.com/cranebeaker/coop-anything) | MIT | Document only, external companion | Agent playbook, 232-project directory and a 9-tool MCP for adding co-op to single-player games. Strong fit for a co-op task, but it is a second skills/playbook layer and its MCP schema is unmeasured. Use it per project; do not register it globally or vendor its skills. |
+| [Crackdown Xbox 360 recompiled](https://github.com/saulob/crackdown-xbox360-recompiled) | GPL-2.0-only | Drop | A specific game's native port, not a reusable tool. Useful as a ReXGlue case study, but it owns no general capability and ships no game files. |
+| [GameFrame](https://github.com/tanepiper/game-frame) | Apache-2.0 code, CC0-1.0 content | Document only, experimental external framework | Agent-first RE/reimplementation framework with Ghidra, Unicorn, REA and a large skill set. Overlaps Reverse THIS! and the bundle, needs Ghidra/JDK/Node/Zig, is early (21 stars, v1.4.0 with no release assets). Reference it; do not install it as a second workflow. |
+| [ReXGlue SDK](https://github.com/rexglue/rexglue-sdk) | BSD-3-Clause | Reverse THIS! candidate route, not bundle | Xbox 360 static-recompilation runtime/toolkit. Useful as a documented console-port route (with XenonRecomp and Crackdown as evidence), but it is an early C/C++/CMake/Vulkan toolchain, not a shim or a one-click payload. A short encyclopedia recipe is the right home; do not install it into the kit. |
+| [AssetRipper](https://github.com/AssetRipper/AssetRipper) | GPL-3.0 | Already owned by Reverse THIS!; no action | Unity asset extractor, installed as 2.0.0 with an `assetripper.cmd` shim in the local kit. The bundle's reverse-engineering skill already routes to that shim; do not add a second copy. |
+
+No dependency, skill or catalog entry was added. The only action is the documented triage.
+
 ## 2026-10-27 — taste-skill 2.1.5 and ECC 2.2.3 re-evaluated (v8.25.1)
 
 Both read from a shallow clone of the upstream default branch; nothing was run or installed.
