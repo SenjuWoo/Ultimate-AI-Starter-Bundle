@@ -27,7 +27,10 @@
 
 .PARAMETER Components
   Base components to install. V8 adds the full optional catalog unless
-  -CoreOnly is passed. Accepts arrays or comma-separated names through -File.
+  -CoreOnly is passed. codebase-memory is in the default extras (it is a
+  ~5,204-token code-profile schema, under the 10k budget); -CoreOnly opts out,
+  and -Components codebase-memory forces it back. Accepts arrays or
+  comma-separated names through -File.
 
 .PARAMETER WorkspaceRoot
   Optional workspace to receive AGENTS.md / CLAUDE.md / _PROJECT-TEMPLATE
@@ -74,7 +77,7 @@ param(
   [switch]$AllProviders,
   [ValidateSet('BundledFirst','OnlineLatest','BundledOnly')]
   [string]$Mode = 'OnlineLatest',
-  [string[]]$Components = @('housecarl','codebase-memory','headroom','superpowers','ponytail','codeburn','impeccable','playwright-cli','github-mcp-server','rtk','universal-modder','uabs-toolbox'),
+  [string[]]$Components = @('housecarl','headroom','superpowers','ponytail','codeburn','impeccable','playwright-cli','github-mcp-server','rtk','universal-modder','uabs-toolbox'),
   [string]$WorkspaceRoot = '',
   # The directory Skyrim Forge is installed INTO, not the folder that
   # contains it: -ForgeRoot 'S:\Apps\Skyrim Tools\Skyrim-Forge' keeps Forge
@@ -181,6 +184,7 @@ param(
 $Components = @($Components | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ } | Select-Object -Unique)
 if (-not $CoreOnly) {
   $Components = @($Components) + @(
+    'codebase-memory',
     'code-review-skill', 'obsidian-skills',
     'playwright-mcp', 'firecrawl-mcp', 'perplexity-mcp'
   ) | Select-Object -Unique

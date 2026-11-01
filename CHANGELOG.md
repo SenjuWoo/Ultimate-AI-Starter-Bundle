@@ -5,7 +5,9 @@
   stopped, so the `code` profile never received `codebase-memory-mcp`. The
   installer now continues migration and runs a supported
   `TOOLS/Ensure-CodebaseMemoryHermes.ps1` fallback; the fallback was tested by
-  removing the entry and re-adding it through `hermes mcp add`.
+  removing the entry and re-adding it through `hermes mcp add`. It stays in the
+  default extras (5,204 code-profile schema tokens, under the 10k budget);
+  `-CoreOnly` opts out and `-Components codebase-memory` forces it back.
 - Replaced the stale graph: `list_projects` pointed at the deleted
   `Ultimate-AI-Starter-Bundle-v8.21.0` root. Deleted that project and indexed
   the current checkout (21,372 nodes, 50,000 edges). `auto_watch` and

@@ -33086,8 +33086,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 256209,
-  "sha256": "778f3c2136a7173f84907d69d65c862ba8d8fa445b2a573eb9214c5d48c546db"
+  "size": 256375,
+  "sha256": "91e81164894d37b1cbefc5851192d79a17d944ff80964480f13e2dd4b0c452cc"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -33166,8 +33166,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 179899,
-  "sha256": "f37f848875924bc583c7d472d51be858da785bb6a65de24e5874da946a81e876"
+  "size": 180085,
+  "sha256": "20850b9c6a0e9f7208c0090b8052575a6f46319db07e51313bbd26bac4b32977"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33231,8 +33231,8 @@
  },
  {
   "path": "README.md",
-  "size": 70407,
-  "sha256": "27f2d80e22c205624b4051cccf0ad4f2830427cafd062782964e6aa1b509777f"
+  "size": 70597,
+  "sha256": "2deea50258be17023d7246eae7085197c2fdedfc616063190c4b6f3313195b1b"
  },
  {
   "path": "SECURITY.md",
@@ -33246,8 +33246,8 @@
  },
  {
   "path": "START-HERE.txt",
-  "size": 3502,
-  "sha256": "f7b2ad4d849a6a3141b542e7b506bcc20ae8729a382c853a1f8e024bd2ea431c"
+  "size": 3690,
+  "sha256": "74994c88bea432c08495629b427da0df775aa04f6579f80ce32026278daf1ffc"
  },
  {
   "path": "STATE.md",
@@ -38867,7 +38867,7 @@
  {
   "path": "docs/TOOL-EVALUATIONS.md",
   "size": 56741,
-  "sha256": "cf52ce3b3a5014b19c7cfb76044f8aa202a21f50df6b5d8d2bf9196ab41dabfb"
+  "sha256": "8c9bdf8c151d819c0e7bef50a00cf29521aec492a52dffae887f1191030294d2"
  },
  {
   "path": "docs/USAGE-ECONOMY.md",
@@ -39516,8 +39516,8 @@
  },
  {
   "path": "docs/history/V8.29.4-CHANGELOG.md",
-  "size": 2022,
-  "sha256": "5c129ab63298f59470f28b6dac892f45f0eedbe50920c32311d3118a3d2fc699"
+  "size": 2244,
+  "sha256": "c600d4d20d819c81514a14ebaeeff5a9c9a55e7210e48f4ce59a6d7ebfe0ac7c"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

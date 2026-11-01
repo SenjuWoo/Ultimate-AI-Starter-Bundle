@@ -41,6 +41,9 @@ Turn it off again .... START-HERE.bat -ExcludePacks skyrim
 Reverse engineering .. automatic when Reverse THIS! is already registered
 Force a layer on ..... START-HERE.bat -Packs skyrim,reverse
 Only some apps ....... START-HERE.bat -Providers Claude,Codex
+Skip optional extras . START-HERE.bat -CoreOnly
+                       (also skips the local code graph; re-add it with
+                        START-HERE.bat -Components codebase-memory)
 Check the install .... run START-HERE.bat again; its last step checks
                        everything it installed and prints PASS or the problem.
 

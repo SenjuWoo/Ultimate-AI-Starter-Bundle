@@ -293,7 +293,7 @@ filter tools, so the active surface is usually smaller.
 | Headroom 0.40.0 | always-on | 3 | 1,250 | 313 |
 | Context7 4.3.0 | always-on | 2 | 5,231 | 1,308 |
 | GitHub MCP 2.0.2 (five toolsets) | always-on | 47 | 129,679 | 32,420 |
-| codebase-memory 0.11.0 | `code-intel` profile | 17 | 17,308 | 4,327 |
+| codebase-memory 0.12.1 | `code-intel` profile | 17 | 20,814 | 5,204 |
 | Serena 1.7.0 (`agent` context) | `code-intel` profile | 28 | 36,553 | 9,138 |
 | Playwright MCP 0.0.83 | `web` profile | 25 | 20,286 | 5,072 |
 | Chrome DevTools MCP 1.10.1 | `web` profile | 30 | 26,388 | 6,597 |
