@@ -1,5 +1,47 @@
 # Bundle audit state
 
+## Completed 8.29.4 codebase-memory registration and project map — 2026-11-01
+
+- Root cause of "codebase memory never worked": the binary was installed and a
+  graph existed, but `hermes mcp list` had no entry. The installer aborted the
+  whole Hermes profile migration when a live gateway could not be stopped, so
+  the native `code` profile never received `codebase-memory-mcp`.
+- `INSTALL-AIO.ps1` now warns and continues migration instead of throwing, and
+  `TOOLS/Ensure-CodebaseMemoryHermes.ps1` registers the server through
+  `hermes mcp add` as an idempotent fallback. The fallback was proven by
+  removing the entry and re-adding it; `hermes -p code mcp test` connected with
+  all 17 tools, and a fresh `hermes -p code chat` used `list_projects` and
+  returned the current root.
+- codebase-memory stays in the default extras (5,204 code-profile schema
+  tokens, under the 10k budget); `-CoreOnly` skips it and
+  `-Components codebase-memory` forces it back. It remains absent from default
+  chats.
+- The stale graph pointed at the deleted `-v8.21.0` checkout. Deleted that
+  project and indexed the current root: **21,379 nodes, 50,022 edges**,
+  `status=ready`. `auto_watch=false`, `watcher_enabled=false`; indexing is
+  manual and deliberate.
+- `TOOLS/Start-CodebaseMemory-UI.ps1` starts one keepalive dashboard host;
+  `http://127.0.0.1:9749/` returned HTTP 200 and the CBM Lens Beta title. It is
+  optional; MCP works without it. A Startup shortcut was created locally.
+- Re-measured 0.12.1: **17 tools, 20,814 schema bytes, ~5,204 tokens** (bytes/4).
+  Updated the skill, catalog scope note, capability record, evaluation doc and
+  release contract.
+- Added the local-only project map: `PROFILE.md`, `MACHINE-MAP.md` roots and a
+  workspace `WORKSPACE.md`; `project-intel` now sends agents there before
+  scanning drives. Other projects are indexed on demand after `.cbmignore`
+  review, not bulk-indexed into asset noise.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.4
+  at `ff5e4c9541eb6d8d0baafd343a5094495a58fb0d`; CI 41260592574, CodeQL
+  41260592435, Release 41261157323; `Wait-External` verdict **pass, 12/12**.
+  Core 45,481,355 B sha256
+  `714887b120758849ac19968999e74ccfc0a5d1dc1619bfd6558b8440b9726d65`;
+  Full-Offline 142,031,075 B sha256
+  `fb2fcf4cfb60c745b9403692784004012c55f26a83154712503ea04db5f3cb12`.
+  All nine assets verified with `sha256sum -c SHA256SUMS.txt`.
+- Local install: repository checkout, `install-state.json` 8.29.4,
+  `MACHINE-MAP.md` points here; doctor 8.29.4 **0 errors / 0 warnings**.
+- Open alerts: Dependabot 0, code-scanning 0, secret-scanning 0.
+
 ## Completed 8.29.3 auto-check and CI-wait correction — 2026-10-31
 
 - `TOOLS/discover_tools.ps1` now reports `skyrim-forge` beside `reverse-this`,
