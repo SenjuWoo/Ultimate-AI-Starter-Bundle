@@ -51,7 +51,10 @@ if ($GitHubRun -or $Sha) {
             $stdout = $process.StandardOutput.ReadToEndAsync()
             $stderr = $process.StandardError.ReadToEndAsync()
             if (-not $process.WaitForExit($remaining)) {
-                $process.Kill()
+                # Killing a child can be denied by the Windows job/session
+                # boundary (observed on the Python 3.15 CI job). The waiter must
+                # still return the timeout verdict; the child is best-effort.
+                try { $process.Kill() } catch { }
                 $null = $process.WaitForExit(1000)
                 throw 'GitHub request timeout'
             }

@@ -1,3 +1,12 @@
+## 8.29.5 (2026-11-01)
+
+- `TOOLS/Wait-External.ps1` no longer fails its own timeout path when Windows
+  denies `Process.Kill()` inside a CI job boundary. The waiter still returns the
+  timeout verdict; the child kill is best-effort. This was the Python 3.15 pack
+  gate failure on the 8.29.4 docs commit; `Test-GitHubVerdict.ps1` now passes all
+  20 cases locally.
+- No runtime or dependency changes beyond that waiter hardening.
+
 ## 8.29.4 (2026-10-31)
 
 - Fixed the real reason codebase-memory was installed but never callable:
