@@ -268,6 +268,15 @@ def test_mod_presentation_and_workspace_repair_are_wired() -> None:
     assert "PRESENTATION: PASS|FAIL|N/A" in gate
 
 
+def test_discovery_checks_owner_companions() -> None:
+    """The discovery report names the owner tools instead of guessing."""
+    text = read(ROOT / "TOOLS" / "discover_tools.ps1")
+    assert "$report['skyrim-forge']" in text, "Skyrim Forge is not auto-checked"
+    assert "SKYRIM_FORGE_ROOT" in text
+    assert "$report['reverse-this']" in text, "Reverse THIS! is not auto-checked"
+    assert "do not duplicate" in text
+
+
 def test_documented_skill_counts() -> None:
     actual = len(list(CANON.glob("*/SKILL.md")))
     # No pinned number here: the count is whatever the tree holds, and every
@@ -2888,6 +2897,7 @@ def main() -> int:
         test_all_descriptions_under_budget,
         test_specialist_packs_auto_detect_for_one_click_install,
         test_mod_presentation_and_workspace_repair_are_wired,
+        test_discovery_checks_owner_companions,
         test_documented_skill_counts,
         test_bootstrap,
         test_release_checklist_exact_sha_contract,

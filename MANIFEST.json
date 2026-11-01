@@ -4416,8 +4416,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6121,
-  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
+  "size": 6421,
+  "sha256": "0186cbb0e09b107be648c28dfc3b2071bbce61397337554e62cf97911ebaadd9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -9131,8 +9131,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6121,
-  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
+  "size": 6421,
+  "sha256": "0186cbb0e09b107be648c28dfc3b2071bbce61397337554e62cf97911ebaadd9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -13906,8 +13906,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6121,
-  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
+  "size": 6421,
+  "sha256": "0186cbb0e09b107be648c28dfc3b2071bbce61397337554e62cf97911ebaadd9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -18671,8 +18671,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6121,
-  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
+  "size": 6421,
+  "sha256": "0186cbb0e09b107be648c28dfc3b2071bbce61397337554e62cf97911ebaadd9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -23436,8 +23436,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6121,
-  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
+  "size": 6421,
+  "sha256": "0186cbb0e09b107be648c28dfc3b2071bbce61397337554e62cf97911ebaadd9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -28276,8 +28276,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/SKILL.md",
-  "size": 6121,
-  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
+  "size": 6421,
+  "sha256": "0186cbb0e09b107be648c28dfc3b2071bbce61397337554e62cf97911ebaadd9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/token-efficiency/references/shell-output-compression.md",
@@ -29002,12 +29002,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 62642,
-  "sha256": "b1068b061a1fef62b7c985b0af25733a78c7308b0af3a7df446d822d912c0ad3"
+  "sha256": "1e2812beb4b9b15489d84ca66493eb89440cb889bfac4b6919dc8e199112f82e"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1327,
-  "sha256": "8450a45bae4f9d02355b1bc9c0dcc69d69ee313eeaf9148467515a7fa42182e1"
+  "sha256": "51966364f65272d4ab67a770e4b97d97559d14782e89af43214bda15b5a2d5db"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -29017,7 +29017,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39648,
-  "sha256": "8306afbac8dab640f2bea2ba0b501005f104d5d567c27a608473b253b0ee1da7"
+  "sha256": "96b678f6aba22ac8f52ee5f08efb2ce5f3af2868950578ee43d32e5bd163336c"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -33086,8 +33086,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 254197,
-  "sha256": "261ec2a34541088b918f92e1537d091227813ad66cf89dbb84101f41aa292073"
+  "size": 254758,
+  "sha256": "64ac02eb4d975727cdf430fee99b9dc86834800314493d9c01d3c9c6d135fbf1"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -33167,7 +33167,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 178807,
-  "sha256": "03ab664c4a6c94e3cf6cf1006f8940927d306a2631d27dc89bf956cf5b72c352"
+  "sha256": "9ee8f4be98542d7c69a9416592c850525057d7f1a0f47f9483549a16f0d9bf8c"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33232,7 +33232,7 @@
  {
   "path": "README.md",
   "size": 70285,
-  "sha256": "1712b2f7c9da9741cabdd75806841832e50b462d024dfd4142fdfb94c3decbbc"
+  "sha256": "d04e06d2f370b578d1c6c9b068cd5a483aca1755f825929faa93e90eb34c0b26"
  },
  {
   "path": "SECURITY.md",
@@ -33242,12 +33242,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "07bdbec85fa4a5dd0b4ec60dadb665f9aa0e99b699515b0b8b518739e8af68f4"
+  "sha256": "66106b9bb1ad49174234d9dc95666c830e6af1a4f257ee0ecf3da758fed39d62"
  },
  {
   "path": "START-HERE.txt",
   "size": 3502,
-  "sha256": "014cb730898b95f15dcf6faa7100608274e79fa564b858f92c53cc81e4a2df23"
+  "sha256": "6f9f846589eb871a62cf1f0abefcbdfc72583ca89579025355a7114148eaf61c"
  },
  {
   "path": "STATE.md",
@@ -33651,8 +33651,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 343941,
-  "sha256": "6a7fac7be3108f387c34cc02e88b2a29799132935900a1227c3a7d5a099af9ae"
+  "size": 344414,
+  "sha256": "3c10646929a4ee26d2236b73f8eef5a58e19abad925d4fa4300440c6079b2fef"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -33916,8 +33916,8 @@
  },
  {
   "path": "TOOLS/discover_tools.ps1",
-  "size": 6135,
-  "sha256": "d3f9b58326612a94fc514761688b77510452e6604695034cc63fd11011613d0a"
+  "size": 6859,
+  "sha256": "4e32a6bd411320a453f0fc4ca45262bb6d5cad0170acfd9ee32df9296dd12376"
  },
  {
   "path": "TOOLS/fanout_providers.py",
@@ -34092,7 +34092,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2671,
-  "sha256": "836ac00e60530e56e4ef5a755916d031cf67392ab42fa6e8fc240311d006d728"
+  "sha256": "e14964d4f2fee0e32f00e7f6b5c0575e071a7f2ff1267cc89bc74e5fc885b9df"
  },
  {
   "path": "VALIDATION.md",
@@ -34102,7 +34102,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "0ceee8f6b5a48ce988c10e78543ae444770704f34845bd630f71f387c7202b72"
+  "sha256": "2bee0f562aeb8330c10604a1bfd3cb33e2b31ec7d20573bda2cde7af0326dc6b"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -38351,8 +38351,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/token-efficiency/SKILL.md",
-  "size": 6121,
-  "sha256": "d25fa6a3c5d1a5c9cc2bc9079c8009bd44d54f105df2d2611493299eef9baec1"
+  "size": 6421,
+  "sha256": "0186cbb0e09b107be648c28dfc3b2071bbce61397337554e62cf97911ebaadd9"
  },
  {
   "path": "_CANONICAL-SKILLS/token-efficiency/references/shell-output-compression.md",
@@ -39498,6 +39498,11 @@
   "path": "docs/history/V8.29.2-CHANGELOG.md",
   "size": 885,
   "sha256": "9236a4e423a8ccda1cd766fb060b325934ea150748855de71c56dccf25bbc5dc"
+ },
+ {
+  "path": "docs/history/V8.29.3-CHANGELOG.md",
+  "size": 1032,
+  "sha256": "f913ad210862e7f47988791d5aba938afe7eb97bd161d4e4a9a2b9014d698b5b"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

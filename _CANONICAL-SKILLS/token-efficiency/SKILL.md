@@ -44,6 +44,10 @@ and wait with `TOOLS/Wait-External.ps1 -GitHubRun auto -Repo OWNER/REPO -Sha FUL
 It reports the explicit verdict for that SHA with bounded polling and failure
 tails; `ci-convergence` owns the truth table. Verify every required check
 succeeded on that SHA before publishing.
+Never use fixed `sleep` intervals (for example `sleep 300`) to check CI: they
+block the session and queue the user's messages behind them. Let
+`Wait-External.ps1` poll dynamically (2 seconds, backing off to 30) or run it in
+the background; the waiter already reports pass and fail, not only failure.
 No runs, failed/cancelled runs, or a different SHA are not success.
 Respect the host's wait limits and keep the user informed without busy polling.
 

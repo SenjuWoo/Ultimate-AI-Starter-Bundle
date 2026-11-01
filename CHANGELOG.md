@@ -1,3 +1,14 @@
+## 8.29.3 (2026-10-31)
+
+- `TOOLS/discover_tools.ps1` now auto-checks Skyrim Forge from
+  `SKYRIM_FORGE_ROOT` or its default root and reports it beside Reverse THIS!.
+  The bundle detects the owner install and never duplicates it; houseCARL is
+  noted as Forge-owned.
+- `token-efficiency` now forbids fixed `sleep` polling for CI: a fixed wait
+  blocks the session and queues user messages. Use `Wait-External.ps1`, which
+  polls dynamically (2 s, backing off to 30 s) and reports pass as well as fail.
+- No runtime behavior change beyond discovery.
+
 ## 8.29.2 (2026-10-31)
 
 - Closed the stale-pin audit without blind upgrades: the 10 newer optional or

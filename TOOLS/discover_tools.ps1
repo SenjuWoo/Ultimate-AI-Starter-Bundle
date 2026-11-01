@@ -97,6 +97,19 @@ $report['reverse-this'] = @{
   install = 'https://github.com/SenjuWoo/reverse-this (owner kit; do not duplicate)'
 }
 
+# skyrim-forge: the owner install, detected from its root or the default. The
+# bundle never installs a second copy; houseCARL lives inside this owner tree.
+$sfRoot = Get-EnvAnyScope 'SKYRIM_FORGE_ROOT'
+if (-not $sfRoot) { $sfRoot = Join-Path $env:LOCALAPPDATA 'Skyrim-Tools\Skyrim-Forge' }
+$sfOk = Test-Path -LiteralPath $sfRoot -PathType Container
+$report['skyrim-forge'] = @{
+  status = $(if ($sfOk) {'FOUND'} else {'MISSING'})
+  path = $(if ($sfOk) {$sfRoot} else {$null})
+  python = $(if ($sfOk) {Join-Path $sfRoot '.venv\Scripts\python.exe'} else {$null})
+  install = 'https://github.com/SenjuWoo/SkyrimForge (owner tool; do not duplicate)'
+  note = 'houseCARL is owned by Forge; use its MCP or CLI from this tree'
+}
+
 # Runtimes the stack leans on
 foreach ($rt in @(@('python','https://www.python.org/downloads/'), @('node','https://nodejs.org/'), @('git','https://git-scm.com/'), @('gh','https://cli.github.com/'), @('uv','https://docs.astral.sh/uv/'))) {
   $p = Find-OnPath $rt[0]
