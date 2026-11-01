@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.29.3 -->
+<!-- Ultimate AI Starter Bundle v8.29.4 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.29.3
+# Ultimate AI Starter Bundle v8.29.4
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -772,7 +772,7 @@ Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tool
 - **Native plugins** — Superpowers and Ponytail use each provider's official/native plugin lifecycle; Claude-only `claude-mem` installs Bun automatically when needed.
 - **MCP servers** — context7 and Headroom are the always-on core (the official GitHub server too, where `gh` is not signed in); servers a tool's own installer registers machine-wide are parked per project. Hermes isolates codebase-memory in `code`, the official Studio MCP in `roblox`, and houseCARL in `skyrim`; the remaining browser/editor/game profiles stay off outside matching projects, and credentialed servers stay off until their key exists.
 - **houseCARL** MCP + MO2 instance or Vortex shim setup (Skyrim pack)
-- **codebase-memory-mcp** — installed but enabled only by Claude/Grok/trusted Codex project-scoped `code-intel` or Hermes' native `code` profile; `.cbmignore` + `TOOLS/Setup-CodebaseMemory-Index.ps1` keep the graph on source, not asset trees
+- **codebase-memory-mcp** — installed by default and enabled only by Claude/Grok/trusted Codex project-scoped `code-intel` or Hermes' native `code` profile; `.cbmignore` + `TOOLS/Setup-CodebaseMemory-Index.ps1` keep the graph on source, not asset trees. The optional dashboard is `TOOLS/Start-CodebaseMemory-UI.ps1` (http://127.0.0.1:9749/); MCP works without it.
 - **Headroom** (context compression, registered as an MCP server — see [Headroom + Grok](#headroom--grok))
 - **Superpowers** + **Ponytail** plugins/skills
 - **CodeBurn** CLI (installed by default, invoked when needed)

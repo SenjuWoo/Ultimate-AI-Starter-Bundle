@@ -1,3 +1,26 @@
+## 8.29.4 (2026-10-31)
+
+- Fixed the real reason codebase-memory was installed but never callable:
+  the Hermes profile migration aborted when a live gateway could not be
+  stopped, so the `code` profile never received `codebase-memory-mcp`. The
+  installer now continues migration and runs a supported
+  `TOOLS/Ensure-CodebaseMemoryHermes.ps1` fallback; the fallback was tested by
+  removing the entry and re-adding it through `hermes mcp add`.
+- Replaced the stale graph: `list_projects` pointed at the deleted
+  `Ultimate-AI-Starter-Bundle-v8.21.0` root. Deleted that project and indexed
+  the current checkout (21,372 nodes, 50,000 edges). `auto_watch` and
+  `watcher_enabled` are off; the graph is manual and deliberate.
+- Added `TOOLS/Start-CodebaseMemory-UI.ps1` for the optional 9749 dashboard.
+  It is idempotent, keeps one host alive, and returned HTTP 200 / CBM Lens Beta
+  on this machine. MCP clients still use `args=[]` and do not need the UI.
+- Re-measured 0.12.1: 17 tools, 20,814 schema bytes, ~5,204 tokens (bytes/4).
+  Updated the skill, catalog scope note, capability record and evaluation doc.
+- Added the local project map: `PROFILE.md`, `MACHINE-MAP.md` roots and a
+  workspace `WORKSPACE.md`; `project-intel` now points agents there before
+  scanning drives. Other projects are indexed on demand after `.cbmignore`
+  review, not bulk-indexed into asset noise.
+- No new skills; canonical count stays 129.
+
 ## 8.29.3 (2026-10-31)
 
 - `TOOLS/discover_tools.ps1` now auto-checks Skyrim Forge from

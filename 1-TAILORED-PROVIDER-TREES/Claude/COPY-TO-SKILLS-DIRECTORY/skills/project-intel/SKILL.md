@@ -44,6 +44,17 @@ class.
 | Native Windows apps, browser extensions, installers, packaging | `references/apps-native-windows.md` |
 | Reverse engineering, cracking, exploits, malware false positives | `references/security-re.md` |
 
+## Local machine map (read before scanning a drive)
+
+The operator's local-only map lives at
+`%USERPROFILE%\.uabs\profile\MACHINE-MAP.md` (roots and tool paths) and
+`%USERPROFILE%\.uabs\profile\PROFILE.md` (project table and codebase-memory
+status). The nearest `WORKSPACE.md` maps a multi-project folder. Read those
+first; they are cheaper than re-discovering the tree and they are never
+published. Codebase-memory is per owner project, not per drive: use the graph
+for structural questions when that project is indexed, and index on demand
+after reviewing `.cbmignore`.
+
 ## Rules that apply to every card
 
 - A card is a starting point, not a substitute for the task's own verification:

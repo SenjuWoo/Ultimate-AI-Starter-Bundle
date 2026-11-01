@@ -938,14 +938,15 @@ codebase-memory on the same corpus. The schema size alone is not that proof.
 
 ### TAKEN — scoped codebase-memory for Hermes
 
-The installed codebase-memory-mcp 0.10.8 now exposes 15 tools, including
-`check_index_coverage`: 23,974 schema bytes, about **5,994 tokens per enabled
-turn**. Registering it globally on every provider would spend that budget in
+The installed codebase-memory-mcp 0.12.1 now exposes 17 tools, including
+`get_file_outline` and `compare_graphs`: 20,814 schema bytes, about **5,204
+tokens per enabled turn**. Registering it globally on every provider would spend that budget in
 unrelated chats. Claude and Grok therefore keep the project-scoped `code-intel`
 profile; Codex and Kimi remain unregistered by default because they have no
 project-path MCP scope. Hermes now gets a native `code` profile, selected with
 `hermes -p code`, so its graph tools do not leak into the default profile.
-`auto_index=false` and `auto_watch=false` remain mandatory.
+`auto_index=false`, `auto_watch=false` and `watcher_enabled=false` remain mandatory.
+The 9749 dashboard is optional and served by `TOOLS/Start-CodebaseMemory-UI.ps1`.
 
 ## How to add a row
 

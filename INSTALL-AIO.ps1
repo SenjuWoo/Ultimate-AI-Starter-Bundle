@@ -549,7 +549,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.29.3 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.29.4 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -2715,7 +2715,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.29.3'
+version = '8.29.4'
   content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
@@ -2833,9 +2833,16 @@ if (-not $ToolsOnly) {
         $gwText = Get-UabsNativeOutput -Exe $hermesGw -CmdArgs @('gateway', 'status')
         $gwUp = $gwText -match '(?i)running' -and $gwText -notmatch '(?i)not running'
         if ($gwUp) {
-          if (-not (Invoke-UabsNative $hermesGw @('gateway', 'stop'))) { throw 'Hermes gateway could not be stopped before profile migration' }
-          $script:UabsHermesGatewayWasRunning = $true
-          Write-UabsOk 'Hermes gateway stopped before profile migration'
+          if (-not (Invoke-UabsNative $hermesGw @('gateway', 'stop'))) {
+            # A live chat session keeps the gateway up. Do not skip profile
+            # migration: that is how codebase-memory-mcp and the code profile
+            # silently stayed unregistered on an otherwise successful install.
+            Write-UabsWarn 'Hermes gateway has a live session; profile migration will write config without stopping it. Restart Hermes to load new MCP entries.'
+            $script:UabsHermesGatewayWasRunning = $false
+          } else {
+            $script:UabsHermesGatewayWasRunning = $true
+            Write-UabsOk 'Hermes gateway stopped before profile migration'
+          }
         }
       }
       $hermesUp = Get-Process -Name 'Hermes' -ErrorAction SilentlyContinue
@@ -2863,6 +2870,17 @@ if (-not $ToolsOnly) {
       Write-UabsOk ('Hermes profiles ready ({0}): task tools start on demand through the toolbox' -f $evaluatedProfiles.Count)
     } catch {
       Write-UabsWarn ('Hermes native profiles: ' + $_.Exception.Message)
+    }
+    # The migrator refuses while a live gateway is up; this supported fallback
+    # still gives the default code profile its graph server on a one-click run.
+    $ensureCbm = Join-Path $PackRoot 'TOOLS\Ensure-CodebaseMemoryHermes.ps1'
+    if (Test-Path -LiteralPath $ensureCbm -PathType Leaf) {
+      $ensureCode = Invoke-UabsChildScript -Title 'Codebase-memory Hermes entry' -File $ensureCbm -ArgList @()
+      if ($ensureCode -eq 0) {
+        Write-UabsOk 'codebase-memory-mcp registered in the Hermes code profile'
+      } else {
+        Write-UabsWarn 'codebase-memory-mcp Hermes registration failed; run TOOLS\Ensure-CodebaseMemoryHermes.ps1 after restart'
+      }
     }
   }
 

@@ -165,7 +165,7 @@ its historical 4,590 schema bytes are not evidence of better answers.
 Hermes has a smaller native topology: `default` is the always-on core (context7,
 headroom and the toolbox; GitHub only where `gh` is not signed in), `code`
 adds codebase-memory, `roblox` adds the official Roblox Studio MCP, `skyrim`
-adds houseCARL, and `creative` adds Blender MCP plus MCP for Unity. Use `hermes -p code` in a code repository; its ~5,994 schema-token
+adds houseCARL, and `creative` adds Blender MCP plus MCP for Unity. Use `hermes -p code` in a code repository; its ~5,204 schema-token
 estimate is not a bill, and its servers are absent from ordinary Hermes sessions.
 The Skyrim toolset includes both specialists: houseCARL through the
 profile MCP, and Skyrim Forge through its skill/CLI and routed specialist

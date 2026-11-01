@@ -224,7 +224,7 @@
       ],
       "install": "zip-extract",
       "exe_rel": "codebase-memory-mcp.exe",
-      "scope_note": "Installed globally but absent from global/default MCP sets. Claude, Grok and trusted Codex projects get it through code-intel; Hermes through its native code profile. Kimi needs explicit global opt-in. NEVER enable --ui / install.ps1 --ui (Windows Codebase Discovery Open-With). auto_index=false auto_watch=false default. Recorded 0.10.8: 15 tools, 23,974 schema bytes, ~5,994 schema tokens (bytes/4), not a per-turn bill.",
+      "scope_note": "Installed globally but absent from global/default MCP sets. Claude, Grok and trusted Codex projects get it through code-intel; Hermes through its native code profile. Kimi needs explicit global opt-in. NEVER enable --ui / install.ps1 --ui (Windows Codebase Discovery Open-With). auto_index=false auto_watch=false watcher_enabled=false. Recorded 0.12.1: 17 tools, 20,814 schema bytes, ~5,204 schema tokens (bytes/4), not a per-turn bill. The 9749 dashboard is served by a standalone keepalive host (TOOLS/Start-CodebaseMemory-UI.ps1); MCP clients keep args=[].",
       "server_id": "codebase-memory-mcp",
       "version": "0.12.1",
       "release_tag": "v0.12.1"
@@ -988,7 +988,7 @@
       "compatibility_hold": "1.24.0 is a newer optional local-media CLI; 1.23.0 remains the evaluated pin."
     }
   ],
-  "pack_version": "8.29.3",
+  "pack_version": "8.29.4",
   "updated_utc": "2026-10-18",
   "providers": {
     "Grok": {
@@ -1076,7 +1076,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.29.3",
+  "catalog_version": "8.29.4",
   "updated": "2026-10-26",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test.",
   "companions": [

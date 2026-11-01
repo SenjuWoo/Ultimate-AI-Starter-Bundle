@@ -402,7 +402,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16092,
-  "sha256": "0f8bc5a6d2bbc756d5f5edd256ee5a90a5d78e015eb5ecfe5e1109631ebe5c69"
+  "sha256": "74c4461f79c20f0470947cc62e95c1d5e7859e13a603c7af94ce4cb06f78e9d9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -676,8 +676,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 18885,
-  "sha256": "2ea7e47cb441844d4c736b8af45c0ec46802e81801ae7c8aa29452982328a885"
+  "size": 20405,
+  "sha256": "d788e294a4b075aa972f0deaf88358db903639e29bdb74ae0e417b1a5fe77d93"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -3921,8 +3921,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3368,
-  "sha256": "6701428b2622e5c41cd942467b00937129254885177227e7bc181b1e24b131f3"
+  "size": 3940,
+  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -5117,7 +5117,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16092,
-  "sha256": "0f8bc5a6d2bbc756d5f5edd256ee5a90a5d78e015eb5ecfe5e1109631ebe5c69"
+  "sha256": "74c4461f79c20f0470947cc62e95c1d5e7859e13a603c7af94ce4cb06f78e9d9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -5391,8 +5391,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 18885,
-  "sha256": "2ea7e47cb441844d4c736b8af45c0ec46802e81801ae7c8aa29452982328a885"
+  "size": 20405,
+  "sha256": "d788e294a4b075aa972f0deaf88358db903639e29bdb74ae0e417b1a5fe77d93"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -8636,8 +8636,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3368,
-  "sha256": "6701428b2622e5c41cd942467b00937129254885177227e7bc181b1e24b131f3"
+  "size": 3940,
+  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -9892,7 +9892,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16092,
-  "sha256": "0f8bc5a6d2bbc756d5f5edd256ee5a90a5d78e015eb5ecfe5e1109631ebe5c69"
+  "sha256": "74c4461f79c20f0470947cc62e95c1d5e7859e13a603c7af94ce4cb06f78e9d9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -10166,8 +10166,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 18885,
-  "sha256": "2ea7e47cb441844d4c736b8af45c0ec46802e81801ae7c8aa29452982328a885"
+  "size": 20405,
+  "sha256": "d788e294a4b075aa972f0deaf88358db903639e29bdb74ae0e417b1a5fe77d93"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -13411,8 +13411,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3368,
-  "sha256": "6701428b2622e5c41cd942467b00937129254885177227e7bc181b1e24b131f3"
+  "size": 3940,
+  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -14657,7 +14657,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16092,
-  "sha256": "0f8bc5a6d2bbc756d5f5edd256ee5a90a5d78e015eb5ecfe5e1109631ebe5c69"
+  "sha256": "74c4461f79c20f0470947cc62e95c1d5e7859e13a603c7af94ce4cb06f78e9d9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -14931,8 +14931,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 18885,
-  "sha256": "2ea7e47cb441844d4c736b8af45c0ec46802e81801ae7c8aa29452982328a885"
+  "size": 20405,
+  "sha256": "d788e294a4b075aa972f0deaf88358db903639e29bdb74ae0e417b1a5fe77d93"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -18176,8 +18176,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3368,
-  "sha256": "6701428b2622e5c41cd942467b00937129254885177227e7bc181b1e24b131f3"
+  "size": 3940,
+  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -19422,7 +19422,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16092,
-  "sha256": "0f8bc5a6d2bbc756d5f5edd256ee5a90a5d78e015eb5ecfe5e1109631ebe5c69"
+  "sha256": "74c4461f79c20f0470947cc62e95c1d5e7859e13a603c7af94ce4cb06f78e9d9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -19696,8 +19696,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 18885,
-  "sha256": "2ea7e47cb441844d4c736b8af45c0ec46802e81801ae7c8aa29452982328a885"
+  "size": 20405,
+  "sha256": "d788e294a4b075aa972f0deaf88358db903639e29bdb74ae0e417b1a5fe77d93"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -22941,8 +22941,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3368,
-  "sha256": "6701428b2622e5c41cd942467b00937129254885177227e7bc181b1e24b131f3"
+  "size": 3940,
+  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -24262,7 +24262,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16092,
-  "sha256": "0f8bc5a6d2bbc756d5f5edd256ee5a90a5d78e015eb5ecfe5e1109631ebe5c69"
+  "sha256": "74c4461f79c20f0470947cc62e95c1d5e7859e13a603c7af94ce4cb06f78e9d9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -24536,8 +24536,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 18885,
-  "sha256": "2ea7e47cb441844d4c736b8af45c0ec46802e81801ae7c8aa29452982328a885"
+  "size": 20405,
+  "sha256": "d788e294a4b075aa972f0deaf88358db903639e29bdb74ae0e417b1a5fe77d93"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -27781,8 +27781,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3368,
-  "sha256": "6701428b2622e5c41cd942467b00937129254885177227e7bc181b1e24b131f3"
+  "size": 3940,
+  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -29001,13 +29001,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 62642,
-  "sha256": "1e2812beb4b9b15489d84ca66493eb89440cb889bfac4b6919dc8e199112f82e"
+  "size": 62779,
+  "sha256": "2a41cf1364fe11b0f56695a3958ddfefee659a5c3712d89be58c8e2c7da964e2"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1327,
-  "sha256": "51966364f65272d4ab67a770e4b97d97559d14782e89af43214bda15b5a2d5db"
+  "sha256": "5e0f6159f7e821929776d276f76ba2335f4d46c7698273a87f3ca0ae02295895"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -29017,7 +29017,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39648,
-  "sha256": "96b678f6aba22ac8f52ee5f08efb2ce5f3af2868950578ee43d32e5bd163336c"
+  "sha256": "29c351b7d08280fe8a316dd24fb34853e5d30c881d3ab2c8c528850fc6f351ac"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -29042,7 +29042,7 @@
  {
   "path": "BUNDLED-TOOLS/capability-records/codebase-memory.json",
   "size": 444,
-  "sha256": "c25700596812ee508865dd8083681ded28a086a805933e78e80eff6f8d3067b3"
+  "sha256": "1542d6c78f6b36bc09283c6652e8f81eaa0ef9b98bad52f1b59f0443115d3861"
  },
  {
   "path": "BUNDLED-TOOLS/capability-records/context7.json",
@@ -33086,8 +33086,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 254758,
-  "sha256": "64ac02eb4d975727cdf430fee99b9dc86834800314493d9c01d3c9c6d135fbf1"
+  "size": 256209,
+  "sha256": "778f3c2136a7173f84907d69d65c862ba8d8fa445b2a573eb9214c5d48c546db"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
@@ -33166,8 +33166,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 178807,
-  "sha256": "9ee8f4be98542d7c69a9416592c850525057d7f1a0f47f9483549a16f0d9bf8c"
+  "size": 179899,
+  "sha256": "f37f848875924bc583c7d472d51be858da785bb6a65de24e5874da946a81e876"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33186,8 +33186,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 62316,
-  "sha256": "0acd501424e913f44c91e0f0030eaa2909cd57d1cd0efa60bafdb32abde5d4f7"
+  "size": 62784,
+  "sha256": "b046135c736709db7264bb7720ed4e71ce36265d7c3383d48c37ae1240f53495"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -33231,8 +33231,8 @@
  },
  {
   "path": "README.md",
-  "size": 70285,
-  "sha256": "d04e06d2f370b578d1c6c9b068cd5a483aca1755f825929faa93e90eb34c0b26"
+  "size": 70407,
+  "sha256": "27f2d80e22c205624b4051cccf0ad4f2830427cafd062782964e6aa1b509777f"
  },
  {
   "path": "SECURITY.md",
@@ -33242,12 +33242,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "66106b9bb1ad49174234d9dc95666c830e6af1a4f257ee0ecf3da758fed39d62"
+  "sha256": "7cdcd59cdabc7851f56a5398beb387ce00bd95b34d536fc94d3683cbf6a64eaa"
  },
  {
   "path": "START-HERE.txt",
   "size": 3502,
-  "sha256": "6f9f846589eb871a62cf1f0abefcbdfc72583ca89579025355a7114148eaf61c"
+  "sha256": "f7b2ad4d849a6a3141b542e7b506bcc20ae8729a382c853a1f8e024bd2ea431c"
  },
  {
   "path": "STATE.md",
@@ -33652,7 +33652,7 @@
  {
   "path": "TESTS/test_release_contract.py",
   "size": 344414,
-  "sha256": "3c10646929a4ee26d2236b73f8eef5a58e19abad925d4fa4300440c6079b2fef"
+  "sha256": "bd8bf7ae1b812330481c0eff056dd35241b9b0287c1c615e6d8ae9ec7e0ae8e5"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -33723,6 +33723,11 @@
   "path": "TOOLS/Clean-StaleState.ps1",
   "size": 26962,
   "sha256": "05123c05dff03c91131ef348ea1d4a50090d1faba2b3f6887b39122acba2907d"
+ },
+ {
+  "path": "TOOLS/Ensure-CodebaseMemoryHermes.ps1",
+  "size": 2389,
+  "sha256": "f3be9a24340825ffe64bbced8ff6fcb69fd6a48b4337b7cafafd932cb75ac902"
  },
  {
   "path": "TOOLS/Ensure-Headroom-Grok.ps1",
@@ -33843,6 +33848,11 @@
   "path": "TOOLS/Setup-HouseCarl.ps1",
   "size": 675,
   "sha256": "2c1e9c8e4ea362d8e4609562bf1bcd484f6d54aab66b181e0fe2eb74b91c1a53"
+ },
+ {
+  "path": "TOOLS/Start-CodebaseMemory-UI.ps1",
+  "size": 1266,
+  "sha256": "2637d526ad4ad093264e0b9a4739a34ca2ed7e7d6ca7cd7ef57343f8c58c737d"
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
@@ -34092,7 +34102,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2671,
-  "sha256": "e14964d4f2fee0e32f00e7f6b5c0575e071a7f2ff1267cc89bc74e5fc885b9df"
+  "sha256": "419e3bff5ae37689325e20962171541afae5d6b849beadf0495701944c0cbfde"
  },
  {
   "path": "VALIDATION.md",
@@ -34102,7 +34112,7 @@
  {
   "path": "VERSION.txt",
   "size": 8,
-  "sha256": "2bee0f562aeb8330c10604a1bfd3cb33e2b31ec7d20573bda2cde7af0326dc6b"
+  "sha256": "cc8beec16f1d891c921e90ad69c4ba8d6af2d616e62974de37af7d8ba59eb3b3"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -34337,7 +34347,7 @@
  {
   "path": "_CANONICAL-SKILLS/capability-profiles/SKILL.md",
   "size": 16092,
-  "sha256": "0f8bc5a6d2bbc756d5f5edd256ee5a90a5d78e015eb5ecfe5e1109631ebe5c69"
+  "sha256": "74c4461f79c20f0470947cc62e95c1d5e7859e13a603c7af94ce4cb06f78e9d9"
  },
  {
   "path": "_CANONICAL-SKILLS/capability-profiles/references/task-recipes.json",
@@ -34611,8 +34621,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/codebase-memory/SKILL.md",
-  "size": 18885,
-  "sha256": "2ea7e47cb441844d4c736b8af45c0ec46802e81801ae7c8aa29452982328a885"
+  "size": 20405,
+  "sha256": "d788e294a4b075aa972f0deaf88358db903639e29bdb74ae0e417b1a5fe77d93"
  },
  {
   "path": "_CANONICAL-SKILLS/codeburn/SKILL.md",
@@ -37856,8 +37866,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/SKILL.md",
-  "size": 3368,
-  "sha256": "6701428b2622e5c41cd942467b00937129254885177227e7bc181b1e24b131f3"
+  "size": 3940,
+  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/ai-models-harness.md",
@@ -38856,8 +38866,8 @@
  },
  {
   "path": "docs/TOOL-EVALUATIONS.md",
-  "size": 56617,
-  "sha256": "fe50725cd7b490adb520a33b33b7c8d4dbcfb51cab1c69fc833f15f0fb880b18"
+  "size": 56741,
+  "sha256": "cf52ce3b3a5014b19c7cfb76044f8aa202a21f50df6b5d8d2bf9196ab41dabfb"
  },
  {
   "path": "docs/USAGE-ECONOMY.md",
@@ -39503,6 +39513,11 @@
   "path": "docs/history/V8.29.3-CHANGELOG.md",
   "size": 1032,
   "sha256": "f913ad210862e7f47988791d5aba938afe7eb97bd161d4e4a9a2b9014d698b5b"
+ },
+ {
+  "path": "docs/history/V8.29.4-CHANGELOG.md",
+  "size": 2022,
+  "sha256": "5c129ab63298f59470f28b6dac892f45f0eedbe50920c32311d3118a3d2fc699"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

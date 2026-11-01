@@ -43,15 +43,26 @@ graph of animation files that costs tokens on every query and answers nothing. R
 - High fan-out: `search_graph(min_degree=10, relationship="CALLS", direction="outbound")`
 - High fan-in: `search_graph(min_degree=10, relationship="CALLS", direction="inbound")`
 
-## 15 MCP Tools
+## 17 MCP Tools
 `index_repository`, `index_status`, `list_projects`, `delete_project`,
 `search_graph`, `search_code`, `trace_path`, `detect_changes`,
-`query_graph`, `get_graph_schema`, `get_code_snippet`, `get_architecture`, `check_index_coverage`,
-`manage_adr`, `ingest_traces`
+`query_graph`, `get_graph_schema`, `get_code_snippet`, `get_file_outline`,
+`get_architecture`, `check_index_coverage`, `compare_graphs`, `manage_adr`,
+`ingest_traces`
 
-Measured on 0.10.8 (2026-09-03): 23,974 schema bytes, about 5,994 schema tokens
-(bytes/4, not measured billing). Use Claude/Grok/trusted Codex project scope or Hermes' native
+Measured on 0.12.1 (2026-10-31): 17 tools, 20,814 schema bytes, about 5,204
+schema tokens (bytes/4, not measured billing). Use Claude/Grok/trusted Codex project scope or Hermes' native
 `code` profile; do not register it globally just because the executable exists.
+
+## First check: does the graph point at the current checkout?
+
+`list_projects` returns each project's `root_path`. A moved or renamed repo
+leaves a healthy-looking graph pointing at the old path — every query then
+answers about a tree that no longer exists. On 2026-10-31 the bundle graph still
+pointed at `Ultimate-AI-Starter-Bundle-v8.21.0` after the repo moved to
+`Ultimate-AI-Starter-Bundle`; `index_status` looked ready, but the root was
+gone. If the root does not match the checkout, delete that project and reindex
+the current root; do not trust node counts alone.
 
 ## The `cli` mode (v0.11.0+) — every tool is terminal-drivable
 
@@ -229,7 +240,10 @@ index_repository(repo_path=<owner project root>, mode=moderate, name=<stable-slu
    `get_architecture(aspects=["languages"])` — if the languages you expect are missing,
    your ignores are wrong (or the language is unparsed, see Papyrus above).
 
-MCP only — never `Start-Process` the exe, never pass `--ui` in MCP `args`.
+Indexing/querying is MCP or `cli` only — never `Start-Process` the exe for those,
+and never pass `--ui` in MCP `args`. The one exception is the standalone
+dashboard host in `TOOLS/Start-CodebaseMemory-UI.ps1`; it exists only to keep
+port 9749 alive.
 Re-indexing is idempotent; run it again after large structural changes.
 
 ## Reading the dashboard honestly
@@ -299,6 +313,17 @@ Upstream: https://github.com/DeusData/codebase-memory-mcp
 
 Verify: `codebase-memory-mcp.exe --version`
 
+### Default scope in this pack
+
+- Hermes registers it in the native **code** profile only; verify with
+  `hermes -p code mcp list` and `hermes -p code mcp test codebase-memory-mcp`.
+- It is not a global/default MCP entry and must not be added to the default
+  profile just because the exe exists.
+- If it is installed but absent from the code profile, run
+  `TOOLS\Migrate-HermesProfiles.ps1 -Apply`; the installer now continues profile
+  migration even when a live gateway cannot be stopped, then Hermes needs a
+  restart to load the entry.
+
 ### Install (MCP stdio; the HTTP dashboard is optional and global)
 
 ```powershell
@@ -345,12 +370,15 @@ app restarts. This is why the dashboard seems to work and then vanish for no rea
 For a dashboard that stays up, run one standalone keep-alive host, which holds stdin open:
 
 ```powershell
-& "$env:LOCALAPPDATA\Programs\codebase-memory-mcp\Start-codebase-memory-UI.bat"
+& ".\TOOLS\Start-CodebaseMemory-UI.ps1"
 ```
 
-Run **one** UI host only - port 9749 has a single binder. MCP clients keep `args = []` and
-coexist with that host normally; they never need to own the dashboard themselves. Verified:
-the standalone host serves <http://127.0.0.1:9749/> while MCP tool calls keep working.
+Run it from the pack root. The bundle ships that helper; it is idempotent and starts the hidden console
+that keeps stdin open. Run **one** UI host only - port 9749 has a single binder.
+MCP clients keep `args = []` and coexist with that host normally; they never
+need to own the dashboard themselves. Verified: the standalone host serves
+<http://127.0.0.1:9749/> while MCP tool calls keep working. On 2026-10-31 the
+port was empty only because no host was running; the helper returned 200.
 
 **Cold-daemon stall:** if the daemon is down (port 9749 not listening), the next MCP spawn
 cold-boots it and the first turn can stall ~30s; the spawn logs

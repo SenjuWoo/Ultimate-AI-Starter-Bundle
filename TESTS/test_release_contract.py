@@ -624,8 +624,8 @@ def test_hermes_native_profile_migration_contract() -> None:
     )
     cbm_cost = json.loads(read(ROOT / "BUNDLED-TOOLS" / "capability-records" / "codebase-memory.json"))
     assert cbm_cost.get("record") == "mcp-schema-cost"
-    assert cbm_cost.get("tools") == 15 and cbm_cost.get("schema_bytes") == 23974, (
-        "the codebase-memory doctor cost no longer matches the measured 0.10.8 tools/list surface"
+    assert cbm_cost.get("tools") == 17 and cbm_cost.get("schema_bytes") == 20814, (
+        "the codebase-memory doctor cost no longer matches the measured 0.12.1 tools/list surface"
     )
     assert "Migrate-HermesProfiles.ps1" in installer, "the installer no longer runs the profile migration"
     assert "$profileArgs = @('-Apply')" in installer and "-File $hermesProfiles -ArgList $profileArgs" in installer, (
