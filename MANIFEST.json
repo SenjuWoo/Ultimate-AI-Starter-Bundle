@@ -61,8 +61,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Compact.md",
-  "size": 4840,
-  "sha256": "a4f3fac99800dd41444f665949cdf6be2c1d03db191c2f31eae7f2afe37bc04d"
+  "size": 4809,
+  "sha256": "1b431304c197ac055565497596fed1cb7ae4221010d0547c4c599835e5d54d73"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web Light.md",
@@ -76,8 +76,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 12206,
-  "sha256": "9d25fc564a8d35284e346005a7c83ea56e153e9c394a83696bcf375717a42b4a"
+  "size": 11709,
+  "sha256": "caa01bca572e60c31892f00eae9bd29861c918d4d03d1416b74a803edf03d3f0"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
@@ -161,8 +161,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/README.md",
-  "size": 8206,
-  "sha256": "36cba9f1063f1e0e772cb4da6882a94a998f47f417961cda2249e70711e0f24d"
+  "size": 8592,
+  "sha256": "07e687ac3a66c6e611e8d592fa412e30b3eaa96205c5584997450ee383570e32"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/Character Creation.txt",
@@ -33096,8 +33096,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 255063,
-  "sha256": "3efc713f35001881f180e0828c70bad0a326bad8af5c4fa640bb68be0cf985db"
+  "size": 255323,
+  "sha256": "d15d736efc379a1f3935eecb893a2fcdac6ddd22a35cf57a1ac290e2687e710f"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -33116,8 +33116,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 12206,
-  "sha256": "9d25fc564a8d35284e346005a7c83ea56e153e9c394a83696bcf375717a42b4a"
+  "size": 11709,
+  "sha256": "caa01bca572e60c31892f00eae9bd29861c918d4d03d1416b74a803edf03d3f0"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
@@ -33206,8 +33206,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 63006,
-  "sha256": "63278919131d84ea91a9a361926c8a10ece163c705c22ce178b05a399080a934"
+  "size": 63235,
+  "sha256": "dae01e452e850afc565a4b9338ecd1fc074345b601097adb65a14fc11ea992de"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -33672,7 +33672,7 @@
  {
   "path": "TESTS/test_release_contract.py",
   "size": 344414,
-  "sha256": "92e3144aafab1613808760d90b283093a32414e1e1035002d3a1409448f9283a"
+  "sha256": "97154f9f0cfa39836333e0e64c4f4e9602291c5b5c316f5f23cc4140fcc569c4"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -39553,6 +39553,11 @@
   "path": "docs/history/V8.29.6-CHANGELOG.md",
   "size": 931,
   "sha256": "cbb084c1d70514b9d17b69ac0712aed501eefe66f5d7b06a7d57bed9855dade0"
+ },
+ {
+  "path": "docs/history/V8.29.7-CHANGELOG.md",
+  "size": 1081,
+  "sha256": "6849c9d5f529a4c2a2673c3958f8b4c2e01f7df1f375160adf5cfe7d6a2a5ff6"
  },
  {
   "path": "docs/history/V8.3.0-CHANGELOG.md",

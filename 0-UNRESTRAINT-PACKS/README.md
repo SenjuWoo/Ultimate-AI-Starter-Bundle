@@ -18,8 +18,8 @@ layers — stacking two costs tokens and contradicts itself.
 
 | File | Size | Tools? | Use it for |
 |---|---|---|---|
-| `AIO-INSTRUCTION.md` | ~8.9 KB / 1371 w | yes | Agent CLIs (Claude Code, Codex, Grok, Kimi, Hermes). The only variant with the PACK CONTEXT block: how to discover this pack's tools portably, install what is missing, and state what was verified. |
-| `AIO-INSTRUCTION — Compact.md` | ~3.1 KB / 486 w | yes | Same job, ~65% cheaper. Use when the host has a small system-prompt budget or you are paying per turn. |
+| `AIO-INSTRUCTION.md` | ~11.7 KB / 1726 w | yes | Agent CLIs (Claude Code, Codex, Grok, Kimi, Hermes). The only variant with the PACK CONTEXT block: how to discover this pack's tools portably, install what is missing, and state what was verified. |
+| `AIO-INSTRUCTION — Compact.md` | ~4.8 KB / 695 w | yes | Same job, ~65% cheaper. Use when the host has a small system-prompt budget or you are paying per turn. |
 | `AIO-INSTRUCTION — Web.md` | ~1.4 KB / 212 w | no | ChatGPT / Gemini / Perplexity web UIs. States plainly that there is no code execution, no files, no MCP, so the model stops pretending otherwise. |
 | `AIO-INSTRUCTION — Web Light.md` | ~0.6 KB / 99 w | no | Same job as Web, ~55% cheaper. The smallest paste that still carries the full unrestraint payload. |
 
@@ -45,6 +45,7 @@ phrasing.** Neither is weaker on content; only the scaffolding differs.
 
 | Folder | Source | What it is |
 |---|---|---|
+| `CLAUDE-CODE-ADDENDUM.md` | Operator kit | Claude Code output-identity and provider-boundary addendum; paste after AIO or keep in the project `CLAUDE.md` |
 | `Fun-stuff-kit/` | Operator kit (`Z:\Misc\Boof\Ai prompts n stuff\Fun stuff`) | AIO (chat/research jail), Story (fiction jail + NSFW physics), Websim, Vision (image caption FULL/SHORT), Character Maker, FablesGG, Tags (adult tag bank), Tools, SKSE-DLL, Papyrus, Models, Sites |
 | `Tavern-presets/` | Operator kit | WooJuice V12.1 + V12.1 SPEECH + anti-ethical-bullshit + notes (SillyTavern) |
 | `ComfyUI-SwarmUI-presets/` | Operator kit | SwarmUI / ComfyUI generation presets (FLUX2, Krea 2, Anima, SDXL Illustrious and more - 47 configs) |
@@ -81,7 +82,7 @@ this folder.
 
 | Target | File | How |
 |---|---|---|
-| Claude Code | `~/.claude/CLAUDE.md` | Wired: profile block + SOUL + AIO (+ Skyrim pack block). |
+| Claude Code | `~/.claude/CLAUDE.md` and project `CLAUDE.md` | Wired: profile block + SOUL + AIO (+ Skyrim pack block); add `0-UNRESTRAINT-PACKS/CLAUDE-CODE-ADDENDUM.md` for no-attribution and local fallback. |
 | Codex | `~/.codex/AGENTS.md` | Wired (global). |
 | Kimi | `~/.kimi-code/AGENTS.md` | Wired (global). |
 | Grok CLI | `~/.grok/AGENTS.md` | Wired (global). |
@@ -91,7 +92,8 @@ this folder.
 
 ## Honest notes
 
-- The AIO now also fixes output provenance: no visible model credit, author line, co-author trailer or watermark unless the operator asks. It does not remove host-side invisible provenance or hide a request from the provider; for adult fiction or a game recreation the reliable route is a local/open-weight model or a provider whose terms allow it, not reworded prompts or classifier games.
+- The AIO now also fixes output provenance: no visible model credit, author line, co-author trailer or watermark unless the operator asks. It cannot remove host-side invisible provenance; for a blocked request, switch to a local/open-weight model.
+- `TOOLS/Strip-AI-Attribution.py` removes the visible attribution lines from files you own (dry-run by default, `--apply` writes a timestamped backup). It cannot remove a server-side or invisible watermark and does not rewrite another author's git history.
 - Public jailbreak texts decay: what worked on Claude 3.x mostly does not work verbatim on Claude 4.x/Opus 5.
 - The operator kit (AIO/Story/Vision) consistently beats older repo texts for fiction quality.
 - Frontier chat surfaces (ChatGPT, Gemini apps) apply separate server-side filters regardless of prompt;

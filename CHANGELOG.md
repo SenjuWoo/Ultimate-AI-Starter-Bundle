@@ -2,11 +2,14 @@
 
 - `AIO-INSTRUCTION.md` and the Compact variant now carry a provider-boundary and
   output-provenance rule: no visible model credit, author line, co-author trailer
-  or watermark unless the operator asks; no impersonation; no claim that host-side
-  invisible provenance was removed. A refused request is routed to a local or
-  permitted surface rather than reworded to dodge a classifier. Claude Code's
-  footer and `Co-authored-by: Claude` trailer are omitted unless asked, and only
-  the model's own commit is changed on request.
+  or watermark unless the operator asks; strip a host-injected visible label from
+  your own output; no claim that host-side invisible provenance was removed. A
+  refused request is routed to a local or permitted surface rather than burning
+  turns arguing. Claude Code's footer and `Co-authored-by: Claude` trailer are
+  omitted unless asked, and only the model's own commit is changed on request.
+- Added `CLAUDE-CODE-ADDENDUM.md` (paste after AIO or keep in the project
+  `CLAUDE.md`) and `TOOLS/Strip-AI-Attribution.py` for visible attribution lines
+  in operator-owned files; dry-run by default, `--apply` writes a backup.
 - Live provider preambles were recomposed from the updated source; the workspace
   copy and the preamble hash test were updated. 129 canonical skills total.
 - No dependency or catalog change.
