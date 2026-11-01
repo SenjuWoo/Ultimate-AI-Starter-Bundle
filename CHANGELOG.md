@@ -1,12 +1,23 @@
+## 8.29.8 (2026-11-01)
+
+- Refined the provider-boundary rule: a refused request is retried once with the
+  operator's exact intent and the smallest framing change; the agent does not drop
+  scope or switch models on the first refusal. The operator decides whether to
+  move the task to a local model.
+- Added the Claude Code addendum and visible-attribution filter from 8.29.7;
+  live preambles are recomposed. 129 canonical skills total.
+- No dependency or catalog change.
+
 ## 8.29.7 (2026-11-01)
 
 - `AIO-INSTRUCTION.md` and the Compact variant now carry a provider-boundary and
   output-provenance rule: no visible model credit, author line, co-author trailer
   or watermark unless the operator asks; strip a host-injected visible label from
   your own output; no claim that host-side invisible provenance was removed. A
-  refused request is routed to a local or permitted surface rather than burning
-  turns arguing. Claude Code's footer and `Co-authored-by: Claude` trailer are
-  omitted unless asked, and only the model's own commit is changed on request.
+  refused request is retried once with the operator's intent and the smallest
+  framing change; it does not drop scope or switch models on the first refusal.
+  Claude Code's footer and `Co-authored-by: Claude` trailer are omitted unless
+  asked, and only the model's own commit is changed on request.
 - Added `CLAUDE-CODE-ADDENDUM.md` (paste after AIO or keep in the project
   `CLAUDE.md`) and `TOOLS/Strip-AI-Attribution.py` for visible attribution lines
   in operator-owned files; dry-run by default, `--apply` writes a backup.
