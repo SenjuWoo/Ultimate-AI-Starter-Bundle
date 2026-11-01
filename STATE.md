@@ -1,5 +1,31 @@
 # Bundle audit state
 
+## Completed 8.29.3 auto-check and CI-wait correction — 2026-10-31
+
+- `TOOLS/discover_tools.ps1` now reports `skyrim-forge` beside `reverse-this`,
+  resolving `SKYRIM_FORGE_ROOT` or the default root and recording the Forge
+  Python. Live check: Forge **6.7.0**, 50 tools, 0 doctor warnings; Reverse
+  THIS! **1.9.5** from its kit; 48/48 Skyrim pack skills present. The bundle
+  detects both owner installs and does not duplicate them.
+- The fixed-`sleep` CI habit is corrected in `token-efficiency`: use
+  `TOOLS/Wait-External.ps1` (2 s, backing off to 30 s), which reports pass as
+  well as fail. It is the same waiter used by the release workflow, so a green
+  run is no longer mistaken for "no alert"; the wait on this release returned
+  `verdict=pass`, 12/12 checks.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.3
+  at `b916410b20a59b22dd6deabc1ab8a4902843f8f0`; CI 41255310432, CodeQL
+  41255310396, Release 41255887720. Core 45,472,458 B sha256
+  `f7e3b47fe9e2098db028942d4a1e262b7d86cc827ffdd05935245e4cd73ed6d0`;
+  Full-Offline 142,022,180 B sha256
+  `c5dcbdfe25f6242a3424b574cb29fb8aed21d55fdcb5a55b409012d70e3eb905`.
+  All nine assets verified by `sha256sum -c SHA256SUMS.txt`.
+- Local install is the repository itself at
+  `Z:\Backup\Ai documentation\Ultimate-AI-Starter-Bundle`; the temporary
+  `%USERPROFILE%\Apps\...` copies and Temp extracts were removed. `install-state.json`
+  and `MACHINE-MAP.md` point at the repository; doctor 8.29.3 is 0 errors / 0
+  warnings. No application was stopped.
+- Open alerts: Dependabot 0, code-scanning 0, secret-scanning 0.
+
 ## Completed 8.29.2 stale-pin closure and cleanup — 2026-10-31
 
 - Closed the catalog audit without blind upgrades: the 10 newer optional or
