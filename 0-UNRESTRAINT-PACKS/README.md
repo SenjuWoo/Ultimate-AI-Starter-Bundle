@@ -8,6 +8,7 @@ The full no-holds prompt library — the operator's own kit, reviewed, deduped, 
 - Token hygiene: paste the smallest file that does the job.
 - For SillyTavern, use the WooJuice V12.1 preset — do not paste Story.txt into ST.
 - The AIO family already carries the full unrestraint payload — standalone jailbreak collections are retired (2026-10-12); regenerate against the current model instead of trusting an old payload.
+- Read `PROVIDER-BOUNDARIES.md` before routing game recreations, explicit work, or anything involving watermarks/authorship. It records the legitimate route; it is not a bypass payload.
 
 ---
 
@@ -45,6 +46,7 @@ phrasing.** Neither is weaker on content; only the scaffolding differs.
 
 | Folder | Source | What it is |
 |---|---|---|
+| `PROVIDER-BOUNDARIES.md` | Operator boundary sheet | Claude Code game-recreation rule, explicit-content routing, watermark/attribution rules, and the legitimate route when a provider says no |
 | `Fun-stuff-kit/` | Operator kit (`Z:\Misc\Boof\Ai prompts n stuff\Fun stuff`) | AIO (chat/research jail), Story (fiction jail + NSFW physics), Websim, Vision (image caption FULL/SHORT), Character Maker, FablesGG, Tags (adult tag bank), Tools, SKSE-DLL, Papyrus, Models, Sites |
 | `Tavern-presets/` | Operator kit | WooJuice V12.1 + V12.1 SPEECH + anti-ethical-bullshit + notes (SillyTavern) |
 | `ComfyUI-SwarmUI-presets/` | Operator kit | SwarmUI / ComfyUI generation presets (FLUX2, Krea 2, Anima, SDXL Illustrious and more - 47 configs) |
