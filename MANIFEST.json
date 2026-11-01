@@ -33090,6 +33090,16 @@
   "sha256": "771312d14cf6a5ce573a4a50b2fd50bcedafbc31278e00728e3af841a1b03732"
  },
  {
+  "path": "CODE_OF_CONDUCT.md",
+  "size": 2002,
+  "sha256": "20eb50c2b662f9c193f4eae523a778ea3fcfa31de9d76f9aac4d1222bb0c813e"
+ },
+ {
+  "path": "CONTRIBUTING.md",
+  "size": 1318,
+  "sha256": "2d9186a55e73350191c8cb4399e48ee400d900ee9e722e65f690869ed02ed57d"
+ },
+ {
   "path": "COPY-TO-YOUR-WORKSPACE/AGENTS.md",
   "size": 2412,
   "sha256": "5dbfa7098000fb045ba3600bb851cbc11da7f462e863506aebeca2408c519bba"
