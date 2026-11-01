@@ -1,5 +1,29 @@
 # Bundle audit state
 
+## Completed 8.29.5 Serena default and waiter hardening — 2026-11-01
+
+- Serena 2.1.0 is now part of the default `code-intel` profile and the Hermes
+  `code` profile when installed. It advertises **3 tools / 4,225 bytes /
+  ~1,056 tokens**; with CBM the fixed surface is **~6,260**, under the 10k
+  budget. The REPL exposes the rest dynamically; it is not registered globally.
+- Added `TOOLS/Ensure-SerenaHermes.ps1` for live-gateway installs. Hermes
+  `code` now has CBM + Serena; Claude and Grok show both connected for this
+  project; Codex has the project config and requires trusting the project.
+  Antigravity/Gemini is not wired; Kimi needs explicit `-Global`.
+- `TOOLS/Wait-External.ps1` treats a denied `Process.Kill()` as best-effort and
+  still returns the timeout verdict; `Test-GitHubVerdict.ps1` passes 20/20.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.5
+  at `1cb96a96f6739768af5231b27dca7518e2b6b68b`; CI 41265265704, CodeQL
+  41265265364, Release 41265813623. Core 45,483,375 B sha256
+  `efe1d628f60bb0526d166d4d97d4b2e1b2a0af9e1da442d692dd9020346e27e2`;
+  Full-Offline 142,033,098 B sha256
+  `24f5c0c1b8f55bee920f45baade4ba0bd3829e028f49de6ededb45e45946886e`.
+  All nine assets verified with `sha256sum -c SHA256SUMS.txt`.
+- Local install: repository checkout, `install-state.json` 8.29.5; doctor
+  **0 errors / 0 warnings**; CBM test 17 tools; Serena test 3 tools; default
+  profile has neither.
+- Open alerts: Dependabot 0, code-scanning 0, secret-scanning 0.
+
 ## Completed 8.29.4 codebase-memory registration and project map — 2026-11-01
 
 - Root cause of "codebase memory never worked": the binary was installed and a
