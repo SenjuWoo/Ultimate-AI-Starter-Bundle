@@ -925,6 +925,11 @@
   "sha256": "77b5562fa6fa91817dd06099bbb69e054141d08e86dfa1700384dd38051b8b3f"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
+  "size": 9398,
+  "sha256": "677c85f885f55f646c711fd90a1bbdc14721c81f2e823353ffd30b314393c709"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-mashup-passthrough/SKILL.md",
   "size": 4206,
   "sha256": "b92a22cc210588373b9aba51468dd39819fad50b4f0b90424dd10a86487852df"
@@ -5638,6 +5643,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/fresh-install-proof/SKILL.md",
   "size": 1239,
   "sha256": "77b5562fa6fa91817dd06099bbb69e054141d08e86dfa1700384dd38051b8b3f"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
+  "size": 9398,
+  "sha256": "677c85f885f55f646c711fd90a1bbdc14721c81f2e823353ffd30b314393c709"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-mashup-passthrough/SKILL.md",
@@ -10415,6 +10425,11 @@
   "sha256": "77b5562fa6fa91817dd06099bbb69e054141d08e86dfa1700384dd38051b8b3f"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
+  "size": 9398,
+  "sha256": "677c85f885f55f646c711fd90a1bbdc14721c81f2e823353ffd30b314393c709"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-mashup-passthrough/SKILL.md",
   "size": 4206,
   "sha256": "b92a22cc210588373b9aba51468dd39819fad50b4f0b90424dd10a86487852df"
@@ -15180,6 +15195,11 @@
   "sha256": "77b5562fa6fa91817dd06099bbb69e054141d08e86dfa1700384dd38051b8b3f"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
+  "size": 9398,
+  "sha256": "677c85f885f55f646c711fd90a1bbdc14721c81f2e823353ffd30b314393c709"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-mashup-passthrough/SKILL.md",
   "size": 4206,
   "sha256": "b92a22cc210588373b9aba51468dd39819fad50b4f0b90424dd10a86487852df"
@@ -19943,6 +19963,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/fresh-install-proof/SKILL.md",
   "size": 1239,
   "sha256": "77b5562fa6fa91817dd06099bbb69e054141d08e86dfa1700384dd38051b8b3f"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
+  "size": 9398,
+  "sha256": "677c85f885f55f646c711fd90a1bbdc14721c81f2e823353ffd30b314393c709"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-mashup-passthrough/SKILL.md",
@@ -24785,6 +24810,11 @@
   "sha256": "77b5562fa6fa91817dd06099bbb69e054141d08e86dfa1700384dd38051b8b3f"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
+  "size": 9398,
+  "sha256": "677c85f885f55f646c711fd90a1bbdc14721c81f2e823353ffd30b314393c709"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-mashup-passthrough/SKILL.md",
   "size": 4206,
   "sha256": "b92a22cc210588373b9aba51468dd39819fad50b4f0b90424dd10a86487852df"
@@ -29017,12 +29047,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 62136,
-  "sha256": "6e2d9aca2b8358968b8e44a5449cee763142630455960ae37a7a8dfcfdd8b56a"
+  "sha256": "3681414108302aae17ef33049cac31af868da17aeb70f872f4a5450400a5f863"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1328,
-  "sha256": "2e949664f73b40f4dabf793e397aa80b8b1a5215ceeb8c2ed3a1fd77f955a4e3"
+  "sha256": "8682a43a889b24dfc5e377cf1249ebb17435267e12510cef0910e8e4a55f822b"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -29032,7 +29062,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39683,
-  "sha256": "190573b41967557b028ff78ffcea5fa47610fcf224d6278a5f1f3a75bd915b01"
+  "sha256": "61238d97e80ee4371e6216083d2f13327f577b596debf9855d95bd5d2a96be6a"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -29047,7 +29077,7 @@
  {
   "path": "BUNDLED-TOOLS/RETIRED-SKILLS.json",
   "size": 8245,
-  "sha256": "4784f0dee971e191286b8ec04d6d752fd3c745f51bfd58b504c43369a918a76d"
+  "sha256": "1c481b62afc005473197aee0a8eb27b9fef68dd83907f2be473bcc46241a61a1"
  },
  {
   "path": "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md",
@@ -33101,8 +33131,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 256893,
-  "sha256": "afcd68bd80b65dfd683aa0c96b5827a69e34245d15f2730c11dfd9c15f6a199e"
+  "size": 257801,
+  "sha256": "be824605fd6315c8ed995332e8ff1696f8bc9e87abe7f023cc111b3404a3033c"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -33192,7 +33222,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 180618,
-  "sha256": "c66bc3a8ccfb9bf7d1ceb10bc8bebb768f1a8819b1ce1000af9ad6c8220d9bc1"
+  "sha256": "97012d215e287c01ae76e6e1b32ab180e567a77ca7ba65c158424860aeee9386"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33211,8 +33241,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 63235,
-  "sha256": "dae01e452e850afc565a4b9338ecd1fc074345b601097adb65a14fc11ea992de"
+  "size": 63927,
+  "sha256": "169e7b7a4ead7c599119d39b11e048beb1b00b53841a824156186d4a5100e244"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -33256,8 +33286,8 @@
  },
  {
   "path": "README.md",
-  "size": 71068,
-  "sha256": "96fa38c2dbaaeb8bdd624fb968285c78a4c31f34007f70ccbdf2152f043166d7"
+  "size": 71925,
+  "sha256": "c2d39ec48011f432c860ac3bcc4ef3af9619906805ccb5fa6c0a0a2f6436bf0d"
  },
  {
   "path": "SECURITY.md",
@@ -33267,12 +33297,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1027,
-  "sha256": "433cb0a01b99240b389c6bbc6f382b27afd2132404ad21677c5493fe4ca49cbf"
+  "sha256": "4f4eeae82ee49386a83c8c28ef754c25bf9a7954ecdeff7dff0778d973be9203"
  },
  {
   "path": "START-HERE.txt",
-  "size": 3691,
-  "sha256": "b525fd28322d40a462eadce01ba7d5c25f29ecfa20c00b03dbf92eef0eb0ffbb"
+  "size": 3917,
+  "sha256": "7eb7143419dbb3b790a6c736a864350f218b327e710f390cc8ff0157bacf2f97"
  },
  {
   "path": "STATE.md",
@@ -33655,6 +33685,11 @@
   "sha256": "1be5cf36d0c04fbc6dc7bcceeb387118b927056029d8918d90b9927464e06ff5"
  },
  {
+  "path": "TESTS/test_free_game_tools.py",
+  "size": 1289,
+  "sha256": "30f72a64d0415233d003e64d42b01289eb61b7d16fe7ff4e40f1ed409413f221"
+ },
+ {
   "path": "TESTS/test_hermes_bootstrap.py",
   "size": 3131,
   "sha256": "c4d142b5fe5616b5870199d4b3dc759b7c9e12c5413448298fcfb5cba9dfc86e"
@@ -33975,6 +34010,11 @@
   "sha256": "97578ffbe6070bd8c92434a517975f0007ab396522aecf97559e373b74818c74"
  },
  {
+  "path": "TOOLS/free_game_tools.py",
+  "size": 4588,
+  "sha256": "f41429ebb5017edb7ce9c9947c99334910130e7b1fe41a35a818ab34e1b6a280"
+ },
+ {
   "path": "TOOLS/generate_manifest.py",
   "size": 3950,
   "sha256": "fad2019732900aa9c3251a79f461d87bd218e659808ad04815f7f2117c5ff1d3"
@@ -34142,7 +34182,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2673,
-  "sha256": "be3a3f72c0f8ce28c54254cd36875727f802fb8b987a9df2469207721ffa69be"
+  "sha256": "7011b0b50f25995a7918a25fdfef69cb3e4059814dc5c85cdb43da75dd650227"
  },
  {
   "path": "VALIDATION.md",
@@ -34152,7 +34192,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "457dcd51b33b5ee0b4ed4661047a79242c259f789b78982b9c86d41f55b21b6f"
+  "sha256": "ce060d9054252bf1e75d043326af02a0cc50bf8ba5c3f73e507d358ee2559a3b"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -34893,6 +34933,11 @@
   "path": "_CANONICAL-SKILLS/fresh-install-proof/SKILL.md",
   "size": 1239,
   "sha256": "77b5562fa6fa91817dd06099bbb69e054141d08e86dfa1700384dd38051b8b3f"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/game-dev-starter/SKILL.md",
+  "size": 9398,
+  "sha256": "677c85f885f55f646c711fd90a1bbdc14721c81f2e823353ffd30b314393c709"
  },
  {
   "path": "_CANONICAL-SKILLS/game-mashup-passthrough/SKILL.md",
@@ -39548,6 +39593,11 @@
   "path": "docs/history/V8.29.10-CHANGELOG.md",
   "size": 679,
   "sha256": "75818a8f2f40bb627c68d77f91495ed23770d3eba46b54a378ca0847ba815a9a"
+ },
+ {
+  "path": "docs/history/V8.29.11-CHANGELOG.md",
+  "size": 897,
+  "sha256": "116ada73708d931ca075d9493ba02f634c2f474cb3d703d6cca950833cff7fd1"
  },
  {
   "path": "docs/history/V8.29.2-CHANGELOG.md",

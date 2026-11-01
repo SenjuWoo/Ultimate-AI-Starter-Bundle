@@ -1,3 +1,19 @@
+## 8.29.11 (2026-11-01)
+
+- Added the `game-dev-starter` skill (130 canonical skills total): a free-first
+  route for a new game or app. It picks the smallest stack (Godot 4, Phaser,
+  Three.js, Pygame CE, LOVE, Bevy, Tauri, SvelteKit/Next, FastAPI), names free
+  procedural asset generators (Blender, Material Maker, Pixelorama, Krita,
+  Inkscape, Godot noise/tiles/scatter, Three.js instancing, jsfxr, DeBroglie,
+  CC0 libraries), and requires a real headless/build harness before content.
+  No paid API or key is needed for the first slice.
+- Added `TOOLS/free_game_tools.py`, a no-network probe that reports which free
+  tools are present and the official free page for each missing one, plus its
+  contract tests.
+- Exposed the route in `README.md` and `START-HERE.txt`; all six provider trees
+  regenerated from the canonical skill.
+- Catalog and dependencies unchanged; no new binary or paid service.
+
 ## 8.29.10 (2026-11-01)
 
 - `Migrate-HermesProfiles.ps1` accepts `-DeferLiveGateway`. When the Hermes

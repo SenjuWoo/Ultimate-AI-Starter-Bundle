@@ -1,4 +1,4 @@
-Ultimate AI Starter Bundle V8.29.10 - START HERE
+Ultimate AI Starter Bundle V8.29.11 - START HERE
 ================================================
 
 WHAT THIS IS
@@ -6,6 +6,10 @@ WHAT THIS IS
 A one-click setup for AI coding apps on Windows. Claude Code, Codex, Grok,
 Kimi, Hermes and Google Antigravity get the same skills, tools and
 instructions, and learn where your games, mods and tools live.
+
+For a new game or app, ask the AI to use `game-dev-starter`: it picks a free
+stack (Godot, Phaser, Three.js, Pygame, LOVE, Bevy, Tauri, FastAPI), routes to
+free procedural asset tools, and requires a real build/test harness.
 
 
 WHAT YOU NEED

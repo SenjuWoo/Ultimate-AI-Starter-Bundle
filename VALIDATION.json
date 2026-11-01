@@ -1,11 +1,11 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.29.10",
+  "version": "8.29.11",
   "generated": "2026-10-29",
-  "release_tag": "v8.29.10",
-  "canonical_skills": 129,
+  "release_tag": "v8.29.11",
+  "canonical_skills": 130,
   "provider_trees": 6,
-  "registry_entries": 129,
+  "registry_entries": 130,
   "gates": [
     "TESTS/test_audit_regressions.py",
     "TESTS/Test-Pack.ps1",
