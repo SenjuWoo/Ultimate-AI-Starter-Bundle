@@ -91,6 +91,7 @@ this folder.
 
 ## Honest notes
 
+- The AIO now also fixes output provenance: no visible model credit, author line, co-author trailer or watermark unless the operator asks. It does not remove host-side invisible provenance or hide a request from the provider; for adult fiction or a game recreation the reliable route is a local/open-weight model or a provider whose terms allow it, not reworded prompts or classifier games.
 - Public jailbreak texts decay: what worked on Claude 3.x mostly does not work verbatim on Claude 4.x/Opus 5.
 - The operator kit (AIO/Story/Vision) consistently beats older repo texts for fiction quality.
 - Frontier chat surfaces (ChatGPT, Gemini apps) apply separate server-side filters regardless of prompt;

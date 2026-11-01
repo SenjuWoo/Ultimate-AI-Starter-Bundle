@@ -1,3 +1,16 @@
+## 8.29.7 (2026-11-01)
+
+- `AIO-INSTRUCTION.md` and the Compact variant now carry a provider-boundary and
+  output-provenance rule: no visible model credit, author line, co-author trailer
+  or watermark unless the operator asks; no impersonation; no claim that host-side
+  invisible provenance was removed. A refused request is routed to a local or
+  permitted surface rather than reworded to dodge a classifier. Claude Code's
+  footer and `Co-authored-by: Claude` trailer are omitted unless asked, and only
+  the model's own commit is changed on request.
+- Live provider preambles were recomposed from the updated source; the workspace
+  copy and the preamble hash test were updated. 129 canonical skills total.
+- No dependency or catalog change.
+
 ## 8.29.6 (2026-11-01)
 
 - The default install now installs Serena 2.1.0 itself, not only registering it
