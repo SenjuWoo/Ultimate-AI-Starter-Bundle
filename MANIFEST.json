@@ -23971,8 +23971,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/README.txt",
-  "size": 5250,
-  "sha256": "09853dea9e32cdc08d85c507f3bbb338397b68981b0f7a00302ec7ab360fe683"
+  "size": 5242,
+  "sha256": "ac476a8c763cde398066e1770be72e5c23c8ebbc08b61d3a7d98dee07f60773a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml",
@@ -33681,8 +33681,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 344414,
-  "sha256": "9431a51cd97d449afdcf03bc8f96d6ce047a5b1e97c806eeac444caf1eeb4a93"
+  "size": 344404,
+  "sha256": "4206d0cd614cef57a6ccb0ab8bee240166e05b043721980af81b153a16c6dc77"
  },
  {
   "path": "TESTS/test_release_provenance.py",
