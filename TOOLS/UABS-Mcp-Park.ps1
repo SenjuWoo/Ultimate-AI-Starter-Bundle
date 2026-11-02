@@ -134,6 +134,24 @@ function Get-UabsGlobalMcpEntries {
   }
 }
 
+function Get-UabsMcpLaunchText {
+  param($Entry)
+  if ($Entry.Style -eq 'json') {
+    return (ConvertTo-UabsJsonText @{
+      command=$Entry.Definition['command']; args=$Entry.Definition['args']; url=$Entry.Definition['url']
+    } -Compress)
+  }
+  if ($Entry.Style -eq 'toml') {
+    # Only the server's own table, never its env/header subtables or comments.
+    $body = @([regex]::Split($Entry.Text, '(?m)^\[[^\]\r\n]+\][ \t]*\r?$'))[1]
+    $pattern = '(?ms)^[ \t]*(?:command|args|url)[ \t]*=[ \t]*(?:\[[^\]]*\]|[^\r\n]*)'
+  } else {
+    $body = $Entry.Text
+    $pattern = '(?ms)^    (?:command|args|url):[ \t]*(?:\[[^\]]*\]|[^\r\n]*(?:\r?\n(?:    |      )-[^\r\n]*)*)'
+  }
+  return (@([regex]::Matches([string]$body, $pattern) | ForEach-Object { $_.Value }) -join "`n")
+}
+
 function Find-UabsGlobalScopeLeaks {
   <# Machine-wide entries that launch a known task-specific server. Matching is on
      what the entry LAUNCHES (command, args, url), not on the name it was given,
@@ -146,6 +164,7 @@ function Find-UabsGlobalScopeLeaks {
   $leaks = @()
   foreach ($e in @(Get-UabsGlobalMcpEntries -Providers $Providers)) {
     if ($e.Disabled) { continue }
+    $launchText = Get-UabsMcpLaunchText -Entry $e
     foreach ($r in $rules) {
       if ($keep -contains $r.id) { continue }
       if ($r.only_if -eq 'gh-ready') {
@@ -154,7 +173,7 @@ function Find-UabsGlobalScopeLeaks {
       }
       $hit = $false
       foreach ($lit in $r.match) {
-        if ($e.Text.IndexOf($lit, [StringComparison]::OrdinalIgnoreCase) -ge 0) { $hit = $true; break }
+        if ($launchText.IndexOf($lit, [StringComparison]::OrdinalIgnoreCase) -ge 0) { $hit = $true; break }
       }
       if ($hit) { $leaks += [pscustomobject]@{ Provider = $e.Provider; Id = $e.Id; Rule = $r; Entry = $e }; break }
     }

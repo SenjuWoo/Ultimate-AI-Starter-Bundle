@@ -1,3 +1,18 @@
+## 8.29.13 (2026-11-02)
+
+- Installer leaves running Hermes sessions open: native plugin refresh defers,
+  retaining existing plugin ownership, and profile migration uses its existing
+  live-gateway guard. Removed automatic gateway stop, process kill and relaunch
+  code; deferred migration is recorded as deferred, not reported as applied.
+- Hardened legacy skill-sync and fallback-chain ownership boundaries with focused
+  regressions, preserving linked/customized destinations and personal settings.
+- Release instructions follow the automatic exact-SHA publication workflow and
+  keep final receipts in release assets/local diagnostics rather than triggering
+  another full CI through a receipt-only commit. Removed one duplicate docs
+  check; the full Python matrix, exact-SHA gates and reproducible builds remain.
+- unrestrained/preamble source untouched; no model default or dependency
+  changes. Companion releases still follow latest; 130 canonical skills total.
+
 ## 8.29.12 (2026-11-01)
 
 - Agents are no longer limited to tools named in the bundle or the current

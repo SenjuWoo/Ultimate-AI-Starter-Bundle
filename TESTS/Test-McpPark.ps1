@@ -33,6 +33,7 @@ try {
 {
   "numStartups": 3,
   "mcpServers": {
+    "toolbox": { "command": "uabs-toolbox", "args": [], "env": { "ROBLOX_FORGE_ROOT": "S:/RobloxForge/mcp_server", "command": "RobloxForge" } },
     "context7": { "command": "npx", "args": ["-y", "@upstash/context7-mcp@4.4.4"] },
     "github": { "command": "C:\\x\\github-mcp-server.exe", "args": ["stdio", "--toolsets", "repos"] },
     "rimworldforge": { "type": "stdio", "command": "S:\\Apps\\RimWorld Tools\\RimWorldForge\\.venv\\Scripts\\python.exe", "args": ["S:\\Apps\\RimWorld Tools\\RimWorldForge\\mcp_server\\server.py"], "env": {} },
@@ -45,6 +46,13 @@ try {
 '@)
   [IO.File]::WriteAllText($codexToml, @'
 model = "x"
+
+[mcp_servers.toolbox]
+command = "uabs-toolbox"
+args = []
+env = { ROBLOX_FORGE_ROOT = "S:/RobloxForge/mcp_server" }
+[mcp_servers.toolbox.env]
+command = "RobloxForge"
 
 [mcp_servers.github]
 command = "C:\\x\\github-mcp-server.exe"
@@ -66,6 +74,7 @@ enabled = false
   # 1. A check changes nothing; the user's opt-out is honoured.
   $env:UABS_KEEP_GLOBAL_MCP = 'melty,avatarforge'
   $check = Run-Mcp @('-Park', '-CheckOnly', '-Providers', 'Claude,Codex')
+  Assert ($check -notmatch 'would park (Claude|Codex)/toolbox') 'the toolbox was classified by an inherited environment hint'
   Assert ($check -match 'would park Claude/rimworldforge') 'check did not find the RimWorldForge entry'
   Assert ($check -notmatch 'melty' -and $check -notmatch 'avatarforge') 'UABS_KEEP_GLOBAL_MCP was ignored'
   Assert ((Bytes $claudeJson) -ceq $before.claude -and (Bytes $codexToml) -ceq $before.codex) '-Park -CheckOnly wrote to a config'
@@ -86,7 +95,7 @@ enabled = false
   }
   $cj = (Bytes $claudeJson) | ConvertFrom-Json
   $global = @($cj.mcpServers.PSObject.Properties.Name)
-  Assert (($global -join ',') -eq 'context7,my-docs') ("machine-wide Claude servers are now: " + ($global -join ','))
+  Assert (($global -join ',') -eq 'toolbox,context7,my-docs') ("machine-wide Claude servers are now: " + ($global -join ','))
   Assert ($cj.projects.'C:\other'.mcpServers.x.command -eq 'y') 'an existing project entry changed'
   $toml = Bytes $codexToml
   Assert ($toml -notmatch 'mcp_servers\.avatarforge' -and $toml -notmatch 'mcp_servers\.github' -and $toml -match 'mcp_servers\.robloxforge') 'Codex entries were not parked/kept correctly'
@@ -142,6 +151,16 @@ enabled = false
   Assert ((Project-Servers $ghProj) -contains 'github-mcp') 'the github profile did not register for the project'
   Assert (-not ($cj.mcpServers.PSObject.Properties.Name -contains 'github-mcp') -and -not ($cj.mcpServers.PSObject.Properties.Name -contains 'github')) 'the github profile wrote machine-wide'
 
+  # Reporting YAML must use launch fields too, including both argument-list styles.
+  $ast = [Management.Automation.Language.Parser]::ParseFile((Join-Path $PackRoot 'TOOLS\UABS-Mcp-Park.ps1'), [ref]$null, [ref]$null)
+  $definition = $ast.Find({param($n) $n -is [Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq 'Get-UabsMcpLaunchText'}, $true)
+  Invoke-Expression $definition.Extent.Text
+  $launch = Get-UabsMcpLaunchText @{Style='yaml';Text="    command: uabs-toolbox`n    args: []`n    env:`n      command: RobloxForge`n"}
+  Assert ($launch -match 'uabs-toolbox' -and $launch -notmatch 'RobloxForge') 'YAML env leaked into launch matching'
+  foreach ($arguments in @("    args:`n    - S:/RobloxForge/server.py", "    args: [`n      'S:/RobloxForge/server.py'`n    ]")) {
+    $launch = Get-UabsMcpLaunchText @{Style='yaml';Text="    command: python`n$arguments`n"}
+    Assert ($launch -match 'RobloxForge') 'YAML launch arguments were lost'
+  }
   Write-Host 'MCP PARK GATE: PASS'
 } finally {
   foreach ($k in $saved.Keys) { [Environment]::SetEnvironmentVariable($k, $saved[$k]) }

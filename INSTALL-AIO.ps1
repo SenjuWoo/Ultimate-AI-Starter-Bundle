@@ -220,7 +220,6 @@ $installFailedPath = Join-Path $installLogRoot 'INSTALL-FAILED.txt'
 # console and transcript keep one line per step.
 $script:UabsDetailsLog = $installLogPath -replace '\.log$', '-details.log'
 $script:UabsTranscriptStarted = $false
-$script:UabsHermesGatewayWasRunning = $false
 try {
   Start-Transcript -LiteralPath $installLogPath -Force | Out-Null
   $script:UabsTranscriptStarted = $true
@@ -553,7 +552,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.29.12 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.29.13 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -959,9 +958,8 @@ if (Test-Path -LiteralPath $claudeKm -PathType Leaf) {
 #           scanner false-positives on both plugins and --force does not
 #           override it. The Superpowers bridge drops Claude/Codex/Cursor/Devin/Kimi
 #           manifests; Hermes would otherwise parse them on every gateway start.
-#           A gateway that was already running stays down until profile migration
-#           finishes, then restarts. Restarting it here lets it save the pre-migration
-#           config back over the file.
+#           A running desktop or gateway defers native plugin changes; existing
+#           native ownership and copied skills remain available.
 #   Codex   bundled superpowers staged into the local marketplace +
 #           [plugins."superpowers@ultimate-bundle"] enabled = true in
 #           config.toml; ponytail is detected (user's own marketplace
@@ -1101,41 +1099,17 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
         $gitCmd = Get-Command git -EA SilentlyContinue
         $gatewayStatus = Get-UabsNativeOutput -Exe $hermesExe -CmdArgs @('gateway', 'status')
         $gatewayWasRunning = $gatewayStatus -match '(?i)running' -and $gatewayStatus -notmatch '(?i)not running'
-        if ($gatewayWasRunning) {
-          if (Invoke-UabsNative $hermesExe @('gateway', 'stop')) {
-            $script:UabsHermesGatewayWasRunning = $true
-            Write-UabsOk 'Hermes gateway stopped for native plugin refresh; it stays down until config writes finish'
-          } else {
-            # A live chat session is using the gateway. Stopping it would kill
-            # that session, so defer the plugin refresh instead of failing the
-            # whole install; the copied skills stay and the next restart can
-            # finish it.
-            Write-UabsWarn 'Hermes gateway has a live session; native plugin refresh deferred. Restart Hermes and run START-HERE again to finish it.'
-            foreach ($pluginId in @('superpowers', 'ponytail')) {
-              $pstate.plugins[$pluginId] = New-UabsPluginStateEntry -Status 'deferred-live-gateway' -Reason 'gateway has a live session; copied skills stay'
-            }
-            break
-          }
-        }
-        # Hermes desktop (Hermes.exe) loads config.yaml once at startup and
-        # persists ITS in-memory copy on later saves. Left running, it rewrites
-        # the file from pre-install state and silently wipes every mcp_servers
-        # entry this install adds (same stale-config class as the gateway).
-        # Stop it alongside the gateway; relaunched at the end of the script
-        # once config.yaml is final.
         $hermesDesktop = Get-Process -Name 'Hermes' -ErrorAction SilentlyContinue
-        if ($hermesDesktop) {
-          $script:UabsHermesDesktopExe = ($hermesDesktop | Select-Object -First 1).Path
-          # An install started from inside a Hermes chat closes the app that IS
-          # the agent's parent, so that chat dies mid-run. Say so first: three
-          # installs on 2026-10-16 each vanished a session with no explanation,
-          # which reads as a crash and sends the owner hunting for a cause.
-          if ($env:HERMES_AGENT -or $env:HERMES_DESKTOP) {
-            Write-UabsWarn 'Hermes is running this install: closing the desktop app ends this chat session. Hermes is relaunched automatically when the install finishes - reopen the chat afterwards.'
+        if ($gatewayWasRunning -or $hermesDesktop) {
+          # Keep active sessions alive and retain ownership of plugins already installed.
+          $listed = Get-UabsNativeOutput -Exe $hermesExe -CmdArgs @('plugins', 'list')
+          foreach ($pluginId in @('superpowers', 'ponytail')) {
+            $entry = New-UabsPluginStateEntry -Status 'deferred-live-gateway' -Reason 'Hermes is running; existing plugins and copied skills stay'
+            $entry.native = $listed -match ('(?m)\b' + [regex]::Escape($pluginId) + '\b')
+            $pstate.plugins[$pluginId] = $entry
           }
-          Write-UabsWarn ('Hermes desktop is running - closing it for the install so its stale config cannot wipe the MCP entries (it will be relaunched when done)')
-          $hermesDesktop | Stop-Process -Force -ErrorAction SilentlyContinue
-          Start-Sleep -Milliseconds 500
+          Write-UabsWarn 'Hermes is running; native plugin refresh deferred without closing any app. Existing plugins and copied skills remain usable.'
+          break
         }
         # The scanner refuses both bundled plugins (false-positive 'traversal'
         # findings; --force does not override) - disarm scan-at-install first.
@@ -1251,17 +1225,10 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
             }
           }
         } finally {
-          # Restore the operator's scanner setting. Leave the gateway down:
-          # it rewrites config.yaml from the copy it loaded at start, and the
-          # profile migration below has not run yet. Restart is after that write.
+          # Restore the operator's scanner setting; running Hermes was deferred above.
           $pstate.scan_on_install_restore = Restore-UabsHermesPluginScan `
             -ConfigPath (Join-Path $providerHome 'config.yaml') `
             -State $pstate.scan_on_install_fix
-          if ($script:UabsHermesGatewayWasRunning) {
-            Write-UabsOk 'Hermes gateway stays stopped until profile migration finishes'
-          } elseif ($newInstalls -gt 0) {
-            Write-UabsOk 'Hermes gateway was stopped before install - left stopped'
-          }
         }
       }
 
@@ -2719,7 +2686,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.29.12'
+version = '8.29.13'
   content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')
@@ -2821,43 +2788,15 @@ if (-not $ToolsOnly) {
 
   if (-not $SkillsOnly -and -not $SkipMcpWire -and ($Providers -contains 'Hermes') -and (Test-Path -LiteralPath $hermesProfiles)) {
     try {
-      # The migrator refuses to run while Hermes.exe is up, because the desktop
-      # app persists its stale in-memory config on the next save and would undo
-      # the migration (the v8.0.4 defect, in a new place). The install already
-      # closes it -- but only inside the plugin block, which -SkipNativePlugins
-      # and an absent Hermes CLI both skip. Without this the migration became a
-      # warning on exactly the runs that skipped that block, and the profile
-      # topology silently never landed.
+      # The migrator's defer guard protects a live desktop/gateway without ending sessions.
       $hermesGw = Get-UabsHermesExecutable
-      if (-not (Test-Path -LiteralPath $hermesGw -PathType Leaf)) {
-        $hermesCmd = Get-Command hermes -ErrorAction SilentlyContinue
-        if ($hermesCmd) { $hermesGw = $hermesCmd.Source } else { $hermesGw = $null }
-      }
-      if ($hermesGw) {
+      $gwUp = $false
+      if ($hermesGw -and (Test-Path -LiteralPath $hermesGw -PathType Leaf)) {
         $gwText = Get-UabsNativeOutput -Exe $hermesGw -CmdArgs @('gateway', 'status')
         $gwUp = $gwText -match '(?i)running' -and $gwText -notmatch '(?i)not running'
-        if ($gwUp) {
-          if (-not (Invoke-UabsNative $hermesGw @('gateway', 'stop'))) {
-            # A live chat session keeps the gateway up. Do not skip profile
-            # migration: that is how codebase-memory-mcp and the code profile
-            # silently stayed unregistered on an otherwise successful install.
-            Write-UabsWarn 'Hermes gateway has a live session; profile migration will write config without stopping it. Restart Hermes to load new MCP entries.'
-            $script:UabsHermesGatewayWasRunning = $false
-          } else {
-            $script:UabsHermesGatewayWasRunning = $true
-            Write-UabsOk 'Hermes gateway stopped before profile migration'
-          }
-        }
       }
       $hermesUp = Get-Process -Name 'Hermes' -ErrorAction SilentlyContinue
-      if ($hermesUp) {
-        if (-not $script:UabsHermesDesktopExe) {
-          $script:UabsHermesDesktopExe = ($hermesUp | Select-Object -First 1).Path
-        }
-        Write-UabsWarn 'Hermes desktop is running - closing it so the profile migration cannot be overwritten (relaunched when the install finishes)'
-        $hermesUp | Stop-Process -Force -ErrorAction SilentlyContinue
-        Start-Sleep -Milliseconds 500
-      }
+      $hermesLive = [bool]($gwUp -or $hermesUp)
       $profileArgs = @('-Apply', '-DeferLiveGateway')
       # Resolve the REAL Hermes home, not the active profile: Hermes desktop
       # exports HERMES_HOME as profiles\<name> for everything it launches, and
@@ -2870,8 +2809,12 @@ if (-not $ToolsOnly) {
       if ($migrateCode -ne 0) { throw "Hermes profile migrator failed with exit code $migrateCode" }
       $profileHome = if ($hermesRoot) { $hermesRoot } elseif ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }
       $evaluatedProfiles = @('default') + @(Get-ChildItem -LiteralPath (Join-Path $profileHome 'profiles') -Directory -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name)
-      $installed['hermes-native-profiles'] = @{ status='evaluated'; profiles=$evaluatedProfiles; skyrim_toolset=$(if ($SkyrimToolset) { $SkyrimToolset } else { 'default (Lean)' }) }
-      Write-UabsOk ('Hermes profiles ready ({0}): task tools start on demand through the toolbox' -f $evaluatedProfiles.Count)
+      $installed['hermes-native-profiles'] = @{ status=$(if ($hermesLive) { 'deferred-live-gateway' } else { 'evaluated' }); profiles=$evaluatedProfiles; skyrim_toolset=$(if ($SkyrimToolset) { $SkyrimToolset } else { 'default (Lean)' }) }
+      if ($hermesLive) {
+        Write-UabsWarn 'Hermes profile migration deferred; existing profiles are preserved. Run installation with Hermes closed when profile changes are needed.'
+      } else {
+        Write-UabsOk ('Hermes profiles ready ({0}): task tools start on demand through the toolbox' -f $evaluatedProfiles.Count)
+      }
     } catch {
       Write-UabsWarn ('Hermes native profiles: ' + $_.Exception.Message)
     }
@@ -3014,30 +2957,6 @@ if (-not $SkipCleanup -and -not $ToolsOnly) {
 $state.status = 'complete'
 $state.completed_utc = [DateTime]::UtcNow.ToString('o')
 $state | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $stateDir 'install-state.json') -Encoding UTF8
-
-# Relaunch Hermes only after every config write is done. The gateway rewrites
-# config.yaml from the copy it loaded at start, so it cannot be up during migration.
-if ($script:UabsHermesGatewayWasRunning) {
-  $hermesGw = Get-UabsHermesExecutable
-  if (-not (Test-Path -LiteralPath $hermesGw -PathType Leaf)) {
-    $hermesCmd = Get-Command hermes -ErrorAction SilentlyContinue
-    if ($hermesCmd) { $hermesGw = $hermesCmd.Source } else { $hermesGw = $null }
-  }
-  if ($hermesGw -and (Invoke-UabsNative $hermesGw @('gateway', 'start'))) {
-    Write-UabsOk 'Hermes gateway restarted after config writes'
-  } else {
-    Write-UabsWarn 'Hermes gateway was running before install but could not be restarted'
-  }
-}
-if ($script:UabsHermesDesktopExe) {
-  if (Test-Path -LiteralPath $script:UabsHermesDesktopExe -PathType Leaf) {
-    Start-Process -FilePath $script:UabsHermesDesktopExe -WindowStyle Hidden
-    Write-UabsOk 'Hermes desktop relaunched with the final config'
-  } else {
-    Write-UabsWarn ('Hermes desktop was closed for the install but its exe is gone (' + $script:UabsHermesDesktopExe + ') - relaunch it manually')
-  }
-  $script:UabsHermesDesktopExe = $null
-}
 
 # One click, nothing to type: the closing text names no command. The toolbox
 # count comes from the installed toolbox itself, so it reflects this machine.

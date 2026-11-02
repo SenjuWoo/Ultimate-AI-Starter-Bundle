@@ -1,28 +1,19 @@
-"""Install the canonical skills into the live provider homes.
+"""Compare canonical skills with the legacy provider homes; never write them.
 
-Deliberately conservative:
+    python install_live_skills.py <canonical-dir> --check
 
-  * Backs up each provider's existing skills tree first (only when something
-    will actually change).
-  * Only touches skill directories the canonical tree actually contains, so
-    provider-only extras (e.g. the other-games mega-pack under .codex and
-    .hermes) are left completely alone.
-  * Never deletes. A skill that stops being scoped to a provider is simply no
-    longer written there; removing the existing copy is a human decision.
-  * Copies scripts byte-for-byte; a .ps1 keeps its BOM (PS 5.1 needs it) while
-    SKILL.md is written BOM-less (a BOM would hide its description).
-  * --check reports what WOULD change and writes nothing.
-
-    python install_live_skills.py <canonical-dir> [--check]
+Counts describe byte differences, not an ownership-aware installation plan.
+For writes, use INSTALL-AIO.ps1 with explicit -Providers and the skills-only
+flags shown when a write request is refused. This helper never runs it.
 """
+import argparse
 import io
 import json
 import os
-import shutil
 import stat
 import sys
-import time
 
+sys.dont_write_bytecode = True  # Read-only checks must not create import caches.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fanout_providers import SCOPED  # noqa: E402  single source of truth
 
@@ -38,7 +29,7 @@ HOMES = {
     'Hermes': r'%LOCALAPPDATA%\hermes\skills',
     'Antigravity': r'%USERPROFILE%\.gemini\config\skills',
 }
-VERBATIM_EXT = {'.ps1', '.psm1', '.psd1', '.bat', '.cmd'}
+
 # The installer's registry of skills the owner keeps on purpose (an
 # independently updated copy). Measured 2026-10-20: this tool ignored it and
 # merged the pack's Impeccable 4.1.3 over a preserved 4.3.1 in three apps, and
@@ -74,28 +65,15 @@ def is_reparse(p):
         return False
 
 
-def clear_dangling(dst_dir, notes):
-    """A junction whose target is gone shadows the real skill and breaks every
-    read of it. Observed live: .grok\\skills\\skyrim-memory pointed at a
-    non-existent shared .agents directory, so Grok's mandated first skill
-    resolved to nothing. Remove the link (never the target) and let real files
-    be written in its place."""
-    if not is_reparse(dst_dir):
-        return False
-    target_ok = os.path.isdir(dst_dir)          # follows the link
-    if target_ok:
-        notes.append('LEFT INTACT (live junction): %s' % os.path.basename(dst_dir))
-        return False
-    try:
-        os.rmdir(dst_dir)                        # removes the link only
-        notes.append('replaced DANGLING junction: %s' % os.path.basename(dst_dir))
-        return True
-    except OSError as e:
-        notes.append('could not clear junction %s (%s)' % (os.path.basename(dst_dir), e))
-        return False
+WRITE_GUIDANCE = (r'.\INSTALL-AIO.ps1 -Providers {providers} -SkillsOnly '
+                  '-SkipNativePlugins -SkipStarterSettings -SkipPreamble -SkipCleanup')
 
 
 def install(canon, dest, provider, check, notes):
+    """Retain the legacy comparison API, but refuse writes before any I/O."""
+    if not check:
+        raise ValueError('This legacy helper is check-only. Use ' +
+                         WRITE_GUIDANCE.format(providers=provider))
     added = changed = kept = withheld = 0
     codex_sys = os.path.expandvars(r'%USERPROFILE%\.codex\skills\.system')
     keep = preserved_skills(provider)
@@ -116,11 +94,8 @@ def install(canon, dest, provider, check, notes):
         src_dir = os.path.join(canon, sk)
         dst_dir = os.path.join(dest, sk)
         if is_reparse(dst_dir):
-            if check:
-                notes.append('%s junction: %s' % (
-                    'DANGLING' if not os.path.isdir(dst_dir) else 'live', sk))
-            else:
-                clear_dangling(dst_dir, notes)
+            notes.append('%s junction: %s' % (
+                'DANGLING' if not os.path.isdir(dst_dir) else 'live', sk))
         for dp, _, fs in os.walk(src_dir):
             for f in fs:
                 sp = os.path.join(dp, f)
@@ -132,23 +107,19 @@ def install(canon, dest, provider, check, notes):
                     continue
                 else:
                     changed += 1
-                if check:
-                    continue
-                os.makedirs(os.path.dirname(op), exist_ok=True)
-                if os.path.splitext(f)[1].lower() in VERBATIM_EXT:
-                    shutil.copy2(sp, op)
-                else:
-                    with io.open(sp, 'rb') as fh:
-                        data = fh.read()
-                    with io.open(op, 'wb') as fh:
-                        fh.write(data)
+
     return added, changed, kept, len(skills) - withheld, withheld
 
 
 def main():
-    canon = sys.argv[1]
-    check = '--check' in sys.argv
-    stamp = time.strftime('%Y%m%d-%H%M%S')
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('canonical_dir')
+    parser.add_argument('--check', action='store_true', help='compare only; never write')
+    args = parser.parse_args()
+    if not args.check:
+        parser.error('This legacy helper is check-only; pass --check. For writes '
+                     '(select providers explicitly), use ' +
+                     WRITE_GUIDANCE.format(providers='Claude'))
 
     for provider, raw in HOMES.items():
         dest = os.path.expandvars(raw)
@@ -158,40 +129,14 @@ def main():
         existing = len([d for d in os.listdir(dest)
                         if os.path.isdir(os.path.join(dest, d))])
         notes = []
-        if not check:
-            # Dangling junctions must go BEFORE the backup. Python treats a
-            # Windows junction as a directory (not a symlink), so copytree
-            # recurses into it and aborts the whole backup on a dead target --
-            # symlinks=True does not help.
-            for d in sorted(os.listdir(dest)):
-                p = os.path.join(dest, d)
-                if is_reparse(p) and not os.path.isdir(p):
-                    clear_dangling(p, notes)
-        # Probe before touching anything. Backing up an unchanged tree is pure
-        # waste: a run that installs nothing used to still copy ~53 MB per
-        # provider, and those stacked up (13 backup trees / ~692 MB observed on
-        # one machine). Only spend the copy when there is something to undo.
-        pending_a, pending_c = install(canon, dest, provider, True, [])[:2]
-        backed_up = False
-        if not check and (pending_a or pending_c):
-            backup = dest + '.bak-uabs-' + stamp
-            if not os.path.exists(backup):
-                shutil.copytree(dest, backup, symlinks=True,
-                                ignore_dangling_symlinks=True)
-                backed_up = True
-        a, c, k, n, w = install(canon, dest, provider, check, notes)
+        a, c, k, n, w = install(args.canonical_dir, dest, provider, True, notes)
         held = ', '.join(sorted(s for s, p in SCOPED.items() if provider not in p))
         if w and held:
             notes.insert(0, 'withheld (scoped elsewhere): %s' % held)
-        print('%-8s %3d skills present -> canonical %d | +%d new, %d updated, %d unchanged%s'
-              % (provider, existing, n, a, c, k, '  [CHECK ONLY]' if check else ''))
+        print('%-8s %3d skills present -> canonical %d | +%d new, %d updated, %d unchanged  [CHECK ONLY]'
+              % (provider, existing, n, a, c, k))
         for msg in notes:
             print('           ! %s' % msg)
-        if not check:
-            if backed_up:
-                print('           backup: %s' % os.path.basename(dest + '.bak-uabs-' + stamp))
-            else:
-                print('           backup: skipped (nothing changed)')
 
 
 if __name__ == '__main__':

@@ -1,5 +1,21 @@
 # Bundle audit state
 
+## Prepared 8.29.13 — non-disruptive install — 2026-11-02
+
+- Live Hermes desktop/gateway is no longer stopped or relaunched. Native plugin
+  refresh and profile migration defer with `deferred-live-gateway`; copied
+  skills and existing plugins stay usable.
+- `install_live_skills.py` is comparison-only; writes go through
+  `INSTALL-AIO.ps1 -SkillsOnly` so junctions and preserved skills are safe.
+- Release flow drops one duplicate docs check and avoids receipt-only commits;
+  publication evidence stays in CI/job records and release assets.
+- Local install proof: `install-state.json` 8.29.13, status complete; doctor
+  PASS; personal model/provider choices unchanged; no apps closed.
+- 130 canonical skills total. Unrestrained/preamble source untouched.
+- Exact-SHA CI, release tag and asset hashes are recorded in the publication
+  job/asset records; this file is updated before the release commit so the
+  release does not trigger a second full matrix.
+
 ## Completed 8.29.12 tool horizon — 2026-11-01
 
 - Second-opinion pass. Agents may use a better tool than the catalog names.

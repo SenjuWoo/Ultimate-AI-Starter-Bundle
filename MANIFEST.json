@@ -36,8 +36,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 11246,
-  "sha256": "3d55d08da362481a9e90de4e90e972eb69d4ddea0dc56d52e716c806eed3981e"
+  "size": 11230,
+  "sha256": "287ac5b6dc95d6dc677a2b0b0b05a54d956364549dc354b94f94530f5b67a2e0"
  },
  {
   "path": ".github/workflows/dependabot-auto-merge.yml",
@@ -4011,8 +4011,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9979,
-  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
+  "size": 10765,
+  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -8731,8 +8731,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9979,
-  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
+  "size": 10765,
+  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -13511,8 +13511,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9979,
-  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
+  "size": 10765,
+  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -18281,8 +18281,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9979,
-  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
+  "size": 10765,
+  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -23051,8 +23051,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9979,
-  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
+  "size": 10765,
+  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -27896,8 +27896,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 9979,
-  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
+  "size": 10765,
+  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -29067,12 +29067,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 62136,
-  "sha256": "74215db65e258fd1992bfcccc9a984c3fd50897b85d7a09d7aea722f5a1e35bd"
+  "sha256": "9468bd85fa94d71d3c978793a63a0c3343822808128adbd997b6979c48597110"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1328,
-  "sha256": "da24309f67b99b7093b92be661733f1e1541f454b60efa914a389735a3d72d7b"
+  "sha256": "9d7b3c7e0976087f0a2639373a3e6f69b0a0e6a2952b708fc334db64b8b8192b"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -29082,7 +29082,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39683,
-  "sha256": "4be172ecb453a805bc195c7621386d49b7894789745d80c829146e1703b6055a"
+  "sha256": "ae22d71bed8d2e118e727eeeb1ccfc264c8c52837cd18b6c776fd86c717794c3"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -33151,8 +33151,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 258797,
-  "sha256": "ef8f8f6a4f520c1c51cbb071fa616e30cbf8163808c85b64c2749bbaf7a6266f"
+  "size": 259769,
+  "sha256": "82c767bd44849180831f1409c1dc2880a40770bd3e9067bda07c0a7ec63fe4ce"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -33241,8 +33241,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 180618,
-  "sha256": "fced1309559c99fa0b2f57d07755168cdece6ca27034dd55dca5fb98f1ac4a94"
+  "size": 175870,
+  "sha256": "8d44cce03259e42aa5d6972128a7f4f8f254c03302ac0353400dfcfd4e61c19d"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33261,8 +33261,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 63927,
-  "sha256": "169e7b7a4ead7c599119d39b11e048beb1b00b53841a824156186d4a5100e244"
+  "size": 63943,
+  "sha256": "daf12437bbd77f64f16b294c7f9f14dd60f279622a8ae85bd04b681275e21910"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -33306,8 +33306,8 @@
  },
  {
   "path": "README.md",
-  "size": 71925,
-  "sha256": "1afc5787708b0e5159cdaf5699052840770f52dc74b979d02348b68d2e03bd71"
+  "size": 71937,
+  "sha256": "317ac65b988840e072e8fd4c7a8e695bdd116c048eea09bc2c121a1a005cdd23"
  },
  {
   "path": "SECURITY.md",
@@ -33317,17 +33317,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1027,
-  "sha256": "311f5e606e8ae093deb562404f465d6c79e1e6973f0ad5b74785d63afd6836af"
+  "sha256": "102e5c2ef611762b00d66c52ae09534d03dfd24ac41481629cb886cef7c07569"
  },
  {
   "path": "START-HERE.txt",
-  "size": 3917,
-  "sha256": "697858a37966d71da81ac1adb2ce10dd76e68a0d03210026cb365b01588962a5"
+  "size": 4013,
+  "sha256": "33662dc7cb1007d95ca4ee2c7436320c013c1b699d1432b9c4d838f690d5462b"
  },
  {
   "path": "STATE.md",
-  "size": 51706,
-  "sha256": "92e1824fbba14fef66a6cf4b7a2c050050139abe2a7e4804c838e0c59cdc2245"
+  "size": 52670,
+  "sha256": "e5a71caeda02d01622d2f9485bee45d55b445601029cd938f9f6d50aaa1054a6"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -33351,8 +33351,8 @@
  },
  {
   "path": "TESTS/Test-CodexPluginDedupe.ps1",
-  "size": 3332,
-  "sha256": "4b73931f3beab755b9aad5ae08e0aba6f48d2c671a758a7361d3ac5af8d8c5c4"
+  "size": 3660,
+  "sha256": "f312041f7de54a458e13043c30adb367265b504c54e1a860bc30f9c7cca5113a"
  },
  {
   "path": "TESTS/Test-Companions.ps1",
@@ -33405,9 +33405,19 @@
   "sha256": "f9410696e02008008f931c4aa9d436fbc294cc4d2fc5bd7378f3b2604aa1c4f6"
  },
  {
+  "path": "TESTS/Test-HermesLiveInstall.ps1",
+  "size": 2035,
+  "sha256": "a00cd7db50f761d3dfd4a10419a23bff9b13e65a0401951ff9492517cae84448"
+ },
+ {
   "path": "TESTS/Test-HermesNativeStderr.ps1",
   "size": 3442,
   "sha256": "d5bc73ce1576456c1da10b8180f520b55718f61abb84b116e6a76c8489aeb28d"
+ },
+ {
+  "path": "TESTS/Test-HermesProfiles.ps1",
+  "size": 4797,
+  "sha256": "16950b08f855ac6e5b809be54491dc9f501a48d792dd06029c1cf2e600192439"
  },
  {
   "path": "TESTS/Test-HookPrerequisites.ps1",
@@ -33426,8 +33436,8 @@
  },
  {
   "path": "TESTS/Test-McpPark.ps1",
-  "size": 10288,
-  "sha256": "3c8f3bd8018dac6feca9131c0a9fce3184792992df7bf853fa7f2f8d2dc530c6"
+  "size": 11701,
+  "sha256": "c4395dfb66b3f59acdd09380778de730aeb9c33983c06bb5630f0be07ac9a8c8"
  },
  {
   "path": "TESTS/Test-McpProfiles.ps1",
@@ -33446,8 +33456,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 68030,
-  "sha256": "0456de6e0fc7397e1017d40ecdca9af18da75179dc15d005b6be50d0206c606a"
+  "size": 68194,
+  "sha256": "7816181ef83603fe256ed38b217fdfa0570a23a7cff1e67b16abb8d0e5604728"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -33715,6 +33725,11 @@
   "sha256": "c4d142b5fe5616b5870199d4b3dc759b7c9e12c5413448298fcfb5cba9dfc86e"
  },
  {
+  "path": "TESTS/test_install_live_skills.py",
+  "size": 7965,
+  "sha256": "4a58535f4e224c87cf26793734fe778c456f7ab7e11ebc29e260ef485a0a18a0"
+ },
+ {
   "path": "TESTS/test_maintainer_contract.py",
   "size": 18698,
   "sha256": "5e7735955574a57ba6c7bb3528f20d8b1aa56bb5e182c520bf57a9e1a542fc42"
@@ -33736,8 +33751,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 345502,
-  "sha256": "b04a1aa81e27c6cc90956a248bf9c8cfc3d981967efedbd467ac74261b88116d"
+  "size": 344911,
+  "sha256": "fae16117895470b544772ab19578923599bcdb147516e1f72ec829021e952c01"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -33896,8 +33911,8 @@
  },
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
-  "size": 77496,
-  "sha256": "8044f452b448e56c55b25d77d783f767b82c42fe0f8c48b0ae2d72ca91d756a3"
+  "size": 77814,
+  "sha256": "065f6e51e6cd620163d8b40a0733e56bc1a6bcea7fcd13b65e6c3231965b6f49"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -33967,12 +33982,12 @@
  {
   "path": "TOOLS/UABS-Common.ps1",
   "size": 168192,
-  "sha256": "f89b883d06d68c9b983ec3ca5214b0a059723dda94a03f0715560eea57963afe"
+  "sha256": "f2c7622fa7f495425042f1d45a2d57d2df657aae57d23ce890bfede8028f9888"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
-  "size": 13943,
-  "sha256": "c6686b0ae2712f4b47947934c97adc97f201580f2098828bc35b6f3eafa4f076"
+  "size": 14771,
+  "sha256": "95e391f202b8e689f9313a245693dbc4bec1342754c3675fed7d5fc59ccd65ad"
  },
  {
   "path": "TOOLS/UABS-Mcp-Write.ps1",
@@ -34111,8 +34126,8 @@
  },
  {
   "path": "TOOLS/install_live_skills.py",
-  "size": 8339,
-  "sha256": "af9071920b78a8507eefcbf821fc4cd72868531335150fd66188246cceeab273"
+  "size": 5755,
+  "sha256": "c860b57ea184787cbb0edec2b6caf977271b963299677cba7d2a2cd9f9732b52"
  },
  {
   "path": "TOOLS/mcp_handshake.py",
@@ -34202,7 +34217,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2673,
-  "sha256": "cea62ec8d49c86cfa9b1a864be794ececc66ce9c4facb2461382b9f17dc39cc1"
+  "sha256": "35d335d2b6ce245b04e3e728629d5b90bf72f66b1bfa3285fa75dfc37f1f5a8e"
  },
  {
   "path": "VALIDATION.md",
@@ -34212,7 +34227,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "ff621dbdfa4e6207defe4c62fd78c89e87b59ad865f447afbf4a4658749e5d63"
+  "sha256": "1a1aaef6f7d60c280789504b372f0c63525651e90ddae057dcdb17c81275ad4f"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -38041,8 +38056,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/SKILL.md",
-  "size": 9979,
-  "sha256": "fc007ad7a214aa0b75983ff5e09cf11996e0c9a32a9f5e7822299a0be95be037"
+  "size": 10765,
+  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -39623,6 +39638,11 @@
   "path": "docs/history/V8.29.12-CHANGELOG.md",
   "size": 833,
   "sha256": "bd1c165ff6c5e9e6ff95f44cf02268da7d1bce50a5ab2279595978471a637192"
+ },
+ {
+  "path": "docs/history/V8.29.13-CHANGELOG.md",
+  "size": 943,
+  "sha256": "574850b115e5482ffc07df36515012b28f7e092a15977a93e93793814c2d18d4"
  },
  {
   "path": "docs/history/V8.29.2-CHANGELOG.md",

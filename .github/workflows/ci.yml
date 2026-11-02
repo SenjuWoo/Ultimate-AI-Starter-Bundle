@@ -155,8 +155,7 @@ jobs:
         run: |
           python .github/scripts/check_versions.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python TOOLS/verify_docs.py
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          # Docs are already checked, with exit enforcement, in every Pack gate.
 
   # Skyrim Forge is developed and released in github.com/SenjuWoo/SkyrimForge,
   # which runs Forge's own matrix (Python, native Go writer, reproducible

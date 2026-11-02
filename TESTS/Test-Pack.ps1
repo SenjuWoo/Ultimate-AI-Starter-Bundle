@@ -622,14 +622,16 @@ if ($aio -match "Invoke-UabsSkillDedupe -Provider 'Hermes'") {
 if ($aio -match 'Remove-UabsHermesForeignHarnessDirs') {
     Good 'AIO strips foreign Superpowers manifests from the Hermes bridge'
 } else { Bad 'INSTALL-AIO.ps1 does not strip foreign Superpowers manifests for Hermes' }
-$migAt = $aio.IndexOf('Migrate-HermesProfiles.ps1')
-$restartAt = $aio.IndexOf('Hermes gateway restarted after config writes')
-if ($migAt -ge 0 -and $restartAt -gt $migAt) {
-    Good 'AIO restarts the Hermes gateway only after profile migration'
-} else { Bad 'Hermes gateway restart is not after Migrate-HermesProfiles.ps1' }
-if ($aio -match 'Hermes gateway restarted \(it was running before plugin refresh\)') {
-    Bad 'AIO still restarts the Hermes gateway inside the plugin refresh'
-} else { Good 'AIO does not restart the Hermes gateway inside plugin refresh' }
+if ($aio -notmatch 'Stop-Process' -and $aio -notmatch "@\('gateway', 'stop'\)" -and
+    $aio -match 'deferred-live-gateway') {
+    Good 'AIO preserves running Hermes sessions and records deferral'
+} else { Bad 'AIO still shuts down Hermes or hides live deferral' }
+foreach ($gate in @('TESTS\Test-HermesLiveInstall.ps1','TESTS\Test-HermesProfiles.ps1')) {
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot $gate)
+    if ($LASTEXITCODE -eq 0) { Good "$gate passed" } else { Bad "$gate failed" }
+}
+& $py.Source (Join-Path $PackRoot 'TESTS\test_install_live_skills.py')
+if ($LASTEXITCODE -eq 0) { Good 'legacy skill comparison is read-only' } else { Bad 'legacy skill comparison regression failed' }
 $stripRoot = Join-Path ([IO.Path]::GetTempPath()) ('uabs-hermes-strip-' + [guid]::NewGuid().ToString('n'))
 try {
     New-Item -ItemType Directory -Force -Path (Join-Path $stripRoot '.hermes-plugin') | Out-Null

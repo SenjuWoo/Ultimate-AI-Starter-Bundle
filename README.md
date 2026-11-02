@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.29.12 -->
+<!-- Ultimate AI Starter Bundle v8.29.13 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.29.12
+# Ultimate AI Starter Bundle v8.29.13
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -128,10 +128,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "& ([scriptblock]::Create
 Or double-click `INSTALL-REMOTE.bat`. Re-running reuses the matching release
 folder and runs the installer again; newer releases refresh that folder.
 
-Run it from a normal window, not from inside an AI chat: the installer stops
-and relaunches Hermes desktop (the running app would otherwise rewrite
-`config.yaml` from its stale in-memory copy), so a chat that launched the
-install ends with the app. The installer says so before it happens.
+The installer does not close running AI apps. With Hermes live, native plugin
+refresh and profile migration defer visibly; existing plugins and skills stay
+usable. For a fresh setup or profile topology change, run installation with
+Hermes closed so its in-memory config cannot overwrite those changes.
 `-Force` refreshes the same release.
 
 **Windows (bundle already on disk)**

@@ -637,19 +637,10 @@ def test_hermes_native_profile_migration_contract() -> None:
     assert "$migrateCode -ne 0" in profile_call and "throw" in profile_call, (
         "the installer records Hermes profiles as evaluated even when the child migrator exits nonzero"
     )
-    # The migrator refuses while Hermes.exe is up. The install closes the
-    # desktop app inside the PLUGIN block, which -SkipNativePlugins skips, so
-    # the migration call site has to close it too or the topology silently
-    # never lands on those runs.
-    call_site = installer[installer.index("$hermesProfiles = Join-Path"):]
-    call_site = call_site[:call_site.index("-File $hermesProfiles -ArgList $profileArgs")]
-    assert "Get-Process -Name 'Hermes'" in call_site, (
-        "the Hermes profile migration no longer closes a running desktop app; "
-        "it will degrade to a warning whenever the plugin block is skipped"
-    )
-    assert "$script:UabsHermesDesktopExe" in call_site, (
-        "the migration closes Hermes without recording it for relaunch"
-    )
+    # A live app must defer migration, not be force-closed by its caller.
+    assert "Stop-Process" not in installer and "@('gateway', 'stop')" not in installer
+    assert "status=$(if ($hermesLive) { 'deferred-live-gateway' }" in installer
+    assert (ROOT / "TESTS" / "Test-HermesLiveInstall.ps1").is_file()
     assert "config', 'set'" not in body, "PowerShell 5.1 corrupts nested Hermes JSON passed through config set"
 
 
@@ -2379,12 +2370,10 @@ def test_a_profile_scoped_hermes_home_resolves_to_the_real_home() -> None:
         if re.search(r"\$home\s*=[^=]", read(path), re.I):
             offenders.append(path.relative_to(ROOT).as_posix())
     assert not offenders, "these shipped scripts assign to the read-only $HOME: %s" % offenders
-    # An install launched from inside a Hermes chat closes the desktop app, so
-    # the chat dies mid-run; the installer must say that before the window goes.
+    # Live installation preserves the parent chat instead of warning before killing it.
     installer = read(ROOT / "INSTALL-AIO.ps1")
-    assert "closing the desktop app ends this chat session" in installer, (
-        "an install started from a Hermes session no longer explains why the session ends"
-    )
+    assert "native plugin refresh deferred without closing any app" in installer
+    assert "Stop-Process" not in installer
     gateway = read(ROOT / "TOOLS" / "Install-SillyTavernGateway.ps1")
     assert "$toolDir = $PSScriptRoot" in gateway, (
         "the gateway installer reuses a possibly-null $here for its shared-helper path"

@@ -38,9 +38,15 @@ try {
     function Get-UabsNativeOutput {
       param($Exe,$CmdArgs)
       Assert ($env:CODEX_HOME -ceq $script:expectedInventoryHome) 'Inventory queried the wrong Codex home.'
+      "Warning: remote marketplace unavailable`n" + ($script:testInventory | ConvertTo-Json -Depth 6)
+    }
+    function Get-UabsNativeStdout {
+      param($Exe,$CmdArgs)
+      Assert ($env:CODEX_HOME -ceq $script:expectedInventoryHome) 'Inventory queried the wrong Codex home.'
+      $global:LASTEXITCODE = 0
       $script:testInventory | ConvertTo-Json -Depth 6
     }
-    Assert (@(Repair-UabsCodexDuplicatePlugins -CodexHome $fixture -CheckOnly).Count -eq 1) 'Redirected-home inventory was not used.'
+    Assert (@(Repair-UabsCodexDuplicatePlugins -CodexHome $fixture -CheckOnly).Count -eq 1) 'Valid inventory was lost when stderr contained a warning.'
     Assert ($env:CODEX_HOME -ceq 'unrelated-parent-home') 'Inventory lookup leaked CODEX_HOME into its caller.'
   } finally { $env:CODEX_HOME = $outerHome }
   Write-Host 'CODEX PLUGIN DEDUPE GATE: PASS'

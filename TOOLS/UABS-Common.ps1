@@ -2539,7 +2539,7 @@ function Repair-UabsCodexDuplicatePlugins {
     $savedCodexHome = $env:CODEX_HOME
     try {
       $env:CODEX_HOME = $CodexHome
-      $Inventory = Get-UabsNativeOutput -Exe $cli.Source -CmdArgs @('plugin','list','--json') | ConvertFrom-Json
+      $Inventory = Get-UabsNativeStdout -Exe $cli.Source -CmdArgs @('plugin','list','--json') | ConvertFrom-Json
     }
     catch { Write-UabsWarn 'Codex plugin inventory unavailable; duplicate-plugin repair skipped.'; return }
     finally { $env:CODEX_HOME = $savedCodexHome }

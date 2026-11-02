@@ -22,10 +22,15 @@ Sync the live install through the ownership-aware installer (for skills only:
 Use the selected providers; preserve local override hashes and native-owned skills.
 Sync the local bundle, then commit -> push -> converge CI
 on the exact pushed SHA -> tag -> publish -> verify the shipped bytes (steps
-5-7). A step that requires an application to be closed - Hermes profile
-migration, an installer that rewrites provider config - is user-run by design:
-print the exact command, say why it cannot run here, and never report it as
-applied from inside the running app.
+5-7). The installer never closes running AI apps. Hermes native plugin refresh
+and profile migration defer while Hermes is live; existing plugins and skills
+remain available. Apply profile changes with Hermes closed, and report any
+remaining deferral rather than calling it applied.
+
+Put planned changes and local evidence in the release commit. Keep final
+publication receipts in release assets/job records and local diagnostics; fold
+source ledger updates into the next substantive change. Do not make a separate
+post-release receipt-only commit: it needlessly triggers the full CI again.
 
 ## 0. Prove the public surface
 
@@ -128,6 +133,11 @@ on code quality is unavailable on that repository; leave it off.
 
 ## 6. Tag and build artifacts from the GREEN commit
 
+When the repository publishes automatically after green CI (this bundle does),
+wait for that workflow's exact-SHA result and verify its tag/assets in step 7.
+Do not also tag, build or publish manually. Use the commands below only for
+repositories without automatic publication or a diagnosed manual recovery.
+
     git tag -a vX.Y.Z -m '<summary>'
     git push origin vX.Y.Z
     powershell -NoProfile -ExecutionPolicy Bypass -File TOOLS/Build-Release.ps1
@@ -136,6 +146,9 @@ Build zips AFTER the fix. Artifacts built from a red commit stay broken even
 if the tag is later moved.
 
 ## 7. Publish, then verify what actually shipped
+
+Invoke `gh release create` below only for the manual path; automatic releases
+already publish here. Both paths must complete the same verification.
 
     gh release create vX.Y.Z --title '...' --notes '...' <zip>... 
     gh release view vX.Y.Z --json tagName,targetCommitish,assets

@@ -712,7 +712,11 @@ function Ensure-UabsProfilePrefs([string]$Profile) {
   $signature = Get-UabsFallbackSignature $current.fallback
   if (-not $signature) {
     Add-UabsLedger 'untouched' "$Profile has no fallback chain (pack default: none)"
-  } elseif ($script:UabsSupersededChains -contains $signature) {
+  } elseif ($script:UabsSupersededChains -ccontains $signature -and -not @($current.fallback | Where-Object {
+      # Model names alone do not prove ownership of a user-configured chain.
+      $_ -isnot [System.Collections.IDictionary] -or $_.psbase.Count -ne 2 -or
+      $_['provider'] -cne 'openrouter' -or $_['model'] -isnot [string] -or $_['model'].Contains('|')
+    }).Count) {
     # Our old default, not the user's choice: clear it.
     Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'fallback_providers' `
       -Key 'fallback_providers' -Value @() -Detail "clear superseded pack fallback chain ($signature)"
