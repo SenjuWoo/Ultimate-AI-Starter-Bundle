@@ -1,6 +1,6 @@
 # Bundle audit state
 
-## Local 8.29.12 tool horizon — 2026-11-01
+## Completed 8.29.12 tool horizon — 2026-11-01
 
 - Second-opinion pass. Agents may use a better tool than the catalog names.
   A download that is not installed and not shipped by the pack is checked
@@ -38,9 +38,18 @@
 - Personal-preservation notes, not doctor failures: Claude `spid-authoring`,
   and several Kimi Skyrim skills. Kimi is outside the recorded install, so
   the skill-accounting section skips it.
-- The release workflow publishes this version from `main` after CI is green.
-  Asset hashes, the CI run, and alert counts are recorded in the following
-  docs commit, the same way 8.29.11 was.
+- Release https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/tag/v8.29.12
+  at `d7b361731fe2a33318f06aa2692124d9f2fbda31`. CI 41365949141, CodeQL
+  41365948870, Release 41366718426. All 12 checks passed.
+- Core 45,569,682 B sha256
+  `b07fdb82de8da5d7c0fa68a149bc408eda6160301a1c4ca39a57408bbbf33b96`;
+  Full-Offline 142,141,699 B sha256
+  `63cb6f8287bc5215e8a0c63da99cb669c2cd3cf1d77bbe308a7c51be5aeb7584`.
+  The eight hashed assets matched `SHA256SUMS.txt`; `SHA256SUMS.txt` itself
+  is the ninth asset (802 bytes). The published Core zip matches the local
+  build byte for byte.
+- Open alerts: Dependabot 0, code-scanning 0, secret-scanning 0.
+  Code quality scanning is unavailable on this repository and stays off.
 
 ## Completed 8.29.11 free game/app starter — 2026-11-01
 
