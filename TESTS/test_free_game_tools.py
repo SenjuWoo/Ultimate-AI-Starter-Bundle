@@ -1,6 +1,7 @@
 """Probe contract for TOOLS/free_game_tools.py (no network, no install)."""
 from __future__ import annotations
 
+import importlib.util
 import json
 import subprocess
 import sys
@@ -35,3 +36,27 @@ def test_probe_human_output_names_a_missing_free_page() -> None:
     assert "FREE GAME/APP TOOL DISCOVERY" in text
     assert "free: https://" in text
     assert "Missing tools are optional" in text
+
+
+def test_windows_fallback_does_not_credit_a_different_tool() -> None:
+    """A Blender install must not satisfy a missing Godot row."""
+    spec = importlib.util.spec_from_file_location("free_game_tools", TOOL)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    blender = r"C:\Program Files\Blender Foundation\Blender\blender.exe"
+
+    def no_path(_names):
+        return None
+
+    def only_blender(_folder, exe):
+        if exe.lower() == "blender.exe":
+            return blender
+        return None
+
+    mod.find_tool = no_path
+    mod.find_windows_file = only_blender
+    rows = {row["id"]: row for row in mod.collect()}
+    assert rows["blender"]["installed"] is True
+    assert rows["blender"]["path"] == blender
+    assert rows["godot"]["installed"] is False
+    assert rows["godot"]["path"] == ""

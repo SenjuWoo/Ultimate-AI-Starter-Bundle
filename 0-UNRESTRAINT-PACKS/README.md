@@ -18,8 +18,8 @@ layers — stacking two costs tokens and contradicts itself.
 
 | File | Size | Tools? | Use it for |
 |---|---|---|---|
-| `AIO-INSTRUCTION.md` | ~11.7 KB / 1726 w | yes | Agent CLIs (Claude Code, Codex, Grok, Kimi, Hermes). The only variant with the PACK CONTEXT block: how to discover this pack's tools portably, install what is missing, and state what was verified. |
-| `AIO-INSTRUCTION — Compact.md` | ~4.8 KB / 695 w | yes | Same job, ~65% cheaper. Use when the host has a small system-prompt budget or you are paying per turn. |
+| `AIO-INSTRUCTION.md` | ~12.4 KB / 1895 w | yes | Agent CLIs (Claude Code, Codex, Grok, Kimi, Hermes). The only variant with the PACK CONTEXT block: how to discover this pack's tools portably, install what is missing, and state what was verified. It also carries the tool-horizon rule: a newer tool may be used after one recorded safety check. |
+| `AIO-INSTRUCTION — Compact.md` | ~5.1 KB / 753 w | yes | Same job, shorter. Use when the host has a small system-prompt budget or you are paying per turn. |
 | `AIO-INSTRUCTION — Web.md` | ~1.4 KB / 212 w | no | ChatGPT / Gemini / Perplexity web UIs. States plainly that there is no code execution, no files, no MCP, so the model stops pretending otherwise. |
 | `AIO-INSTRUCTION — Web Light.md` | ~0.6 KB / 99 w | no | Same job as Web, ~55% cheaper. The smallest paste that still carries the full unrestraint payload. |
 

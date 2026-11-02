@@ -1,5 +1,47 @@
 # Bundle audit state
 
+## Local 8.29.12 tool horizon — 2026-11-01
+
+- Second-opinion pass. Agents may use a better tool than the catalog names.
+  A download that is not installed and not shipped by the pack is checked
+  once and recorded in `%USERPROFILE%\.uabs\profile\SAFE-TOOLS.md`. Vendoring
+  stays in `docs/TOOL-EVALUATIONS.md`.
+- Bug fixed in `TOOLS/free_game_tools.py`: the Windows folder search was one
+  shared list, so a missing tool was marked installed at the first other
+  program found. The probe tests now run from the release contract.
+- Four previously unarchived AIO texts are in `3-PREAMBLES/history`, so an
+  older installed contract can be stripped instead of stacked.
+- Live `tool-discovery` and preambles were refreshed. Full
+  `install_live_skills.py --apply` was not run: it would also rewrite the
+  `build-mcpb` newline and non-Claude `provider:` tags. Hermes `sillytavern`
+  was left unwired on purpose (persona profile). `install-state.json` is 8.29.12.
+- Codex dedupe, same path the installer uses: 21 unmodified pack copies that
+  enabled native plugins already serve were backed up and removed (6 ponytail
+  under `dedupe-Codex-20261101-195139`, 15 superpowers under
+  `dedupe-Codex-20261101-195149`, both in
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\backups`). Plugins stay enabled.
+  `skill-creator` remains Codex-owned (`.codex\skills\.system`); the pack copy
+  is absent, which is the builtin dedupe.
+- Doctor this session, exit 0: PASS. One warning: Codex indexes
+  `roblox-game-development` twice. Index 194 entries (159 from the pack, 35
+  elsewhere), 148 visible description chars, measured. Re-running the
+  installer does not clear it. Dedupe only removes a pack copy that a native
+  plugin or `.codex\skills\.system` owns.
+- The two roblox copies differ. `.agents\skills\roblox-game-development`
+  matches `_CANONICAL-SKILLS` (3316 bytes, MD5
+  `C5825595F5E536A015BE4E36650B3872`). `.codex\skills\roblox-game-development`
+  is a local RobloxForge expansion (SKILL.md 5940 bytes, MD5
+  `C049C9A4C24830448E22FA88B822940F`, plus `.rbforge-version`,
+  `beginner-guide.md`, `free-stack.md`, `worldbuilding-lighting.md`, and
+  longer shared references). `skill-overrides.json` does not exist. Neither
+  copy was deleted or merged. Held for a decision.
+- Personal-preservation notes, not doctor failures: Claude `spid-authoring`,
+  and several Kimi Skyrim skills. Kimi is outside the recorded install, so
+  the skill-accounting section skips it.
+- The release workflow publishes this version from `main` after CI is green.
+  Asset hashes, the CI run, and alert counts are recorded in the following
+  docs commit, the same way 8.29.11 was.
+
 ## Completed 8.29.11 free game/app starter — 2026-11-01
 
 - Added `game-dev-starter` (130 canonical skills): free-first stack choice,

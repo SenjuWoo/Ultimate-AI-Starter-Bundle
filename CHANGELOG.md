@@ -1,3 +1,20 @@
+## 8.29.12 (2026-11-01)
+
+- Agents are no longer limited to tools named in the bundle or the current
+  prompt. The full and compact AIO contracts, the start/resume prompt, and
+  `tool-discovery` say to use a newer tool when it is the better one. A
+  download that is not already installed and not shipped here is checked once
+  (official source, license, what it executes) and the verdict is recorded in
+  `%USERPROFILE%\.uabs\profile\SAFE-TOOLS.md`. A later session reuses a verdict
+  of `safe` or one that starts with `safe`.
+  Vendoring decisions stay in `docs/TOOL-EVALUATIONS.md`.
+- Fixed `TOOLS/free_game_tools.py`: the Windows folder search was one shared
+  list, so a missing tool was reported as installed at the first other program
+  found (Godot absent, Blender present, Godot credited with `blender.exe`).
+  Each tool now searches only its own folders. Cargo is detected from `cargo`,
+  not from `rustc` alone.
+- 130 canonical skills total. No catalog component or dependency change.
+
 ## 8.29.11 (2026-11-01)
 
 - Added the `game-dev-starter` skill (130 canonical skills total): a free-first

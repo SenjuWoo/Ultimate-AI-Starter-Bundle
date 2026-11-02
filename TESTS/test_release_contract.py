@@ -2439,7 +2439,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "e90c542f8652aa9e82e794d3e67f544a6087dc9111f55b731472b4fa510590a0", (
+    assert digest == "39f6db824b329981d02e518554cac237f0c284b01ed91bae6a48ff84a8255adf", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -2551,8 +2551,11 @@ def test_grok_forge_wiring_does_not_warn_before_bundled_forge_install() -> None:
 def test_aio_prompt_cache_ci_and_game_profile_contract() -> None:
     prompt = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md")
     for needle in ("prompt-cache locality", "cached-input tokens", "Installed is not enabled",
-                   "exact commit SHA", "terminal successful state"):
+                   "exact commit SHA", "terminal successful state",
+                   "TOOL HORIZON", "SAFE-TOOLS.md", "docs/TOOL-EVALUATIONS.md"):
         assert needle in prompt, f"AIO prompt lost its efficiency/release contract: {needle}"
+    compact = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION — Compact.md")
+    assert "SAFE-TOOLS.md" in compact, "the compact contract dropped the external-tool verdict file"
     # NOTE: the wording inside AIO-INSTRUCTION.md is the operator's own edit;
     # no assertion polices its phrasing.
 
@@ -3043,6 +3046,7 @@ def main() -> int:
         test_toolbox_wheel_is_the_shipped_source,
         test_game_mashup_passthrough_knowledge_is_wired_and_private,
         test_release_workflow_publishes_only_a_green_untagged_main_sha,
+        test_free_game_probe_contract,
     ]
     failed = []
     skipped = []
@@ -6338,6 +6342,25 @@ def test_provider_bootstrap_never_inherits_a_stale_exit_code() -> None:
     assert body.count("$probeExit = $LASTEXITCODE") == 2, (
         "probe exit code must be read exactly twice, inside the branches that ran a process"
     )
+
+
+def test_free_game_probe_contract() -> None:
+    """The free-tool probe is a script CI would otherwise never collect.
+
+    Its Windows fallback once credited Blender to a missing Godot row. The
+    checks live in TESTS/test_free_game_tools.py; this entry is what actually
+    runs them.
+    """
+    spec = importlib.util.spec_from_file_location(
+        "free_game_tools_contract", ROOT / "TESTS" / "test_free_game_tools.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    for name in (
+        "test_probe_lists_free_choices_and_never_counts_windows_convert",
+        "test_probe_human_output_names_a_missing_free_page",
+        "test_windows_fallback_does_not_credit_a_different_tool",
+    ):
+        getattr(module, name)()
 
 
 def test_release_workflow_publishes_only_a_green_untagged_main_sha() -> None:

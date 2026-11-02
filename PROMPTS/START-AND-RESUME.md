@@ -21,6 +21,7 @@ Task: [goal, target project/files if known, and what "done" looks like]
    - If a bundled skill or touched code path is stale or over-engineered, modernize or fix it directly (while preserving my intentional personal configs, data, and preferences).
 4. Smart Autonomy & Efficiency: Figure out the implementation details yourself. Ask before expensive work ONLY when consequential ambiguity or a major architectural shift changes the outcome or risk. Save usage via batching, evidence reuse, and concise output—never by weakening validation or code quality.
 5. State & Verified Handoff: Maintain `STATE.md` as the live source of truth (decisions, verified evidence, remaining steps). Complete implementation, tests, and docs, then report verified results and exact remaining gaps.
+6. Tool horizon: Do not limit yourself to apps, plugins or CLIs named in the bundle or this prompt. A newer tool you know can be the better one. Prefer what is already installed. Before downloading anything that is not installed and not shipped by the pack, verify it is safe (official source, license, what it executes) and record the verdict in `%USERPROFILE%\.uabs\profile\SAFE-TOOLS.md` so the next session reuses it. A pack-vendoring decision also goes in `docs/TOOL-EVALUATIONS.md`.
 ```
 
 ## After a usage limit
@@ -34,6 +35,7 @@ My usage limit has reset. Resume the unfinished task using `STATE.md`.
 3. Tooling & Skill Integrity (NO SILENT FALLBACKS): Load only the relevant skills, plugins, MCPs, and CLIs on PATH needed for the remaining work; keep others unloaded.
    - If an MCP or tool is offline or broken after the reset, repair it first—never bypass it with manual workarounds. Stop and advise me if my input is needed.
    - If a bundled skill or existing project pattern is outdated, wrong, or needlessly inefficient, update or supersede it with the cleanest current approach while preserving my personal settings.
+   - Do not limit the remaining work to tools named in the bundle. A newer tool you know can be the better one. Before a download that is not already installed, read `%USERPROFILE%\.uabs\profile\SAFE-TOOLS.md` and reuse a recorded safe verdict; verify and record a new one only when that file has no matching row.
 4. Finish & Validate: Ask only when missing context or high-risk ambiguity blocks correct work. Save usage through batching, focused output, and evidence reuse—never weaker validation. Finish implementation, tests, and `STATE.md`, then report verified results and exact remaining gaps.
 ```
 

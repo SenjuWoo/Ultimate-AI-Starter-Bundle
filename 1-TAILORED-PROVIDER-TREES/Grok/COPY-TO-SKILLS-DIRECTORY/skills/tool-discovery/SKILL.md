@@ -183,6 +183,32 @@ It prints FOUND / MISSING for each general tool and never modifies the system.
 
 After editing MCP config: **fully restart** the AI application.
 
+## Beyond the catalog
+
+The catalog is this pack's default set, not the limit of what you may use.
+Tooling moves. If you know a better app, plugin, CLI or MCP for the task, use
+it when it is the right tool.
+
+1. Prefer a tool that is already installed.
+2. Then one this pack ships (`Ensure-Tools.ps1`, the catalog, or the owning installer).
+3. Anything else: before you download it, check the official source, the license,
+   and what the installer executes. Append one line to
+   `%USERPROFILE%\.uabs\profile\SAFE-TOOLS.md`:
+
+```text
+name | source URL | version | safe or reject | why
+```
+
+Create that file with a one-line header if it is missing. It stays on this
+machine and is not sent with every request. Reuse a line whose verdict is
+`safe` or starts with `safe` (for example `safe-reference`). Recheck only
+when the source, version or publisher changed.
+
+Bundle-level reviews (vendor it, or leave it out) live in
+`docs/TOOL-EVALUATIONS.md`. Do not repeat a review recorded there unless the
+upstream release changed. Do not add the tool to the global MCP profile or
+vendor it into the pack unless the task is pack maintenance.
+
 ## Safety
 
 - Discovery is read-only.

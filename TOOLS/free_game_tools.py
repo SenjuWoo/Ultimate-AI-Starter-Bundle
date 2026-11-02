@@ -31,21 +31,33 @@ TOOLS = [
     ("python", "Python (tools/API)", ("python", "python3", "py"), "https://www.python.org/downloads/"),
     ("uv", "uv (isolated Python tools)", ("uv",), "https://docs.astral.sh/uv/getting-started/installation/"),
     ("dotnet", ".NET SDK (C#/DeBroglie)", ("dotnet",), "https://dotnet.microsoft.com/download"),
-    ("cargo", "Rust/Cargo (Bevy)", ("cargo", "rustc"), "https://rustup.rs/"),
+    ("cargo", "Rust/Cargo (Bevy)", ("cargo",), "https://rustup.rs/"),
     ("love", "LOVE 11 (2D Lua)", ("love", "lovec"), "https://love2d.org/"),
     ("git", "Git", ("git",), "https://git-scm.com/downloads"),
 ]
 
-# Extra Windows locations worth checking even when PATH is not refreshed.
-WIN_GLOBS = [
-    (r"%LOCALAPPDATA%\Programs\Godot", "godot.exe"),
-    (r"%LOCALAPPDATA%\Programs\Blender Foundation", "blender.exe"),
-    (r"%PROGRAMFILES%\Blender Foundation", "blender.exe"),
-    (r"%PROGRAMFILES%\Godot", "godot.exe"),
-    (r"%LOCALAPPDATA%\Programs\Pixelorama", "pixelorama.exe"),
-    (r"%PROGRAMFILES%\Krita", "krita.exe"),
-    (r"%PROGRAMFILES%\Inkscape", "inkscape.exe"),
-]
+# Extra Windows locations, keyed by tool id. A shared list credited the first
+# hit to whichever catalog row was missing: Godot absent and Blender present
+# reported Godot as installed at blender.exe.
+WIN_GLOBS = {
+    "godot": [
+        (r"%LOCALAPPDATA%\Programs\Godot", "godot.exe"),
+        (r"%PROGRAMFILES%\Godot", "godot.exe"),
+    ],
+    "blender": [
+        (r"%LOCALAPPDATA%\Programs\Blender Foundation", "blender.exe"),
+        (r"%PROGRAMFILES%\Blender Foundation", "blender.exe"),
+    ],
+    "pixelorama": [
+        (r"%LOCALAPPDATA%\Programs\Pixelorama", "pixelorama.exe"),
+    ],
+    "krita": [
+        (r"%PROGRAMFILES%\Krita", "krita.exe"),
+    ],
+    "inkscape": [
+        (r"%PROGRAMFILES%\Inkscape", "inkscape.exe"),
+    ],
+}
 
 
 def expand(path: str) -> str:
@@ -64,12 +76,13 @@ def find_windows_file(folder: str, exe: str) -> str | None:
     base = expand(folder)
     if not os.path.isdir(base):
         return None
-    for root, _dirs, files in os.walk(base):
-        if exe.lower() in {f.lower() for f in files}:
-            return os.path.join(root, exe)
+    for root, dirs, files in os.walk(base):
+        for name in files:
+            if name.lower() == exe.lower():
+                return os.path.join(root, name)
         # Do not descend forever into a large install tree.
         if root.count(os.sep) - base.count(os.sep) > 3:
-            _dirs[:] = []
+            dirs[:] = []
     return None
 
 
@@ -78,7 +91,7 @@ def collect() -> list[dict]:
     for key, label, names, url in TOOLS:
         path = find_tool(names)
         if not path:
-            for folder, exe in WIN_GLOBS:
+            for folder, exe in WIN_GLOBS.get(key, ()):
                 path = find_windows_file(folder, exe)
                 if path:
                     break
