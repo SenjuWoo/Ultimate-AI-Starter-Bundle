@@ -2997,6 +2997,7 @@ def main() -> int:
         # v8.6.7 -- Codex ships skills of its own; adopting one by the same
         # name indexed it twice on Codex alone.
         test_codex_builtin_skills_are_discovered_not_hardcoded,
+        test_build_proof_runs_its_batch_file_by_relative_path,
         # v8.6.9 -- a correct preset over four unloadable saved model configs.
         test_lmstudio_optimizer_writes_the_settings_that_actually_fit,
         # v8.6.11 -- the same three bytes that broke START-HERE.bat twice.
@@ -4448,6 +4449,15 @@ def test_codex_builtin_skills_are_discovered_not_hardcoded() -> None:
     assert "Get-UabsCodexBuiltinSkillNames -CodexHome $providerHome" in doctor, (
         "the doctor does not verify Codex's live built-in ownership"
     )
+
+
+def test_build_proof_runs_its_batch_file_by_relative_path() -> None:
+    """`NoDefaultCurrentDirectoryInExePath=1` (a common hardening setting) makes
+    `cmd /c compile.cmd` fail with "not recognized", which aborted the whole
+    install at the compiler self-test on a hardened account."""
+    text = ps_code(ROOT / "TOOLS" / "Install-BuildTools.ps1")
+    assert "'/c','.\compile.cmd'" in text, "the build proof runs a bare compile.cmd again"
+    assert "'/c','compile.cmd'" not in text
 
 
 def test_lmstudio_optimizer_writes_the_settings_that_actually_fit() -> None:

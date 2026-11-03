@@ -1,3 +1,15 @@
+## 8.29.15 (2026-11-03)
+
+- Fixed the installer aborting at the compiler self-test on accounts with
+  `NoDefaultCurrentDirectoryInExePath=1`: `cmd /c compile.cmd` could not find its
+  own batch file, so the whole install stopped with "Common compiler suite
+  failed". It now runs `.\compile.cmd`; a contract test guards it.
+- Live proof on that hardened account: install exit 0, doctor PASS with 0
+  warnings, and Codex lists `roblox-game-development` once (RobloxForge's copy
+  kept, the pack copy backed up and removed).
+- No model default, preamble or content-permission change; companion releases
+  still follow latest; 130 canonical skills total.
+
 ## 8.29.14 (2026-11-03)
 
 - Codex no longer indexes a skill twice when a companion app installed its own

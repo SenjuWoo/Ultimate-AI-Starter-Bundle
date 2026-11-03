@@ -270,10 +270,10 @@ try {
     [IO.File]::WriteAllText((Join-Path $work 'CMakeLists.txt'), "cmake_minimum_required(VERSION 3.20)`nproject(UabsProof LANGUAGES CXX)`nadd_executable(cpp-proof hello.cpp)`n")
     $devcmd = Join-Path $vs 'Common7\Tools\VsDevCmd.bat'
     # A batch file keeps cmd quoting local; no user path is interpreted as code.
-    $batch = Join-Path $work 'compile.cmd'
+    $batch = Join-Path $work 'compile.cmd'   # run as .\compile.cmd: NoDefaultCurrentDirectoryInExePath=1 hides a bare name
     $body = @('@echo off', 'setlocal DisableDelayedExpansion', ('call "{0}" -arch=x64 -host_arch=x64 >nul' -f $devcmd.Replace('%','%%')), 'if errorlevel 1 exit /b 1', ('"{0}" -S . -B cpp-build -G Ninja -DCMAKE_CXX_COMPILER=cl.exe "-DCMAKE_MAKE_PROGRAM={1}"' -f $cmake.Replace('%','%%'),$ninja.Replace('%','%%')), 'if errorlevel 1 exit /b 1', ('"{0}" --build cpp-build' -f $cmake.Replace('%','%%')))
     [IO.File]::WriteAllLines($batch, $body, [Text.Encoding]::Default)
-    Run-Build $env:ComSpec @('/d','/v:off','/c','compile.cmd') | Out-Null
+    Run-Build $env:ComSpec @('/d','/v:off','/c','.\compile.cmd') | Out-Null
     if ((Run-Build (Join-Path $work 'cpp-build\cpp-proof.exe') @()) -ne 'uabs-build-ok') { throw 'C++/Windows SDK smoke output mismatch.' }
     # No dependencies are requested: this verifies the build system without changing a user's project.
     $xmakeWork=Join-Path $work 'xmake-proof'

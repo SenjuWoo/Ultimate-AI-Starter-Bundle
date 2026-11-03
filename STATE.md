@@ -1,5 +1,18 @@
 # Bundle audit state
 
+## Prepared 8.29.15 — hardened-account installer fix — 2026-11-03
+
+- 8.29.14 is published and verified (CI 12/12 on dfe40ec, release run success, Core and
+  Full-Offline sha256 match GitHub digests and SHA256SUMS; alerts 0). Its live install
+  failed on this account: `NoDefaultCurrentDirectoryInExePath=1` is set at user level, so
+  the compiler self-test's `cmd /c compile.cmd` was not found. Fixed with `.\compile.cmd`
+  plus a contract test.
+- Live proof (working tree of 8.29.14 + this fix): install exit 0, doctor PASS 0 errors /
+  0 warnings, Codex skill index 193 entries with `duplicates: []`; `~/.agents/skills` has no
+  pack `roblox-game-development`, RobloxForge's copy in `~/.codex/skills` is untouched.
+- Next: nothing pending; re-run the installer after 8.29.15 publishes only to stamp the
+  installed version.
+
 ## Prepared 8.29.14 — finished the 8.29.13 audit's two open items — 2026-11-03
 
 - Roblox duplicate: `~/.codex/skills/roblox-game-development` is RobloxForge's
