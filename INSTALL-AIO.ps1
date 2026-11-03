@@ -552,7 +552,7 @@ function Find-UabsBunExecutable {
 
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.29.13 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v8.29.14 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -824,6 +824,7 @@ if (-not $ToolsOnly) {
       $movedLegacy = 0
       foreach ($oldSkill in @(Get-ChildItem -LiteralPath $legacyCodexSkills -Directory -Force -ErrorAction SilentlyContinue)) {
         if ($oldSkill.Name -eq '.system' -or ($oldSkill.Attributes -band [IO.FileAttributes]::ReparsePoint)) { continue }
+        if ($codexBuiltins -contains $oldSkill.Name) { continue }   # owner-installed copy (RobloxForge): not ours to move or warn about
         $expected = $legacyCodexDigests[$oldSkill.Name]
         if (-not $expected) {
           $currentSource = Join-Path $srcSkills $oldSkill.Name
@@ -2686,7 +2687,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.29.13'
+version = '8.29.14'
   content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')

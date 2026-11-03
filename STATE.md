@@ -1,5 +1,24 @@
 # Bundle audit state
 
+## Prepared 8.29.14 — finished the 8.29.13 audit's two open items — 2026-11-03
+
+- Roblox duplicate: `~/.codex/skills/roblox-game-development` is RobloxForge's
+  richer copy (`.rbforge-version` stamp); the pack copy sat in `~/.agents/skills`,
+  so Codex indexed both. `Get-UabsCodexBuiltinSkillNames` now also returns
+  top-level skills stamped `.<owner>-version`; the installer then backs up and
+  removes the pack copy, the doctor accepts it, and legacy migration skips it.
+  Fixture test added to `TESTS/Test-CodexPluginDedupe.ps1`; contract assertion added.
+  Claude's copy of the skill is untouched (no duplicate there).
+- Pins: GitHub MCP 2.0.3 -> 2.1.0 (asset sha256 ddce2749... equals GitHub's digest;
+  47 tools, same schema bytes under the registered toolsets), Context7 4.4.4 -> 4.5.0
+  (capability record regenerated; same 2 tools, same keyless split), Super MCP Router
+  2.8.5 -> 2.9.2 (same 12 tools). `npm audit`: one moderate `@hono/node-server`
+  finding is present in both Context7 4.4.4 and 4.5.0 (HTTP `serveStatic`, not
+  used by stdio); the router tree has none. The three versions were published
+  hours to ~1.5 days before adoption; pins are exact and the digest/surface checks
+  above are the gate.
+- Not exercised: authenticated GitHub tool calls, a live Context7 doc query (needs a key).
+
 ## Verified audit of 8.29.13 — 2026-11-03
 
 - Audited release/source commit `63bb3c0989c5a8f20ac219ce44116f92b0ab1825`;

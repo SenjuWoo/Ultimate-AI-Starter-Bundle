@@ -2624,7 +2624,8 @@ function Repair-UabsCodexRetiredFeatures {
 
 function Get-UabsCodexBuiltinSkillNames {
   <#
-  Names of the skills Codex ships ITSELF, from <CodexHome>\skills\.system.
+  Names of the skills Codex ships ITSELF, from <CodexHome>\skills\.system,
+  plus skills a companion app installed there under its own version stamp.
 
   Why this exists: v8.6.6 adopted `skill-creator` into the canonical tree so
   all five providers would carry it. Codex already ships a `skill-creator` of
@@ -2642,15 +2643,32 @@ function Get-UabsCodexBuiltinSkillNames {
   A directory only counts when it actually carries a SKILL.md: an empty or
   half-written folder owns nothing, and treating it as an owner would evict
   the pack's working copy in favour of nothing.
+
+  A second owner is a companion app that installs its own, richer copy of a
+  skill straight into <CodexHome>\skills (RobloxForge stamps each one with a
+  `.rbforge-version` file). The pack copy lives in the supported skills root,
+  so Codex indexed both. A top-level skill folder carrying a `.<owner>-version`
+  stamp is that app's installation: it wins, and the pack copy is backed up.
   #>
   param([string]$CodexHome)
   if (-not $CodexHome) { return @() }
-  $sys = Join-Path (Join-Path $CodexHome 'skills') '.system'
-  if (-not (Test-Path -LiteralPath $sys -PathType Container)) { return @() }
+  $root = Join-Path $CodexHome 'skills'
   $names = New-Object System.Collections.Generic.List[string]
-  foreach ($d in @(Get-ChildItem -LiteralPath $sys -Directory -EA SilentlyContinue)) {
-    if (Test-Path -LiteralPath (Join-Path $d.FullName 'SKILL.md') -PathType Leaf) {
-      [void]$names.Add($d.Name)
+  $sys = Join-Path $root '.system'
+  if (Test-Path -LiteralPath $sys -PathType Container) {
+    foreach ($d in @(Get-ChildItem -LiteralPath $sys -Directory -EA SilentlyContinue)) {
+      if (Test-Path -LiteralPath (Join-Path $d.FullName 'SKILL.md') -PathType Leaf) {
+        [void]$names.Add($d.Name)
+      }
+    }
+  }
+  if (Test-Path -LiteralPath $root -PathType Container) {
+    foreach ($d in @(Get-ChildItem -LiteralPath $root -Directory -EA SilentlyContinue | Where-Object { -not $_.Name.StartsWith('.') })) {
+      if ($d.Attributes -band [IO.FileAttributes]::ReparsePoint) { continue }
+      if (-not (Test-Path -LiteralPath (Join-Path $d.FullName 'SKILL.md') -PathType Leaf)) { continue }
+      if (@(Get-ChildItem -LiteralPath $d.FullName -File -Force -Filter '.*-version' -EA SilentlyContinue).Count) {
+        [void]$names.Add($d.Name)
+      }
     }
   }
   return @($names)

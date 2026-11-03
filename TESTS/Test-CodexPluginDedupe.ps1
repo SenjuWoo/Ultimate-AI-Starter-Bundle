@@ -49,6 +49,19 @@ try {
     Assert (@(Repair-UabsCodexDuplicatePlugins -CodexHome $fixture -CheckOnly).Count -eq 1) 'Valid inventory was lost when stderr contained a warning.'
     Assert ($env:CODEX_HOME -ceq 'unrelated-parent-home') 'Inventory lookup leaked CODEX_HOME into its caller.'
   } finally { $env:CODEX_HOME = $outerHome }
+  # Codex-owned (.system) and companion-stamped (RobloxForge) skills own their
+  # name; an unstamped skill, an empty folder and a hidden folder own nothing.
+  $skillsRoot = Join-Path $fixture 'skills'
+  foreach ($case in @(
+      @('.system\imagegen', $true, $null), @('stamped', $true, '.rbforge-version'),
+      @('plain', $true, $null), @('empty-stamped', $false, '.rbforge-version'), @('.hidden', $true, '.rbforge-version'))) {
+    $dir = Join-Path $skillsRoot $case[0]
+    New-Item -ItemType Directory -Path $dir -Force | Out-Null
+    if ($case[1]) { [IO.File]::WriteAllText((Join-Path $dir 'SKILL.md'), "---`nname: x`n---`n", $utf8) }
+    if ($case[2]) { [IO.File]::WriteAllText((Join-Path $dir $case[2]), '0.3.0', $utf8) }
+  }
+  $owned = @(Get-UabsCodexBuiltinSkillNames -CodexHome $fixture | Sort-Object)
+  Assert (($owned -join ',') -ceq 'imagegen,stamped') ('Wrong Codex skill owners: ' + ($owned -join ','))
   Write-Host 'CODEX PLUGIN DEDUPE GATE: PASS'
 } finally {
   if (Test-UabsPathWithin -Path $fixture -Root ([IO.Path]::GetTempPath())) { Remove-Item -LiteralPath $fixture -Recurse -Force -ErrorAction SilentlyContinue }

@@ -1,7 +1,7 @@
 {
   "component": "context7",
-  "command": "npx -y @upstash/context7-mcp@4.4.4",
-  "tested_utc": "2026-10-19T22:45:25Z",
+  "command": "npx -y @upstash/context7-mcp@4.5.0",
+  "tested_utc": "2026-11-03T17:44:18Z",
   "credentials": "none (environment reduced to 24 process variables)",
   "tools": 2,
   "schema_bytes": 5227,

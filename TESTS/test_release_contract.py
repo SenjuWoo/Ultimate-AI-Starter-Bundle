@@ -4398,6 +4398,10 @@ def test_codex_builtin_skills_are_discovered_not_hardcoded() -> None:
     assert "'.system'" in body or '".system"' in body, (
         "the discovery no longer reads Codex's .system root"
     )
+    assert "'.*-version'" in body, (
+        "a companion-installed skill (RobloxForge's .rbforge-version) no longer "
+        "owns its name, so Codex indexes it next to the pack copy again"
+    )
     assert "'SKILL.md'" in body, (
         "a directory with no SKILL.md owns nothing; without this check an "
         "empty folder would evict the pack's working copy in favour of nothing"

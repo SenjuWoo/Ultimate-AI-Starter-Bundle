@@ -595,7 +595,7 @@
       "kind": "mcp-npx",
       "mcp": true,
       "license": "MIT",
-      "version": "4.4.4",
+      "version": "4.5.0",
       "github": {
         "owner": "upstash",
         "repo": "context7"
@@ -604,7 +604,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "@upstash/context7-mcp@4.4.4"
+        "@upstash/context7-mcp@4.5.0"
       ],
       "auto_register": true,
       "api_key_env": "CONTEXT7_API_KEY",
@@ -613,7 +613,7 @@
       "keyless_tools": [
         "resolve-library-id"
       ],
-      "keyless_note": "Measured 2026-10-19 against pinned 4.4.4 with the credential environment scrubbed: resolve-library-id answered keyless; query-docs now returns an auth-required response without a key. Set CONTEXT7_API_KEY to unlock documentation queries and raise rate limits. Regenerate with TOOLS/measure_mcp_capability.py.",
+      "keyless_note": "Measured 2026-11-03 against pinned 4.5.0 (identical to 4.4.4 on 2026-10-19) with the credential environment scrubbed: resolve-library-id answered keyless; query-docs now returns an auth-required response without a key. Set CONTEXT7_API_KEY to unlock documentation queries and raise rate limits. Regenerate with TOOLS/measure_mcp_capability.py.",
       "capability_record": "BUNDLED-TOOLS/capability-records/context7.json",
       "providers": [
         "Claude",
@@ -635,13 +635,13 @@
       "kind": "mcp-binary",
       "mcp": true,
       "license": "MIT",
-      "version": "2.0.3",
+      "version": "2.1.0",
       "github": {
         "owner": "github",
         "repo": "github-mcp-server"
       },
       "install": "zip-extract",
-      "offline_asset": "github-mcp-server-2.0.3-windows-x86_64.zip",
+      "offline_asset": "github-mcp-server-2.1.0-windows-x86_64.zip",
       "asset_match": [
         "github-mcp-server-*-windows-x86_64.zip",
         "*github-mcp-server*Windows_x86_64.zip"
@@ -657,10 +657,10 @@
       "api_key_optional": true,
       "auth_mode": "built-in-oauth-or-optional-pat",
       "toolsets": "context,repos,pull_requests,actions,issues",
-      "scope_note": "GitHub's official server, replacing @modelcontextprotocol/server-github, which npm marks 'Package no longer supported'. Official release binaries since 1.5.0 carry GitHub's OAuth application: no PAT is required on github.com; the first authenticated tool call opens GitHub's browser authorization and keeps that token in the server process only. A GITHUB_PERSONAL_ACCESS_TOKEN is optional and takes precedence when the user deliberately configures one. initialize + tools/list proves the binary and protocol, not completion of that later browser authorization. Registered with a scoped --toolsets list, not 'all': the server exposes 20 toolset groups and enabled groups enlarge the advertised schema; actual prompt and billed usage depend on provider discovery and caching. Widen it per project, never globally. 2026-10-02 refresh: 1.14.0: official Windows ZIP SHA-256 0277e5fca965ae7fa31c7193954eae948ddc13997bc4b835858be858ac55cabe verified; scoped context,repos,pull_requests,actions,issues initialize/tools-list PASS; 47 tools, 129,567 compact UTF-8 schema bytes. OAuth completion and authenticated calls not exercised. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 2.0.2 Windows initialize/tools-list PASS; 47 advertised tools, 129,679 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. Compared with 1.14.0 using the same scoped toolsets: no tool names added or removed; upstream release digest verified. 2026-10-22: official 2.0.3 Windows ZIP digest verified; initialize/tools-list PASS (default toolsets). Scoped transport receipt recorded in audit artifacts; no authenticated actions.",
+      "scope_note": "GitHub's official server, replacing @modelcontextprotocol/server-github, which npm marks 'Package no longer supported'. Official release binaries since 1.5.0 carry GitHub's OAuth application: no PAT is required on github.com; the first authenticated tool call opens GitHub's browser authorization and keeps that token in the server process only. A GITHUB_PERSONAL_ACCESS_TOKEN is optional and takes precedence when the user deliberately configures one. initialize + tools/list proves the binary and protocol, not completion of that later browser authorization. Registered with a scoped --toolsets list, not 'all': the server exposes 20 toolset groups and enabled groups enlarge the advertised schema; actual prompt and billed usage depend on provider discovery and caching. Widen it per project, never globally. 2026-10-02 refresh: 1.14.0: official Windows ZIP SHA-256 0277e5fca965ae7fa31c7193954eae948ddc13997bc4b835858be858ac55cabe verified; scoped context,repos,pull_requests,actions,issues initialize/tools-list PASS; 47 tools, 129,567 compact UTF-8 schema bytes. OAuth completion and authenticated calls not exercised. Schema bytes are transport measurements, not billed-token savings. 2026-10-10: 2.0.2 Windows initialize/tools-list PASS; 47 advertised tools, 129,679 compact UTF-8 schema bytes (transport bytes, not billed tokens). No credentialed calls, GUI/editor actions or inference exercised. Compared with 1.14.0 using the same scoped toolsets: no tool names added or removed; upstream release digest verified. 2026-10-22: official 2.1.0 Windows ZIP digest matches GitHub's; initialize/tools-list PASS (2026-11-03): 47 tools and the same schema bytes as 2.0.3 under the registered toolsets. 2.0.3 verified the same way (default toolsets). Scoped transport receipt recorded in audit artifacts; no authenticated actions.",
       "server_id": "github",
-      "release_tag": "v2.0.3",
-      "asset_sha256": "f0e1b9880a1b88730d1250d1c25cfee39617ec3e800a7a252f2279cd0c8394e0"
+      "release_tag": "v2.1.0",
+      "asset_sha256": "ddce274916ebf31346dee71a0ed3345e80cd36b060a0bfb8160db0afc411e9d3"
     },
     {
       "id": "serena",
@@ -915,7 +915,7 @@
       "kind": "mcp-npx",
       "mcp": true,
       "license": "MIT",
-      "version": "2.8.5",
+      "version": "2.9.2",
       "github": {
         "owner": "mindstone",
         "repo": "Super-MCP"
@@ -924,7 +924,7 @@
       "npx_command": "npx",
       "npx_args": [
         "-y",
-        "super-mcp-router@2.8.5"
+        "super-mcp-router@2.9.2"
       ],
       "profile": null,
       "auto_register": false,
@@ -988,7 +988,7 @@
       "compatibility_hold": "1.24.0 is a newer optional local-media CLI; 1.23.0 remains the evaluated pin."
     }
   ],
-  "pack_version": "8.29.13",
+  "pack_version": "8.29.14",
   "updated_utc": "2026-10-18",
   "providers": {
     "Grok": {
@@ -1076,7 +1076,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.29.13",
+  "catalog_version": "8.29.14",
   "updated": "2026-10-26",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test.",
   "companions": [
