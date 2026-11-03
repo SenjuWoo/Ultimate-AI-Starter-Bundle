@@ -5,6 +5,7 @@
 - Lessons from the Ultron 1.1.2/1.2.0 audit and the Gnar 1.3.1 fixes are in the bundle: preflight and definition of
   done in `unity-mod-frameworks/references/risk-of-rain2.md`, a `project-intel` card (`ror2-modding.md`), the Forge
   and `ROR2_FORGE_ROOT` in `tool-discovery`. The Forge side shipped as Risk-Of-Rain-2-Forge v1.10.0 and v1.10.1.
+- Published: v8.29.16 at `10658f9f7c952b8418cafe643d6678641e491046`. Pack gate PASS, release contracts 160/0, CI 12/12 and CodeQL green on that SHA, Release run success, Core zip sha256 matches SHA256SUMS, preflight present in the Claude tree of the zip, alerts 0/0/0.
 - Not done: no `game-ror2` MCP profile (the Forge is a CLI); the routing is advice a model must follow, the only
   mechanical guard is `forge audit` when the model runs it.
 
