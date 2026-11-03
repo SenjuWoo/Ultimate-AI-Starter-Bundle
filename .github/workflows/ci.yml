@@ -159,10 +159,10 @@ jobs:
 
   # Skyrim Forge is developed and released in github.com/SenjuWoo/SkyrimForge,
   # which runs Forge's own matrix (Python, native Go writer, reproducible
-  # repository gate, Windows installer). This repo pins one release by tag,
-  # asset and SHA-256. Two repositories are how 7.8.0 shipped an installer that
-  # read a contract field Forge never emitted, so this job installs the exact
-  # pinned release with the real installer on a clean machine, runs
+  # repository gate, Windows installer). This repo resolves the latest stable
+  # release and verifies its asset digest. Version 7.8.0 read a doctor field
+  # Forge never emitted, so this job installs the resolved release with the
+  # real installer on a clean machine, runs
   # `forge doctor`, and proves an upgrade keeps the user's Workspaces.
   companions:
     name: Bundle installs latest companions end to end

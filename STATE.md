@@ -1,5 +1,37 @@
 # Bundle audit state
 
+## Verified audit of 8.29.13 — 2026-11-03
+
+- Audited release/source commit `63bb3c0989c5a8f20ac219ce44116f92b0ab1825`;
+  checkout was clean. Its CI and release jobs completed successfully.
+- Full Windows PowerShell 5.1 pack gate PASS; release contracts 159/159 PASS;
+  source manifest 7,998/7,998; all declared versions agree. Evidence is in
+  local `artifacts/audit-20261103-*.log` (not product payload).
+- Local doctor initially reported five stale Forge skill receipts. Compared
+  installed skills against their source before using Forge's owner installer:
+  zero skill replacements; custom SPID content preserved; receipts backed up.
+  Final doctor PASS. The existing two different Roblox skill copies remain;
+  no personal expansion was deleted to silence a duplicate-index warning.
+- Startup warning reproduced offline in a separate Discord watcher: its legacy
+  `ready` listener emits Discord.js's deprecation warning. Backed up the script,
+  retained `clientReady` only, and tested the actual registrations: one callback,
+  zero warnings; syntax PASS. No login, messages or bot restart performed.
+  Next normal launch loads the fix; the user's original unseen warning cannot
+  be conclusively identified as this warning.
+- Live registry audit: 10 current, 14 existing compatibility holds, 3 newer
+  unheld versions, 1 internal source component skipped; zero lookup errors.
+  New candidates: Context7 4.5.0, GitHub MCP 2.1.0, Super MCP Router 2.9.2.
+  Isolated initialize/tools-list passed (2/47/12 tools). Not adopted: full
+  behavioral/credential/config-migration proof is incomplete; the combined npm
+  candidate dependency audit also reports Hono advisories. This is a dependency
+  finding, not proof the stdio configurations expose the affected HTTP paths.
+- Security query: Dependabot/code-scanning/secret-scanning all zero open;
+  code quality unavailable. Corrected stale pinned-companion CI commentary and
+  historical checkout-name guidance. No bundle runtime change or new release.
+- Next: independently evaluate candidate dependency updates, including their
+  transitive resolutions, and reconcile RobloxForge's separate skill ownership
+  before removing either indexed copy. Do not overwrite custom settings/skills.
+
 ## Prepared 8.29.13 — non-disruptive install — 2026-11-02
 
 - Live Hermes desktop/gateway is no longer stopped or relaunched. Native plugin
