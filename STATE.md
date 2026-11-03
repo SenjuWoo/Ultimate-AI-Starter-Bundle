@@ -1,5 +1,13 @@
 # Bundle audit state
 
+## Prepared 8.29.16 — Risk of Rain 2 survivor preflight — 2026-11-03
+
+- Lessons from the Ultron 1.1.2/1.2.0 audit and the Gnar 1.3.1 fixes are in the bundle: preflight and definition of
+  done in `unity-mod-frameworks/references/risk-of-rain2.md`, a `project-intel` card (`ror2-modding.md`), the Forge
+  and `ROR2_FORGE_ROOT` in `tool-discovery`. The Forge side shipped as Risk-Of-Rain-2-Forge v1.10.0 and v1.10.1.
+- Not done: no `game-ror2` MCP profile (the Forge is a CLI); the routing is advice a model must follow, the only
+  mechanical guard is `forge audit` when the model runs it.
+
 ## Prepared 8.29.15 — hardened-account installer fix — 2026-11-03
 
 - 8.29.14 is published and verified (CI 12/12 on dfe40ec, release run success, Core and

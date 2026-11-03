@@ -17,7 +17,7 @@ specific reference below.
 | Valheim | `references/valheim-jotunn.md` |
 | Subnautica | `references/subnautica-nautilus.md` |
 | Lethal Company | `references/lethal-company.md` |
-| Risk of Rain 2 | `references/risk-of-rain2.md` |
+| Risk of Rain 2 (a survivor: read its "Survivors: preflight" section first) | `references/risk-of-rain2.md` |
 | Stardew Valley | `references/stardew-valley.md` |
 | Oxygen Not Included | `references/oxygen-not-included.md` |
 | Kerbal Space Program 1 | `references/kerbal-space-program.md` |

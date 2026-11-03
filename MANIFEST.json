@@ -3941,8 +3941,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3940,
-  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
+  "size": 4047,
+  "sha256": "b5e3d3971439fb75a626dfe23dbca0cff1bbd23ebc2c0e3209346c7b66ee805b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -3963,6 +3963,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
   "size": 3026,
   "sha256": "3679ab8b4bd90ae7b9e423d0aa5077f40fb108cfe76b90986df9a2e593e883ef"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ror2-modding.md",
+  "size": 3113,
+  "sha256": "6e8a63da27792c328789b444fe2f14f50d6d42a000a280fc79535be6202e2356"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
@@ -4446,8 +4451,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10201,
-  "sha256": "01e4dbc0d8650c18e23f50e5eba5703551cc8448fb09fae755c32a1fcd0c47ac"
+  "size": 10346,
+  "sha256": "c4ad9b9df80fe5a1b588e04588a97e97844a988748f57762c361b0eba2401e96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -4486,8 +4491,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
-  "size": 1262,
-  "sha256": "00bd45a1d7012f6c3dd42618fc266077f94c269f1d84e8db87fb72903c31eb52"
+  "size": 1322,
+  "sha256": "890594e30a004db2f944b56c9e6a07538d7bdef2977d259eb72b1319c4f2e179"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/OVERVIEW.md",
@@ -4521,8 +4526,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/risk-of-rain2.md",
-  "size": 2158,
-  "sha256": "69d9fd0ba4079a8c3f0595129a6a197908f0d80073334ec15dfd10a6a4edd212"
+  "size": 6740,
+  "sha256": "631387c845fd3ed2e267620efb7a0afd9ce88705476b2bf2b8781f276691a7ad"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/stardew-valley.md",
@@ -8661,8 +8666,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3940,
-  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
+  "size": 4047,
+  "sha256": "b5e3d3971439fb75a626dfe23dbca0cff1bbd23ebc2c0e3209346c7b66ee805b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -8683,6 +8688,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
   "size": 3026,
   "sha256": "3679ab8b4bd90ae7b9e423d0aa5077f40fb108cfe76b90986df9a2e593e883ef"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ror2-modding.md",
+  "size": 3113,
+  "sha256": "6e8a63da27792c328789b444fe2f14f50d6d42a000a280fc79535be6202e2356"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
@@ -9166,8 +9176,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10201,
-  "sha256": "01e4dbc0d8650c18e23f50e5eba5703551cc8448fb09fae755c32a1fcd0c47ac"
+  "size": 10346,
+  "sha256": "c4ad9b9df80fe5a1b588e04588a97e97844a988748f57762c361b0eba2401e96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -9206,8 +9216,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
-  "size": 1262,
-  "sha256": "00bd45a1d7012f6c3dd42618fc266077f94c269f1d84e8db87fb72903c31eb52"
+  "size": 1322,
+  "sha256": "890594e30a004db2f944b56c9e6a07538d7bdef2977d259eb72b1319c4f2e179"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/OVERVIEW.md",
@@ -9241,8 +9251,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/risk-of-rain2.md",
-  "size": 2158,
-  "sha256": "69d9fd0ba4079a8c3f0595129a6a197908f0d80073334ec15dfd10a6a4edd212"
+  "size": 6740,
+  "sha256": "631387c845fd3ed2e267620efb7a0afd9ce88705476b2bf2b8781f276691a7ad"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/stardew-valley.md",
@@ -13441,8 +13451,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3940,
-  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
+  "size": 4047,
+  "sha256": "b5e3d3971439fb75a626dfe23dbca0cff1bbd23ebc2c0e3209346c7b66ee805b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -13463,6 +13473,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
   "size": 3026,
   "sha256": "3679ab8b4bd90ae7b9e423d0aa5077f40fb108cfe76b90986df9a2e593e883ef"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ror2-modding.md",
+  "size": 3113,
+  "sha256": "6e8a63da27792c328789b444fe2f14f50d6d42a000a280fc79535be6202e2356"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
@@ -13946,8 +13961,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10201,
-  "sha256": "01e4dbc0d8650c18e23f50e5eba5703551cc8448fb09fae755c32a1fcd0c47ac"
+  "size": 10346,
+  "sha256": "c4ad9b9df80fe5a1b588e04588a97e97844a988748f57762c361b0eba2401e96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -13986,8 +14001,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
-  "size": 1262,
-  "sha256": "00bd45a1d7012f6c3dd42618fc266077f94c269f1d84e8db87fb72903c31eb52"
+  "size": 1322,
+  "sha256": "890594e30a004db2f944b56c9e6a07538d7bdef2977d259eb72b1319c4f2e179"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/OVERVIEW.md",
@@ -14021,8 +14036,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/risk-of-rain2.md",
-  "size": 2158,
-  "sha256": "69d9fd0ba4079a8c3f0595129a6a197908f0d80073334ec15dfd10a6a4edd212"
+  "size": 6740,
+  "sha256": "631387c845fd3ed2e267620efb7a0afd9ce88705476b2bf2b8781f276691a7ad"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/stardew-valley.md",
@@ -18211,8 +18226,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3940,
-  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
+  "size": 4047,
+  "sha256": "b5e3d3971439fb75a626dfe23dbca0cff1bbd23ebc2c0e3209346c7b66ee805b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -18233,6 +18248,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
   "size": 3026,
   "sha256": "3679ab8b4bd90ae7b9e423d0aa5077f40fb108cfe76b90986df9a2e593e883ef"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ror2-modding.md",
+  "size": 3113,
+  "sha256": "6e8a63da27792c328789b444fe2f14f50d6d42a000a280fc79535be6202e2356"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
@@ -18716,8 +18736,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10201,
-  "sha256": "01e4dbc0d8650c18e23f50e5eba5703551cc8448fb09fae755c32a1fcd0c47ac"
+  "size": 10346,
+  "sha256": "c4ad9b9df80fe5a1b588e04588a97e97844a988748f57762c361b0eba2401e96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -18756,8 +18776,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
-  "size": 1262,
-  "sha256": "00bd45a1d7012f6c3dd42618fc266077f94c269f1d84e8db87fb72903c31eb52"
+  "size": 1322,
+  "sha256": "890594e30a004db2f944b56c9e6a07538d7bdef2977d259eb72b1319c4f2e179"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/OVERVIEW.md",
@@ -18791,8 +18811,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/risk-of-rain2.md",
-  "size": 2158,
-  "sha256": "69d9fd0ba4079a8c3f0595129a6a197908f0d80073334ec15dfd10a6a4edd212"
+  "size": 6740,
+  "sha256": "631387c845fd3ed2e267620efb7a0afd9ce88705476b2bf2b8781f276691a7ad"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/stardew-valley.md",
@@ -22981,8 +23001,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3940,
-  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
+  "size": 4047,
+  "sha256": "b5e3d3971439fb75a626dfe23dbca0cff1bbd23ebc2c0e3209346c7b66ee805b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -23003,6 +23023,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
   "size": 3026,
   "sha256": "3679ab8b4bd90ae7b9e423d0aa5077f40fb108cfe76b90986df9a2e593e883ef"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ror2-modding.md",
+  "size": 3113,
+  "sha256": "6e8a63da27792c328789b444fe2f14f50d6d42a000a280fc79535be6202e2356"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
@@ -23486,8 +23511,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10201,
-  "sha256": "01e4dbc0d8650c18e23f50e5eba5703551cc8448fb09fae755c32a1fcd0c47ac"
+  "size": 10346,
+  "sha256": "c4ad9b9df80fe5a1b588e04588a97e97844a988748f57762c361b0eba2401e96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -23526,8 +23551,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
-  "size": 1262,
-  "sha256": "00bd45a1d7012f6c3dd42618fc266077f94c269f1d84e8db87fb72903c31eb52"
+  "size": 1322,
+  "sha256": "890594e30a004db2f944b56c9e6a07538d7bdef2977d259eb72b1319c4f2e179"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/OVERVIEW.md",
@@ -23561,8 +23586,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/risk-of-rain2.md",
-  "size": 2158,
-  "sha256": "69d9fd0ba4079a8c3f0595129a6a197908f0d80073334ec15dfd10a6a4edd212"
+  "size": 6740,
+  "sha256": "631387c845fd3ed2e267620efb7a0afd9ce88705476b2bf2b8781f276691a7ad"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/stardew-valley.md",
@@ -27826,8 +27851,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 3940,
-  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
+  "size": 4047,
+  "sha256": "b5e3d3971439fb75a626dfe23dbca0cff1bbd23ebc2c0e3209346c7b66ee805b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -27848,6 +27873,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
   "size": 3026,
   "sha256": "3679ab8b4bd90ae7b9e423d0aa5077f40fb108cfe76b90986df9a2e593e883ef"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ror2-modding.md",
+  "size": 3113,
+  "sha256": "6e8a63da27792c328789b444fe2f14f50d6d42a000a280fc79535be6202e2356"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
@@ -28331,8 +28361,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10201,
-  "sha256": "01e4dbc0d8650c18e23f50e5eba5703551cc8448fb09fae755c32a1fcd0c47ac"
+  "size": 10346,
+  "sha256": "c4ad9b9df80fe5a1b588e04588a97e97844a988748f57762c361b0eba2401e96"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -28371,8 +28401,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
-  "size": 1262,
-  "sha256": "00bd45a1d7012f6c3dd42618fc266077f94c269f1d84e8db87fb72903c31eb52"
+  "size": 1322,
+  "sha256": "890594e30a004db2f944b56c9e6a07538d7bdef2977d259eb72b1319c4f2e179"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/OVERVIEW.md",
@@ -28406,8 +28436,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/risk-of-rain2.md",
-  "size": 2158,
-  "sha256": "69d9fd0ba4079a8c3f0595129a6a197908f0d80073334ec15dfd10a6a4edd212"
+  "size": 6740,
+  "sha256": "631387c845fd3ed2e267620efb7a0afd9ce88705476b2bf2b8781f276691a7ad"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/references/stardew-valley.md",
@@ -29067,12 +29097,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 62296,
-  "sha256": "c3e28310f7498ab81070b345ea4c35e5c369b57ff8b5b5af5aeb81f68e9d49d6"
+  "sha256": "802e129aed435ceeb87be23a1dcc3eda32853db7722c421b4a88ca79eaf3274d"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1328,
-  "sha256": "6dce2bfd071c8f4d248277f0f9866a24b33b455117e25d28986d47e57e4f1c12"
+  "sha256": "432816166c8d85f5e9ceec5c2b58d3b2a357052ccbca47b804959576af84a2a2"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -29082,7 +29112,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39683,
-  "sha256": "9beb5d1ee8e02067eb78e67a38de7703775032ce076600d280007df3dea7c6c4"
+  "sha256": "7a600e45fd29473cdfa8e09e4165b6e916bff5dc6f58082e7d113c2defacbe1f"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -33151,8 +33181,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 261433,
-  "sha256": "bdf07039aea2315e28010472dd90ee9eac9b886bb611d505a728dc4960e63597"
+  "size": 262531,
+  "sha256": "3405596d3ffa7718dbd4f12f4973d3ffd9257a3010398b1ee6dd3d9face92acb"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -33242,7 +33272,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 176007,
-  "sha256": "a58c544ac1d07ee1cb00e09a8ca2d0b92ea507ad201d938c36900b1a74553fb0"
+  "sha256": "3929f06d108e242971250712e79b2921fae7b90b64f62abfaa5a9df9d89ef17b"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -33307,7 +33337,7 @@
  {
   "path": "README.md",
   "size": 71937,
-  "sha256": "20d52394c8c370875a589d2dadfd841615af3ad52d3f2f814a5fdeefed1ee015"
+  "sha256": "4447ff121b4abc79b5a81e52370a60dac461bbfa215af52404cd1995304b729a"
  },
  {
   "path": "SECURITY.md",
@@ -33317,17 +33347,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1027,
-  "sha256": "d1ef8ba2bf8bc5be6130a904f19bf326f26d22f67dab585f80cca3561d6178dc"
+  "sha256": "7b082ef55645611da09f55ad739c22296c60291b3dd550576324e5bb9a291b2e"
  },
  {
   "path": "START-HERE.txt",
   "size": 4013,
-  "sha256": "b7f08432cdd6abf52a162151fb2b189c7840bbdf2c4d2beacc8778fb7aacd575"
+  "sha256": "271b2af4c1e22bce9064bf809d0a3a81c1d35da9fdd2a38d89b8df6dba4d239a"
  },
  {
   "path": "STATE.md",
-  "size": 57059,
-  "sha256": "b3925d0da7ad7968c8600d8d06fd7d87556dcf3a8fe594f5617e6842492abb56"
+  "size": 57652,
+  "sha256": "b7a58a8fc7999dc995213c9844c58bf1faf540d02c4a58baf042b8c3bdf8364a"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -34217,7 +34247,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2673,
-  "sha256": "ba57c19f355b8725231722d8340b6fbacd03d24ef6fbe8c98dc24cafc6da263c"
+  "sha256": "3938f276daf16aa6faf8bfd844dc27d62f1ba31ba1cd89183cb7d361fe6bcaee"
  },
  {
   "path": "VALIDATION.md",
@@ -34227,7 +34257,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "7325f2f39b4fb7c82e8876b8bb438e658a797ef35bb36fc7e2236c2969716afd"
+  "sha256": "9c336815155e142f7c787fb7bee893f8a323e440ff85a8eae0b452e6ad6a0397"
  },
  {
   "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
@@ -37986,8 +38016,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/SKILL.md",
-  "size": 3940,
-  "sha256": "252bdd6b05e488c272f363184f31b6ad1102eed01391b6bf462f2c20bc790572"
+  "size": 4047,
+  "sha256": "b5e3d3971439fb75a626dfe23dbca0cff1bbd23ebc2c0e3209346c7b66ee805b"
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/ai-models-harness.md",
@@ -38008,6 +38038,11 @@
   "path": "_CANONICAL-SKILLS/project-intel/references/game-modding-other.md",
   "size": 3026,
   "sha256": "3679ab8b4bd90ae7b9e423d0aa5077f40fb108cfe76b90986df9a2e593e883ef"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/project-intel/references/ror2-modding.md",
+  "size": 3113,
+  "sha256": "6e8a63da27792c328789b444fe2f14f50d6d42a000a280fc79535be6202e2356"
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/security-re.md",
@@ -38491,8 +38526,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/SKILL.md",
-  "size": 10201,
-  "sha256": "01e4dbc0d8650c18e23f50e5eba5703551cc8448fb09fae755c32a1fcd0c47ac"
+  "size": 10346,
+  "sha256": "c4ad9b9df80fe5a1b588e04588a97e97844a988748f57762c361b0eba2401e96"
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/browser-cli.md",
@@ -38531,8 +38566,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/unity-mod-frameworks/SKILL.md",
-  "size": 1262,
-  "sha256": "00bd45a1d7012f6c3dd42618fc266077f94c269f1d84e8db87fb72903c31eb52"
+  "size": 1322,
+  "sha256": "890594e30a004db2f944b56c9e6a07538d7bdef2977d259eb72b1319c4f2e179"
  },
  {
   "path": "_CANONICAL-SKILLS/unity-mod-frameworks/references/OVERVIEW.md",
@@ -38566,8 +38601,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/unity-mod-frameworks/references/risk-of-rain2.md",
-  "size": 2158,
-  "sha256": "69d9fd0ba4079a8c3f0595129a6a197908f0d80073334ec15dfd10a6a4edd212"
+  "size": 6740,
+  "sha256": "631387c845fd3ed2e267620efb7a0afd9ce88705476b2bf2b8781f276691a7ad"
  },
  {
   "path": "_CANONICAL-SKILLS/unity-mod-frameworks/references/stardew-valley.md",
@@ -39653,6 +39688,11 @@
   "path": "docs/history/V8.29.15-CHANGELOG.md",
   "size": 696,
   "sha256": "cd6648cfe43df9e3cd7e61708966c34ee1c41251bab0d728b273d7cd7c94a83f"
+ },
+ {
+  "path": "docs/history/V8.29.16-CHANGELOG.md",
+  "size": 1121,
+  "sha256": "c9129d41d4989bc03192ac0c727786dba586e78a2a752f622772774df160f979"
  },
  {
   "path": "docs/history/V8.29.2-CHANGELOG.md",

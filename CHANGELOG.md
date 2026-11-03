@@ -1,3 +1,18 @@
+## 8.29.16 (2026-11-03)
+
+- Risk of Rain 2 survivors now get a preflight before the first line of C#
+  (`unity-mod-frameworks/references/risk-of-rain2.md`): item displays, `DamageSource` tags,
+  authority-gated motor writes, Commando clone leftovers, audio (Unity audio is disabled; winmm
+  route with the game's volume sliders and distance falloff), non-readable textures, package
+  layout, R2API names, detached live model, single-field stat buffs, costume handling, and a
+  definition of done that includes `forge audit`, `forge validate` and an all-costume autorun.
+  Each default was missed in a shipped survivor (Ultron, Gnar) and compiles, validates and plays solo.
+- It routes to the Risk of Rain 2 Forge (`ROR2_FORGE_ROOT`, v1.10.1+: `forge audit` now warns on those
+  gaps) and carries the same list inline, so a model without the tool still gets it.
+- `project-intel` gained a Risk of Rain 2 card with dated, workflow-scoped findings;
+  `tool-discovery` knows the Forge and its environment variable.
+- No model default, preamble or content-permission change; still 130 canonical skills.
+
 ## 8.29.15 (2026-11-03)
 
 - Fixed the installer aborting at the compiler self-test on accounts with
