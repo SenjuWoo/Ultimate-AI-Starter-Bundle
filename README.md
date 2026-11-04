@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.30.3 -->
+<!-- Ultimate AI Starter Bundle v8.30.4 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.30.3
+# Ultimate AI Starter Bundle v8.30.4
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -526,10 +526,11 @@ entries if you want failover, and only with models that accept the same
 modalities as the main model. Custom chains remain user-owned; migration clears
 a superseded pack chain and leaves a user-written one untouched.
 
-Auxiliary tasks, delegation and MoA use one low-cost OpenRouter pair:
-DeepSeek V4.1 Flash for vision, compression, approvals, review, curator,
-triage and research; Particle-1 for skills hub, MCP, titles, voice, Fast /
-execute delegation and MoA aggregation. Compression fires at a 320,000-token
+Cache-first by default: auxiliary tasks and delegation follow the main model
+(`provider: auto`, empty model) so prompt caches hit, MoA is off, and
+`prompt_caching.cache_ttl` is 1h with price-first provider routing. Pinning an
+aux task to a different model starts a cold cache and should only be done when
+that task's quality gain beats the cache loss. Compression fires at a 320,000-token
 cap on the default window, prunes oversized tool results from 80,000 tokens,
 and aborts rather than replacing context when a summary fails. [Model guidance](docs/HERMES-MODELS.md) · [Profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md).
 

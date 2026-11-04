@@ -29,30 +29,24 @@ tier at 272,000 tokens: $4 / $15. Cached input, reasoning output, search and
 provider routing can change the bill. These are dated catalog rates, not task
 quotes. None was benchmarked or promoted to a default by this update.
 
-## Auxiliary tasks use one low-cost pair
+## Cache-first auxiliary, delegation and MoA
 
-Catalog check: **2026-11-04**. The shipped auxiliary, delegation and MoA slots
-use two OpenRouter models, so the cost profile is deliberate:
+Catalog check: **2026-11-04**. The starter is optimized for cached-token profit:
 
-- `deepseek/deepseek-v4.1-flash-1017` for vision, compression, approvals, review,
-  curator, triage and research. OpenRouter listed it at $0.032 / $0.288 per 1M
-  input / output tokens on the collection page.
-- `particle-ai/particle-1` for skills hub, MCP, title generation, voice,
-  profile description, Fast / execute delegation and the MoA aggregator.
-  OpenRouter listed it at $0.05 / $0.50 per 1M input / output tokens.
+- Auxiliary tasks ship as `provider: auto` with an empty model, so they follow
+  the main model and reuse its prompt cache. Do not pin aux tasks to a
+  different model unless that one task's quality gain beats the cache loss.
+- Delegation ships with `provider: auto` and empty model, so subagents inherit
+  the parent model/provider and cache family. No model-map.
+- MoA ships **off**. It adds a reference call plus an aggregator call on
+  different models every turn — mostly uncached cost.
+- `prompt_caching.cache_ttl` is `1h`; `provider_routing` sorts by price and
+  requires parameters; `openrouter.response_cache` stays off (that's response
+  caching, not prompt caching, and it can serve stale answers).
 
-This intentionally pins two current IDs. If either is retired or becomes
-text-only, update one place: both starter configs, this guide and the
-registration contract in `TESTS/test_release_contract.py`. Do not let an aux
-task fail back to `auto` silently; a missed pin should be a visible failure.
-
-## Delegation and MoA use the same pair
-
-Delegation ships as a model map: Particle-1 for Fast and execute, DeepSeek
-V4.1 Flash for research, defaulting to execute. MoA ships enabled with the
-`deepseek_particle` preset: DeepSeek V4.1 Flash reference, Particle-1
-aggregator. The premium `default` preset is present but disabled, so a stray
-preset switch cannot pick up an expensive aggregator.
+Pinning auxiliary models is what silently breaks caching: every distinct
+model/provider/prefix starts a cold cache. If an aux model changes, update
+both starter configs, this guide and `TESTS/test_release_contract.py`.
 
 `auxiliary.vision.fallback_chain` is **not a recognized Hermes key**. Older
 configs carried it, and it did nothing; the pack no longer ships it. Use

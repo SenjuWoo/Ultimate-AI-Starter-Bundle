@@ -109,126 +109,36 @@ openrouter:
   response_cache_ttl: 300
   min_coding_score: 0.65
 auxiliary:
-  # Low-cost pair: DeepSeek for vision/reasoning/review; Particle for repeatable ops.
-  transient_retries: 2
+  # Cache-first: auxiliary tasks follow the main model so prompt caches hit.
+  transient_retries: 1
   vision:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 120
-    extra_body: {}
-    reasoning_effort: high
-    download_timeout: 30
+    provider: auto
+    model: ''
   compression:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 120
-    extra_body: {}
-    reasoning_effort: medium
-    no_progress_timeout:
-  skills_hub:
-    provider: openrouter
-    model: particle-ai/particle-1
-    timeout: 30
-    extra_body: {}
-    reasoning_effort: medium
-  approval:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 30
-    extra_body: {}
-    reasoning_effort: medium
-  review:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    api_mode: ''
-    reasoning_effort: high
-  mcp:
-    provider: openrouter
-    model: particle-ai/particle-1
-    timeout: 30
-    extra_body: {}
-    reasoning_effort: medium
-  title_generation:
-    enabled: true
-    model_upgrade_enabled: true
-    provider: openrouter
-    model: particle-ai/particle-1
-    prefer_fast_model: false
-    timeout: 30
-    extra_body: {}
-    reasoning_effort: minimal
-    language: ''
-  memory_query_rewrite:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 8
-    extra_body: {}
-    reasoning_effort: minimal
-  tts_audio_tags:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 30
-    extra_body: {}
-    reasoning_effort: minimal
-  voice_chat:
-    provider: openrouter
-    model: particle-ai/particle-1
-    timeout: 120
-    extra_body: {}
-    reasoning_effort: low
-  triage_specifier:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 120
-    extra_body: {}
-    reasoning_effort: high
-  kanban_decomposer:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 180
-    extra_body: {}
-    reasoning_effort: high
-  profile_describer:
-    provider: openrouter
-    model: particle-ai/particle-1
-    timeout: 60
-    extra_body: {}
-    reasoning_effort: low
-  goal_judge:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 60
-    extra_body: {}
-    reasoning_effort: medium
-  curator:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
+    provider: auto
+    model: ''
     timeout: 600
-    extra_body: {}
-    reasoning_effort: high
-  monitor:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 60
-    extra_body: {}
-    reasoning_effort: medium
+    extra_body:
+      provider:
+        require_parameters: true
+  skills_hub:
+    provider: auto
+    model: ''
+  approval:
+    provider: auto
+    model: ''
+  mcp:
+    provider: auto
+    model: ''
+  title_generation:
+    enabled: false
+    provider: auto
+    model: ''
+  curator:
+    provider: auto
+    model: ''
   background_review:
-    enabled: true
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 120
-    extra_body: {}
-    reasoning_effort: high
-  moa_reference:
-    provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    timeout: 900
-    extra_body: {}
-  moa_aggregator:
-    provider: openrouter
-    model: particle-ai/particle-1
-    timeout: 900
-    extra_body: {}
+    enabled: false
 display:
   compact: false
   personality: ''
@@ -259,47 +169,23 @@ memory:
   nudge_interval: 10
   flush_min_turns: 6
 delegation:
-  # Cheap model map: Particle for Fast/execute; DeepSeek V4.1 Flash for research.
-  max_iterations: 100
-  backend: model_map
-  backends:
-    model_map:
-      options:
-      - name: Fast
-        description: Quick independent tasks, simple code changes, summaries, formatting, and straightforward tool operations. Prioritize speed and low token usage.
-        provider: openrouter
-        model: particle-ai/particle-1
-        reasoning_effort: low
-      - name: execute
-        description: Implement features, write and refactor code, run tests, and fix well-understood bugs. Follow existing plans and verify the results.
-        provider: openrouter
-        model: particle-ai/particle-1
-        reasoning_effort: high
-      - name: research
-        description: Investigate complex bugs, research unfamiliar systems, compare technical approaches, and design architectures. Return evidence and actionable plans.
-        provider: openrouter
-        model: deepseek/deepseek-v4.1-flash-1017
-        reasoning_effort: xhigh
-      default: execute
+  # Cache-first: subagents inherit the parent model so caches hit.
+  provider: auto
   model: ''
-  provider: ''
   reasoning_effort: high
-  max_concurrent_children: 3
+  max_iterations: 50
+  max_concurrent_children: 2
   max_spawn_depth: 1
-  orchestrator_enabled: true
-  inherit_mcp_toolsets: true
-  max_summary_chars: 24000
-  child_timeout_seconds: 0
-  oneshot_max_children: 2
-  subagent_auto_approve: false
-  surface_child_process_notifications: false
 moa:
-  # Cheap MoA: DeepSeek V4.1 Flash reference, Particle aggregator; premium preset disabled.
+  # MoA ships OFF: it adds uncached reference + aggregator calls every turn.
   presets:
     default:
       reference_models:
       - provider: openrouter
-        model: deepseek/deepseek-v4.1-flash-1017
+        model: particle-ai/particle-1
+        enabled: false
+      - provider: openrouter
+        model: google/gemini-3.7-flash
         enabled: false
       aggregator:
         provider: openrouter
@@ -307,33 +193,20 @@ moa:
       enabled: false
       degraded_reference_policy: loud
       fanout: user_turn
-    deepseek_particle:
-      enabled: true
-      reference_models:
-      - provider: openrouter
-        model: deepseek/deepseek-v4.1-flash-1017
-        enabled: true
-      aggregator:
-        provider: openrouter
-        model: particle-ai/particle-1
-      degraded_reference_policy: loud
-      fanout: user_turn
   reference_models:
   - provider: openrouter
-    model: deepseek/deepseek-v4.1-flash-1017
-    enabled: true
+    model: particle-ai/particle-1
+    enabled: false
+  - provider: openrouter
+    model: google/gemini-3.7-flash
+    enabled: false
   aggregator:
     provider: openrouter
     model: particle-ai/particle-1
   degraded_reference_policy: loud
   max_tokens: 4096
   fanout: user_turn
-  enabled: true
-  default_preset: deepseek_particle
-  active_preset: ''
-  save_traces: false
-  trace_dir: ''
-  privacy_filter: ''
+  enabled: false
 skills:
   creation_nudge_interval: 0
 security:

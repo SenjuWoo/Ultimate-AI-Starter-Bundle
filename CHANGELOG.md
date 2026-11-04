@@ -1,3 +1,14 @@
+## 8.30.4 (2026-11-04)
+
+- Cache-first cost model: auxiliary tasks and delegation follow the main
+  model again, MoA ships off, background review and title generation are
+  disabled, `prompt_caching.cache_ttl` is 1h, and provider routing sorts by
+  price with parameters required. Pinning aux/delegation to other models is
+  what started cold caches; quality is now protected by prompt-cache hits
+  rather than a model split.
+- Self-style unrestrained/preamble source unchanged; no main-model or
+  companion-pin change; 78 canonical skills total.
+
 ## 8.30.3 (2026-11-04)
 
 - Hermes aux, delegation and MoA now use one low-cost OpenRouter pair,
