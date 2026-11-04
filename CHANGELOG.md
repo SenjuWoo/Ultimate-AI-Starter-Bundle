@@ -18,8 +18,9 @@
   cached tokens automatically.
 - Gemini is removed from the shipped MoA defaults; no automatic route selects
   Crouton Alpha, GPT, Claude, Gemini, Grok or any premium model.
-- Self-style unrestrained/preamble source untouched; no companion pin changed;
-  78 canonical skills total.
+- Unrestrained preamble and refusal protocol reinforced across all shipped variants and
+  provider instruction files; no content rule was removed or weakened. No companion pin
+  changed; 78 canonical skills total.
 
 ## 8.30.4 (2026-11-04)
 

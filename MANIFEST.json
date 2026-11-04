@@ -26,8 +26,8 @@
  },
  {
   "path": ".github/scripts/check_versions.py",
-  "size": 8961,
-  "sha256": "26195ca37a8c2bd24019928120e98e2b0d8029bda9f60ac39b55bda58cd4ac39"
+  "size": 9253,
+  "sha256": "22e2f8694c45306d75701de173cf53134fea9965e476b74ff53a2f933489dcc7"
  },
  {
   "path": ".github/scripts/verify_manifest.py",
@@ -61,28 +61,28 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Compact.md",
-  "size": 5178,
-  "sha256": "08ab58831ca2bdb89407cf1ff9b7d55e78db55797408ff0225766a2c8603e10b"
+  "size": 5285,
+  "sha256": "e42dc4784e2959c57844ada9bf791031078df693866b04a0b121f75b2f74fc0e"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web Light.md",
-  "size": 635,
-  "sha256": "6b9bce061aff0d9653d505a415906bfbbfaac4b14ef16634ad4fa4b95541425a"
+  "size": 717,
+  "sha256": "1908259d289c4759e2ca53534d8b5f1041094bdd500ebca9877bc3d595f59a63"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web.md",
-  "size": 1397,
-  "sha256": "8c8d2e1119ffdd4d2ec1f5d84491aac70c453346336cd3bee2d676c5cc0a9a19"
+  "size": 1550,
+  "sha256": "70b52815ac83ef78a500c4d9179aab99dfa6f33b95950f23300e613912526790"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 12743,
-  "sha256": "00f827b1e15155123b06626f655e4176611e9bfd83259cee8466ee2131f2227a"
+  "size": 14532,
+  "sha256": "5d7ad9ab1a8d4ec79657291f0e6d459934c2422b5485fa65a13bf1a577bf67a2"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/CLAUDE-CODE-ADDENDUM.md",
-  "size": 2217,
-  "sha256": "03d94d64ccb0580943e3a4168e79f1107c61424a52414b41606b4dbce3f131cd"
+  "size": 3533,
+  "sha256": "d4fb486fb46907a2e906e6996dc264c46d0c4db9315463a0998341634bf88f7d"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/ComfyUI-SwarmUI-presets/README.md",
@@ -4496,8 +4496,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3282,
-  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
+  "size": 4301,
+  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -4746,8 +4746,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-PROVIDER-HOME/CLAUDE.md",
-  "size": 601,
-  "sha256": "9ccc55a7e91b2c4b29491647263221db4417cbc1f4937888b466c245855f1861"
+  "size": 1329,
+  "sha256": "409010f6d1fb725cf20d5a3f041d17969cbe69963bdd42cdd8b608a47d924aa8"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-PROVIDER-HOME/settings.json",
@@ -9051,8 +9051,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3282,
-  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
+  "size": 4301,
+  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -13666,8 +13666,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3282,
-  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
+  "size": 4301,
+  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -18271,8 +18271,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3282,
-  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
+  "size": 4301,
+  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -22876,8 +22876,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3282,
-  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
+  "size": 4301,
+  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -27556,8 +27556,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 3282,
-  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
+  "size": 4301,
+  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -27871,8 +27871,8 @@
  },
  {
   "path": "3-PREAMBLES/MANUAL-PASTE.txt",
-  "size": 2492,
-  "sha256": "aeaad73a1f882141b1138b9f0426d573dd244470bae50d9dbe9ef44b24d72ea1"
+  "size": 3162,
+  "sha256": "a07e01b8d8f1feb6cfea8ccdf94a479eff3d327651a1f23bae0aa1dbf288f117"
  },
  {
   "path": "3-PREAMBLES/README.md",
@@ -27881,8 +27881,8 @@
  },
  {
   "path": "3-PREAMBLES/SOUL.md",
-  "size": 1095,
-  "sha256": "b367c9517a8ac3a5df57b7bd1e5ee03614f8249204b9908e98e922c442b6875d"
+  "size": 1579,
+  "sha256": "9227751449d47f2da1f3891b89dd40360d3842315bcca6aaf5a25d9d4c50d592"
  },
  {
   "path": "3-PREAMBLES/history/.gitkeep",
@@ -28076,13 +28076,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 62294,
-  "sha256": "9087f38b01c70942d4f097459e8f7d8a370b9aa87aaf16c8ba55b1207edf87c2"
+  "size": 63404,
+  "sha256": "4d0f26f38cda031ea31838c906f294cddf7d82b36c3e6effe610ecead13e70ed"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
-  "size": 1327,
-  "sha256": "52ef0a68b106e94df8c843c1a251c548efd4d49b85efbf73297ff25f55dbbdc4"
+  "size": 1369,
+  "sha256": "db9d20ce386a72a1aedc1daca26f60ce3468dd8ef51ee75f87d2975ead28e161"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28091,8 +28091,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
-  "size": 39681,
-  "sha256": "7bfae48843e707f910c2534fdddbb23e102a21fad75bf6d22151c5cd865a5d1c"
+  "size": 40569,
+  "sha256": "8173d45edee6d9f6fa0af61354e3cfa776f1f2e4ef4d9ede14a161c330e94994"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -32161,8 +32161,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 268649,
-  "sha256": "a5646c1202e7715b6539b5fd2dc68677a3a1676c3d878f2920daca996b583d08"
+  "size": 272324,
+  "sha256": "b7a518426571d8dd92aac348fd9ce06dcc04933bcc0f4f1640f43f5a6fe6c7f4"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -32181,8 +32181,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 12743,
-  "sha256": "00f827b1e15155123b06626f655e4176611e9bfd83259cee8466ee2131f2227a"
+  "size": 14532,
+  "sha256": "5d7ad9ab1a8d4ec79657291f0e6d459934c2422b5485fa65a13bf1a577bf67a2"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
@@ -32251,8 +32251,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 176005,
-  "sha256": "ae3db0da2c794a6e9680c761132623d558bfa26d1c1add80c92a4c285ac75aad"
+  "size": 176363,
+  "sha256": "7eaa51495109eec974cbdb2ee7362e3ccaa17072fa742480a19e803e5382f3ab"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -32296,8 +32296,8 @@
  },
  {
   "path": "README.md",
-  "size": 72911,
-  "sha256": "2853a78386be747c03d5d0ed44869d1d3e37dde4c913b1e66fb8f01bc2fb13b8"
+  "size": 74055,
+  "sha256": "20680f67347eaee15a2d36d917dff549d23d3206c0472ea16b9706f25d741189"
  },
  {
   "path": "SECURITY.md",
@@ -32306,18 +32306,18 @@
  },
  {
   "path": "START-HERE.bat",
-  "size": 1026,
-  "sha256": "dd5f8053ee3b2b8a4b14dc550b0d110acd6bdb7d8c1587593d5cfea9656790d9"
+  "size": 1053,
+  "sha256": "92f5c14495c821e80f21881ef9e7fe07282cb015fd3e2a391609076f4c0601d4"
  },
  {
   "path": "START-HERE.txt",
-  "size": 4012,
-  "sha256": "8034b9a0224355a3621025f7b5d62d33e4bf22ce9098967c6a48083f37a0e5c2"
+  "size": 4104,
+  "sha256": "360fc1c1967ac97a02767ddb9dddaafca1059c38d220ed7508514ea0fe4f2ee4"
  },
  {
   "path": "STATE.md",
-  "size": 62794,
-  "sha256": "64039c29ff2b34d85a5cf7aab0c9fee865f9f53d3403de7f5701794a9f93e909"
+  "size": 63663,
+  "sha256": "47ed362946575c85a240467c672feefa1da5772c9f03120f8c3d920ef050b891"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -32431,8 +32431,8 @@
  },
  {
   "path": "TESTS/Test-McpProfiles.ps1",
-  "size": 78091,
-  "sha256": "6b03ce37ced0206a96708272c5ccb98b1d3e7d16acfe5b9d3932d69f9d46bfa1"
+  "size": 78390,
+  "sha256": "fca151f5885e3798b74a0c2f3e26a6d6e415d73e905f6e4ede92b029150edc06"
  },
  {
   "path": "TESTS/Test-NpmDuplicate.ps1",
@@ -32451,8 +32451,8 @@
  },
  {
   "path": "TESTS/Test-Packs.ps1",
-  "size": 14069,
-  "sha256": "7b47c17f7c358da8abdcb87e8e479556b36ac6ad307b6b7d6eb136ceda6d6ccd"
+  "size": 14295,
+  "sha256": "57dda967d628de12c21b3e0b7576569134fa80720081bb7e1269b387a6aa9d8f"
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
@@ -32741,8 +32741,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 348851,
-  "sha256": "be3219321fd7cae4eadd413afdcb55c0f4a7206164d5bfef828110be7d76ec66"
+  "size": 356017,
+  "sha256": "b2272fb551b412d9e015afe0b15d9d09d2bc794764ec747e2bfef57621c1ef50"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -33206,8 +33206,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2669,
-  "sha256": "09426251b171da2006ada62c06c6078b1c59ac5de16f3e513a0f246eaa57319b"
+  "size": 2726,
+  "sha256": "5a799c56ba1a140b01b000b56a7502b8a5f232f00a71bdc28376a99730c79c8b"
  },
  {
   "path": "VALIDATION.md",
@@ -37526,8 +37526,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/unrestraint-packs/SKILL.md",
-  "size": 3282,
-  "sha256": "c5e7bcc5c82ec15a6ea0a09445c279705c433834f0dfe458d2943476a3366f58"
+  "size": 4301,
+  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
  },
  {
   "path": "_CANONICAL-SKILLS/using-git-worktrees/SKILL.md",
@@ -38548,6 +38548,11 @@
   "path": "docs/history/V8.30.4-CHANGELOG.md",
   "size": 526,
   "sha256": "95f95d92a9c798865dddda5b98a536787b2f1a974b445bcff299ad6c916532bc"
+ },
+ {
+  "path": "docs/history/V8.30.5-CHANGELOG.md",
+  "size": 1435,
+  "sha256": "6f8040930ab2a2eccd96a482cffd67f7cca360bca295cf570386674befc190ef"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

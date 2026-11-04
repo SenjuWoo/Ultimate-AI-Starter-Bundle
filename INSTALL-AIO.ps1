@@ -550,9 +550,14 @@ function Find-UabsBunExecutable {
   return $null
 }
 
+# One version source: VERSION.txt. A hardcoded copy here went stale on every
+# bump and made a correct install fail its own final check.
+$BundleVersion = ([IO.File]::ReadAllText((Join-Path $PackRoot 'VERSION.txt'))).Trim()
+if ($BundleVersion.StartsWith('v') -or $BundleVersion.StartsWith('V')) { $BundleVersion = $BundleVersion.Substring(1) }
+
 Write-Host ""
 Write-Host "=====================================================" -ForegroundColor Magenta
-Write-Host " Ultimate AI Starter Bundle v8.30.4 - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
+Write-Host " Ultimate AI Starter Bundle v$BundleVersion - ALL-IN-ONE INSTALLER" -ForegroundColor Magenta
 Write-Host " Mode=$Mode  Providers=$($Providers -join ',') [$script:UabsProviderSource]" -ForegroundColor Magenta
 if ($script:UabsSkippedProviders.Count) {
   Write-Host (" Not installed here, so not touched: " + ($script:UabsSkippedProviders -join ', ') + "  (add them with -AllProviders)") -ForegroundColor DarkGray
@@ -2687,7 +2692,7 @@ if ($priorState -and $priorState.providers) { $knownProviders += @($priorState.p
 $stateProviders = @($script:UabsAllProviders | Where-Object { $knownProviders -contains $_ })
 
   $state = @{
-version = '8.30.4'
+version = $BundleVersion
   content_packs = @($packSel.Enabled)
   status = 'verifying'
   installed_utc = [DateTime]::UtcNow.ToString('o')

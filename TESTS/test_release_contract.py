@@ -352,7 +352,9 @@ def test_bootstrap() -> None:
     )
 
     ps = read(ROOT / "INSTALL-AIO.ps1")
-    assert VERSION in ps
+    # The installer reads VERSION.txt once; a literal copy went stale on bump.
+    assert "Join-Path $PackRoot 'VERSION.txt'" in ps and "v$BundleVersion" in ps, (
+        "AIO no longer derives its version from VERSION.txt")
     doctor = "Test-Installed-State.ps1"
     assert doctor in ps, "final install-state doctor is not invoked"
     assert ps.index(doctor) < ps.index('INSTALL COMPLETE'), "doctor must run before success banner"
@@ -1915,6 +1917,13 @@ def test_version_sources() -> None:
     assert "bundle-managed and contract-checked" not in readme, "README still documents the removed cross-repo Forge contract"
     assert "## Version\n\nThe version is in [VERSION.txt](VERSION.txt)" in readme, "README Version section restates releases again"
     assert forge.get("install") not in ("manual-user-product", None)
+    # The installer stamp must come from VERSION.txt; a hardcoded copy made a
+    # correct install fail its own final check on every bump.
+    installer = read(ROOT / "INSTALL-AIO.ps1")
+    assert "version = $BundleVersion" in installer, "install-state version is hardcoded again"
+    assert "Join-Path $PackRoot 'VERSION.txt'" in installer, "installer does not read VERSION.txt"
+    assert not re.search(r'version\s*=\s*\'\d+\.\d+\.\d+', installer), (
+        "INSTALL-AIO.ps1 pins a literal bundle version")
 
 
 def test_forge_install_directory_is_never_version_stamped() -> None:
@@ -2472,7 +2481,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "39f6db824b329981d02e518554cac237f0c284b01ed91bae6a48ff84a8255adf", (
+    assert digest == "8e8e8989d1259b7b132fcb6448254c5018eef135f7c6f72cb5dbe9aa93af0f7a", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )

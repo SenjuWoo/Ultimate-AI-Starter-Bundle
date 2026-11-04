@@ -13,7 +13,9 @@
   disabling MoA; the shared prefs applier writes both without touching any
   profile's main model. `TESTS/Test-HermesProfiles.ps1` covers 44 cases.
   Release contract `test_hermes_starter_uses_planner_worker_pair`: 160/0.
-- No unrestrained/preamble or companion-pin changes; 78 canonical skills.
+- Unrestrained preamble, refusal protocol and Claude addendum reinforced (no content rule
+  removed); provider instruction files and the unrestraint-packs skill carry the new
+  no-self-refusal route. No companion-pin changes; 78 canonical skills.
 
 ## Prepared 8.30.2 — Skyrim knowledge moved to Skyrim Forge — 2026-11-04
 

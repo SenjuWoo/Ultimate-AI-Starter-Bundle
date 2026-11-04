@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
   Content packs: auto-detection, remembered choices, instruction blocks, skill retirement.
 
@@ -77,7 +77,10 @@ try {
   [IO.File]::WriteAllText($ownerInstructions, '# Skyrim owner fixture: skyrim-tool-router')
   $env:SKYRIM_FORGE_ROOT=$owner
 
-  $general = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Claude\COPY-TO-PROVIDER-HOME\CLAUDE.md'
+  # A fixed fixture, not the live provider file: this gate tests block mechanics,
+  # and a real instruction file's edits must not turn into a red pack gate.
+  $general = Join-Path $fx 'general.md'
+  [IO.File]::WriteAllText($general, "# General rules`r`nKeep answers short.`r`n", (New-Object System.Text.UTF8Encoding $false))
   $legacy = @(Get-ChildItem -LiteralPath (Join-Path $PackRoot 'BUNDLED-TOOLS\packs\skyrim\legacy') -Filter '*.md' | Sort-Object Name)[0]
   Assert $legacy 'No archived legacy Skyrim section to test against.'
   $file = Join-Path $fx 'home\CLAUDE.md'

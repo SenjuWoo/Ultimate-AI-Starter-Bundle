@@ -26,8 +26,8 @@ DECLARATIONS = [
     ("README.md", r"^<!-- Ultimate AI Starter Bundle v" + V + r" -->", "README.md (first line)"),
     ("README.md", r"^# Ultimate AI Starter Bundle v" + V, "README.md (title)"),
     ("START-HERE.txt", r"^Ultimate AI Starter Bundle V" + V, "START-HERE.txt"),
-    ("INSTALL-AIO.ps1", r"Ultimate AI Starter Bundle v" + V + r" - ALL-IN-ONE INSTALLER", "INSTALL-AIO.ps1 (banner)"),
-    ("INSTALL-AIO.ps1", r"version = '" + V + r"'", "INSTALL-AIO.ps1 (state)"),
+    ("INSTALL-AIO.ps1", r"Ultimate AI Starter Bundle v\$BundleVersion - ALL-IN-ONE INSTALLER", "INSTALL-AIO.ps1 (banner)"),
+    ("INSTALL-AIO.ps1", r"version = \$BundleVersion", "INSTALL-AIO.ps1 (state)"),
     # The console title is the first thing a fresh user sees; it sat at v7.8.0
     # for a whole release before it was checked.
     ("START-HERE.bat", r"^title Ultimate AI Starter Bundle v" + V, "START-HERE.bat (title)"),
@@ -106,6 +106,11 @@ def main(argv):
             continue
         if not found:
             problems.append("%s: no version declaration matched %r" % (rel, pattern))
+            continue
+        if len(found.groups()) == 0:
+            # The installer derives its stamp from VERSION.txt; there is no
+            # literal to compare, only the derivation the tests pin.
+            print("  %-8s %-38s %s" % ("ok", label, "derived from VERSION.txt"))
             continue
         got = found.group(1)
         print("  %-8s %-38s %s" % ("ok" if got == bare else "MISMATCH", label, got))
