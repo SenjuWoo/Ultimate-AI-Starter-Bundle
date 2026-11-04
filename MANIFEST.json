@@ -3716,8 +3716,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4094,
-  "sha256": "a3609832a42f76fc252d1bd66da918f9d5e174193c684ec93a5a275c7b755665"
+  "size": 4050,
+  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -3731,8 +3731,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 11305,
-  "sha256": "44065532cf79b2683b1f0defef5892c3feb5089f41d54b89cfbd54ac86454923"
+  "size": 11322,
+  "sha256": "123472b1d5622c5c62c0db7e024ece6a26e29bd6ebf63f000faa6536fb227f33"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -3743,16 +3743,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
   "size": 2339,
   "sha256": "cfcfc19ea73ba2efb30094e4d436da26f3d8a3ca0be899b95429ca505961bce0"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-modding.md",
-  "size": 4051,
-  "sha256": "c2ceae48fea2a5be4f7006fe60abb946e4726f72f5e3622441641b1a59691d9f"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-release.md",
-  "size": 1797,
-  "sha256": "673d775715152d145d7c74d015309b252217174f0b10e93ffec1c976f464e9ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
@@ -8281,8 +8271,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4094,
-  "sha256": "a3609832a42f76fc252d1bd66da918f9d5e174193c684ec93a5a275c7b755665"
+  "size": 4050,
+  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -8296,8 +8286,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 11305,
-  "sha256": "44065532cf79b2683b1f0defef5892c3feb5089f41d54b89cfbd54ac86454923"
+  "size": 11322,
+  "sha256": "123472b1d5622c5c62c0db7e024ece6a26e29bd6ebf63f000faa6536fb227f33"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -8308,16 +8298,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
   "size": 2339,
   "sha256": "cfcfc19ea73ba2efb30094e4d436da26f3d8a3ca0be899b95429ca505961bce0"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-modding.md",
-  "size": 4051,
-  "sha256": "c2ceae48fea2a5be4f7006fe60abb946e4726f72f5e3622441641b1a59691d9f"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-release.md",
-  "size": 1797,
-  "sha256": "673d775715152d145d7c74d015309b252217174f0b10e93ffec1c976f464e9ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
@@ -12906,8 +12886,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4094,
-  "sha256": "a3609832a42f76fc252d1bd66da918f9d5e174193c684ec93a5a275c7b755665"
+  "size": 4050,
+  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -12921,8 +12901,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 11305,
-  "sha256": "44065532cf79b2683b1f0defef5892c3feb5089f41d54b89cfbd54ac86454923"
+  "size": 11322,
+  "sha256": "123472b1d5622c5c62c0db7e024ece6a26e29bd6ebf63f000faa6536fb227f33"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -12933,16 +12913,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
   "size": 2339,
   "sha256": "cfcfc19ea73ba2efb30094e4d436da26f3d8a3ca0be899b95429ca505961bce0"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-modding.md",
-  "size": 4051,
-  "sha256": "c2ceae48fea2a5be4f7006fe60abb946e4726f72f5e3622441641b1a59691d9f"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-release.md",
-  "size": 1797,
-  "sha256": "673d775715152d145d7c74d015309b252217174f0b10e93ffec1c976f464e9ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
@@ -17521,8 +17491,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4094,
-  "sha256": "a3609832a42f76fc252d1bd66da918f9d5e174193c684ec93a5a275c7b755665"
+  "size": 4050,
+  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -17536,8 +17506,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 11305,
-  "sha256": "44065532cf79b2683b1f0defef5892c3feb5089f41d54b89cfbd54ac86454923"
+  "size": 11322,
+  "sha256": "123472b1d5622c5c62c0db7e024ece6a26e29bd6ebf63f000faa6536fb227f33"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -17548,16 +17518,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
   "size": 2339,
   "sha256": "cfcfc19ea73ba2efb30094e4d436da26f3d8a3ca0be899b95429ca505961bce0"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-modding.md",
-  "size": 4051,
-  "sha256": "c2ceae48fea2a5be4f7006fe60abb946e4726f72f5e3622441641b1a59691d9f"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-release.md",
-  "size": 1797,
-  "sha256": "673d775715152d145d7c74d015309b252217174f0b10e93ffec1c976f464e9ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
@@ -22136,8 +22096,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4094,
-  "sha256": "a3609832a42f76fc252d1bd66da918f9d5e174193c684ec93a5a275c7b755665"
+  "size": 4050,
+  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -22151,8 +22111,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 11305,
-  "sha256": "44065532cf79b2683b1f0defef5892c3feb5089f41d54b89cfbd54ac86454923"
+  "size": 11322,
+  "sha256": "123472b1d5622c5c62c0db7e024ece6a26e29bd6ebf63f000faa6536fb227f33"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -22163,16 +22123,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
   "size": 2339,
   "sha256": "cfcfc19ea73ba2efb30094e4d436da26f3d8a3ca0be899b95429ca505961bce0"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-modding.md",
-  "size": 4051,
-  "sha256": "c2ceae48fea2a5be4f7006fe60abb946e4726f72f5e3622441641b1a59691d9f"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-release.md",
-  "size": 1797,
-  "sha256": "673d775715152d145d7c74d015309b252217174f0b10e93ffec1c976f464e9ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
@@ -26826,8 +26776,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4094,
-  "sha256": "a3609832a42f76fc252d1bd66da918f9d5e174193c684ec93a5a275c7b755665"
+  "size": 4050,
+  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -26841,8 +26791,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-mashup-melty.md",
-  "size": 11305,
-  "sha256": "44065532cf79b2683b1f0defef5892c3feb5089f41d54b89cfbd54ac86454923"
+  "size": 11322,
+  "sha256": "123472b1d5622c5c62c0db7e024ece6a26e29bd6ebf63f000faa6536fb227f33"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/game-modding-other.md",
@@ -26853,16 +26803,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/security-re.md",
   "size": 2339,
   "sha256": "cfcfc19ea73ba2efb30094e4d436da26f3d8a3ca0be899b95429ca505961bce0"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-modding.md",
-  "size": 4051,
-  "sha256": "c2ceae48fea2a5be4f7006fe60abb946e4726f72f5e3622441641b1a59691d9f"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/skyrim-release.md",
-  "size": 1797,
-  "sha256": "673d775715152d145d7c74d015309b252217174f0b10e93ffec1c976f464e9ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
@@ -28137,12 +28077,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 62294,
-  "sha256": "d8ad68b62335bdc25428a5af3cebb2ce6c15d9d41d3c80e691dae18fe6ee4409"
+  "sha256": "bc7ecff44352ee210f4f7936abc92b553c7020b6796650e8e5eb20ff22278959"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1327,
-  "sha256": "32956f0a166f62d37b23dac0e7c3bb1ce8a47394843d7e074f51b90cdf3005a0"
+  "sha256": "5f81155e68738d1b7f6c56f5a7f4388cf29d7f70c04e22caa2a2d2342bd5c364"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28152,7 +28092,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39681,
-  "sha256": "8f0a91a4c374950bcedfa59a1a4768c2bd9f068c28196f67fb67c051044b6263"
+  "sha256": "e3d84f249d2ae4b6701dc90ae4e4eb4cabd1128bcbe3bea9b715ce155fcdb122"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -32221,8 +32161,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 265617,
-  "sha256": "0afae0f966abb2aea47426ef2df98b1a9f0f1a7bafdeb1abfaa4e47dfb36818a"
+  "size": 266197,
+  "sha256": "403ddfd58938c332931f9c77b23db04f89eb77ebd24616babaf857ab9bba279b"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -32312,7 +32252,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 176005,
-  "sha256": "8850c65524b5e3cfd3ebfe2ba32ec239da856a82e5172942a5b478f86d66226d"
+  "sha256": "11a868d7532897a911395f910159ce4a707a5fa7d471532ceb9943ee18197132"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -32341,33 +32281,13 @@
  },
  {
   "path": "PROMPTS/README.md",
-  "size": 578,
-  "sha256": "28d3d810eedfcce926f981c8932697c2944ae90b460c0343e0507341db05a350"
- },
- {
-  "path": "PROMPTS/SKYRIM-MODERNIZATION-MASTER-PROMPT.md",
-  "size": 1170,
-  "sha256": "7fefd27cb3bf44ad2d3e4e32114b9a2ef2be9c55f6fcd48337ce737ec0430982"
- },
- {
-  "path": "PROMPTS/SKYRIM-MODPACK-CONFLICT-SOLVER.md",
-  "size": 1016,
-  "sha256": "74475cb895a0d1fa1035c257259742242cc256bc1e4e8f3cf86213a8a0994416"
- },
- {
-  "path": "PROMPTS/SKYRIM-QUICK-MODERNIZE.md",
-  "size": 748,
-  "sha256": "2ca6df7cf264d05d153537cf1efc8aeadc115c73e835d0ab6b0bf3dc1bddc3f2"
+  "size": 608,
+  "sha256": "10217f0e482db012420f1610dab164ac8f6dec0a8e8459aac9e494283ecd5c2e"
  },
  {
   "path": "PROMPTS/START-AND-RESUME.md",
   "size": 4696,
   "sha256": "b18fc2c5e210b74e1d5c5aaf1fc250ce774366b88342df075ccbdff985fb7af0"
- },
- {
-  "path": "PROMPTS/ULTIMATE-GENERALIZED-SKYRIM-PROMPTS-v3.md",
-  "size": 24098,
-  "sha256": "8e982a6840a250ddcd01c5f839c05e3b1b83cbc6f4c27084f8f877bb0a865dbe"
  },
  {
   "path": "README-CORE.txt",
@@ -32376,8 +32296,8 @@
  },
  {
   "path": "README.md",
-  "size": 72581,
-  "sha256": "075cfcb9999ac71e67c4120110d19b875338e412736b7ed1c84912eb44ac2f20"
+  "size": 72597,
+  "sha256": "e6d44a4d768e8e9a66357fc357b168b8ae8e22302125991821e03bb3369462e6"
  },
  {
   "path": "SECURITY.md",
@@ -32387,17 +32307,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "f2f94fcc38ecab4bc93e07b3f31d69b8f07be6c3b2da3bcc354d3aec0f6076c6"
+  "sha256": "7e2b95425683755550f5eb9d174cef099d131c2f9f4e5fdefb6db8f648c9f8a6"
  },
  {
   "path": "START-HERE.txt",
   "size": 4012,
-  "sha256": "a3796e4a7b6d13f0b6fd2320f9f76f41bf3280b5ea2a58a90520565d86b57a9e"
+  "sha256": "950f3bab17af7f86773c07220c68881f55f92bbc5c3a72d6712c21192c90760b"
  },
  {
   "path": "STATE.md",
-  "size": 61232,
-  "sha256": "f5f2d483c1f1485ec30e960169114e23435ea3f19272a12e1a01aa2047e47aaa"
+  "size": 61828,
+  "sha256": "ae498d1035ae587a7aa3a5c7e1c94a25dc9ba9edc42dd2ad25022f0b8501e724"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -32821,8 +32741,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 346676,
-  "sha256": "6e6008c5a04b6de456cabbd7f7a86d1f04a67f84f28dd96766ad63b3caf2068a"
+  "size": 346630,
+  "sha256": "e47345572c2f6ba5ea6a11d85bc17e4e0da47c5cf017c2afb6ef26a83cd4ac4c"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -33101,8 +33021,8 @@
  },
  {
   "path": "TOOLS/build_release.py",
-  "size": 14251,
-  "sha256": "ac881177eeb25a7842fcbaa195148a0b87df5edf527343205b2a1a45ffd67abf"
+  "size": 14213,
+  "sha256": "1d7b4119e50324322a430535d9c0902b18ae7137c82740400853d1e06b52bd01"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -33287,7 +33207,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2669,
-  "sha256": "0d1b6a4d81b642ec12bd6e6aca1a2d1c3f7d35e288a706ccc5a5e5bf3f9c2a9f"
+  "sha256": "e6dbb2ecd93f0ba1bcb6ed39db2398317039cf7dbb666e773ffe1a6cc16d349c"
  },
  {
   "path": "VALIDATION.md",
@@ -33297,12 +33217,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "98697af02194c6d1db16bfb74b334c882ba2a3bb9bd605e88271632e94cf4ebb"
- },
- {
-  "path": "WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md",
-  "size": 3718,
-  "sha256": "de7bbb83dfdc98f37a6b71e7461b8cc0fceb582a1970c9895b96817ef8cecf93"
+  "sha256": "5b3a618654e3b7c8f914059438bd70bf063f7873f26d274a44c01a166565f4f7"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -36831,8 +36746,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/SKILL.md",
-  "size": 4094,
-  "sha256": "a3609832a42f76fc252d1bd66da918f9d5e174193c684ec93a5a275c7b755665"
+  "size": 4050,
+  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/ai-models-harness.md",
@@ -36846,8 +36761,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/game-mashup-melty.md",
-  "size": 11305,
-  "sha256": "44065532cf79b2683b1f0defef5892c3feb5089f41d54b89cfbd54ac86454923"
+  "size": 11322,
+  "sha256": "123472b1d5622c5c62c0db7e024ece6a26e29bd6ebf63f000faa6536fb227f33"
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/game-modding-other.md",
@@ -36858,16 +36773,6 @@
   "path": "_CANONICAL-SKILLS/project-intel/references/security-re.md",
   "size": 2339,
   "sha256": "cfcfc19ea73ba2efb30094e4d436da26f3d8a3ca0be899b95429ca505961bce0"
- },
- {
-  "path": "_CANONICAL-SKILLS/project-intel/references/skyrim-modding.md",
-  "size": 4051,
-  "sha256": "c2ceae48fea2a5be4f7006fe60abb946e4726f72f5e3622441641b1a59691d9f"
- },
- {
-  "path": "_CANONICAL-SKILLS/project-intel/references/skyrim-release.md",
-  "size": 1797,
-  "sha256": "673d775715152d145d7c74d015309b252217174f0b10e93ffec1c976f464e9ff"
  },
  {
   "path": "_CANONICAL-SKILLS/public-copy-durability/SKILL.md",
@@ -38628,6 +38533,11 @@
   "path": "docs/history/V8.30.1-CHANGELOG.md",
   "size": 869,
   "sha256": "b9ad269bf96ab2bb52ab1523b75ed9fe183a98dbc5e7f55d060c2932e154149a"
+ },
+ {
+  "path": "docs/history/V8.30.2-CHANGELOG.md",
+  "size": 608,
+  "sha256": "807925f8a3fd13ba87ac7f864e177d408d9f6e6ef51bfdc96afdc0a8537cec1a"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

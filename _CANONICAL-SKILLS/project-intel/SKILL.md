@@ -36,8 +36,7 @@ class.
 
 | Starting / resuming… | Load |
 |---|---|
-| Skyrim SE/AE authoring: frameworks, crashes, conflicts, FOMOD, assets | `references/skyrim-modding.md` |
-| Nexus pages, releases, permissions, archive downloads | `references/skyrim-release.md` |
+| Skyrim SE/AE authoring, crashes, FOMOD, Nexus releases | Skyrim Forge's `skyrim-memory` skill (`references/SETTLED-RESULTS.md`, `RELEASE-RESULTS.md`) |
 | BDO, Helldivers 2, Saints Row, GTA/FiveM, RimWorld, Sims 4, Minecraft, Warframe | `references/game-modding-other.md` |
 | Model choice, harness routing, MCP wiring, agent cost control | `references/ai-models-harness.md` |
 | Game mashups by passthrough, Melty mashups and cross-engine character/asset swaps - only when the task is a mashup or an explicit two-game fusion; an ordinary mod uses its game card - plus UE4SS, ReShade add-ons, pre-UI draw, skeleton retargeting (workflow: `game-mashup-passthrough`) | `references/game-mashup-melty.md` |

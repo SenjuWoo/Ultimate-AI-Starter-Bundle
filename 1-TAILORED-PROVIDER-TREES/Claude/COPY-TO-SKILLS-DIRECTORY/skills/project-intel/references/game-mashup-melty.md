@@ -1,7 +1,7 @@
 # Game mashups by passthrough (and Melty) — settled results
 
 > Scope: mashup and cross-engine fusion work only. An ordinary single-game mod
-> belongs to its game card (`skyrim-modding.md`, `game-modding-other.md`);
+> belongs to its game's evidence (Skyrim Forge's `skyrim-memory`, `game-modding-other.md`);
 > nothing here says to put mods in a Melty folder. The order of work and the
 > guardrails are in the `game-mashup-passthrough` skill; this card holds the
 > technical results behind it. Updated 2026-10-21 with the project's full

@@ -1,5 +1,13 @@
 # Bundle audit state
 
+## Prepared 8.30.2 — Skyrim knowledge moved to Skyrim Forge — 2026-11-04
+
+- SkyrimForge was free (clean, in sync after its 6.9.0 release). Moved: `project-intel` Skyrim cards ->
+  `skyrim-memory/references/SETTLED-RESULTS.md` and `RELEASE-RESULTS.md`; `PROMPTS/SKYRIM-*` and the v3 prompt
+  library -> Forge `docs/prompts/`; `WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md` -> Forge `docs/WHICH-AI-SHOULD-I-USE.md`.
+  Forge 6.9.1: native helpers rebuilt, validator twice with reports and once without, all PASS. The bundle is
+  pushed only after Forge 6.9.1 publishes, so no install sees neither copy.
+
 ## Prepared 8.30.1 — public text stays general — 2026-11-04
 
 - 8.30.0 published at `ed2fa21` (CI 12/12, Release success, Core 45,222,894 B sha256 2307258f..., Full-Offline

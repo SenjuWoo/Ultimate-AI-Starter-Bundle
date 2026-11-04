@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.30.1 -->
+<!-- Ultimate AI Starter Bundle v8.30.2 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.30.1
+# Ultimate AI Starter Bundle v8.30.2
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -950,7 +950,7 @@ START-HERE.txt                     short human guide
 - [Component catalog](BUNDLED-TOOLS/CATALOG.json), [capability profiles](BUNDLED-TOOLS/PROFILES.json) and [tool evaluations](docs/TOOL-EVALUATIONS.md)
 - [Hermes model review](docs/HERMES-MODELS.md) and [native profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md)
 - [LM Studio settings and VRAM budgeting](BUNDLED-TOOLS/lm-studio/README.md)
-- [Skyrim assistant/task selection](WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md), without unsupported provider rankings
+- Skyrim assistant/task selection and prompt packs: [Skyrim Forge docs](https://github.com/SenjuWoo/SkyrimForge/tree/main/docs)
 - [Tool notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) and [skill notices](_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md)
 - [Changelog](CHANGELOG.md), [historical notes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/) and [latest published package](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest)
 

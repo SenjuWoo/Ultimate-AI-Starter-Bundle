@@ -1,6 +1,6 @@
 # PROMPTS
 
-Standalone prompt packs (Skyrim workflows etc.). Not installed automatically.
+Standalone prompts, not installed automatically. Skyrim prompt packs live in Skyrim Forge (`docs/prompts`).
 
 For ordinary work, use the short cross-provider
 [new-chat and usage-limit-resume prompts](START-AND-RESUME.md). Add the actual

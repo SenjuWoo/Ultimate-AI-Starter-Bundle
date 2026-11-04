@@ -1,3 +1,12 @@
+## 8.30.2 (2026-11-04)
+
+- Skyrim knowledge now has one owner. The two Skyrim `project-intel` cards, the four Skyrim prompt packs and
+  `WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md` moved to Skyrim Forge 6.9.1 (`skyrim-memory/references/SETTLED-RESULTS.md`,
+  `RELEASE-RESULTS.md`, `docs/prompts/`, `docs/WHICH-AI-SHOULD-I-USE.md`); `project-intel` and the README route there.
+  The installer's Skyrim bridge (installing the Forge and houseCARL) is unchanged.
+- No model default, preamble or content-permission change; companion releases still follow latest; 78 canonical
+  skills total.
+
 ## 8.30.1 (2026-11-04)
 
 - Public text carried the maintainer's drive root as an example in `tool-discovery`; it now uses a placeholder,
