@@ -549,20 +549,19 @@ def test_hermes_cost_contract() -> None:
         assert re.search(r"(?m)^\s*micro_compact:\s*false\s*$", cfg), path
         assert re.search(r"(?m)^\s*idle_compact_after_seconds:\s*0\s*$", cfg), path
 
-        assert re.search(r"(?m)^\s*transient_retries:\s*1\s*$", cfg), path
+        assert re.search(r"(?m)^\s*transient_retries:\s*2\s*$", cfg), path
         assert re.search(r"(?m)^\s*cost_threshold_usd:\s*0\.01\s*$", cfg), path
-        assert re.search(r"(?ms)^  background_review:\s*\n\s+enabled:\s*false\s*$", cfg), path
-        # Compression follows the main model; there is no pinned summarizer
-        # left to retire, rate-limit or silently swap.
+        assert re.search(r"(?ms)^  background_review:\s*\n\s+enabled:\s*true\s*$", cfg), path
+        # Compression is pinned to the catalog-checked low-cost DeepSeek model.
         aux_start = cfg.index("auxiliary:")
         aux_end = cfg.index("\ndisplay:", aux_start)
         aux = cfg[aux_start:aux_end]
         m = re.search(r"(?ms)^  compression:\n(.*?)(?=^  [a-z_]+:|\Z)", aux)
         assert m, f"{path}: Hermes auxiliary.compression block missing"
         compression = m.group(0)
-        assert "provider: auto" in compression, path
-        assert re.search(r"(?m)^    model: ''\s*$", compression), path
-        assert "timeout: 600" in compression, path
+        assert "provider: openrouter" in compression, path
+        assert re.search(r"(?m)^    model: deepseek/deepseek-v4\.1-flash-1017\s*$", compression), path
+        assert "timeout: 120" in compression, path
 
         assert re.search(r"(?m)^\s*cache_ttl:\s*1h\s*$", cfg), path
         assert "response_cache: false" in cfg, path
@@ -1277,12 +1276,11 @@ def _yaml_list_of_models(text: str, key: str) -> list:
     return re.findall(r"^\s*model:\s*(\S+)\s*$", m.group(1), re.M)
 
 
-def test_hermes_starter_aux_models_follow_the_main_model() -> None:
-    """Auxiliary tasks must not pin a dated model id.
+def test_hermes_starter_uses_low_cost_model_pair() -> None:
+    """Aux/delegation/MoA use DeepSeek V4.1 Flash + Particle-1.
 
-    The old free chain went text-only, then quota-limited, then retired, and
-    every failure was silent. `provider: auto` plus an empty model follows the
-    main model, which accepts images on the shipped default.
+    This pin is deliberate and catalog-checked in docs/HERMES-MODELS.md. It
+    must stay one cheap pair, not a retired free chain or a premium preset.
     """
     text = HERMES_STARTER.read_text(encoding="utf-8")
     assert _yaml_list_of_models(text, "fallback_providers") == [], (
@@ -1294,27 +1292,55 @@ def test_hermes_starter_aux_models_follow_the_main_model() -> None:
     aux_start = text.index("auxiliary:")
     aux_end = text.index("\ndisplay:", aux_start)
     aux = text[aux_start:aux_end]
-    assert re.search(r"(?m)^  vision:\n    provider: auto\n    model: ''\s*$", aux), (
-        "vision no longer follows the main model")
-    for task in ("compression", "skills_hub", "approval", "mcp", "title_generation", "curator"):
+    assert "provider: auto" not in aux, "an auxiliary task still follows the main model"
+    expected = {
+        "vision": "deepseek/deepseek-v4.1-flash-1017",
+        "compression": "deepseek/deepseek-v4.1-flash-1017",
+        "skills_hub": "particle-ai/particle-1",
+        "approval": "deepseek/deepseek-v4.1-flash-1017",
+        "review": "deepseek/deepseek-v4.1-flash-1017",
+        "mcp": "particle-ai/particle-1",
+        "title_generation": "particle-ai/particle-1",
+        "memory_query_rewrite": "deepseek/deepseek-v4.1-flash-1017",
+        "tts_audio_tags": "deepseek/deepseek-v4.1-flash-1017",
+        "voice_chat": "particle-ai/particle-1",
+        "triage_specifier": "deepseek/deepseek-v4.1-flash-1017",
+        "kanban_decomposer": "deepseek/deepseek-v4.1-flash-1017",
+        "profile_describer": "particle-ai/particle-1",
+        "goal_judge": "deepseek/deepseek-v4.1-flash-1017",
+        "curator": "deepseek/deepseek-v4.1-flash-1017",
+        "monitor": "deepseek/deepseek-v4.1-flash-1017",
+        "background_review": "deepseek/deepseek-v4.1-flash-1017",
+        "moa_reference": "deepseek/deepseek-v4.1-flash-1017",
+        "moa_aggregator": "particle-ai/particle-1",
+    }
+    for task, model in expected.items():
         m = re.search(r"(?ms)^  %s:\n(.*?)(?=^  [a-z_]+:|\Z)" % task, aux)
         assert m, "auxiliary.%s block missing" % task
         block = m.group(1)
-        assert "provider: auto" in block, "auxiliary.%s pins a provider" % task
-        assert re.search(r"(?m)^    model: ''\s*$", block), (
-            "auxiliary.%s pins a model id instead of following the main model" % task)
+        assert "provider: openrouter" in block, "auxiliary.%s lost its OpenRouter route" % task
+        assert re.search(r"(?m)^    model: %s\s*$" % re.escape(model), block), (
+            "auxiliary.%s is not pinned to the low-cost pair" % task)
 
     delegation = re.search(r"(?ms)^delegation:\n(.*?)(?=^[a-z_]+:|\Z)", text).group(1)
-    assert "provider: auto" in delegation and re.search(r"(?m)^  model: ''\s*$", delegation), (
-        "delegation still pins a dated model instead of following the main model")
+    for needle in ("backend: model_map", "name: Fast", "name: execute",
+                   "name: research", "model: particle-ai/particle-1",
+                   "model: deepseek/deepseek-v4.1-flash-1017", "default: execute"):
+        assert needle in delegation, "delegation lost %r" % needle
+    assert "provider: auto" not in delegation, "delegation still follows the main model"
 
     assert re.search(r"(?m)^  default: particle-ai/particle-1$", text), (
         "the starter default moved; update this contract and docs/HERMES-MODELS.md together")
 
     moa = re.search(r"(?ms)^moa:\r?\n(.*?)(?=^[a-z_]+:|\Z)", text)
     assert moa, "the starter lost its MoA block"
+    moa_text = moa.group(1)
+    assert "enabled: true" in moa_text and "default_preset: deepseek_particle" in moa_text, (
+        "the low-cost deepseek_particle MoA preset is not enabled")
+    assert "model: deepseek/deepseek-v4.1-flash-1017" in moa_text
+    assert "model: particle-ai/particle-1" in moa_text
     for retired in ("gpt-5.5", "claude-opus-4.8", "claude-opus-4-8", "deepseek-v4-pro"):
-        assert retired not in moa.group(1), (
+        assert retired not in moa_text, (
             "the starter MoA block pins the retired advisor %r; use the main "
             "deepseek model or a current flash model" % retired)
 
@@ -2926,7 +2952,7 @@ def main() -> int:
         test_canonical_tree_carries_no_maintainer_identity,
         test_doctor_counts_every_skill_root_and_never_interpolates,
         # v8.5.0 -- a cloned Hermes profile drifts and nothing re-converged it.
-        test_hermes_starter_aux_models_follow_the_main_model,
+        test_hermes_starter_uses_low_cost_model_pair,
         test_hermes_starter_carries_no_machine_state,
         test_hermes_profile_prefs_converge_without_clobbering_user_choice,
         test_readme_model_guidance_matches_the_shipped_config,

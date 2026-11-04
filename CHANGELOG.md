@@ -1,3 +1,13 @@
+## 8.30.3 (2026-11-04)
+
+- Hermes aux, delegation and MoA now use one low-cost OpenRouter pair,
+  synced across profiles: DeepSeek V4.1 Flash for vision, compression,
+  approvals, review, curator, triage and research; Particle-1 for skills hub,
+  MCP, titles, voice, Fast / execute delegation and MoA aggregation. The
+  premium MoA default preset is disabled; `deepseek_particle` is the default.
+- Self-style unrestrained/preamble source unchanged; no companion pin changed;
+  78 canonical skills total.
+
 ## 8.30.2 (2026-11-04)
 
 - Skyrim knowledge now has one owner. The two Skyrim `project-intel` cards, the four Skyrim prompt packs and

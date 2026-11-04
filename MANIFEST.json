@@ -18576,8 +18576,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml",
-  "size": 8283,
-  "sha256": "3131a5eb089897bb3a1f11d03bce259a21e7923e7f049ef43a13d7cc3cc4f73d"
+  "size": 11694,
+  "sha256": "53a510b718bf10ed19d4edb114941868d8cd46df62f6bdbb9f4d39babc9122d7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
@@ -23176,8 +23176,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml",
-  "size": 8283,
-  "sha256": "3131a5eb089897bb3a1f11d03bce259a21e7923e7f049ef43a13d7cc3cc4f73d"
+  "size": 11694,
+  "sha256": "53a510b718bf10ed19d4edb114941868d8cd46df62f6bdbb9f4d39babc9122d7"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md",
@@ -28077,12 +28077,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 62294,
-  "sha256": "bc7ecff44352ee210f4f7936abc92b553c7020b6796650e8e5eb20ff22278959"
+  "sha256": "abd21af96224156deb412a8a168501ce836fb1dab2c7caf950ee3752270b220a"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1327,
-  "sha256": "5f81155e68738d1b7f6c56f5a7f4388cf29d7f70c04e22caa2a2d2342bd5c364"
+  "sha256": "b9ce446601342bf3067cd6f1d8743984e190e81ac342314299d667bcf5b55cb3"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28092,7 +28092,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 39681,
-  "sha256": "e3d84f249d2ae4b6701dc90ae4e4eb4cabd1128bcbe3bea9b715ce155fcdb122"
+  "sha256": "90118c7b6b3ddd9a1f0027a46b91c1500f52c4aca115b658a518635a8735229b"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -32161,8 +32161,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 266197,
-  "sha256": "403ddfd58938c332931f9c77b23db04f89eb77ebd24616babaf857ab9bba279b"
+  "size": 266701,
+  "sha256": "3f8bdc01deb11cc38ea752d9b8f0394e3db67001590f2a25964c5540f15fa00a"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -32252,7 +32252,7 @@
  {
   "path": "INSTALL-AIO.ps1",
   "size": 176005,
-  "sha256": "11a868d7532897a911395f910159ce4a707a5fa7d471532ceb9943ee18197132"
+  "sha256": "12060b57bf3020275b237034cb3c52f892721fa8f7ba54fd5584853078af46a2"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -32296,8 +32296,8 @@
  },
  {
   "path": "README.md",
-  "size": 72597,
-  "sha256": "e6d44a4d768e8e9a66357fc357b168b8ae8e22302125991821e03bb3369462e6"
+  "size": 72550,
+  "sha256": "407393fe9632198f5545bac816bee18c6cfabaf1a040686b42c019472382e210"
  },
  {
   "path": "SECURITY.md",
@@ -32307,12 +32307,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1026,
-  "sha256": "7e2b95425683755550f5eb9d174cef099d131c2f9f4e5fdefb6db8f648c9f8a6"
+  "sha256": "3c62e39bf9fefceb65caaddd33634a5d0a45df0fded732e98a74b78e4aa547c7"
  },
  {
   "path": "START-HERE.txt",
   "size": 4012,
-  "sha256": "950f3bab17af7f86773c07220c68881f55f92bbc5c3a72d6712c21192c90760b"
+  "sha256": "c5c2b2d8b7feede32cb4dbaef74b7968ff4fa97b99501c6ad9b4dba64d1ded8e"
  },
  {
   "path": "STATE.md",
@@ -32741,8 +32741,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 346630,
-  "sha256": "e47345572c2f6ba5ea6a11d85bc17e4e0da47c5cf017c2afb6ef26a83cd4ac4c"
+  "size": 348078,
+  "sha256": "a011b111b6ba657d0dd5158246e0bca08d92319d9f7a5e984dd6fb3ce7b022d9"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -33207,7 +33207,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2669,
-  "sha256": "e6dbb2ecd93f0ba1bcb6ed39db2398317039cf7dbb666e773ffe1a6cc16d349c"
+  "sha256": "5061cffc73851ce822dbe2e6362d3b3b1cacb341e87217a38779462218a1e100"
  },
  {
   "path": "VALIDATION.md",
@@ -33217,7 +33217,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "5b3a618654e3b7c8f914059438bd70bf063f7873f26d274a44c01a166565f4f7"
+  "sha256": "ec0b4b2292a299d38c9731d3cf0510332c0a64de0dc19fa20fdd27dcf827a46d"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -37791,8 +37791,8 @@
  },
  {
   "path": "docs/HERMES-MODELS.md",
-  "size": 5211,
-  "sha256": "a69823f34a34a823b250613cba0a4dba1d69445dee57f9abcdd9b2a036520a53"
+  "size": 5754,
+  "sha256": "cefa35cf54b26cdf30e6dabeac74626779188ae13fbd40b0c82d8867c5edbec8"
  },
  {
   "path": "docs/OPERATOR-PROFILES.md",
@@ -38538,6 +38538,11 @@
   "path": "docs/history/V8.30.2-CHANGELOG.md",
   "size": 608,
   "sha256": "807925f8a3fd13ba87ac7f864e177d408d9f6e6ef51bfdc96afdc0a8537cec1a"
+ },
+ {
+  "path": "docs/history/V8.30.3-CHANGELOG.md",
+  "size": 582,
+  "sha256": "112620afdbafbb731720ba06e29591f532938b7c62fd808a8a0385592e79b6fe"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",
