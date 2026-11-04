@@ -98,16 +98,11 @@ Only recommend tools that help the active task. Do not nag about every optional 
 
 ## Game-specific tools are not bundled
 
-Game toolchains (Skyrim Forge and houseCARL, RimWorldForge, RobloxForge,
-SaintsRowForge, AvatarForge, Risk of Rain 2 Forge ...) live in their own repositories and install
-themselves; the bundle only knows how to *activate* an installed one per
-project (`game-*` profiles, parked-server rules). When a game tool is absent,
-say which repository owns it and use the TOOL MISSING template; for Skyrim that
-is `https://github.com/SenjuWoo/SkyrimForge`
-(`Install-AI-Bridge.ps1 -Provider All -WithHouseCarl`). Look for the tool's own
-environment variable first (for example `SKYRIM_FORGE_ROOT`,
-`HOUSECARL_MCP`, `ROBLOX_FORGE_ROOT`, `ROR2_FORGE_ROOT`) and its skill-local `INSTALLATION.json`.
-The Risk of Rain 2 Forge is `https://github.com/SenjuWoo/Risk-Of-Rain-2-Forge` (a CLI: `forge doctor`).
+Game and specialist toolchains live in the owner's forges and install themselves. The registry (repository,
+start command, environment variable) is in `ai-tooling-stack`; the bundle only activates an installed forge per
+project (`game-*` profiles, parked-server rules). Check the forge's own variable first (`SKYRIM_FORGE_ROOT`,
+`HOUSECARL_MCP`, `ROBLOX_FORGE_ROOT`, `ROR2_FORGE_ROOT`), then `UABS_TOOL_ROOTS` and its skill-local
+`INSTALLATION.json`. When it is absent, use the TOOL MISSING template with the owning repository.
 
 ## Environment variables (optional, user-set)
 
@@ -141,7 +136,7 @@ It prints FOUND / MISSING for each general tool and never modifies the system.
 - Install: https://github.com/DeusData/codebase-memory-mcp  
   PowerShell installer from upstream `install.ps1` (optionally `--ui`)
 - Provider wiring: MCP server entry must point at the **exe** with adequate startup timeout (Grok often needs 90s+)
-- Grok repair helper ships in pack: `TOOLS\Fix-Grok-Codebase-Memory-Direct.ps1` (edit paths first)
+- Grok repair helper ships in pack: `TOOLS\Fix-Grok-Codebase-Memory-Direct.ps1` (resolves the exe itself; `-ExePath` overrides)
 - Fallback: ripgrep / codebase explore without graph
 
 ### Headroom

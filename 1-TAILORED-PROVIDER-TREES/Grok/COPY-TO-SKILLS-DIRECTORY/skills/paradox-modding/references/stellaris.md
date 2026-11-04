@@ -13,4 +13,4 @@ Primary source:
 
 - https://stellaris.paradoxwikis.com/Modding
 
-Load `paradox-clausewitz-jomini-modding` first.
+Read `references/OVERVIEW.md` first.

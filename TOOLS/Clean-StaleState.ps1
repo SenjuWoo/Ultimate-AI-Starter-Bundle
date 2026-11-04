@@ -181,6 +181,12 @@ if (-not $SkipSkills -and $retired.Count) {
         [void]$script:Reported.Add("$provider/$name has no SKILL.md - not recognizably ours, left alone")
         continue
       }
+      # A forge reinstalls some retired names itself (RobloxForge stamps .rbforge-version); that copy is its, not ours.
+      $stamp = @(Get-ChildItem -LiteralPath $target -File -Force -Filter '.*-version' -ErrorAction SilentlyContinue | Select-Object -First 1)
+      if ($stamp.Count) {
+        [void]$script:Reported.Add("$provider/$name carries an owner stamp ($($stamp[0].Name)) - another tool's copy, left alone")
+        continue
+      }
       $successor = if ($entry.superseded_by) { "superseded by $($entry.superseded_by)" } else { 'retired, no successor' }
       Add-CleanTarget -Kind "skill/$provider" -Path $target -Why $successor
     }

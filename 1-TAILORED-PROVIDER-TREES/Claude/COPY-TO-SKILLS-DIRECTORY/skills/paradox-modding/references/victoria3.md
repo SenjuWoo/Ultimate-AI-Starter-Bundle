@@ -11,4 +11,4 @@ Primary source:
 
 - https://vic3.paradoxwikis.com/Modding
 
-Load `paradox-clausewitz-jomini-modding` first.
+Read `references/OVERVIEW.md` first.

@@ -2,11 +2,39 @@
   "schema": 1,
   "generated_by": "TOOLS/generate_retired_skills.py",
   "why": "Skills this pack used to ship and no longer does, plus skills it ABSORBED that were never shipped from here. The installer copies the canonical tree in but never removed what left it, so a machine installed against an older version kept loading the superseded skill next to its replacement -- two skills claiming the same domain, the retired one documenting the older dialect.",
-  "current_skill_count": 130,
+  "current_skill_count": 78,
   "retired": [
+    {
+      "name": "adversarial-self-review",
+      "superseded_by": "reasoning-discipline"
+    },
+    {
+      "name": "ambiguity-resolution",
+      "superseded_by": "reasoning-discipline"
+    },
+    {
+      "name": "api-compatibility",
+      "superseded_by": "reliability-engineering"
+    },
     {
       "name": "arma3-modding",
       "superseded_by": "game-modding"
+    },
+    {
+      "name": "artifact-proof",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "artifact-provenance",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "assumption-audit",
+      "superseded_by": "reasoning-discipline"
+    },
+    {
+      "name": "automation-first",
+      "superseded_by": "reasoning-discipline"
     },
     {
       "name": "baldurs-gate3-modding",
@@ -33,12 +61,48 @@
       "superseded_by": "paradox-modding"
     },
     {
+      "name": "compatibility-matrix",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "concurrency-safety",
+      "superseded_by": "reliability-engineering"
+    },
+    {
+      "name": "condition-based-waiting",
+      "superseded_by": "reliability-engineering"
+    },
+    {
+      "name": "config-preservation",
+      "superseded_by": "reliability-engineering"
+    },
+    {
+      "name": "context-compaction-fidelity",
+      "superseded_by": "token-efficiency"
+    },
+    {
+      "name": "contradiction-detection",
+      "superseded_by": "reasoning-discipline"
+    },
+    {
       "name": "cyberpunk2077-modding",
       "superseded_by": "game-modding"
     },
     {
+      "name": "data-integrity",
+      "superseded_by": "reliability-engineering"
+    },
+    {
       "name": "dayz-modding",
       "superseded_by": "game-modding"
+    },
+    {
+      "name": "dependency-capability-check",
+      "superseded_by": "reasoning-discipline"
+    },
+    {
+      "name": "deterministic-selection",
+      "superseded_by": "reliability-engineering"
     },
     {
       "name": "divinity-original-sin2-modding",
@@ -53,16 +117,48 @@
       "superseded_by": "unity-mod-frameworks"
     },
     {
+      "name": "edge-case-matrix",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "environment-parity",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "error-taxonomy",
+      "superseded_by": "reliability-engineering"
+    },
+    {
       "name": "eu4-modding",
       "superseded_by": "paradox-modding"
+    },
+    {
+      "name": "evidence-calibration",
+      "superseded_by": "reasoning-discipline"
     },
     {
       "name": "factorio-modding",
       "superseded_by": "game-modding"
     },
     {
+      "name": "failure-injection-testing",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "failure-recovery-loop",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "fallback-degradation",
+      "superseded_by": "reliability-engineering"
+    },
+    {
       "name": "fallout4-modding",
       "superseded_by": "bethesda-creation-modding"
+    },
+    {
+      "name": "fresh-install-proof",
+      "superseded_by": "verification-discipline"
     },
     {
       "name": "game-mod-assets",
@@ -137,6 +233,10 @@
       "superseded_by": "paradox-modding"
     },
     {
+      "name": "invariant-driven-design",
+      "superseded_by": "reliability-engineering"
+    },
+    {
       "name": "kerbal-space-program-modding",
       "superseded_by": "unity-mod-frameworks"
     },
@@ -149,56 +249,68 @@
       "superseded_by": "mcp-server-diagnostics"
     },
     {
+      "name": "migration-rollback",
+      "superseded_by": "reliability-engineering"
+    },
+    {
       "name": "minecraft-content-datagen-worldgen",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-data-components-attachments",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-fabric-quilt-modding",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-forge-neoforge-modding",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-java-game-modding",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-java-modding",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-library-api-integrations",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-mixins-access-control",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
+    },
+    {
+      "name": "minecraft-modding",
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-modpack-scripting",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-multiloader-architectury",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-networking-persistence",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-rendering-animation",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "minecraft-testing-porting-release",
-      "superseded_by": "minecraft-modding"
+      "superseded_by": "ai-tooling-stack"
+    },
+    {
+      "name": "minimal-reproducer",
+      "superseded_by": "verification-discipline"
     },
     {
       "name": "no-mans-sky-modding",
@@ -207,6 +319,10 @@
     {
       "name": "noita-modding",
       "superseded_by": "game-modding"
+    },
+    {
+      "name": "numerical-sanity-check",
+      "superseded_by": "verification-discipline"
     },
     {
       "name": "oxygen-not-included-modding",
@@ -221,28 +337,104 @@
       "superseded_by": "paradox-modding"
     },
     {
+      "name": "partial-success-accounting",
+      "superseded_by": "reliability-engineering"
+    },
+    {
+      "name": "path-portability",
+      "superseded_by": "reliability-engineering"
+    },
+    {
+      "name": "performance-evidence",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "process-lifecycle-cleanup",
+      "superseded_by": "reliability-engineering"
+    },
+    {
       "name": "project-zomboid-modding",
       "superseded_by": "game-modding"
+    },
+    {
+      "name": "prompt-cache-discipline",
+      "superseded_by": "token-efficiency"
+    },
+    {
+      "name": "real-boundary-testing",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "reasoning-economy",
+      "superseded_by": "token-efficiency"
+    },
+    {
+      "name": "regression-sweep",
+      "superseded_by": "verification-discipline"
     },
     {
       "name": "repo-release-sweep",
       "superseded_by": "release-checklist"
     },
     {
+      "name": "reproducible-builds",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "requirements-traceability",
+      "superseded_by": "reasoning-discipline"
+    },
+    {
+      "name": "resource-budgeting",
+      "superseded_by": "token-efficiency"
+    },
+    {
+      "name": "retry-idempotency",
+      "superseded_by": "reliability-engineering"
+    },
+    {
       "name": "rimworld-harmony-modding",
-      "superseded_by": "unity-mod-frameworks"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "risk-of-rain2-modding",
-      "superseded_by": "unity-mod-frameworks"
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "roblox-docs",
-      "superseded_by": "roblox-game-development"
+      "superseded_by": "ai-tooling-stack"
+    },
+    {
+      "name": "roblox-game-development",
+      "superseded_by": "ai-tooling-stack"
+    },
+    {
+      "name": "saints-row-modding",
+      "superseded_by": "ai-tooling-stack"
     },
     {
       "name": "satisfactory-sml-modding",
       "superseded_by": "unreal-mod-frameworks"
+    },
+    {
+      "name": "schema-evolution",
+      "superseded_by": "reliability-engineering"
+    },
+    {
+      "name": "secret-hygiene",
+      "superseded_by": "reliability-engineering"
+    },
+    {
+      "name": "security-boundaries",
+      "superseded_by": "reliability-engineering"
+    },
+    {
+      "name": "shell-boundary-safety",
+      "superseded_by": "reliability-engineering"
+    },
+    {
+      "name": "side-effect-safety",
+      "superseded_by": "reliability-engineering"
     },
     {
       "name": "skyrim-archive",
@@ -281,6 +473,10 @@
       "superseded_by": "game-modding"
     },
     {
+      "name": "source-of-truth",
+      "superseded_by": "reasoning-discipline"
+    },
+    {
       "name": "space-engineers-modding",
       "superseded_by": "game-modding"
     },
@@ -290,7 +486,7 @@
     },
     {
       "name": "stardew-valley-modding",
-      "superseded_by": "unity-mod-frameworks"
+      "superseded_by": "game-modding"
     },
     {
       "name": "starfield-modding",
@@ -305,8 +501,20 @@
       "superseded_by": "unity-mod-frameworks"
     },
     {
+      "name": "supply-chain-verification",
+      "superseded_by": "reliability-engineering"
+    },
+    {
       "name": "terraria-tmodloader-modding",
       "superseded_by": "game-modding"
+    },
+    {
+      "name": "test-oracle-quality",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "transactional-updates",
+      "superseded_by": "reliability-engineering"
     },
     {
       "name": "unity-bepinex-harmony",
@@ -317,8 +525,20 @@
       "superseded_by": "unreal-mod-frameworks"
     },
     {
+      "name": "upgrade-path-testing",
+      "superseded_by": "verification-discipline"
+    },
+    {
+      "name": "user-intent-lock",
+      "superseded_by": "reasoning-discipline"
+    },
+    {
       "name": "valheim-jotunn-modding",
       "superseded_by": "unity-mod-frameworks"
+    },
+    {
+      "name": "version-sync",
+      "superseded_by": "verification-discipline"
     },
     {
       "name": "victoria3-modding",

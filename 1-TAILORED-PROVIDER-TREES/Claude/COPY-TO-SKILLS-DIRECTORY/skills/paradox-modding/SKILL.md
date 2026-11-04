@@ -6,7 +6,7 @@ description: Paradox grand strategy mods - Stellaris, Crusader Kings III, Hearts
 # Paradox Clausewitz / Jomini mod development
 
 Read `game-modding` -> `references/MODDING-LAWS.md` before the first write:
-version snapshot, evidence ladder, and the never-invent rules apply here too.
+ownership and versioning, evidence ladder, and the never-invent rules apply here too.
 
 Start with `references/OVERVIEW.md` for the shared toolchain, then the
 specific reference below.

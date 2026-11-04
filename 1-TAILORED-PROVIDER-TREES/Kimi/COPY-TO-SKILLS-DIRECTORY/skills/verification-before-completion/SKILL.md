@@ -52,7 +52,7 @@ Skip any step = lying, not verifying
 | Fact is current | The source that settled it, named | "I recall that…" |
 
 Appearance is owned by `visual-verification`, runtime artifacts by
-`artifact-proof`, process cleanup by `process-lifecycle-cleanup`, and current
+`verification-discipline` (artifact proof), process cleanup by `reliability-engineering` (process lifecycle), and current
 external facts by `research-verification`. This skill owns only the gate: fresh
 evidence exists for the claim about to be made.
 

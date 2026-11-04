@@ -6,7 +6,7 @@
 | Fallout 4 | plugins, Papyrus, F4SE, CommonLibF4 |
 | Starfield | plugins, Papyrus, SFSE, CommonLibSF |
 | Cyberpunk 2077 | redscript, RED4ext, ArchiveXL, TweakXL, Codeware, CET, REDmod |
-| Risk of Rain 2 | BepInEx, R2API, Harmony/MonoMod |
+| Risk of Rain 2 | RoR2 BepInExPack, modular R2API, MonoMod HookGen (`On.`/`IL.`); Forge CLI |
 | Palworld | UE4SS, SDKs, PalSchema, cooked assets |
 | RimWorld | XML, Verse, Harmony, frameworks, saves |
 | Paradox family | Clausewitz/Jomini script, descriptors, events, UI, localisation |

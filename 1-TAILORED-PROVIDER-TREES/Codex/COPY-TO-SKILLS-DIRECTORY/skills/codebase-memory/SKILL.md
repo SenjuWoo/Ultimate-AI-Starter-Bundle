@@ -401,7 +401,7 @@ startup_timeout_sec = 90
 tool_timeout_sec = 6000
 ```
 
-Pack helper (edit paths first): `TOOLS/Fix-Grok-Codebase-Memory-Direct.ps1`
+Pack helper: `TOOLS/Fix-Grok-Codebase-Memory-Direct.ps1` (finds the exe from `CODEBASE_MEMORY_MCP` or the default install; `-ExePath` overrides)
 
 ### If MCP tools are missing
 

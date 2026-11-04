@@ -34,6 +34,10 @@ TOOLS = [
     ("cargo", "Rust/Cargo (Bevy)", ("cargo",), "https://rustup.rs/"),
     ("love", "LOVE 11 (2D Lua)", ("love", "lovec"), "https://love2d.org/"),
     ("git", "Git", ("git",), "https://git-scm.com/downloads"),
+    ("lmms", "LMMS (music)", ("lmms",), "https://lmms.io/download"),
+    ("musescore", "MuseScore (scores/music)", ("mscore", "musescore", "MuseScore4"), "https://musescore.org/en/download"),
+    ("audacity", "Audacity (audio edit)", ("audacity",), "https://www.audacityteam.org/download/"),
+    ("fluidsynth", "FluidSynth (MIDI to audio)", ("fluidsynth",), "https://github.com/FluidSynth/fluidsynth/releases"),
 ]
 
 # Extra Windows locations, keyed by tool id. A shared list credited the first
@@ -56,6 +60,15 @@ WIN_GLOBS = {
     ],
     "inkscape": [
         (r"%PROGRAMFILES%\Inkscape", "inkscape.exe"),
+    ],
+    "lmms": [
+        (r"%PROGRAMFILES%\LMMS", "lmms.exe"),
+    ],
+    "musescore": [
+        (r"%PROGRAMFILES%\MuseScore 4", "MuseScore4.exe"),
+    ],
+    "audacity": [
+        (r"%PROGRAMFILES%\Audacity", "audacity.exe"),
     ],
 }
 

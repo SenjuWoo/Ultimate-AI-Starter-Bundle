@@ -47,9 +47,9 @@ def generate(root: Path) -> str:
     owners = {"Wait-External.ps1": "ci-convergence", "Clean-MergedBranches.ps1": "ci-convergence",
               "Set-GitHubProtection.ps1": "github-fleet-maintenance",
               "build_release.py": "release-checklist", "Build-Release.ps1": "release-checklist",
-              "Update-MemoryIndex.ps1": "source-of-truth", "update_memory_index.py": "source-of-truth",
-              "verify_docs.py": "check-work", "verify_manifest.py": "artifact-proof",
-              "verify_product.py": "artifact-proof"}
+              "Update-MemoryIndex.ps1": "reasoning-discipline", "update_memory_index.py": "reasoning-discipline",
+              "verify_docs.py": "check-work", "verify_manifest.py": "verification-discipline",
+              "verify_product.py": "verification-discipline"}
     for path in sorted((root / "TOOLS").iterdir()):
         if not path.is_file() or path.suffix.lower() not in {".py", ".ps1", ".bat", ".cmd", ".psm1"}:
             continue

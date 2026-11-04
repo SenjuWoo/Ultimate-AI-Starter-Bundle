@@ -8,7 +8,7 @@
       "profiles": [],
       "skills": [
         "tool-discovery",
-        "artifact-provenance",
+        "verification-discipline",
         "check-work"
       ],
       "cli": [],
@@ -45,8 +45,7 @@
       "profiles": [],
       "skills": [
         "systematic-debugging",
-        "minimal-reproducer",
-        "regression-sweep",
+        "verification-discipline",
         "check-work"
       ],
       "cli": [],
@@ -91,7 +90,7 @@
         "coding-discipline",
         "img2threejs",
         "visual-verification",
-        "performance-evidence",
+        "verification-discipline",
         "observability-first",
         "check-work"
       ],
@@ -118,7 +117,7 @@
         "coding-discipline",
         "universal-modder",
         "visual-verification",
-        "performance-evidence",
+        "verification-discipline",
         "observability-first",
         "check-work"
       ],
@@ -144,7 +143,7 @@
         "coding-discipline",
         "universal-modder",
         "visual-verification",
-        "performance-evidence",
+        "verification-discipline",
         "observability-first",
         "check-work"
       ],
@@ -191,7 +190,7 @@
         "game-roblox"
       ],
       "skills": [
-        "roblox-game-development",
+        "ai-tooling-stack",
         "universal-modder",
         "visual-verification",
         "observability-first",
@@ -329,7 +328,7 @@
         "game-saints-row"
       ],
       "skills": [
-        "saints-row-modding",
+        "ai-tooling-stack",
         "universal-modder",
         "game-modding",
         "observability-first",
@@ -355,7 +354,7 @@
       ],
       "skills": [
         "universal-modder",
-        "artifact-provenance",
+        "verification-discipline",
         "visual-verification",
         "check-work"
       ],
@@ -375,7 +374,7 @@
       "when": "Prepare a presentable repository, game/app release or mod publication",
       "profiles": [],
       "skills": [
-        "artifact-provenance",
+        "verification-discipline",
         "public-copy-durability",
         "github-fleet-maintenance",
         "release-checklist"
@@ -395,7 +394,7 @@
       "profiles": [],
       "skills": [
         "research-verification",
-        "api-compatibility",
+        "reliability-engineering",
         "capability-routing"
       ],
       "cli": [],
@@ -413,7 +412,7 @@
       "profiles": [],
       "skills": [
         "local-model-ops",
-        "resource-budgeting",
+        "token-efficiency",
         "mcp-server-diagnostics"
       ],
       "cli": [],
@@ -433,7 +432,7 @@
       ],
       "skills": [
         "tool-discovery",
-        "side-effect-safety",
+        "reliability-engineering",
         "visual-verification"
       ],
       "cli": [],

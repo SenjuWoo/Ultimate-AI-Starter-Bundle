@@ -104,7 +104,7 @@ not re-litigated every time someone browses it:
 - **`claude-security`** — `disable-model-invocation: true`, and it orchestrates
   Claude Code agent panels, so it is inert on the other four providers. The pack
   already carries `security-boundaries`, `secret-hygiene` and
-  `supply-chain-verification`.
+  `supply-chain-verification` (now references of `reliability-engineering`).
 - **`claude-md-management/claude-md-improver`** — would audit and rewrite the
   same `CLAUDE.md` this pack's own preamble wiring owns. Two writers, one file.
 - **`plugin-dev/*`** (7 skills) — Claude Code plugin format: structure,

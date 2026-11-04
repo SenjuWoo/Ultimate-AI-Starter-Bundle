@@ -18,7 +18,7 @@ def test_probe_lists_free_choices_and_never_counts_windows_convert() -> None:
     )
     rows = json.loads(out.stdout)
     by_id = {row["id"]: row for row in rows}
-    assert len(rows) == 16
+    assert len(rows) == 20
     for required in ("godot", "blender", "material-maker", "pixelorama", "ffmpeg", "python"):
         assert required in by_id
     # Windows' built-in C:\WINDOWS\system32\convert.exe is not ImageMagick.

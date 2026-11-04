@@ -1,6 +1,6 @@
 ---
 name: game-dev-starter
-description: Use when starting a new game or app from scratch, choosing a free/open-source stack, generating procedural assets, or setting up a runnable prototype and a real headless test harness. Covers Godot, Three.js, Phaser, Pygame, LOVE, Tauri, FastAPI, Blender, Material Maker, Pixelorama and CC0 asset libraries; no paid API or key is required.
+description: Use when starting a new game or app, or making assets yourself for free - 3D models, textures, images, music, sound, voice - with Godot, Three.js, Blender, local open-weight AI models and CC0 libraries, plus a real headless test harness. No paid API or key.
 ---
 
 # Game and app starter
@@ -36,7 +36,8 @@ options in one line, and start.
 
 ## Procedural asset generators
 
-All of these are free/open-source or CC0 at the source:
+All of these are free/open-source or CC0 at the source. For local AI generation (images, image-to-3D, music,
+voice) with verified code and weight licenses, read `references/free-creative-tools.md`.
 
 | Need | Tool / route | Output |
 |---|---|---|
@@ -54,7 +55,7 @@ All of these are free/open-source or CC0 at the source:
 | UI mockups and design handoff | **Penpot** | design file, SVG |
 | Fonts | **Google Fonts** (OFL/Apache) | TTF/WOFF2 |
 | Image-to-3D base mesh | the bundled **`img2threejs`** skill | Three.js factory or GLB |
-| Generative sketches and textures | the bundled **`p5js`** skill | canvas/PNG |
+| Generative sketches and textures | p5.js or a seeded canvas/NumPy script | canvas/PNG |
 | Free finished assets | **Kenney**, **Poly Haven**, **ambientCG**, **Quaternius** | CC0 models, textures, audio, UI |
 
 Keep the generator source. A `.blend`, `.pixelorama`, `.kra` or `.jsx` source is
@@ -119,7 +120,7 @@ broken. Pick the smallest real harness:
 
 The harness must exercise the same exported build the player runs, not only a
 dev server. Record the exact command and the expected result in `STATE.md`.
-Use the bundled `dogfood` and `visual-verification` skills for exploratory UI
+Use `visual-verification` (and the host's browser tools) for exploratory UI
 checks; do not replace a real build/run with a screenshot of a mockup.
 
 ## First-slice workflow
@@ -139,13 +140,11 @@ checks; do not replace a real build/run with a screenshot of a mockup.
 
 - `img2threejs` — image/reference to a procedural Three.js asset with a
   render-and-compare harness.
-- `p5js` — generative sketches, shaders and interactive canvases.
 - `game-modding` — changing an existing game; use its engine references.
 - `capability-profiles` — select only the MCPs/tools the current task needs.
-- `dogfood` — exploratory browser QA with evidence.
 - `visual-verification` — inspect real rendered pixels, not assumptions.
 - `workspace-organization` — one owner folder, versions, `STATE.md`, recovery.
-- `release-checklist` / `artifact-proof` — package and verify the build.
+- `release-checklist` / `verification-discipline` (artifact proof) — package and verify the build.
 
 ## Free-tool discovery
 

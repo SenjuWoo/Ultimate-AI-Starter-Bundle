@@ -1,12 +1,12 @@
 ---
 name: bethesda-creation-modding
-description: Fallout 4 and Starfield mods - plugins, Papyrus, F4SE/SFSE and CommonLib, assets, and packaging. For Skyrim use the skyrim-* skills; this covers the other Creation Engine titles.
+description: Fallout 4 and Starfield mods - plugins, Papyrus, F4SE/SFSE and CommonLib, assets, and packaging. Skyrim belongs to Skyrim Forge (forge registry in ai-tooling-stack); this covers the other Creation Engine titles.
 ---
 
 # Fallout 4 and Starfield mod development
 
 Read `game-modding` -> `references/MODDING-LAWS.md` before the first write:
-version snapshot, evidence ladder, and the never-invent rules apply here too.
+ownership and versioning, evidence ladder, and the never-invent rules apply here too.
 
 | Target | Reference |
 |---|---|

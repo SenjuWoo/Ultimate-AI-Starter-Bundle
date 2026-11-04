@@ -108,4 +108,5 @@ Each line: workflow -> tried -> result -> cause -> what worked -> evidence -> re
 - **Git Bash `python` on this Windows PC** -> instructions said Python is on PATH
   -> it resolved to the Microsoft Store stub ("Python was not found") while real
   Python was installed -> call `py -3` or the full interpreter path; the durable
-  fix is the owner's: turn off the Store app-execution alias or reorder PATH.
+  fix is the owner's: turn off the Store app-execution alias or reorder PATH. Rechecked 2026-11-03: the
+  installer now sets `UABS_PYTHON` and `python` resolves to the shared runtime; prefer `UABS_PYTHON`.

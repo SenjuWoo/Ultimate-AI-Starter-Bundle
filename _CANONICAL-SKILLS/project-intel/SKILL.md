@@ -41,7 +41,7 @@ class.
 | BDO, Helldivers 2, Saints Row, GTA/FiveM, RimWorld, Sims 4, Minecraft, Warframe | `references/game-modding-other.md` |
 | Model choice, harness routing, MCP wiring, agent cost control | `references/ai-models-harness.md` |
 | Game mashups by passthrough, Melty mashups and cross-engine character/asset swaps - only when the task is a mashup or an explicit two-game fusion; an ordinary mod uses its game card - plus UE4SS, ReShade add-ons, pre-UI draw, skeleton retargeting (workflow: `game-mashup-passthrough`) | `references/game-mashup-melty.md` |
-| Risk of Rain 2 survivors, items, BepInEx plugins, Thunderstore packages | `references/ror2-modding.md` |
+| A game with an owner forge (Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row) | that forge's own docs and skill (registry: `ai-tooling-stack`) |
 | Native Windows apps, browser extensions, installers, packaging | `references/apps-native-windows.md` |
 | Reverse engineering, cracking, exploits, malware false positives | `references/security-re.md` |
 

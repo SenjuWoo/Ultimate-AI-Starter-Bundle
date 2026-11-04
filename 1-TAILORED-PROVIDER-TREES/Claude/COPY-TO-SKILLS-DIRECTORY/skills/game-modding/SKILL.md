@@ -1,13 +1,13 @@
 ---
 name: game-modding
-description: Modding any game other than Skyrim - Cyberpunk 2077, Baldur's Gate 3, Factorio, Terraria, Arma 3, DayZ, Project Zomboid, Garry's Mod, No Man's Sky, Witcher 3, Bannerlord, Space Engineers, and 20 more, plus the cross-game workflow, packaging, crash, and release rules.
+description: Modding games without an owner forge - Cyberpunk 2077, Baldur's Gate 3, Factorio, Terraria, Arma 3, DayZ, Project Zomboid, Garry's Mod, No Man's Sky, Witcher 3, Bannerlord, Space Engineers, and 20 more, plus the cross-game workflow, packaging, crash, and release rules.
 ---
 
 # Modding any game other than Skyrim
 
 Read `references/MODDING-LAWS.md` before the first write. It is not optional:
-it carries the version-snapshot workflow, the evidence ladder, and the
-never-invent rules that every game below depends on.
+it carries ownership and versioning (Git tags, or snapshot folders for snapshot
+projects), the evidence ladder, and the never-invent rules that every game below depends on.
 
 For a new or messy project, read `mod-workspace-organization` before the first
 write. Run `TOOLS/workspace_doctor.py <root>` before reorganizing anything; a
@@ -42,13 +42,11 @@ the three-agent split and the post-mortem encyclopedia sync.
 
 | Game family | Skill |
 |---|---|
-| Minecraft Java | `minecraft-modding` |
 | Paradox grand strategy | `paradox-modding` |
 | Unity / BepInEx / Harmony | `unity-mod-frameworks` |
 | Unreal Engine / UE4SS | `unreal-mod-frameworks` |
 | Fallout 4, Starfield | `bethesda-creation-modding` |
-| Roblox | `roblox-game-development` |
-| Saints Row 3/4 | `saints-row-modding` |
+| Has an owner forge (Skyrim, Risk of Rain 2, Roblox, Minecraft NeoForge, RimWorld, Saints Row 3/4, VRChat avatars) | the forge registry in `ai-tooling-stack`; use the forge's own skill and CLI |
 
 ## Games covered here
 
@@ -73,6 +71,7 @@ the three-agent split and the post-mortem encyclopedia sync.
 | Space Engineers | `references/space-engineers.md` |
 | Mount & Blade II: Bannerlord | `references/bannerlord.md` |
 | No Man's Sky | `references/no-mans-sky.md` |
+| Stardew Valley (SMAPI) | `references/stardew-valley.md` |
 
 If the game is not listed, read `references/game-mod-unknown-game-fallback.md`
 and do not guess an API.

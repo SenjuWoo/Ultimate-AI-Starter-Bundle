@@ -71,7 +71,7 @@ README, and do not open a full browser when a render-to-file settles it.
 |---|---|
 | web page / app | the provider's own browser capability, else Playwright (CLI or MCP), screenshot to file |
 | console errors, failed requests, computed layout | Chrome DevTools MCP - `web` profile |
-| desktop app / EXE | launch it, screenshot the window, then close it and check it actually exited (`process-lifecycle-cleanup`) |
+| desktop app / EXE | launch it, screenshot the window, then close it and check it actually exited (`reliability-engineering`, process lifecycle) |
 | Blender / Godot / Unity | render or capture through that engine's own capability - `engine-*` profiles |
 | generated image or asset | open the file |
 

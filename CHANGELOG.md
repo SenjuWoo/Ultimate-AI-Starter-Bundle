@@ -1,3 +1,28 @@
+## 8.30.0 (2026-11-04)
+
+- **Bundle is the general foundation; forges own their games.** Retired `roblox-game-development`,
+  `saints-row-modding` and `minecraft-modding`, and the Risk of Rain 2 and RimWorld references: RobloxForge,
+  SaintsRowForge, Minecraft-Forge, Risk-Of-Rain-2-Forge and RimWorldForge ship richer copies. `ai-tooling-stack`
+  now carries one forge registry (repository, start command, environment variable); `tool-discovery`,
+  `game-modding`, `unity-mod-frameworks` and `project-intel` route to it. Retirement removes only copies whose
+  digest matches this pack's ledger, so a forge's own copy of the same name stays.
+- **Skill index cut from 127 to 78 entries.** 52 one-page discipline skills became reference files under
+  `reliability-engineering`, `verification-discipline`, `reasoning-discipline` and `token-efficiency`; each old
+  trigger line is a row in the router, each body is kept verbatim. Codex and Claude split a fixed index budget
+  across entries, so the remaining descriptions get more room. Old names are retired with successors.
+- **Free creative tools:** `game-dev-starter/references/free-creative-tools.md` maps 3D, textures, images,
+  music, sound and voice to free tools and local open-weight models, with code and weight licenses checked
+  2026-11-03 (non-commercial and gated weights flagged). `TOOLS/free_game_tools.py` also probes LMMS, MuseScore,
+  Audacity and FluidSynth.
+- **Wrong guidance fixed:** 16 game references carried a copied block telling the agent to copy every project
+  into a new snapshot folder, contradicting `MODDING-LAWS.md` (Git projects use tags); replaced by a pointer.
+  Paradox references named a retired skill. Starfield/Fallout 4 pointed at an archived CommonLibSF and an
+  unmaintained CommonLibF4 (now `libxse`). No Man's Sky mods live in `GAMEDATA\MODS` since 5.5. Stardew Valley
+  (MonoGame/SMAPI) moved out of the Unity skill. `game-dev-starter` named two skills the bundle does not ship.
+  Two skills said the Grok codebase-memory helper needs path edits; it resolves the exe itself.
+- No model default, preamble or content-permission change; unrestrained and NSFW material untouched. Companion
+  releases still follow latest; 78 canonical skills total.
+
 ## 8.29.16 (2026-11-03)
 
 - Risk of Rain 2 survivors now get a preflight before the first line of C#

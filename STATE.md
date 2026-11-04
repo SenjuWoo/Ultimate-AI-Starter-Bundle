@@ -1,5 +1,24 @@
 # Bundle audit state
 
+## Prepared 8.30.0 — general foundation, forge registry, smaller index — 2026-11-04
+
+- Owner direction (2026-11-04): the bundle is the general foundation and guide; specialist game content lives in
+  the owner's forges; free procedural/creative tooling; no false guidance; unrestrained/NSFW untouched.
+- Done: retired `roblox-game-development`, `saints-row-modding`, `minecraft-modding` and the RoR2/RimWorld
+  references (forges ship them); forge registry in `ai-tooling-stack`; 52 one-page discipline skills folded into
+  `reliability-engineering`, `verification-discipline`, `reasoning-discipline`, `token-efficiency` (127 -> 78
+  skills); `free-creative-tools.md` with licenses checked on GitHub/Hugging Face; fact fixes listed in the
+  8.30.0 changelog. Link check over 443 canonical URLs: no dead primary source left in kept skills (403s are bot
+  blocks; vendored img2threejs carries some dead three.js manual links, left as upstream).
+- Gemini research (shared report) used as leads only: its package versions were stale (R2API_Core 5.1.5 vs live
+  5.3.0) and several claims (hardcoded `Z:\Backup` in unrestraint-packs, ShugokiFable strings) did not match the
+  tree. Confirmed and fixed: thin/overfit RoR2 guidance, Grok helper "edit paths first", V5 labels.
+- Not done, by decision: Skyrim knowledge files (`PROMPTS/SKYRIM-*`, `WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md`,
+  `project-intel` Skyrim cards) still live here because another session was editing SkyrimForge's working tree;
+  move them into the Forge (e.g. `skyrim-memory/references`) in a Forge release, then delete here. The installer's
+  Skyrim bridge (Forge + houseCARL install, `game-skyrim` profiles) stays: it installs the forge, it does not
+  duplicate it. Vendored upstream skills (superpowers, skill-creator, img2threejs) left unedited.
+
 ## Prepared 8.29.16 — Risk of Rain 2 survivor preflight — 2026-11-03
 
 - Lessons from the Ultron 1.1.2/1.2.0 audit and the Gnar 1.3.1 fixes are in the bundle: preflight and definition of

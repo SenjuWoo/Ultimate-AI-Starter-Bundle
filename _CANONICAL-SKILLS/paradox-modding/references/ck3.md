@@ -12,4 +12,4 @@ Primary source:
 
 - https://ck3.paradoxwikis.com/Modding
 
-Load `paradox-clausewitz-jomini-modding` first.
+Read `references/OVERVIEW.md` first.

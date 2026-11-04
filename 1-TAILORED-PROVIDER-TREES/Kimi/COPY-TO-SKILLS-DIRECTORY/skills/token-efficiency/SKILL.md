@@ -109,3 +109,12 @@ changing rewrites. Preserve failures, exit status and access to full output.
 Sources checked 2026-09-13:
 [Anthropic cache rules](https://platform.claude.com/docs/en/build-with-claude/prompt-caching),
 [Claude Code caching](https://code.claude.com/docs/en/prompt-caching).
+
+## Deeper references
+
+| When | Read |
+|---|---|
+| Work is expensive, long-context, retry-prone, irreversible, or billed heavily for repeated input/output | `references/reasoning-economy.md` |
+| A task can exhaust context, tokens, API spend, memory, disk, file descriptors, processes, retries, time, concurrency, or rate limits | `references/resource-budgeting.md` |
+| Repeated model calls share large instructions, tools, context, or prefixes and cache efficiency materially affects cost or latency | `references/prompt-cache-discipline.md` |
+| Long-running work requires summarization, compaction, handoff, or context reduction without losing requirements or state | `references/context-compaction-fidelity.md` |

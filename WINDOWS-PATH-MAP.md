@@ -67,7 +67,7 @@ Files installed in a selected workspace:
 <PROVIDER_NATIVE_SKILLS>\skyrim-memory\references\ERROR-REGISTRY.json
 ```
 
-## MCP config (V5)
+## MCP config
 
 See `TOOLS\MCP-CONFIG-EXAMPLES.toml.txt` and `TOOLS\Fix-Grok-Codebase-Memory-Direct.ps1`.
 Always fully restart the AI app after MCP edits.

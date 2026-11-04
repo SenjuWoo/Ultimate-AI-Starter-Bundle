@@ -27,7 +27,7 @@ Baseline worth emitting: startup with version/build, the configuration actually 
 
 Make the log switchable (a `--debug` flag, env var, INI key or in-game toggle), quiet by default in releases, size-capped or rotated, and written to the platform's standard log location. Put the path in the README and the first startup line.
 
-What not to emit: whole payloads, request bodies, file contents, per-iteration chatter, or anything from `secret-hygiene`. A field that cannot help reproduce, localise or explain a failure is cost with no return.
+What not to emit: whole payloads, request bodies, file contents, per-iteration chatter, or anything `reliability-engineering` (secret hygiene) says to keep out. A field that cannot help reproduce, localise or explain a failure is cost with no return.
 
 Games and mods: ship a toggleable debug log in the first build, quiet by default, and tell the user where it lands. Engine APIs and log locations (Papyrus, SKSE, BepInEx, MelonLoader, Unity, Unreal, Godot, Minecraft, RimWorld, Roblox, web): `references/game-mod-logging.md`.
 

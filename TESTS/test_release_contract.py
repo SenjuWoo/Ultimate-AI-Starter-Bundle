@@ -199,28 +199,44 @@ def description_from_fm(fm: str) -> str:
     return " ".join((m.group(1) if m else "").split()).strip("'\"")
 
 
+# One-page discipline skills were folded into these routers: each body is a
+# reference file there and its old trigger line is a row in the router table.
+DISCIPLINE_ROUTERS = ("reliability-engineering", "verification-discipline",
+                      "reasoning-discipline", "token-efficiency")
+
+
 def test_skills() -> None:
     missing = []
     for name, tokens in SKILLS.items():
         p = CANON / name / "SKILL.md"
-        if not p.is_file():
-            missing.append(name)
-            continue
-        text = read(p)
-        fm, body = frontmatter(text)
-        desc = description_from_fm(fm)
-        assert desc.startswith("Use when"), f"{name}: description must start 'Use when'"
-        assert len(desc) <= 420, f"{name}: description too long ({len(desc)} chars)"
+        if p.is_file():
+            text = read(p)
+            fm, body = frontmatter(text)
+            desc = description_from_fm(fm)
+            assert desc.startswith("Use when"), f"{name}: description must start 'Use when'"
+            assert len(desc) <= 420, f"{name}: description too long ({len(desc)} chars)"
+            rel = Path(name) / "SKILL.md"
+        else:
+            homes = [r for r in DISCIPLINE_ROUTERS if (CANON / r / "references" / (name + ".md")).is_file()]
+            if len(homes) != 1:
+                missing.append(name)
+                continue
+            p = CANON / homes[0] / "references" / (name + ".md")
+            body = read(p)
+            router = read(CANON / homes[0] / "SKILL.md")
+            assert ("`references/%s.md`" % name) in router, (
+                f"{name}: {homes[0]} no longer routes to its reference, so nothing loads it")
+            rel = Path(homes[0]) / "references" / (name + ".md")
         words = len(body.split())
         assert 45 <= words <= 500, f"{name}: body should be concise/useful, got {words} words"
         low = body.lower()
         for token in tokens:
             assert token.lower() in low, f"{name}: missing contract term {token!r}"
         for provider in PROVIDERS:
-            q = ROOT / "1-TAILORED-PROVIDER-TREES" / provider / "COPY-TO-SKILLS-DIRECTORY" / "skills" / name / "SKILL.md"
-            assert q.is_file(), f"{provider}: missing {name}"
-            assert q.read_bytes() == p.read_bytes(), f"{provider}: {name} drifted from canonical"
-    assert not missing, "missing v7.8 reliability skills: " + ", ".join(missing)
+            q = ROOT / "1-TAILORED-PROVIDER-TREES" / provider / "COPY-TO-SKILLS-DIRECTORY" / "skills" / rel
+            assert q.is_file(), f"{provider}: missing {rel}"
+            assert q.read_bytes() == p.read_bytes(), f"{provider}: {rel} drifted from canonical"
+    assert not missing, "missing reliability guidance: " + ", ".join(missing)
 
 
 def test_all_descriptions_under_budget() -> None:
@@ -282,7 +298,8 @@ def test_documented_skill_counts() -> None:
     # No pinned number here: the count is whatever the tree holds, and every
     # place that RESTATES it must agree. Pinning it meant a deliberate removal
     # failed this gate as if it were an accident.
-    assert actual > 100, f"canonical tree looks truncated: {actual} skills"
+    # 8.30.0 folded 52 one-page skills into routers and moved game skills to forges.
+    assert actual > 60, f"canonical tree looks truncated: {actual} skills"
     readme = read(ROOT / "README.md")
     changelog = read(ROOT / "CHANGELOG.md")
     history = read(ROOT / "docs" / "history" / f"V{BARE}-CHANGELOG.md")
@@ -942,6 +959,9 @@ def test_cleanup_is_dry_run_by_default_and_scoped_to_pack_files() -> None:
     assert "if (-not $Apply) {" in body, "the cleanup no longer short-circuits before deleting"
     assert "Re-run with -Apply" in body, "the dry run no longer says how to proceed"
 
+    # A forge-stamped copy of a retired name (RobloxForge's roblox-game-development) is not ours to delete.
+    assert "-Filter '.*-version'" in body and "carries an owner stamp" in body, (
+        "Clean-StaleState would delete a forge's own copy of a retired skill name")
     # Deletion targets must be pack-owned names, never a bare directory sweep.
     assert "RETIRED-SKILLS.json" in body, "the cleanup no longer reads the declared retired list"
     assert "Get-UabsPreservedSkillNames" in body and "$preserved -contains $name" in body, (
@@ -1050,7 +1070,7 @@ def test_new_skill_descriptions_are_front_loaded() -> None:
     """
     skills = _skill_descriptions()
     added = [
-        "game-modding", "minecraft-modding", "paradox-modding",
+        "game-modding", "paradox-modding",
         "unity-mod-frameworks", "unreal-mod-frameworks", "bethesda-creation-modding",
         "github-fleet-maintenance", "mcp-server-diagnostics", "win64-native-builds",
         "windows-workspace-ops", "c-game-regression-testing",
@@ -1077,9 +1097,8 @@ def test_megapack_consolidation_kept_every_game() -> None:
     """
     routers = {
         "game-modding": 19,          # one-off games (+ workflow refs + laws)
-        "minecraft-modding": 11,
         "paradox-modding": 5,
-        "unity-mod-frameworks": 9,
+        "unity-mod-frameworks": 7,
         "unreal-mod-frameworks": 3,
         "bethesda-creation-modding": 2,
     }
@@ -1100,11 +1119,10 @@ def test_megapack_consolidation_kept_every_game() -> None:
         "game-modding/references/MODDING-LAWS.md",
         "game-modding/references/ERROR-REGISTRY.json",
         "game-modding/references/new_version.py",
-        "minecraft-modding/references/PORTING-CHECKLIST.md",
-        "unity-mod-frameworks/references/rimworld-harmony.md",
+        "game-modding/references/stardew-valley.md",
+        "unity-mod-frameworks/references/valheim-jotunn.md",
         "unreal-mod-frameworks/references/palworld.md",
         "bethesda-creation-modding/references/starfield.md",
-        "roblox-game-development/references/api-docs-lookup.md",
         "release-checklist/references/docs-heavy-repo-sweep.md",
         "mcp-server-diagnostics/references/provider-cli-ops.md",
     ):
@@ -1153,14 +1171,10 @@ def test_absorbed_skills_are_declared_and_exclude_live_ones() -> None:
         assert name in names, "%s was absorbed but is not on the cleanup list" % name
         assert name not in canonical, "%s is both shipped and marked absorbed" % name
 
-    # The three that must survive. Listing any of them deletes a live skill or
-    # reaches into another product's directory.
-    for name in ("saints-row-modding", "roblox-game-development"):
-        assert name in canonical, "%s is no longer shipped" % name
-        assert name not in names, (
-            "%s is shipped canonically AND on the delete list; every install "
-            "would remove a skill it just wrote" % name
-        )
+    # Moved to the owner's forges: retired here, and the forge registry routes to them.
+    for name in ("saints-row-modding", "roblox-game-development", "minecraft-modding"):
+        assert name not in canonical, "%s is back in the canonical tree; the forge owns it" % name
+        assert name in names, "%s left the tree without a retirement entry" % name
     assert "autonomous-ai-agents" not in names, (
         "autonomous-ai-agents is a Hermes CATEGORY directory holding Hermes' own "
         "documentation -- removing it is reaching into another product"
@@ -4456,7 +4470,7 @@ def test_build_proof_runs_its_batch_file_by_relative_path() -> None:
     `cmd /c compile.cmd` fail with "not recognized", which aborted the whole
     install at the compiler self-test on a hardened account."""
     text = ps_code(ROOT / "TOOLS" / "Install-BuildTools.ps1")
-    assert "'/c','.\compile.cmd'" in text, "the build proof runs a bare compile.cmd again"
+    assert r"'/c','.\compile.cmd'" in text, "the build proof runs a bare compile.cmd again"
     assert "'/c','compile.cmd'" not in text
 
 
@@ -5274,7 +5288,7 @@ def test_every_canonical_skill_reached_every_provider_tree() -> None:
         return text
 
     canon = sorted(CANON.glob("*/SKILL.md"))
-    assert len(canon) >= 100, "canonical tree looks empty (%d skills)" % len(canon)
+    assert len(canon) >= 60, "canonical tree looks empty (%d skills)" % len(canon)
 
     drifted = []
     missing = []
@@ -6312,7 +6326,7 @@ def test_antigravity_is_a_first_class_provider() -> None:
 
     tree = ROOT / "1-TAILORED-PROVIDER-TREES" / "Antigravity" / "COPY-TO-SKILLS-DIRECTORY" / "skills"
     skills = [d for d in tree.iterdir() if d.is_dir()]
-    assert len(skills) >= 100, "the Antigravity skill tree is empty"
+    assert len(skills) >= 60, "the Antigravity skill tree is empty"
 
     # Plugins: Antigravity only stages Claude-style trees through its `agy` CLI,
     # so the installer must write a root plugin.json and enable the plugin in

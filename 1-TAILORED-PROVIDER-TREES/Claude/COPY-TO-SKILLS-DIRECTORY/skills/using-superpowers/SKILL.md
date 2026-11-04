@@ -65,7 +65,7 @@ If your harness appears here, read its reference file for special instructions:
 User instructions (CLAUDE.md, AGENTS.md, GEMINI.md, etc, direct requests) take precedence over skills, which in turn override default behavior. Only skip skill workflows or instructions when your human partner has explicitly told you to.
 ---
 
-## V5 pack note
+## Bundle note
 
 This skill is bundled so every provider can follow it as markdown.
 For native slash commands / hooks, install upstream: https://github.com/obra/superpowers
