@@ -28020,9 +28020,19 @@
   "sha256": "307df69c3ac8be94d3a5840b0605830e6593302df9acef2b773b5660ffa313c7"
  },
  {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-e77b65c7acdc.md",
+  "size": 12743,
+  "sha256": "00f827b1e15155123b06626f655e4176611e9bfd83259cee8466ee2131f2227a"
+ },
+ {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-f64b2efc2631.md",
   "size": 9081,
   "sha256": "603e7e252e217ef27872af04cb83aa971e9ca363dffa7f1a16a4404b12ccffef"
+ },
+ {
+  "path": "3-PREAMBLES/history/SOUL-03540478edbe.md",
+  "size": 1095,
+  "sha256": "b367c9517a8ac3a5df57b7bd1e5ee03614f8249204b9908e98e922c442b6875d"
  },
  {
   "path": "3-PREAMBLES/history/SOUL-34a5484e0691.md",
@@ -28233,6 +28243,11 @@
   "path": "BUNDLED-TOOLS/packs/skyrim/legacy/2ca76a0315c0.md",
   "size": 5295,
   "sha256": "36d36ec0bfffe56e80867c6b0106752786f3e9e440c24193a04982afadc6b8cf"
+ },
+ {
+  "path": "BUNDLED-TOOLS/packs/skyrim/legacy/35bda27ef562.md",
+  "size": 601,
+  "sha256": "9ccc55a7e91b2c4b29491647263221db4417cbc1f4937888b466c245855f1861"
  },
  {
   "path": "BUNDLED-TOOLS/packs/skyrim/legacy/3fd6e9b4637a.md",
