@@ -119,3 +119,12 @@ Keep each change set narrow, reversible, and linked to an explicit requirement o
 ## Usage and milestone discipline
 
 Create the smallest buildable artifact early. Compile and checkpoint after each coherent milestone. Stop spawning subagents once the evidence is sufficient. Keep `STATE.md` current with exact paths, uncommitted changes, the last successful command, failures, and the next command.
+
+## Deeper checklists (load the one that matches)
+
+- Code that writes state, retries, migrates, spawns processes, handles secrets or shells out:
+  `reliability-engineering`.
+- About to say "done", "fixed", "passes" or ship a build: `verification-discipline`.
+- A guessed fact, two readings of a request, conflicting sources, or a manual step you could automate:
+  `reasoning-discipline`.
+- Long or costly work, cache and context pressure: `token-efficiency`.

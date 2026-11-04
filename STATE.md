@@ -1,5 +1,22 @@
 # Bundle audit state
 
+## Prepared 8.30.1 — public text stays general — 2026-11-04
+
+- 8.30.0 published at `ed2fa21` (CI 12/12, Release success, Core 45,222,894 B sha256 2307258f..., Full-Offline
+  141,830,240 B sha256 9d912991..., both equal GitHub digests and SHA256SUMS; alerts 0/0/0). The released Core zip
+  was scanned for maintainer identifiers: only the old `tool-discovery` drive example matched; fixed here, and the
+  privacy gate now fails on that drive root. The forge registry names public repositories only.
+- Live (private, not in the repo): the codebase-memory store now holds the bundle and seven tool repositories
+  (reverse-this, Skyrim-Forge, houseCARL, Risk-Of-Rain-2-Forge, RobloxForge, Minecraft-Forge, RimWorldForge);
+  each root got a `.cbmignore` listed in its `.git/info/exclude`. `UABS_TOOL_ROOTS` gained the `Ai apps` folder.
+  The profile registry and map under `%USERPROFILE%` were updated.
+- RobloxForge v0.3.1 (`39f51ef`, CI 6/6, Release success, zip sha256 0b2a5d68... equals digest and .sha256):
+  `Install.ps1`/`Update.ps1`/`Uninstall.ps1` passed no arguments (param named `$Args`). Local copy updated
+  (backup `.backup-0.3.0-*`), keeping its unpublished `src/rbforge/plugins.py` change; its skills are now
+  installed in Claude, Codex, Grok and Hermes (stamped 0.3.1).
+- Folded discipline skills are not lost: each body is `references/<old-name>.md` under its router, the router
+  table keeps the old trigger line, and `coding-discipline` now points at the routers.
+
 ## Prepared 8.30.0 — general foundation, forge registry, smaller index — 2026-11-04
 
 - Owner direction (2026-11-04): the bundle is the general foundation and guide; specialist game content lives in
@@ -11,7 +28,7 @@
   8.30.0 changelog. Link check over 443 canonical URLs: no dead primary source left in kept skills (403s are bot
   blocks; vendored img2threejs carries some dead three.js manual links, left as upstream).
 - Gemini research (shared report) used as leads only: its package versions were stale (R2API_Core 5.1.5 vs live
-  5.3.0) and several claims (hardcoded `Z:\Backup` in unrestraint-packs, ShugokiFable strings) did not match the
+  5.3.0) and several claims (a hardcoded personal drive path in unrestraint-packs, ShugokiFable strings) did not match the
   tree. Confirmed and fixed: thin/overfit RoR2 guidance, Grok helper "edit paths first", V5 labels.
 - Not done, by decision: Skyrim knowledge files (`PROMPTS/SKYRIM-*`, `WHICH-AI-SHOULD-I-USE-FOR-SKYRIM.md`,
   `project-intel` Skyrim cards) still live here because another session was editing SkyrimForge's working tree;

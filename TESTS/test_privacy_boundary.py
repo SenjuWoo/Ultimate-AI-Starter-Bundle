@@ -30,6 +30,8 @@ MARKERS = [
     # A drive-letter Steam library is one machine's layout; skills say <Steam library>.
     (re.compile(r"\b[A-Za-z]:[\\/]{1,2}SteamLibrary\b", re.I), "machine Steam library path"),
     (re.compile(r"SkyrimAEaiWorkspace", re.I), "maintainer workspace name"),
+    # The maintainer's drive root; public text uses a <drive>:\\<folder> placeholder.
+    (re.compile(r"\bZ:[\\/]{1,2}Backup\b", re.I), "maintainer drive root"),
 ]
 ALLOW_FILES = {
     "TESTS/test_privacy_boundary.py",   # this file defines the markers

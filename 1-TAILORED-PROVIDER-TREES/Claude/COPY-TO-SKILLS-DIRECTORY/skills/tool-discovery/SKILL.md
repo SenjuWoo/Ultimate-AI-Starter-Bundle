@@ -34,7 +34,7 @@ For game modding on the owner's bench, use the
 installed tool serves, and the rules that keep the game install and the bench
 untouched.
 
-Never hardcode `C:\Users\<name>`, `S:\Apps`, or `Z:\Backup` as authority. Those may appear only as **example** paths on the pack author's machine.
+Never hardcode a user name, drive letter or personal folder (`C:\Users\<name>`, `<drive>:\<folder>`) as authority. Resolve every root from the order below.
 
 Treat pasted roots as hints. When the user says a path is "just suggestions" and pastes a game folder or a tools root, those are step-5 conversation candidates, not install authority. Resolve via env, `PATH`, and the conversation path. Do not hardcode them as a game or tool root.
 

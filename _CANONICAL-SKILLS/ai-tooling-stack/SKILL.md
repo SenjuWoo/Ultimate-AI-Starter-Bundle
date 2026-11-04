@@ -23,7 +23,7 @@ proof that a tool is installed, enabled or healthy. Preserve models, reasoning, 
 | Free procedural assets: 3D, textures, images, music, sound, games | `game-dev-starter` (`references/free-creative-tools.md`), `img2threejs` |
 | Unknown game: engine recon, sprites, gameplay video | `universal-modder` (`um`), then the engine skill (`unity-`/`unreal-mod-frameworks`, `game-modding`) |
 
-## Owner forges (specialist knowledge lives there, not here)
+## Specialist forges (separate public repositories)
 
 Each forge ships its own skill, tools and updates. When a task is in its domain, use the forge's skill and CLI;
 the bundle keeps no second copy. If the forge is absent, say which repository owns it (TOOL MISSING template in
