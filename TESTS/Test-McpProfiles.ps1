@@ -1081,16 +1081,19 @@ if ($helperStart -lt 0 -or $helperEnd -le $helperStart -or $moaStart -lt 0 -or $
     presets = @{ default = @{ enabled = $true } }
   }
   $plan = Get-MoaMigrationPlan -Moa $vendorMoa -IsVendorDefault $true -MainProvider 'openrouter' -MainModel 'deepseek/deepseek-v4.1-flash-1017'
-  if ($null -ne $plan -and $plan['disable'] -eq $true) {
-    Good 'the vendor default is scheduled for replacement'
+  if ($null -ne $plan -and $plan['enabled'] -eq $true -and $plan['default_preset'] -eq 'deepseek_particle') {
+    Good 'the vendor default is replaced by the on-demand preset'
   } else {
     Bad 'the vendor MoA default was left in place'
   }
-  Is ([string]$plan['aggregator']['model']) 'deepseek/deepseek-v4.1-flash-1017' 'the acting model becomes the aggregator'
-  Is ([string]$plan['aggregator']['provider']) 'openrouter' 'the aggregator keeps the profile provider'
-  $planRefs = @($plan['reference_models'] | ForEach-Object { [string]$_['model'] })
-  if ($planRefs -notcontains 'gpt-5.5' -and $planRefs.Count -eq 2) {
-    Good 'the gpt-5.5 advisor is replaced with cheap OpenRouter models'
+  $preset = $plan['preset']
+  Is ([string]$preset['aggregator']['model']) 'deepseek/deepseek-v4.1-flash-1017' 'the acting model becomes the aggregator'
+  Is ([string]$preset['aggregator']['provider']) 'openrouter' 'the aggregator keeps the profile provider'
+  Is ([string]$preset['aggregator']['reasoning_effort']) 'high' 'the aggregator thinks at high effort'
+  Is ([string]$preset['fanout']) 'user_turn' 'the advisor runs once per user turn'
+  $planRefs = @($preset['reference_models'] | ForEach-Object { [string]$_['model'] })
+  if ($planRefs.Count -eq 1 -and $planRefs[0] -eq 'deepseek/deepseek-v4.1-flash-1017') {
+    Good 'exactly one DeepSeek advisor replaces the vendor references'
   } else {
     Bad ('advisor list still carries the vendor default: ' + ($planRefs -join ', '))
   }

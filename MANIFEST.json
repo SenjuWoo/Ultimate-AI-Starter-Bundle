@@ -18576,8 +18576,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml",
-  "size": 7823,
-  "sha256": "bdb032695d668fbf90ecb5b161b99aa7717a765666ffc6d3fec2ca11dd68feae"
+  "size": 8968,
+  "sha256": "c3142500fbb947c49739eb015f75241913403c0db47ee1b1f7daf3eaf4493a88"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
@@ -23176,8 +23176,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml",
-  "size": 7823,
-  "sha256": "bdb032695d668fbf90ecb5b161b99aa7717a765666ffc6d3fec2ca11dd68feae"
+  "size": 8968,
+  "sha256": "c3142500fbb947c49739eb015f75241913403c0db47ee1b1f7daf3eaf4493a88"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md",
@@ -32161,8 +32161,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 267248,
-  "sha256": "d0e11897579eed5304b0a918a099659e0f08c491f9a3dcd56cd058da1fa4e570"
+  "size": 268649,
+  "sha256": "a5646c1202e7715b6539b5fd2dc68677a3a1676c3d878f2920daca996b583d08"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -32296,8 +32296,8 @@
  },
  {
   "path": "README.md",
-  "size": 72644,
-  "sha256": "695bfc77b36a485eccd242914c825dfe4536deb77a6ce22b16c400021cfe34dc"
+  "size": 72911,
+  "sha256": "2853a78386be747c03d5d0ed44869d1d3e37dde4c913b1e66fb8f01bc2fb13b8"
  },
  {
   "path": "SECURITY.md",
@@ -32316,8 +32316,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 61828,
-  "sha256": "ae498d1035ae587a7aa3a5c7e1c94a25dc9ba9edc42dd2ad25022f0b8501e724"
+  "size": 62794,
+  "sha256": "64039c29ff2b34d85a5cf7aab0c9fee865f9f53d3403de7f5701794a9f93e909"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -32406,8 +32406,8 @@
  },
  {
   "path": "TESTS/Test-HermesProfiles.ps1",
-  "size": 4797,
-  "sha256": "16950b08f855ac6e5b809be54491dc9f501a48d792dd06029c1cf2e600192439"
+  "size": 10374,
+  "sha256": "ed75d9e4fef3a3b07ad9850ab50a6a4c19a0e347065e9bfcc5650c18be3527ff"
  },
  {
   "path": "TESTS/Test-HookPrerequisites.ps1",
@@ -32741,8 +32741,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 346938,
-  "sha256": "e110161a26947f8be686c8483207aaf2f24d0742692834a78f096b065e6e2251"
+  "size": 348851,
+  "sha256": "be3219321fd7cae4eadd413afdcb55c0f4a7206164d5bfef828110be7d76ec66"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -32901,8 +32901,8 @@
  },
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
-  "size": 77814,
-  "sha256": "065f6e51e6cd620163d8b40a0733e56bc1a6bcea7fcd13b65e6c3231965b6f49"
+  "size": 82481,
+  "sha256": "8ad7f9c3377e8830161b321fee9de8ed61fbf4e709978b53207c7055b15113ca"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -33217,7 +33217,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "f59561f55b5d28ff52644943c91da2f519bce24d8a8bea4468d194cace01ce0d"
+  "sha256": "c0ac748a3e7dfd7cf32b93440016daaf3fd32d1024d29e9ba5e9bf71956e1321"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -37791,8 +37791,8 @@
  },
  {
   "path": "docs/HERMES-MODELS.md",
-  "size": 5514,
-  "sha256": "42d33716711a952eb2dc5bddc8955413e08a7298f3f27de0b87fc0cc8945d34f"
+  "size": 6590,
+  "sha256": "862b47c3eb86f20784ed4381ad1427e5807c60029ecae31fcecb6c023aa8faee"
  },
  {
   "path": "docs/OPERATOR-PROFILES.md",

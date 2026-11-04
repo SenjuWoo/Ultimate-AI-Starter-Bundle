@@ -1,3 +1,26 @@
+## 8.30.5 (2026-11-04)
+
+- Planner/worker defaults for Hermes: Particle-1 stays the regular main model,
+  one on-demand MoA preset (`deepseek_particle`) pairs the DeepSeek V4.1 Flash
+  advisor at high reasoning with the Particle-1 aggregator at high reasoning and
+  `fanout: user_turn`. `/moa` is available; ordinary chat stays single-model.
+- Delegation moves to a two-route model map: `execute` on Particle-1 at medium
+  reasoning (default) and `research` on DeepSeek V4.1 Flash at high reasoning,
+  concurrency capped at 2. A missing backend plugin degrades to the built-in
+  default backend instead of blocking installation.
+- Existing profiles keep their delegated and MoA choices; the migration only
+  fills an untouched block and never touches a profile's main model. A
+  backup-first sync of shared auxiliary, delegation and MoA settings runs
+  through the existing migrator.
+- Auxiliary tasks stay on `provider: auto`; title generation and background
+  review remain disabled. Prompt-cache-friendly routing is unchanged (1h TTL,
+  price-first provider routing), and no claim is made that two model calls share
+  cached tokens automatically.
+- Gemini is removed from the shipped MoA defaults; no automatic route selects
+  Crouton Alpha, GPT, Claude, Gemini, Grok or any premium model.
+- Self-style unrestrained/preamble source untouched; no companion pin changed;
+  78 canonical skills total.
+
 ## 8.30.4 (2026-11-04)
 
 - Cache-first cost model: auxiliary tasks and delegation follow the main

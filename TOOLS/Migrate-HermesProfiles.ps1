@@ -145,7 +145,7 @@ function Invoke-UabsHermes([string[]]$Arguments, [switch]$AllowMissing) {
 # get` masks credential-shaped fields (Hermes #84106) and the MCP map read here
 # is written back whole, so a token in an MCP env/header would have been
 # replaced by its mask.
-$script:UabsHermesReadKeys = @('mcp_servers', 'fallback_providers', 'plugins.enabled', 'plugins.disabled', 'model', 'model.aliases', 'auxiliary.vision', 'auxiliary.compression', 'moa', 'uabs.moa_vendor_default')
+$script:UabsHermesReadKeys = @('mcp_servers', 'fallback_providers', 'plugins.enabled', 'plugins.disabled', 'model', 'model.aliases', 'auxiliary.vision', 'auxiliary.compression', 'delegation', 'moa', 'uabs.moa_vendor_default')
 $script:UabsHermesReadCache = @{}
 $script:UabsHermesReadScript = @'
 import json, os, sys
@@ -468,7 +468,7 @@ function Get-UabsProfilePrefs([string]$Profile) {
     }).Count) {
     return Get-UabsProfilePrefs 'default'
   }
-  $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @(); vision_chain = @(); compression = @{}; model = @{}; moa = @{}; moa_vendor_default = $false }
+  $out = @{ fallback = @(); aliases = @{}; plugins = @(); disabled_plugins = @(); vision_chain = @(); compression = @{}; model = @{}; delegation = @{}; moa = @{}; moa_vendor_default = $false }
   $fb = Invoke-UabsHermesConfigGet $Profile 'fallback_providers'
   if ($fb.Code -eq 0) {
     $json = @($fb.Output | ForEach-Object { [string]$_ } |
@@ -535,6 +535,15 @@ function Get-UabsProfilePrefs([string]$Profile) {
       Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
     if ($json) { $out.model = ConvertTo-UabsPlain ($json | ConvertFrom-Json) }
   }
+  # Delegation routing. `hermes delegation config` exposes the backend and its
+  # routes; reading the whole block is the only way to tell an untouched
+  # install (backend `default`, no routes) from a profile the owner routed.
+  $dg = Invoke-UabsHermesConfigGet $Profile 'delegation'
+  if ($dg.Code -eq 0) {
+    $json = @($dg.Output | ForEach-Object { [string]$_ } |
+      Where-Object { $_.Trim().StartsWith('{') }) | Select-Object -Last 1
+    if ($json) { $out.delegation = ConvertTo-UabsPlain ($json | ConvertFrom-Json) }
+  }
   # Hermes' load_config merges DEFAULT_CONFIG, so a profile with no `moa:` key
   # still reports the vendor default (MoA ON, gpt-5.5 advisor, Opus 4.8
   # aggregator). Reading it here is what lets the migration materialize an
@@ -596,9 +605,11 @@ function Ensure-UabsProfilePluginPayload([string]$Profile, [string]$HermesRoot, 
 # advisor that fails wherever Codex is not signed in. `profile create
 # --clone-from default` copied it once and nothing ever converged the copies.
 #
-# The pack ships MoA OFF. This migration materializes an explicit block when
-# the profile still carries the vendor default fingerprint. A block whose
-# aggregator or advisors the owner changed does not match and is left alone.
+# The pack ships MoA as one on-demand preset (DeepSeek advisor, Particle
+# aggregator) and never as the regular main model. This migration materializes
+# an explicit block when the profile still carries the vendor default
+# fingerprint. A block whose aggregator or advisors the owner changed does not
+# match and is left alone.
 $script:UabsRetiredMoaAggregators = @(
   'anthropic/claude-opus-4.8'
   'claude-opus-4.8'
@@ -615,9 +626,12 @@ $script:UabsInheritedMoaReferences = @(
 # the pack's alias list, so a later `moa on` cannot reach a premium endpoint or
 # a provider the user never authenticated.
 $script:UabsMoaReferenceModels = @(
-  @{ provider = 'openrouter'; model = 'particle-ai/particle-1'; enabled = $true }
-  @{ provider = 'openrouter'; model = 'google/gemini-3.7-flash'; enabled = $true }
+  @{ provider = 'openrouter'; model = 'deepseek/deepseek-v4.1-flash-1017'; enabled = $true; reasoning_effort = 'high' }
 )
+# The one shipped on-demand preset. Particle acts; DeepSeek advises once per
+# user turn, so the worker's cached prefix survives and ordinary chat stays
+# single-model.
+$script:UabsMoaPresetName = 'deepseek_particle'
 
 function Get-MoaModelId([string]$Value) {
   # Compare model ids without the routing prefix: the same model is written as
@@ -665,9 +679,62 @@ function Get-MoaMigrationPlan([object]$Moa, [bool]$IsVendorDefault = $false, [st
   $model = Get-MoaModelId $MainModel
   if (-not $model) { $model = 'particle-ai/particle-1' }
   return @{
-    disable = $true
-    aggregator = @{ provider = $provider; model = $model }
-    reference_models = (Copy-UabsValue $script:UabsMoaReferenceModels)
+    enabled = $true
+    default_preset = $script:UabsMoaPresetName
+    preset = @{
+      name = $script:UabsMoaPresetName
+      enabled = $true
+      fanout = 'user_turn'
+      aggregator = @{ provider = $provider; model = $model; reasoning_effort = 'high' }
+      reference_models = (Copy-UabsValue $script:UabsMoaReferenceModels)
+    }
+  }
+}
+
+# ---------------------------------------------------------------------------
+# Delegation routes (v8.30.5)
+#
+# The pack's default delegation backend is a two-route model map: `execute`
+# on the cheap worker, `research` on the stronger DeepSeek model. Only an
+# untouched block (backend `default` and no model map) is migrated; a profile
+# the owner routed to `model_map`, `profile_routes` or a plugin keeps it.
+# ---------------------------------------------------------------------------
+$script:UabsDelegationModelMap = [ordered]@{
+  options = @(
+    @{
+      name = 'execute'
+      description = 'Implement features, write and refactor code, run tests, and fix well-understood bugs. Follow existing plans and verify the results.'
+      provider = 'openrouter'; model = 'particle-ai/particle-1'; reasoning_effort = 'medium'
+    }
+    @{
+      name = 'research'
+      description = 'Investigate complex bugs, research unfamiliar systems, compare technical approaches, and design architectures. Return evidence and actionable plans.'
+      provider = 'openrouter'; model = 'deepseek/deepseek-v4.1-flash-1017'; reasoning_effort = 'high'
+    }
+  )
+  default = 'execute'
+}
+
+function Get-DelegationMigrationPlan([object]$Delegation) {
+  <#
+    Returns $null when the profile already has delegation routing of its own,
+    or a hashtable describing the two-route model map when it does not.
+  #>
+  $plain = ConvertTo-UabsPlain $Delegation
+  if ($plain -is [System.Collections.IDictionary]) {
+    $backend = [string]$plain['backend']
+    $backends = ConvertTo-UabsPlain $plain['backends']
+    if ($backends -is [System.Collections.IDictionary] -and $backends.Contains('model_map')) {
+      $map = ConvertTo-UabsPlain $backends['model_map']
+      if ($map -is [System.Collections.IDictionary] -and @($map['options']).Count) { return $null }
+    }
+    # `default` is the built-in backend; anything else is a deliberate route.
+    if ($backend -and $backend -ne 'default') { return $null }
+  }
+  return @{
+    backend = 'model_map'
+    model_map = (Copy-UabsValue $script:UabsDelegationModelMap)
+    max_concurrent_children = 2
   }
 }
 
@@ -684,19 +751,32 @@ function Ensure-UabsProfilePrefs([string]$Profile) {
     $wanted['compression_migration'] = $migration
   }
 
-  # Inherited MoA default: disable it and replace the retired Opus 4.8
-  # aggregator. Only the vendor-default fingerprint is touched (see
-  # Get-MoaMigrationPlan), so a profile the owner configured is kept verbatim.
+  # Inherited MoA default: replace the retired Opus 4.8 aggregator with the
+  # on-demand DeepSeek->Particle preset. Only the vendor-default fingerprint is
+  # touched (see Get-MoaMigrationPlan), so a profile the owner configured is
+  # kept verbatim.
   $moaMigration = Get-MoaMigrationPlan -Moa $current.moa `
     -IsVendorDefault $current.moa_vendor_default `
     -MainProvider ([string]$current.model['provider']) -MainModel ([string]$current.model['default'])
   if ($moaMigration) {
     Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'moa' -Key 'moa' -Value $moaMigration `
-      -Detail 'disable the inherited vendor MoA default and replace its retired Opus 4.8 aggregator'
+      -Detail "add on-demand $($script:UabsMoaPresetName) preset; replace the retired Opus 4.8 aggregator"
     $wanted['moa'] = $moaMigration
-    Add-UabsLedger 'migrated' "$Profile MoA: off, Opus 4.8 aggregator replaced, cheap advisors"
+    Add-UabsLedger 'migrated' "$Profile MoA: on-demand $($script:UabsMoaPresetName) preset, Opus 4.8 aggregator replaced"
   } else {
     Add-UabsLedger 'kept' "$Profile MoA settings are a user choice"
+  }
+
+  # Delegation: only an untouched backend is routed. A profile already using
+  # model_map, profile_routes or a plugin backend is the owner's choice.
+  $delegationMigration = Get-DelegationMigrationPlan -Delegation $current.delegation
+  if ($delegationMigration) {
+    Add-UabsPlan -Kind 'SetPrefs' -Profile $Profile -Id 'delegation' -Key 'delegation' -Value $delegationMigration `
+      -Detail 'route subagents: execute on Particle, research on DeepSeek; concurrency 2'
+    $wanted['delegation'] = $delegationMigration
+    Add-UabsLedger 'migrated' "$Profile delegation: execute=Particle, research=DeepSeek, concurrency 2"
+  } else {
+    Add-UabsLedger 'kept' "$Profile delegation routing is a user choice"
   }
 
   $toDisable = @($current.plugins | Where-Object { $script:UabsDiscouragedPlugins -contains [string]$_ })
@@ -828,32 +908,46 @@ if migration:
 moa_pref = prefs.get("moa")
 if moa_pref:
     # Materialize the explicit block so the merged vendor default cannot come
-    # back: MoA off, the acting model as aggregator, cheap advisors. Presets are
-    # rewritten too because the active preset is what Hermes runs.
+    # back: one on-demand preset (DeepSeek advisor, acting-model aggregator).
     moa = dict(cfg.get("moa") or {})
-    aggregator = moa_pref.get("aggregator")
-    reference_models = moa_pref.get("reference_models")
-    if moa_pref.get("disable"):
-        moa["enabled"] = False
-    if aggregator:
-        moa["aggregator"] = dict(aggregator)
-    if reference_models is not None:
-        moa["reference_models"] = [dict(slot) for slot in reference_models]
-    presets = dict(moa.get("presets") or {})
-    for name, preset in list(presets.items()):
-        if not isinstance(preset, dict):
-            continue
-        preset = dict(preset)
-        if moa_pref.get("disable"):
-            preset["enabled"] = False
-        if aggregator:
-            preset["aggregator"] = dict(aggregator)
-        if reference_models is not None:
-            preset["reference_models"] = [dict(slot) for slot in reference_models]
-        presets[name] = preset
-    if presets:
+    if "enabled" in moa_pref:
+        moa["enabled"] = bool(moa_pref["enabled"])
+    preset = moa_pref.get("preset")
+    if preset:
+        name = preset.get("name") or "deepseek_particle"
+        entry = dict(preset)
+        entry.pop("name", None)
+        presets = dict(moa.get("presets") or {})
+        presets[name] = entry
         moa["presets"] = presets
+        moa["default_preset"] = name
+        # Reusable slots follow the preset so a Hermes build without preset
+        # support still resolves the same reference/aggregator pair.
+        if preset.get("aggregator"):
+            moa["aggregator"] = dict(preset["aggregator"])
+        if preset.get("reference_models") is not None:
+            moa["reference_models"] = [dict(slot) for slot in preset["reference_models"]]
+        if preset.get("fanout"):
+            moa["fanout"] = preset["fanout"]
     cfg["moa"] = moa
+delegation_pref = prefs.get("delegation")
+if delegation_pref:
+    # Route subagents without touching the profile's own main model.
+    delegation = dict(cfg.get("delegation") or {})
+    if delegation_pref.get("backend"):
+        delegation["backend"] = delegation_pref["backend"]
+    model_map = delegation_pref.get("model_map")
+    if model_map:
+        backends = dict(delegation.get("backends") or {})
+        backends["model_map"] = {
+            "options": [dict(option) for option in model_map["options"]],
+            "default": model_map["default"],
+        }
+        delegation["backends"] = backends
+    limit = delegation_pref.get("max_concurrent_children")
+    if limit and not delegation.get("max_concurrent_children"):
+        delegation["max_concurrent_children"] = limit
+    cfg["delegation"] = delegation
 plugin_names = prefs.get("plugins") or []
 disable_names = prefs.get("disable_plugins") or []
 if plugin_names or disable_names:

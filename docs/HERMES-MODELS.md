@@ -29,24 +29,42 @@ tier at 272,000 tokens: $4 / $15. Cached input, reasoning output, search and
 provider routing can change the bill. These are dated catalog rates, not task
 quotes. None was benchmarked or promoted to a default by this update.
 
-## Cache-first auxiliary, delegation and MoA
+## Planner/worker: Particle runs, DeepSeek plans
 
-Catalog check: **2026-11-04**. The starter is optimized for cached-token profit:
+Catalog check: **2026-11-04**. The starter spends its money where a second model
+buys completion quality, and nowhere else:
 
-- Auxiliary tasks ship as `provider: auto` with an empty model, so they follow
-  the main model and reuse its prompt cache. Do not pin aux tasks to a
-  different model unless that one task's quality gain beats the cache loss.
-- Delegation ships with `provider: auto` and empty model, so subagents inherit
-  the parent model/provider and cache family. No model-map.
-- MoA ships **off**. It adds a reference call plus an aggregator call on
-  different models every turn — mostly uncached cost.
+- **Main model:** `particle-ai/particle-1`. Every ordinary turn is single-model.
+- **Auxiliary tasks:** `provider: auto` with an empty model, so they follow the
+  main model. Automatic title generation and background review are **off**.
+- **Delegation:** `backend: model_map` with exactly two routes — `execute` on
+  Particle-1 at medium reasoning (the default), `research` on
+  `deepseek/deepseek-v4.1-flash-1017` at high reasoning. Concurrency is capped
+  at 2. Delegation is on demand; no turn spawns subagents on its own.
+- **MoA:** exactly one preset, `deepseek_particle`, available through `/moa`
+  and the model picker. Reference: DeepSeek V4.1 Flash 1017 at high reasoning.
+  Aggregator: Particle-1 at high reasoning. `fanout: user_turn` means the
+  advisor runs once per user message and Particle runs the tool loop. The
+  preset is never the regular main model, so an enabled preset is not an active
+  MoA session.
 - `prompt_caching.cache_ttl` is `1h`; `provider_routing` sorts by price and
   requires parameters; `openrouter.response_cache` stays off (that's response
   caching, not prompt caching, and it can serve stale answers).
 
-Pinning auxiliary models is what silently breaks caching: every distinct
-model/provider/prefix starts a cold cache. If an aux model changes, update
-both starter configs, this guide and `TESTS/test_release_contract.py`.
+Cache facts this design relies on: every model keeps its **own** prompt cache,
+so two calls do not share cached tokens just because they use the same model,
+and a different prefix starts a cold cache. Hermes MoA is built to preserve the
+aggregator's prefix — the planner's advice is appended after the reusable
+context — but the reference call is still extra paid input and output. That is
+why MoA is a deliberate `/moa` choice for hard work rather than an always-on
+mode.
+
+No automatic route reaches GPT, Claude, Gemini, Grok, Crouton Alpha or any
+premium endpoint. Existing user model choices and manual aliases survive an
+upgrade; the migration only fills an untouched block.
+
+If an aux, MoA or delegation model changes, update both starter configs, this
+guide and `TESTS/test_release_contract.py` together.
 
 `auxiliary.vision.fallback_chain` is **not a recognized Hermes key**. Older
 configs carried it, and it did nothing; the pack no longer ships it. Use

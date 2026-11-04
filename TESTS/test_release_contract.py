@@ -1276,12 +1276,13 @@ def _yaml_list_of_models(text: str, key: str) -> list:
     return re.findall(r"^\s*model:\s*(\S+)\s*$", m.group(1), re.M)
 
 
-def test_hermes_starter_is_cache_first() -> None:
-    """Aux/delegation/MoA follow the main model so prompt caches hit.
+def test_hermes_starter_uses_planner_worker_pair() -> None:
+    """Particle-1 works, DeepSeek V4.1 Flash plans, and nothing else is automatic.
 
-    Pinning auxiliary/delegation to other models starts cold caches and is
-    the main silent cost leak; MoA adds uncached reference+aggregator calls.
-    These defaults are enforced together with docs/HERMES-MODELS.md.
+    Ordinary turns stay single-model on Particle. One on-demand MoA preset pairs
+    the DeepSeek advisor with the Particle aggregator, and delegation exposes
+    exactly two routes. Auxiliary work follows the main model so prompt caches
+    stay warm; title generation and background review stay off.
     """
     text = HERMES_STARTER.read_text(encoding="utf-8")
     assert _yaml_list_of_models(text, "fallback_providers") == [], (
@@ -1303,11 +1304,22 @@ def test_hermes_starter_is_cache_first() -> None:
             "auxiliary.%s pins a model id and breaks the cache family" % task)
     assert re.search(r"(?ms)^  background_review:\s*\n\s+enabled:\s*false\s*$", aux), (
         "background review is enabled and burns uncached tokens")
+    assert re.search(r"(?ms)^  title_generation:\s*\n\s+enabled:\s*false\s*$", aux), (
+        "automatic title generation is enabled in the shipped default")
 
     delegation = re.search(r"(?ms)^delegation:\n(.*?)(?=^[a-z_]+:|\Z)", text).group(1)
-    assert "provider: auto" in delegation and re.search(r"(?m)^  model: ''\s*$", delegation), (
-        "delegation no longer inherits the parent model")
-    assert "model_map" not in delegation, "delegation uses a model map and breaks the cache family"
+    assert re.search(r"(?m)^  backend: model_map$", delegation), (
+        "delegation lost its two-route model map")
+    assert re.search(r"(?m)^      default: execute$", delegation), (
+        "execute must be the default delegation route")
+    assert re.search(r"(?m)^  max_concurrent_children: 2$", delegation), (
+        "delegation concurrency is not limited to 2")
+    assert re.search(r"(?ms)- name: execute\n(?:.*?\n)*?        model: particle-ai/particle-1\n        reasoning_effort: medium", delegation), (
+        "execute route is not Particle-1 at medium reasoning")
+    assert re.search(r"(?ms)- name: research\n(?:.*?\n)*?        model: deepseek/deepseek-v4.1-flash-1017\n        reasoning_effort: high", delegation), (
+        "research route is not DeepSeek V4.1 Flash at high reasoning")
+    assert "google/gemini" not in delegation and "crouton" not in delegation.lower(), (
+        "a retired or temporary model is still routed automatically")
 
     assert re.search(r"(?m)^  default: particle-ai/particle-1$", text), (
         "the starter default moved; update this contract and docs/HERMES-MODELS.md together")
@@ -1318,11 +1330,23 @@ def test_hermes_starter_is_cache_first() -> None:
     moa = re.search(r"(?ms)^moa:\r?\n(.*?)(?=^[a-z_]+:|\Z)", text)
     assert moa, "the starter lost its MoA block"
     moa_text = moa.group(1)
-    assert "enabled: false" in moa_text, "MoA is enabled and adds uncached calls every turn"
-    assert "default_preset: deepseek_particle" not in moa_text
-    for retired in ("gpt-5.5", "claude-opus-4.8", "claude-opus-4-8", "deepseek-v4-pro"):
-        assert retired not in moa_text, (
-            "the starter MoA block pins the retired advisor %r" % retired)
+    preset = re.search(r"(?ms)^    deepseek_particle:\n(.*?)(?=^    default:|^  reference_models:)", moa_text)
+    assert preset, "the starter lost its deepseek_particle preset"
+    preset_text = preset.group(1)
+    assert re.search(r"(?m)^  default_preset: deepseek_particle$", moa_text), (
+        "the on-demand preset is not the default preset")
+    assert re.search(r"(?m)^      enabled: true$", preset_text), (
+        "the deepseek_particle preset is disabled")
+    assert re.search(r"(?m)^      fanout: user_turn$", preset_text), (
+        "MoA fanout is not user_turn")
+    refs = re.findall(r"(?m)^        model: (\S+)$", preset_text.split("      aggregator:")[0])
+    assert refs and all(r == "deepseek/deepseek-v4.1-flash-1017" for r in refs) and len(refs) == 1, (
+        "the preset must carry exactly one DeepSeek V4.1 Flash reference: %r" % refs)
+    assert re.search(r"(?ms)^      aggregator:\n        provider: openrouter\n        model: particle-ai/particle-1\n        reasoning_effort: high$", preset_text), (
+        "the aggregator is not Particle-1 at high reasoning")
+    for banned in ("google/gemini", "openai/gpt", "anthropic/", "x-ai/grok", "crouton"):
+        assert banned not in moa_text.lower(), (
+            "the shipped MoA default references %r" % banned)
 
 
 def test_hermes_starter_carries_no_machine_state() -> None:
@@ -2932,7 +2956,7 @@ def main() -> int:
         test_canonical_tree_carries_no_maintainer_identity,
         test_doctor_counts_every_skill_root_and_never_interpolates,
         # v8.5.0 -- a cloned Hermes profile drifts and nothing re-converged it.
-        test_hermes_starter_is_cache_first,
+        test_hermes_starter_uses_planner_worker_pair,
         test_hermes_starter_carries_no_machine_state,
         test_hermes_profile_prefs_converge_without_clobbering_user_choice,
         test_readme_model_guidance_matches_the_shipped_config,

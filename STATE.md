@@ -1,5 +1,20 @@
 # Bundle audit state
 
+## Prepared 8.30.5 — planner/worker defaults for Hermes — 2026-11-04
+
+- Hermes starter (both canonical configs): Particle-1 main; one on-demand MoA
+  preset `deepseek_particle` (DeepSeek V4.1 Flash 1017 high reference, Particle-1
+  high aggregator, `fanout: user_turn`); delegation `model_map` with `execute`
+  (Particle medium, default) and `research` (DeepSeek high), concurrency 2;
+  auxiliary on `provider: auto`; title generation and background review off;
+  Gemini removed from shipped MoA defaults.
+- Migration: `Get-DelegationMigrationPlan` fills only an untouched delegation
+  block; `Get-MoaMigrationPlan` now materializes the on-demand preset instead of
+  disabling MoA; the shared prefs applier writes both without touching any
+  profile's main model. `TESTS/Test-HermesProfiles.ps1` covers 44 cases.
+  Release contract `test_hermes_starter_uses_planner_worker_pair`: 160/0.
+- No unrestrained/preamble or companion-pin changes; 78 canonical skills.
+
 ## Prepared 8.30.2 — Skyrim knowledge moved to Skyrim Forge — 2026-11-04
 
 - SkyrimForge was free (clean, in sync after its 6.9.0 release). Moved: `project-intel` Skyrim cards ->

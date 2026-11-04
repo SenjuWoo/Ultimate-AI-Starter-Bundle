@@ -526,11 +526,15 @@ entries if you want failover, and only with models that accept the same
 modalities as the main model. Custom chains remain user-owned; migration clears
 a superseded pack chain and leaves a user-written one untouched.
 
-Cache-first by default: auxiliary tasks and delegation follow the main model
-(`provider: auto`, empty model) so prompt caches hit, MoA is off, and
-`prompt_caching.cache_ttl` is 1h with price-first provider routing. Pinning an
-aux task to a different model starts a cold cache and should only be done when
-that task's quality gain beats the cache loss. Compression fires at a 320,000-token
+Planner/worker by default: `particle-ai/particle-1` runs ordinary turns and
+tool loops; `deepseek/deepseek-v4.1-flash-1017` is the selective booster. One
+on-demand MoA preset (`deepseek_particle`, `/moa`) pairs the DeepSeek advisor
+with the Particle aggregator, and delegation exposes only `execute`
+(Particle, medium) and `research` (DeepSeek, high) with concurrency 2.
+Auxiliary tasks follow the main model (`provider: auto`), title generation and
+background review are off, and `prompt_caching.cache_ttl` is 1h with
+price-first provider routing. Nothing automatic reaches GPT, Claude, Gemini,
+Grok or Crouton Alpha. Compression fires at a 320,000-token
 cap on the default window, prunes oversized tool results from 80,000 tokens,
 and aborts rather than replacing context when a summary fails. [Model guidance](docs/HERMES-MODELS.md) · [Profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md).
 

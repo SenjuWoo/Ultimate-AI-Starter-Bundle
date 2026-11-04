@@ -169,7 +169,23 @@ memory:
   nudge_interval: 10
   flush_min_turns: 6
 delegation:
-  # Cache-first: subagents inherit the parent model so caches hit.
+  # On-demand Advanced Delegation routes. Ordinary turns stay single-model;
+  # subagents run only when the task genuinely warrants delegation.
+  backend: model_map
+  backends:
+    model_map:
+      options:
+      - name: execute
+        description: Implement features, write and refactor code, run tests, and fix well-understood bugs. Follow existing plans and verify the results.
+        provider: openrouter
+        model: particle-ai/particle-1
+        reasoning_effort: medium
+      - name: research
+        description: Investigate complex bugs, research unfamiliar systems, compare technical approaches, and design architectures. Return evidence and actionable plans.
+        provider: openrouter
+        model: deepseek/deepseek-v4.1-flash-1017
+        reasoning_effort: high
+      default: execute
   provider: auto
   model: ''
   reasoning_effort: high
@@ -177,36 +193,50 @@ delegation:
   max_concurrent_children: 2
   max_spawn_depth: 1
 moa:
-  # MoA ships OFF: it adds uncached reference + aggregator calls every turn.
+  # On-demand MoA: DeepSeek plans once per user turn; Particle acts. Ordinary
+  # chat stays single-model Particle-1.
   presets:
+    deepseek_particle:
+      enabled: true
+      reference_models:
+      - provider: openrouter
+        model: deepseek/deepseek-v4.1-flash-1017
+        enabled: true
+        reasoning_effort: high
+      aggregator:
+        provider: openrouter
+        model: particle-ai/particle-1
+        reasoning_effort: high
+      degraded_reference_policy: loud
+      fanout: user_turn
     default:
+      enabled: false
       reference_models:
       - provider: openrouter
         model: particle-ai/particle-1
         enabled: false
-      - provider: openrouter
-        model: google/gemini-3.7-flash
-        enabled: false
       aggregator:
         provider: openrouter
         model: particle-ai/particle-1
-      enabled: false
       degraded_reference_policy: loud
       fanout: user_turn
   reference_models:
   - provider: openrouter
-    model: particle-ai/particle-1
-    enabled: false
-  - provider: openrouter
-    model: google/gemini-3.7-flash
-    enabled: false
+    model: deepseek/deepseek-v4.1-flash-1017
+    enabled: true
+    reasoning_effort: high
   aggregator:
     provider: openrouter
     model: particle-ai/particle-1
+    reasoning_effort: high
   degraded_reference_policy: loud
-  max_tokens: 4096
   fanout: user_turn
-  enabled: false
+  enabled: true
+  default_preset: deepseek_particle
+  active_preset: ''
+  save_traces: false
+  trace_dir: ''
+  privacy_filter: ''
 skills:
   creation_nudge_interval: 0
 security:
