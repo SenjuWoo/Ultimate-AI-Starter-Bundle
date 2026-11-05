@@ -15,6 +15,9 @@ function Resolve-ReverseOwner {
     $receipt=[IO.File]::ReadAllText($Pointer) | ConvertFrom-Json
     if (-not $receipt.kit_root -or -not [IO.Path]::IsPathRooted($receipt.kit_root)) { throw 'Invalid Reverse THIS! owner pointer.' }
     $owner=[IO.Path]::GetFullPath($receipt.kit_root).TrimEnd('\')
+    # A receipt whose install folder is gone is a stale owner record, not
+    # permission to create a second install. Skip it; do not error the bundle.
+    if (-not (Test-Path -LiteralPath $owner -PathType Container)) { return $null }
     if ($receipt.installed_json -ne (Join-Path $owner 'sandbox\installed.json') -or
         $receipt.bin -ne (Join-Path $owner 'sandbox\bin') -or
         -not (Test-Path -LiteralPath $receipt.installed_json -PathType Leaf)) { throw 'Invalid Reverse THIS! owner paths; no new installation created.' }
@@ -26,6 +29,10 @@ function Resolve-ReverseOwner {
 $pointer=Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json'
 $target=Resolve-ReverseOwner -ExplicitRoot $KitRoot -Pointer $pointer -DefaultRoot (Join-Path $env:LOCALAPPDATA 'ReverseThis\kit')
 if ($ResolveOnly) { Write-Output $target; exit 0 }
+if (-not $target) {
+    Write-Host 'Reverse THIS! owner receipt points at a missing install; skipped, nothing replaced.'
+    exit 0
+}
 $comp=@(([IO.File]::ReadAllText((Join-Path $PackRoot 'BUNDLED-TOOLS\CATALOG.json')) | ConvertFrom-Json).components | Where-Object id -eq 'reverse-this')
 if ($comp.Count -ne 1) { throw 'Catalog must declare one Reverse THIS! companion.' }
 $comp=$comp[0]

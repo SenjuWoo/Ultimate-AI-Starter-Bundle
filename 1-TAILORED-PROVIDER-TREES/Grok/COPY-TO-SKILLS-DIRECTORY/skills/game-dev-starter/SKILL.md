@@ -54,7 +54,7 @@ voice) with verified code and weight licenses, read `references/free-creative-to
 | Photogrammetry / scan cleanup | **Meshroom**, **COLMAP** | textured mesh |
 | UI mockups and design handoff | **Penpot** | design file, SVG |
 | Fonts | **Google Fonts** (OFL/Apache) | TTF/WOFF2 |
-| Image-to-3D base mesh | the bundled **`img2threejs`** skill | Three.js factory or GLB |
+| Image-to-3D base mesh | the pinned **`img2threejs`** skill (clone v1.5.1 once) | Three.js factory or GLB |
 | Generative sketches and textures | p5.js or a seeded canvas/NumPy script | canvas/PNG |
 | Free finished assets | **Kenney**, **Poly Haven**, **ambientCG**, **Quaternius** | CC0 models, textures, audio, UI |
 
@@ -138,7 +138,7 @@ checks; do not replace a real build/run with a screenshot of a mockup.
 
 ## Proven-harness pointers
 
-- `img2threejs` — image/reference to a procedural Three.js asset with a
+- `img2threejs` (pinned, installed separately) — image/reference to a procedural Three.js asset with a
   render-and-compare harness.
 - `game-modding` — changing an existing game; use its engine references.
 - `game-production-quality` — fidelity, frame budgets, feel, world, systems, assets and

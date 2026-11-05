@@ -36,12 +36,13 @@ reference.
 
 ## img2threejs — `img2threejs/img2threejs`, Apache-2.0
 
-`img2threejs` is vendored from tag **v1.5.1**, commit
+`img2threejs` was vendored from tag **v1.5.1**, commit
 `dede5909be4e494b228c801a55dda47439143932`. CI metadata, sponsor assets and the
 upstream provider-specific `CLAUDE.md` are excluded; the skill, stdlib Python
 forge, documentation, fixtures and license are retained. UABS adds one Windows
 Python/UTF-8 resolver and replaces upstream's provider symlink instructions with
-canonical fanout.
+canonical fanout. The full tree now lives in its own repository; this bundle ships
+a pointer skill that names the same tag and commit.
 
 ## Impeccable — `pbakaus/impeccable`, Apache-2.0
 

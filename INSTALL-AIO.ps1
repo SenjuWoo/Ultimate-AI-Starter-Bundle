@@ -615,6 +615,7 @@ if (-not $SkipRuntimes -and -not $SkipBuildTools -and -not $SkillsOnly) {
   $buildArgs=if ($Mode -eq 'BundledOnly') { @('-Offline') } else { @() }
   if ($NoToolUpdates) { $buildArgs += '-NoUpdate' }
   if ((Invoke-UabsChildScript -Title 'Common compiler suite' -File (Join-Path $PackRoot 'TOOLS\Install-BuildTools.ps1') -ArgList $buildArgs) -ne 0) { throw 'Common compiler suite failed; see logs\build-tools.log.' }
+
   Refresh-ProcessPath
 }
 
@@ -1129,16 +1130,29 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
           # Offline bridge: Hermes rejects plain local paths, so stage the
           # bundled tree as a local git repo and hand Hermes a file:/// URL.
           $pluginStage = Join-Path $env:LOCALAPPDATA ('Ultimate-AI-Starter-Bundle\hermes-plugin-src\' + $pluginId)
-          if (-not (Test-Path -LiteralPath (Join-Path $pluginStage 'skills') -PathType Container)) {
-            Copy-UabsRobo -From (Join-Path $plugins $pluginId) -To $pluginStage
+          # Refresh the staged source when the bundle ships a newer version.
+          # Copying only when absent left the installed plugin pinned at 5.3.2
+          # while the bundle moved on.
+          $stageNeedsCopy = -not (Test-Path -LiteralPath (Join-Path $pluginStage 'skills') -PathType Container)
+          if (-not $stageNeedsCopy) {
+            $bundlePkg = Join-Path $plugins ($pluginId + '\package.json')
+            $stagePkg = Join-Path $pluginStage 'package.json'
+            if ((Test-Path -LiteralPath $bundlePkg -PathType Leaf) -and (Test-Path -LiteralPath $stagePkg -PathType Leaf)) {
+              try {
+                $bundleVer = [version](([IO.File]::ReadAllText($bundlePkg) | ConvertFrom-Json).version)
+                $stageVer = [version](([IO.File]::ReadAllText($stagePkg) | ConvertFrom-Json).version)
+                if ($bundleVer -gt $stageVer) { $stageNeedsCopy = $true }
+              } catch { }
+            }
           }
+          if ($stageNeedsCopy) { Copy-UabsRobo -From (Join-Path $plugins $pluginId) -To $pluginStage }
           # Hermes loads a plugin from plugin.yaml or .hermes-plugin/plugin.yaml.
           # Only write a fallback .hermes-plugin/plugin.yaml when the plugin ships neither.
           $rootHermesManifest = Join-Path $pluginStage 'plugin.yaml'
           $hermesManifest = Join-Path $pluginStage '.hermes-plugin\plugin.yaml'
           if (-not (Test-Path -LiteralPath $rootHermesManifest -PathType Leaf) -and -not (Test-Path -LiteralPath $hermesManifest -PathType Leaf)) {
             New-Item -ItemType Directory -Force -Path (Split-Path $hermesManifest) | Out-Null
-            $pluginVersion = if ($pluginId -eq 'superpowers') { '7.0.0' } else { '5.3.2' }
+            $pluginVersion = if ($pluginId -eq 'superpowers') { '7.0.0' } else { '5.3.3' }
             @(
               "name: $pluginId",
               "version: $pluginVersion",

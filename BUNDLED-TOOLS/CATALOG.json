@@ -288,15 +288,15 @@
       },
       "name": "Ponytail",
       "offline_asset": null,
-      "bundle_patch_note": "2026-09-28: bundled Cursor adapter anchors Ponytail script names at a word/hyphen boundary to prevent CodeQL #228 polynomial ReDoS. Native provider rules/skills are unchanged. AIO skills-copy and native offline fallbacks consume the vendored plugin tree, not a second plugin ZIP; remove the unused unpatched upstream ZIP rather than mislabel patched bytes as an official archive. Independent upstream marketplace caches are not rewritten by this source patch. 2026-10-02: reviewed v4.10.1 source c6ce46179874ea7368da0eb9e67c1ad5c10f08bc; 16 upstream adapter tests and Cursor security regression pass; existing Cursor fix retained. 2026-10-10: refreshed to v5.1.0 from official archive SHA-256 8fa83a6a1f5f0ca980445f789d3a747ee9999959bbc4176ea6f73e4f3dbcb8bd. Cursor regex fix retained; Windows statusline test now recognizes JSON-escaped paths. Adapter tests: 126 pass, one platform skip.",
+      "bundle_patch_note": "2026-09-28: bundled Cursor adapter anchors Ponytail script names at a word/hyphen boundary to prevent CodeQL #228 polynomial ReDoS. Native provider rules/skills are unchanged. AIO skills-copy and native offline fallbacks consume the vendored plugin tree, not a second plugin ZIP; remove the unused unpatched upstream ZIP rather than mislabel patched bytes as an official archive. Independent upstream marketplace caches are not rewritten by this source patch. 2026-10-02: reviewed v4.10.1 source c6ce46179874ea7368da0eb9e67c1ad5c10f08bc; 16 upstream adapter tests and Cursor security regression pass; existing Cursor fix retained. 2026-10-10: refreshed to v5.1.0 from official archive SHA-256 8fa83a6a1f5f0ca980445f789d3a747ee9999959bbc4176ea6f73e4f3dbcb8bd. Cursor regex fix retained; Windows statusline test now recognizes JSON-escaped paths. Adapter tests: 126 pass, one platform skip. 2026-11-05: merged v5.3.3 (official tag 7801d061) over the vendored 5.3.2 tree, keeping the Cursor/CodeQL regex fix and the band CSV escaping patch; both patch points survived upstream unchanged. Manifests now report 5.3.3. Upstream adapter suite is not vendored, so it was not run in this pass; installed Hermes plugin stays 5.3.2 until the next install.",
       "license": "MIT",
       "required_for": [
         "minimal-diff"
       ],
       "bundled_skills": true,
-      "version": "5.3.2",
-      "release_tag": "v5.3.2",
-      "compatibility_hold": "The bundled tree carries a local security patch; 5.3.3 has a broad upstream diff that needs a merge and adapter test run before it can replace 5.3.2."
+      "version": "5.3.3",
+      "release_tag": "v5.3.3",
+      "compatibility_hold": null
     },
     {
       "install": "npx-or-npm",
@@ -988,7 +988,7 @@
       "compatibility_hold": "1.24.0 is a newer optional local-media CLI; 1.23.0 remains the evaluated pin."
     }
   ],
-  "pack_version": "8.34.2",
+  "pack_version": "8.35.0",
   "updated_utc": "2026-10-18",
   "providers": {
     "Grok": {
@@ -1076,7 +1076,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.34.2",
+  "catalog_version": "8.35.0",
   "updated": "2026-10-26",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test.",
   "companions": [

@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.34.2 -->
+<!-- Ultimate AI Starter Bundle v8.35.0 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.34.2
+# Ultimate AI Starter Bundle v8.35.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -1016,7 +1016,7 @@ Additional canonical payloads without separate tool-catalog entries:
 
 | Payload | Upstream | Integration |
 |---|---|---|
-| `img2threejs` | [img2threejs/img2threejs](https://github.com/img2threejs/img2threejs) | Vendored skill, forge and fixtures |
+| `img2threejs` | [img2threejs/img2threejs](https://github.com/img2threejs/img2threejs) | Pinned pointer skill (v1.5.1); the tool tree lives in its own repo |
 | `skill-creator`, `build-mcp-server`, `build-mcpb`, `build-mcp-app` | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | Selected cross-provider skills, not the entire marketplace |
 | Hermes native Unity bridge | [CoplayDev/unity-mcp](https://github.com/CoplayDev/unity-mcp) | Existing Coplay editor backend, isolated in `unity`/`creative`; distinct from the IvanMurzak project route |
 

@@ -1,3 +1,20 @@
+## 8.35.0 (2026-11-05)
+
+- Scope split. The ComfyUI/SwarmUI preset set, the Anima model installer and its
+  test moved to their own `uabs-image-stack` repository; the bundle keeps no image
+  frontend hook, no model manifest and no download path.
+- `img2threejs` moved to its own repository (pinned v1.5.1). The bundle ships a
+  1.2 KB pointer skill naming the upstream tag and commit; the 489-file tool tree
+  and its six provider copies are gone. `game-dev-starter` still routes to it.
+- Ponytail vendored tree merged to upstream v5.3.3 (tag 7801d061) with both local
+  security patches re-applied: the Cursor/CodeQL regex anchor and band CSV
+  escaping. Catalog hold cleared; installed plugin updates on the next install.
+- Discovery reports TRUE states; see 8.34.1 and 8.34.2 below for the implementation
+  details that still ship (CodeBurn/npx, CLI Hub, cached inventory, 320k caps).
+- Tracked manifest drops from 7,858 to 5,618 files. Pack gate, docs gate, contract
+  suite and installed-state doctor verified after the split.
+- Unrestrained/preamble source untouched; no companion pin changed; 81 canonical skills.
+
 ## 8.34.2 (2026-11-05)
 
 - Compression defaults now reach an existing profile. Hermes writes

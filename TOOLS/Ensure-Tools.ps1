@@ -31,6 +31,7 @@ if ($Components.Count -gt 0) { $need = [System.Collections.Generic.List[string]]
 
 # Common compilers belong here; Skyrim and RE tool repair belongs to their owners.
 & (Join-Path $PSScriptRoot 'Install-BuildTools.ps1') -NoUpdate:$NoUpdate -Offline:($Mode -eq 'BundledOnly')
+
 if ($need.Count -eq 0) { Write-UabsOk 'Common tools ready.'; return }
 
 Write-UabsStep "Installing missing: $($need -join ', ')"

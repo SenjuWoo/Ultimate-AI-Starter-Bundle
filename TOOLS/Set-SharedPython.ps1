@@ -11,6 +11,19 @@ param(
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'UABS-Common.ps1')
 if (-not $Python) {
+  # Reuse the user's configured shared interpreter when it still works. A
+  # non-interactive install otherwise inherits the host agent's PATH and picks a
+  # private runtime the user never chose.
+  $configured = [Environment]::GetEnvironmentVariable('UABS_PYTHON','User')
+  if ($configured -and (Test-Path -LiteralPath $configured -PathType Leaf)) {
+    $probe = @(Get-UabsNativeStdout -Exe $configured -CmdArgs @('-I','-c','import json,sys;print(json.dumps(dict(exe=sys.executable,base=sys.base_prefix,prefix=sys.prefix,version=sys.version.split()[0])))'))
+    if ($LASTEXITCODE -eq 0 -and $probe.Count) {
+      $pi = ($probe -join '') | ConvertFrom-Json
+      if ($pi.base -ceq $pi.prefix) { $Python = $configured }
+    }
+  }
+}
+if (-not $Python) {
   # Re-select the user's working PATH after an upgrade, even if the old binding
   # points at an interpreter they removed. This never downloads a replacement.
   $previousSelection = $env:UABS_PYTHON; $selectionPath = $env:Path

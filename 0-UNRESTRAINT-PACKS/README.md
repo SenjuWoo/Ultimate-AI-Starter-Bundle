@@ -48,7 +48,6 @@ phrasing.** Neither is weaker on content; only the scaffolding differs.
 | `CLAUDE-CODE-ADDENDUM.md` | Operator kit | Claude Code output-identity and provider-boundary addendum; paste after AIO or keep in the project `CLAUDE.md` |
 | `Fun-stuff-kit/` | Operator kit (`Z:\Misc\Boof\Ai prompts n stuff\Fun stuff`) | AIO (chat/research jail), Story (fiction jail + NSFW physics), Websim, Vision (image caption FULL/SHORT), Character Maker, FablesGG, Tags (adult tag bank), Tools, SKSE-DLL, Papyrus, Models, Sites |
 | `Tavern-presets/` | Operator kit | WooJuice V12.1 + V12.1 SPEECH + anti-ethical-bullshit + notes (SillyTavern) |
-| `ComfyUI-SwarmUI-presets/` | Operator kit | SwarmUI / ComfyUI generation presets (FLUX2, Krea 2, Anima, SDXL Illustrious and more - 47 configs) |
 
 ## Retired 2026-10-12
 
