@@ -3014,6 +3014,20 @@ def test_creative_direction_and_capability_discovery() -> None:
     assert "creative-direction" in intel, "project-intel does not hand off creative direction"
 
 
+def test_compression_caps_reach_existing_profiles() -> None:
+    """The starter's absolute caps are not masked by Hermes' disabled defaults."""
+    installer = read(ROOT / "TOOLS" / "Install-Provider-Starter-Settings.ps1")
+    assert "upstream disabled default" in installer
+    for key in ("compression.threshold_tokens", "compression.proactive_prune_tokens"):
+        assert key in installer, f"installer does not reclaim {key}"
+    docs = read(ROOT / "docs" / "HERMES-MODELS.md")
+    assert "2026-11-05" in docs and "$0.05/M" in docs and "$0.016" in docs, (
+        "compression cost illustration is not dated against the current catalog")
+    one = read(ROOT / "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml")
+    two = read(ROOT / "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml")
+    assert one == two, "the two Hermes starter templates diverged"
+
+
 def main() -> int:
     # A failed gate must report Unicode paths on legacy Windows consoles too.
     sys.stdout.reconfigure(errors="backslashreplace")
@@ -3192,6 +3206,7 @@ def main() -> int:
         test_game_production_quality_is_universal_and_lean,
         test_verification_tiers_and_tooling_decisions,
         test_creative_direction_and_capability_discovery,
+        test_compression_caps_reach_existing_profiles,
         test_release_workflow_publishes_only_a_green_untagged_main_sha,
         test_free_game_probe_contract,
     ]

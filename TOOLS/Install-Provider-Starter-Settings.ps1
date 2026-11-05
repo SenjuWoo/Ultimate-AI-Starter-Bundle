@@ -199,6 +199,30 @@ function Merge-UabsHermesEfficiencyDefaults {
     }
     $missing += $key
   }
+
+  # Two pack-owned caps are written by Hermes itself as "disabled" defaults
+  # (threshold_tokens null, proactive_prune_tokens 0). A merged-config check
+  # calls them present, so the starter's 320k/80k never reached an existing
+  # profile. Only an upstream-disabled value is reclaimed; any other value is a
+  # user choice and stays.
+  foreach ($key in @('compression.threshold_tokens', 'compression.proactive_prune_tokens')) {
+    if ($missing -contains $key) { continue }
+    $prevEap = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try { $raw = (& $exe config get $key --json 2>&1 | Out-String) ; $code = $LASTEXITCODE }
+    finally { $ErrorActionPreference = $prevEap }
+    if ($code -ne 0) { continue }
+    # A CLI warning on stderr rides along with the value; parse the last
+    # JSON-looking line rather than the whole capture.
+    $line = @($raw -split "`r?`n" | Where-Object { $_.Trim() -match '^(null|true|false|[-0-9]|\{)' }) | Select-Object -Last 1
+    if (-not $line) { continue }
+    $value = $null
+    try { $value = ($line.Trim() | ConvertFrom-Json) } catch { continue }
+    if ($null -eq $value -or ($value -is [string] -and $value.Trim() -eq '') -or [string]$value -eq '0') {
+      $missing += $key
+      Write-UabsInfo ("{0} carries the upstream disabled default; the starter value applies" -f $key)
+    }
+  }
   if (-not $missing.Count) { Write-UabsOk 'Hermes efficiency/cache defaults already present'; return }
 
   Backup-UabsFile -Path $Dest

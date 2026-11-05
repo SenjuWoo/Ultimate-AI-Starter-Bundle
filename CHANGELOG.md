@@ -1,3 +1,19 @@
+## 8.34.2 (2026-11-05)
+
+- Compression defaults now reach an existing profile. Hermes writes
+  `compression.threshold_tokens: null` and `proactive_prune_tokens: 0` as its own
+  disabled defaults, and the merged-config check treated them as present, so the
+  starter's 320k/80k caps never applied. The installer now reclaims only those
+  upstream-disabled values and leaves any other value untouched (with a backup).
+- `docs/HERMES-MODELS.md` cost illustration corrected and dated 2026-11-05 against
+  the live OpenRouter catalog: Particle-1 is $0.05/M input, $0.003/M cached and
+  $0.50/M output (320k => $0.016 / $0.00096); DeepSeek V4.1 Flash is $0.15/M input,
+  $0.003/M cached, $0.60/M output. The older $0.15/M figure was DeepSeek's rate,
+  not Particle's.
+- Both Hermes starter templates verified byte-identical; no TTL, pruning threshold,
+  auxiliary-model or user configuration changed beyond the reclaimed disabled caps.
+- Unrestrained/preamble source untouched; no companion pin changed; 81 canonical skills.
+
 ## 8.34.1 (2026-11-05)
 
 - `tool-discovery/scripts/discover_tools.ps1` now reports a precise state (VERIFIED,

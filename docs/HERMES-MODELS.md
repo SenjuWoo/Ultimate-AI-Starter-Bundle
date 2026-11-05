@@ -86,8 +86,16 @@ multimodal paid one.
 the lower of `threshold × context` and that count. On a 1,048,576-token window
 the ratio would otherwise wait until ~524k tokens, which is a long, expensive
 turn and past the range where most models hold quality. 320k keeps the working
-set large enough for multi-file work while bounding per-turn input cost
-(~$0.048 at $0.15/1M before caching) and cache invalidation frequency.
+set large enough for multi-file work while bounding per-turn input cost and cache
+invalidation frequency.
+
+Cost at 320,000 input tokens, OpenRouter catalog checked **2026-11-05**:
+`particle-ai/particle-1` lists $0.05/M uncached input, $0.003/M cached input and
+$0.50/M output, so the prompt is **$0.016** uncached or **$0.00096** fully cached;
+output is billed separately. `deepseek/deepseek-v4.1-flash-1017` lists $0.15/M
+input, $0.003/M cached and $0.60/M output ($0.048 / $0.00096 at the same size).
+These are catalog rates, not a bill: reasoning, retries and cache misses change
+the total.
 
 `proactive_prune_tokens: 80000` reclaims stale large tool results before a
 summary is needed; `target_ratio: 0.20`, `tail_mode: lean`, `protect_last_n: 20`
