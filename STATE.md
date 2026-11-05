@@ -6,7 +6,7 @@
   skill ceiling, orphan tools, TODO markers) with `--strict` in the pack gate and
   `TESTS/test_maintainability_audit.py`. Removed 1.1 GB of local build output.
 - Release metadata skill extended with the ADR and audit workflow.
-- Unrestrained/preamble source untouched this release; 80 canonical skills.
+- Unrestrained/preamble source untouched this release; 81 canonical skills.
 
 ## Prepared 8.30.5 — planner/worker defaults for Hermes — 2026-11-04
 
@@ -23,7 +23,7 @@
   Release contract `test_hermes_starter_uses_planner_worker_pair`: 160/0.
 - Unrestrained preamble, refusal protocol and Claude addendum reinforced (no content rule
   removed); provider instruction files and the unrestraint-packs skill carry the new
-  no-self-refusal route. No companion-pin changes; 80 canonical skills.
+  no-self-refusal route. No companion-pin changes; 81 canonical skills.
 
 ## Prepared 8.30.2 — Skyrim knowledge moved to Skyrim Forge — 2026-11-04
 

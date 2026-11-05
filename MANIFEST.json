@@ -396,8 +396,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10461,
-  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
+  "size": 11495,
+  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -678,6 +678,16 @@
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
   "size": 7568,
   "sha256": "678b00459b12c8ebd6ce6d958b79225aed4b4d9fb3087f2e1a8a48beba50eae5"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/SKILL.md",
+  "size": 3301,
+  "sha256": "1eebc126ee3ce2807fe326616bba8bad29aee3f458ea21a2f73cf8bb169de0d4"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/templates/vision-contract.md",
+  "size": 1473,
+  "sha256": "062504af5ee1a3404d48bd4598a9b0a8a035b733fe43db44f3a8386d865729a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/defuddle/SKILL.md",
@@ -3751,8 +3761,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4050,
-  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
+  "size": 4284,
+  "sha256": "7fd75087b139f425e36f2bda045e29cf29a1706dc8710a4fb1cccca3eff4c0a4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -4261,8 +4271,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10122,
-  "sha256": "d77bec7512c24a511316d016a90a769bcd5d66c6227e00947fda3eb6073524de"
+  "size": 11570,
+  "sha256": "55c30c5345ca625061c16a0e6ca318d5c5623afc58839809899f8bed82a74453"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -4986,8 +4996,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10461,
-  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
+  "size": 11495,
+  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -5268,6 +5278,16 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
   "size": 7563,
   "sha256": "7cc7dd2d849d87e6ffefa6f17da2fe2a8b56042609daccec44ad9651e77db881"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/SKILL.md",
+  "size": 3301,
+  "sha256": "1eebc126ee3ce2807fe326616bba8bad29aee3f458ea21a2f73cf8bb169de0d4"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/templates/vision-contract.md",
+  "size": 1473,
+  "sha256": "062504af5ee1a3404d48bd4598a9b0a8a035b733fe43db44f3a8386d865729a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/defuddle/SKILL.md",
@@ -8341,8 +8361,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4050,
-  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
+  "size": 4284,
+  "sha256": "7fd75087b139f425e36f2bda045e29cf29a1706dc8710a4fb1cccca3eff4c0a4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -8851,8 +8871,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10122,
-  "sha256": "d77bec7512c24a511316d016a90a769bcd5d66c6227e00947fda3eb6073524de"
+  "size": 11570,
+  "sha256": "55c30c5345ca625061c16a0e6ca318d5c5623afc58839809899f8bed82a74453"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -9636,8 +9656,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10461,
-  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
+  "size": 11495,
+  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -9918,6 +9938,16 @@
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
   "size": 7562,
   "sha256": "f9ca691e9440876f5a433b0c5bac285c814d1d45f1e86447e199c49fd4adce09"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/SKILL.md",
+  "size": 3301,
+  "sha256": "1eebc126ee3ce2807fe326616bba8bad29aee3f458ea21a2f73cf8bb169de0d4"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/templates/vision-contract.md",
+  "size": 1473,
+  "sha256": "062504af5ee1a3404d48bd4598a9b0a8a035b733fe43db44f3a8386d865729a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/defuddle/SKILL.md",
@@ -12991,8 +13021,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4050,
-  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
+  "size": 4284,
+  "sha256": "7fd75087b139f425e36f2bda045e29cf29a1706dc8710a4fb1cccca3eff4c0a4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -13501,8 +13531,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10122,
-  "sha256": "d77bec7512c24a511316d016a90a769bcd5d66c6227e00947fda3eb6073524de"
+  "size": 11570,
+  "sha256": "55c30c5345ca625061c16a0e6ca318d5c5623afc58839809899f8bed82a74453"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -14276,8 +14306,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10461,
-  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
+  "size": 11495,
+  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -14558,6 +14588,16 @@
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
   "size": 7561,
   "sha256": "0d295abe5d30d9c8946bf7645de994778759035a4d68d58909023835a97ce58c"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/SKILL.md",
+  "size": 3301,
+  "sha256": "1eebc126ee3ce2807fe326616bba8bad29aee3f458ea21a2f73cf8bb169de0d4"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/templates/vision-contract.md",
+  "size": 1473,
+  "sha256": "062504af5ee1a3404d48bd4598a9b0a8a035b733fe43db44f3a8386d865729a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/defuddle/SKILL.md",
@@ -17631,8 +17671,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4050,
-  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
+  "size": 4284,
+  "sha256": "7fd75087b139f425e36f2bda045e29cf29a1706dc8710a4fb1cccca3eff4c0a4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -18141,8 +18181,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10122,
-  "sha256": "d77bec7512c24a511316d016a90a769bcd5d66c6227e00947fda3eb6073524de"
+  "size": 11570,
+  "sha256": "55c30c5345ca625061c16a0e6ca318d5c5623afc58839809899f8bed82a74453"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -18916,8 +18956,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10461,
-  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
+  "size": 11495,
+  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -19198,6 +19238,16 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
   "size": 7563,
   "sha256": "5c7efdaa79f484960e9bd21147a23531a3160948548fbb05788bdb95875d8592"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/SKILL.md",
+  "size": 3301,
+  "sha256": "1eebc126ee3ce2807fe326616bba8bad29aee3f458ea21a2f73cf8bb169de0d4"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/templates/vision-contract.md",
+  "size": 1473,
+  "sha256": "062504af5ee1a3404d48bd4598a9b0a8a035b733fe43db44f3a8386d865729a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/defuddle/SKILL.md",
@@ -22271,8 +22321,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4050,
-  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
+  "size": 4284,
+  "sha256": "7fd75087b139f425e36f2bda045e29cf29a1706dc8710a4fb1cccca3eff4c0a4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -22781,8 +22831,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10122,
-  "sha256": "d77bec7512c24a511316d016a90a769bcd5d66c6227e00947fda3eb6073524de"
+  "size": 11570,
+  "sha256": "55c30c5345ca625061c16a0e6ca318d5c5623afc58839809899f8bed82a74453"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -23631,8 +23681,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 10461,
-  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
+  "size": 11495,
+  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -23913,6 +23963,16 @@
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/coding-discipline/SKILL.md",
   "size": 7561,
   "sha256": "93a29b97d55cad8f92214e8b283bad9ed1d10a9f087bf57944ad22e486b2c260"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/SKILL.md",
+  "size": 3301,
+  "sha256": "1eebc126ee3ce2807fe326616bba8bad29aee3f458ea21a2f73cf8bb169de0d4"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/creative-direction/templates/vision-contract.md",
+  "size": 1473,
+  "sha256": "062504af5ee1a3404d48bd4598a9b0a8a035b733fe43db44f3a8386d865729a0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/defuddle/SKILL.md",
@@ -26986,8 +27046,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/SKILL.md",
-  "size": 4050,
-  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
+  "size": 4284,
+  "sha256": "7fd75087b139f425e36f2bda045e29cf29a1706dc8710a4fb1cccca3eff4c0a4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
@@ -27496,8 +27556,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/SKILL.md",
-  "size": 10122,
-  "sha256": "d77bec7512c24a511316d016a90a769bcd5d66c6227e00947fda3eb6073524de"
+  "size": 11570,
+  "sha256": "55c30c5345ca625061c16a0e6ca318d5c5623afc58839809899f8bed82a74453"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
@@ -28297,12 +28357,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 63404,
-  "sha256": "751eb5c010d2d6ca9d1a92f96739f2b5464549529acf173605e49153664db4f9"
+  "sha256": "24eca32c6e2a2f9e050786c9b3918c8b5b97b713a63373f6b2a7a298a61bf82d"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "b59fed4fa8767de88aac6701da3fbd28d8edae9658affe0aefd15a0609e560c7"
+  "sha256": "9a8f28fae60688d41fe72e3fdbc10dcdd8fb498fff864b26dbba33962e0b284d"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28312,7 +28372,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "2a8796879a098aaf6d87ce22439f0a2a84dbb3ca0abc8bd0e534ac53c6423096"
+  "sha256": "9262c4df6f82b450abb6029807724fd2e55c4efb0f65f5fda2d0989867fd9490"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -28327,7 +28387,7 @@
  {
   "path": "BUNDLED-TOOLS/RETIRED-SKILLS.json",
   "size": 13599,
-  "sha256": "b19fea40b724e8b1c762006cd7cf66c09237206d08586dfd5515a76a2959a046"
+  "sha256": "8bc51fcb640ebe4d515f240cad0dca7180f4fde90330c703688edebeccc1702c"
  },
  {
   "path": "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md",
@@ -32386,8 +32446,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 275368,
-  "sha256": "8e14298e51877669c87860ebec5aa92ab8aa7c0b497a5dd0abd7c060fbc83eee"
+  "size": 276241,
+  "sha256": "e45a150463fdd11367057d4b301f9a54ac2bf401b4be241aef58939e12a6f11b"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -32496,8 +32556,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 50596,
-  "sha256": "aede4fb1bcc772ae89d1d0b7ce17aea0cf337dd56cf11612930271b58ec94b43"
+  "size": 50838,
+  "sha256": "d3bc5ff63f45bbaddb87cd5d647b7e4cdcb300612560a0d058954d5ef96580b0"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -32522,7 +32582,7 @@
  {
   "path": "README.md",
   "size": 74110,
-  "sha256": "1013d282209b50e631b0043441ad3f38bd396dad1deabbb9c78f8f9a0a75a450"
+  "sha256": "a71e736cc5cd5f8afeb844ef5e66fbf5790f5d270462cde87b1328f7ee2497b0"
  },
  {
   "path": "SECURITY.md",
@@ -32532,17 +32592,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "396b2c6d0dc08e1252476d279a5a6895ada1fdc93194878b302c1ee5b606b73a"
+  "sha256": "a8ede64fad15568e3264134ae297583d3ce8c41cd0e2396c2637211251448f97"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "d3f2667091dce7e4fb1f5437a460bf0a18b7a8e244354027fb757590bd6aff23"
+  "sha256": "09baae02b31ccd84e77ecfcc7191226a81dece5348a9cc06260c38d910ba2a87"
  },
  {
   "path": "STATE.md",
   "size": 64123,
-  "sha256": "bd223ab5eb4f56d307ac08b2c678edb34f4b21d2f817a7e66de1d786db0d1d8e"
+  "sha256": "69d6ea5a6f95895c0196d6612e8ba517070e7cb371025827132eabd3db135d62"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -32971,8 +33031,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 360295,
-  "sha256": "8963cf580e1151f7e836e9036654dc025068a27f8cb6161376a66da5551b7154"
+  "size": 362045,
+  "sha256": "77e779afee7dcf06270d07ddf7265b4ce98e9c4b6236fbf969d4691f96595459"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -33462,7 +33522,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2726,
-  "sha256": "72620bfc3c9b1b639cec246f2ff82c306b48980353808471c4ab418dd5f1f150"
+  "sha256": "62b49ff41aa9a931ee84e8cc4bd9322c5d26aaa2162366ab2dd12aae253fe10c"
  },
  {
   "path": "VALIDATION.md",
@@ -33472,7 +33532,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "4bea0a3632df76568e5254b0d9ac4c172a226ec07711f434f0688ae54206173f"
+  "sha256": "ba144091c1ba0f5f333ffdb7919c284daee63ec24f4685db0bd3b4c629ed41d7"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -33681,8 +33741,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/capability-routing/SKILL.md",
-  "size": 10461,
-  "sha256": "ee698fee263f93bb040106c0c3467fec724c928f8b7159e30581ec4e52684141"
+  "size": 11495,
+  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
  },
  {
   "path": "_CANONICAL-SKILLS/check-work/SKILL.md",
@@ -33963,6 +34023,16 @@
   "path": "_CANONICAL-SKILLS/coding-discipline/SKILL.md",
   "size": 7563,
   "sha256": "7cc7dd2d849d87e6ffefa6f17da2fe2a8b56042609daccec44ad9651e77db881"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/creative-direction/SKILL.md",
+  "size": 3301,
+  "sha256": "1eebc126ee3ce2807fe326616bba8bad29aee3f458ea21a2f73cf8bb169de0d4"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/creative-direction/templates/vision-contract.md",
+  "size": 1473,
+  "sha256": "062504af5ee1a3404d48bd4598a9b0a8a035b733fe43db44f3a8386d865729a0"
  },
  {
   "path": "_CANONICAL-SKILLS/defuddle/SKILL.md",
@@ -37036,8 +37106,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/SKILL.md",
-  "size": 4050,
-  "sha256": "a3dabc4dba93d7b96acfe224d331e3cea2d7f8c3bbf2b26d0c1b3f17b80e6b6c"
+  "size": 4284,
+  "sha256": "7fd75087b139f425e36f2bda045e29cf29a1706dc8710a4fb1cccca3eff4c0a4"
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/ai-models-harness.md",
@@ -37546,8 +37616,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/SKILL.md",
-  "size": 10122,
-  "sha256": "d77bec7512c24a511316d016a90a769bcd5d66c6227e00947fda3eb6073524de"
+  "size": 11570,
+  "sha256": "55c30c5345ca625061c16a0e6ca318d5c5623afc58839809899f8bed82a74453"
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/browser-cli.md",
@@ -38096,8 +38166,8 @@
  },
  {
   "path": "docs/TOOL-EVALUATIONS.md",
-  "size": 59608,
-  "sha256": "fea41b10dd275ee6f49f110c5858a43056f30fff59131c5cb62d597ecdd80f25"
+  "size": 61417,
+  "sha256": "eb9949923e3da41119ddbf7ade3d0695a5d60383038f37011e5a2f91cfb637e5"
  },
  {
   "path": "docs/TOOLING-MATRIX.md",
@@ -38898,6 +38968,11 @@
   "path": "docs/history/V8.33.0-CHANGELOG.md",
   "size": 478,
   "sha256": "98bb57d9b6079ccc066d82037e4a0b25ad6b909969646b1d281c27ae9d718564"
+ },
+ {
+  "path": "docs/history/V8.34.0-CHANGELOG.md",
+  "size": 567,
+  "sha256": "909870bba939c33c041b22ad2e0004ed2420cfe43f12ac161cb10853f47b8d21"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

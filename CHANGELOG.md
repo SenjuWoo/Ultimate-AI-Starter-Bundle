@@ -1,3 +1,16 @@
+## 8.34.0 (2026-11-05)
+
+- New `creative-direction` skill: Intent -> Expansion -> Execution, a compact Vision
+  Contract, the build/inspect/critique/improve loop, vertical-slice-first development,
+  a feature ledger for session continuity and an explicit autonomy boundary.
+- `capability-routing` now states the default tool order (native API/CLI, verified CLI
+  harness, specialized MCP, GUI automation) as a best-fit rule, not a rigid ladder, and
+  points missing-capability searches at `tool-discovery`.
+- `tool-discovery` gains a host capability inventory (bounded, cached, evidence-only) and
+  a CLI Hub section: `cli-hub` 0.4.1 is detected, not vendored; adopt one pinned harness
+  after a real smoke test. `project-intel` hands creative projects to the new skill.
+- Unrestrained/preamble source untouched; no companion pin changed; 81 canonical skills.
+
 ## 8.33.0 (2026-11-05)
 
 - Verification tiers: `TOOLS/Verify-Fast.ps1` parses changed PowerShell, compiles changed
@@ -9,7 +22,7 @@
   hyperfine, watchexec, prek and PSScriptAnalyzer. Optional linters are probes: no
   dependency, runtime or install step is added; licences not verified are marked so.
 - ADR-0006 records the tier decision and the optional-linter rule.
-- Unrestrained/preamble source untouched; no companion pin changed; 80 canonical skills.
+- Unrestrained/preamble source untouched; no companion pin changed; 81 canonical skills.
 
 ## 8.32.0 (2026-11-05)
 
@@ -23,7 +36,7 @@
   general modding router.
 - `game-dev-starter` routes production questions to the new skill. No arbitrary polygon,
   draw-call or memory limits; every optimization must be measured and reversible.
-- Unrestrained/preamble source untouched; no companion pin changed; 80 canonical skills.
+- Unrestrained/preamble source untouched; no companion pin changed; 81 canonical skills.
 
 ## 8.31.0 (2026-11-05)
 
@@ -38,7 +51,7 @@
 - New regression suite `TESTS/test_maintainability_audit.py`; release metadata skill now
   documents ADRs, the audit and the pre-push guard.
 - Self-style unrestrained/preamble source untouched this release; no companion pin
-  changed; 80 canonical skills total.
+  changed; 81 canonical skills total.
 
 ## 8.30.5 (2026-11-04)
 
@@ -66,7 +79,7 @@
   skill records the order of operations.
 - Unrestrained preamble and refusal protocol reinforced across all shipped variants and
   provider instruction files; no content rule was removed or weakened. No companion pin
-  changed; 80 canonical skills total.
+  changed; 81 canonical skills total.
 
 ## 8.30.4 (2026-11-04)
 
@@ -77,7 +90,7 @@
   what started cold caches; quality is now protected by prompt-cache hits
   rather than a model split.
 - Self-style unrestrained/preamble source unchanged; no main-model or
-  companion-pin change; 80 canonical skills total.
+  companion-pin change; 81 canonical skills total.
 
 ## 8.30.3 (2026-11-04)
 
@@ -87,7 +100,7 @@
   MCP, titles, voice, Fast / execute delegation and MoA aggregation. The
   premium MoA default preset is disabled; `deepseek_particle` is the default.
 - Self-style unrestrained/preamble source unchanged; no companion pin changed;
-  80 canonical skills total.
+  81 canonical skills total.
 
 ## 8.30.2 (2026-11-04)
 
@@ -133,7 +146,7 @@
   (MonoGame/SMAPI) moved out of the Unity skill. `game-dev-starter` named two skills the bundle does not ship.
   Two skills said the Grok codebase-memory helper needs path edits; it resolves the exe itself.
 - No model default, preamble or content-permission change; unrestrained and NSFW material untouched. Companion
-  releases still follow latest; 80 canonical skills total.
+  releases still follow latest; 81 canonical skills total.
 
 ## 8.29.16 (2026-11-03)
 

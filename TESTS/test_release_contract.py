@@ -2983,6 +2983,37 @@ def test_verification_tiers_and_tooling_decisions() -> None:
     assert "0006-verification-tiers.md" in read(adr / "README.md"), "ADR index lacks 0006"
 
 
+def test_creative_direction_and_capability_discovery() -> None:
+    """The idea-to-project loop stays a router, and CLI Hub stays optional."""
+    skill = CANON / "creative-direction" / "SKILL.md"
+    body = read(skill)
+    words = len(body.split())
+    assert 45 <= words <= 500, f"creative-direction body is {words} words"
+    for needle in ("Vision Contract", "feature ledger", "Vertical slice", "Autonomy boundary"):
+        assert needle.lower() in body.lower(), f"creative-direction lacks {needle}"
+    assert (skill.parent / "templates" / "vision-contract.md").is_file()
+
+    routing = read(CANON / "capability-routing" / "SKILL.md")
+    assert "Default order, not a law" in routing
+    for step in ("native API", "CLI harness", "specialized MCP", "GUI/browser"):
+        assert step in routing, f"capability order lost {step}"
+    assert "cli-hub" in routing and "tool-discovery" in routing
+
+    discovery = read(CANON / "tool-discovery" / "SKILL.md")
+    assert "Host capability inventory" in discovery and "CLI Hub" in discovery
+    assert "never recursive whole-drive" in discovery, "discovery is unbounded again"
+
+    evaluations = read(ROOT / "docs" / "TOOL-EVALUATIONS.md")
+    assert "detected, not vendored" in evaluations, "CLI-Anything decision is not recorded"
+    assert "0.4.1" in evaluations, "the local CLI Hub version was not verified"
+
+    installer = read(ROOT / "INSTALL-AIO.ps1")
+    assert "cli-anything" not in installer.lower(), "the installer adds a CLI-Anything dependency"
+
+    intel = read(CANON / "project-intel" / "SKILL.md")
+    assert "creative-direction" in intel, "project-intel does not hand off creative direction"
+
+
 def main() -> int:
     # A failed gate must report Unicode paths on legacy Windows consoles too.
     sys.stdout.reconfigure(errors="backslashreplace")
@@ -3160,6 +3191,7 @@ def main() -> int:
         test_game_mashup_passthrough_knowledge_is_wired_and_private,
         test_game_production_quality_is_universal_and_lean,
         test_verification_tiers_and_tooling_decisions,
+        test_creative_direction_and_capability_discovery,
         test_release_workflow_publishes_only_a_green_untagged_main_sha,
         test_free_game_probe_contract,
     ]

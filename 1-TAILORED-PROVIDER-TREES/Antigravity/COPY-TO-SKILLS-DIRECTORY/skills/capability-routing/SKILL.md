@@ -27,6 +27,25 @@ Both halves are load-bearing. A pile of excellent servers the model never
 reaches for is worse than a small set it routes correctly — and so is a browser
 stack launched to read a static JSON file.
 
+## Default order, not a law
+
+1. The application's native API, SDK, scripting interface or official CLI.
+2. A verified specialized CLI harness, including a CLI-Anything harness when one
+   covers the operation (`cli-hub can "<task>"`; see `tool-discovery`).
+3. A specialized MCP for structured access, persistent app state or a live editor.
+4. GUI/browser/computer automation when nothing reliable is programmatic.
+
+Pick the tool with the best fit, coverage, verification access and overhead — not
+the first item. A CLI wins for bulk work, an MCP for live state, and one workflow
+may need both. Never replace a working specialized capability with a fresh
+generic script because the script is easier to write.
+
+When no active capability fits, run the discovery ladder in `tool-discovery`
+before telling the operator a tool is missing: installed profiles and MCPs,
+verified machine inventory, PATH, package managers, project-local toolchains,
+then vetted catalogs. Bounded discovery only; never scan whole drives or read
+credentials.
+
 ## The failure this exists to stop
 
 ```

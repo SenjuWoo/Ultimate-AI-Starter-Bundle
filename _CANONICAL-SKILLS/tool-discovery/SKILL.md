@@ -55,6 +55,33 @@ Treat pasted roots as hints. When the user says a path is "just suggestions" and
    install is still forbidden), then run it. Only when no supported install
    exists, say so plainly.
 
+## Host capability inventory
+
+Before declaring nothing fits, check in this order: currently callable tools and
+proactive capabilities; installed but inactive profiles and MCP servers; the
+verified machine inventory; PATH and `Get-Command`/`where.exe`; package managers
+(`winget list`, pip, npm, cargo, dotnet); project-local environments; then vetted
+catalogs and upstream documentation.
+
+Record what you find once, in the machine inventory: path, version, provenance,
+installed/available/enabled/verified, operations, credentials/cost, and the last
+successful smoke test. Refresh it when the environment changes; do not rescan a
+drive for every question. Bounded discovery only — never recursive whole-drive
+scans, and never read credentials.
+
+Documentation is not evidence. A tool counts as usable only after its own
+`--version`/`--help` or a real call succeeds on this host.
+
+## CLI Hub (CLI-Anything)
+
+`cli-hub` is an optional companion, not a bundle dependency. Detect it with
+`Get-Command cli-hub`; its 0.4.x interface is `list`, `search`, `can "<task>"`,
+`info`, `install`, `launch`, `matrix`. Use `cli-hub can` to answer "is there a
+harness for this app?" before hand-writing a wrapper, then smoke-test the harness
+on the real application. Adopt a single harness and pin it; do not vendor the
+upstream repository or install its meta-skill globally. If `cli-hub` is absent,
+the native API/CLI still wins — note the option and continue.
+
 ## Two different failures, two different answers
 
 | What you see | State | Response template |

@@ -10,6 +10,10 @@ disproves others. Re-searching settled questions burns tokens and re-introduces
 known-bad paths. This skill carries the settled results, one card per project
 class.
 
+For a creative project whose look, tone or topology must survive a restart, pair
+this card with `creative-direction`: it owns the Vision Contract and feature
+ledger, and this skill keeps the settled evidence those decisions rest on.
+
 ## Use
 
 1. Identify the project class and load the **one** card that matches the router

@@ -1022,3 +1022,16 @@ The defect is unchanged across 0.1.5 → 0.1.14, so the hold stays and the audit
 skill 4.1.3 pin (plus the reviewed local skill overrides) remains the shipped pair.
 `TESTS/impeccable-security-regressions.mjs` still passes on the vendored CLI.
 
+## CLI-Anything / cli-hub — reviewed 2026-11-05
+
+Local check: `cli-hub --version` -> **0.4.1**; `--help` lists `can`, `info`,
+`install`, `launch`, `list`, `matrix`, `previews`, `search`, `uninstall`,
+`update`; `list` shows real per-app harnesses (blender, freecad, comfyui, ...).
+Provenance: HKUDS, Apache-2.0, documented companion since 0.4.0.
+
+Decision: **detected, not vendored**. The bundle does not ship the repository,
+the hub, or its meta-skill, and does not install a harness during setup. The
+agent may use `cli-hub can "<task>"` to find a harness, then adopts one pinned
+harness after a real smoke test on the installed application. Native API/CLI
+still wins when it covers the operation; MCP still wins for live editor state.
+No global registration is added.
