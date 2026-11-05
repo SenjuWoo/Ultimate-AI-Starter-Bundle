@@ -82,6 +82,19 @@ on the real application. Adopt a single harness and pin it; do not vendor the
 upstream repository or install its meta-skill globally. If `cli-hub` is absent,
 the native API/CLI still wins — note the option and continue.
 
+## Reported states
+
+`scripts/discover_tools.ps1` reports a precise `state` next to the legacy
+`status`: `VERIFIED` (the tool's own version/help answered), `CALLABLE` (MCP
+configured and enabled), `INSTALLED` (binary or config present, probe failed),
+`DISCOVERED` (source checkout only), `MISSING`. `status` keeps FOUND/MISSING for
+old consumers.
+
+Flags: `-Json`, `-Inventory` (bounded registry/package-manager inventory,
+cached 24 h), `-Refresh`, `-NoCache`, `-SearchDir`/`-Isolated` (fixtures),
+`-ToolRoots`, `-HermesConfig` (JSON MCP state). It never installs and never
+scans a whole drive.
+
 ## Two different failures, two different answers
 
 | What you see | State | Response template |

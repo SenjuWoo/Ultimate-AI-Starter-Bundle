@@ -1,3 +1,17 @@
+## 8.34.1 (2026-11-05)
+
+- `tool-discovery/scripts/discover_tools.ps1` now reports a precise state (VERIFIED,
+  CALLABLE, INSTALLED, DISCOVERED, MISSING) beside the legacy FOUND/MISSING status, with
+  a hard timeout and no pipe deadlock. A version/help call decides VERIFIED; a binary on
+  PATH is only INSTALLED.
+- CodeBurn is no longer "available" just because npx exists: `npx --no-install codeburn
+  --version` must answer, and npx can never install during discovery.
+- CLI Hub is probed for real (version, harness count); a CLI-Anything source checkout is
+  DISCOVERED, never treated as installed. Optional host inventory (registry + package
+  managers) is opt-in and cached for 24 h; MCP config can report CALLABLE vs inactive.
+- New `TESTS/Test-ToolDiscovery.ps1` (17 deterministic stub checks) runs in the pack gate.
+- Unrestrained/preamble source untouched; no companion pin changed; 81 canonical skills.
+
 ## 8.34.0 (2026-11-05)
 
 - New `creative-direction` skill: Intent -> Expansion -> Execution, a compact Vision

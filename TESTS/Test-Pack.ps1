@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
   Full v6 pack gate: skill health, PowerShell parseability, offline asset
   integrity, and registry sanity. Exits non-zero on any failure.
@@ -141,6 +141,9 @@ else { Bad ('JSON case-key gate failed:' + [Environment]::NewLine + $jsonCaseOut
 $packsOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-Packs.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $packsOut -match 'PACKS GATE: PASS') { Good 'Content packs: detection, remembered choices, instruction blocks, skill retirement' }
 else { Bad ('Packs gate failed:' + [Environment]::NewLine + $packsOut) }
+$discoveryOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-ToolDiscovery.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $discoveryOut -match 'TOOL DISCOVERY GATE: PASS') { Good 'Tool discovery: verified states, CLI Hub, cache and no installs' }
+else { Bad ('Tool discovery gate failed:' + [Environment]::NewLine + $discoveryOut) }
 $profileOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-UserProfile.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $profileOut -match 'USER PROFILE GATE: PASS') { Good 'Personal profile: seed, machine map, size cap, injection and removal' }
 else { Bad ('User profile gate failed:' + [Environment]::NewLine + $profileOut) }
