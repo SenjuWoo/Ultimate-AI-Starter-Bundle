@@ -10,6 +10,7 @@ Format: context, options, decision, evidence, consequences, revisit trigger.
 | [0003](0003-planner-worker-routing.md) | Particle works, DeepSeek plans, MoA is on demand |
 | [0004](0004-generated-release-metadata.md) | Generated metadata is refreshed before gates |
 | [0005](0005-no-bundle-router-or-paid-eval.md) | No bundle-side router or automatic paid evaluation |
+| [0006](0006-verification-tiers.md) | FAST/FULL/RELEASE tiers, optional linters only |
 
 New record: copy the shape below, number it next, and add a row above.
 

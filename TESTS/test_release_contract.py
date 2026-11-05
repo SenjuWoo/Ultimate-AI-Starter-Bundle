@@ -2959,6 +2959,30 @@ def test_game_production_quality_is_universal_and_lean() -> None:
             f"{provider} does not carry the production skill")
 
 
+def test_verification_tiers_and_tooling_decisions() -> None:
+    """FAST/FULL/RELEASE are separate, and no optional linter became mandatory."""
+    fast = read(ROOT / "TOOLS" / "Verify-Fast.ps1")
+    release = read(ROOT / "TOOLS" / "Verify-Release.ps1")
+    for needle in ("py_compile", "Parser]::ParseFile", ".uabs-cache", "Test-Cached"):
+        assert needle in fast, f"FAST lost {needle}"
+    assert "Get-Command actionlint" in fast and "Get-Command ruff" in fast
+    assert "actionlint is required" not in fast and "ruff is required" not in fast
+    assert "Refresh-Release-Metadata.ps1" in release and "Test-Pack.ps1" in release
+
+    matrix = read(ROOT / "docs" / "TOOLING-MATRIX.md")
+    for tool in ("actionlint", "Ruff", "check-jsonschema", "ast-grep", "lychee",
+                 "hyperfine", "watchexec", "prek", "PSScriptAnalyzer"):
+        assert tool in matrix, f"tooling matrix lacks {tool}"
+    assert "optional probe" in matrix and "not adopted" in matrix and "rejected" in matrix
+    assert "Never replaces" in matrix, "verification tiers do not state the precedence"
+    assert ".uabs-cache/" in read(ROOT / ".gitignore"), "FAST cache is not gitignored"
+
+    adr = CANON.parent / "docs" / "decisions"
+    record = adr / "0006-verification-tiers.md"
+    assert record.is_file() and "FAST" in read(record)
+    assert "0006-verification-tiers.md" in read(adr / "README.md"), "ADR index lacks 0006"
+
+
 def main() -> int:
     # A failed gate must report Unicode paths on legacy Windows consoles too.
     sys.stdout.reconfigure(errors="backslashreplace")
@@ -3135,6 +3159,7 @@ def main() -> int:
         test_toolbox_wheel_is_the_shipped_source,
         test_game_mashup_passthrough_knowledge_is_wired_and_private,
         test_game_production_quality_is_universal_and_lean,
+        test_verification_tiers_and_tooling_decisions,
         test_release_workflow_publishes_only_a_green_untagged_main_sha,
         test_free_game_probe_contract,
     ]

@@ -1,3 +1,16 @@
+## 8.33.0 (2026-11-05)
+
+- Verification tiers: `TOOLS/Verify-Fast.ps1` parses changed PowerShell, compiles changed
+  Python and parses changed JSON with a content-hash cache in `.uabs-cache/verify/`;
+  `TOOLS/Verify-Release.ps1` runs the metadata refresh plus the full pack gate. FAST never
+  substitutes for FULL or RELEASE, and CI keeps every mandatory gate.
+- Free-tooling audit: `docs/TOOLING-MATRIX.md` records the inventory, the gap analysis and
+  an adopt/reject matrix for actionlint, Ruff, check-jsonschema, ast-grep, lychee,
+  hyperfine, watchexec, prek and PSScriptAnalyzer. Optional linters are probes: no
+  dependency, runtime or install step is added; licences not verified are marked so.
+- ADR-0006 records the tier decision and the optional-linter rule.
+- Unrestrained/preamble source untouched; no companion pin changed; 80 canonical skills.
+
 ## 8.32.0 (2026-11-05)
 
 - New `game-production-quality` skill: one engine-agnostic router for perceptual fidelity,

@@ -79,3 +79,6 @@ memories/
 BUNDLED-TOOLS/offline/companions.json
 BUNDLED-TOOLS/offline/Skyrim-Forge-*.zip
 BUNDLED-TOOLS/offline/Reverse-This-*.zip
+
+# FAST verification cache (content-addressed, regenerable)
+.uabs-cache/
