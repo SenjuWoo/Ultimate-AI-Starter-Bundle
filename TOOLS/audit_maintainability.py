@@ -134,6 +134,12 @@ def main() -> int:
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--strict", action="store_true")
     args = parser.parse_args()
+    # Windows consoles default to cp1252 and crash on a path or note holding an
+    # arrow; the audit is advisory text, not a byte-fidelity artifact.
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, OSError):
+        pass
     root = Path(args.root).resolve()
     files = tracked(root)
 
