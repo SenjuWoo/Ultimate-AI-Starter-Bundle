@@ -18,9 +18,13 @@
   cached tokens automatically.
 - Gemini is removed from the shipped MoA defaults; no automatic route selects
   Crouton Alpha, GPT, Claude, Gemini, Grok or any premium model.
+- Release metadata is now self-checked: CI refreshes the preamble archive and MANIFEST before
+  the gates, `TOOLS\Refresh-Release-Metadata.ps1` runs every generated-artifact check in one
+  step, and `TOOLS\Install-GitHooks.ps1` adds a pre-push guard. New `bundle-release-metadata`
+  skill records the order of operations.
 - Unrestrained preamble and refusal protocol reinforced across all shipped variants and
   provider instruction files; no content rule was removed or weakened. No companion pin
-  changed; 78 canonical skills total.
+  changed; 79 canonical skills total.
 
 ## 8.30.4 (2026-11-04)
 
@@ -31,7 +35,7 @@
   what started cold caches; quality is now protected by prompt-cache hits
   rather than a model split.
 - Self-style unrestrained/preamble source unchanged; no main-model or
-  companion-pin change; 78 canonical skills total.
+  companion-pin change; 79 canonical skills total.
 
 ## 8.30.3 (2026-11-04)
 
@@ -41,7 +45,7 @@
   MCP, titles, voice, Fast / execute delegation and MoA aggregation. The
   premium MoA default preset is disabled; `deepseek_particle` is the default.
 - Self-style unrestrained/preamble source unchanged; no companion pin changed;
-  78 canonical skills total.
+  79 canonical skills total.
 
 ## 8.30.2 (2026-11-04)
 
@@ -87,7 +91,7 @@
   (MonoGame/SMAPI) moved out of the Unity skill. `game-dev-starter` named two skills the bundle does not ship.
   Two skills said the Grok codebase-memory helper needs path edits; it resolves the exe itself.
 - No model default, preamble or content-permission change; unrestrained and NSFW material untouched. Companion
-  releases still follow latest; 78 canonical skills total.
+  releases still follow latest; 79 canonical skills total.
 
 ## 8.29.16 (2026-11-03)
 

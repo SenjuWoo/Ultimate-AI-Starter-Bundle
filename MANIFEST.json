@@ -36,8 +36,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 11203,
-  "sha256": "682558dab529d0a772f02d6b2f1cd4bf4a4738b34dbd2a3e46a536881935a929"
+  "size": 11910,
+  "sha256": "410a59409cebbf4b4b6fec28548b05c68531bc1d06d3b12f035f04f574a2e38b"
  },
  {
   "path": ".github/workflows/dependabot-auto-merge.yml",
@@ -368,6 +368,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/references/manifest-schema.md",
   "size": 5515,
   "sha256": "f397354947ae792187e36e55e775000ad6160358010ba0a3dc00422a555d88ea"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
+  "size": 2219,
+  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
@@ -4923,6 +4928,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/references/manifest-schema.md",
   "size": 5515,
   "sha256": "f397354947ae792187e36e55e775000ad6160358010ba0a3dc00422a555d88ea"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
+  "size": 2219,
+  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
@@ -9540,6 +9550,11 @@
   "sha256": "f397354947ae792187e36e55e775000ad6160358010ba0a3dc00422a555d88ea"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
+  "size": 2219,
+  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
   "size": 3201,
   "sha256": "b808bbf03ce18f6b5984c3607ba288d2a1a7daa2335b638d905be3360c2a6306"
@@ -14145,6 +14160,11 @@
   "sha256": "f397354947ae792187e36e55e775000ad6160358010ba0a3dc00422a555d88ea"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
+  "size": 2219,
+  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
   "size": 3201,
   "sha256": "b808bbf03ce18f6b5984c3607ba288d2a1a7daa2335b638d905be3360c2a6306"
@@ -18748,6 +18768,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/references/manifest-schema.md",
   "size": 5515,
   "sha256": "f397354947ae792187e36e55e775000ad6160358010ba0a3dc00422a555d88ea"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
+  "size": 2219,
+  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
@@ -23428,6 +23453,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/build-mcpb/references/manifest-schema.md",
   "size": 5515,
   "sha256": "f397354947ae792187e36e55e775000ad6160358010ba0a3dc00422a555d88ea"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
+  "size": 2219,
+  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
@@ -28117,7 +28147,7 @@
  {
   "path": "BUNDLED-TOOLS/RETIRED-SKILLS.json",
   "size": 13599,
-  "sha256": "9f989e75ff48b9633fa2d78aed18d86188bd8e12bb806426b5852030ae6e6b2f"
+  "sha256": "7c03c85b5ca3bf6c0d7689750a099f6e390fd63397dc3b1adbe671bf1d4ac831"
  },
  {
   "path": "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md",
@@ -32176,8 +32206,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 272324,
-  "sha256": "b7a518426571d8dd92aac348fd9ce06dcc04933bcc0f4f1640f43f5a6fe6c7f4"
+  "size": 272650,
+  "sha256": "c0940084edd022e924d9b0d042dd0c1b02c32e637455adfa6bd48c340e5b1262"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -32286,8 +32316,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 49038,
-  "sha256": "59195c3338f3a81251d0f6aba3335b435936d9e7692d0cb66bd0dfe665c05ac3"
+  "size": 49680,
+  "sha256": "133a0ee50294b081ed4b0b492c58fef8a9aacddbaaac3abe74908d9a7f7a4bf9"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -32312,7 +32342,7 @@
  {
   "path": "README.md",
   "size": 74055,
-  "sha256": "20680f67347eaee15a2d36d917dff549d23d3206c0472ea16b9706f25d741189"
+  "sha256": "bfd5a00e6944d170db087982bf212875636264f62d46bf9f1abf822765ba6eea"
  },
  {
   "path": "SECURITY.md",
@@ -32332,7 +32362,7 @@
  {
   "path": "STATE.md",
   "size": 63663,
-  "sha256": "47ed362946575c85a240467c672feefa1da5772c9f03120f8c3d920ef050b891"
+  "sha256": "6699d1c623be0cf51888bde96a066a0b4366fe2f240a3a7bdfea85421063e351"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -32885,6 +32915,11 @@
   "sha256": "91781930af74b5ed452541dca24be0bc2792530200fba61eef95cf36947ee6dd"
  },
  {
+  "path": "TOOLS/Install-GitHooks.ps1",
+  "size": 1511,
+  "sha256": "bfd40c7a3c87f4597c1b24f2069ea8e6b778021e5598c7d09815ca291463da50"
+ },
+ {
   "path": "TOOLS/Install-Provider-Starter-Settings.ps1",
   "size": 20618,
   "sha256": "cfb0d7584e57429469251a4f0108d7d15f2e3919d4f89131abd4875d4c064514"
@@ -32923,6 +32958,11 @@
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
   "size": 2610,
   "sha256": "32ff50754f6625d267e17d1632e5a6dfce8b0c2f7c4abeb9609e35ea4be4a4d1"
+ },
+ {
+  "path": "TOOLS/Refresh-Release-Metadata.ps1",
+  "size": 1537,
+  "sha256": "b3969f20da05315e9ed2421b987af05af4a9f8ac3c9e62d184d17a72e07e3fe9"
  },
  {
   "path": "TOOLS/Repair-McpPaths.ps1",
@@ -33222,7 +33262,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2726,
-  "sha256": "5a799c56ba1a140b01b000b56a7502b8a5f232f00a71bdc28376a99730c79c8b"
+  "sha256": "9f3b0eda001bd624cc661d928f6b7b9821ef35ce130df02332f619a759e3c9fd"
  },
  {
   "path": "VALIDATION.md",
@@ -33413,6 +33453,11 @@
   "path": "_CANONICAL-SKILLS/build-mcpb/references/manifest-schema.md",
   "size": 5515,
   "sha256": "f397354947ae792187e36e55e775000ad6160358010ba0a3dc00422a555d88ea"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/bundle-release-metadata/SKILL.md",
+  "size": 2219,
+  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
  },
  {
   "path": "_CANONICAL-SKILLS/c-game-regression-testing/SKILL.md",
@@ -38567,7 +38612,7 @@
  {
   "path": "docs/history/V8.30.5-CHANGELOG.md",
   "size": 1435,
-  "sha256": "6f8040930ab2a2eccd96a482cffd67f7cca360bca295cf570386674befc190ef"
+  "sha256": "c0c597a932151943d62052c68200e9e02d137895feca59bc79d07f498effacb7"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

@@ -15,7 +15,7 @@
   Release contract `test_hermes_starter_uses_planner_worker_pair`: 160/0.
 - Unrestrained preamble, refusal protocol and Claude addendum reinforced (no content rule
   removed); provider instruction files and the unrestraint-packs skill carry the new
-  no-self-refusal route. No companion-pin changes; 78 canonical skills.
+  no-self-refusal route. No companion-pin changes; 79 canonical skills.
 
 ## Prepared 8.30.2 — Skyrim knowledge moved to Skyrim Forge — 2026-11-04
 

@@ -3,9 +3,9 @@
   "version": "8.30.5",
   "generated": "2026-11-04",
   "release_tag": "v8.30.5",
-  "canonical_skills": 78,
+  "canonical_skills": 79,
   "provider_trees": 6,
-  "registry_entries": 78,
+  "registry_entries": 79,
   "gates": [
     "TESTS/test_audit_regressions.py",
     "TESTS/Test-Pack.ps1",

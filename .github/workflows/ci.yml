@@ -82,6 +82,20 @@ jobs:
           # In-process: the script throws on any failure, which fails the step.
           .\TOOLS\Get-Companions.ps1
 
+      # A local install or test run can add a preamble/legacy archive after the
+      # manifest was generated. Regenerate before the gates so a stale committed
+      # MANIFEST cannot turn this run red; a hash that does not match a file
+      # still fails in verify_manifest.
+      - name: Refresh generated release metadata
+        shell: powershell
+        run: |
+          python TOOLS/generate_preamble_history.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TOOLS/generate_manifest.py .
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python .github/scripts/verify_manifest.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
       - name: Pack gate
         shell: powershell
         run: |
