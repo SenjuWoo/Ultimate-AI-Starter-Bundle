@@ -1,3 +1,18 @@
+## 8.31.0 (2026-11-05)
+
+- Architecture decision records: `docs/decisions/` now records the no-hard-blocker
+  rule, owner-tooling boundary, planner/worker routing, generated-metadata refresh and
+  the deliberate refusal to build a bundle-side router or automatic paid evaluation.
+- Maintainability audit: `TOOLS/audit_maintainability.py` reports duplicate non-generated
+  files, skills over 500 lines, orphaned tools and TODO markers, with a small allowlist
+  for intentional mirrors. It runs in the pack gate; a new hard duplicate fails CI.
+- Repository hygiene: removed 1.1 GB of stale local build output and extracted archives
+  (gitignored, regenerable); tracked tree unchanged.
+- New regression suite `TESTS/test_maintainability_audit.py`; release metadata skill now
+  documents ADRs, the audit and the pre-push guard.
+- Self-style unrestrained/preamble source untouched this release; no companion pin
+  changed; 79 canonical skills total.
+
 ## 8.30.5 (2026-11-04)
 
 - Planner/worker defaults for Hermes: Particle-1 stays the regular main model,

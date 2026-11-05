@@ -1049,11 +1049,14 @@ Section '20. Maintainer lifecycle and documentation contracts'
 if ($LASTEXITCODE -eq 0) { Good 'exact-SHA CI verdicts and bounded waiting pass' }
 else { Bad 'GitHub verdict regression failed' }
 if ($py) {
-    foreach ($gate in @('TOOLS\verify_docs.py','TESTS\test_maintainer_contract.py')) {
+    foreach ($gate in @('TOOLS\verify_docs.py','TESTS\test_maintainer_contract.py','TESTS\test_maintainability_audit.py')) {
         & $py.Source (Join-Path $PackRoot $gate)
         if ($LASTEXITCODE -eq 0) { Good ($gate + ' passed') }
         else { Bad ($gate + ' failed') }
     }
+    & $py.Source (Join-Path $PackRoot 'TOOLS\audit_maintainability.py') (Join-Path $PackRoot '.') '--strict'
+    if ($LASTEXITCODE -eq 0) { Good 'Maintainability audit: no duplicates, oversized skills or broken ADRs' }
+    else { Bad 'Maintainability audit found hard drift' }
 }
 
 Write-Host ''

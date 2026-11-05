@@ -371,8 +371,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
-  "size": 2219,
-  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
+  "size": 3007,
+  "sha256": "290132c51da9be030a863692c2be6f3ed9157a05492ea00d91f64562001d12bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
@@ -4931,8 +4931,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
-  "size": 2219,
-  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
+  "size": 3007,
+  "sha256": "290132c51da9be030a863692c2be6f3ed9157a05492ea00d91f64562001d12bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
@@ -9551,8 +9551,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
-  "size": 2219,
-  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
+  "size": 3007,
+  "sha256": "290132c51da9be030a863692c2be6f3ed9157a05492ea00d91f64562001d12bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
@@ -14161,8 +14161,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
-  "size": 2219,
-  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
+  "size": 3007,
+  "sha256": "290132c51da9be030a863692c2be6f3ed9157a05492ea00d91f64562001d12bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
@@ -18771,8 +18771,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
-  "size": 2219,
-  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
+  "size": 3007,
+  "sha256": "290132c51da9be030a863692c2be6f3ed9157a05492ea00d91f64562001d12bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
@@ -23456,8 +23456,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/bundle-release-metadata/SKILL.md",
-  "size": 2219,
-  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
+  "size": 3007,
+  "sha256": "290132c51da9be030a863692c2be6f3ed9157a05492ea00d91f64562001d12bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/c-game-regression-testing/SKILL.md",
@@ -28117,12 +28117,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 63404,
-  "sha256": "4d0f26f38cda031ea31838c906f294cddf7d82b36c3e6effe610ecead13e70ed"
+  "sha256": "e0e875f4a94ec4704e432dd6351ce84d8eb4ca19364aada6336dd0a099f90d4f"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "db9d20ce386a72a1aedc1daca26f60ce3468dd8ef51ee75f87d2975ead28e161"
+  "sha256": "6f70717c9243976c5784bae3e2c89de29514bae571d30d08c86198069559897e"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28132,7 +28132,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "8173d45edee6d9f6fa0af61354e3cfa776f1f2e4ef4d9ede14a161c330e94994"
+  "sha256": "8211741d1f6665aa9cb1636ce9ba3cbea3e7dedf91a384a814a25462e19d61a9"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -32206,8 +32206,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 272650,
-  "sha256": "c0940084edd022e924d9b0d042dd0c1b02c32e637455adfa6bd48c340e5b1262"
+  "size": 273610,
+  "sha256": "e640e88bdb2bebe55f37992960de493917ce44d8c5498258a785d2a6165d3ac8"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -32316,8 +32316,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 49680,
-  "sha256": "133a0ee50294b081ed4b0b492c58fef8a9aacddbaaac3abe74908d9a7f7a4bf9"
+  "size": 49921,
+  "sha256": "d61723aa5794bd9127940ba46984df404d050f73131e1bd811f4c375d53435ae"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -32341,8 +32341,8 @@
  },
  {
   "path": "README.md",
-  "size": 74055,
-  "sha256": "bfd5a00e6944d170db087982bf212875636264f62d46bf9f1abf822765ba6eea"
+  "size": 74110,
+  "sha256": "71ebbcb1cfdc48cece7a16ef894d0fa50e134c4aaab17eaba7b4772a92a15d84"
  },
  {
   "path": "SECURITY.md",
@@ -32352,17 +32352,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "92f5c14495c821e80f21881ef9e7fe07282cb015fd3e2a391609076f4c0601d4"
+  "sha256": "de0047b4ee232b2a5a514658ebcc0176df272563e28a6250636b49ba7970071d"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "360fc1c1967ac97a02767ddb9dddaafca1059c38d220ed7508514ea0fe4f2ee4"
+  "sha256": "9fefa15a2af90541645b0a8f5a28fe8ba9650fd40dbb776c0267ce16724c07be"
  },
  {
   "path": "STATE.md",
-  "size": 63663,
-  "sha256": "6699d1c623be0cf51888bde96a066a0b4366fe2f240a3a7bdfea85421063e351"
+  "size": 64123,
+  "sha256": "8909a9a6878804be5cc36a9f7366d665d911e05a1e5babd289924eea4df911e4"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -32491,8 +32491,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 68194,
-  "sha256": "7816181ef83603fe256ed38b217fdfa0570a23a7cff1e67b16abb8d0e5604728"
+  "size": 68509,
+  "sha256": "b68a1c56ef0924b87ac80e9056222c4dc7cc8178abe6cf3c70b1245293c816ce"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -32763,6 +32763,11 @@
   "path": "TESTS/test_install_live_skills.py",
   "size": 7965,
   "sha256": "4a58535f4e224c87cf26793734fe778c456f7ab7e11ebc29e260ef485a0a18a0"
+ },
+ {
+  "path": "TESTS/test_maintainability_audit.py",
+  "size": 2695,
+  "sha256": "cc26dc0757b42a790b06cec0f369536ab86bad54c4c70b8b6da50d015491e122"
  },
  {
   "path": "TESTS/test_maintainer_contract.py",
@@ -33065,6 +33070,11 @@
   "sha256": "863ad432e17d5b14f4ef190eccac9dffcf95fbf81942197a84444567b477007b"
  },
  {
+  "path": "TOOLS/audit_maintainability.py",
+  "size": 6897,
+  "sha256": "e09921178da5019466bf4371817818d471fce0df1128a3d841b14b52b8d43552"
+ },
+ {
   "path": "TOOLS/audit_skills.py",
   "size": 5615,
   "sha256": "c535ad3aaa29d35d16b75c24959ce68c7a43859cb50818472547f3c55ddc52df"
@@ -33262,7 +33272,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2726,
-  "sha256": "9f3b0eda001bd624cc661d928f6b7b9821ef35ce130df02332f619a759e3c9fd"
+  "sha256": "4b3aebbece5ae9bd57c66944b365da561cee97037b4a7e04b5a12b20c62c8a93"
  },
  {
   "path": "VALIDATION.md",
@@ -33271,8 +33281,8 @@
  },
  {
   "path": "VERSION.txt",
-  "size": 9,
-  "sha256": "c0ac748a3e7dfd7cf32b93440016daaf3fd32d1024d29e9ba5e9bf71956e1321"
+  "size": 8,
+  "sha256": "6605ce110589028068447d19a13e57ff63d3a74a8349d70d4947ee37475c4088"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -33456,8 +33466,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/bundle-release-metadata/SKILL.md",
-  "size": 2219,
-  "sha256": "8d1235ada1fd1ac147a10bb3f36084a2c14473c186f3cabd343eb213ed3d445b"
+  "size": 3007,
+  "sha256": "290132c51da9be030a863692c2be6f3ed9157a05492ea00d91f64562001d12bb"
  },
  {
   "path": "_CANONICAL-SKILLS/c-game-regression-testing/SKILL.md",
@@ -37880,6 +37890,36 @@
   "sha256": "b9cbfb4925feed92d5b7f9e2174ea3959138cfc66c6ec7bbbf17f4192dd050fb"
  },
  {
+  "path": "docs/decisions/0001-no-hard-blockers.md",
+  "size": 1281,
+  "sha256": "f01907129a6c5962ba4b17b26cfa4d162bf379dfcbdd28bdfff8d316f088f530"
+ },
+ {
+  "path": "docs/decisions/0002-owner-tooling.md",
+  "size": 1189,
+  "sha256": "bd33b7cacded16450d99d91d35c72ae2c2b6ea82d8e1dd49c601601a1722d7a5"
+ },
+ {
+  "path": "docs/decisions/0003-planner-worker-routing.md",
+  "size": 1524,
+  "sha256": "d2853c89392e02ebf2f923e30969e102ffc4697bd4c9c9a56574126da6f6d3ee"
+ },
+ {
+  "path": "docs/decisions/0004-generated-release-metadata.md",
+  "size": 1371,
+  "sha256": "09c1e396aa27742a78cfb1c8bf37eba639d7a3e9acbcdbc520242ca995c3a1fa"
+ },
+ {
+  "path": "docs/decisions/0005-no-bundle-router-or-paid-eval.md",
+  "size": 1606,
+  "sha256": "ef772cc1184e0f8449205164126cdbfe8cc0fc959194c61702d0b159c9d09f08"
+ },
+ {
+  "path": "docs/decisions/README.md",
+  "size": 971,
+  "sha256": "dd5912b7c4e83caa3385b3855387421afb0e608297d45a2aed4974dbda308a33"
+ },
+ {
   "path": "docs/history/FINAL-AUDIT-v5.0.0.md",
   "size": 390,
   "sha256": "57a29e0c88b8e24399fb76a5629fb102d1d8cacb7e76dd24699a845631c87648"
@@ -38613,6 +38653,11 @@
   "path": "docs/history/V8.30.5-CHANGELOG.md",
   "size": 1435,
   "sha256": "c0c597a932151943d62052c68200e9e02d137895feca59bc79d07f498effacb7"
+ },
+ {
+  "path": "docs/history/V8.31.0-CHANGELOG.md",
+  "size": 514,
+  "sha256": "b06d90baeff8db5ab84ecb4051d2036f128bc92cf36d6a0bbc158f08ab6d0782"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

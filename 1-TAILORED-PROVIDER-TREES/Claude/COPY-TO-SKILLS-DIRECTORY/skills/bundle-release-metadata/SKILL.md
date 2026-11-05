@@ -52,6 +52,24 @@ git add MANIFEST.json && git commit -m "<version>: regenerate manifest" && git p
 cannot fail the run; the gate still fails when a recorded hash does not match a
 file, which is the case that matters.
 
+## Architecture decisions
+
+`docs/decisions/` holds one ADR per decision a future maintainer could undo by
+accident, indexed in `docs/decisions/README.md`. A new record needs context,
+options, decision, evidence, consequences and a revisit trigger; the
+maintainability audit fails a record missing any of them.
+
+Before changing an invariant, read the ADR that owns it. If the decision has
+changed, write a new ADR that supersedes the old one; do not silently rewrite
+history.
+
+## Maintainability audit
+
+`python TOOLS/audit_maintainability.py . --strict` reports duplicate
+non-generated files, skills over 500 lines, orphaned tools and TODO markers.
+Known mirrors (workspace AIO, hook plugin copy, LICENSE) are allowlisted by
+path. The pack gate runs it, so a new hard duplicate fails CI.
+
 ## Pre-push hook
 
 `.\TOOLS\Install-GitHooks.ps1` writes `.git/hooks/pre-push`: it refreshes the

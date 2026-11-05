@@ -1,5 +1,13 @@
 # Bundle audit state
 
+## Prepared 8.31.0 — decisions, audit, hygiene — 2026-11-05
+
+- `docs/decisions/` ADR-0001..0005; `TOOLS/audit_maintainability.py` (duplicates,
+  skill ceiling, orphan tools, TODO markers) with `--strict` in the pack gate and
+  `TESTS/test_maintainability_audit.py`. Removed 1.1 GB of local build output.
+- Release metadata skill extended with the ADR and audit workflow.
+- Unrestrained/preamble source untouched this release; 79 canonical skills.
+
 ## Prepared 8.30.5 — planner/worker defaults for Hermes — 2026-11-04
 
 - Hermes starter (both canonical configs): Particle-1 main; one on-demand MoA

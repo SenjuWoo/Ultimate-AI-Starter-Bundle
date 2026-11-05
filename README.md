@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.30.5 -->
+<!-- Ultimate AI Starter Bundle v8.31.0 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.30.5
+# Ultimate AI Starter Bundle v8.31.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -536,7 +536,7 @@ background review are off, and `prompt_caching.cache_ttl` is 1h with
 price-first provider routing. Nothing automatic reaches GPT, Claude, Gemini,
 Grok or Crouton Alpha. Compression fires at a 320,000-token
 cap on the default window, prunes oversized tool results from 80,000 tokens,
-and aborts rather than replacing context when a summary fails. [Model guidance](docs/HERMES-MODELS.md) · [Profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md).
+and aborts rather than replacing context when a summary fails. [Model guidance](docs/HERMES-MODELS.md) · [Profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md). · [Architecture decisions](docs/decisions/README.md).
 
 ### Hermes: native web search and keyless options
 
