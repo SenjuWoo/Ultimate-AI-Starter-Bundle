@@ -1316,10 +1316,22 @@ def test_hermes_starter_uses_planner_worker_pair() -> None:
         "execute must be the default delegation route")
     assert re.search(r"(?m)^  max_concurrent_children: 2$", delegation), (
         "delegation concurrency is not limited to 2")
-    assert re.search(r"(?ms)- name: execute\n(?:.*?\n)*?        model: particle-ai/particle-1\n        reasoning_effort: medium", delegation), (
-        "execute route is not Particle-1 at medium reasoning")
-    assert re.search(r"(?ms)- name: research\n(?:.*?\n)*?        model: deepseek/deepseek-v4.1-flash-1017\n        reasoning_effort: high", delegation), (
-        "research route is not DeepSeek V4.1 Flash at high reasoning")
+    # Line scan, not a nested-quantifier regex: this file is scanned for ReDoS.
+    routes, current = {}, None
+    for raw in delegation.splitlines():
+        line = raw.strip()
+        indent = len(raw) - len(raw.lstrip())
+        if line.startswith("- name: ") and indent >= 6:
+            current = line.split(":", 1)[1].strip()
+            routes[current] = {}
+        elif current and indent >= 8 and line.startswith("model: "):
+            routes[current]["model"] = line.split(":", 1)[1].strip()
+        elif current and indent >= 8 and line.startswith("reasoning_effort: "):
+            routes[current]["effort"] = line.split(":", 1)[1].strip()
+    assert routes.get("execute") == {"model": "particle-ai/particle-1", "effort": "medium"}, (
+        "execute route is not Particle-1 at medium reasoning: %r" % routes.get("execute"))
+    assert routes.get("research") == {"model": "deepseek/deepseek-v4.1-flash-1017", "effort": "high"}, (
+        "research route is not DeepSeek V4.1 Flash at high reasoning: %r" % routes.get("research"))
     assert "google/gemini" not in delegation and "crouton" not in delegation.lower(), (
         "a retired or temporary model is still routed automatically")
 
