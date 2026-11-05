@@ -2925,6 +2925,40 @@ def test_game_mashup_passthrough_knowledge_is_wired_and_private() -> None:
         assert copy.is_file(), f"{provider} tree is missing game-mashup-passthrough"
 
 
+def test_game_production_quality_is_universal_and_lean() -> None:
+    """One router for production quality; engine commands stay with the forges."""
+    skill = CANON / "game-production-quality" / "SKILL.md"
+    body = read(skill)
+    words = len(body.split())
+    assert 45 <= words <= 500, f"game-production-quality body is {words} words"
+    for ref in re.findall(r"`(references/[^`]+|templates/[^`]+)`", body):
+        assert (skill.parent / ref).is_file(), f"missing linked file: {ref}"
+    assert "RobloxForge" in body and "unreal-mod-frameworks" in body
+    assert "unity-mod-frameworks" in body and "bethesda-creation-modding" in body
+    assert "Never impose an arbitrary" in body, "the skill lost its no-arbitrary-limits rule"
+
+    defaults = read(CANON / "game-dev-starter" / "SKILL.md")
+    assert "game-production-quality" in defaults, "the starter does not route production questions"
+
+    templates = read(skill.parent / "templates" / "production-templates.md")
+    for heading in ("Game design and core-loop brief", "Technical performance budget",
+                    "Visual fidelity and asset importance tiers", "Gameplay experience checklist",
+                    "Level design and immersion review", "Asset acceptance checklist",
+                    "Automated playtest scenario", "Performance regression report"):
+        assert heading in templates, f"template missing: {heading}"
+
+    contract = read(skill.parent / "references" / "forge-capability-contract.md")
+    for capability in ("Profiling", "Scene inspection", "Automated playtest", "Packaging",
+                       "Runtime verification"):
+        assert capability in contract, f"forge contract lacks {capability}"
+    assert "discovered by probe" in contract, "forge capabilities are assumed, not probed"
+
+    for provider in PROVIDERS:
+        tree = ROOT / "1-TAILORED-PROVIDER-TREES" / provider / "COPY-TO-SKILLS-DIRECTORY" / "skills"
+        assert (tree / "game-production-quality" / "SKILL.md").is_file(), (
+            f"{provider} does not carry the production skill")
+
+
 def main() -> int:
     # A failed gate must report Unicode paths on legacy Windows consoles too.
     sys.stdout.reconfigure(errors="backslashreplace")
@@ -3100,6 +3134,7 @@ def main() -> int:
         test_portable_skill_routing_does_not_require_superpowers_prefix,
         test_toolbox_wheel_is_the_shipped_source,
         test_game_mashup_passthrough_knowledge_is_wired_and_private,
+        test_game_production_quality_is_universal_and_lean,
         test_release_workflow_publishes_only_a_green_untagged_main_sha,
         test_free_game_probe_contract,
     ]

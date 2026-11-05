@@ -141,6 +141,8 @@ checks; do not replace a real build/run with a screenshot of a mockup.
 - `img2threejs` — image/reference to a procedural Three.js asset with a
   render-and-compare harness.
 - `game-modding` — changing an existing game; use its engine references.
+- `game-production-quality` — fidelity, frame budgets, feel, world, systems, assets and
+  playtests for any engine; it routes the question and the forge supplies the commands.
 - `capability-profiles` — select only the MCPs/tools the current task needs.
 - `visual-verification` — inspect real rendered pixels, not assumptions.
 - `workspace-organization` — one owner folder, versions, `STATE.md`, recovery.

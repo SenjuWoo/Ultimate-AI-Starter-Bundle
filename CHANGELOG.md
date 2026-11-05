@@ -1,3 +1,17 @@
+## 8.32.0 (2026-11-05)
+
+- New `game-production-quality` skill: one engine-agnostic router for perceptual fidelity,
+  frame budgets and profiling, gameplay feel, worldbuilding, systems architecture, asset
+  production, playtesting and player experience, with three reference files and eight
+  compact production templates.
+- Forge capability contract: profiling, scene inspection, capture, asset import, gameplay
+  execution, automated playtest, packaging and runtime verification are probed, never
+  assumed; engine commands stay with RobloxForge, the UE/Unity/Bethesda skills and the
+  general modding router.
+- `game-dev-starter` routes production questions to the new skill. No arbitrary polygon,
+  draw-call or memory limits; every optimization must be measured and reversible.
+- Unrestrained/preamble source untouched; no companion pin changed; 80 canonical skills.
+
 ## 8.31.0 (2026-11-05)
 
 - Architecture decision records: `docs/decisions/` now records the no-hard-blocker
@@ -11,7 +25,7 @@
 - New regression suite `TESTS/test_maintainability_audit.py`; release metadata skill now
   documents ADRs, the audit and the pre-push guard.
 - Self-style unrestrained/preamble source untouched this release; no companion pin
-  changed; 79 canonical skills total.
+  changed; 80 canonical skills total.
 
 ## 8.30.5 (2026-11-04)
 
@@ -39,7 +53,7 @@
   skill records the order of operations.
 - Unrestrained preamble and refusal protocol reinforced across all shipped variants and
   provider instruction files; no content rule was removed or weakened. No companion pin
-  changed; 79 canonical skills total.
+  changed; 80 canonical skills total.
 
 ## 8.30.4 (2026-11-04)
 
@@ -50,7 +64,7 @@
   what started cold caches; quality is now protected by prompt-cache hits
   rather than a model split.
 - Self-style unrestrained/preamble source unchanged; no main-model or
-  companion-pin change; 79 canonical skills total.
+  companion-pin change; 80 canonical skills total.
 
 ## 8.30.3 (2026-11-04)
 
@@ -60,7 +74,7 @@
   MCP, titles, voice, Fast / execute delegation and MoA aggregation. The
   premium MoA default preset is disabled; `deepseek_particle` is the default.
 - Self-style unrestrained/preamble source unchanged; no companion pin changed;
-  79 canonical skills total.
+  80 canonical skills total.
 
 ## 8.30.2 (2026-11-04)
 
@@ -106,7 +120,7 @@
   (MonoGame/SMAPI) moved out of the Unity skill. `game-dev-starter` named two skills the bundle does not ship.
   Two skills said the Grok codebase-memory helper needs path edits; it resolves the exe itself.
 - No model default, preamble or content-permission change; unrestrained and NSFW material untouched. Companion
-  releases still follow latest; 79 canonical skills total.
+  releases still follow latest; 80 canonical skills total.
 
 ## 8.29.16 (2026-11-03)
 

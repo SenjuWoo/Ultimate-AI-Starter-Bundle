@@ -811,8 +811,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9370,
-  "sha256": "b9d72070e8afa5fa8b943132c4d28c4cbd4f54c3a30ae0fcabecbebe14ed0639"
+  "size": 9548,
+  "sha256": "159b7e91f56dfc3f6cc17a0eb5b068c218e7bbeb6f792f02d9b8d9dac195b406"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -1038,6 +1038,36 @@
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/witcher3-redkit.md",
   "size": 519,
   "sha256": "919f66b77995987c72719de6dd0cfd32d9f04ee5408433c1020fb14aca003911"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/SKILL.md",
+  "size": 3611,
+  "sha256": "71bcce724774836e37eafc3c4c13842b40c3d8b5940fdd3cf5453fc448e1aada"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/feel-world-and-experience.md",
+  "size": 3491,
+  "sha256": "0b66d0b3b2d8e291d9718987927dfcb01ab2217a095ed9bce08b38aeedbc7b0b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/fidelity-and-performance.md",
+  "size": 3524,
+  "sha256": "49d88d8c54d4fd46c587c6b0ccd241fde4ca686df6644425f822d377fc8b7384"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/forge-capability-contract.md",
+  "size": 1649,
+  "sha256": "15045be86b12995a731e83f316d64363c17a33dc1453960633ddfa19a7c03c8b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/systems-assets-and-playtests.md",
+  "size": 3610,
+  "sha256": "c4b186fa725c426587314a75260d66a3ede6ea2ef8f511c00c8b6244b8411a84"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/templates/production-templates.md",
+  "size": 2557,
+  "sha256": "be57fa5f35782d350a94d5d6209ef800c63d5de77cd63058db017ef36a7056ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
@@ -5371,8 +5401,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9370,
-  "sha256": "b9d72070e8afa5fa8b943132c4d28c4cbd4f54c3a30ae0fcabecbebe14ed0639"
+  "size": 9548,
+  "sha256": "159b7e91f56dfc3f6cc17a0eb5b068c218e7bbeb6f792f02d9b8d9dac195b406"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -5598,6 +5628,36 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/witcher3-redkit.md",
   "size": 519,
   "sha256": "919f66b77995987c72719de6dd0cfd32d9f04ee5408433c1020fb14aca003911"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/SKILL.md",
+  "size": 3611,
+  "sha256": "71bcce724774836e37eafc3c4c13842b40c3d8b5940fdd3cf5453fc448e1aada"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/feel-world-and-experience.md",
+  "size": 3491,
+  "sha256": "0b66d0b3b2d8e291d9718987927dfcb01ab2217a095ed9bce08b38aeedbc7b0b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/fidelity-and-performance.md",
+  "size": 3524,
+  "sha256": "49d88d8c54d4fd46c587c6b0ccd241fde4ca686df6644425f822d377fc8b7384"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/forge-capability-contract.md",
+  "size": 1649,
+  "sha256": "15045be86b12995a731e83f316d64363c17a33dc1453960633ddfa19a7c03c8b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/systems-assets-and-playtests.md",
+  "size": 3610,
+  "sha256": "c4b186fa725c426587314a75260d66a3ede6ea2ef8f511c00c8b6244b8411a84"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/templates/production-templates.md",
+  "size": 2557,
+  "sha256": "be57fa5f35782d350a94d5d6209ef800c63d5de77cd63058db017ef36a7056ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
@@ -9991,8 +10051,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9370,
-  "sha256": "b9d72070e8afa5fa8b943132c4d28c4cbd4f54c3a30ae0fcabecbebe14ed0639"
+  "size": 9548,
+  "sha256": "159b7e91f56dfc3f6cc17a0eb5b068c218e7bbeb6f792f02d9b8d9dac195b406"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -10218,6 +10278,36 @@
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/witcher3-redkit.md",
   "size": 519,
   "sha256": "919f66b77995987c72719de6dd0cfd32d9f04ee5408433c1020fb14aca003911"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/SKILL.md",
+  "size": 3611,
+  "sha256": "71bcce724774836e37eafc3c4c13842b40c3d8b5940fdd3cf5453fc448e1aada"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/feel-world-and-experience.md",
+  "size": 3491,
+  "sha256": "0b66d0b3b2d8e291d9718987927dfcb01ab2217a095ed9bce08b38aeedbc7b0b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/fidelity-and-performance.md",
+  "size": 3524,
+  "sha256": "49d88d8c54d4fd46c587c6b0ccd241fde4ca686df6644425f822d377fc8b7384"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/forge-capability-contract.md",
+  "size": 1649,
+  "sha256": "15045be86b12995a731e83f316d64363c17a33dc1453960633ddfa19a7c03c8b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/systems-assets-and-playtests.md",
+  "size": 3610,
+  "sha256": "c4b186fa725c426587314a75260d66a3ede6ea2ef8f511c00c8b6244b8411a84"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/templates/production-templates.md",
+  "size": 2557,
+  "sha256": "be57fa5f35782d350a94d5d6209ef800c63d5de77cd63058db017ef36a7056ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
@@ -14601,8 +14691,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9370,
-  "sha256": "b9d72070e8afa5fa8b943132c4d28c4cbd4f54c3a30ae0fcabecbebe14ed0639"
+  "size": 9548,
+  "sha256": "159b7e91f56dfc3f6cc17a0eb5b068c218e7bbeb6f792f02d9b8d9dac195b406"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -14828,6 +14918,36 @@
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/witcher3-redkit.md",
   "size": 519,
   "sha256": "919f66b77995987c72719de6dd0cfd32d9f04ee5408433c1020fb14aca003911"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/SKILL.md",
+  "size": 3611,
+  "sha256": "71bcce724774836e37eafc3c4c13842b40c3d8b5940fdd3cf5453fc448e1aada"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/feel-world-and-experience.md",
+  "size": 3491,
+  "sha256": "0b66d0b3b2d8e291d9718987927dfcb01ab2217a095ed9bce08b38aeedbc7b0b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/fidelity-and-performance.md",
+  "size": 3524,
+  "sha256": "49d88d8c54d4fd46c587c6b0ccd241fde4ca686df6644425f822d377fc8b7384"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/forge-capability-contract.md",
+  "size": 1649,
+  "sha256": "15045be86b12995a731e83f316d64363c17a33dc1453960633ddfa19a7c03c8b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/systems-assets-and-playtests.md",
+  "size": 3610,
+  "sha256": "c4b186fa725c426587314a75260d66a3ede6ea2ef8f511c00c8b6244b8411a84"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/templates/production-templates.md",
+  "size": 2557,
+  "sha256": "be57fa5f35782d350a94d5d6209ef800c63d5de77cd63058db017ef36a7056ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
@@ -19211,8 +19331,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9370,
-  "sha256": "b9d72070e8afa5fa8b943132c4d28c4cbd4f54c3a30ae0fcabecbebe14ed0639"
+  "size": 9548,
+  "sha256": "159b7e91f56dfc3f6cc17a0eb5b068c218e7bbeb6f792f02d9b8d9dac195b406"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -19438,6 +19558,36 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/witcher3-redkit.md",
   "size": 519,
   "sha256": "919f66b77995987c72719de6dd0cfd32d9f04ee5408433c1020fb14aca003911"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/SKILL.md",
+  "size": 3611,
+  "sha256": "71bcce724774836e37eafc3c4c13842b40c3d8b5940fdd3cf5453fc448e1aada"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/feel-world-and-experience.md",
+  "size": 3491,
+  "sha256": "0b66d0b3b2d8e291d9718987927dfcb01ab2217a095ed9bce08b38aeedbc7b0b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/fidelity-and-performance.md",
+  "size": 3524,
+  "sha256": "49d88d8c54d4fd46c587c6b0ccd241fde4ca686df6644425f822d377fc8b7384"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/forge-capability-contract.md",
+  "size": 1649,
+  "sha256": "15045be86b12995a731e83f316d64363c17a33dc1453960633ddfa19a7c03c8b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/systems-assets-and-playtests.md",
+  "size": 3610,
+  "sha256": "c4b186fa725c426587314a75260d66a3ede6ea2ef8f511c00c8b6244b8411a84"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/templates/production-templates.md",
+  "size": 2557,
+  "sha256": "be57fa5f35782d350a94d5d6209ef800c63d5de77cd63058db017ef36a7056ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
@@ -23896,8 +24046,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9370,
-  "sha256": "b9d72070e8afa5fa8b943132c4d28c4cbd4f54c3a30ae0fcabecbebe14ed0639"
+  "size": 9548,
+  "sha256": "159b7e91f56dfc3f6cc17a0eb5b068c218e7bbeb6f792f02d9b8d9dac195b406"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -24123,6 +24273,36 @@
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/witcher3-redkit.md",
   "size": 519,
   "sha256": "919f66b77995987c72719de6dd0cfd32d9f04ee5408433c1020fb14aca003911"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/SKILL.md",
+  "size": 3611,
+  "sha256": "71bcce724774836e37eafc3c4c13842b40c3d8b5940fdd3cf5453fc448e1aada"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/feel-world-and-experience.md",
+  "size": 3491,
+  "sha256": "0b66d0b3b2d8e291d9718987927dfcb01ab2217a095ed9bce08b38aeedbc7b0b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/fidelity-and-performance.md",
+  "size": 3524,
+  "sha256": "49d88d8c54d4fd46c587c6b0ccd241fde4ca686df6644425f822d377fc8b7384"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/forge-capability-contract.md",
+  "size": 1649,
+  "sha256": "15045be86b12995a731e83f316d64363c17a33dc1453960633ddfa19a7c03c8b"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/references/systems-assets-and-playtests.md",
+  "size": 3610,
+  "sha256": "c4b186fa725c426587314a75260d66a3ede6ea2ef8f511c00c8b6244b8411a84"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-production-quality/templates/production-templates.md",
+  "size": 2557,
+  "sha256": "be57fa5f35782d350a94d5d6209ef800c63d5de77cd63058db017ef36a7056ff"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/github-fleet-maintenance/SKILL.md",
@@ -28117,12 +28297,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 63404,
-  "sha256": "e0e875f4a94ec4704e432dd6351ce84d8eb4ca19364aada6336dd0a099f90d4f"
+  "sha256": "6464ea2f89acd739208da3f3160d5272ce965655fbf8940943e21b0dba79d475"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "6f70717c9243976c5784bae3e2c89de29514bae571d30d08c86198069559897e"
+  "sha256": "5d3a71235109504fbb073c4ed0b3e7023b181dd82c9f62155d6e8a4cdfd41374"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -28132,7 +28312,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "8211741d1f6665aa9cb1636ce9ba3cbea3e7dedf91a384a814a25462e19d61a9"
+  "sha256": "1a737ad33cd3030e773a99d9c27cbb1c66e413a1793f45fb5302827286585be5"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -28147,7 +28327,7 @@
  {
   "path": "BUNDLED-TOOLS/RETIRED-SKILLS.json",
   "size": 13599,
-  "sha256": "7c03c85b5ca3bf6c0d7689750a099f6e390fd63397dc3b1adbe671bf1d4ac831"
+  "sha256": "b19fea40b724e8b1c762006cd7cf66c09237206d08586dfd5515a76a2959a046"
  },
  {
   "path": "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md",
@@ -32206,8 +32386,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 273610,
-  "sha256": "e640e88bdb2bebe55f37992960de493917ce44d8c5498258a785d2a6165d3ac8"
+  "size": 274496,
+  "sha256": "eb15ffb4882814a0876e73796e88024bcb13f997dceccbb478d32c95c1c86679"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -32316,8 +32496,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 49921,
-  "sha256": "d61723aa5794bd9127940ba46984df404d050f73131e1bd811f4c375d53435ae"
+  "size": 50181,
+  "sha256": "765a95bc45250f36af0bb69c7a79a1df4c2c7d4aa8dbae90ba71b3218439a856"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -32342,7 +32522,7 @@
  {
   "path": "README.md",
   "size": 74110,
-  "sha256": "71ebbcb1cfdc48cece7a16ef894d0fa50e134c4aaab17eaba7b4772a92a15d84"
+  "sha256": "f7ff16cf649c756e740f4cb60979d4fa342791ada418cdf1659112ff854534e8"
  },
  {
   "path": "SECURITY.md",
@@ -32352,17 +32532,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "de0047b4ee232b2a5a514658ebcc0176df272563e28a6250636b49ba7970071d"
+  "sha256": "ef056055c7cd076086fce76363e73aeca85cef78ebca103973f5082eefa81928"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "9fefa15a2af90541645b0a8f5a28fe8ba9650fd40dbb776c0267ce16724c07be"
+  "sha256": "f62e12dbbbaa2ea0aa675ea335b20c4a4b32dd80ba15e32238cb0c6f5b1d94ee"
  },
  {
   "path": "STATE.md",
   "size": 64123,
-  "sha256": "8909a9a6878804be5cc36a9f7366d665d911e05a1e5babd289924eea4df911e4"
+  "sha256": "bd223ab5eb4f56d307ac08b2c678edb34f4b21d2f817a7e66de1d786db0d1d8e"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -32791,8 +32971,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 356639,
-  "sha256": "843267249a665415e0630c79da269cb24e67de3a3dd5f2422487098354c75c62"
+  "size": 358800,
+  "sha256": "0c56d8a86e5bf5f33afd47d2900eb09984f80528eb32588a053266acec7bae90"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -33272,7 +33452,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2726,
-  "sha256": "4b3aebbece5ae9bd57c66944b365da561cee97037b4a7e04b5a12b20c62c8a93"
+  "sha256": "23f0ae06fea431d94fbfe4138528cd8ced4388cb9e2eaca4a97dc769c0471b91"
  },
  {
   "path": "VALIDATION.md",
@@ -33281,8 +33461,8 @@
  },
  {
   "path": "VERSION.txt",
-  "size": 8,
-  "sha256": "6605ce110589028068447d19a13e57ff63d3a74a8349d70d4947ee37475c4088"
+  "size": 9,
+  "sha256": "935950c0958537b7e160474de0655aa3c7187c8a4c852d7b4a20b03e248933c4"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -33906,8 +34086,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-dev-starter/SKILL.md",
-  "size": 9370,
-  "sha256": "b9d72070e8afa5fa8b943132c4d28c4cbd4f54c3a30ae0fcabecbebe14ed0639"
+  "size": 9548,
+  "sha256": "159b7e91f56dfc3f6cc17a0eb5b068c218e7bbeb6f792f02d9b8d9dac195b406"
  },
  {
   "path": "_CANONICAL-SKILLS/game-dev-starter/references/free-creative-tools.md",
@@ -34133,6 +34313,36 @@
   "path": "_CANONICAL-SKILLS/game-modding/references/witcher3-redkit.md",
   "size": 519,
   "sha256": "919f66b77995987c72719de6dd0cfd32d9f04ee5408433c1020fb14aca003911"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/game-production-quality/SKILL.md",
+  "size": 3611,
+  "sha256": "71bcce724774836e37eafc3c4c13842b40c3d8b5940fdd3cf5453fc448e1aada"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/game-production-quality/references/feel-world-and-experience.md",
+  "size": 3491,
+  "sha256": "0b66d0b3b2d8e291d9718987927dfcb01ab2217a095ed9bce08b38aeedbc7b0b"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/game-production-quality/references/fidelity-and-performance.md",
+  "size": 3524,
+  "sha256": "49d88d8c54d4fd46c587c6b0ccd241fde4ca686df6644425f822d377fc8b7384"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/game-production-quality/references/forge-capability-contract.md",
+  "size": 1649,
+  "sha256": "15045be86b12995a731e83f316d64363c17a33dc1453960633ddfa19a7c03c8b"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/game-production-quality/references/systems-assets-and-playtests.md",
+  "size": 3610,
+  "sha256": "c4b186fa725c426587314a75260d66a3ede6ea2ef8f511c00c8b6244b8411a84"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/game-production-quality/templates/production-templates.md",
+  "size": 2557,
+  "sha256": "be57fa5f35782d350a94d5d6209ef800c63d5de77cd63058db017ef36a7056ff"
  },
  {
   "path": "_CANONICAL-SKILLS/github-fleet-maintenance/SKILL.md",
@@ -38657,7 +38867,12 @@
  {
   "path": "docs/history/V8.31.0-CHANGELOG.md",
   "size": 514,
-  "sha256": "b06d90baeff8db5ab84ecb4051d2036f128bc92cf36d6a0bbc158f08ab6d0782"
+  "sha256": "73cdd665c79295c08898af8e8eacd3e640ce2e686cd2168f9ab146e6808d31c0"
+ },
+ {
+  "path": "docs/history/V8.32.0-CHANGELOG.md",
+  "size": 569,
+  "sha256": "faab7c60d53df0c08721e5f558c28e3381e49b1cae6d19a1f359b6c5e442fd11"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",
