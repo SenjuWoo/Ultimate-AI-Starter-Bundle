@@ -19,3 +19,4 @@ Most expensive mistakes are a wrong premise acted on confidently. Pick the row t
 | The same fact appears in multiple files, configs, generated reports, caches, docs, or external systems | `references/source-of-truth.md` |
 | A task depends on runtimes, CLIs, SDKs, APIs, provider features, plugins, or platform-specific behavior | `references/dependency-capability-check.md` |
 | A workflow asks the user to copy, edit, approve, restart, configure, repair, or verify steps that software may be able to perform | `references/automation-first.md` |
+| The user named a consequential method you can prove is worse for automation or intelligence, or omitted a step the finished job needs | Say the proof before executing. Confirmation still means do their method. A missing sentence is not a scope cut. Not a refusal. See `references/user-intent-lock.md`. |

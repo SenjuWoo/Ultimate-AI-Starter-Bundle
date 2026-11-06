@@ -61,23 +61,23 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Compact.md",
-  "size": 5285,
-  "sha256": "e42dc4784e2959c57844ada9bf791031078df693866b04a0b121f75b2f74fc0e"
+  "size": 5721,
+  "sha256": "c5584bdde3a670040aeadf9a23e842e7c5f8b44de5fd516c1fcb99213a88e3f2"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web Light.md",
-  "size": 717,
-  "sha256": "1908259d289c4759e2ca53534d8b5f1041094bdd500ebca9877bc3d595f59a63"
+  "size": 875,
+  "sha256": "83dd339ec64e2bf33f5a78e77692f71e9de17c751ce0364f96bd5dcfa1d724da"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web.md",
-  "size": 1550,
-  "sha256": "70b52815ac83ef78a500c4d9179aab99dfa6f33b95950f23300e613912526790"
+  "size": 1736,
+  "sha256": "75542dd61140fd2f7fd7504e891ac12e9262afdcecc439951092f7004c5a3559"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 14532,
-  "sha256": "5d7ad9ab1a8d4ec79657291f0e6d459934c2422b5485fa65a13bf1a577bf67a2"
+  "size": 15534,
+  "sha256": "98e2fc63a9b941b427f88c98eeef9b3d1748dc308b3d50082dd1616a569384a9"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/CLAUDE-CODE-ADDENDUM.md",
@@ -2176,13 +2176,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3136,
-  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
+  "size": 3592,
+  "sha256": "818b97dd0de9092c95f95d54fde03c0cbb7d27558845b6ab3f8b7eb94fc8540a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/SKILL.md",
-  "size": 2112,
-  "sha256": "7a6a6d4c3d8f65c6884b81faafc391733612e889429b4e0a3998f74bdfba3445"
+  "size": 2418,
+  "sha256": "1ea68757dc747d548674c03abab52ba692cc01ae91ba8f60ab39dc3d05945ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/adversarial-self-review.md",
@@ -2201,8 +2201,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/automation-first.md",
-  "size": 934,
-  "sha256": "64876c1ef875af2427e25ccac51a4ad3b175f6d76d81960c09fb01217a601b91"
+  "size": 1108,
+  "sha256": "0a6010e0b076c5eb6b27a312e1950284e066e40eeeceb32c6b9e5a070b4e0176"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/contradiction-detection.md",
@@ -2231,8 +2231,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/user-intent-lock.md",
-  "size": 796,
-  "sha256": "93601faf122511512318e6fe509ebc94964c131f4e99141a864e8d23c70a0ce1"
+  "size": 1187,
+  "sha256": "0e2fbefe31ecd6072b37863df28893897e232226f3bc5f8e91ceefe6a3ea8c91"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/receiving-code-review/SKILL.md",
@@ -2241,8 +2241,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 10765,
-  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
+  "size": 10938,
+  "sha256": "12122788d8240e9325cec289a94b869730023800b50ade2cef4b40b0107c7e46"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -2921,8 +2921,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4301,
-  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
+  "size": 4468,
+  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -2971,8 +2971,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/verification-before-completion/SKILL.md",
-  "size": 4584,
-  "sha256": "d7cb5837b34e755cd587ee08a2fc2bc00d6a50f36fedf5991681a42abd383259"
+  "size": 5102,
+  "sha256": "012727cdedde53f8a7d6daad6c17a493435e1b0ff3f37a12fae5b82d4db84721"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/verification-discipline/SKILL.md",
@@ -5166,13 +5166,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3136,
-  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
+  "size": 3592,
+  "sha256": "818b97dd0de9092c95f95d54fde03c0cbb7d27558845b6ab3f8b7eb94fc8540a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/SKILL.md",
-  "size": 2112,
-  "sha256": "7a6a6d4c3d8f65c6884b81faafc391733612e889429b4e0a3998f74bdfba3445"
+  "size": 2418,
+  "sha256": "1ea68757dc747d548674c03abab52ba692cc01ae91ba8f60ab39dc3d05945ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/adversarial-self-review.md",
@@ -5191,8 +5191,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/automation-first.md",
-  "size": 934,
-  "sha256": "64876c1ef875af2427e25ccac51a4ad3b175f6d76d81960c09fb01217a601b91"
+  "size": 1108,
+  "sha256": "0a6010e0b076c5eb6b27a312e1950284e066e40eeeceb32c6b9e5a070b4e0176"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/contradiction-detection.md",
@@ -5221,8 +5221,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/user-intent-lock.md",
-  "size": 796,
-  "sha256": "93601faf122511512318e6fe509ebc94964c131f4e99141a864e8d23c70a0ce1"
+  "size": 1187,
+  "sha256": "0e2fbefe31ecd6072b37863df28893897e232226f3bc5f8e91ceefe6a3ea8c91"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/receiving-code-review/SKILL.md",
@@ -5231,8 +5231,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 10765,
-  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
+  "size": 10938,
+  "sha256": "12122788d8240e9325cec289a94b869730023800b50ade2cef4b40b0107c7e46"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -5911,8 +5911,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4301,
-  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
+  "size": 4468,
+  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -5961,8 +5961,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/verification-before-completion/SKILL.md",
-  "size": 4584,
-  "sha256": "d7cb5837b34e755cd587ee08a2fc2bc00d6a50f36fedf5991681a42abd383259"
+  "size": 5102,
+  "sha256": "012727cdedde53f8a7d6daad6c17a493435e1b0ff3f37a12fae5b82d4db84721"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/verification-discipline/SKILL.md",
@@ -8216,13 +8216,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3136,
-  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
+  "size": 3592,
+  "sha256": "818b97dd0de9092c95f95d54fde03c0cbb7d27558845b6ab3f8b7eb94fc8540a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/SKILL.md",
-  "size": 2112,
-  "sha256": "7a6a6d4c3d8f65c6884b81faafc391733612e889429b4e0a3998f74bdfba3445"
+  "size": 2418,
+  "sha256": "1ea68757dc747d548674c03abab52ba692cc01ae91ba8f60ab39dc3d05945ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/adversarial-self-review.md",
@@ -8241,8 +8241,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/automation-first.md",
-  "size": 934,
-  "sha256": "64876c1ef875af2427e25ccac51a4ad3b175f6d76d81960c09fb01217a601b91"
+  "size": 1108,
+  "sha256": "0a6010e0b076c5eb6b27a312e1950284e066e40eeeceb32c6b9e5a070b4e0176"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/contradiction-detection.md",
@@ -8271,8 +8271,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/user-intent-lock.md",
-  "size": 796,
-  "sha256": "93601faf122511512318e6fe509ebc94964c131f4e99141a864e8d23c70a0ce1"
+  "size": 1187,
+  "sha256": "0e2fbefe31ecd6072b37863df28893897e232226f3bc5f8e91ceefe6a3ea8c91"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/receiving-code-review/SKILL.md",
@@ -8281,8 +8281,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 10765,
-  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
+  "size": 10938,
+  "sha256": "12122788d8240e9325cec289a94b869730023800b50ade2cef4b40b0107c7e46"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -8961,8 +8961,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4301,
-  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
+  "size": 4468,
+  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -9011,8 +9011,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/verification-before-completion/SKILL.md",
-  "size": 4584,
-  "sha256": "d7cb5837b34e755cd587ee08a2fc2bc00d6a50f36fedf5991681a42abd383259"
+  "size": 5102,
+  "sha256": "012727cdedde53f8a7d6daad6c17a493435e1b0ff3f37a12fae5b82d4db84721"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/verification-discipline/SKILL.md",
@@ -11256,13 +11256,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3136,
-  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
+  "size": 3592,
+  "sha256": "818b97dd0de9092c95f95d54fde03c0cbb7d27558845b6ab3f8b7eb94fc8540a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/SKILL.md",
-  "size": 2112,
-  "sha256": "7a6a6d4c3d8f65c6884b81faafc391733612e889429b4e0a3998f74bdfba3445"
+  "size": 2418,
+  "sha256": "1ea68757dc747d548674c03abab52ba692cc01ae91ba8f60ab39dc3d05945ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/adversarial-self-review.md",
@@ -11281,8 +11281,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/automation-first.md",
-  "size": 934,
-  "sha256": "64876c1ef875af2427e25ccac51a4ad3b175f6d76d81960c09fb01217a601b91"
+  "size": 1108,
+  "sha256": "0a6010e0b076c5eb6b27a312e1950284e066e40eeeceb32c6b9e5a070b4e0176"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/contradiction-detection.md",
@@ -11311,8 +11311,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/user-intent-lock.md",
-  "size": 796,
-  "sha256": "93601faf122511512318e6fe509ebc94964c131f4e99141a864e8d23c70a0ce1"
+  "size": 1187,
+  "sha256": "0e2fbefe31ecd6072b37863df28893897e232226f3bc5f8e91ceefe6a3ea8c91"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/receiving-code-review/SKILL.md",
@@ -11321,8 +11321,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 10765,
-  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
+  "size": 10938,
+  "sha256": "12122788d8240e9325cec289a94b869730023800b50ade2cef4b40b0107c7e46"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -12001,8 +12001,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4301,
-  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
+  "size": 4468,
+  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -12051,8 +12051,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/verification-before-completion/SKILL.md",
-  "size": 4584,
-  "sha256": "d7cb5837b34e755cd587ee08a2fc2bc00d6a50f36fedf5991681a42abd383259"
+  "size": 5102,
+  "sha256": "012727cdedde53f8a7d6daad6c17a493435e1b0ff3f37a12fae5b82d4db84721"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/verification-discipline/SKILL.md",
@@ -14296,13 +14296,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3136,
-  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
+  "size": 3592,
+  "sha256": "818b97dd0de9092c95f95d54fde03c0cbb7d27558845b6ab3f8b7eb94fc8540a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/SKILL.md",
-  "size": 2112,
-  "sha256": "7a6a6d4c3d8f65c6884b81faafc391733612e889429b4e0a3998f74bdfba3445"
+  "size": 2418,
+  "sha256": "1ea68757dc747d548674c03abab52ba692cc01ae91ba8f60ab39dc3d05945ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/adversarial-self-review.md",
@@ -14321,8 +14321,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/automation-first.md",
-  "size": 934,
-  "sha256": "64876c1ef875af2427e25ccac51a4ad3b175f6d76d81960c09fb01217a601b91"
+  "size": 1108,
+  "sha256": "0a6010e0b076c5eb6b27a312e1950284e066e40eeeceb32c6b9e5a070b4e0176"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/contradiction-detection.md",
@@ -14351,8 +14351,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/user-intent-lock.md",
-  "size": 796,
-  "sha256": "93601faf122511512318e6fe509ebc94964c131f4e99141a864e8d23c70a0ce1"
+  "size": 1187,
+  "sha256": "0e2fbefe31ecd6072b37863df28893897e232226f3bc5f8e91ceefe6a3ea8c91"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/receiving-code-review/SKILL.md",
@@ -14361,8 +14361,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 10765,
-  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
+  "size": 10938,
+  "sha256": "12122788d8240e9325cec289a94b869730023800b50ade2cef4b40b0107c7e46"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -15041,8 +15041,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4301,
-  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
+  "size": 4468,
+  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -15091,8 +15091,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/verification-before-completion/SKILL.md",
-  "size": 4584,
-  "sha256": "d7cb5837b34e755cd587ee08a2fc2bc00d6a50f36fedf5991681a42abd383259"
+  "size": 5102,
+  "sha256": "012727cdedde53f8a7d6daad6c17a493435e1b0ff3f37a12fae5b82d4db84721"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/verification-discipline/SKILL.md",
@@ -17411,13 +17411,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/public-copy-durability/SKILL.md",
-  "size": 3136,
-  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
+  "size": 3592,
+  "sha256": "818b97dd0de9092c95f95d54fde03c0cbb7d27558845b6ab3f8b7eb94fc8540a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/SKILL.md",
-  "size": 2112,
-  "sha256": "7a6a6d4c3d8f65c6884b81faafc391733612e889429b4e0a3998f74bdfba3445"
+  "size": 2418,
+  "sha256": "1ea68757dc747d548674c03abab52ba692cc01ae91ba8f60ab39dc3d05945ca3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/adversarial-self-review.md",
@@ -17436,8 +17436,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/automation-first.md",
-  "size": 934,
-  "sha256": "64876c1ef875af2427e25ccac51a4ad3b175f6d76d81960c09fb01217a601b91"
+  "size": 1108,
+  "sha256": "0a6010e0b076c5eb6b27a312e1950284e066e40eeeceb32c6b9e5a070b4e0176"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/contradiction-detection.md",
@@ -17466,8 +17466,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/reasoning-discipline/references/user-intent-lock.md",
-  "size": 796,
-  "sha256": "93601faf122511512318e6fe509ebc94964c131f4e99141a864e8d23c70a0ce1"
+  "size": 1187,
+  "sha256": "0e2fbefe31ecd6072b37863df28893897e232226f3bc5f8e91ceefe6a3ea8c91"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/receiving-code-review/SKILL.md",
@@ -17476,8 +17476,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/SKILL.md",
-  "size": 10765,
-  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
+  "size": 10938,
+  "sha256": "12122788d8240e9325cec289a94b869730023800b50ade2cef4b40b0107c7e46"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -18156,8 +18156,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4301,
-  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
+  "size": 4468,
+  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -18206,8 +18206,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/verification-before-completion/SKILL.md",
-  "size": 4584,
-  "sha256": "d7cb5837b34e755cd587ee08a2fc2bc00d6a50f36fedf5991681a42abd383259"
+  "size": 5102,
+  "sha256": "012727cdedde53f8a7d6daad6c17a493435e1b0ff3f37a12fae5b82d4db84721"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/verification-discipline/SKILL.md",
@@ -18471,8 +18471,8 @@
  },
  {
   "path": "3-PREAMBLES/MANUAL-PASTE.txt",
-  "size": 3162,
-  "sha256": "a07e01b8d8f1feb6cfea8ccdf94a479eff3d327651a1f23bae0aa1dbf288f117"
+  "size": 3519,
+  "sha256": "d8da1a4311d942dc40dca0d9744a80c0afca49acdd9288a41106b98fcc3d6777"
  },
  {
   "path": "3-PREAMBLES/README.md",
@@ -18481,8 +18481,8 @@
  },
  {
   "path": "3-PREAMBLES/SOUL.md",
-  "size": 1579,
-  "sha256": "9227751449d47f2da1f3891b89dd40360d3842315bcca6aaf5a25d9d4c50d592"
+  "size": 1783,
+  "sha256": "fd6175d6d47c9e44171eab03929dcb967ece04e44853fc2348183c7e3ab8ee03"
  },
  {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-0185e0249c27.md",
@@ -20538,6 +20538,11 @@
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/scripts/review-package",
   "size": 2444,
   "sha256": "aed7c6e09fc660417d28898ed975e84651cb9f18f4675141cd475edfb7037f3d"
+ },
+ {
+  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/scripts/sdd-repo",
+  "size": 2410,
+  "sha256": "8b63d61c6094502c0392d12415e3637f055ed24e3d6c1558c7ed7cbe42caebf7"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/scripts/sdd-workspace",
@@ -22746,8 +22751,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 285142,
-  "sha256": "3df1810af5022c52f50287eaedf2ae08aec2ff2180bf4cb3815b2727125dac66"
+  "size": 285718,
+  "sha256": "d68b2665fc0d1ffbd52b20cbe751116c69a95b56813ef0d069e69e95af0c6b45"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22766,8 +22771,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 14532,
-  "sha256": "5d7ad9ab1a8d4ec79657291f0e6d459934c2422b5485fa65a13bf1a577bf67a2"
+  "size": 15534,
+  "sha256": "98e2fc63a9b941b427f88c98eeef9b3d1748dc308b3d50082dd1616a569384a9"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
@@ -22901,8 +22906,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 67632,
-  "sha256": "313fcca32bb378ce6131e3aa9b6543a53a133b7849ba4ee3a515bf6617850a58"
+  "size": 68720,
+  "sha256": "bf5898bf1837b8ef2f3e726205502c0705e80fd4616d37a1e3b1e9f27bca9870"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -23337,7 +23342,7 @@
  {
   "path": "TESTS/test_release_contract.py",
   "size": 364096,
-  "sha256": "6605969893d13c3c608963f9e89d9571026b2215f4b568e588da2d042f3c80a3"
+  "sha256": "fffc75adbe4300a2987a74812e765303dabe1b5e4758506b6e05c885761cceb1"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23363,6 +23368,11 @@
   "path": "TESTS/test_universal_modder.py",
   "size": 5379,
   "sha256": "1a449a08232ab71607c145c716e33f4b60f0562e419f56ad6eb949855e914a76"
+ },
+ {
+  "path": "TESTS/test_version_bump.py",
+  "size": 3839,
+  "sha256": "fa360c59baca58bd95799e62779422e9b1b2ca82cbf592823dee9dac0d6d9e96"
  },
  {
   "path": "TESTS/test_workspace_ownership.py",
@@ -23683,6 +23693,11 @@
   "path": "TOOLS/hooks/completeness_gate.py",
   "size": 16947,
   "sha256": "ac364297ea2a5ac8187b55ecc12e74c52760cf0444a9a0a51e1fa316e061d9d9"
+ },
+ {
+  "path": "TOOLS/hooks/hermes_gateway_guard.py",
+  "size": 19691,
+  "sha256": "f4180654bb565dc3a457df99e3f6f74b15a65c2a13cc94e31105bed745dcdadc"
  },
  {
   "path": "TOOLS/hooks/hermes_wire.py",
@@ -25836,13 +25851,13 @@
  },
  {
   "path": "_CANONICAL-SKILLS/public-copy-durability/SKILL.md",
-  "size": 3136,
-  "sha256": "a46831f74871fd83f7497f6cb7890f4cf5f4285eb7b6776e8ce857c3f05faeb5"
+  "size": 3592,
+  "sha256": "818b97dd0de9092c95f95d54fde03c0cbb7d27558845b6ab3f8b7eb94fc8540a"
  },
  {
   "path": "_CANONICAL-SKILLS/reasoning-discipline/SKILL.md",
-  "size": 2112,
-  "sha256": "7a6a6d4c3d8f65c6884b81faafc391733612e889429b4e0a3998f74bdfba3445"
+  "size": 2418,
+  "sha256": "1ea68757dc747d548674c03abab52ba692cc01ae91ba8f60ab39dc3d05945ca3"
  },
  {
   "path": "_CANONICAL-SKILLS/reasoning-discipline/references/adversarial-self-review.md",
@@ -25861,8 +25876,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/reasoning-discipline/references/automation-first.md",
-  "size": 934,
-  "sha256": "64876c1ef875af2427e25ccac51a4ad3b175f6d76d81960c09fb01217a601b91"
+  "size": 1108,
+  "sha256": "0a6010e0b076c5eb6b27a312e1950284e066e40eeeceb32c6b9e5a070b4e0176"
  },
  {
   "path": "_CANONICAL-SKILLS/reasoning-discipline/references/contradiction-detection.md",
@@ -25891,8 +25906,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/reasoning-discipline/references/user-intent-lock.md",
-  "size": 796,
-  "sha256": "93601faf122511512318e6fe509ebc94964c131f4e99141a864e8d23c70a0ce1"
+  "size": 1187,
+  "sha256": "0e2fbefe31ecd6072b37863df28893897e232226f3bc5f8e91ceefe6a3ea8c91"
  },
  {
   "path": "_CANONICAL-SKILLS/receiving-code-review/SKILL.md",
@@ -25901,8 +25916,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/SKILL.md",
-  "size": 10765,
-  "sha256": "c507cfb82388a1244a0fd7f18ac0cbd771bac9209edd23a71e0f3586884ba020"
+  "size": 10938,
+  "sha256": "12122788d8240e9325cec289a94b869730023800b50ade2cef4b40b0107c7e46"
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/references/docs-heavy-repo-sweep.md",
@@ -26581,8 +26596,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/unrestraint-packs/SKILL.md",
-  "size": 4301,
-  "sha256": "95e8bf76ba3d5f77f7d9b65f6110e8104eef52a422c37d803c2f8b9105730f19"
+  "size": 4468,
+  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
  },
  {
   "path": "_CANONICAL-SKILLS/using-git-worktrees/SKILL.md",
@@ -26631,8 +26646,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/verification-before-completion/SKILL.md",
-  "size": 4584,
-  "sha256": "d7cb5837b34e755cd587ee08a2fc2bc00d6a50f36fedf5991681a42abd383259"
+  "size": 5102,
+  "sha256": "012727cdedde53f8a7d6daad6c17a493435e1b0ff3f37a12fae5b82d4db84721"
  },
  {
   "path": "_CANONICAL-SKILLS/verification-discipline/SKILL.md",
@@ -26845,6 +26860,11 @@
   "sha256": "a1e808ac8bfe1a197b4a07f26da2c383f32e39935bf3b221e22396dd9ca0b815"
  },
  {
+  "path": "docs/GUIDE.md",
+  "size": 65108,
+  "sha256": "9491218c873249629ba92dc75461d7fd94324c336987feb927bf2b0b86560e5c"
+ },
+ {
   "path": "docs/HERMES-MODELS.md",
   "size": 7041,
   "sha256": "77393100558793133af10baf08b739966be5a8ac8e80f03d3133b46d2cd09565"
@@ -26913,6 +26933,16 @@
   "path": "docs/decisions/README.md",
   "size": 1060,
   "sha256": "d2011654537e4f4af901454f924c537e414ec3e3ce7586d3c76eaef346ecf1ee"
+ },
+ {
+  "path": "docs/dropoffs/2026-11-06-free-agent-quality-efficiency.md",
+  "size": 23847,
+  "sha256": "a7fc4f886dd2153a78c6b085c13f64a2007b78bd5cff5dbcdfed0d4b1bcadacb"
+ },
+ {
+  "path": "docs/dropoffs/2026-11-06-public-copy-and-judgment-gate.md",
+  "size": 12303,
+  "sha256": "b7d4be5758127fb4d545ed0cfa12ff4d04a998641be7b050491efc7acfe7ba1a"
  },
  {
   "path": "docs/history/FINAL-AUDIT-v5.0.0.md",
@@ -27688,6 +27718,11 @@
   "path": "docs/history/V8.35.1-CHANGELOG.md",
   "size": 353,
   "sha256": "cc43abca1afe7d0d805022d7ba677c35bf70f06f2bd480ecf80075004fd0d046"
+ },
+ {
+  "path": "docs/history/V8.36.0-CHANGELOG.md",
+  "size": 5492,
+  "sha256": "1d4dd184d6547e24f86871975947060c832770924fc93ffb1f67ba5d6d1aa54b"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

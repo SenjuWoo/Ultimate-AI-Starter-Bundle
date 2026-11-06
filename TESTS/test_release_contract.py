@@ -2513,7 +2513,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "8e8e8989d1259b7b132fcb6448254c5018eef135f7c6f72cb5dbe9aa93af0f7a", (
+    assert digest == "082dec1adb3b216eef4cb9ac2f417c3384351e3dae3377c7ebaf9a158d136835", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )

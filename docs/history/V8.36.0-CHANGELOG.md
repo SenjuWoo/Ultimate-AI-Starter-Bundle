@@ -1,5 +1,13 @@
 ## 8.36.0 (2026-11-05)
 
+- The instruction files now carry two standing rules in every form of the
+  contract (full, Compact, Web, Web Light, SOUL): public GitHub text - README,
+  changelog, release body, docs - contains no personal names, machine paths,
+  drive letters, home folders or session stories; and a method you can prove is
+  worse for automation or intelligence is named before execution, without
+  becoming a refusal, a content gate or a tamer version, with any step the
+  request forgot still in scope. `MANUAL-PASTE.txt`, the workspace AIO mirror,
+  six skills and the wired-prefix hash follow the same change.
 - Hermes named-profile `gateway run --replace` is now refused. That argv kills the multiplex host and the new process stays standalone, so other profiles resume as `storage_unavailable` while their session databases are intact. `hermes_gateway_guard.py` denies it from agent shells. The same decision is installed as `sitecustomize` on Hermes's store Python, which is what Desktop and `hermes update` actually spawn (`python -I` still imports it). A default-profile replace and `--force` still pass. When the multiplex host is already up, the named replace stops with `os._exit(0)` and starts nothing. `SystemExit` from inside `sitecustomize` is a fatal `init_import_site` error, because `site.py` only catches `Exception`. When it is not, the guard starts the default host detached and still does not become the standalone.
 - Install no longer aborts on a Hermes warning. `Ensure-CodebaseMemoryHermes.ps1`
   and `Ensure-SerenaHermes.ps1` read `hermes mcp list` through
@@ -9,10 +17,10 @@
   registered in the `code` profile and the warning is gone.
 - The unreadable manifest was a leftover `advanced-delegation` folder with a
   deny-all ACL. It was moved aside, which cleared the warning for every agent.
-- MCP path repair follows a tool that moved to a different tree. The RobloxForge
-  server under `Z:/Backup/Ai apps` had moved to `Tools/Ai tools`; sibling-only
-  search reported three dead paths. Repair now searches `UABS_TOOL_ROOTS` plus the
-  machine map to depth 3 and requires a unique match, and all three were repointed.
+- MCP path repair follows a tool that moved to a different tree. A companion's
+  server directory had moved to another root; sibling-only search reported its
+  paths dead. Repair now searches `UABS_TOOL_ROOTS` plus the machine map to depth 3
+  and requires a unique match, and the live paths were repointed.
 - One discovery implementation. `TOOLS/discover_tools.ps1` is now a forwarder to
   the tool-discovery skill's script; the duplicate older copy the installer ran
   is gone. Fixed while proving it: a `.ps1` npm shim (`codeburn`) is probed
@@ -36,8 +44,8 @@
   detail moved intact to `docs/GUIDE.md`.
 - Catalog notes dated: playwright-cli 0.1.23 could not be evaluated here (no
   Chrome distribution for the CLI, 0.1.22 fails the same way), so 0.1.22 stays.
-- Two dead Start-menu autostart entries that pointed at the old Discord-Forge
-  folder were repointed to the moved tool, with `.bak-toolmove` copies.
+- Start-menu autostarts that pointed at a tool's previous folder were repointed to
+  where it lives now, with backups kept beside them.
 - Cleanup now demands proof of ownership before deleting a skill: the installer's
   managed-skill receipt plus a matching tree digest. A retired name with a
   SKILL.md is no longer enough, so a user's own skill that happens to share a

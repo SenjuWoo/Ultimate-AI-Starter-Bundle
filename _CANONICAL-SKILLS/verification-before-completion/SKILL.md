@@ -60,6 +60,15 @@ evidence exists for the claim about to be made.
 final CSS edit, or a test run from before the last commit, is not evidence about
 what ships. If you changed anything after gathering evidence, gather it again.
 
+## Last review
+
+Another check, not a content stop:
+
+- If you can prove the requested method is worse for automation or intelligence, say the proof and the better route before you execute. Confirmation means do the requested method.
+- If the request omitted a step the finished job needs, include it or name it.
+- If the text about to be published is a GitHub changelog, README or release body, it has no personal names, machine paths or private session detail.
+- This section is not a refusal and not a hard blocker.
+
 ## Red Flags - STOP
 
 - Using "should", "probably", "seems to"

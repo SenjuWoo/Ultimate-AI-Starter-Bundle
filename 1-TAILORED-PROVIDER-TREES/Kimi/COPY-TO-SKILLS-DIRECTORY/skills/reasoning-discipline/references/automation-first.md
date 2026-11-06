@@ -1,7 +1,7 @@
 # Automation First
 
 ## Core rule
-Every required **manual step** is a potential failure point. **Automate** deterministic setup and verification when the platform provides a safe interface.
+Every required **manual step** is a potential failure point. **Automate** deterministic setup and verification when the platform provides a safe interface. A step the user forgot to name, which the finished automation needs and the platform can already do, is still in scope; do not turn a forgotten sentence into a manual chore.
 
 ## Decision
 Automate when the action is deterministic, scoped, reversible or verifiable, and supported by a CLI/API/config contract. Preserve an explicit **fallback** only for capabilities that truly cannot be automated safely.

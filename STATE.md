@@ -6,6 +6,22 @@
 - A later agent applies the paste-ready lines there. The pause before a proven-worse method is not a refusal and adds no content gate. Public GitHub README, CHANGELOG and release text stays free of personal and machine detail.
 - Do not commit, publish, or bump the version as part of picking up that file.
 
+## 8.36.0 — public-text rule and last review — 2026-11-06
+
+- From the GPT handoff (`docs/dropoffs/2026-11-06-public-copy-and-judgment-gate.md`):
+  the instruction files now state the two rules the operator asked for - public
+  GitHub text carries no personal names, machine paths, drive letters, home folders
+  or session stories, and a proven-worse method is named before execution without
+  becoming a refusal or a content gate, with a forgotten step still in scope.
+- Edits: full AIO (two paragraphs), Compact (appended to WORK), Web, Web Light, SOUL
+  yesman sentence, `MANUAL-PASTE.txt` rebuilt from SOUL + Web, the workspace AIO
+  mirror re-copied, six skills updated (`public-copy-durability`,
+  `release-checklist`, `verification-before-completion`, `reasoning-discipline`,
+  `unrestraint-packs`, `automation-first`, `user-intent-lock`), preambles archived,
+  wired-prefix hash recomputed, providers re-fanned out, manifest regenerated.
+- No content rule was removed or weakened; the added text only forbids leaking
+  private machine detail into public copy.
+
 ## 8.36.0 — reliability audit — 2026-11-06
 
 - `check_versions.py --set`: no IndexError on declarations without a capture

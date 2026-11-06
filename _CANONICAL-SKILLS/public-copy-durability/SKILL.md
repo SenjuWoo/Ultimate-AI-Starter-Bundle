@@ -57,3 +57,7 @@ sentence only makes sense for one release, it is changelog text.
 Never invent a version, date, or count to fill a stability gap - leave a placeholder and say so.
 The page-shape contract lives in `skyrim-nexus-publishing`; the release gate that checks the
 public surface lives in `release-checklist`.
+
+## Public does not mean private
+
+GitHub README, CHANGELOG, release bodies and docs are public even though an agent can edit them later. They may carry versions and per-release facts. They may not carry personal names, machine paths, drive letters, home folders, this PC's layout, or session stories. Those stay in the private profile or a local handoff. Say what the product did. A public repository login already used as the author is not personal data.
