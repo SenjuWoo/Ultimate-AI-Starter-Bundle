@@ -1,4 +1,4 @@
-## 8.37.3 (2026-11-06)
+## 8.37.4 (2026-11-06)
 - Default model is `deepseek/deepseek-v4.1-flash-1017`, the pinned October snapshot,
   in both the shipped starter and the live profile. The MoA preset stays defined but
   disabled: its Particle-1 aggregator was the unreliable piece. `provider_routing`
@@ -10,7 +10,7 @@
 - 81 canonical skills, no companion pin changed, unrestrained/preamble sources
   untouched.
 
-
+## 8.37.3 (2026-11-06)
 - Companion registry contracts are verified against the published owner layouts:
   Risk of Rain 2 Forge setup is `forge.cmd setup` and its `updates` command is
   labelled check-only; RimWorldForge uses `RimWorldForge-*.zip`,
