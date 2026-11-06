@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.35.0 -->
+<!-- Ultimate AI Starter Bundle v8.35.1 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.35.0
+# Ultimate AI Starter Bundle v8.35.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 

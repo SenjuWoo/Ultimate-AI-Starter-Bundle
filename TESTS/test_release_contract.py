@@ -3028,6 +3028,15 @@ def test_compression_caps_reach_existing_profiles() -> None:
     assert one == two, "the two Hermes starter templates diverged"
 
 
+def test_reverse_kit_is_adopted_after_a_move() -> None:
+    """A moved Reverse THIS! kit is found in the tool roots, not re-installed."""
+    script = read(ROOT / "TOOLS" / "Install-ReverseThis.ps1")
+    assert "Find-ReverseOwnerKit" in script and "Save-ReverseOwnerReceipt" in script
+    assert "Adopted moved Reverse THIS! kit" in script
+    assert "-Recurse -Depth 3" in script, "kit discovery must stay bounded"
+    assert "UABS_TOOL_ROOTS" in script
+
+
 def main() -> int:
     # A failed gate must report Unicode paths on legacy Windows consoles too.
     sys.stdout.reconfigure(errors="backslashreplace")
@@ -3207,6 +3216,7 @@ def main() -> int:
         test_verification_tiers_and_tooling_decisions,
         test_creative_direction_and_capability_discovery,
         test_compression_caps_reach_existing_profiles,
+        test_reverse_kit_is_adopted_after_a_move,
         test_release_workflow_publishes_only_a_green_untagged_main_sha,
         test_free_game_probe_contract,
     ]

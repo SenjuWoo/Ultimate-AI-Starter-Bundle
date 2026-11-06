@@ -1,3 +1,17 @@
+## 8.35.1 (2026-11-05)
+
+- Moved tool roots are adopted, not duplicated: if a Reverse THIS! receipt points
+  at a folder that no longer exists, the installer searches `UABS_TOOL_ROOTS` and
+  the usual tool folders (depth 3, bounded), validates `sandbox/installed.json`,
+  and repairs the receipt instead of installing a second kit.
+- The repair pass also fixed a stale `installed.json` whose `kit_root` lacked the
+  new `Github` segment; the local kit now reports its real path.
+- Installer reuses the configured `UABS_PYTHON` instead of a host agent runtime,
+  and refreshes the staged native plugin when the bundle ships a newer version.
+- CBM registry maintenance: five moved projects reindexed at their new roots,
+  deleted stale duplicates, bundle reindexed (16,559 nodes).
+- Unrestrained/preamble source untouched; no companion pin changed; 81 canonical skills.
+
 ## 8.35.0 (2026-11-05)
 
 - Scope split. The ComfyUI/SwarmUI preset set, the Anima model installer and its

@@ -425,11 +425,6 @@
   "sha256": "9ad2fa7cab00c308b089fcb0a9ec9a0f14862f2cb1ea594ff902d36c50f9a955"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.nojekyll",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
- },
- {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/CONTRIBUTING.md",
   "size": 10885,
   "sha256": "f82bbd08b368e589a03d7b90b3790153e50c2d19c41a202f4d7abecdd1085783"
@@ -2435,11 +2430,6 @@
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/__init__.py",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
- },
- {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/aggregate_benchmark.py",
   "size": 14787,
   "sha256": "16c5a53e4cbf55a679a42c244cba39cee463d99ce507ecc9fafc4cb4e0a133e0"
@@ -3423,11 +3413,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.hive/tasks.md",
   "size": 2514,
   "sha256": "9ad2fa7cab00c308b089fcb0a9ec9a0f14862f2cb1ea594ff902d36c50f9a955"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.nojekyll",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/CONTRIBUTING.md",
@@ -5435,11 +5420,6 @@
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/__init__.py",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
- },
- {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/aggregate_benchmark.py",
   "size": 14787,
   "sha256": "16c5a53e4cbf55a679a42c244cba39cee463d99ce507ecc9fafc4cb4e0a133e0"
@@ -6483,11 +6463,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.hive/tasks.md",
   "size": 2514,
   "sha256": "9ad2fa7cab00c308b089fcb0a9ec9a0f14862f2cb1ea594ff902d36c50f9a955"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.nojekyll",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/CONTRIBUTING.md",
@@ -8495,11 +8470,6 @@
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/__init__.py",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
- },
- {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/aggregate_benchmark.py",
   "size": 14787,
   "sha256": "16c5a53e4cbf55a679a42c244cba39cee463d99ce507ecc9fafc4cb4e0a133e0"
@@ -9533,11 +9503,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.hive/tasks.md",
   "size": 2514,
   "sha256": "9ad2fa7cab00c308b089fcb0a9ec9a0f14862f2cb1ea594ff902d36c50f9a955"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.nojekyll",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/CONTRIBUTING.md",
@@ -11545,11 +11510,6 @@
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/__init__.py",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
- },
- {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/aggregate_benchmark.py",
   "size": 14787,
   "sha256": "16c5a53e4cbf55a679a42c244cba39cee463d99ce507ecc9fafc4cb4e0a133e0"
@@ -12583,11 +12543,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.hive/tasks.md",
   "size": 2514,
   "sha256": "9ad2fa7cab00c308b089fcb0a9ec9a0f14862f2cb1ea594ff902d36c50f9a955"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.nojekyll",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/CONTRIBUTING.md",
@@ -14595,11 +14550,6 @@
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/__init__.py",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
- },
- {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/aggregate_benchmark.py",
   "size": 14787,
   "sha256": "16c5a53e4cbf55a679a42c244cba39cee463d99ce507ecc9fafc4cb4e0a133e0"
@@ -15708,11 +15658,6 @@
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.hive/tasks.md",
   "size": 2514,
   "sha256": "9ad2fa7cab00c308b089fcb0a9ec9a0f14862f2cb1ea594ff902d36c50f9a955"
- },
- {
-  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/.nojekyll",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/CONTRIBUTING.md",
@@ -17720,11 +17665,6 @@
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
  },
  {
-  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/__init__.py",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
- },
- {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/aggregate_benchmark.py",
   "size": 14787,
   "sha256": "16c5a53e4cbf55a679a42c244cba39cee463d99ce507ecc9fafc4cb4e0a133e0"
@@ -18545,11 +18485,6 @@
   "sha256": "9227751449d47f2da1f3891b89dd40360d3842315bcca6aaf5a25d9d4c50d592"
  },
  {
-  "path": "3-PREAMBLES/history/.gitkeep",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
- },
- {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-0185e0249c27.md",
   "size": 12206,
   "sha256": "9d25fc564a8d35284e346005a7c83ea56e153e9c394a83696bcf375717a42b4a"
@@ -18747,12 +18682,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 63613,
-  "sha256": "7b0655447e6fae80a8435e086eae60e8b235873016f3fda2234b443932bc8855"
+  "sha256": "7b33c4ebdf1af6fccbd236a36458a71fedf69620d09a1116e29e6cc8a0657156"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "4eac991491c092e1dfdb13407ae75e0eaabe2c13ccac65cf72222a8b96518dc8"
+  "sha256": "8441d17dd0d858cc53bfe4189dc56b30887b9ce7d55e5b2996a0c717eae4683a"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18762,7 +18697,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "839c08f3d6078786fadb97c74302dac2cc1aeb64f7cb8c43ff0cd6956ee24b23"
+  "sha256": "c86079fbe1b1e37a4c760a92500786fe871061195e67ab7a7acd5b5524dd44ad"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -21015,11 +20950,6 @@
   "sha256": "841f1d014f231c84f441cc6b91f388cc3e9e788012e6d36f5e78406c1f4c9b49"
  },
  {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/tests/hermes/__init__.py",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
- },
- {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/hermes/conftest.py",
   "size": 1036,
   "sha256": "6cf5e434b124d912e1b53b4e6c1287f72c9af8d60aa01e8b49722c98e8a41dc8"
@@ -22841,8 +22771,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 279342,
-  "sha256": "d87054fac9102959cb4921bd0141dc535e0e021d39862e38e5f7ce4785b44b99"
+  "size": 280224,
+  "sha256": "d5d78a63828828c829c521ed11f8944e68ade41bfef1fb4eaac50bf3eab61fcd"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22977,7 +22907,7 @@
  {
   "path": "README.md",
   "size": 74142,
-  "sha256": "bf8d1763e6935c9cc32933529cb35a6d17e23915bf58af691805ce0da31731ed"
+  "sha256": "716ed96d03ef70c5ea908bfa2466f4bd144126f4bd46b5dd4dfabffc0e3e4f72"
  },
  {
   "path": "SECURITY.md",
@@ -22987,12 +22917,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "6a0f62f6e84682ee2122e77dcd6258fda935c91b2759582959be4a0e9eeb0ac1"
+  "sha256": "4b1504b5d65ddd30f524c6013a9560816380581dad58b5ca9d2f15202e3b691a"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "0c35404933faeac0db990e3829c9b38ecfe30d47de24f5553c41f4fddaca3445"
+  "sha256": "a3547c4d9769c440189c06bfde55b050f9d58e96f33594995674d3fbab01f58d"
  },
  {
   "path": "STATE.md",
@@ -23431,8 +23361,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 362114,
-  "sha256": "8107e5cd2163d075d38ec54863d41d11a693a80b00bd82f11c344520fa1b3a2a"
+  "size": 362631,
+  "sha256": "7be26610586679a94290b9307d36375c84c2ec6be4fec64cf07012e04df04408"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23571,8 +23501,8 @@
  },
  {
   "path": "TOOLS/Install-ReverseThis.ps1",
-  "size": 7458,
-  "sha256": "9955f60550e495348656d1243f2397b7970538bbca4fbb156f840156dee3cee5"
+  "size": 9983,
+  "sha256": "59815715d428ddde24927c5cd6185222064d5f14c50256ab54af7870ba2fd0c0"
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
@@ -23922,7 +23852,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2726,
-  "sha256": "44ed60446e470fb472ced1d3dd8c1d51a050aaba279931f9098caa1f6847bda5"
+  "sha256": "37a6cd095be1dbfc47a7ea9e29a64feb41d7a13a08442b9cb929dfac4158953c"
  },
  {
   "path": "VALIDATION.md",
@@ -23932,7 +23862,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "fdcd30660f9897c6489c08c75b51191a0ee2e5aae91195d22c43fcc659b2878e"
+  "sha256": "d6b335701807c085a5404f24fcad7f3d5dae4ee866f09ebbd0fda9a4e89b1fdb"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24178,11 +24108,6 @@
   "path": "_CANONICAL-SKILLS/code-review-skill/.hive/tasks.md",
   "size": 2514,
   "sha256": "9ad2fa7cab00c308b089fcb0a9ec9a0f14862f2cb1ea594ff902d36c50f9a955"
- },
- {
-  "path": "_CANONICAL-SKILLS/code-review-skill/.nojekyll",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
  },
  {
   "path": "_CANONICAL-SKILLS/code-review-skill/CONTRIBUTING.md",
@@ -26190,11 +26115,6 @@
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
  },
  {
-  "path": "_CANONICAL-SKILLS/skill-creator/scripts/__init__.py",
-  "size": 0,
-  "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
- },
- {
   "path": "_CANONICAL-SKILLS/skill-creator/scripts/aggregate_benchmark.py",
   "size": 14787,
   "sha256": "16c5a53e4cbf55a679a42c244cba39cee463d99ce507ecc9fafc4cb4e0a133e0"
@@ -27788,6 +27708,11 @@
   "path": "docs/history/V8.35.0-CHANGELOG.md",
   "size": 399,
   "sha256": "134bbd0e0bbed1c131e4236f99bc7e3cc31df819eae7f62e46419948f8f8cabb"
+ },
+ {
+  "path": "docs/history/V8.35.1-CHANGELOG.md",
+  "size": 353,
+  "sha256": "cc43abca1afe7d0d805022d7ba677c35bf70f06f2bd480ecf80075004fd0d046"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

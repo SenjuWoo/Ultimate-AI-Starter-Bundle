@@ -26,8 +26,63 @@ function Resolve-ReverseOwner {
     return $owner
 }
 
+
+function Find-ReverseOwnerKit {
+    # A moved install keeps its sandbox/installed.json; adopt it instead of
+    # creating a second kit. Bounded roots only, never a drive walk.
+    param([string[]]$Roots)
+    foreach ($base in $Roots) {
+        if ([string]::IsNullOrWhiteSpace($base) -or -not (Test-Path -LiteralPath $base -PathType Container)) { continue }
+        $candidates = @()
+        try {
+            $candidates = @(Get-ChildItem -LiteralPath $base -Directory -Recurse -Depth 3 -ErrorAction SilentlyContinue |
+                Where-Object { $_.Name -ieq 'reverse-this' })
+        } catch { }
+        foreach ($dir in $candidates) {
+            $stateFile = Join-Path $dir.FullName 'sandbox\installed.json'
+            if (-not (Test-Path -LiteralPath $stateFile -PathType Leaf)) { continue }
+            try {
+                $state = [IO.File]::ReadAllText($stateFile) | ConvertFrom-Json
+                if ($state.schema -eq 1 -and $state.tools -and $state.kit_root) {
+                    $owner = [IO.Path]::GetFullPath($dir.FullName).TrimEnd('')
+                    return [pscustomobject]@{ Owner = $owner; StateFile = $stateFile }
+                }
+            } catch { }
+        }
+    }
+    return $null
+}
+
+function Save-ReverseOwnerReceipt {
+    param([object]$Kit, [string]$Pointer)
+    $state = [IO.File]::ReadAllText($Kit.StateFile) | ConvertFrom-Json
+    $receipt = [ordered]@{
+        java_home = $state.java_home
+        bin = (Join-Path $Kit.Owner 'sandbox\bin')
+        installed_json = $Kit.StateFile
+        kit_root = $Kit.Owner
+    }
+    [IO.File]::WriteAllText($Pointer, ($receipt | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
+}
+
 $pointer=Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json'
 $target=Resolve-ReverseOwner -ExplicitRoot $KitRoot -Pointer $pointer -DefaultRoot (Join-Path $env:LOCALAPPDATA 'ReverseThis\kit')
+if (-not $target) {
+    # Receipt points at a moved or deleted kit: look for the owner in the tool
+    # roots before giving up, then repair the receipt.
+    $search = @()
+    foreach ($k in @('UABS_TOOL_ROOTS','REVERSE_THIS_ROOT')) {
+        $v = [Environment]::GetEnvironmentVariable($k, 'User'); if (-not $v) { $v = [Environment]::GetEnvironmentVariable($k, 'Process') }
+        if ($v) { $search += ($v -split ';' | Where-Object { $_ }) }
+    }
+    $search += @((Join-Path $env:USERPROFILE 'Tools'), (Join-Path $env:USERPROFILE 'Documents\Tools'), 'C:\Tools')
+    $kit = Find-ReverseOwnerKit -Roots $search
+    if ($kit) {
+        Save-ReverseOwnerReceipt -Kit $kit -Pointer $pointer
+        $target = $kit.Owner
+        Write-Host ('Adopted moved Reverse THIS! kit at ' + $target)
+    }
+}
 if ($ResolveOnly) { Write-Output $target; exit 0 }
 if (-not $target) {
     Write-Host 'Reverse THIS! owner receipt points at a missing install; skipped, nothing replaced.'
