@@ -180,6 +180,22 @@ def _marker_present(root, marker):
     return os.path.exists(os.path.join(root, marker))
 
 
+def _subdirs(root, depth=2):
+    """Breadth-first subdirectories, bounded. A moved owner is usually one level
+    down; a whole-drive walk is not worth the seconds it costs."""
+    level = [root]
+    for _ in range(depth):
+        nxt = []
+        for parent in level:
+            for name in _children(parent):
+                candidate = os.path.join(parent, name)
+                if os.path.isdir(candidate):
+                    nxt.append(candidate)
+        for candidate in nxt:
+            yield candidate
+        level = nxt
+
+
 def find(entry, search_roots):
     """Owner pointer first, then a directory containing every marker."""
     markers = entry["markers"]
@@ -190,9 +206,8 @@ def find(entry, search_roots):
     for root in search_roots:
         if _norm(os.path.basename(root.rstrip("\\/"))) in wanted and all(_marker_present(root, m) for m in markers):
             return root
-        for name in _children(root):
-            candidate = os.path.join(root, name)
-            if not os.path.isdir(candidate) or _norm(name) not in wanted:
+        for candidate in _subdirs(root):
+            if _norm(os.path.basename(candidate)) not in wanted:
                 continue
             if all(_marker_present(candidate, m) for m in markers):
                 return candidate

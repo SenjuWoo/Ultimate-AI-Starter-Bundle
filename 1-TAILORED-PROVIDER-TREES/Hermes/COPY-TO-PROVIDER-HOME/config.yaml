@@ -1,7 +1,13 @@
-# Portable Hermes starter config. Ships provider/model preferences only;
+# Portable Hermes starter config. Ships provider/model preferences only.
+# Default model: deepseek/deepseek-v4.1-flash-1017 (~$0.006 in / $0.50 out per
+# 1M, 1M context, native tools). Model page and live provider prices:
+#   https://openrouter.ai/deepseek/deepseek-v4.1-flash-1017
+# provider_routing.only keeps the cheapest cache-read providers; change it if a
+# provider is slow for you. OpenRouter's quantization filter (e.g. excluding
+# fp4) is not a Hermes routing key - set it on the OpenRouter side if needed.
 # MCP servers and hooks are wired per-machine by INSTALL-AIO.ps1.
 model:
-  default: particle-ai/particle-1
+  default: deepseek/deepseek-v4.1-flash-1017
   provider: openrouter
   base_url: https://openrouter.ai/api/v1
   aliases:
@@ -10,6 +16,7 @@ model:
     nemotron-ultra: openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
     nemotron-ultra-nofree: openrouter/nvidia/nemotron-3-ultra-550b-a55b
     v4.1-flash: openrouter/deepseek/deepseek-v4.1-flash
+    flash-1017: openrouter/deepseek/deepseek-v4.1-flash-1017
     flash: openrouter/deepseek/deepseek-v4-flash-0731
     muse: openrouter/meta/muse-spark-1.2-contributor
     v4-pro: openrouter/deepseek/deepseek-v4-pro-0813
@@ -178,8 +185,8 @@ delegation:
       - name: execute
         description: Implement features, write and refactor code, run tests, and fix well-understood bugs. Follow existing plans and verify the results.
         provider: openrouter
-        model: particle-ai/particle-1
-        reasoning_effort: medium
+        model: deepseek/deepseek-v4.1-flash-1017
+        reasoning_effort: high
       - name: research
         description: Investigate complex bugs, research unfamiliar systems, compare technical approaches, and design architectures. Return evidence and actionable plans.
         provider: openrouter
@@ -197,7 +204,7 @@ moa:
   # chat stays single-model Particle-1.
   presets:
     deepseek_particle:
-      enabled: true
+      enabled: false
       reference_models:
       - provider: openrouter
         model: deepseek/deepseek-v4.1-flash-1017
@@ -205,7 +212,7 @@ moa:
         reasoning_effort: high
       aggregator:
         provider: openrouter
-        model: particle-ai/particle-1
+        model: deepseek/deepseek-v4.1-flash-1017
         reasoning_effort: high
       degraded_reference_policy: loud
       fanout: user_turn
@@ -213,11 +220,11 @@ moa:
       enabled: false
       reference_models:
       - provider: openrouter
-        model: particle-ai/particle-1
+        model: deepseek/deepseek-v4.1-flash-1017
         enabled: false
       aggregator:
         provider: openrouter
-        model: particle-ai/particle-1
+        model: deepseek/deepseek-v4.1-flash-1017
       degraded_reference_policy: loud
       fanout: user_turn
   reference_models:
@@ -227,12 +234,12 @@ moa:
     reasoning_effort: high
   aggregator:
     provider: openrouter
-    model: particle-ai/particle-1
+    model: deepseek/deepseek-v4.1-flash-1017
     reasoning_effort: high
   degraded_reference_policy: loud
   fanout: user_turn
-  enabled: true
-  default_preset: deepseek_particle
+  enabled: false
+  default_preset: ''
   active_preset: ''
   save_traces: false
   trace_dir: ''
@@ -257,6 +264,16 @@ _config_version: 44
 provider_routing:
   sort: price
   require_parameters: true
+  only:
+  - StreamLake
+  - Particle AI
+  - Decart
+  - StepFun
+  - DeepInfra
+  - Cloudflare
+  - Baidu Qianfan
+  - GMICloud
+
 session_reset:
   mode: none
   idle_minutes: 1440

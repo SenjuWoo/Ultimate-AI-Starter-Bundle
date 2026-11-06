@@ -180,14 +180,29 @@ reported instead of guessed. Move anything you like; nothing needs editing.
 
 ## Models: cheap worker, smarter planner
 
-The starter ships **Particle-1** as the worker and **DeepSeek V4.1 Flash** as an
-on-demand planner (MoA) and research delegate. Ordinary turns stay single-model;
-the planner runs once per user turn only when MoA is invoked. There is **no fallback chain**: a silent downgrade is worse than a clear error.
+The starter ships **`deepseek/deepseek-v4.1-flash-1017`** as the only model:
+one strong worker instead of a cheap aggregator plus a planner. It is a 552B MoE
+(8B active on input, 16B on output), 1M context, native tool calling, and its
+compressed KV cache is roughly a quarter of the previous Flash generation — that
+is what makes long agent runs affordable. Prices, providers and quantizations:
+<https://openrouter.ai/deepseek/deepseek-v4.1-flash-1017>
+
+MoA presets are still defined but **disabled**: the Particle-1 aggregator was the
+unreliable part, and a single model finishes more work per dollar. Re-enable with
+`moa.presets.deepseek_particle.enabled` if you want it.
+
+`provider_routing` sorts by price and **allowlists only the cheapest cache-read
+providers** for this model (StreamLake, Particle AI, Decart, StepFun, DeepInfra,
+Cloudflare, Baidu Qianfan, GMICloud — cache read $0.0022–$0.0036/M on
+2026-11-06). Everything else stays on OpenRouter's default (latest / auto).
+Excluding fp4 quantization is **not** a Hermes routing key; set that filter on the
+OpenRouter side. There is **no fallback chain**: a silent downgrade is worse than
+a clear error.
 
 | Alias | Model | Use it for |
 |---|---|---|
-| *(default)* | `particle-ai/particle-1` | everyday work |
-| `hermes model v4.1-flash` | `deepseek/deepseek-v4.1-flash` | planning, verification, research |
+| *(default)* | `deepseek/deepseek-v4.1-flash-1017` | everything: coding, agents, long runs |
+| `hermes model v4.1-flash` | `deepseek/deepseek-v4.1-flash` | the same family, non-pinned snapshot |
 | `hermes model flash` | `deepseek/deepseek-v4-flash-0731` | fast, cheap passes |
 | `hermes model v4-pro` | `deepseek/deepseek-v4-pro-0813` | hardest reasoning |
 | `hermes model nemotron-ultra` | `nvidia/nemotron-3-ultra-550b-a55b:free` | free tier |

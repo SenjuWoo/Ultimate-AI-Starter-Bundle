@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| Release | `v8.37.0` at `cc6f1c1` (published, 9 assets, digests verified) |
+| Release | `v8.37.2` at `b446e4d` (published, 9 assets, digests verified) |
 | Branch | `main`, in sync with `origin/main` |
-| Next version | `v8.37.1` (this pass) |
+| Next version | `v8.37.3` (this pass) |
 | Evidence | `python TESTS/test_release_contract.py` (166), `TESTS/Test-Pack.ps1`, `TOOLS/Verify-Fast.ps1`, `gh run list --commit <sha>` |
 
 - Done and verified: reliability pass in 8.36.0/8.36.1 (atomic version bump,
@@ -31,7 +31,7 @@
   starter keeps `null`, `true` and `0`. The live values are the operator's own, so
   nothing was changed; `compression.threshold_tokens` is a cap on the ratio
   trigger, not a floor, and was left alone.
-- Next action: run the gates and publish 8.37.1.
+- Next action: run the gates and publish 8.37.3.
 
 Older sections below are the history this state summarises; anything marked
 "not implemented" is superseded by the entry that implements it.

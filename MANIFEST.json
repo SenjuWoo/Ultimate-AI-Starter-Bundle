@@ -12336,8 +12336,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml",
-  "size": 8968,
-  "sha256": "c3142500fbb947c49739eb015f75241913403c0db47ee1b1f7daf3eaf4493a88"
+  "size": 9977,
+  "sha256": "ba8319b975c131e893a48d54e59206a56a8c20335ab6ed2e3aaecdf61e1110a2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/THIRD-PARTY-NOTICES.md",
@@ -15376,8 +15376,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml",
-  "size": 8968,
-  "sha256": "c3142500fbb947c49739eb015f75241913403c0db47ee1b1f7daf3eaf4493a88"
+  "size": 9977,
+  "sha256": "ba8319b975c131e893a48d54e59206a56a8c20335ab6ed2e3aaecdf61e1110a2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md",
@@ -22806,8 +22806,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 294774,
-  "sha256": "07923ea31914f6722caa6554b0d1176d38e18cb77f65802922ec5f76215f123b"
+  "size": 295499,
+  "sha256": "c85ba98d8d6b0af4a71c8fb2de73a6fae6980f564e618fa15e2cabbfb73ea93b"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22951,8 +22951,8 @@
  },
  {
   "path": "README.md",
-  "size": 42062,
-  "sha256": "32362590e7118f22cae693606864aeea6ffe29704c2a0e4c9bdfc00c548283cf"
+  "size": 42981,
+  "sha256": "1baff27fe48854e100e0f2aa6bb182615c426d4dc5dfa024aab4db854d3fc6e1"
  },
  {
   "path": "SECURITY.md",
@@ -22972,7 +22972,7 @@
  {
   "path": "STATE.md",
   "size": 72022,
-  "sha256": "bf12024de1b66985578f1c18fe3fc8ea9dce5c13cb54319dc72906e4c7ea0b5d"
+  "sha256": "a0da5b50cf2eca1c10328882556f4970a03a3427930b1cfce50d544cc26d9402"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -23366,8 +23366,8 @@
  },
  {
   "path": "TESTS/test_companion_registry.py",
-  "size": 6367,
-  "sha256": "cfa41c56fdf4ed95358ca7396d55640f8ff66adaac5e0c346c64a8894cccd25b"
+  "size": 7393,
+  "sha256": "4ce2a9e7e315b5fc2772dc940b8948c7b87b419a4cda18a6ac343005e1c06b5c"
  },
  {
   "path": "TESTS/test_free_game_tools.py",
@@ -23421,8 +23421,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 368248,
-  "sha256": "c01ef18cddb0c7a21e7fc3af5fedfe47df7a4d9525f159c5e5c94b5fd7f6a4cf"
+  "size": 368555,
+  "sha256": "bc246c89ba411e0b83944dff186686655828006038f6d39fa05cb8ff7b80900e"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23746,8 +23746,8 @@
  },
  {
   "path": "TOOLS/companion_registry.py",
-  "size": 11732,
-  "sha256": "e964522b71909b6585ec64404b8f8a39a329bfe903a444c9bac4ae4a95eb1425"
+  "size": 12500,
+  "sha256": "46e6fa7609927b7d39e479d4d4c16492d3caa8247e7afe1f929f3ab247c668ab"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -26966,13 +26966,8 @@
  },
  {
   "path": "docs/HERMES-MODELS.md",
-  "size": 7041,
-  "sha256": "77393100558793133af10baf08b739966be5a8ac8e80f03d3133b46d2cd09565"
- },
- {
-  "path": "docs/INTEGRATION-REPORT-2026-11-06.md",
-  "size": 5785,
-  "sha256": "7155e7018652240fcf7af8ffc138037b3eaac57160341056df3faec38c9a4747"
+  "size": 7231,
+  "sha256": "7f2ef3729711193af234a14a6b46029b26985f98e39a5e4e113d57f3a0781640"
  },
  {
   "path": "docs/OPERATOR-PROFILES.md",
@@ -27851,8 +27846,8 @@
  },
  {
   "path": "docs/history/V8.37.3-CHANGELOG.md",
-  "size": 1424,
-  "sha256": "5f95bfbd08a974e7f37d11c26d068eadd924cbb4655020d8ed8b594ef30b9b1a"
+  "size": 2115,
+  "sha256": "74c9b04664c0a947d07931ef82c7e7dcd930962dad7ffe999c75a06e40ea1f68"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

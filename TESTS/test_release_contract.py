@@ -1363,14 +1363,14 @@ def test_hermes_starter_uses_planner_worker_pair() -> None:
             routes[current]["model"] = line.split(":", 1)[1].strip()
         elif current and indent >= 8 and line.startswith("reasoning_effort: "):
             routes[current]["effort"] = line.split(":", 1)[1].strip()
-    assert routes.get("execute") == {"model": "particle-ai/particle-1", "effort": "medium"}, (
-        "execute route is not Particle-1 at medium reasoning: %r" % routes.get("execute"))
+    assert routes.get("execute") == {"model": "deepseek/deepseek-v4.1-flash-1017", "effort": "high"}, (
+        "execute route is not the shipped default at high reasoning: %r" % routes.get("execute"))
     assert routes.get("research") == {"model": "deepseek/deepseek-v4.1-flash-1017", "effort": "high"}, (
         "research route is not DeepSeek V4.1 Flash at high reasoning: %r" % routes.get("research"))
     assert "google/gemini" not in delegation and "crouton" not in delegation.lower(), (
         "a retired or temporary model is still routed automatically")
 
-    assert re.search(r"(?m)^  default: particle-ai/particle-1$", text), (
+    assert re.search(r"(?m)^  default: deepseek/deepseek-v4.1-flash-1017$", text), (
         "the starter default moved; update this contract and docs/HERMES-MODELS.md together")
     assert "cache_ttl: 1h" in text
     assert "sort: price" in text and "require_parameters: true" in text
@@ -1382,17 +1382,21 @@ def test_hermes_starter_uses_planner_worker_pair() -> None:
     preset = re.search(r"(?ms)^    deepseek_particle:\n(.*?)(?=^    default:|^  reference_models:)", moa_text)
     assert preset, "the starter lost its deepseek_particle preset"
     preset_text = preset.group(1)
-    assert re.search(r"(?m)^  default_preset: deepseek_particle$", moa_text), (
-        "the on-demand preset is not the default preset")
-    assert re.search(r"(?m)^      enabled: true$", preset_text), (
-        "the deepseek_particle preset is disabled")
+    # One reliable model: MoA stays defined but off, so nothing silently routes a
+    # user turn through a second provider.
+    assert re.search(r"(?m)^  default_preset: ''$", moa_text), (
+        "a MoA preset is active again; the aggregator was the unreliable piece")
+    assert re.search(r"(?m)^  enabled: false$", moa_text), (
+        "moa.enabled must stay false in the shipped starter")
+    assert re.search(r"(?m)^      enabled: false$", preset_text), (
+        "the deepseek_particle preset is enabled")
     assert re.search(r"(?m)^      fanout: user_turn$", preset_text), (
         "MoA fanout is not user_turn")
     refs = re.findall(r"(?m)^        model: (\S+)$", preset_text.split("      aggregator:")[0])
     assert refs and all(r == "deepseek/deepseek-v4.1-flash-1017" for r in refs) and len(refs) == 1, (
         "the preset must carry exactly one DeepSeek V4.1 Flash reference: %r" % refs)
-    assert re.search(r"(?ms)^      aggregator:\n        provider: openrouter\n        model: particle-ai/particle-1\n        reasoning_effort: high$", preset_text), (
-        "the aggregator is not Particle-1 at high reasoning")
+    assert re.search(r"(?ms)^      aggregator:\n        provider: openrouter\n        model: deepseek/deepseek-v4.1-flash-1017\n        reasoning_effort: high$", preset_text), (
+        "the aggregator is not the shipped default at high reasoning")
     for banned in ("google/gemini", "openai/gpt", "anthropic/", "x-ai/grok", "crouton"):
         assert banned not in moa_text.lower(), (
             "the shipped MoA default references %r" % banned)

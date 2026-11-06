@@ -110,6 +110,7 @@ Existing mappings are retained. `sol` and `opus` are not moving "latest" pointer
 
 | Alias | Shipped model ID |
 | --- | --- |
+| `flash-1017` | `deepseek/deepseek-v4.1-flash-1017` |
 | `v4.1-flash` | `deepseek/deepseek-v4.1-flash` |
 | `flash` | `deepseek/deepseek-v4-flash-0731` |
 | `muse` | `meta/muse-spark-1.2-contributor` |

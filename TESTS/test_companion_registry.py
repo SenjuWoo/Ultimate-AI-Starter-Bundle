@@ -172,3 +172,25 @@ if __name__ == "__main__":
                 print("FAIL", name, "->", exc)
     print("\n%d failed" % failures)
     sys.exit(1 if failures else 0)
+
+
+def test_owner_one_level_deeper_is_found_and_a_decoy_is_not():
+    """People keep tools in a sub-folder ("Tools/Ai tools"), so a bounded two-level
+    search is the difference between "not installed" and the truth."""
+    with tempfile.TemporaryDirectory() as root:
+        deep = os.path.join(root, "tools", "games", "Demo")
+        os.makedirs(deep)
+        open(os.path.join(deep, "demo.exe"), "w").close()
+        decoy = os.path.join(root, "demo")
+        os.makedirs(decoy)  # right name, no marker: not an install
+        report = reg.status([root], _data())
+        assert report["demo"]["state"] == "INSTALLED_UNVERIFIED", report
+        assert report["demo"]["path"] == deep, report
+
+
+def test_owner_folder_named_after_the_owner_but_empty_is_partial():
+    with tempfile.TemporaryDirectory() as root:
+        half = os.path.join(root, "Demo")
+        os.makedirs(half)
+        report = reg.status([root], _data())
+        assert report["demo"]["state"] in ("DISCOVERED", "NOT_FOUND"), report
