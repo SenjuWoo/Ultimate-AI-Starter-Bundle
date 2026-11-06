@@ -33,7 +33,9 @@ if (-not (Test-Path -LiteralPath $SerenaExe -PathType Leaf)) {
   throw "Serena was not found after installation at $SerenaExe"
 }
 
-$listed = (& $HermesExe -p code mcp list 2>&1 | Out-String)
+# Stdout only: a Hermes warning on stderr must not abort registration (PS 5.1
+# promotes redirected stderr to an ErrorRecord under $ErrorActionPreference=Stop).
+$listed = (Get-UabsNativeStdout -Exe $HermesExe -CmdArgs @('-p', 'code', 'mcp', 'list')) -join "`n"
 if ($listed -match '(?m)^\s*serena\s') {
   Write-Host 'Serena already registered in the Hermes code profile.'
   exit 0
@@ -54,7 +56,7 @@ try {
   Remove-Item -LiteralPath $answer -Force -ErrorAction SilentlyContinue
 }
 
-$listed = (& $HermesExe -p code mcp list 2>&1 | Out-String)
+$listed = (Get-UabsNativeStdout -Exe $HermesExe -CmdArgs @('-p', 'code', 'mcp', 'list')) -join "`n"
 if ($listed -notmatch '(?m)^\s*serena\s') {
   throw 'Serena was added but is absent from the Hermes code profile list.'
 }

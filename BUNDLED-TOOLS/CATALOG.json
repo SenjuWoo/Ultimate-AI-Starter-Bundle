@@ -273,9 +273,9 @@
         "process-discipline"
       ],
       "bundled_skills": true,
-      "version": "7.0.1",
-      "release_tag": "v7.0.1",
-      "bundle_patch_note": "2026-10-10: reviewed upstream v7.0.0 archive SHA-256 1e95883561717c85aa90590f210674687086bf88eac919a17e8a6518e11003da. Preserve UABS browser-companion HttpOnly-cookie hardening and Hermes compaction recovery; include upstream Hermes skill descriptions. Native/skills fallbacks consume the patched vendored tree, not the unpatched official archive. 2026-10-22: v7.0.1 archive SHA-256 3fc88ea12ba5e524fe3a1ab5952a2e739310f35607af54968b79d7ccd8c13eb6; 69 upstream file changes, zero overlaps with six UABS patched files; patches retained."
+      "version": "7.0.2",
+      "release_tag": "v7.0.2",
+      "bundle_patch_note": "2026-11-05: v7.0.2 (commit 22f0b463e7a5e579904dd6211a520321035526f7) merged. Six local delta files re-applied over upstream: Hermes compaction re-injection in .hermes-plugin/__init__.py (now also skips platform=subagent, matching the 7.0.2 delegate_task fix), HttpOnly cookie hardening in skills/brainstorming/scripts/server.cjs and helper.js, and the three matching test files (tests/brainstorm-server/auth.test.js, helper.test.js, tests/hermes/test_plugin.py). Upstream 7.0.2 tests pass against the patched tree with ws installed (7 files, 0 failures)."
     },
     {
       "install": "skills-copy",
@@ -962,7 +962,7 @@
         "browser-cli"
       ],
       "scope_note": "No MCP registration or provider skill installer. Use existing native browser tools first; otherwise playwright-cli --help with NO_UPDATE_NOTIFIER=1. Named, non-persistent sessions and targeted snapshot reads avoid dumping full page trees. The official 0.1.20 package pins Playwright 1.64.0-alpha-2026-09-14; isolated Windows open/eval/close verified 2026-09-13. Browser installation is separate; reuse installed Chrome when available. See tool-discovery/references/browser-cli.md. Not a measured billed-token saving. 2026-09-28: CLI 0.1.21 pins Playwright 1.64.0-alpha-1789764292000; isolated Windows Chrome navigation, raw title evaluation and named-session close PASS. 2026-10-02 refresh: 0.1.22: isolated Windows Chrome about:blank navigation, raw document.URL evaluation and unique named-session close PASS. Schema bytes are transport measurements, not billed-token savings.",
-      "compatibility_hold": "0.1.23 is a newer optional browser CLI; 0.1.22 remains the evaluated pin."
+      "compatibility_hold": "2026-11-05: 0.1.23 is published but could not be evaluated on this machine -- 0.1.22 and 0.1.23 both fail `open` with 'Chromium distribution 'chrome' is not found', because no Chrome distribution is installed for the CLI. That is an environment gap, not a 0.1.23 regression, and downloading a browser is out of scope. 0.1.22 remains the evaluated pin."
     },
     {
       "id": "comfy-cli",
@@ -988,7 +988,7 @@
       "compatibility_hold": "1.24.0 is a newer optional local-media CLI; 1.23.0 remains the evaluated pin."
     }
   ],
-  "pack_version": "8.35.1",
+  "pack_version": "8.36.0",
   "updated_utc": "2026-10-18",
   "providers": {
     "Grok": {
@@ -1076,7 +1076,7 @@
   "provider_config_schemas": {
     "Hermes": 44
   },
-  "catalog_version": "8.35.1",
+  "catalog_version": "8.36.0",
   "updated": "2026-10-26",
   "spec_notes": "Profile wiring lives in PROFILES.json. Claude uses projects[\"<abs path>\"].mcpServers in ~/.claude.json; Grok uses project .grok/config.toml; Codex uses trusted-project .codex/config.toml. Kimi needs explicit global opt-in. Hermes uses native named profiles. The installer never grants project trust. Schema bytes are not prompt or billing measurements: native filtering, deferred discovery, caching and calls affect usage. Test-McpHandshake.ps1 proves a stdio transport exchange, not full provider activation or authentication. See TESTS/test_codex_native_profiles.py for the opt-in native Codex boundary test.",
   "companions": [

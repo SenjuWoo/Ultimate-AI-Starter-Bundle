@@ -58,6 +58,10 @@ param(
   [switch]$SkipHouseCarlSetup,
   [switch]$KeepZip,
   [switch]$SelfUpdate,
+  # Re-downloading from codeload, or installing an asset the API published
+  # without a digest, both mean "bytes nobody verified". Only an explicit
+  # opt-in may do that; the default must fail rather than downgrade.
+  [switch]$AllowUnverified,
   [string[]]$InstallerArgs = @()
 )
 
@@ -126,10 +130,19 @@ if (-not $Force -and (Test-Path -LiteralPath $catalog) -and $installedVersion -e
         $got = (Get-FileHash -LiteralPath $zip -Algorithm SHA256).Hash.ToLowerInvariant()
         if ($got -ne $want) { Remove-Item -LiteralPath $zip -Force -ErrorAction SilentlyContinue; Fail ("release asset digest mismatch (expected $want, got $got)") }
         Ok 'release asset SHA-256 verified'
+      } elseif ($AllowUnverified) {
+        Warn 'release asset published no digest - installing unverified bytes because -AllowUnverified was given'
+      } else {
+        # A missing digest is not "nothing to check": it means these bytes cannot
+        # be tied to the release, so the default is to stop rather than downgrade.
+        Remove-Item -LiteralPath $zip -Force -ErrorAction SilentlyContinue
+        Fail "release asset $($asset.name) has no published SHA-256; re-run with -AllowUnverified only if you accept unverified bytes"
       }
-    } else {
-      Warn 'no zip asset on the release - falling back to the source archive'
+    } elseif ($AllowUnverified) {
+      Warn 'no zip asset on the release - falling back to the source archive (-AllowUnverified)'
       Invoke-WebRequest -Uri "https://codeload.github.com/$Owner/$Repo/zip/refs/tags/$tag" -OutFile $zip -Headers $H -TimeoutSec 1800
+    } else {
+      Fail "release $tag has no zip asset to verify; re-run with -AllowUnverified to build from the source archive instead"
     }
   } catch {
     Fail ("download failed: " + $_.Exception.Message)

@@ -1,10 +1,12 @@
 <#
 .SYNOPSIS
-  Install the completeness gate, assumption gate, and narrow RTK output hook
-  using each provider's real hook mechanism.
+  Install the completeness gate, assumption gate, narrow RTK output hook,
+  and the Hermes multiplex guard using each provider's real hook mechanism.
 
 .DESCRIPTION
-  Three controls, same three design rules (precise, cheap, fail open):
+  Four controls. The first three stay precise, cheap, and fail open.
+  The multiplex guard fails open on every other command and fails closed
+  only for a named-profile `gateway run --replace`.
 
     completeness_gate.py  refuses a push, and refuses to end a turn, while a
                           release is internally inconsistent - a version bumped
@@ -16,6 +18,13 @@
                           remote content piped straight into a shell.
     rtk_safe_hook.py      rewrites only exact status and standalone
                           human-facing pytest/cargo/go tests. It never blocks.
+    hermes_gateway_guard.py
+                          refuses `hermes --profile <name> gateway run --replace`.
+                          That argv kills the multiplex host and the replacement
+                          stays standalone, so resume comes back storage_unavailable.
+                          Also installs a sitecustomize into Hermes's store Python,
+                          which is the process Desktop and `hermes update` actually
+                          spawn. `--force` and a default-profile replace still pass.
 
   v6.8.0 wired every provider by dropping the same JSON into
   `~/.<provider>/hooks/`. That was an assumption, and it was wrong for three of
@@ -67,7 +76,7 @@
   Report what would change and exit.
 
 .PARAMETER Uninstall
-  Remove all three bundle controls from the selected providers.
+  Remove all four bundle controls from the selected providers.
 #>
 [CmdletBinding()]
 param(
@@ -116,6 +125,7 @@ $gates = @(
   @{ Name = 'completeness_gate.py'; Matcher = 'Bash|Shell|Terminal|PowerShell|run_command|execute_command'; AllTools = $false; Stop = $true }
   @{ Name = 'assumption_gate.py';   Matcher = 'Bash|Shell|Terminal|PowerShell|run_command|execute_command|Write|Edit|MultiEdit|NotebookEdit|write_file|create_file|str_replace.*'; AllTools = $true; Stop = $true }
   @{ Name = 'rtk_safe_hook.py';     Matcher = 'Bash|Shell|Terminal|PowerShell|run_command|execute_command'; AllTools = $false; Stop = $false }
+  @{ Name = 'hermes_gateway_guard.py'; Matcher = 'Bash|Shell|Terminal|PowerShell|run_command|execute_command'; AllTools = $false; Stop = $false }
 )
 foreach ($g in $gates) {
   if (-not (Test-Path -LiteralPath (Join-Path $hooksSrc $g.Name))) { throw "$($g.Name) not found under $hooksSrc" }
@@ -303,6 +313,9 @@ if ($Uninstall) {
       Invoke-UabsHermesPython -HermesExe $hx -PythonArgs $args
       if ($LASTEXITCODE -ne 0) { throw "Hermes hook removal failed for $($g.Name)." }
     }
+    if ($python) {
+      & $python (Join-Path $hooksSrc 'hermes_gateway_guard.py') --remove-sitecustomize
+    }
   }
   Write-Host 'Codex: disable [plugins."completeness-gate@ultimate-bundle"] in ~/.codex/config.toml'
   exit 0
@@ -379,17 +392,66 @@ foreach ($p in $Providers) {
       if (-not (Test-Path -LiteralPath $wireSrc)) { Write-Host 'Hermes  hermes_wire.py missing from pack'; break }
       if ($CheckOnly) { Write-Host "Hermes  would merge hooks into $(& $hx config path)"; break }
 
+      # Desktop and `hermes update` spawn the store Python with -I. A shell
+      # hook never sees that process. sitecustomize does, and -I still imports it.
+      # Install this before the config merge: a locked profile config must not
+      # leave the process-start guard uninstalled.
+      $guard = Join-Path $installRoot 'hermes_gateway_guard.py'
+      & $yamlPython $guard --install-sitecustomize
+      if ($LASTEXITCODE -ne 0) { throw "Hermes store-Python guard install failed with exit $LASTEXITCODE." }
+
       # Hand off to hermes_wire.py: it asks `hermes config path` for the real
       # location, parses the existing YAML instead of appending text to it, and
       # verifies the result round-trips before reporting success. Writing this
       # config by hand is what shipped broken in v6.8.1.
-      foreach ($g in $gates) {
-        $args = @($wireSrc, $hx, $yamlPython, (Join-Path $installRoot $g.Name))
-        if ($g.AllTools) { $args += '--all-tools' }
-        if (-not $g.Stop) { $args += '--pre-only' }
-        $args += '--approve'
-        Invoke-UabsHermesPython -HermesExe $hx -PythonArgs $args
-        if ($LASTEXITCODE -ne 0) { throw "Hermes hook wiring failed for $($g.Name)." }
+      # The default config is not the only one agents read. A named profile
+      # with its own hooks: block (the desktop primary is one of these) never
+      # sees a hook written only at the root.
+      $savedHermesHome = $env:HERMES_HOME
+      $homes = New-Object System.Collections.Generic.List[string]
+      try {
+        Remove-Item Env:\HERMES_HOME -ErrorAction SilentlyContinue
+        $primary = @(Get-UabsNativeStdout -Exe $hx -CmdArgs @('config','path') | Select-Object -First 1)
+        $primary = [string]$primary
+        if ($primary) { $primary = $primary.Trim() }
+        if ($primary) {
+          $rootHome = Split-Path -Parent $primary
+          $homes.Add($rootHome)
+          $profileRoot = Join-Path $rootHome 'profiles'
+          if (Test-Path -LiteralPath $profileRoot -PathType Container) {
+            foreach ($dir in @(Get-ChildItem -LiteralPath $profileRoot -Directory)) {
+              if (Test-Path -LiteralPath (Join-Path $dir.FullName 'config.yaml') -PathType Leaf) {
+                $homes.Add($dir.FullName)
+              }
+            }
+          }
+        }
+      } finally {
+        if ($null -eq $savedHermesHome) { Remove-Item Env:\HERMES_HOME -ErrorAction SilentlyContinue }
+        else { $env:HERMES_HOME = $savedHermesHome }
+      }
+      if ($homes.Count -eq 0) { throw 'Hermes config path did not resolve a home to wire.' }
+      foreach ($hermesHome in $homes) {
+        $savedHermesHome = $env:HERMES_HOME
+        try {
+          $env:HERMES_HOME = $hermesHome
+          foreach ($g in $gates) {
+            $args = @($wireSrc, $hx, $yamlPython, (Join-Path $installRoot $g.Name))
+            if ($g.AllTools) { $args += '--all-tools' }
+            if (-not $g.Stop) { $args += '--pre-only' }
+            $args += '--approve'
+            $wired = $false
+            for ($try = 1; $try -le 5; $try++) {
+              Invoke-UabsHermesPython -HermesExe $hx -PythonArgs $args
+              if ($LASTEXITCODE -eq 0) { $wired = $true; break }
+              if ($try -lt 5) { Start-Sleep -Seconds 1 }
+            }
+            if (-not $wired) { throw "Hermes hook wiring failed for $($g.Name) in $hermesHome." }
+          }
+        } finally {
+          if ($null -eq $savedHermesHome) { Remove-Item Env:\HERMES_HOME -ErrorAction SilentlyContinue }
+          else { $env:HERMES_HOME = $savedHermesHome }
+        }
       }
       # Only the exact, self-tested bundle commands above are persisted. Never
       # set hooks_auto_accept=true, which would approve future third-party hooks.

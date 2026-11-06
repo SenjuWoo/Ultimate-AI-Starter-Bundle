@@ -65,6 +65,10 @@ relabelled, because they were never controlled benchmarks.
   Keep private paths local. A recent model assertion is not stronger than a
   reproducible older result; don't auto-import conversation dumps into prompts.
 
+## Workflow-scoped Hermes gateway lesson (2026-11-05)
+
+- **Named-profile `gateway run --replace` while multiplexing is on** -> a detached named-profile `gateway run --replace` replaced the host that served every profile, then stayed standalone because only the default profile may multiplex -> resume failed with route mismatch (`storage_unavailable`) while the session databases were intact. A later update, run as a hoped hotfix, did not get a verified multiplex relaunch, and a second named `--replace` killed the replacement host -> Hermes `decide()` returns REPLACE_HOST for `--replace` when the owner already serves the profile, and the named-profile refusal is not allowed to eat that flag -> block that argv unless it is the default profile or carries `--force`. A shell hook cannot see the `python -I` relaunch, so the guard has to load from the store interpreter. `SystemExit` inside `sitecustomize` is a fatal `init_import_site` error because `site.py` only catches `Exception`; `os._exit(0)` is the clean stop. Recheck if Hermes stops relaunching named profiles with `--replace`, or if `python -I` stops importing prefix `sitecustomize`.
+
 ## Workflow-scoped efficiency lessons (2026-10-15)
 
 Each line: workflow -> tried -> result -> cause -> what worked -> evidence -> recheck.

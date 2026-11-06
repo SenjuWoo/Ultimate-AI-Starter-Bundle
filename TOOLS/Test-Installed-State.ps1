@@ -794,7 +794,7 @@ foreach ($p in @('Claude','Grok','Hermes')) {
 foreach ($f in $gateHookFiles) {
   if (-not (Test-Path -LiteralPath $f -PathType Leaf)) { continue }
   $privateGate = @([IO.File]::ReadAllLines($f) | ForEach-Object { $_.Replace('\\','\') } |
-    Where-Object { $_ -match '(completeness_gate|assumption_gate|rtk_safe_hook)\.py' -and (Test-UabsPrivateRuntimePath $_) })
+    Where-Object { $_ -match '(completeness_gate|assumption_gate|rtk_safe_hook|hermes_gateway_guard)\.py' -and (Test-UabsPrivateRuntimePath $_) })
   if ($privateGate.Count) { Err ('Bundle hooks in ' + $f + ' run on an AI app''s private Python. Run TOOLS\Install-Completeness-Gate.ps1, then restart the apps.') }
 }
 

@@ -73,6 +73,9 @@ def set_version(bare):
     """Rewrite every declaration in place, preserving each file's bytes otherwise."""
     if not re.fullmatch(V, bare):
         raise SystemExit("--set needs a dotted version such as 8.27.0, got %r" % bare)
+    # Rewrite in memory first, write only when every declaration matched: a
+    # missing pattern halfway through used to leave the tree with mixed versions.
+    pending = []
     for rel in sorted({rel for rel, _, _ in DECLARATIONS} | {"VERSION.txt"}):
         path = os.path.join(ROOT, rel)
         raw = open(path, "rb").read()
@@ -81,10 +84,18 @@ def set_version(bare):
         if rel == "VERSION.txt":
             text = re.sub(r"v?" + V, "v" + bare, text, count=1)
         for _, pattern, label in (d for d in DECLARATIONS if d[0] == rel):
+            # A declaration with no capture group restates no literal (the
+            # installer derives its banner and state stamp from VERSION.txt).
+            # Calling m.group(1) on one raised IndexError, so --set crashed on
+            # the first release that used it. Nothing to rewrite: skip it.
+            if re.compile(pattern, re.M).groups == 0:
+                continue
             text, count = re.subn(pattern, lambda m: m.group(0).replace(m.group(1), bare, 1), text, count=1, flags=re.M)
             if not count:
                 raise SystemExit("%s: no declaration matched for %s" % (rel, label))
-        open(path, "wb").write((b"\xef\xbb\xbf" if bom else b"") + text.encode("utf-8"))
+        pending.append((path, (b"\xef\xbb\xbf" if bom else b"") + text.encode("utf-8")))
+    for path, data in pending:
+        open(path, "wb").write(data)
     print("Declared versions set to %s; add '## %s' to CHANGELOG.md and docs/history/V%s-CHANGELOG.md." % (bare, bare, bare))
 
 

@@ -136,13 +136,26 @@ jobs:
         run: |
           set -euo pipefail
           # A new user lands here first: say which file to take before the changelog.
-          {
+          { 
             echo "**Which file?** Most people: \`Ultimate-AI-Starter-Bundle-$TAG-Full-Offline.zip\` (everything in one file). Smaller download: \`Ultimate-AI-Starter-Bundle-$TAG-Core.zip\` (the installer fetches the rest). Unzip it, double-click \`START-HERE.bat\`, then reopen your AI apps. The other files are checksums and build records for verifying the zip."
             echo
             tail -n +2 "docs/history/V$VERSION-CHANGELOG.md"
           } > "$RUNNER_TEMP/notes.md"
-          gh release create "$TAG" --repo "$REPO" --target "$SHA" --title "$TAG" --notes-file "$RUNNER_TEMP/notes.md" --latest "$RUNNER_TEMP"/build-a/*
+          # Re-running after a failed verification must be possible without ever
+          # retargeting a tag. An existing release is reused only when it already
+          # points at this exact SHA; anything else is a hard stop for a human.
+          if gh release view "$TAG" --repo "$REPO" >/dev/null 2>&1; then
+            existing="$(gh api "repos/$REPO/commits/$TAG" --jq .sha)"
+            if [ "$existing" != "$SHA" ]; then
+              echo "::error::release $TAG already exists at $existing, not $SHA - refusing to retarget it"
+              exit 1
+            fi
+            echo "release $TAG already published at this SHA; re-verifying the published bytes"
+          else
+            gh release create "$TAG" --repo "$REPO" --target "$SHA" --title "$TAG" --notes-file "$RUNNER_TEMP/notes.md" --latest "$RUNNER_TEMP"/build-a/*
+          fi
           test "$(gh api "repos/$REPO/commits/$TAG" --jq .sha)" = "$SHA"
+          rm -rf "$RUNNER_TEMP/published"
           gh release download "$TAG" --repo "$REPO" --dir "$RUNNER_TEMP/published"
           test "$(ls "$RUNNER_TEMP/published" | wc -l)" -eq "$(ls "$RUNNER_TEMP/build-a" | wc -l)"
           for f in "$RUNNER_TEMP"/build-a/*; do cmp "$f" "$RUNNER_TEMP/published/$(basename "$f")"; done

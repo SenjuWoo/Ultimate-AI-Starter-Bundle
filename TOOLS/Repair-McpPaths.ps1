@@ -92,7 +92,61 @@ function ConvertTo-ConfigLiteral([string]$LivePath, [string]$DeadLiteral) {
 }
 
 # Absolute Windows paths that look like a program, in either slash style.
-$rxPath = '(?<p>[A-Za-z]:[\\/](?:[^"''\r\n;]*?)\.(?:exe|cmd|bat|ps1|py))'
+$rxPath = '(?<p>[A-Za-z]:[\\\\/](?:[^"''\r\n;]*?)\.(?:exe|cmd|bat|ps1|py))'
+
+# Folder names that are never an owner root. Skipping them keeps the index walk
+# to the project level instead of descending into every dependency tree.
+$script:ToolIndexSkip = @('.git', 'node_modules', 'dist', 'build', 'target', '__pycache__', '.venv', 'venv')
+
+<#
+  Index of tool folders, built once per run and only when a dead path exists.
+  Sources: UABS_TOOL_ROOTS (the variable the installer writes), the machine
+  map's "Tool folders" line (what the user actually keeps), and the conventional
+  per-user tool folders. Bounded to depth 3 and capped, because an owner folder
+  always sits at Tools\<category>\<owner> -- never ten levels down.
+#>
+$script:ToolDirectoryIndex = $null
+function Get-ToolDirectoryIndex {
+  if ($null -ne $script:ToolDirectoryIndex) { return $script:ToolDirectoryIndex }
+  $roots = New-Object System.Collections.Generic.List[string]
+  foreach ($scope in @('Process', 'User')) {
+    $hints = [Environment]::GetEnvironmentVariable('UABS_TOOL_ROOTS', $scope)
+    if ($hints) { foreach ($h in ($hints -split ';')) { if ($h) { [void]$roots.Add($h) } } }
+  }
+  foreach ($p in @((Join-Path $env:USERPROFILE 'Tools'), (Join-Path $env:USERPROFILE 'Documents\Tools'), 'C:\Tools')) {
+    [void]$roots.Add($p)
+  }
+  $map = Join-Path $env:USERPROFILE '.uabs\profile\MACHINE-MAP.md'
+  if (Test-Path -LiteralPath $map -PathType Leaf) {
+    foreach ($line in [IO.File]::ReadAllLines($map)) {
+      if ($line -notmatch '^-\s+Tool folders') { continue }
+      $rest = ($line -split ':', 2)
+      if ($rest.Count -lt 2) { continue }
+      foreach ($piece in ($rest[1] -split ';')) {
+        $v = $piece.Trim()
+        if ($v) { [void]$roots.Add([Environment]::ExpandEnvironmentVariables($v)) }
+      }
+    }
+  }
+  $dirs = New-Object System.Collections.Generic.List[string]
+  foreach ($r in @($roots | Select-Object -Unique)) {
+    if (-not $r -or -not (Test-Path -LiteralPath $r -PathType Container)) { continue }
+    try { [void]$dirs.Add($r) } catch { continue }
+    $stack = New-Object System.Collections.Generic.Stack[object]
+    $stack.Push(@{ Path = $r; Depth = 0 })
+    while ($stack.Count -gt 0 -and $dirs.Count -lt 5000) {
+      $cur = $stack.Pop()
+      if ($cur.Depth -ge 3) { continue }
+      foreach ($d in @(Get-ChildItem -LiteralPath $cur.Path -Directory -ErrorAction SilentlyContinue)) {
+        if ($script:ToolIndexSkip -contains $d.Name) { continue }
+        [void]$dirs.Add($d.FullName)
+        $stack.Push(@{ Path = $d.FullName; Depth = ($cur.Depth + 1) })
+      }
+    }
+  }
+  $script:ToolDirectoryIndex = $dirs.ToArray()
+  return $script:ToolDirectoryIndex
+}
 
 <#
   Repointing rule: if a dead path contains a version-stamped directory
@@ -158,7 +212,6 @@ function Resolve-LivePath([string]$dead) {
     }
     if ($hits.Count -eq 1) { return $hits[0] }
   }
-
   # The bundle registers houseCARL via the HOUSECARL_MCP user env. It is the
   # one server whose live root is NOT a version-stamped sibling of the dead
   # path (users move it to a tools drive; the sibling rule cannot cross
@@ -169,6 +222,42 @@ function Resolve-LivePath([string]$dead) {
     foreach ($envMcp in @($env:HOUSECARL_MCP, [Environment]::GetEnvironmentVariable('HOUSECARL_MCP','User'))) {
       if ($envMcp -and (Test-Path -LiteralPath (Get-NormalPath $envMcp))) { return (Get-NormalPath $envMcp) }
     }
+
+
+  # Relocated owner folder. A tool can move to a different parent entirely
+  # (Z:\Backup\Ai apps\RobloxForge -> Z:\Backup\Ai documentation\Tools\Ai tools\
+  # RobloxForge). Every rule above only looks at siblings of the dead path, so a
+  # live server one tree over is reported as "no replacement found". Search the
+  # folders the user actually keeps tools in (UABS_TOOL_ROOTS + the machine map)
+  # for a folder with the same name and the same remaining tail. Uniqueness is
+  # required: two hits is a question for a human, not a guess.
+  $index = @()
+  if (Get-Command Get-ToolDirectoryIndex -ErrorAction SilentlyContinue) { $index = Get-ToolDirectoryIndex }
+  if ($index.Count -gt 0) {
+    # Anchor on a distinctive folder. Starting at the end walked straight into
+    # `bin\tool.exe`, which "uniquely" matches half the machine and repointed a
+    # server at an unrelated binary.
+    $generic = @('bin', 'lib', 'libs', 'obj', 'dist', 'build', 'src', 'out', 'release',
+                 'debug', 'x64', 'x86', 'amd64', 'windows', 'win64', 'cmd', 'app',
+                 'data', 'assets', 'resources', 'runtime', 'server')
+    for ($i = $parts.Count - 2; $i -ge 1; $i--) {
+      $name = $parts[$i]
+      if ($name -notmatch '^[A-Za-z0-9][A-Za-z0-9._ -]*$') { continue }
+      if ($generic -contains $name.ToLowerInvariant()) { continue }
+      if ($name -match '^\d+(\.\d+)*$') { continue }
+      $tail = ($parts[($i + 1)..($parts.Count - 1)]) -join '\'
+      if (-not $tail) { continue }
+      $hits = @()
+      foreach ($dir in $index) {
+        if ((Split-Path -Leaf $dir) -ine $name) { continue }
+        $full = Join-Path $dir $tail
+        if (Test-Path -LiteralPath $full -PathType Leaf) { $hits += $full }
+      }
+      $hits = @($hits | Select-Object -Unique)
+      if ($hits.Count -eq 1) { return $hits[0] }
+    }
+  }
+
   }
   return $null
 }

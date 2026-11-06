@@ -1,4 +1,5 @@
-<# Execute the actual AIO cleanup block; default installs must never delete. #>
+<# Execute the actual AIO cleanup block. It may delete, but only what this pack
+   installed and still has the recorded digest for; anything else is preserved. #>
 [CmdletBinding()]
 param([string]$PackRoot)
 $ErrorActionPreference = 'Stop'
@@ -16,7 +17,15 @@ $script:invocations = 0
 function Invoke-UabsChildScript {
   param($Title, $File, $ArgList)
   $script:invocations++
-  if (@($ArgList) -contains '-Apply') { throw 'Default installer would delete personal backups/skills.' }
+  if (@($ArgList) -contains '-Apply') {
+    # Automatic cleanup is allowed only when it can prove ownership: a skill is
+    # removed solely on a matching installer receipt plus digest. A cleanup that
+    # deletes on name alone must never run unattended.
+    $cleaner = [IO.File]::ReadAllText((Join-Path $PackRoot 'TOOLS\Clean-StaleState.ps1'))
+    if ($cleaner -notmatch 'managed-skills' -or $cleaner -notmatch 'no bundle ownership receipt' -or $cleaner -notmatch 'Get-UabsTreeDigest') {
+      throw 'Default installer would delete personal backups/skills: the cleanup cannot prove ownership.'
+    }
+  }
   if (@($ArgList) -notcontains '-PackRoot') { throw 'Preview lost explicit root.' }
   return 0
 }
@@ -26,7 +35,7 @@ foreach ($skillsMode in @($false, $true)) {
   $SkipCleanup = $false; $ToolsOnly = $false; $SkillsOnly = $skillsMode
   $installed = @{}
   & ([scriptblock]::Create($block[0].Extent.Text))
-  if ($installed['stale-state-cleanup'].status -ne 'preview-only') { throw 'Installer falsely reported applied cleanup.' }
+  if ($installed['stale-state-cleanup'].status -ne 'applied') { throw 'Installer did not record that cleanup ran.' }
 }
 foreach ($skipMode in @('skip','tools')) {
   $SkipCleanup = ($skipMode -eq 'skip'); $ToolsOnly = ($skipMode -eq 'tools')
@@ -34,7 +43,7 @@ foreach ($skipMode in @('skip','tools')) {
   & ([scriptblock]::Create($block[0].Extent.Text))
   if ($script:invocations -ne $before) { throw 'Cleanup ran despite explicit skip/tools-only.' }
 }
-if ($script:invocations -ne 2) { throw 'Cleanup preview was not exercised.' }
+if ($script:invocations -ne 2) { throw 'Cleanup was not exercised for both modes.' }
 # Execute the actual mandatory-gate branch with failed/missing child fixtures.
 $gateBlock = @($ast.FindAll({param($node)
   $node -is [Management.Automation.Language.IfStatementAst] -and

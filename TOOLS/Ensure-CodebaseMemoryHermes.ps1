@@ -25,7 +25,11 @@ if (-not (Test-Path -LiteralPath $CodebaseMemoryExe -PathType Leaf)) {
   exit 0
 }
 
-$listed = (& $HermesExe -p code mcp list 2>&1 | Out-String)
+# Stdout only. Any Hermes warning (a plugin manifest it cannot read, an update
+# hint) arrives on stderr, and Windows PowerShell 5.1 turns a redirected stderr
+# line into an ErrorRecord -- with $ErrorActionPreference='Stop' that aborts this
+# script before the server is ever registered. A warning is not a failure.
+$listed = (Get-UabsNativeStdout -Exe $HermesExe -CmdArgs @('-p', 'code', 'mcp', 'list')) -join "`n"
 if ($listed -match '(?m)^\s*codebase-memory-mcp\s') {
   Write-Host 'codebase-memory-mcp already registered in the Hermes code profile.'
   exit 0
@@ -48,7 +52,7 @@ try {
   Remove-Item -LiteralPath $answer -Force -ErrorAction SilentlyContinue
 }
 
-$listed = (& $HermesExe -p code mcp list 2>&1 | Out-String)
+$listed = (Get-UabsNativeStdout -Exe $HermesExe -CmdArgs @('-p', 'code', 'mcp', 'list')) -join "`n"
 if ($listed -notmatch '(?m)^\s*codebase-memory-mcp\s') {
   throw 'codebase-memory-mcp was added but is absent from the Hermes code profile list.'
 }

@@ -51,9 +51,22 @@ function Get-EnvAnyScope {
 function Invoke-Probe {
   param([string]$Exe, [string[]]$Arguments = @(), [int]$TimeoutSeconds = 6)
   try {
+    # A script shim (.ps1/.cmd/.bat) is not a PE image: Process.Start throws on
+    # it, so the tool would be reported INSTALLED forever even though it answers
+    # fine in a shell (npm puts codeburn.ps1 on PATH). Wrap it in its host.
+    $file = $Exe
+    $argLine = ($Arguments -join ' ')
+    $ext = [IO.Path]::GetExtension($Exe).ToLowerInvariant()
+    if ($ext -eq '.ps1') {
+      $file = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
+      $argLine = '-NoProfile -ExecutionPolicy Bypass -File "' + $Exe + '"' + $(if ($argLine) { ' ' + $argLine } else { '' })
+    } elseif ($ext -eq '.cmd' -or $ext -eq '.bat') {
+      $file = $env:ComSpec
+      $argLine = '/c "' + $Exe + '"' + $(if ($argLine) { ' ' + $argLine } else { '' })
+    }
     $psi = New-Object System.Diagnostics.ProcessStartInfo
-    $psi.FileName = $Exe
-    $psi.Arguments = ($Arguments -join ' ')
+    $psi.FileName = $file
+    $psi.Arguments = $argLine
     $psi.RedirectStandardOutput = $true
     $psi.RedirectStandardError = $true
     $psi.UseShellExecute = $false
@@ -135,6 +148,32 @@ $rtk = Find-FirstFile @((Join-Path $env:USERPROFILE '.local\bin\rtk.exe'))
 if (-not $rtk) { $rtk = Find-OnPath 'rtk' }
 $report['rtk'] = Test-Tool 'rtk' @($rtk) 'Run START-HERE.bat from the Ultimate-AI-Starter-Bundle' @('--version')
 
+# Owner kits. The bundle never installs these; it reports where the owner kept
+# them so an agent does not build a second copy. kit.json is the reverse-this
+# registry (authoritative after a move); REVERSE_THIS_ROOT only overrides one
+# task. No directory walks here -- a moved kit is repaired in one place.
+$rtRoot = Get-EnvAnyScope 'REVERSE_THIS_ROOT'
+if (-not $rtRoot) {
+  $kitPointer = Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json'
+  if (Test-Path -LiteralPath $kitPointer -PathType Leaf) {
+    try { $kit = [IO.File]::ReadAllText($kitPointer) | ConvertFrom-Json; if ($kit.kit_root) { $rtRoot = [string]$kit.kit_root } } catch {}
+  }
+}
+if (-not $rtRoot) { $rtRoot = Join-Path $env:LOCALAPPDATA 'ReverseThis\kit' }
+$rtBin = Get-EnvAnyScope 'REVERSE_THIS_BIN'
+if (-not $rtBin) { $rtBin = Join-Path $rtRoot 'sandbox\bin' }
+$rtVersion = $null
+$rtVersionFile = Join-Path $rtRoot 'VERSION'
+if (Test-Path -LiteralPath $rtVersionFile -PathType Leaf) { $rtVersion = ([IO.File]::ReadAllText($rtVersionFile)).Trim() }
+$rtOk = (Test-Path -LiteralPath $rtRoot -PathType Container) -and (Test-Path -LiteralPath $rtBin -PathType Container)
+$report['reverse-this'] = if ($rtOk) { New-Row 'VERIFIED' $rtRoot 'https://github.com/SenjuWoo/reverse-this (owner kit; do not duplicate)' $rtVersion 'bin: ' + $rtBin }
+  else { New-Row 'MISSING' $null 'https://github.com/SenjuWoo/reverse-this (owner kit; do not duplicate)' }
+
+$sfRoot = Get-EnvAnyScope 'SKYRIM_FORGE_ROOT'
+if (-not $sfRoot) { $sfRoot = Join-Path $env:LOCALAPPDATA 'Skyrim-Tools\Skyrim-Forge' }
+$report['skyrim-forge'] = if (Test-Path -LiteralPath $sfRoot -PathType Container) { New-Row 'VERIFIED' $sfRoot 'https://github.com/SenjuWoo/SkyrimForge (owner tool; do not duplicate)' $null 'houseCARL is owned by Forge' }
+  else { New-Row 'MISSING' $null 'https://github.com/SenjuWoo/SkyrimForge (owner tool; do not duplicate)' }
+
 foreach ($rt in @(@('python','https://www.python.org/downloads/'), @('node','https://nodejs.org/'), @('git','https://git-scm.com/'), @('gh','https://cli.github.com/'), @('uv','https://docs.astral.sh/uv/'))) {
   $p = Find-OnPath $rt[0]
   if ($p) {
@@ -145,10 +184,13 @@ foreach ($rt in @(@('python','https://www.python.org/downloads/'), @('node','htt
 }
 
 # Compilers: path presence is INSTALLED; VERIFIED needs the tool to answer.
+# `go` spells its version probe differently -- `go --version` is a flag error,
+# which used to mark a working toolchain INSTALLED on every run.
 foreach ($tool in @('go','rustc','cargo','gcc','cmake','xmake','ninja','dotnet')) {
   $path = Find-OnPath $tool
   if (-not $path) { $report[$tool] = New-Row 'MISSING' $null 'TOOLS/Install-BuildTools.ps1'; continue }
-  $probe = Invoke-Probe $path @('--version')
+  $probeArgs = if ($tool -eq 'go') { @('version') } else { @('--version') }
+  $probe = Invoke-Probe $path $probeArgs
   if ($probe.ok) { $report[$tool] = New-Row 'VERIFIED' $path 'TOOLS/Install-BuildTools.ps1' ($probe.text.Split("`n")[0]) }
   else { $report[$tool] = New-Row 'INSTALLED' $path 'TOOLS/Install-BuildTools.ps1' $null 'version probe failed' }
 }
@@ -167,21 +209,48 @@ if ($hub) {
   $report['cli-hub'] = New-Row 'MISSING' $null 'pip install cli-anything-hub - https://github.com/HKUDS/CLI-Anything'
 }
 
-$roots = @($ToolRoots + @(
-  (Get-EnvAnyScope 'UABS_TOOL_ROOTS'),
-  (Get-EnvAnyScope 'CLI_ANYTHING_ROOT'),
-  (Join-Path $env:USERPROFILE 'CLI-Anything-main'),
-  (Join-Path $env:USERPROFILE 'Downloads\CLI-Anything-main'),
-  (Join-Path $env:LOCALAPPDATA 'CLI-Anything')
-))
-$checkout = $null
-foreach ($root in $roots) {
-  if ([string]::IsNullOrWhiteSpace($root)) { continue }
-  foreach ($candidate in @($root, (Join-Path $root 'CLI-Anything-main'))) {
-    if (Test-Path -LiteralPath (Join-Path $candidate 'cli_hub') -PathType Container) { $checkout = $candidate; break }
-    if (Test-Path -LiteralPath (Join-Path $candidate 'pyproject.toml') -PathType Leaf) { $checkout = $candidate; break }
+# A checkout may sit at a root, one level down, or under a category folder
+# (Tools\Github\CLI-Anything-main). UABS_TOOL_ROOTS is a ';' list, not one path;
+# treating it as one string made a moved checkout look absent. Two bounded
+# levels, never a drive walk.
+$roots = New-Object System.Collections.Generic.List[string]
+foreach ($r in @($ToolRoots)) { if ($r) { [void]$roots.Add($r) } }
+foreach ($name in @('UABS_TOOL_ROOTS', 'CLI_ANYTHING_ROOT')) {
+  $value = Get-EnvAnyScope $name
+  if ($value) { foreach ($piece in ($value -split ';')) { if ($piece.Trim()) { [void]$roots.Add($piece.Trim()) } } }
+}
+foreach ($p in @(
+    (Join-Path $env:USERPROFILE 'CLI-Anything-main'),
+    (Join-Path $env:USERPROFILE 'Downloads\CLI-Anything-main'),
+    (Join-Path $env:LOCALAPPDATA 'CLI-Anything'))) { [void]$roots.Add($p) }
+$map = Join-Path $env:USERPROFILE '.uabs\profile\MACHINE-MAP.md'
+if (Test-Path -LiteralPath $map -PathType Leaf) {
+  foreach ($line in [IO.File]::ReadAllLines($map)) {
+    if ($line -notmatch '^-\s+Tool folders') { continue }
+    $rest = $line -split ':', 2
+    if ($rest.Count -lt 2) { continue }
+    foreach ($piece in ($rest[1] -split ';')) { if ($piece.Trim()) { [void]$roots.Add([Environment]::ExpandEnvironmentVariables($piece.Trim())) } }
   }
-  if ($checkout) { break }
+}
+
+$candidates = New-Object System.Collections.Generic.List[string]
+foreach ($root in @($roots | Select-Object -Unique)) {
+  if (-not $root -or -not (Test-Path -LiteralPath $root -PathType Container)) { continue }
+  [void]$candidates.Add($root)
+  [void]$candidates.Add((Join-Path $root 'CLI-Anything-main'))
+  foreach ($d in @(Get-ChildItem -LiteralPath $root -Directory -ErrorAction SilentlyContinue)) {
+    [void]$candidates.Add($d.FullName)
+    foreach ($g in @(Get-ChildItem -LiteralPath $d.FullName -Directory -Filter 'CLI-Anything*' -ErrorAction SilentlyContinue)) { [void]$candidates.Add($g.FullName) }
+  }
+}
+$checkout = $null
+foreach ($candidate in @($candidates | Select-Object -Unique)) {
+  # A pyproject.toml alone proves nothing -- every Python project has one, and an
+  # unrelated repo was reported as a CLI-Anything checkout. The package folder is
+  # the exact marker; the name check keeps a renamed checkout recognizable.
+  if (Test-Path -LiteralPath (Join-Path $candidate 'cli_hub') -PathType Container) { $checkout = $candidate; break }
+  if (Test-Path -LiteralPath (Join-Path $candidate 'cli-hub') -PathType Container) { $checkout = $candidate; break }
+  if ((Split-Path -Leaf $candidate) -match '^CLI-Anything' -and (Test-Path -LiteralPath (Join-Path $candidate 'pyproject.toml') -PathType Leaf)) { $checkout = $candidate; break }
 }
 $report['cli-anything-source'] = if ($checkout) { New-Row 'DISCOVERED' $checkout 'https://github.com/HKUDS/CLI-Anything' $null 'source checkout; not installed by the bundle' }
                                   else { New-Row 'MISSING' $null 'https://github.com/HKUDS/CLI-Anything' }

@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.35.1",
+  "version": "8.36.0",
   "generated": "2026-11-05",
-  "release_tag": "v8.35.1",
+  "release_tag": "v8.36.0",
   "canonical_skills": 81,
   "provider_trees": 6,
   "registry_entries": 81,
@@ -20,6 +20,7 @@
     "TOOLS/hooks/completeness_gate.py --selftest",
     "TOOLS/hooks/assumption_gate.py --selftest",
     "TOOLS/hooks/rtk_safe_hook.py --selftest",
+    "TOOLS/hooks/hermes_gateway_guard.py --selftest",
     "TESTS/Test-ReleaseAssetCache.ps1",
     "TESTS/Test-ForgeRootResolution.ps1",
     "TESTS/Test-ProviderSkillSync.ps1",

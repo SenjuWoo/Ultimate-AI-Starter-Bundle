@@ -55,13 +55,21 @@ def _strip_frontmatter(content: str) -> str:
 
 
 def _frontmatter_value(content: str, key: str) -> str:
-    """Read stock single-line frontmatter scalars for Hermes discovery."""
+    """Return a flat ``key: value`` scalar from a SKILL.md frontmatter block.
+
+    Hermes reads a skill's description from ``register_skill``'s ``description``
+    argument, which defaults to "" — registering only the path left every stock
+    skill with a blank description in the skill catalogue, so the model had
+    nothing to select on. Stock frontmatter is a flat block of single-line
+    scalars, so a line scan covers it without a YAML dependency.
+    """
     match = re.match(r"^---\n([\s\S]*?)\n---\n", content)
-    if match:
-        for line in match.group(1).splitlines():
-            name, sep, value = line.partition(":")
-            if sep and name.strip() == key:
-                return value.strip().strip("\"'")
+    if not match:
+        return ""
+    for line in match.group(1).splitlines():
+        name, sep, value = line.partition(":")
+        if sep and name.strip() == key:
+            return value.strip().strip("\"'")
     return ""
 
 
@@ -117,7 +125,9 @@ def register(ctx):
     # pre_llm_call returning {"context": ...} is the documented injection path
     # (on_session_start return values are ignored, and ctx.inject_message
     # refuses from that hook — verified empirically 2026-07-23). The context is
-    # appended to the first turn's user message.
+    # appended to the first turn's user message. delegate_task children run
+    # with platform="subagent" and an empty history, so every child's first
+    # turn would otherwise get the controller bootstrap too.
     def pre_llm_call(
         session_id=None,
         user_message=None,
@@ -127,17 +137,19 @@ def register(ctx):
         platform=None,
         **kwargs,
     ):
-        if is_first_turn:
+        if is_first_turn and platform != "subagent":
             return {"context": bootstrap}
         # Re-inject after a compaction. Hermes compacts long sessions, and the
         # bootstrap lives in the first turn's user message -- exactly the part
         # a compaction summarises away. Without this the plugin injects once,
         # the context is dropped mid-session, and the model quietly stops
         # having superpowers for the rest of a long run.
+        if platform == "subagent":
+            return None
         if conversation_history is None:
             # Shape not provided by this hermes build: cannot tell whether the
-            # bootstrap survived, and injecting every turn would burn tokens
-            # on every request. First-turn behaviour only.
+            # bootstrap survived, and injecting every turn would burn tokens on
+            # every request. First-turn behaviour only.
             return None
         if not _history_has_marker(conversation_history):
             return {"context": bootstrap}

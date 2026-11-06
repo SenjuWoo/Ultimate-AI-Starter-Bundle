@@ -152,9 +152,13 @@ param(
   #   Full 45 tools ~41,768 schema tokens | Lean 42 ~31,369 (-25%) | ReadOnly 27 ~17,604 (-58%); bytes/4, not billing.
   [ValidateSet('', 'Full', 'Lean', 'ReadOnly')]
   [string]$SkyrimToolset = '',
-  # Preview stale state after a successful install. Deletion is never automatic:
-  # old backups and same-name skills may belong to the user. Inspect the report
-  # before explicitly invoking TOOLS\Clean-StaleState.ps1 -Apply.
+  # Self-maintenance: after a successful install, remove only what this pack
+  # created and no longer needs -- backups past the retention window, logs past
+  # the last five, retired skills whose ledger digest still matches, retired
+  # marketplace entries. Anything with an owner stamp, a modified digest or a
+  # name outside the pack's own records is reported and left alone. -SkipCleanup
+  # keeps everything (diagnosing a bad install); TOOLS\Clean-StaleState.ps1 on
+  # its own is always a preview.
   [switch]$SkipCleanup,
   # START-HERE checks GitHub for a newer bundle release first: a clean git
   # clone fast-forwards, a release copy installs the new release through
@@ -2960,12 +2964,12 @@ if (-not $SkipCleanup -and -not $ToolsOnly) {
   $cleanTool = Join-Path $PackRoot 'TOOLS\Clean-StaleState.ps1'
   if (Test-Path -LiteralPath $cleanTool -PathType Leaf) {
     try {
-      $cleanArgs = @('-PackRoot', $PackRoot)
+      $cleanArgs = @('-PackRoot', $PackRoot, '-Apply')
       if ($SkillsOnly) { $cleanArgs += '-SkipSkills' }
       $cleanCode = Invoke-UabsChildScript -Title 'Leftover cleanup' -File $cleanTool -ArgList $cleanArgs
       if ($cleanCode -ne 0) { throw "cleanup exited with code $cleanCode" }
-      Write-UabsOk 'Stale-state preview complete; no backups or skills deleted'
-      $installed['stale-state-cleanup'] = @{ status = 'preview-only' }
+      Write-UabsOk 'Stale-state cleanup complete; only pack-created leftovers were removed'
+      $installed['stale-state-cleanup'] = @{ status = 'applied' }
     } catch {
       # Never fail an otherwise-good install over housekeeping.
       Write-UabsWarn ('Leftover cleanup: ' + $_.Exception.Message)

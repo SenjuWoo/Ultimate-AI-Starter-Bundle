@@ -26,8 +26,8 @@
  },
  {
   "path": ".github/scripts/check_versions.py",
-  "size": 9253,
-  "sha256": "22e2f8694c45306d75701de173cf53134fea9965e476b74ff53a2f933489dcc7"
+  "size": 9882,
+  "sha256": "81241970603b3fdf418d687a37b8680fa93b6a484d20bdc507ccb01f395319b6"
  },
  {
   "path": ".github/scripts/verify_manifest.py",
@@ -46,8 +46,8 @@
  },
  {
   "path": ".github/workflows/release.yml",
-  "size": 8116,
-  "sha256": "d27db18faeb98651492aa7824ef65f1048bb15a30920286b7595cc74569ec518"
+  "size": 8861,
+  "sha256": "b5972893391ee8789470481d88b001d0db5709df66201166c0ca59ef50e72ece"
  },
  {
   "path": ".gitignore",
@@ -2151,8 +2151,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
-  "size": 7054,
-  "sha256": "f78c345b8a988e1c2062085722e3913a205cda6a3d079ff0b96b2d290008e388"
+  "size": 8205,
+  "sha256": "e853de2f209a0412b85e78a4f9208ed939c197d5afa64718dfeec3e846a1ccaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/apps-native-windows.md",
@@ -2681,8 +2681,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
-  "size": 12545,
-  "sha256": "078337511ef8eb719f52f02602a29404ee9843df8a574b34718814983ab94e8f"
+  "size": 17357,
+  "sha256": "7b07ada003f6eeec822d450ac9f25433e27c62178c4b9144ea47b2f2d10bff14"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
@@ -5141,8 +5141,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
-  "size": 7054,
-  "sha256": "f78c345b8a988e1c2062085722e3913a205cda6a3d079ff0b96b2d290008e388"
+  "size": 8205,
+  "sha256": "e853de2f209a0412b85e78a4f9208ed939c197d5afa64718dfeec3e846a1ccaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/apps-native-windows.md",
@@ -5671,8 +5671,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
-  "size": 12545,
-  "sha256": "078337511ef8eb719f52f02602a29404ee9843df8a574b34718814983ab94e8f"
+  "size": 17357,
+  "sha256": "7b07ada003f6eeec822d450ac9f25433e27c62178c4b9144ea47b2f2d10bff14"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
@@ -8191,8 +8191,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
-  "size": 7054,
-  "sha256": "f78c345b8a988e1c2062085722e3913a205cda6a3d079ff0b96b2d290008e388"
+  "size": 8205,
+  "sha256": "e853de2f209a0412b85e78a4f9208ed939c197d5afa64718dfeec3e846a1ccaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/apps-native-windows.md",
@@ -8721,8 +8721,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
-  "size": 12545,
-  "sha256": "078337511ef8eb719f52f02602a29404ee9843df8a574b34718814983ab94e8f"
+  "size": 17357,
+  "sha256": "7b07ada003f6eeec822d450ac9f25433e27c62178c4b9144ea47b2f2d10bff14"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
@@ -11231,8 +11231,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
-  "size": 7054,
-  "sha256": "f78c345b8a988e1c2062085722e3913a205cda6a3d079ff0b96b2d290008e388"
+  "size": 8205,
+  "sha256": "e853de2f209a0412b85e78a4f9208ed939c197d5afa64718dfeec3e846a1ccaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/apps-native-windows.md",
@@ -11761,8 +11761,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
-  "size": 12545,
-  "sha256": "078337511ef8eb719f52f02602a29404ee9843df8a574b34718814983ab94e8f"
+  "size": 17357,
+  "sha256": "7b07ada003f6eeec822d450ac9f25433e27c62178c4b9144ea47b2f2d10bff14"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
@@ -14271,8 +14271,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
-  "size": 7054,
-  "sha256": "f78c345b8a988e1c2062085722e3913a205cda6a3d079ff0b96b2d290008e388"
+  "size": 8205,
+  "sha256": "e853de2f209a0412b85e78a4f9208ed939c197d5afa64718dfeec3e846a1ccaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/apps-native-windows.md",
@@ -14801,8 +14801,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
-  "size": 12545,
-  "sha256": "078337511ef8eb719f52f02602a29404ee9843df8a574b34718814983ab94e8f"
+  "size": 17357,
+  "sha256": "7b07ada003f6eeec822d450ac9f25433e27c62178c4b9144ea47b2f2d10bff14"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
@@ -17386,8 +17386,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/ai-models-harness.md",
-  "size": 7054,
-  "sha256": "f78c345b8a988e1c2062085722e3913a205cda6a3d079ff0b96b2d290008e388"
+  "size": 8205,
+  "sha256": "e853de2f209a0412b85e78a4f9208ed939c197d5afa64718dfeec3e846a1ccaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/project-intel/references/apps-native-windows.md",
@@ -17916,8 +17916,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/scripts/discover_tools.ps1",
-  "size": 12545,
-  "sha256": "078337511ef8eb719f52f02602a29404ee9843df8a574b34718814983ab94e8f"
+  "size": 17357,
+  "sha256": "7b07ada003f6eeec822d450ac9f25433e27c62178c4b9144ea47b2f2d10bff14"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unity-mod-frameworks/SKILL.md",
@@ -18681,13 +18681,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 63613,
-  "sha256": "7b33c4ebdf1af6fccbd236a36458a71fedf69620d09a1116e29e6cc8a0657156"
+  "size": 63910,
+  "sha256": "59771192436cfa6cf593d9e52136e67395b4a2bd7a9f61afb3c57548dc6250df"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "8441d17dd0d858cc53bfe4189dc56b30887b9ce7d55e5b2996a0c717eae4683a"
+  "sha256": "d7f306aa428d2f2598e00dfed2be7cca95e42a9fcfa53e21f5ec765ab91a1101"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18697,7 +18697,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "c86079fbe1b1e37a4c760a92500786fe871061195e67ab7a7acd5b5524dd44ad"
+  "sha256": "2792d16681a44bdab2943e085d47e8e786011dcc2ff3efd98feed8514eed9c72"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -19927,32 +19927,32 @@
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.antigravity-plugin/plugin.json",
   "size": 668,
-  "sha256": "59d3191313f359668f608c2a3951faeb7717ee60f9c5fc740002f8a534f2da75"
+  "sha256": "47fe1ae9311cdf7a1136e2d39d74194ee2bc06d4b9fe2fe8d8652a265ca4a57a"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.claude-plugin/marketplace.json",
   "size": 514,
-  "sha256": "aa23337d43302fffa00927f3700205e92b6c09b79dfe4a13bf66b7b15122604a"
+  "sha256": "04015bf36c0c8e475e61509f4c0c2e72838abb1b6ab70a2c44f04be4317f79fa"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.claude-plugin/plugin.json",
   "size": 497,
-  "sha256": "fa3b15088f102c31b7cf1abd4d329fd50d76a99222083638aab810d81930b162"
+  "sha256": "6728b554d1aaf9235f7981c7838a32f50c191297284af97f4c2a808155f7c399"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.codex-plugin/plugin.json",
   "size": 1730,
-  "sha256": "fef198cdbcaa5544e4244ff74cb83a2a797d18c9cfb9af26a18418206bb806c3"
+  "sha256": "925b862a7ee38f170f4595a33a1d3c1cecd5e944f271b30d98efa55919febab0"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.cursor-plugin/plugin.json",
   "size": 578,
-  "sha256": "4f0755b6150bf762c1d8fb2f63bd323bea020e6cd11f9f1d7c68b69ff690cf99"
+  "sha256": "e74bbc3086286fec5595e3adc35f3c340ec255508afdf5030dd617a6a850afea"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.devin-plugin/plugin.json",
   "size": 575,
-  "sha256": "ee1269c4d4325006fa590fa8ccb20ea302cd11992363c3bc9bc4ac62a2d4792a"
+  "sha256": "5d1227aa357f7c44c07c6555190c3f8e106af24666b8cb48bf0475026113f3d7"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.gitattributes",
@@ -19996,43 +19996,43 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.hermes-plugin/__init__.py",
-  "size": 5858,
-  "sha256": "ffb1a0d7ab8ab01c769f4090be0ff662428618f1a2620c62a44f45b609ec3c56"
+  "size": 6505,
+  "sha256": "6c8deef1b64e4d57e6551caefdd02d54928cc230201d517d723d99bcdf28826d"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.hermes-plugin/plugin.yaml",
   "size": 151,
-  "sha256": "956c7257fa4549a00d6501c2b81ea43805eb1f26b3a2cfd60920751ce3c63fe2"
+  "sha256": "31827794da38529aa1fd1b0020f29b6325a94029aaa425a1c3a1b329c47efec7"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.kimi-plugin/plugin.json",
   "size": 3090,
-  "sha256": "40af10480f1c943386c8bb1a1da4c5349262d162818bb2e561fc2c4c62730f92"
+  "sha256": "fd150224125adf931a839b210adeff56a36ce7937c67916da93c7da428d22e44"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.muse-plugin/marketplace.json",
   "size": 507,
-  "sha256": "8107646e9dedc1aea1aad369da66a1ba30e1f5faa53ab840e928a7e8ac4a7701"
+  "sha256": "cb77cc7e9cc87ca74892584ad6810288551b6ec71123ece2da112a20a6b190ae"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.muse-plugin/plugin.json",
-  "size": 2286,
-  "sha256": "901b5b2fcd5aa32f904f5659f1f8199cb8d4db9635e465649a775fa658ac6c1c"
+  "size": 2288,
+  "sha256": "56f1ce972975db8f6efe65e6b0136e7cbcc3a1c3ca22658e2fae01f132af7c9a"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.opencode/INSTALL.md",
   "size": 5379,
-  "sha256": "0594f252048cf87e98d56faa876b7f1c3d4ae1119cf8fc77bbf5a5b63729296f"
+  "sha256": "15a91f33314d5a156ed6b8fa9e243bfe85e6e9e4e60238f6e9b0e06b17640d2e"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.opencode/plugins/superpowers.js",
-  "size": 17617,
-  "sha256": "c979fe5a9fd6fddc9bc9730b34b25989f9d53939eed7d594c4564f6e47495f26"
+  "size": 19346,
+  "sha256": "e0a696ca06f0b05f9e76734ea302f0796fe747d6a79fe4910e34462822723043"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.pi/extensions/superpowers.ts",
-  "size": 4283,
-  "sha256": "39c27000c047f8a1399a76e032e4cd239d7bdb0be168a121f46a2ac719deaae0"
+  "size": 4359,
+  "sha256": "59774512277ffb41b706f6ed376b27fda83c3a04045a41560f4a2307591e3939"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/.pre-commit-config.yaml",
@@ -20071,8 +20071,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/RELEASE-NOTES.md",
-  "size": 112907,
-  "sha256": "7340c58689fd50b55010767bc2714d944aabcaf4ccdeeb8e6be4452516db669b"
+  "size": 120808,
+  "sha256": "af121b6df7d328b0f325bdd016f31bbb59b1f23cfaf6c7f2a9ac2be8c7e0fc01"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/assets/antigravity-logo.png",
@@ -20096,8 +20096,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/README.opencode.md",
-  "size": 8758,
-  "sha256": "17ae31ae43f88ef40fd4b5dcb03bd9ad761fed46f4a7e1697fb824433c105433"
+  "size": 9090,
+  "sha256": "7ce149e5b91bf7f55bab76732c0e054c0b7ff29dc2865b3a59a10085c793e5ae"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/plans/2025-11-22-opencode-support-design.md",
@@ -20121,8 +20121,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/porting-to-a-new-harness.md",
-  "size": 52602,
-  "sha256": "f30e91289a3f4a11ce529b67ecc081e03be1d1d906628d645618e8129e83f519"
+  "size": 52650,
+  "sha256": "562a1436134babc815c11adf0379e2df00c8de0e73c362291faf495448b94f3e"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/superpowers/specs/2026-01-22-document-review-system-design.md",
@@ -20241,13 +20241,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/docs/windows/polyglot-hooks.md",
-  "size": 7119,
-  "sha256": "2ddf6e3dba3de202fe5bca3d6ea26f308a0a27be8e785d10842f26cfed2f644b"
+  "size": 7658,
+  "sha256": "6691f1a4fedfecb456550610afda3bda56ad458cf6f2200bc5249fa3cd743a94"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/gemini-extension.json",
   "size": 187,
-  "sha256": "8b7e69416536746b5948f49979fb34448c85fa10aabbdc9c6f4c2f4ded5fa985"
+  "sha256": "acb18fa699f7e1b313ef46df10cea32904ea3681b833d6ef068ed87fb00f39b7"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/hooks/hooks-cursor.json",
@@ -20256,18 +20256,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/hooks/hooks.json",
-  "size": 334,
-  "sha256": "47fd72cc8bedf31c72702b35b4ed7bab670294d658c4ce518330337525a3798b"
+  "size": 424,
+  "sha256": "19fa1af26a0ed32bfabee6c4d744e5447ea3bdf769efceba9e268f2d9f6dc263"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/hooks/run-hook.cmd",
-  "size": 2996,
-  "sha256": "d1fcecfe19df2d083994803f73417710f745bd96c0938f594f87096005b1e403"
+  "size": 3577,
+  "sha256": "324b298bd370d6f3ea71c165e0b732d5678e5cff68d0d7f7e47c13bc2cb2559a"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/hooks/session-start",
-  "size": 3938,
-  "sha256": "5c15e62a90ed13ad8e4b3561148c54c26c6ee28b41ec3a55a241f68b400d886d"
+  "size": 4421,
+  "sha256": "38fdeed045b28b62034a809e45602e33358573acbc23c83787d76d449cb89902"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/index.js",
@@ -20277,7 +20277,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/package.json",
   "size": 433,
-  "sha256": "b4ca961ce1aead5d08e40507b2fca8c04c61dea054866bac92259308d24527e3"
+  "sha256": "49004c08be59f027bf23a500d57ab1ba6a288deb5697d3cbd743432cf4a42059"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/scripts/bump-version.sh",
@@ -20292,7 +20292,7 @@
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/scripts/package-codex-plugin.sh",
   "size": 10338,
-  "sha256": "2541617b86519273428d12d18a5f7ec852ac39cfdec74622c01ce71a504bb80d"
+  "sha256": "297c6f3e7c5ee9fabe2fe39765109a7a5e79e9b19c990775025586c5263121d4"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/scripts/render-antigravity-logo.sh",
@@ -20302,12 +20302,12 @@
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/scripts/sync-to-codex-plugin.sh",
   "size": 15097,
-  "sha256": "90b2117068f55fa095960d1f2c60c389a1b3131958bd132617aabdea49b52ec5"
+  "sha256": "68faa7e87b9df99ded0b9a1ed2e683c1007c36543593adfdbf55a9d57ab318d5"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/brainstorming/SKILL.md",
-  "size": 13602,
-  "sha256": "61a7ef918652108c76a3fd01e02dd92d39996c6b46d4cb2819cbd03f6c45e46a"
+  "size": 15190,
+  "sha256": "2c9ca71f94886f9ca9f4aef055f7cafb3e1a9bdf3aeebf8f4cb547c69405d207"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/brainstorming/builder-check-prompt.md",
@@ -20331,8 +20331,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/brainstorming/scripts/start-server.sh",
-  "size": 6908,
-  "sha256": "a4e5ae84275bcaacd2f84345afeabe59cf7b00ba080e123da7cc1fb226f12847"
+  "size": 7315,
+  "sha256": "314dd68dc00e8dd94c7491aca8a5f004c7fddffc161e2b07482f29f48d13659a"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/brainstorming/scripts/stop-server.sh",
@@ -20451,18 +20451,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/executing-plans/SKILL.md",
-  "size": 18103,
-  "sha256": "e4649e59880ef2643d1da128e3d607e87e3f969410d72095a5bf65811b6036dc"
+  "size": 18364,
+  "sha256": "deaf176fa179827e80f2ea3101db3ea90fdf562ebef340eba761e4687940f5f5"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/executing-plans/scripts/task-done",
-  "size": 1692,
-  "sha256": "d0d4f2397c85a4426443ea955e699ef12568b41b408ec6122d4ec2433ee3a5f6"
+  "size": 1900,
+  "sha256": "ac0b5ebafc7d471507b7e94d88da77a11f187ba277c8d48fefaf8ff3e4fee50e"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/executing-plans/scripts/task-start",
-  "size": 963,
-  "sha256": "f833693c8fce3700fc9f841562d80f8015cd40f652c168a3405ac3e46947a1fe"
+  "size": 1185,
+  "sha256": "4ae7ce3b6777c3240af786197836a6b4bbf3b0ee831c25f147c149ea8db54a21"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/finishing-a-development-branch/SKILL.md",
@@ -20486,8 +20486,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/SKILL.md",
-  "size": 19506,
-  "sha256": "ba41f697136cba88a7962d60c8e2f97488ba04a8688b1d0fbeb27f6953808e75"
+  "size": 19740,
+  "sha256": "1baf70e307bde682c462513c86116333f1f066168c6710f45145bf5f0b00828d"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/implementer-prompt.md",
@@ -20496,8 +20496,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/re-review-prompt.md",
-  "size": 4761,
-  "sha256": "0828a5e9cbb12ba49f14621dd8c3953c48c0fc383e75bb5494f055ed0d6d824f"
+  "size": 4833,
+  "sha256": "ad54d0a10f1c2c8e656456e0a46e654af5dfe5ee6bcef63428cfd69b8dcd9311"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/batching.md",
@@ -20511,13 +20511,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/final-review.md",
-  "size": 2447,
-  "sha256": "2fd999d86e5dd0b9b32aaf93f2a41663ef30b3e3cb78fb2fd5cb450eb59eb9de"
+  "size": 2576,
+  "sha256": "6c9e12093e46c4ad0a203bc07709c17e3470f855f1b78e55c5e7b722a012a32c"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/fix-loop.md",
-  "size": 4249,
-  "sha256": "eafff1f801af2ced86e8761f3eeef04b701860d986ba5d0a8b20d506a75104bb"
+  "size": 4314,
+  "sha256": "1938ce707915efc44021e563ebc29666329e20ad861b6c50b89f305b8f4e8d8b"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/references/handling-reports.md",
@@ -20536,28 +20536,23 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/scripts/review-package",
-  "size": 2029,
-  "sha256": "f9275175b2276b1d5fdb1bae0bedaadd2a950659b7c6f311ea37ff85e1861b1f"
+  "size": 2444,
+  "sha256": "aed7c6e09fc660417d28898ed975e84651cb9f18f4675141cd475edfb7037f3d"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/scripts/sdd-workspace",
-  "size": 3684,
-  "sha256": "4fd9770e7a49b6bde488c0e92bac1b3bd01fcbdaf8f06b6c4efbe3a1abd99f86"
+  "size": 4823,
+  "sha256": "de3af5252fa595fc2000ba05cf69e06187d5c8aae9d283cced4c167ad1813061"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/scripts/task-brief",
-  "size": 1322,
-  "sha256": "cc563538e09abf719b34ddf4b2fa7a65cf3b301729039dbfa923cb060f729146"
+  "size": 4769,
+  "sha256": "0f244a12e146393c552ba62069d3eedcc85cb3f76de67b01f4e11219e5ebbcd8"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/subagent-driven-development/task-reviewer-prompt.md",
-  "size": 9031,
-  "sha256": "bfed55c8f19d0ff6ed57b0fe09127c92890e9311c6c73917129598826bf9ebe8"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/systematic-debugging/CREATION-LOG.md",
-  "size": 4257,
-  "sha256": "c24733a5b1821bd6bed1fc950261f0b9f4e90097e0bbb96459d8179713730789"
+  "size": 9175,
+  "sha256": "61a04c2fb29907887d8babee1594f5e35ae26d461e7e584f5b7c283215165e08"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/systematic-debugging/SKILL.md",
@@ -20588,26 +20583,6 @@
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/systematic-debugging/root-cause-tracing.md",
   "size": 5321,
   "sha256": "75b933b6a8c40bdb2031b10f21654395b56ec6ab6bc7b018c18d3fe57aeb7fb8"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/systematic-debugging/test-academic.md",
-  "size": 653,
-  "sha256": "fe2ba480d78ac0d686dc025f41c2a32a43d642bf533f91b0c6053a04d35d6486"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/systematic-debugging/test-pressure-1.md",
-  "size": 1900,
-  "sha256": "0b6a915db0054577819834c79be9eb614e97bddba10d73768e1fbe91cfed048a"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/systematic-debugging/test-pressure-2.md",
-  "size": 2283,
-  "sha256": "b2030aeffba07050e8ad573ddf87486457c4a016a786bb326235bebd856f2016"
- },
- {
-  "path": "BUNDLED-TOOLS/plugins/superpowers/skills/systematic-debugging/test-pressure-3.md",
-  "size": 2692,
-  "sha256": "96b50a52e2c7989c9cf20fb752c47c1e9a3a70dc362f8f7989f8f5b64dac7708"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/skills/test-driven-development/SKILL.md",
@@ -20781,13 +20756,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/brainstorm-server/server.test.js",
-  "size": 26676,
-  "sha256": "a8f2effba4647767e0e66b0c681ae63e89355cb6bb5e20a4f86d48149c3957e6"
+  "size": 27226,
+  "sha256": "7e98be35f51747ac54def39b17fc5de1002fdd36ecbad17c3d026ca11e5d1f90"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/brainstorm-server/start-server.test.sh",
-  "size": 3099,
-  "sha256": "fb0c928e206fbd6a0fe77e750198d71ae0c331e361b13e9a8b8742cdb22302b5"
+  "size": 4879,
+  "sha256": "fc32961620c79a01230631a29e50760c0cc39e08638ac42aa5341ea5106b58a2"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/brainstorm-server/stop-server.test.sh",
@@ -20821,8 +20796,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/claude-code/test-executing-plans-scripts.sh",
-  "size": 6093,
-  "sha256": "4bb8ac69cd96add9d524c5d9d04726853f4e82810aefcb87fd8965d9a55cbc76"
+  "size": 10352,
+  "sha256": "dabc5a81cc989331d27ae470bf107f691cb4412883fb4056035d55d5206a6b07"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/claude-code/test-helpers.sh",
@@ -20831,8 +20806,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/claude-code/test-sdd-workspace.sh",
-  "size": 16039,
-  "sha256": "dd258732aebae183b0019d480422df661468b7f3664025d3960e0bc5fcb6385d"
+  "size": 35023,
+  "sha256": "56fe0e161064e02ecd9dbb09b858da25731f80bab42553fce5b27e22fc9c1e29"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/claude-code/test-subagent-driven-development-integration.sh",
@@ -20856,8 +20831,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/codex-plugin-sync/test-sync-to-codex-plugin.sh",
-  "size": 24818,
-  "sha256": "df2dd25436dd61f79912bbd36b76e5921c6cbdef3f12941d4a102d35babbec13"
+  "size": 26160,
+  "sha256": "28e801f3b4792de2593178204b0bf696c434f0ce04a050381520569c4b6176c4"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/codex/test-marketplace-manifest.sh",
@@ -20866,8 +20841,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/codex/test-package-codex-plugin.sh",
-  "size": 9650,
-  "sha256": "bbf76d50eac33b60d73318946bc1418a6e6c6d52cdd918f39c7b18b8eaa0b0f4"
+  "size": 10750,
+  "sha256": "671e0667b268947ea44d49687d0efb05ae5387621191c9122c318fc59ffc86fa"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/devin/test-devin-plugin.sh",
@@ -20966,13 +20941,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/hooks/test-run-hook-cmd-windows.sh",
-  "size": 8452,
-  "sha256": "1630ca0accde617b06cac968d821f5420ec124672a2d7b79eb2bc81c39b94154"
+  "size": 9491,
+  "sha256": "af80fc5779c806ca42bf4b16f62343cedada2b0cd12693bcdcb0416b2c007b70"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/hooks/test-session-start.sh",
-  "size": 10082,
-  "sha256": "036c13ac48192e459c6ad327614161670f8b142fcf70e4e670d05c43775a54ad"
+  "size": 13993,
+  "sha256": "23f462f38fc152d1f63b0bbe859acb88cc382adf51e7c8f9537b4e8f2e83b2af"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/kimi/run-tests.sh",
@@ -20986,8 +20961,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/opencode/run-tests.sh",
-  "size": 4592,
-  "sha256": "b2f2067cfefa61aec22da47686dcc7b60e4de16bca439d1f3e4631d71ad78054"
+  "size": 4735,
+  "sha256": "fa16ebeba28fd98adbb4c9a7572965de8e614e06de9912c287883f677114cf1c"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/opencode/setup.sh",
@@ -20996,8 +20971,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/opencode/test-bootstrap-caching.mjs",
-  "size": 9837,
-  "sha256": "7966d45d3bfa281679c917c03704824ae9752f2e624173b598baaea961bebafa"
+  "size": 11198,
+  "sha256": "63c3156aebf3db49c25e97aadcff613932d6a7ceab59c66cef9ecff20f6e5019"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/opencode/test-bootstrap-caching.sh",
@@ -21016,8 +20991,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/opencode/test-session-bootstrap.mjs",
-  "size": 9235,
-  "sha256": "843f69300ee5f93f5ec9a8cedf7467427cc254f91a6d21e4b4ddc15f849c3aa1"
+  "size": 9854,
+  "sha256": "fc1655c45f484e6c19e738b1aec162e9b2e825a89dbe7facdd90b3a8fcbe81d7"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/opencode/test-session-bootstrap.sh",
@@ -21041,8 +21016,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/pi/test-pi-extension.mjs",
-  "size": 5828,
-  "sha256": "0f84e8fe4190575e907a109e3b2540a21832ddac4f1bdb76f1074489f4f605c6"
+  "size": 7333,
+  "sha256": "807b0d5623600d70e8fc4bd4bb8ab836d0f45003a2fd044114b076d1ba3d4af5"
  },
  {
   "path": "BUNDLED-TOOLS/plugins/superpowers/tests/shell-lint/test-lint-shell.sh",
@@ -22771,8 +22746,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 280224,
-  "sha256": "d5d78a63828828c829c521ed11f8944e68ade41bfef1fb4eaac50bf3eab61fcd"
+  "size": 285142,
+  "sha256": "3df1810af5022c52f50287eaedf2ae08aec2ff2180bf4cb3815b2727125dac66"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22861,8 +22836,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 180250,
-  "sha256": "5d8db391240690f7ec102631a4c4c972ae15eb7105bcb1f68dd62fec3be0382f"
+  "size": 180549,
+  "sha256": "f7849a2723a81c9867ef2125f8a8a50b9fde2199ecc5013e2aad09df1455eede"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -22871,8 +22846,8 @@
  },
  {
   "path": "INSTALL-REMOTE.ps1",
-  "size": 10132,
-  "sha256": "f7a74285ba7fd4c50439e95214435961a1803252ce09041a84327bc0abeccfd7"
+  "size": 11172,
+  "sha256": "8d3e821931b4537d91a9e99a90655de33462e54f2bb21b23da51d8b9fc06c762"
  },
  {
   "path": "LICENSE",
@@ -22881,8 +22856,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 50825,
-  "sha256": "b9c5a6af0a16d007a7b1d10b662be8794a748d645bdb70567d05c939f901ccad"
+  "size": 50799,
+  "sha256": "27cf497936c73350fdb5376eda65334ac1dec2961c22aa1ba10887d252cea364"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -22906,8 +22881,8 @@
  },
  {
   "path": "README.md",
-  "size": 74142,
-  "sha256": "716ed96d03ef70c5ea908bfa2466f4bd144126f4bd46b5dd4dfabffc0e3e4f72"
+  "size": 41606,
+  "sha256": "6aa8ad2fce75c51268a739fdd61baa2dfec2d65c1c2185018ae414a28842f8ab"
  },
  {
   "path": "SECURITY.md",
@@ -22917,17 +22892,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "4b1504b5d65ddd30f524c6013a9560816380581dad58b5ca9d2f15202e3b691a"
+  "sha256": "828bc6c8f348be18a026f5eb0cbdb49a6f84223a7e8cebbd14311ab38da6b83f"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "a3547c4d9769c440189c06bfde55b050f9d58e96f33594995674d3fbab01f58d"
+  "sha256": "2a5d1afd2ac26790ea380195007d6e5db7fde4a1d99c506051a467632716a4a3"
  },
  {
   "path": "STATE.md",
-  "size": 64123,
-  "sha256": "69d6ea5a6f95895c0196d6612e8ba517070e7cb371025827132eabd3db135d62"
+  "size": 67632,
+  "sha256": "313fcca32bb378ce6131e3aa9b6543a53a133b7849ba4ee3a515bf6617850a58"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -23026,8 +23001,8 @@
  },
  {
   "path": "TESTS/Test-InstallerPreservation.ps1",
-  "size": 2907,
-  "sha256": "cd9ae2bad21ff2636ad22733503663a6283ed8e6ed3e77befba5200fa0f466a8"
+  "size": 3491,
+  "sha256": "56ca2ab50c574daff13ac136dbe552370d9ac7a84bda37529eb3cb231dbef877"
  },
  {
   "path": "TESTS/Test-JsonCaseKeys.ps1",
@@ -23056,8 +23031,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 70022,
-  "sha256": "5cd6ad412c4172e752d81807e6036f2ee0b5e25efe1ab50d1497afea1b131248"
+  "size": 71359,
+  "sha256": "2eb6999ed933d867242855a360fae0361ae1bfd1c8243927cd2a07235234a07b"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -23081,8 +23056,8 @@
  },
  {
   "path": "TESTS/Test-ProviderHookScope.ps1",
-  "size": 12779,
-  "sha256": "b71e3d798e8b8ec3f0a539b2b880ffa73fffb68f5d9bf499bdaf468abff429a8"
+  "size": 12804,
+  "sha256": "3328d184224cc4f9957c39a6ac3fe2c9fd223dd702260a4a32c62b9102d40a58"
  },
  {
   "path": "TESTS/Test-ProviderSkillSync.ps1",
@@ -23361,8 +23336,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 362631,
-  "sha256": "7be26610586679a94290b9307d36375c84c2ec6be4fec64cf07012e04df04408"
+  "size": 364096,
+  "sha256": "6605969893d13c3c608963f9e89d9571026b2215f4b568e588da2d042f3c80a3"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23431,13 +23406,13 @@
  },
  {
   "path": "TOOLS/Clean-StaleState.ps1",
-  "size": 27412,
-  "sha256": "8c15b713ca1c886797cd85880ea1f9a08b219a0f61aa1dbd1e6733b7b5f69d60"
+  "size": 29045,
+  "sha256": "aa26a2cb20feb301a5c55ce9d4a9aacf37db8f48c5520b55e163e062f741d3f7"
  },
  {
   "path": "TOOLS/Ensure-CodebaseMemoryHermes.ps1",
-  "size": 2389,
-  "sha256": "f3be9a24340825ffe64bbced8ff6fcb69fd6a48b4337b7cafafd932cb75ac902"
+  "size": 2785,
+  "sha256": "870485bca9cedb1fe4c134a392e36ce8acdf588914199ea5e9d37010e5f15f6c"
  },
  {
   "path": "TOOLS/Ensure-Headroom-Grok.ps1",
@@ -23451,8 +23426,8 @@
  },
  {
   "path": "TOOLS/Ensure-SerenaHermes.ps1",
-  "size": 2571,
-  "sha256": "d8c100e5d10488eb631840bde9b314b4899dc0c678347ff37b877c334ed7660d"
+  "size": 2812,
+  "sha256": "70d3a13450046bd78d2eaf1d4379a350bb24a02a11d90e909ddd129cd4b083a7"
  },
  {
   "path": "TOOLS/Ensure-Tools.ps1",
@@ -23486,8 +23461,8 @@
  },
  {
   "path": "TOOLS/Install-Completeness-Gate.ps1",
-  "size": 21688,
-  "sha256": "91781930af74b5ed452541dca24be0bc2792530200fba61eef95cf36947ee6dd"
+  "size": 25102,
+  "sha256": "771dfb8c31d47acaac30a53fc37db41aa6e998a4e88c94936d8ce15e354d5cfe"
  },
  {
   "path": "TOOLS/Install-GitHooks.ps1",
@@ -23541,8 +23516,8 @@
  },
  {
   "path": "TOOLS/Repair-McpPaths.ps1",
-  "size": 13882,
-  "sha256": "551f66ec3db63ec1cbef7c99bc9d1b38cdc4e9ae064749cda4ff19c5a7421fec"
+  "size": 18313,
+  "sha256": "1b43e4a07f4e7b9eded68445a142525a67fe22fee63e44a57c13b68d9d60c32f"
  },
  {
   "path": "TOOLS/Set-GitHubProtection.ps1",
@@ -23586,8 +23561,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 63950,
-  "sha256": "268b71d0527de79877ae7fcd465818629904fc9e9aa0703198091625eb322508"
+  "size": 63971,
+  "sha256": "56deff72c57033f19dd2bf498388326e2e99b95cf4f44e57030324fac8ada5be"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -23601,8 +23576,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 169210,
-  "sha256": "c2ac5d61c7420da7c867f311e3808eb471243bbc7ccdafacd59e63b8bc831ebc"
+  "size": 169260,
+  "sha256": "ed8a2eda349d7f96a7ff7dab6b26f3b4b6fe6d4514e3ad7386c8911a9469b471"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
@@ -23671,8 +23646,8 @@
  },
  {
   "path": "TOOLS/discover_tools.ps1",
-  "size": 6859,
-  "sha256": "4e32a6bd411320a453f0fc4ca45262bb6d5cad0170acfd9ee32df9296dd12376"
+  "size": 1102,
+  "sha256": "a86cd4e5d9270ebc0bd478a3c939fa3ea0ec886383f277838c20796200f377d9"
  },
  {
   "path": "TOOLS/fanout_providers.py",
@@ -23746,8 +23721,8 @@
  },
  {
   "path": "TOOLS/hooks/ultimate-bundle.json",
-  "size": 1750,
-  "sha256": "c4c7d76253e264d9114b066e49b23d9caea6dcef03ed9c930bb25c4cdb583814"
+  "size": 1934,
+  "sha256": "5572e3590040dc8b7c1b09abda9883910171c6ce6f529580bb63d5398d8f7b28"
  },
  {
   "path": "TOOLS/housecarl/README.md",
@@ -23851,8 +23826,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2726,
-  "sha256": "37a6cd095be1dbfc47a7ea9e29a64feb41d7a13a08442b9cb929dfac4158953c"
+  "size": 2781,
+  "sha256": "ca9b0db150a6f96865d55a71da8a0e3df9d8eab3d5a8366b437b515b151b1c6b"
  },
  {
   "path": "VALIDATION.md",
@@ -23862,7 +23837,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "d6b335701807c085a5404f24fcad7f3d5dae4ee866f09ebbd0fda9a4e89b1fdb"
+  "sha256": "d8c1ee94a407db43c68dbfec315c886a3f17f6103001cb7c04f021e596876b61"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -25836,8 +25811,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/ai-models-harness.md",
-  "size": 7054,
-  "sha256": "f78c345b8a988e1c2062085722e3913a205cda6a3d079ff0b96b2d290008e388"
+  "size": 8205,
+  "sha256": "e853de2f209a0412b85e78a4f9208ed939c197d5afa64718dfeec3e846a1ccaa"
  },
  {
   "path": "_CANONICAL-SKILLS/project-intel/references/apps-native-windows.md",
@@ -26366,8 +26341,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/scripts/discover_tools.ps1",
-  "size": 12545,
-  "sha256": "078337511ef8eb719f52f02602a29404ee9843df8a574b34718814983ab94e8f"
+  "size": 17357,
+  "sha256": "7b07ada003f6eeec822d450ac9f25433e27c62178c4b9144ea47b2f2d10bff14"
  },
  {
   "path": "_CANONICAL-SKILLS/unity-mod-frameworks/SKILL.md",

@@ -286,11 +286,16 @@ def test_mod_presentation_and_workspace_repair_are_wired() -> None:
 
 def test_discovery_checks_owner_companions() -> None:
     """The discovery report names the owner tools instead of guessing."""
-    text = read(ROOT / "TOOLS" / "discover_tools.ps1")
+    # One implementation: TOOLS/discover_tools.ps1 forwards to the skill's script,
+    # which is the copy an agent reads. Check the implementation, not the shim.
+    text = read(ROOT / "_CANONICAL-SKILLS" / "tool-discovery" / "scripts" / "discover_tools.ps1")
     assert "$report['skyrim-forge']" in text, "Skyrim Forge is not auto-checked"
     assert "SKYRIM_FORGE_ROOT" in text
     assert "$report['reverse-this']" in text, "Reverse THIS! is not auto-checked"
     assert "do not duplicate" in text
+    shim = read(ROOT / "TOOLS" / "discover_tools.ps1")
+    assert "_CANONICAL-SKILLS" in shim and "discover_tools.ps1" in shim, (
+        "the TOOLS entry point stopped forwarding to the one implementation")
 
 
 def test_documented_skill_counts() -> None:
@@ -950,6 +955,17 @@ def test_retired_skills_are_declared_and_cannot_delete_a_live_skill() -> None:
             )
 
 
+def test_retired_skill_deletion_requires_an_ownership_receipt() -> None:
+    """A name in RETIRED-SKILLS.json is not proof the pack installed it."""
+    body = read(ROOT / "TOOLS" / "Clean-StaleState.ps1")
+    assert "managed-skills" in body, "the cleanup never reads the installer's ownership receipts"
+    head = body[:body.index('Add-CleanTarget -Kind "skill/')]
+    gate = head[head.index("$ledgerEntry"):]
+    assert "Get-UabsTreeDigest" in gate, "the receipt is trusted without matching the installed bytes"
+    assert "no bundle ownership receipt" in gate and "was modified since" in gate, (
+        "a skill without a receipt, or edited after install, must be reported rather than deleted")
+
+
 def test_cleanup_is_dry_run_by_default_and_scoped_to_pack_files() -> None:
     """A tool that deletes must default to showing, and must only own its own mess."""
     body = read(ROOT / "TOOLS" / "Clean-StaleState.ps1")
@@ -990,14 +1006,18 @@ def test_cleanup_is_dry_run_by_default_and_scoped_to_pack_files() -> None:
     assert "$KeepBackups = 3" in body and "$KeepLogs = 5" in body, "retention defaults changed silently"
     assert "ValidateRange(1, 200)" in body, "log retention can be set to zero, deleting the evidence of the run that deleted it"
 
-    # Installs preview cleanup; destructive retention requires explicit review.
+    # Installs apply the scoped cleanup by default: leftovers are the user's
+    # complaint, and leaving them forever is not maintenance. The narrower
+    # contract that must survive: the script itself still defaults to a dry run
+    # (asserted above), the installer passes -Apply explicitly, it records that
+    # it applied rather than previewed, and -SkipCleanup opts out.
     assert "Clean-StaleState.ps1" in installer, "the installer never runs the cleanup"
     cleanup = installer[installer.index('if (-not $SkipCleanup -and -not $ToolsOnly)'):]
     cleanup = cleanup[:cleanup.index("$state.status = 'complete'")]
-    assert "'-Apply'" not in cleanup, "default setup can delete personal backups or same-name skills"
-    assert "status = 'preview-only'" in cleanup, "cleanup preview is falsely recorded as applied"
-    assert 'Test-InstallerPreservation.ps1' in read(ROOT / 'TESTS/Test-Pack.ps1')
+    assert "'-Apply'" in cleanup, "the installer's cleanup would silently do nothing"
+    assert "status = 'applied'" in cleanup, "cleanup result is not recorded"
     assert "[switch]$SkipCleanup" in installer, "-SkipCleanup opt-out is gone"
+    assert 'Test-InstallerPreservation.ps1' in read(ROOT / 'TESTS/Test-Pack.ps1')
 
 
 def test_tool_routing_stays_scoped_and_preserves_evidence_boundaries() -> None:
@@ -3079,6 +3099,7 @@ def main() -> int:
         test_hermes_tool_budget_is_data_and_internally_consistent,
         test_tool_budget_is_applied_without_overwriting_a_user_choice,
         test_retired_skills_are_declared_and_cannot_delete_a_live_skill,
+        test_retired_skill_deletion_requires_an_ownership_receipt,
         test_cleanup_is_dry_run_by_default_and_scoped_to_pack_files,
         test_tool_routing_stays_scoped_and_preserves_evidence_boundaries,
         # v8.4.0 -- entry COUNT is the scarce resource in a skills index.

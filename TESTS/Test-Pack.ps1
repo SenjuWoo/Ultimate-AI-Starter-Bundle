@@ -290,7 +290,7 @@ if ($LASTEXITCODE -eq 0 -and $runtimeVersionOut -match 'FORGE RUNTIME VERSION GA
 
 Section '6. Gate self-tests'
 $gateDir = Join-Path $PackRoot 'TOOLS\hooks'
-foreach ($g in @('completeness_gate.py', 'assumption_gate.py', 'rtk_safe_hook.py')) {
+foreach ($g in @('completeness_gate.py', 'assumption_gate.py', 'rtk_safe_hook.py', 'hermes_gateway_guard.py')) {
     $gp = Join-Path $gateDir $g
     if (-not (Test-Path -LiteralPath $gp)) { Bad "$g missing"; continue }
     if (-not $py) { Bad "python not found; $g --selftest skipped"; continue }
@@ -517,13 +517,32 @@ else {
         $src = [IO.File]::ReadAllText($repair)
         $fn1 = [regex]::Match($src, '(?ms)^function Get-NormalPath.*?^\}').Value
         $fn2 = [regex]::Match($src, '(?ms)^function Resolve-LivePath.*?^\}').Value
+        $fn3 = [regex]::Match($src, '(?ms)^function Get-ToolDirectoryIndex.*?^\}').Value
         if (-not $fn1 -or -not $fn2) { Bad 'could not extract resolver functions' }
         else {
-            . ([scriptblock]::Create($fn1 + "`n" + $fn2))
+            . ([scriptblock]::Create($fn1 + "`n" + $fn3 + "`n" + $fn2))
             $dead = Join-Path (Join-Path (Join-Path $sandbox 'Widget-1.0.0') 'bin') 'tool.exe'
             $got = Resolve-LivePath $dead
             if ($got -eq $liveExe) { Good 'resolver picks highest version that really exists' }
             else { Bad "resolver returned '$got', expected '$liveExe'" }
+
+            # A tool that moved to a different tree: the old path is under one
+            # root, the live copy under another. This is the RobloxForge bug --
+            # sibling-only search said "no replacement found" while the server
+            # was alive one tree over. Only a unique match may be returned.
+            $homeRoot = Join-Path $sandbox 'home'
+            $movedOwner = Join-Path (Join-Path $homeRoot 'MovedOwner') 'bin'
+            New-Item -ItemType Directory -Force -Path $movedOwner | Out-Null
+            $movedExe = Join-Path $movedOwner 'tool.exe'
+            Set-Content -LiteralPath $movedExe -Value 'x'
+            $deadMoved = Join-Path (Join-Path (Join-Path (Join-Path $sandbox 'elsewhere') 'MovedOwner') 'bin') 'tool.exe'
+            $prevRoots = $env:UABS_TOOL_ROOTS
+            try {
+                $env:UABS_TOOL_ROOTS = $homeRoot
+                $moved = Resolve-LivePath $deadMoved
+                if ($moved -eq $movedExe) { Good 'resolver follows an owner folder that moved to another root' }
+                else { Bad "moved-folder resolver returned '$moved', expected '$movedExe'" }
+            } finally { $env:UABS_TOOL_ROOTS = $prevRoots }
             # No version-stamped folder in the path: it must refuse to guess.
             $got2 = Resolve-LivePath (Join-Path (Join-Path $sandbox 'nothing') 'here.exe')
             if ($null -eq $got2) { Good 'resolver refuses to guess unversioned paths' }

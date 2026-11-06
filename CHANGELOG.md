@@ -1,3 +1,62 @@
+## 8.36.0 (2026-11-05)
+
+- Hermes named-profile `gateway run --replace` is now refused. That argv kills the multiplex host and the new process stays standalone, so other profiles resume as `storage_unavailable` while their session databases are intact. `hermes_gateway_guard.py` denies it from agent shells. The same decision is installed as `sitecustomize` on Hermes's store Python, which is what Desktop and `hermes update` actually spawn (`python -I` still imports it). A default-profile replace and `--force` still pass. When the multiplex host is already up, the named replace stops with `os._exit(0)` and starts nothing. `SystemExit` from inside `sitecustomize` is a fatal `init_import_site` error, because `site.py` only catches `Exception`. When it is not, the guard starts the default host detached and still does not become the standalone.
+- Install no longer aborts on a Hermes warning. `Ensure-CodebaseMemoryHermes.ps1`
+  and `Ensure-SerenaHermes.ps1` read `hermes mcp list` through
+  `Get-UabsNativeStdout`; Windows PowerShell 5.1 had been promoting a stderr
+  warning (an unreadable plugin manifest) into a terminating error, so both
+  servers were reported failed while Hermes itself worked. Codebase-memory is
+  registered in the `code` profile and the warning is gone.
+- The unreadable manifest was a leftover `advanced-delegation` folder with a
+  deny-all ACL. It was moved aside, which cleared the warning for every agent.
+- MCP path repair follows a tool that moved to a different tree. The RobloxForge
+  server under `Z:/Backup/Ai apps` had moved to `Tools/Ai tools`; sibling-only
+  search reported three dead paths. Repair now searches `UABS_TOOL_ROOTS` plus the
+  machine map to depth 3 and requires a unique match, and all three were repointed.
+- One discovery implementation. `TOOLS/discover_tools.ps1` is now a forwarder to
+  the tool-discovery skill's script; the duplicate older copy the installer ran
+  is gone. Fixed while proving it: a `.ps1` npm shim (`codeburn`) is probed
+  through PowerShell instead of being reported INSTALLED forever, `go` is probed
+  with `go version`, `UABS_TOOL_ROOTS` is split as a list, a checkout under a
+  category folder is found, and a stray `pyproject.toml` no longer counts as a
+  CLI-Anything checkout.
+- Stale state is cleaned automatically on install: pack-created backups past the
+  last three, logs past the last five, retired skills whose ledger digest still
+  matches, retired marketplace entries. Foreign files, owner-stamped skills and
+  edited skills are reported and kept. `-SkipCleanup` restores the old behaviour.
+- Superpowers vendored tree merged to upstream v7.0.2 with all six local deltas
+  re-applied (Hermes compaction re-injection, now also excluding subagents;
+  HttpOnly cookie hardening plus its three tests). Upstream's own 7.0.2 test
+  suite passes against the patched tree.
+- `check_versions.py --set` no longer crashes on declarations without a capture
+  group; the release bumper works again.
+- README rewritten as a front page (1144 to 324 lines) with the owner-tool map
+  (Skyrim Forge, Reverse THIS!, the game forges, CLI-Anything, the Unity bridges,
+  REA, Context Mode, CLibDT, Blender) and the split-out projects; the operational
+  detail moved intact to `docs/GUIDE.md`.
+- Catalog notes dated: playwright-cli 0.1.23 could not be evaluated here (no
+  Chrome distribution for the CLI, 0.1.22 fails the same way), so 0.1.22 stays.
+- Two dead Start-menu autostart entries that pointed at the old Discord-Forge
+  folder were repointed to the moved tool, with `.bak-toolmove` copies.
+- Cleanup now demands proof of ownership before deleting a skill: the installer's
+  managed-skill receipt plus a matching tree digest. A retired name with a
+  SKILL.md is no longer enough, so a user's own skill that happens to share a
+  retired name is reported and kept (and so is anything edited after install).
+- `check_versions.py --set` rewrites every declaration in memory and writes only
+  after all of them matched, so a failed bump can no longer leave mixed versions;
+  `TESTS/test_version_bump.py` covers valid, versionless, missing, invalid,
+  idempotent and failed-bump cases.
+- `INSTALL-REMOTE.ps1` no longer silently downgrades verification: a release asset
+  without a published SHA-256, or a release with no zip asset at all, now fails
+  unless `-AllowUnverified` is passed explicitly.
+- The release workflow can be re-run safely after a failed post-publish check: an
+  existing release is reused only when it already points at this exact commit,
+  and it is never retargeted or replaced.
+- MCP path repair anchors on a distinctive folder name, not `bin`. The first
+  version matched `bin	ool.exe` anywhere on the machine and could repoint a
+  server at an unrelated binary.
+- Unrestrained/preamble source untouched; no companion pin changed; 81 canonical skills.
+
 ## 8.35.1 (2026-11-05)
 
 - Moved tool roots are adopted, not duplicated: if a Reverse THIS! receipt points

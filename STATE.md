@@ -1,5 +1,48 @@
 # Bundle audit state
 
+## Handoff — public copy and last-review judgment — 2026-11-06
+
+- Not implemented. Assignment: `docs/dropoffs/2026-11-06-public-copy-and-judgment-gate.md`.
+- A later agent applies the paste-ready lines there. The pause before a proven-worse method is not a refusal and adds no content gate. Public GitHub README, CHANGELOG and release text stays free of personal and machine detail.
+- Do not commit, publish, or bump the version as part of picking up that file.
+
+## 8.36.0 — reliability audit — 2026-11-06
+
+- `check_versions.py --set`: no IndexError on declarations without a capture
+  group, and the bump is atomic (every declaration is rewritten in memory first).
+  `TESTS/test_version_bump.py` covers valid, versionless, missing, invalid,
+  repeat and failed-bump cases.
+- `Clean-StaleState.ps1`: deleting a retired skill now requires the installer's
+  `managed-skills` receipt AND a matching tree digest. No receipt, a digest
+  mismatch, an owner stamp or a live canonical name all mean "left alone".
+  Preview on this machine plans zero deletions.
+- `INSTALL-REMOTE.ps1`: a release asset without a published SHA-256, or a release
+  with no zip asset, now fails instead of silently installing unverified bytes;
+  `-AllowUnverified` is the only way past it.
+- `release.yml`: the publish step reuses an existing release only when it already
+  points at this exact commit, so a failed post-publish verification can be
+  retried. It never retargets a tag or replaces a published asset.
+- `Repair-McpPaths.ps1`: the houseCARL registry rule runs before the folder
+  search (an explicit registry beats a name match), and the relocation search
+  anchors on a distinctive folder instead of `bin`, which could otherwise
+  "uniquely" match `bin	ool.exe` anywhere on the machine.
+- Gates: Test-Pack PASS (section 8 relocation case, docs gate, 166 contract
+  tests), Verify-Fast PASS, manifest and version checks agree.
+- Real install v8.36.0: EXIT=0, `INSTALL COMPLETE (v8.36.0)`, doctor PASS,
+  codebase-memory + Serena registered in the `code` profile.
+
+## Review packet — free agent quality tools — 2026-11-06
+
+- Not a release and not an install. Review file: `docs/dropoffs/2026-11-06-free-agent-quality-efficiency.md`.
+- Finding: the pack already hard-stops Hermes tool loops and compresses context. The open gap is effort (DeepSeek's own API maps `medium` to `high`) plus a project-local lint/type check. Do not add another agent or compressor from that file until a reviewer accepts a row.
+
+## 8.36.0 follow-up — Hermes multiplex guard — 2026-11-05
+
+- Named-profile `gateway run --replace` killed the live multiplex host and the replacement stayed standalone (`storage_unavailable` / route mismatch, databases intact).
+- Guard: `TOOLS/hooks/hermes_gateway_guard.py`, wired by `Install-Completeness-Gate.ps1` to shell hooks and to the Hermes store Python `sitecustomize`. `--force` and a default-profile replace still pass.
+- The process stop is `os._exit(0)`. `SystemExit` inside `sitecustomize` is a fatal `init_import_site` error because `site.py` only catches `Exception`. Verified 2026-11-06: a named-profile `--replace` on the store Python exited 0 with no output, and the multiplex host stayed the same process.
+- Bundle work for this incident is done. The remaining host gaps (no login task, the repair's console window, the 2200-character memory cap) are in the Hermes home file `OUTSIDE-HANDOFF.md`. Do not keep editing the bundle for them.
+
 ## Prepared 8.31.0 — decisions, audit, hygiene — 2026-11-05
 
 - `docs/decisions/` ADR-0001..0005; `TOOLS/audit_maintainability.py` (duplicates,

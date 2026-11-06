@@ -151,6 +151,20 @@ if (Test-Path -LiteralPath $retiredPath -PathType Leaf) {
 }
 
 if (-not $SkipSkills -and $retired.Count) {
+  # Ownership receipts written by Sync-UabsProviderSkills: provider -> name -> tree digest.
+  $skillLedger = @{}
+  $managedDir = Join-Path (Get-UabsStateRoot) 'managed-skills'
+  if (Test-Path -LiteralPath $managedDir -PathType Container) {
+    foreach ($f in @(Get-ChildItem -LiteralPath $managedDir -File -Filter '*.json' -ErrorAction SilentlyContinue)) {
+      try {
+        $doc = [IO.File]::ReadAllText($f.FullName) | ConvertFrom-Json
+        if (-not $doc.provider) { continue }
+        $map = @{}
+        foreach ($s in @($doc.skills)) { if ($s.name) { $map[[string]$s.name] = [string]$s.digest } }
+        $skillLedger[[string]$doc.provider] = $map
+      } catch { Write-UabsWarn ('managed-skill receipt unreadable, nothing removed for it: ' + $f.Name) }
+    }
+  }
   $canonical = @{}
   $canonRoot = Join-Path $PackRoot '_CANONICAL-SKILLS'
   if (Test-Path -LiteralPath $canonRoot -PathType Container) {
@@ -188,6 +202,20 @@ if (-not $SkipSkills -and $retired.Count) {
         continue
       }
       $successor = if ($entry.superseded_by) { "superseded by $($entry.superseded_by)" } else { 'retired, no successor' }
+      # Ownership proof: the installer records the tree digest of every skill it
+      # copied (managed-skills\<provider>.json). A name plus a SKILL.md is not
+      # evidence - a user's own skill can carry a retired name. No receipt, or a
+      # digest that no longer matches, means it is not ours to delete.
+      $ledgerEntry = $null
+      if ($skillLedger.ContainsKey($provider) -and $skillLedger[$provider].ContainsKey($name)) { $ledgerEntry = $skillLedger[$provider][$name] }
+      if (-not $ledgerEntry) {
+        [void]$script:Reported.Add("$provider/$name has no bundle ownership receipt - left alone")
+        continue
+      }
+      if ((Get-UabsTreeDigest $target) -cne $ledgerEntry) {
+        [void]$script:Reported.Add("$provider/$name was modified since this pack installed it - left alone")
+        continue
+      }
       Add-CleanTarget -Kind "skill/$provider" -Path $target -Why $successor
     }
   }

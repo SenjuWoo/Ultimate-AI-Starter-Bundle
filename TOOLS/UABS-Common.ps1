@@ -1953,7 +1953,7 @@ function Repair-UabsCodexLegacyHooks {
   if (-not $hookProperty -or -not $hookProperty.Value) { return }
   $roots = @((Join-Path (Get-UabsStateRoot) 'hooks')) + @(Get-UabsLegacyHookRoots)
   $alternation = (@($roots | Where-Object { $_ } | ForEach-Object { [regex]::Escape($_.Replace('\','/').TrimEnd('/')) })) -join '|'
-  $owned = '(?i)(?:^|[\s"''])(?:' + $alternation + ')/(completeness_gate\.py|assumption_gate\.py|rtk_safe_hook\.py)(?=[\s"'']|$)'
+  $owned = '(?i)(?:^|[\s"''])(?:' + $alternation + ')/(completeness_gate\.py|assumption_gate\.py|rtk_safe_hook\.py|hermes_gateway_guard\.py)(?=[\s"'']|$)'
   $impeccableUnix = '[ ! -f ".codex/skills/impeccable/scripts/impeccable" ] || ".codex/skills/impeccable/scripts/impeccable" hook'
   $impeccableWindows = 'if exist ".codex/skills/impeccable/scripts/impeccable.cmd" (".codex/skills/impeccable/scripts/impeccable.cmd" hook & exit /b)'
   # This legacy global pair targets an executable no longer shipped by the
@@ -2073,7 +2073,7 @@ function Get-UabsGrokHookIssues {
   # compatibility cell before treating a discovered Claude hook as active.
   $cell = @($Inspection.externalCompat.cells | Where-Object { $_.vendor -eq 'claude' -and $_.surface -eq 'hooks' })
   if ($cell.Count -ne 1) { throw 'Grok inspect did not report its effective Claude hooks compatibility cell.' }
-  $managed = 'completeness_gate\.py|assumption_gate\.py|rtk_safe_hook\.py'
+  $managed = 'completeness_gate\.py|assumption_gate\.py|rtk_safe_hook\.py|hermes_gateway_guard\.py'
   if (-not $HooksDir) { $HooksDir = Join-Path (Get-UabsProviderHome -Provider Grok -Catalog (Get-UabsCatalog)) 'hooks' }
   $native = @($Inspection.hooks | Where-Object { ([string]$_.source.path).TrimEnd('\','/').Replace('/','\') -ieq $HooksDir.TrimEnd('\','/').Replace('/','\') })
   $inherited = @($Inspection.hooks | Where-Object { $_.target -match $managed -and $_.source.path -match '[\\/]\.claude(?:[\\/]|$)' })

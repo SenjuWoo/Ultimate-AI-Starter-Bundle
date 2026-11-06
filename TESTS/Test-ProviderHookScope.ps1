@@ -40,7 +40,7 @@ try {
     # The production merge runs unchanged. Disable only persistent PATH repair;
     # Python is a full executable path captured before the environment is isolated.
     Put (Join-Path $testPack 'TOOLS\UABS-Common.ps1') (". '$common'`nfunction Repair-UabsHookShellPath { param([switch]`$CheckOnly) }`nfunction Get-UabsPythonExecutable { return `$env:UABS_HOOK_TEST_PYTHON }`n")
-    foreach ($name in @('completeness_gate.py','assumption_gate.py','rtk_safe_hook.py')) {
+    foreach ($name in @('completeness_gate.py','assumption_gate.py','rtk_safe_hook.py','hermes_gateway_guard.py')) {
         $destination = Join-Path $testPack ('TOOLS\hooks\' + $name)
         [void][IO.Directory]::CreateDirectory((Split-Path -Parent $destination))
         [IO.File]::Copy((Join-Path $PackRoot ('TOOLS\hooks\' + $name)), $destination)
@@ -86,7 +86,7 @@ try {
     Run-Gate Claude
     $doc = [IO.File]::ReadAllText($claude) | ConvertFrom-Json
     Assert ((@(Read-Commands $doc) -contains $personal)) 'Custom-home install removed a same-basename personal handler.'
-    Assert (@(Read-Commands $doc | Where-Object { $_ -like ('*' + $root + '*') }).Count -eq 5) ('Custom Claude home did not receive the bundle hooks: ' + $script:lastGateOutput)
+    Assert (@(Read-Commands $doc | Where-Object { $_ -like ('*' + $root + '*') }).Count -eq 6) ('Custom Claude home did not receive the bundle hooks: ' + $script:lastGateOutput)
     Assert ($doc.hooks.PreToolUse[0].future -eq 'keep' -and $doc.hooks.PreToolUse[0].hooks[0].future -eq 'keep' -and $doc.personal -eq 'keep') 'Custom sibling or group metadata was changed.'
     Assert ([IO.File]::ReadAllText($defaultClaude) -ceq '{"personal":"default profile"}') 'A custom-home install changed the default Claude profile.'
     foreach ($path in $untouched.Keys) { Assert ([IO.File]::ReadAllText($path) -ceq $untouched[$path]) ('An unselected provider file changed: ' + $path) }
@@ -143,7 +143,7 @@ function Invoke-UabsHermesPython {
     Run-Gate Hermes -Uninstall
     Assert (Test-Path -LiteralPath $vendorMarker) 'Hermes uninstall bypassed the vendor dependency runtime.'
     $invocations = @([IO.File]::ReadAllLines($vendorMarker) | ForEach-Object { $_ | ConvertFrom-Json })
-    Assert ($invocations.Count -eq 3) 'Hermes uninstall did not remove each of the three bundle gates.'
+    Assert ($invocations.Count -eq 4) 'Hermes uninstall did not remove each of the four bundle gates.'
     foreach ($invocation in $invocations) {
         Assert ($invocation.executable -ceq $modernHermes -and $invocation.arguments[0] -ceq $wireFixture -and $invocation.arguments[1] -ceq $modernHermes -and $invocation.arguments -contains '--remove') 'Hermes uninstall passed the wrong runtime or removal arguments.'
     }
