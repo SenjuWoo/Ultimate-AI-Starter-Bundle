@@ -27050,6 +27050,11 @@
   "sha256": "57a29e0c88b8e24399fb76a5629fb102d1d8cacb7e76dd24699a845631c87648"
  },
  {
+  "path": "docs/history/INTEGRATION-REPORT-2026-11-06.md",
+  "size": 6029,
+  "sha256": "32874202a3af54afcccb66058f8b04b361aef565c73d7266b13645a8bdffca6e"
+ },
+ {
   "path": "docs/history/RELEASE-NOTES-v5.2.2.md",
   "size": 922,
   "sha256": "062daf2cf4c46b8d98faa97dc9b5c0d398337cdbd7098903b4c480a6860f5cd4"
