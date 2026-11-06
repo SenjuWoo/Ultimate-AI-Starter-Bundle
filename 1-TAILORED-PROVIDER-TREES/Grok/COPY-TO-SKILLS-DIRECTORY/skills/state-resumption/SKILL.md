@@ -47,5 +47,21 @@ Every project you create or change keeps a `STATE.md` in its owner folder, writt
 
 Another model or a fresh session must be able to continue from this file plus `git status` alone. Never put secrets or personal data in it.
 
+## Task controller (when the project has a task table)
+If `PLAN.md` contains a task table (`ID`, `Status`, `Depends on`, `Verify`,
+`Evidence`), ask the tool before reasoning about progress:
+
+```
+python TOOLS/task_state.py next      # the task to start, dependencies already met
+python TOOLS/task_state.py resume    # does STATE.md agree with the plan and git?
+python TOOLS/task_state.py resume --fix   # writes only when something differs
+python TOOLS/task_state.py handoff   # ~10-line packet for the next session
+```
+
+Exit 1 means the plan or the state needs repair — fix the listed problem and keep
+going; it is not a reason to abandon the task. `Verify: cmd:...` is never
+executed by the controller: run it yourself and record `verified@<sha>` in
+`Evidence`. Projects without a task table need none of this.
+
 ## Compression discipline
 Before context compaction or handoff, update the ledger with facts, not narrative. Keep volatile logs out; preserve only commands, outcomes, hashes, decisions, and blockers needed to continue deterministically.

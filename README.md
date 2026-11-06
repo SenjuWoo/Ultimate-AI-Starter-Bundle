@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.37.7 -->
+<!-- Ultimate AI Starter Bundle v8.37.8 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.37.7
+# Ultimate AI Starter Bundle v8.37.8
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -181,9 +181,12 @@ python TOOLS/task_state.py resume    # reconcile STATE.md with the plan and git 
 python TOOLS/task_state.py handoff   # compact continuation packet, ~10 lines
 ```
 
-It parses, compares and runs nothing generative: no database, no daemon, no
-network. A cycle, a duplicate ID or a task marked complete whose evidence file is
-missing exits 1 instead of being silently believed.
+It parses and compares; it runs **no** plan command and needs no database,
+daemon or network. `Verify` takes `file:<path>` (the controller checks it exists)
+or `cmd:<command>` (never executed — the task stays unverified until `Evidence`
+records `verified@<sha>`). A cycle, an unknown dependency, a superseded
+prerequisite, a stale SHA or a completed task without real evidence exits 1, and
+every subcommand reaches that verdict through the same check.
 
 ## What the foundation gives you
 

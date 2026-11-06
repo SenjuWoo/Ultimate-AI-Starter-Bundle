@@ -1,3 +1,25 @@
+## 8.37.8 (2026-11-06)
+
+- The task controller has one validation path: `next`, `status`, `resume` and
+  `handoff` now return the same verdict. A stale SHA, an unknown dependency or a
+  cycle is exit 1 everywhere, while still printing the task to start - a problem
+  means repair and continue, not abandon.
+- Evidence is a convention, not optimism. `Verify: file:<path>` is checked for
+  existence; `Verify: cmd:<command>` is never executed and counts as unverified
+  until `Evidence` records `verified@<sha>`. A task marked `complete` with no
+  verification is reported. `superseded` no longer satisfies a dependency.
+- `resume --fix` computes the new text first and writes only when the bytes
+  differ, atomically, preserving unrelated lines; a second run reports "nothing
+  written" and leaves the mtime untouched.
+- An active task is chosen over an earlier pending one.
+- `state-resumption` tells an agent to consult the controller at session start
+  and after milestones.
+- `STATE.md` no longer stores a release version it could contradict - `VERSION.txt`
+  and the tag are the only source, and a contract test fails if a literal version
+  in that row disagrees with `VERSION.txt`.
+- 20 task-controller tests (fixtures only) and 171 release contracts pass.
+- 81 canonical skills, no companion pin changed.
+
 ## 8.37.7 (2026-11-06)
 
 - `PLAN.md` and `STATE.md` in the project template are now executable: a task

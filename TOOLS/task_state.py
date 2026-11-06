@@ -2,47 +2,54 @@
 
 Deterministic only: parses the task table, computes the dependency-ready next
 task, finds cycles and duplicate IDs, compares the recorded SHA with the real
-repository, and flags tasks claimed complete whose evidence is missing.
+repository, and flags tasks claimed complete whose verification is not recorded.
+
+Verification convention in the `Verify` column:
+  `file:<path>` or a bare path -> the controller checks the file exists
+  `cmd:<command>`              -> never executed; the task counts as unverified
+                                  until `Evidence` records the result
+An empty value, `-`, or a command with no recorded pass means unverified.
 
     python TOOLS/task_state.py next      [--root DIR]
     python TOOLS/task_state.py status    [--root DIR]
     python TOOLS/task_state.py resume    [--root DIR] [--fix]
     python TOOLS/task_state.py handoff   [--root DIR]
 
-Exit codes: 0 ok, 1 the project needs attention (cycle, contradictory state),
-2 no PLAN.md.
+Exit codes: 0 ok, 1 the project needs repair (cycle, invalid dependency,
+contradictory or unverified state), 2 no PLAN.md.
 """
 
 import argparse
+import os
 import re
 import subprocess
 import sys
 from pathlib import Path
 
 STATUSES = {"pending", "active", "complete", "failed", "blocked", "superseded"}
-DONE = {"complete", "superseded"}
+# Only a completed task satisfies a dependency. A superseded task is retired, not
+# done: its dependents must be repointed at whatever replaced it.
+SATISFIES = {"complete"}
+PASS_WORDS = re.compile(r"(?i)\b(pass|passed|verified|ok)\b|verified@")
 
 
 class Task:
-    __slots__ = ("tid", "text", "status", "deps", "verify", "evidence", "line")
+    __slots__ = ("tid", "text", "status", "deps", "verify", "evidence")
 
-    def __init__(self, tid, text, status, deps, verify, evidence, line):
+    def __init__(self, tid, text, status, deps, verify, evidence):
         self.tid, self.text, self.status = tid, text, status
-        self.deps, self.verify, self.evidence, self.line = deps, verify, evidence, line
+        self.deps, self.verify, self.evidence = deps, verify, evidence
 
 
 def split_row(line):
-    cells = [c.strip() for c in line.strip().strip("|").split("|")]
-    return cells
+    return [c.strip().strip("`") for c in line.strip().strip("|").split("|")]
 
 
 def parse_plan(path):
     """Return (goal, tasks, errors). Any markdown table with ID+Status columns counts."""
     text = path.read_text(encoding="utf-8-sig")
-    goal = ""
     m = re.search(r"(?mi)^goal:\s*(.+)$", text)
-    if m:
-        goal = m.group(1).strip()
+    goal = m.group(1).strip() if m else ""
     errors, tasks = [], []
     rows = text.splitlines()
     i = 0
@@ -55,18 +62,16 @@ def parse_plan(path):
                 j = i + 2
                 while j < len(rows) and rows[j].strip().startswith("|"):
                     cells = split_row(rows[j])
-                    if len(cells) >= 2:
-                        get = lambda n: cells[col[n]] if n in col and col[n] < len(cells) else ""
-                        tid = get("id")
-                        status = get("status").lower() or "pending"
-                        deps = [d.strip() for d in re.split(r"[,;]", get("depends on")) if d.strip() not in ("", "-", "–")]
-                        if not tid:
-                            errors.append("row %d has no task ID" % (j + 1))
-                        else:
-                            tasks.append(Task(tid, get("task"), status, deps,
-                                              get("verify"), get("evidence"), j + 1))
+                    get = lambda n: cells[col[n]] if n in col and col[n] < len(cells) else ""
+                    tid, status = get("id"), (get("status") or "pending").lower()
+                    deps = [d.strip() for d in re.split(r"[,;]", get("depends on"))
+                            if d.strip() not in ("", "-", "\u2013")]
+                    if not tid:
+                        errors.append("row %d has no task ID" % (j + 1))
+                    else:
+                        tasks.append(Task(tid, get("task"), status, deps, get("verify"), get("evidence")))
                         if status not in STATUSES:
-                            errors.append("%s: unknown status %r" % (tid or "?", status))
+                            errors.append("%s: unknown status %r" % (tid, status))
                     j += 1
                 i = j
                 continue
@@ -108,6 +113,16 @@ def find_cycle(tasks):
     return None
 
 
+def plan_problems(tasks, errors):
+    """One validation path: every command reports the same structural verdict."""
+    problems = []
+    cycle = find_cycle(tasks)
+    if cycle:
+        problems.append("dependency cycle: %s" % " -> ".join(cycle))
+    problems.extend(errors)
+    return problems
+
+
 def parse_state(path):
     fields = {}
     if path.exists():
@@ -127,33 +142,83 @@ def git_sha(root):
         return ""
 
 
+def verify_of(task):
+    """(kind, value) where kind is file, cmd or none. Never a shell call."""
+    raw = (task.verify or "").strip()
+    if raw in ("", "-", "\u2013"):
+        return "none", ""
+    low = raw.lower()
+    if low.startswith("cmd:"):
+        return "cmd", raw[4:].strip()
+    if low.startswith("file:"):
+        return "file", raw[5:].strip()
+    if re.search(r"[|&;<>$`\"']", raw):
+        return "cmd", raw
+    return "file", raw
+
+
+def unverified_reason(task, root):
+    """Why a task marked complete is not actually verified, or None."""
+    if task.status != "complete":
+        return None
+    kind, value = verify_of(task)
+    evidence = (task.evidence or "").strip()
+    passed = bool(evidence) and evidence not in ("-", "\u2013") and bool(PASS_WORDS.search(evidence))
+    if kind == "none":
+        return "no verification recorded"
+    if kind == "cmd":
+        return None if passed else "command never run (%s)" % value
+    if not (root / value).exists():
+        return "evidence missing (%s)" % value
+    return None
+
+
 def actionable(tasks):
-    done = {t.tid for t in tasks if t.status in DONE}
+    done = {t.tid for t in tasks if t.status in SATISFIES}
     ready = [t for t in tasks if t.status in ("pending", "active")
              and all(d in done for d in t.deps)]
+    ready.sort(key=lambda t: t.status != "active")  # an active task wins over a pending one
     blocked = [t for t in tasks if t.status in ("pending", "active")
                and any(d not in done for d in t.deps)]
     return ready, blocked
 
 
-def evidence_missing(task, root):
-    """A task marked complete with a Verify value that names a missing file."""
-    ref = (task.verify or "").strip().strip("`")
-    if not ref:
-        return False
-    if any(ch in ref for ch in " |&;<>$"):
-        return False  # a command, not a path; the controller cannot run it safely
-    path = root / ref
-    return not path.exists()
+def superseded_deps(tasks):
+    sup = {t.tid for t in tasks if t.status == "superseded"}
+    return ["%s depends on superseded %s - repoint it or complete the replacement"
+            % (t.tid, d) for t in tasks if t.status in ("pending", "active")
+            for d in t.deps if d in sup]
 
 
-def cmd_status(root):
+def report(root, tasks, problems, state=None, sha=None):
+    """Shared verdict: the exit code every command must agree on."""
+    unverified = [(t.tid, unverified_reason(t, root)) for t in tasks if t.status == "complete"]
+    unverified = [(tid, why) for tid, why in unverified if why]
+    for tid, why in unverified:
+        print("problem: %s complete but unverified - %s" % (tid, why))
+    problems = problems + superseded_deps(tasks)
+    for problem in problems:
+        print("problem: %s" % problem)
+    stale = bool(sha) and bool(state and state.get("SHA")) and not sha.startswith(state["SHA"][:7])
+    if stale:
+        print("problem: STATE.md SHA %s is behind %s" % (state["SHA"][:7], sha[:7]))
+    return 1 if (problems or unverified or stale) else 0
+
+
+def load(root):
     plan = root / "PLAN.md"
     if not plan.exists():
         print("no PLAN.md in %s" % root)
+        return None
+    return parse_plan(plan)
+
+
+def cmd_status(root):
+    loaded = load(root)
+    if not loaded:
         return 2
-    goal, tasks, errors = parse_plan(plan)
-    cycle = find_cycle(tasks)
+    goal, tasks, errors = loaded
+    problems = plan_problems(tasks, errors)
     state = parse_state(root / "STATE.md")
     counts = {}
     for t in tasks:
@@ -163,111 +228,112 @@ def cmd_status(root):
     ready, blocked = actionable(tasks)
     print("next: %s" % (ready[0].tid + " " + ready[0].text if ready else "(nothing actionable)"))
     print("blocked: %s" % (", ".join(t.tid for t in blocked) or "none"))
-    missing = [t for t in tasks if t.status == "complete" and evidence_missing(t, root)]
-    if missing:
-        print("complete without evidence: %s" % ", ".join(t.tid for t in missing))
-    sha = git_sha(root)
-    if sha and state.get("SHA") and not sha.startswith(state["SHA"][:7]):
-        print("state is stale: STATE.md says %s, repository is %s" % (state["SHA"][:7], sha[:7]))
     if state.get("CURRENT TASK"):
         print("state current task: %s" % state["CURRENT TASK"])
     if state.get("NEXT ACTION"):
         print("state next action: %s" % state["NEXT ACTION"])
-    if cycle:
-        errors.append("dependency cycle: %s" % " -> ".join(cycle))
-    for err in errors:
-        print("problem: %s" % err)
-    return 1 if errors or missing or cycle else 0
+    return report(root, tasks, problems, state, git_sha(root))
 
 
 def cmd_next(root):
-    plan = root / "PLAN.md"
-    if not plan.exists():
-        print("no PLAN.md in %s" % root)
+    loaded = load(root)
+    if not loaded:
         return 2
-    _goal, tasks, errors = parse_plan(plan)
-    cycle = find_cycle(tasks)
-    if cycle:
-        print("dependency cycle: %s" % " -> ".join(cycle))
-        return 1
+    _goal, tasks, errors = loaded
+    problems = plan_problems(tasks, errors)
     ready, blocked = actionable(tasks)
-    if not ready:
+    if ready:
+        task = ready[0]
+        kind, value = verify_of(task)
+        print("%s  %s" % (task.tid, task.text))
+        print("  status: %s" % task.status)
+        print("  verify: %s%s" % (value or "(none recorded)",
+                                  " [file]" if kind == "file" else " [run it]" if kind == "cmd" else ""))
+        print("  evidence: %s" % (task.evidence or "(none recorded)"))
+        if blocked:
+            print("  waiting behind: %s" % ", ".join(t.tid for t in blocked))
+    else:
         print("nothing actionable; %d blocked or unfinished" % len(blocked))
-        return 0 if not errors else 1
-    task = ready[0]
-    print("%s  %s" % (task.tid, task.text))
-    print("  status: %s" % task.status)
-    print("  verify: %s" % (task.verify or "(none recorded)"))
-    print("  evidence: %s" % (task.evidence or "(none recorded)"))
-    if blocked:
-        print("  waiting behind: %s" % ", ".join(t.tid for t in blocked))
-    return 0
+    return report(root, tasks, problems, parse_state(root / "STATE.md"), git_sha(root))
 
 
-def cmd_resume(root):
-    """Reconcile STATE.md with the plan and the repository; --fix rewrites fields."""
-    plan, state_path = root / "PLAN.md", root / "STATE.md"
-    if not plan.exists():
-        print("no PLAN.md in %s" % root)
+def desired_state(text, task, sha):
+    """Return (new_text, changed_keys, missing_keys). Never touches unrelated lines."""
+    changed, missing, updates = [], [], {}
+    if task:
+        updates["CURRENT TASK"] = task.tid
+        updates["NEXT ACTION"] = (task.verify or task.text or "").strip() or "-"
+    if sha:
+        updates["SHA"] = sha[:12]
+    for key, value in updates.items():
+        pattern = re.compile(r"(?m)^%s:.*$" % re.escape(key))
+        if pattern.search(text):
+            new = pattern.sub("%s: %s" % (key, value), text, count=1)
+            if new != text:
+                changed.append(key)
+            text = new
+        else:
+            text = text.rstrip("\r\n") + "\r\n%s: %s\r\n" % (key, value)
+            changed.append(key)
+            missing.append(key)
+    return text, changed, missing
+
+
+def cmd_resume(root, fix=False):
+    """Reconcile STATE.md with the plan and the repository; --fix writes only real changes."""
+    loaded = load(root)
+    if not loaded:
         return 2
-    goal, tasks, errors = parse_plan(plan)
-    cycle = find_cycle(tasks)
-    if cycle:
-        print("dependency cycle blocks resumption: %s" % " -> ".join(cycle))
-        return 1
+    _goal, tasks, errors = loaded
+    problems = plan_problems(tasks, errors)
+    state_path = root / "STATE.md"
     state = parse_state(state_path)
+    sha = git_sha(root)
     ready, _blocked = actionable(tasks)
     next_task = ready[0] if ready else None
-    sha = git_sha(root)
-    problems = []
+
     if state.get("CURRENT TASK") and state["CURRENT TASK"] not in {t.tid for t in tasks}:
         problems.append("STATE.md names a task that is not in PLAN.md: %s" % state["CURRENT TASK"])
-    if next_task and state.get("CURRENT TASK") and state["CURRENT TASK"] != next_task.tid:
+    elif next_task and state.get("CURRENT TASK") and state["CURRENT TASK"] != next_task.tid:
         problems.append("STATE.md current task %s, plan says %s" % (state["CURRENT TASK"], next_task.tid))
-    stale = [t for t in tasks if t.status == "complete" and evidence_missing(t, root)]
-    if stale:
-        problems.append("marked complete without evidence: %s" % ", ".join(t.tid for t in stale))
-    if sha and state.get("SHA") and not sha.startswith(state["SHA"][:7]):
-        problems.append("STATE.md SHA %s is behind %s" % (state["SHA"][:7], sha[:7]))
 
-    if args_fix and state_path.exists():
-        text = state_path.read_text(encoding="utf-8-sig")
-        updates = {}
-        if next_task:
-            updates["CURRENT TASK"] = next_task.tid
-            updates["NEXT ACTION"] = next_task.verify or next_task.text
-        if sha:
-            updates["SHA"] = sha[:12]
-        if updates:
-            for key, value in updates.items():
-                text = re.sub(r"(?m)^%s:.*$" % re.escape(key), "%s: %s" % (key, value), text)
-            state_path.write_text(text, encoding="utf-8")
-            print("STATE.md updated: %s" % ", ".join(sorted(updates)))
+    if fix:
+        if not state_path.exists():
+            print("no STATE.md to repair in %s" % root)
+        else:
+            original = state_path.read_text(encoding="utf-8-sig")
+            updated, changed, missing = desired_state(original, next_task, sha)
+            if updated != original:
+                tmp = state_path.with_suffix(".md.tmp")
+                tmp.write_bytes(updated.encode("utf-8"))
+                os.replace(tmp, state_path)
+                print("STATE.md updated: %s" % ", ".join(changed))
+                if missing:
+                    print("STATE.md was missing: %s (added)" % ", ".join(missing))
+            else:
+                print("STATE.md already correct; nothing written")
 
-    for problem in problems:
-        print("problem: %s" % problem)
-    if not problems:
-        print("state agrees with plan and repository")
+    code = report(root, tasks, problems, state, sha)
     if next_task:
         print("resume at: %s %s" % (next_task.tid, next_task.text))
         print("verify with: %s" % (next_task.verify or "(none recorded)"))
-    return 1 if problems else 0
+    return code
 
 
 def cmd_handoff(root):
-    plan = root / "PLAN.md"
-    if not plan.exists():
-        print("no PLAN.md in %s" % root)
+    loaded = load(root)
+    if not loaded:
         return 2
-    goal, tasks, _errors = parse_plan(plan)
+    goal, tasks, errors = loaded
+    problems = plan_problems(tasks, errors)
     state = parse_state(root / "STATE.md")
+    sha = git_sha(root)
     ready, blocked = actionable(tasks)
     task = ready[0] if ready else None
-    sha = git_sha(root)
     print("## Handoff")
     print()
     print("Goal: %s" % (state.get("GOAL") or goal or "(not recorded)"))
-    print("Repo: %s" % sha[:12] if sha else "Repo: (not a git repository)")
+    print("Repo: %s" % (sha[:12] if sha else "(not a git repository)"))
     if task:
         print("Next task: %s - %s" % (task.tid, task.text))
         print("Verify: %s" % (task.verify or "(none recorded)"))
@@ -278,20 +344,19 @@ def cmd_handoff(root):
     for key in ("BLOCKERS", "LAST VERIFIED"):
         if state.get(key):
             print("%s: %s" % (key.title(), state[key]))
-    return 0
+    return report(root, tasks, problems, state, sha)
 
 
 def main(argv=None):
-    global args_fix
     ap = argparse.ArgumentParser(description="read PLAN.md and STATE.md without a model")
     ap.add_argument("command", choices=["next", "status", "resume", "handoff"])
     ap.add_argument("--root", default=".", help="project root (default: current directory)")
-    ap.add_argument("--fix", action="store_true", help="resume: rewrite STATE.md fields")
+    ap.add_argument("--fix", action="store_true", help="resume: write STATE.md fields when they differ")
     args = ap.parse_args(argv)
-    args_fix = args.fix
     root = Path(args.root).resolve()
-    return {"next": cmd_next, "status": cmd_status, "resume": cmd_resume,
-            "handoff": cmd_handoff}[args.command](root)
+    if args.command == "resume":
+        return cmd_resume(root, fix=args.fix)
+    return {"next": cmd_next, "status": cmd_status, "handoff": cmd_handoff}[args.command](root)
 
 
 if __name__ == "__main__":

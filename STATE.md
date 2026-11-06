@@ -4,10 +4,11 @@
 
 | | |
 |---|---|
-| Release | `v8.37.2` at `b446e4d` (published, 9 assets, digests verified) |
+| Release | `VERSION.txt` and the git tag are the only source; a contract test fails if this row disagrees with `VERSION.txt`. no literal version is kept here on purpose |
 | Branch | `main`, in sync with `origin/main` |
-| Next version | `v8.37.3` (this pass) |
-| Evidence | `python TESTS/test_release_contract.py` (166), `TESTS/Test-Pack.ps1`, `TOOLS/Verify-Fast.ps1`, `gh run list --commit <sha>` |
+| Next version | the next patch after `VERSION.txt`; nothing to edit here |
+| Next action | whatever the Done/Next section below lists; this header stores no release fact it could contradict |
+| Evidence | `python TESTS/test_release_contract.py`, `python TESTS/test_task_state.py`, `TESTS/Test-Pack.ps1`, `gh run list --commit <sha>` |
 
 - Done and verified: reliability pass in 8.36.0/8.36.1 (atomic version bump,
   receipt-gated cleanup, verified remote installs, reachable release recovery,

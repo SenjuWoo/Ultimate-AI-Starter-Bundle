@@ -298,6 +298,18 @@ def test_discovery_checks_owner_companions() -> None:
         "the TOOLS entry point stopped forwarding to the one implementation")
 
 
+def test_state_header_cannot_drift_from_the_release():
+    """STATE.md may name a version or none, but never a stale one."""
+    state = (ROOT / "STATE.md").read_text(encoding="utf-8-sig")
+    version = (ROOT / "VERSION.txt").read_text(encoding="utf-8-sig").strip().lstrip("vV")
+    rows = [l for l in state.splitlines() if l.startswith("| Release |")]
+    assert rows, "STATE.md lost its Release row"
+    found = re.findall(r"v(\d+\.\d+\.\d+)", rows[0])
+    stale = [v for v in found if v != version]
+    assert not stale, ("STATE.md names release(s) %s but VERSION.txt is %s - drop the "
+                       "literal or update it" % (", ".join(stale), version))
+
+
 def test_documented_skill_counts() -> None:
     actual = len(list(CANON.glob("*/SKILL.md")))
     # No pinned number here: the count is whatever the tree holds, and every
@@ -3152,6 +3164,7 @@ def main() -> int:
         test_tool_budget_is_applied_without_overwriting_a_user_choice,
         test_retired_skills_are_declared_and_cannot_delete_a_live_skill,
         test_state_md_opens_with_current_state_and_no_dead_status,
+        test_state_header_cannot_drift_from_the_release,
         test_retired_skill_deletion_requires_an_ownership_receipt,
         test_cleanup_is_dry_run_by_default_and_scoped_to_pack_files,
         test_tool_routing_stays_scoped_and_preserves_evidence_boundaries,
