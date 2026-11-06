@@ -23435,6 +23435,11 @@
   "sha256": "82f0bba75199a04acbd74668025fe399ff26f9e4206027ae5b27c4b66c90d5d7"
  },
  {
+  "path": "TESTS/test_skill_trigger_parser.py",
+  "size": 5252,
+  "sha256": "30592662bd49cec7deb980cb2bb0e70ddf2afa133568d367356173318d93a446"
+ },
+ {
   "path": "TESTS/test_toolbox.py",
   "size": 15467,
   "sha256": "62bf9522d06f62de8a6ea65f64892e492ce434bdce05f5ebeb9bcb1bdf418ef8"
@@ -27823,6 +27828,11 @@
   "path": "docs/history/V8.37.0-CHANGELOG.md",
   "size": 2190,
   "sha256": "46f92c9be6e177b439827ae0c3c77271e0ddb1a4eb460907b2253700d0302fd8"
+ },
+ {
+  "path": "docs/history/V8.37.1-CHANGELOG.md",
+  "size": 1500,
+  "sha256": "8d90836ad9e2cb3b7545ed158154aee2f8948c5dcf8229386a3e271d5feb01db"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",
