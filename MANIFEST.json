@@ -23315,6 +23315,11 @@
   "sha256": "53fe3e21ed270cffd395c27b84cdd0422c5e4bbd8918e6efce8145acd9763162"
  },
  {
+  "path": "TESTS/test_gateway_guard_lifecycle.py",
+  "size": 6588,
+  "sha256": "97052550b5cc4223aff2579e7ccf96fc1639866176dd22b212d811e9cbc50873"
+ },
+ {
   "path": "TESTS/test_hermes_bootstrap.py",
   "size": 3131,
   "sha256": "c4d142b5fe5616b5870199d4b3dc759b7c9e12c5413448298fcfb5cba9dfc86e"
@@ -27733,6 +27738,11 @@
   "path": "docs/history/V8.36.0-CHANGELOG.md",
   "size": 5492,
   "sha256": "1d4dd184d6547e24f86871975947060c832770924fc93ffb1f67ba5d6d1aa54b"
+ },
+ {
+  "path": "docs/history/V8.36.1-CHANGELOG.md",
+  "size": 3017,
+  "sha256": "3b51c9e792010f2012b4854e629e3835627683ab6762a91a4116dea34748cf7b"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",
