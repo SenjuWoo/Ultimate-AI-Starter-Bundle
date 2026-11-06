@@ -7,62 +7,122 @@ $ErrorActionPreference='Stop'
 if (-not $PackRoot) { $PackRoot=Split-Path -Parent $PSScriptRoot }
 . (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1')
 
+function Get-ReverseCanonicalPath([string]$Path) {
+    if ([string]::IsNullOrWhiteSpace($Path) -or -not [IO.Path]::IsPathRooted($Path)) { throw 'Reverse THIS! owner path is not absolute.' }
+    return ([IO.Path]::GetFullPath($Path)).TrimEnd([char[]]@('\','/'))
+}
+function Test-ReverseContainedPath([string]$Parent, [string]$Child) {
+    $p=Get-ReverseCanonicalPath $Parent; $c=Get-ReverseCanonicalPath $Child
+    return $c.Equals($p,[StringComparison]::OrdinalIgnoreCase) -or $c.StartsWith($p+'\',[StringComparison]::OrdinalIgnoreCase)
+}
+function Test-ReverseReparse([string]$Path) {
+    if (-not (Test-Path -LiteralPath $Path)) { return $false }
+    return [bool]((Get-Item -LiteralPath $Path -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)
+}
+function Test-ReverseOwnerState {
+    # Ownership proof is the state schema plus every bound payload file still
+    # matching its receipt inside this candidate root. A folder named
+    # reverse-this alone is never enough.
+    param([string]$Owner, [string]$StateFile)
+    if (-not (Test-Path -LiteralPath $StateFile -PathType Leaf) -or (Test-ReverseReparse $StateFile)) { return $null }
+    try { $state=[IO.File]::ReadAllText($StateFile) | ConvertFrom-Json } catch { return $null }
+    if ($state.schema -ne 1 -or -not $state.tools -or -not $state.kit_root) { return $null }
+    $checked=0
+    foreach ($row in @($state.tools.PSObject.Properties.Value)) {
+        if (-not $row -or -not $row.dir -or -not $row.files) { return $null }
+        $dirPath = if ([IO.Path]::IsPathRooted([string]$row.dir)) { [string]$row.dir } else { Join-Path $Owner ([string]$row.dir) }
+        if (-not (Test-ReverseContainedPath $Owner $dirPath)) { return $null }
+        if (-not (Test-Path -LiteralPath $dirPath -PathType Container) -or (Test-ReverseReparse $dirPath)) { return $null }
+        foreach ($name in @($row.files.PSObject.Properties.Name)) {
+            $hash=[string]$row.files.$name
+            if ($hash -notmatch '^[0-9a-fA-F]{64}$') { return $null }
+            $file=[IO.Path]::GetFullPath((Join-Path $dirPath $name))
+            if (-not (Test-ReverseContainedPath $dirPath $file)) { return $null }
+            if (-not (Test-Path -LiteralPath $file -PathType Leaf) -or (Test-ReverseReparse $file)) { return $null }
+            if ((Get-FileHash -LiteralPath $file -Algorithm SHA256).Hash -ne $hash.ToLowerInvariant()) { return $null }
+            $checked++
+        }
+    }
+    if (-not $checked) { return $null }
+    return $state
+}
+
 # A registered owner wins over a default folder; malformed receipts never authorize another installation.
 function Resolve-ReverseOwner {
     param([string]$ExplicitRoot, [string]$Pointer, [string]$DefaultRoot)
-    if ($ExplicitRoot) { return [IO.Path]::GetFullPath($ExplicitRoot) }
+    if ($ExplicitRoot) { return Get-ReverseCanonicalPath $ExplicitRoot }
     if (-not (Test-Path -LiteralPath $Pointer -PathType Leaf)) { return $DefaultRoot }
+    if (Test-ReverseReparse $Pointer) { throw 'Invalid Reverse THIS! owner pointer: reparse point.' }
     $receipt=[IO.File]::ReadAllText($Pointer) | ConvertFrom-Json
     if (-not $receipt.kit_root -or -not [IO.Path]::IsPathRooted($receipt.kit_root)) { throw 'Invalid Reverse THIS! owner pointer.' }
-    $owner=[IO.Path]::GetFullPath($receipt.kit_root).TrimEnd('\')
+    $owner=Get-ReverseCanonicalPath $receipt.kit_root
     # A receipt whose install folder is gone is a stale owner record, not
     # permission to create a second install. Skip it; do not error the bundle.
     if (-not (Test-Path -LiteralPath $owner -PathType Container)) { return $null }
-    if ($receipt.installed_json -ne (Join-Path $owner 'sandbox\installed.json') -or
-        $receipt.bin -ne (Join-Path $owner 'sandbox\bin') -or
+    if (Test-ReverseReparse $owner) { throw 'Invalid Reverse THIS! owner root: reparse point.' }
+    if (-not (Test-ReverseContainedPath $owner $receipt.installed_json) -or
+        -not (Test-ReverseContainedPath $owner $receipt.bin) -or
         -not (Test-Path -LiteralPath $receipt.installed_json -PathType Leaf)) { throw 'Invalid Reverse THIS! owner paths; no new installation created.' }
-    $state=[IO.File]::ReadAllText($receipt.installed_json) | ConvertFrom-Json
-    if ($state.schema -ne 1 -or $state.kit_root.TrimEnd('\') -ne $owner -or -not $state.tools) { throw 'Invalid Reverse THIS! owner state.' }
+    $state=Test-ReverseOwnerState -Owner $owner -StateFile $receipt.installed_json
+    if (-not $state -or (Get-ReverseCanonicalPath $state.kit_root) -ne $owner) { throw 'Invalid Reverse THIS! owner state.' }
     return $owner
 }
 
 
 function Find-ReverseOwnerKit {
     # A moved install keeps its sandbox/installed.json; adopt it instead of
-    # creating a second kit. Bounded roots only, never a drive walk.
+    # creating a second kit. Bounded roots only, never a drive walk. Multiple
+    # equally valid candidates are ambiguous and are never guessed through.
     param([string[]]$Roots)
+    $found=@()
     foreach ($base in $Roots) {
         if ([string]::IsNullOrWhiteSpace($base) -or -not (Test-Path -LiteralPath $base -PathType Container)) { continue }
+        if (Test-ReverseReparse $base) { continue }
         $candidates = @()
         try {
             $candidates = @(Get-ChildItem -LiteralPath $base -Directory -Recurse -Depth 3 -ErrorAction SilentlyContinue |
-                Where-Object { $_.Name -ieq 'reverse-this' })
+                Where-Object { $_.Name -ieq 'reverse-this' -and -not ($_.Attributes -band [IO.FileAttributes]::ReparsePoint) })
         } catch { }
         foreach ($dir in $candidates) {
             $stateFile = Join-Path $dir.FullName 'sandbox\installed.json'
-            if (-not (Test-Path -LiteralPath $stateFile -PathType Leaf)) { continue }
-            try {
-                $state = [IO.File]::ReadAllText($stateFile) | ConvertFrom-Json
-                if ($state.schema -eq 1 -and $state.tools -and $state.kit_root) {
-                    $owner = [IO.Path]::GetFullPath($dir.FullName).TrimEnd('')
-                    return [pscustomobject]@{ Owner = $owner; StateFile = $stateFile }
-                }
-            } catch { }
+            $owner = Get-ReverseCanonicalPath $dir.FullName
+            $state = Test-ReverseOwnerState -Owner $owner -StateFile $stateFile
+            if ($state) { $found += [pscustomobject]@{ Owner=$owner; StateFile=$stateFile } }
         }
     }
+    $unique=@($found | Sort-Object Owner -Unique)
+    if ($unique.Count -gt 1) { throw ('Ambiguous Reverse THIS! owner candidates: ' + (($unique | ForEach-Object Owner) -join ', ')) }
+    if ($unique.Count -eq 1) { return $unique[0] }
     return $null
 }
 
 function Save-ReverseOwnerReceipt {
     param([object]$Kit, [string]$Pointer)
-    $state = [IO.File]::ReadAllText($Kit.StateFile) | ConvertFrom-Json
+    $state = Test-ReverseOwnerState -Owner $Kit.Owner -StateFile $Kit.StateFile
+    if (-not $state) { throw 'Refusing to write a Reverse THIS! pointer for an invalid owner.' }
     $receipt = [ordered]@{
+        schema = 1
+        owner = 'reverse-this'
         java_home = $state.java_home
         bin = (Join-Path $Kit.Owner 'sandbox\bin')
         installed_json = $Kit.StateFile
         kit_root = $Kit.Owner
     }
-    [IO.File]::WriteAllText($Pointer, ($receipt | ConvertTo-Json), (New-Object Text.UTF8Encoding $false))
+    $parent=Split-Path -Parent $Pointer
+    New-Item -ItemType Directory -Force -Path $parent | Out-Null
+    $temp=Join-Path $parent ('.kit.json.tmp-'+$PID+'-'+[guid]::NewGuid().ToString('N'))
+    $backup=Join-Path $parent 'kit.json.bak'
+    try {
+        [IO.File]::WriteAllText($temp, ($receipt | ConvertTo-Json -Compress), (New-Object Text.UTF8Encoding $false))
+        if (Test-Path -LiteralPath $Pointer -PathType Leaf) { Copy-Item -LiteralPath $Pointer -Destination $backup -Force }
+        Move-Item -LiteralPath $temp -Destination $Pointer -Force
+        $check=[IO.File]::ReadAllText($Pointer) | ConvertFrom-Json
+        if ((Get-ReverseCanonicalPath $check.kit_root) -ne $Kit.Owner -or $check.schema -ne 1) { throw 'Written Reverse THIS! pointer did not validate.' }
+    } catch {
+        if (Test-Path -LiteralPath $backup -PathType Leaf) { Copy-Item -LiteralPath $backup -Destination $Pointer -Force }
+        Remove-Item -LiteralPath $temp -Force -ErrorAction SilentlyContinue
+        throw
+    }
 }
 
 $pointer=Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json'
@@ -72,7 +132,7 @@ if (-not $target) {
     # roots before giving up, then repair the receipt.
     $search = @()
     foreach ($k in @('UABS_TOOL_ROOTS','REVERSE_THIS_ROOT')) {
-        $v = [Environment]::GetEnvironmentVariable($k, 'User'); if (-not $v) { $v = [Environment]::GetEnvironmentVariable($k, 'Process') }
+        $v = [Environment]::GetEnvironmentVariable($k, 'Process'); if (-not $v) { $v = [Environment]::GetEnvironmentVariable($k, 'User') }
         if ($v) { $search += ($v -split ';' | Where-Object { $_ }) }
     }
     $search += @((Join-Path $env:USERPROFILE 'Tools'), (Join-Path $env:USERPROFILE 'Documents\Tools'), 'C:\Tools')
@@ -83,11 +143,11 @@ if (-not $target) {
         Write-Host ('Adopted moved Reverse THIS! kit at ' + $target)
     }
 }
-if ($ResolveOnly) { Write-Output $target; exit 0 }
 if (-not $target) {
-    Write-Host 'Reverse THIS! owner receipt points at a missing install; skipped, nothing replaced.'
-    exit 0
+    if ($ResolveOnly) { Write-Error 'Reverse THIS! owner is missing and no verified owner could be recovered.'; exit 2 }
+    throw 'Reverse THIS! owner receipt points at a missing install and no verified owner could be recovered; nothing was installed or recorded as ready.'
 }
+if ($ResolveOnly) { Write-Output $target; exit 0 }
 $comp=@(([IO.File]::ReadAllText((Join-Path $PackRoot 'BUNDLED-TOOLS\CATALOG.json')) | ConvertFrom-Json).components | Where-Object id -eq 'reverse-this')
 if ($comp.Count -ne 1) { throw 'Catalog must declare one Reverse THIS! companion.' }
 $comp=$comp[0]

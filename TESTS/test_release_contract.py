@@ -3064,6 +3064,16 @@ def test_compression_caps_reach_existing_profiles() -> None:
     assert one == two, "the two Hermes starter templates diverged"
 
 
+def test_reverse_missing_owner_is_not_reported_as_success() -> None:
+    """A stale owner pointer cannot fall through to owner-managed success."""
+    script = read(ROOT / "TOOLS" / "Install-ReverseThis.ps1")
+    assert "skipped, nothing replaced" not in script
+    assert "no verified owner could be recovered" in script
+    assert "exit 2" in script
+    assert "Ambiguous Reverse THIS! owner candidates" in script
+    assert "Test-ReverseOwnerState" in script
+
+
 def test_reverse_kit_is_adopted_after_a_move() -> None:
     """A moved Reverse THIS! kit is found in the tool roots, not re-installed."""
     script = read(ROOT / "TOOLS" / "Install-ReverseThis.ps1")
@@ -3254,6 +3264,7 @@ def main() -> int:
         test_verification_tiers_and_tooling_decisions,
         test_creative_direction_and_capability_discovery,
         test_compression_caps_reach_existing_profiles,
+        test_reverse_missing_owner_is_not_reported_as_success,
         test_reverse_kit_is_adopted_after_a_move,
         test_release_workflow_publishes_only_a_green_untagged_main_sha,
         test_free_game_probe_contract,

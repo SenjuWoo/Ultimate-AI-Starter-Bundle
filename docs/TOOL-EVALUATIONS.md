@@ -1035,3 +1035,11 @@ agent may use `cli-hub can "<task>"` to find a harness, then adopts one pinned
 harness after a real smoke test on the installed application. Native API/CLI
 still wins when it covers the operation; MCP still wins for live editor state.
 No global registration is added.
+
+## jsonschema (general JSON Schema validator)
+
+Source: https://github.com/python-jsonschema/jsonschema - MIT, 4.26.0 installed into the shared user runtime on 2026-11-06. Purpose: validate SPDX SBOMs, MCP
+manifests, catalogs and generated configs against their real schemas instead of
+by eye. Adopted from the Skyrim Forge handoff: the validator is general tooling,
+so it belongs in the shared runtime while schemas stay project data. Callers use
+`python -m jsonschema -i <doc> <schema>` or import it; nothing is vendored.

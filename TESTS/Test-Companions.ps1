@@ -32,6 +32,7 @@ $pointer=Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json'
 if ($InstallRoot) { $root=$InstallRoot } elseif (Test-Path -LiteralPath $pointer) { $root=([IO.File]::ReadAllText($pointer) | ConvertFrom-Json).kit_root }
 @{root=$root;doctor=[bool]$Doctor;offline=[bool]$Offline;no_update=[bool]$NoUpdate;only=@($Only)} | ConvertTo-Json -Compress | Add-Content -LiteralPath (Join-Path $root 'calls.jsonl')
 if ($env:UABS_REVERSE_FAIL) { exit 7 }
+if ($Doctor -and $env:UABS_REVERSE_DOCTOR_FAIL) { exit 8 }
 exit 0
 '@)
     [IO.File]::WriteAllText((Join-Path $release 'Update-ReverseThis.ps1'),@'
@@ -72,9 +73,11 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'VERSION'),(Join-Path $PSScriptR
     Assert ($calls.Count -eq 2 -and $calls[0].offline -and $calls[1].doctor) 'Offline/Doctor options did not reach the owner.'
     # A registered older-folder owner is reused. Newer source and existing selection survive.
     [IO.File]::WriteAllText((Join-Path $target 'VERSION'),'9.0.0')
-    New-Item -ItemType Directory -Force -Path (Join-Path $target 'sandbox'),(Join-Path $env:LOCALAPPDATA 'ReverseThis') | Out-Null
+    New-Item -ItemType Directory -Force -Path (Join-Path $target 'sandbox'),(Join-Path $target 'sandbox\tools\rea'),(Join-Path $env:LOCALAPPDATA 'ReverseThis') | Out-Null
+    [IO.File]::WriteAllText((Join-Path $target 'sandbox\tools\rea\rea.cmd'),'@echo off')
+    $reaHash=(Get-FileHash -LiteralPath (Join-Path $target 'sandbox\tools\rea\rea.cmd') -Algorithm SHA256).Hash.ToLowerInvariant()
     $statePath=Join-Path $target 'sandbox\installed.json'
-    [IO.File]::WriteAllText($statePath,(@{schema=1;kit_root=$target;tools=@{rea=@{version='6.8.0'}}} | ConvertTo-Json -Depth 5))
+    [IO.File]::WriteAllText($statePath,(@{schema=1;kit_root=$target;tools=@{rea=@{version='6.8.0';dir='sandbox\tools\rea';files=@{'rea.cmd'=$reaHash}}}} | ConvertTo-Json -Depth 5))
     $pointerPath=Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json'
     [IO.File]::WriteAllText($pointerPath,(@{kit_root=$target;installed_json=$statePath;bin=(Join-Path $target 'sandbox\bin');personal='preserve'} | ConvertTo-Json))
     $before=(Get-FileHash -LiteralPath $pointerPath -Algorithm SHA256).Hash
@@ -97,6 +100,45 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'VERSION'),(Join-Path $PSScriptR
     $result=Run-Companion @('-NoUpdate')
     Assert ($result.code -ne 0 -and $result.output -match 'tool update failed') 'Native child failure was reported as success.'
     Remove-Item Env:UABS_REVERSE_FAIL
+    $env:UABS_REVERSE_DOCTOR_FAIL='1'
+    $result=Run-Companion @('-NoUpdate')
+    Assert ($result.code -ne 0 -and $result.output -match 'doctor failed') 'Doctor failure was reported as success.'
+    Remove-Item Env:UABS_REVERSE_DOCTOR_FAIL
+
+    # A stale pointer with no recoverable owner is an explicit failure, not success.
+    $emptyRoot=Join-Path $fixture 'no-owner'
+    New-Item -ItemType Directory -Force -Path $emptyRoot | Out-Null
+    $env:UABS_TOOL_ROOTS=$emptyRoot
+    [IO.File]::WriteAllText($pointerPath,(@{kit_root=(Join-Path $fixture 'gone-owner')} | ConvertTo-Json))
+    $result=Run-Companion @('-ResolveOnly')
+    Assert ($result.code -ne 0 -and $result.output -match 'no verified owner could be recovered') ('Unrecoverable stale pointer still exited successfully: '+$result.output)
+    Remove-Item Env:UABS_TOOL_ROOTS
+
+    # A moved owner with matching receipt proof is adopted and the pointer is repaired atomically.
+    $movedBase=Join-Path $fixture 'moved-base'
+    $movedOwner=Join-Path $movedBase 'reverse-this'
+    New-Item -ItemType Directory -Force -Path (Join-Path $movedOwner 'sandbox\tools\rea') | Out-Null
+    [IO.File]::WriteAllText((Join-Path $movedOwner 'VERSION'),'1.4.0')
+    [IO.File]::WriteAllText((Join-Path $movedOwner 'sandbox\tools\rea\rea.cmd'),'@echo off')
+    $movedHash=(Get-FileHash -LiteralPath (Join-Path $movedOwner 'sandbox\tools\rea\rea.cmd') -Algorithm SHA256).Hash.ToLowerInvariant()
+    [IO.File]::WriteAllText((Join-Path $movedOwner 'sandbox\installed.json'),(@{schema=1;kit_root=(Join-Path $fixture 'old-owner');tools=@{rea=@{version='1.4.0';dir='sandbox\tools\rea';files=@{'rea.cmd'=$movedHash}}}} | ConvertTo-Json -Depth 5))
+    $env:UABS_TOOL_ROOTS=$movedBase
+    $result=Run-Companion @('-ResolveOnly')
+    $repaired=([IO.File]::ReadAllText($pointerPath) | ConvertFrom-Json)
+    Assert ($result.code -eq 0 -and $result.output -match [regex]::Escape($movedOwner) -and $repaired.kit_root -eq $movedOwner -and (Test-Path -LiteralPath (Join-Path (Split-Path -Parent $pointerPath) 'kit.json.bak'))) ('Moved owner was not adopted: '+$result.output)
+
+    # Multiple equally valid candidates are ambiguous and are never guessed through.
+    $second=Join-Path $fixture 'second-base\reverse-this'
+    New-Item -ItemType Directory -Force -Path (Join-Path $second 'sandbox\tools\rea') | Out-Null
+    [IO.File]::WriteAllText((Join-Path $second 'sandbox\tools\rea\rea.cmd'),'@echo off')
+    $secondHash=(Get-FileHash -LiteralPath (Join-Path $second 'sandbox\tools\rea\rea.cmd') -Algorithm SHA256).Hash.ToLowerInvariant()
+    [IO.File]::WriteAllText((Join-Path $second 'sandbox\installed.json'),(@{schema=1;kit_root=$second;tools=@{rea=@{version='1.4.0';dir='sandbox\tools\rea';files=@{'rea.cmd'=$secondHash}}}} | ConvertTo-Json -Depth 5))
+    [IO.File]::WriteAllText($pointerPath,(@{kit_root=(Join-Path $fixture 'gone-again')} | ConvertTo-Json))
+    $env:UABS_TOOL_ROOTS=(Join-Path $fixture 'moved-base')+';'+(Join-Path $fixture 'second-base')
+    $result=Run-Companion @('-ResolveOnly')
+    Assert ($result.code -ne 0 -and $result.output -match 'Ambiguous Reverse THIS') 'Ambiguous owners were guessed through.'
+    Remove-Item Env:UABS_TOOL_ROOTS
+
     [IO.File]::WriteAllText($pointerPath,'{"kit_root":"relative"}')
     $result=Run-Companion @('-ResolveOnly')
     Assert ($result.code -ne 0 -and $result.output -match 'Invalid Reverse THIS') 'Malformed owner pointer triggered default installation.'

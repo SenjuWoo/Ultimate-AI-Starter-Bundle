@@ -1,11 +1,28 @@
-## Unreleased
+## 8.37.1 (2026-11-06)
 
-- Third-party Roblox skill pack integrated (MIT, https://github.com/EL4CTEO/roblox-skills, October 2026
-  snapshot): 23 Agent Skills under `_CANONICAL-SKILLS/roblox-*` and 23 Roblox-Assistant briefs under
-  `docs/roblox-assistant-briefs/`, with attribution in `docs/THIRD-PARTY-roblox-skills.md` and the
-  upstream licence at `_CANONICAL-SKILLS/ROBLOX-SKILLS-LICENSE.txt`. They are optional: the first-party
-  `roblox-game-development` skill remains the router and workflow contract. `MANIFEST.json` regenerated
-  for the 73 new files; the two pre-existing mismatches (`ci.yml`, `STATE.md`) are untouched.
+- Skill-trigger evaluation reads events again. The Windows/queue rewrite left the
+  event handlers inside `except: continue`, so every valid event was discarded and
+  every skill scored 0% trigger rate while CI stayed green. The handlers moved out,
+  the reader no longer drops queued output when the process exits, and a failed
+  `claude` run raises instead of being recorded as "did not trigger".
+  `TESTS/test_skill_trigger_parser.py` (6 cases against a fake process) fails on
+  the broken version and passes on the fix.
+- The generic template no longer carries a live project decision: `VISION.md`'s
+  corrections table ships empty, and a test rejects a dated row or a specific
+  layout in the template.
+- Roblox ownership settled. The 23 Roblox skills and 23 assistant briefs are owned
+  and versioned by RobloxForge (skills, briefs, MIT licence, third-party notices,
+  install/doctor coverage, 0.13.6); the bundle no longer ships either, and the
+  false "integrated here" changelog claim is gone.
+- `STATE.md` and the README now match the published release: `v8.37.0` at
+  `cc6f1c1`, Core recommended for connected installs, Full-Offline for restricted
+  networks.
+- Handoff processed and removed: the shared Python runtime gains
+  `jsonschema>=4.18` (4.26.0 installed here) for SPDX/config/manifest validation,
+  recorded in `docs/TOOL-EVALUATIONS.md`.
+- 81 canonical skills, no companion pin changed, unrestrained/preamble sources
+  untouched.
+
 
 ## 8.37.0 (2026-11-06)
 

@@ -41,6 +41,14 @@ class ProjectTemplate(unittest.TestCase):
         self.assertLess(state.lower().count("art-direction"), 3,
                         "STATE.md is copying the vision contract instead of linking it")
 
+    def test_vision_template_carries_no_live_project_decision(self):
+        # A template that ships one project's approved layout applies it to every
+        # new project. The corrections table must start empty.
+        text = (TEMPLATE / "VISION.md").read_text(encoding="utf-8")
+        dated = [l for l in text.splitlines() if l.startswith("| 20")]
+        self.assertEqual([], dated, f"a real correction is baked into the template: {dated}")
+        self.assertNotIn("tunnel", text.lower(), "a specific game layout leaked into the template")
+
 
 class SkillPointers(unittest.TestCase):
     def test_code_review_carries_an_advisory_concern_radar(self):

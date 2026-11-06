@@ -36,8 +36,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 12349,
-  "sha256": "ee2b31ac7185f3239f4a068139c76b30961fdc34b4b60b468c13c8efaf9bec3e"
+  "size": 12571,
+  "sha256": "c8d56802ff0327fb3fd7a589db787724dc1b203f7954d09fb1cbd55d140a3565"
  },
  {
   "path": ".github/workflows/dependabot-auto-merge.yml",
@@ -2461,8 +2461,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 12614,
-  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
+  "size": 12587,
+  "sha256": "f63854df22e99457acaff175eb2f626f0d7c04968e2c5054a50a3bbef304573c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -5456,8 +5456,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 12614,
-  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
+  "size": 12587,
+  "sha256": "f63854df22e99457acaff175eb2f626f0d7c04968e2c5054a50a3bbef304573c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -8511,8 +8511,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 12614,
-  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
+  "size": 12587,
+  "sha256": "f63854df22e99457acaff175eb2f626f0d7c04968e2c5054a50a3bbef304573c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -11556,8 +11556,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 12614,
-  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
+  "size": 12587,
+  "sha256": "f63854df22e99457acaff175eb2f626f0d7c04968e2c5054a50a3bbef304573c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -14601,8 +14601,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 12614,
-  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
+  "size": 12587,
+  "sha256": "f63854df22e99457acaff175eb2f626f0d7c04968e2c5054a50a3bbef304573c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -17721,8 +17721,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 12614,
-  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
+  "size": 12587,
+  "sha256": "f63854df22e99457acaff175eb2f626f0d7c04968e2c5054a50a3bbef304573c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -18722,12 +18722,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64142,
-  "sha256": "372efa06db081ab20c17f08f8131926af2c23f17e558ef3967ded1bb6fa86f1e"
+  "sha256": "07034317c42ea95160627d45d55c2780cd2318663561077cf38b79d44e7b70bd"
+ },
+ {
+  "path": "BUNDLED-TOOLS/COMPANIONS.json",
+  "size": 9123,
+  "sha256": "a6e75f88f9d7b3264b38a0e7a1dc44e80136ad52c572bac38b3dccebf19ce27b"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "6def47f258dc33b003345b339abc1a988d4ca6fb71285dd30c6f46a221d8d9a6"
+  "sha256": "e9a8d800049a0347b720ae7b9375046271f9c6396776e31b12cafebeb2a388d6"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18737,7 +18742,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "7ebc851917129c42d8772166ef74a801e888af76996939e4a172ce57e5aa35f9"
+  "sha256": "3c0edd2fd6710e64f60b8278894a4985eec5f3954febee0d9dfb7cb0024259d8"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22791,8 +22796,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 291608,
-  "sha256": "90be35dd5c28da788f4676dfab3eaa54cb47371411228e7fa48a4fc306908c6a"
+  "size": 292481,
+  "sha256": "617c0eecce0a61329d95c8c72a809edea62f02fc9ba9e7c7b83d978ff9d938f8"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22876,8 +22881,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/VISION.md",
-  "size": 1802,
-  "sha256": "9175f09b3b3c4afaabd848459d1d34f082741f92b31de90dba0da0c0a213415b"
+  "size": 2018,
+  "sha256": "2eab11ae57f3426a5b0790ad666574c9d6e32263e41e608673b9ddc74bee323b"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/WORKSPACE_OWNERSHIP.md",
@@ -22911,8 +22916,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 50799,
-  "sha256": "27cf497936c73350fdb5376eda65334ac1dec2961c22aa1ba10887d252cea364"
+  "size": 51016,
+  "sha256": "71cde48892c1be418e2691b03e23865a6e9188480858c45720fd20ab2ee2abc0"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -22936,8 +22941,8 @@
  },
  {
   "path": "README.md",
-  "size": 41777,
-  "sha256": "66f8541d4ed7176c66cbf2f450d5297272c8918e34772bd798bd849055adf074"
+  "size": 42051,
+  "sha256": "674e286a4a938ef0b58f955952d98326260fd6fd152ac2461577f34bc38b6b1f"
  },
  {
   "path": "SECURITY.md",
@@ -22947,17 +22952,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "800bfe36c38465170a033860f32d746222d7542d9657d7a51d7143c81989c2b7"
+  "sha256": "0d91d08db8fb85263f0855289e0a3e04115d167cde5023da7de2456e771448dd"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "aa44d9e5d74243f675fd5ba611fb5eafce7ad1568ffcd731c65ba568d035a9a8"
+  "sha256": "c38982d4b964ed0011d5fcc43fc99273a9c8fe236ec55cd5df2aecdebed04907"
  },
  {
   "path": "STATE.md",
-  "size": 70677,
-  "sha256": "22597431a0ff6efb7758735b11f7c2fd16ca8f76cc26221daafdda839b353acb"
+  "size": 70984,
+  "sha256": "4384b373d7584cad5407637a56e07d01ada8de7651109473083c282179ac3a94"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -22986,8 +22991,8 @@
  },
  {
   "path": "TESTS/Test-Companions.ps1",
-  "size": 9567,
-  "sha256": "9fb9a02be4b76aae7befb8c08185ef1454cabc2b99541429936897192123acda"
+  "size": 13134,
+  "sha256": "14098dd84600ef6e59894bc3991c83f653401e0c68c5e571c005deaf229140b3"
  },
  {
   "path": "TESTS/Test-DoctorProviderScope.ps1",
@@ -23350,6 +23355,11 @@
   "sha256": "1be5cf36d0c04fbc6dc7bcceeb387118b927056029d8918d90b9927464e06ff5"
  },
  {
+  "path": "TESTS/test_companion_registry.py",
+  "size": 4065,
+  "sha256": "85a8b35e87d90f1a93f85a67d26594acc1dd995ae22c1de16320c2389badfd0f"
+ },
+ {
   "path": "TESTS/test_free_game_tools.py",
   "size": 2152,
   "sha256": "53fe3e21ed270cffd395c27b84cdd0422c5e4bbd8918e6efce8145acd9763162"
@@ -23371,8 +23381,8 @@
  },
  {
   "path": "TESTS/test_knowledge_contract.py",
-  "size": 3164,
-  "sha256": "3155c0a006df99cc715b40910964b055ce565f3f591e46b471c0b8324496b687"
+  "size": 3783,
+  "sha256": "01493db651d2769eb7c256922c8551f46ecf095ceac4aab20844fa53db814757"
  },
  {
   "path": "TESTS/test_maintainability_audit.py",
@@ -23401,8 +23411,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 366079,
-  "sha256": "22863a1a96d76834a6792f19cc8dbefb55342da0294956c7bdfe3f3019de1df0"
+  "size": 366617,
+  "sha256": "75158d6f2c1ac146717af4167f98982087222359decd89015f9fbe8625454c63"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23551,8 +23561,8 @@
  },
  {
   "path": "TOOLS/Install-ReverseThis.ps1",
-  "size": 9983,
-  "sha256": "59815715d428ddde24927c5cd6185222064d5f14c50256ab54af7870ba2fd0c0"
+  "size": 14149,
+  "sha256": "86da1e79581474dbfffa380a92cd8bbd68b57be56b3b26146cd6a2906f8f2aed"
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
@@ -23636,8 +23646,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 63971,
-  "sha256": "56deff72c57033f19dd2bf498388326e2e99b95cf4f44e57030324fac8ada5be"
+  "size": 67748,
+  "sha256": "a34d44476e55c32fcb8d227fbaa76a8f2e005525dc32a41421492e268ab75b07"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -23718,6 +23728,11 @@
   "path": "TOOLS/build_release.py",
   "size": 14213,
   "sha256": "1d7b4119e50324322a430535d9c0902b18ae7137c82740400853d1e06b52bd01"
+ },
+ {
+  "path": "TOOLS/companion_registry.py",
+  "size": 7784,
+  "sha256": "74bcec16db2ce18948802a7cfdb9a26c47f50d9efdc484ce3140d8430e1bf15b"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -23907,7 +23922,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2781,
-  "sha256": "6a5a927fd6463920f85a910a792760879281ec45fed9034b61e93bda6502d9fc"
+  "sha256": "823184b78e9c7cd30abf017d848724affc59e42692d4fb065b665b6e4ac53960"
  },
  {
   "path": "VALIDATION.md",
@@ -23917,7 +23932,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "715a563435f8127bb33e70619ed423af6177f5620560f30429e60e4a384fc19e"
+  "sha256": "d3fe32b9ea9ef21a99f1d818861c7d44d5fde6ecaa204020495fa983ac8042f6"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -26201,8 +26216,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/skill-creator/scripts/run_eval.py",
-  "size": 12614,
-  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
+  "size": 12587,
+  "sha256": "f63854df22e99457acaff175eb2f626f0d7c04968e2c5054a50a3bbef304573c"
  },
  {
   "path": "_CANONICAL-SKILLS/skill-creator/scripts/run_loop.py",
@@ -26926,8 +26941,8 @@
  },
  {
   "path": "docs/COMPANION-ARCHITECTURE.md",
-  "size": 18548,
-  "sha256": "a1e808ac8bfe1a197b4a07f26da2c383f32e39935bf3b221e22396dd9ca0b815"
+  "size": 20103,
+  "sha256": "81e3d65f0f66695a2d764782d07b7e457da484f6b5ab899fc613bc3ecaad83f9"
  },
  {
   "path": "docs/GUIDE.md",
@@ -26940,6 +26955,11 @@
   "sha256": "77393100558793133af10baf08b739966be5a8ac8e80f03d3133b46d2cd09565"
  },
  {
+  "path": "docs/INTEGRATION-REPORT-2026-11-06.md",
+  "size": 6251,
+  "sha256": "1892257439bcf5529088e53ffcb48c73004291f37d8ff56eab3c0421c248126f"
+ },
+ {
   "path": "docs/OPERATOR-PROFILES.md",
   "size": 2756,
   "sha256": "25c40b267c6af90aa43265f43057350e8f35312bee035cde6c75d468d3c42d07"
@@ -26950,14 +26970,9 @@
   "sha256": "67086657c696fbb1914350ce903a09e5923bb8d60b6e0c50918eb127b68a9966"
  },
  {
-  "path": "docs/THIRD-PARTY-roblox-skills.md",
-  "size": 808,
-  "sha256": "e98a9bc00f82be58b93e514c1b22ea35030e9a9adfd3ad00527c7f82416f1aeb"
- },
- {
   "path": "docs/TOOL-EVALUATIONS.md",
-  "size": 61417,
-  "sha256": "eb9949923e3da41119ddbf7ade3d0695a5d60383038f37011e5a2f91cfb637e5"
+  "size": 61949,
+  "sha256": "49c74381108f12d9fef95e34d31c5b7a45c5138c03af90134e2ae557e92d4e0e"
  },
  {
   "path": "docs/TOOLING-MATRIX.md",
@@ -28103,121 +28118,6 @@
   "path": "docs/history/V8.9.0-CHANGELOG.md",
   "size": 7138,
   "sha256": "2e4ce90c6d3909a944eac978a4d438465780668b92d9355c38f9262d671ebc91"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-analytics-liveops.md",
-  "size": 7041,
-  "sha256": "ba1d2e277a7287a52ca19452bed45f51b762afc501ccd6b48e15bbf726fef951"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-architecture.md",
-  "size": 18689,
-  "sha256": "91aa293b48cfff61aca31fae4df68d9382544575147e3d3a43ec5a5c6ecd3a4a"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-audio.md",
-  "size": 5661,
-  "sha256": "90b2e22511a9c334a7a2780a15b9b3cba0397e44d0c698500ffb2d843beda0cb"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-characters-animation.md",
-  "size": 11233,
-  "sha256": "ee0b9c779d76d470bc25ee4ceac953cac5ded1c7a65a8cf37588c778812498d6"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-code-review.md",
-  "size": 16890,
-  "sha256": "913bd862eddaf4f16036c03321d5ff8fec2417a8d0c768f11a327cc47af79c1c"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-data-stores.md",
-  "size": 18743,
-  "sha256": "5a7969091087ea669ad6967d0656bfbae55e3ec7e844884436c9d379b801efde"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-game-systems.md",
-  "size": 24331,
-  "sha256": "a05cae28e6f3669a156fc3dc0a983e1bf7a1af8d8a64531e09a999aaa325cc9b"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-input.md",
-  "size": 8242,
-  "sha256": "911a5e3a980b050311deb7393409fb19d58b0c97dfc64c12d80b4c1eb85b0009"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-luau.md",
-  "size": 23774,
-  "sha256": "0d5279cb2c3f96835a4d4088bb7d24f3e3902aad11b627dc8e27420765cc8154"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-monetization.md",
-  "size": 13607,
-  "sha256": "933cfd1218623fc8193c5ad668e9dd054893ef8887129aa486b7d2ff2be379e3"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-networking.md",
-  "size": 12805,
-  "sha256": "4fe7fbc7cbdb767858be349b3642b779475688e5e42e0435f1cb58ed66b07571"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-npc-ai.md",
-  "size": 9591,
-  "sha256": "a350ead4c85b59f96efcd4da4c3049071b1777051954762b64dfffa2d9814c84"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-open-cloud.md",
-  "size": 11406,
-  "sha256": "93f614ad07af355886867a8d9923621225daa3db9500b65fdacc4f586fdc7229"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-performance.md",
-  "size": 10961,
-  "sha256": "40a6692a6632962091084051a44391b4561a27ddbe694b73da9c9de16e94d5cd"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-physics.md",
-  "size": 20539,
-  "sha256": "5f560a828794327e30dbad5acdf4846ff8806a53eb41b2c037490029239e41aa"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-security.md",
-  "size": 15245,
-  "sha256": "7fd05feabba4b6975c9b752ddddc35ecaab384d393d1804687963955a7e7d71e"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-studio-mcp.md",
-  "size": 8947,
-  "sha256": "f24dacb62cbdc50f5385e1370638685226244518c268697b6e666721d5e833dc"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-teleport-matchmaking.md",
-  "size": 7434,
-  "sha256": "e7005a5d06394152b85563843e5cdf29487cb4b1e826e0c03b402217667c3e50"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-testing.md",
-  "size": 9405,
-  "sha256": "0c10aeb86565c7005319f351c418b7508486675336fc4c7545d6de67d3400db0"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-text-chat.md",
-  "size": 11441,
-  "sha256": "a8827c68d21082dddff6b629adf353994bb34eb7dd26baecd0d46cbdc887d708"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-tooling.md",
-  "size": 8732,
-  "sha256": "cda5aa6bc3e3a50b068d7ec8a4c9110860366e26b6f3d998ce9069e083bcc9d3"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-ui.md",
-  "size": 12237,
-  "sha256": "625cceece9ecbec990371cff908524c4905182c051b500f37d304a18c90d509c"
- },
- {
-  "path": "docs/roblox-assistant-briefs/roblox-world-building.md",
-  "size": 7705,
-  "sha256": "db82d68df89aff0c619433a598f4c0f906dd5491c8f7ca9f1c935153584b149d"
  },
  {
   "path": "docs/superpowers/plans/2026-10-23-fresh-windows-recovery.md",

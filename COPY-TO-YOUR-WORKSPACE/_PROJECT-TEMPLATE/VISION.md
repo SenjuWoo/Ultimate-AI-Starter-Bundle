@@ -16,7 +16,7 @@ test: "would this change break it?"
 ## Interaction and structure
 
 Gameplay loop, or the structural/topological requirements that are not negotiable
-(for example: centre, then wall, then tunnel, then house).
+in this project. State them plainly; do not illustrate with another game's layout.
 
 ## Visual language
 
@@ -42,7 +42,10 @@ silhouette, lighting, pacing — not "the vibe".
 
 | Date | Correction | Reason | Still in force |
 |---|---|---|---|
-| 2026-11-06 | base layout is centre → wall → tunnel → house | approved composition | yes |
+| _YYYY-MM-DD_ | _what the user corrected_ | _why it matters_ | _yes_ |
+
+This table starts empty on purpose. A row here is a binding decision for ONE
+project, so it belongs in that project's own VISION.md, never in this template.
 
 This table is the anti-regression record. A later agent that reverts a listed
 correction is wrong even if its own reasoning is sound; ask before changing it.

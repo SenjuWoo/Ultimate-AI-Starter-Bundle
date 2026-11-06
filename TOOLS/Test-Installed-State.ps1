@@ -51,6 +51,59 @@ else{
   }catch{Err ('install-state unreadable: '+$_.Exception.Message)}
 }
 
+# UABS-03: an owner-managed Reverse THIS! component is not healthy just because
+# the catalog or install-state says so. Verify the pointer, owner state, shims and
+# the owner doctor; a stale/incompatible pairing is visible in the report.
+$reverseHealth=[ordered]@{status='not-selected'}
+$reverseComponent=@($catalog.components | Where-Object { $_.id -eq 'reverse-this' }) | Select-Object -First 1
+$reverseState=$null
+if ($state -and $state.components -and $reverseComponent) {
+  $reverseProperty=$state.components.PSObject.Properties['reverse-this']
+  if ($reverseProperty) { $reverseState=$reverseProperty.Value }
+}
+if ($reverseComponent -and $reverseState -and $reverseState.status -eq 'owner-managed') {
+  $reverseHealth.status='failed'
+  $reversePointer=Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json'
+  try {
+    if (-not (Test-Path -LiteralPath $reversePointer -PathType Leaf)) { throw 'owner pointer is missing' }
+    $reverseReceipt=[IO.File]::ReadAllText($reversePointer) | ConvertFrom-Json
+    if (-not $reverseReceipt.kit_root -or -not [IO.Path]::IsPathRooted($reverseReceipt.kit_root)) { throw 'owner pointer is malformed' }
+    $reverseRoot=[IO.Path]::GetFullPath($reverseReceipt.kit_root).TrimEnd([char[]]@('\','/'))
+    if (-not (Test-Path -LiteralPath $reverseRoot -PathType Container)) { throw 'owner root is missing' }
+    $reverseVersionFile=Join-Path $reverseRoot 'VERSION'
+    if (-not (Test-Path -LiteralPath $reverseVersionFile -PathType Leaf)) { throw 'owner VERSION is missing' }
+    $reverseVersion=([IO.File]::ReadAllText($reverseVersionFile)).Trim()
+    if ($reverseVersion -notmatch '^\d+\.\d+\.\d+$') { throw 'owner VERSION is invalid' }
+    $reverseStateFile=Join-Path $reverseRoot 'sandbox\installed.json'
+    if (-not (Test-Path -LiteralPath $reverseStateFile -PathType Leaf)) { throw 'owner installed.json is missing' }
+    $reverseOwnerState=[IO.File]::ReadAllText($reverseStateFile) | ConvertFrom-Json
+    if ($reverseOwnerState.schema -ne 1 -or -not $reverseOwnerState.tools) { throw 'owner installed.json is malformed' }
+    if (([IO.Path]::GetFullPath([string]$reverseOwnerState.kit_root).TrimEnd([char[]]@('\','/')) -ne $reverseRoot)) { throw 'owner installed.json kit_root disagrees with its pointer' }
+    foreach ($toolRow in @($reverseOwnerState.tools.PSObject.Properties.Value)) {
+      foreach ($shim in @($toolRow.shims.PSObject.Properties.Value)) {
+        if (-not $shim) { continue }
+        $shimPath=[IO.Path]::GetFullPath((Join-Path $reverseRoot ([string]$shim)))
+        if (-not $shimPath.StartsWith($reverseRoot+'\',[StringComparison]::OrdinalIgnoreCase)) { throw 'owner shim escapes its root' }
+        if (-not (Test-Path -LiteralPath $shimPath -PathType Leaf)) { throw ('selected owner shim is missing: ' + [string]$shim) }
+      }
+    }
+    $reverseDoctor=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $reverseRoot 'Install-Modkit.ps1') -Doctor -InstallRoot $reverseRoot 2>&1 | Out-String
+    if ($LASTEXITCODE -ne 0) { throw ('owner doctor failed: ' + $reverseDoctor.Trim()) }
+    $reaVersion=[string]$reverseOwnerState.tools.rea.version
+    $ghidraVersion=[string]$reverseOwnerState.tools.ghidra.version
+    if ($reaVersion -eq '6.8.0' -and $ghidraVersion -match '12\.2') {
+      $reverseHealth.compatibility='REA 6.8.0 is not compatible with Ghidra 12.2; use the isolated Ghidra 12.1 line + JDK 21 route.'
+      Warn $reverseHealth.compatibility
+    } else { $reverseHealth.compatibility='not-evaluated' }
+    $reverseHealth.status='verified'
+    $reverseHealth.version=$reverseVersion
+    $reverseHealth.root=$reverseRoot
+  } catch {
+    $reverseHealth.error=$_.Exception.Message
+    Err ('Reverse THIS! owner readiness failed: '+$_.Exception.Message)
+  }
+}
+
 # A path can be exactly where the installer recorded it and still contain the
 # wrong release. This happened when GitHub reused RTK's asset filename: an old
 # cache archive was accepted by size alone and copied over the newer offline
@@ -1134,7 +1187,7 @@ $autostartReport = @($autostarts | ForEach-Object {
 })
 
 $doctorResult = if ($errors.Count) { 'FAIL' } else { 'PASS' }
-$report=[ordered]@{version=$packBare;checked_utc=[DateTime]::UtcNow.ToString('o');errors=@($errors);warnings=@($warnings);rtk_runtime=$rtkRuntime;capability_states=@($capabilityStates);hermes_tool_budgets=@($hermesBudgets);hermes_plugin_issues=@($hermesPluginIssues);hermes_discouraged_plugin_issues=@($hermesDiscouragedPluginIssues);hermes_hook_issues=@($hermesHookIssues);codex_skill_index=$script:codexSkillIndex;ai_autostarts=@($autostartReport);hook_misdirection=@($hookMisdirection);shadowed_tools=@($shadowReport);result=$doctorResult}
+$report=[ordered]@{version=$packBare;checked_utc=[DateTime]::UtcNow.ToString('o');errors=@($errors);warnings=@($warnings);reverse_this=$reverseHealth;rtk_runtime=$rtkRuntime;capability_states=@($capabilityStates);hermes_tool_budgets=@($hermesBudgets);hermes_plugin_issues=@($hermesPluginIssues);hermes_discouraged_plugin_issues=@($hermesDiscouragedPluginIssues);hermes_hook_issues=@($hermesHookIssues);codex_skill_index=$script:codexSkillIndex;ai_autostarts=@($autostartReport);hook_misdirection=@($hookMisdirection);shadowed_tools=@($shadowReport);result=$doctorResult}
 $reportPath=Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\installed-state-doctor.json'
 $report['grok_hook_issues'] = @($grokHookIssues)
 $report['codex_hook_issues'] = @($codexHookIssues)

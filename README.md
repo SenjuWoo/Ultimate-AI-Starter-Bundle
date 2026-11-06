@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.37.0 -->
+<!-- Ultimate AI Starter Bundle v8.37.1 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.37.0
+# Ultimate AI Starter Bundle v8.37.1
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -72,9 +72,10 @@ GB; `-SkipBuildTools` skips it.
 
 **Install in three steps**
 
-1. Download the **Full-Offline** zip from the
+1. Download the **Core** zip from the
    [latest release](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest)
-   and unzip it.
+   and unzip it. On a slow or restricted network take **Full-Offline** instead;
+   both install the same tools (see the table below).
 2. Double-click **`START-HERE.bat`**. If Windows warns about the file, choose
    *Run* (or *More info*, then *Run anyway*); allow administrator rights if asked.
 3. When the window says **INSTALL COMPLETE**, close and reopen your AI apps.
@@ -159,7 +160,8 @@ reported instead of guessed. Move anything you like; nothing needs editing.
 
 | Moved out | Why | Where it lives now |
 |---|---|---|
-| Image-generation stack (SwarmUI/ComfyUI presets, Anima pin) | it is an image pipeline, not an agent harness, and it changes on model timescales | its own repository (`Bundle-Splits/uabs-image-stack`) |
+| Companion owners (Forge family, Reverse THIS!, comfy-kit, GUI apps) | `python TOOLS/companion_registry.py --verify` lists each owner as NOT_FOUND / DISCOVERED / INSTALLED |
+| Image-generation stack (SwarmUI/ComfyUI presets, Anima pin) | it is an image pipeline, not an agent harness, and it changes on model timescales | its own repository (`SenjuWoo/comfy-kit`) |
 | `img2threejs` tool tree (489 files) | the capability belongs here, the tree does not | [img2threejs/img2threejs](https://github.com/img2threejs/img2threejs); the bundle keeps a pinned pointer skill |
 | WooMix-Anima model page and samples | model publication, not harness work | the model's own workspace |
 

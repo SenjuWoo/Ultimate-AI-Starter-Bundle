@@ -4,9 +4,9 @@
 
 | | |
 |---|---|
-| Release | `v8.36.0` at `4abba63` (published, 9 assets, digests verified) |
+| Release | `v8.37.0` at `cc6f1c1` (published, 9 assets, digests verified) |
 | Branch | `main`, in sync with `origin/main` |
-| Next version | `v8.37.0` (this pass) |
+| Next version | `v8.37.1` (this pass) |
 | Evidence | `python TESTS/test_release_contract.py` (166), `TESTS/Test-Pack.ps1`, `TOOLS/Verify-Fast.ps1`, `gh run list --commit <sha>` |
 
 - Done and verified: reliability pass in 8.36.0/8.36.1 (atomic version bump,
@@ -18,6 +18,10 @@
   a vision contract with a binding corrections table; `code-review-skill` has an
   advisory concern radar; `skill-creator` has a capture checklist; release-file
   guidance matches Core vs Full-Offline.
+- Roblox ownership resolved: the 23 skills and the 23 briefs live in
+  RobloxForge (`skills/`, `docs/roblox-briefs/`, MIT + notices, 0.13.6) and the
+  bundle no longer carries either. The earlier local copy was lost while
+  untracked; it was re-fetched from the upstream repository and committed there.
 - Held out of the bundle: 23 untracked Roblox skill directories plus an MIT
   licence file (EL4CTEO) appeared in `_CANONICAL-SKILLS/` on 2026-11-06. Roblox
   skills belong to RobloxForge and the pack was not credited, so they were moved
@@ -27,7 +31,7 @@
   starter keeps `null`, `true` and `0`. The live values are the operator's own, so
   nothing was changed; `compression.threshold_tokens` is a cap on the ratio
   trigger, not a floor, and was left alone.
-- Next action: run the gates and publish 8.37.0.
+- Next action: run the gates and publish 8.37.1.
 
 Older sections below are the history this state summarises; anything marked
 "not implemented" is superseded by the entry that implements it.
