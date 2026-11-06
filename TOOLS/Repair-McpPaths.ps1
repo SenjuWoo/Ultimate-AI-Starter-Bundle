@@ -224,10 +224,10 @@ function Resolve-LivePath([string]$dead) {
     }
 
 
-  # Relocated owner folder. A tool can move to a different parent entirely
-  # (Z:\Backup\Ai apps\RobloxForge -> Z:\Backup\Ai documentation\Tools\Ai tools\
-  # RobloxForge). Every rule above only looks at siblings of the dead path, so a
-  # live server one tree over is reported as "no replacement found". Search the
+  # Relocated owner folder. A tool can move to a completely different parent:
+  # a server under one tools root ends up under a different one. Every rule
+  # above only looks at siblings of the dead path, so a live server one tree over
+  # is reported as "no replacement found". Search the
   # folders the user actually keeps tools in (UABS_TOOL_ROOTS + the machine map)
   # for a folder with the same name and the same remaining tail. Uniqueness is
   # required: two hits is a question for a human, not a guess.

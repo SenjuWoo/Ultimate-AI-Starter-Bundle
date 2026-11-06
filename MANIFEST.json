@@ -23536,8 +23536,8 @@
  },
  {
   "path": "TOOLS/Repair-McpPaths.ps1",
-  "size": 18313,
-  "sha256": "1b43e4a07f4e7b9eded68445a142525a67fe22fee63e44a57c13b68d9d60c32f"
+  "size": 18286,
+  "sha256": "7e9f3e6b45d50e6b182e6d1f322da0c4d96a921d400c06e16f29d2294a71a72d"
  },
  {
   "path": "TOOLS/Set-GitHubProtection.ps1",
