@@ -122,6 +122,7 @@ jobs:
           python TESTS/test_skill_trigger_parser.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_companion_registry.py
+          python TESTS/test_task_state.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_knowledge_contract.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

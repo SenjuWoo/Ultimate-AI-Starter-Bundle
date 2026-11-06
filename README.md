@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.37.6 -->
+<!-- Ultimate AI Starter Bundle v8.37.7 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.37.6
+# Ultimate AI Starter Bundle v8.37.7
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -166,6 +166,24 @@ reported instead of guessed. Move anything you like; nothing needs editing.
 | WooMix-Anima model page and samples | model publication, not harness work | the model's own workspace |
 
 `impeccable` stays in full: UI review is harness work.
+
+### The plan is executable
+
+Every project template carries `PLAN.md` (task table with IDs, dependencies,
+verification and evidence) and `STATE.md` (where you are right now). A small
+deterministic controller reads both so a weaker model does not have to hold the
+whole plan in context:
+
+```
+python TOOLS/task_state.py next      # first task whose dependencies are complete
+python TOOLS/task_state.py status    # counts, cycle, complete-without-evidence, stale SHA
+python TOOLS/task_state.py resume    # reconcile STATE.md with the plan and git (--fix writes it)
+python TOOLS/task_state.py handoff   # compact continuation packet, ~10 lines
+```
+
+It parses, compares and runs nothing generative: no database, no daemon, no
+network. A cycle, a duplicate ID or a task marked complete whose evidence file is
+missing exits 1 instead of being silently believed.
 
 ## What the foundation gives you
 

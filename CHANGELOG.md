@@ -1,3 +1,19 @@
+## 8.37.7 (2026-11-06)
+
+- `PLAN.md` and `STATE.md` in the project template are now executable: a task
+  table with IDs, dependencies, a verification command and evidence, plus a
+  six-field state snapshot. `TOOLS/task_state.py next|status|resume|handoff`
+  answers "what now" from those two files with no model call, no database and no
+  daemon. It reports dependency cycles, duplicate IDs, unknown dependencies,
+  tasks marked complete whose evidence is missing, and a STATE.md SHA that is
+  behind the repository. `resume --fix` rewrites the state fields; a second run
+  changes nothing.
+- 10 regression tests run on temporary fixtures only, wired into CI.
+- Not built: automatic model sizing/routing and the before/after benchmark of the
+  addendum. Both need a paid multi-model harness and measured baselines; shipping
+  unmeasured claims would be worse than shipping nothing.
+- 81 canonical skills, no companion pin changed.
+
 ## 8.37.6 (2026-11-06)
 
 - No provider list is shipped. `provider_routing` keeps `sort: price` and
