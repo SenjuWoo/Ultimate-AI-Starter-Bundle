@@ -110,6 +110,11 @@
   "sha256": "ac71e73f60638e28ef05dc8012d5ea49959ea7a6fc03452c53bad692bb94309b"
  },
  {
+  "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/MANGA-VISUAL-STORY-DIRECTOR.txt",
+  "size": 19249,
+  "sha256": "f214194ecf13a37a71aff8bbef2f39e7ed8032c9d97dd61cf17c8fb7a72d4f30"
+ },
+ {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Models.txt",
   "size": 1714,
   "sha256": "df4efdae883185eee4306b945ea7d75872ff25e406101255904e2b636f01702b"
@@ -143,6 +148,11 @@
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Tools.txt",
   "size": 3037,
   "sha256": "05bd4a3c4da112e529171179d42fee165d393a7069b17966449d2a774077e83a"
+ },
+ {
+  "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Vision-jail-MAX-v8.txt",
+  "size": 8330,
+  "sha256": "15f38ef1cdf410e5bd66009ce326674871bb242ef0687029f782797e69736547"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Vision.txt",
@@ -27833,6 +27843,11 @@
   "path": "docs/history/V8.37.1-CHANGELOG.md",
   "size": 1500,
   "sha256": "8d90836ad9e2cb3b7545ed158154aee2f8948c5dcf8229386a3e271d5feb01db"
+ },
+ {
+  "path": "docs/history/V8.37.2-CHANGELOG.md",
+  "size": 899,
+  "sha256": "17998c780269344cc6a526cc2dba2942c9ef68db81ef0b05b02c62b9e9b7b531"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",
