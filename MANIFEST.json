@@ -2425,6 +2425,11 @@
   "sha256": "46abd4e19e482b4aeebea24b135c2d88fb122a63346dbeab7fcecd83828a826d"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/learning-capture.md",
+  "size": 1194,
+  "sha256": "8b8d6b77a76bd967bf68bd6bf2f08bfe0dd0f41383b77df99766321b84b5e091"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/schemas.md",
   "size": 12491,
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
@@ -5413,6 +5418,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/eval-viewer/viewer.html",
   "size": 46323,
   "sha256": "46abd4e19e482b4aeebea24b135c2d88fb122a63346dbeab7fcecd83828a826d"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/learning-capture.md",
+  "size": 1194,
+  "sha256": "8b8d6b77a76bd967bf68bd6bf2f08bfe0dd0f41383b77df99766321b84b5e091"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/schemas.md",
@@ -8465,6 +8475,11 @@
   "sha256": "46abd4e19e482b4aeebea24b135c2d88fb122a63346dbeab7fcecd83828a826d"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/learning-capture.md",
+  "size": 1194,
+  "sha256": "8b8d6b77a76bd967bf68bd6bf2f08bfe0dd0f41383b77df99766321b84b5e091"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/schemas.md",
   "size": 12491,
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
@@ -11505,6 +11520,11 @@
   "sha256": "46abd4e19e482b4aeebea24b135c2d88fb122a63346dbeab7fcecd83828a826d"
  },
  {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/learning-capture.md",
+  "size": 1194,
+  "sha256": "8b8d6b77a76bd967bf68bd6bf2f08bfe0dd0f41383b77df99766321b84b5e091"
+ },
+ {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/schemas.md",
   "size": 12491,
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
@@ -14543,6 +14563,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/eval-viewer/viewer.html",
   "size": 46323,
   "sha256": "46abd4e19e482b4aeebea24b135c2d88fb122a63346dbeab7fcecd83828a826d"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/learning-capture.md",
+  "size": 1194,
+  "sha256": "8b8d6b77a76bd967bf68bd6bf2f08bfe0dd0f41383b77df99766321b84b5e091"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/schemas.md",
@@ -17658,6 +17683,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/eval-viewer/viewer.html",
   "size": 46323,
   "sha256": "46abd4e19e482b4aeebea24b135c2d88fb122a63346dbeab7fcecd83828a826d"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/learning-capture.md",
+  "size": 1194,
+  "sha256": "8b8d6b77a76bd967bf68bd6bf2f08bfe0dd0f41383b77df99766321b84b5e091"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/references/schemas.md",
@@ -23371,8 +23401,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 365185,
-  "sha256": "42e9103e2a1b504c9f2da1c5275e0c26355cfb0a246fafa71234382fd3bb8fd0"
+  "size": 366079,
+  "sha256": "22863a1a96d76834a6792f19cc8dbefb55342da0294956c7bdfe3f3019de1df0"
  },
  {
   "path": "TESTS/test_release_provenance.py",

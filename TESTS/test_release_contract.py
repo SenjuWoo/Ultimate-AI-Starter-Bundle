@@ -5499,6 +5499,7 @@ def test_every_canonical_skill_reached_every_provider_tree() -> None:
     drifted = []
     missing = []
     extra = []
+    copies_seen = set()
     for skill_dir in sorted(p for p in CANON.iterdir() if p.is_dir()):
         files = [p for p in skill_dir.rglob("*") if p.is_file()
                  and '__pycache__' not in p.parts and p.suffix not in {'.pyc','.pyo'}]
@@ -5514,6 +5515,7 @@ def test_every_canonical_skill_reached_every_provider_tree() -> None:
                 if not copy.is_file():
                     missing.append(label)
                     continue
+                copies_seen.add(copy.relative_to(ROOT).as_posix())
                 raw = src.read_bytes()
                 got = copy.read_bytes()
                 if src.suffix.lower() in text_ext:
@@ -5539,6 +5541,20 @@ def test_every_canonical_skill_reached_every_provider_tree() -> None:
         "`python TOOLS/fanout_providers.py _CANONICAL-SKILLS .`"
         % (len(extra), ", ".join(sorted(extra)[:5]))
     )
+    # Existence on this machine is not existence in the repository. Provider
+    # trees are gitignored for NEW files, so `git add -A` silently skips a file
+    # the fanout just created: local gate green, fresh clone and CI red.
+    if (ROOT / ".git").exists() and copies_seen:
+        listed = subprocess.run(["git", "-C", str(ROOT), "ls-files", "-z"],
+                                capture_output=True, text=True).stdout
+        tracked = set(listed.split(chr(0)))
+        untracked = sorted(p for p in copies_seen if p not in tracked)
+        assert not untracked, (
+            "%d provider file(s) exist on disk but are not in git: %s -- "
+            "`git add -f` them (the tree is gitignored for new files)"
+            % (len(untracked), ", ".join(untracked[:5]))
+        )
+
     assert not drifted, (
         "%d provider copy(ies) differ from canonical in content: %s. Editing "
         "_CANONICAL-SKILLS does not ship anything on its own -- INSTALL-AIO "
