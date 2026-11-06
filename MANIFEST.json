@@ -22825,6 +22825,11 @@
   "sha256": "0853e2bc05a1d5f060b2b66acf488ab8f0c1be06ca3db4141ca115e9b2cb81b4"
  },
  {
+  "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/MEMORY/README.md",
+  "size": 2287,
+  "sha256": "7073ae589274138c691205807b0221edd695cd54a78a1f8911f30fb204f0b1f1"
+ },
+ {
   "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/PLAN.md",
   "size": 8,
   "sha256": "5b8518e2ef9fc1c88a9750294bf9f2284f5fbf1e5b49f427fe99919e5c93b1ef"
@@ -22838,6 +22843,11 @@
   "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/VALIDATION.md",
   "size": 14,
   "sha256": "03fe079fa59b4895cfaf8ef4a9bb32e3bca84272178bef4ef7ebad4e7c2d8d7c"
+ },
+ {
+  "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/VISION.md",
+  "size": 1802,
+  "sha256": "9175f09b3b3c4afaabd848459d1d34f082741f92b31de90dba0da0c0a213415b"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/WORKSPACE_OWNERSHIP.md",
@@ -23330,6 +23340,11 @@
   "sha256": "4a58535f4e224c87cf26793734fe778c456f7ab7e11ebc29e260ef485a0a18a0"
  },
  {
+  "path": "TESTS/test_knowledge_contract.py",
+  "size": 3164,
+  "sha256": "3155c0a006df99cc715b40910964b055ce565f3f591e46b471c0b8324496b687"
+ },
+ {
   "path": "TESTS/test_maintainability_audit.py",
   "size": 2695,
   "sha256": "cc26dc0757b42a790b06cec0f369536ab86bad54c4c70b8b6da50d015491e122"
@@ -23373,6 +23388,11 @@
   "path": "TESTS/test_shared_shell.py",
   "size": 6899,
   "sha256": "edf53fe5d5d4b3d8ba902ebb461ebe13dd7431eceeee6ca0bf13136fab55c2c0"
+ },
+ {
+  "path": "TESTS/test_skill_creator_eval.py",
+  "size": 4059,
+  "sha256": "82f0bba75199a04acbd74668025fe399ff26f9e4206027ae5b27c4b66c90d5d7"
  },
  {
   "path": "TESTS/test_toolbox.py",
@@ -26115,6 +26135,11 @@
   "sha256": "46abd4e19e482b4aeebea24b135c2d88fb122a63346dbeab7fcecd83828a826d"
  },
  {
+  "path": "_CANONICAL-SKILLS/skill-creator/references/learning-capture.md",
+  "size": 1194,
+  "sha256": "8b8d6b77a76bd967bf68bd6bf2f08bfe0dd0f41383b77df99766321b84b5e091"
+ },
+ {
   "path": "_CANONICAL-SKILLS/skill-creator/references/schemas.md",
   "size": 12491,
   "sha256": "5ef5fd3c1ac7baae965b5bda6b4f2cf6a191a2d712c7fef2a12dde84573b4833"
@@ -26893,6 +26918,11 @@
   "path": "docs/TASK-ROUTING.md",
   "size": 4464,
   "sha256": "67086657c696fbb1914350ce903a09e5923bb8d60b6e0c50918eb127b68a9966"
+ },
+ {
+  "path": "docs/THIRD-PARTY-roblox-skills.md",
+  "size": 808,
+  "sha256": "e98a9bc00f82be58b93e514c1b22ea35030e9a9adfd3ad00527c7f82416f1aeb"
  },
  {
   "path": "docs/TOOL-EVALUATIONS.md",
@@ -27745,6 +27775,11 @@
   "sha256": "3b51c9e792010f2012b4854e629e3835627683ab6762a91a4116dea34748cf7b"
  },
  {
+  "path": "docs/history/V8.37.0-CHANGELOG.md",
+  "size": 2190,
+  "sha256": "46f92c9be6e177b439827ae0c3c77271e0ddb1a4eb460907b2253700d0302fd8"
+ },
+ {
   "path": "docs/history/V8.4.0-CHANGELOG.md",
   "size": 8101,
   "sha256": "2dff11b96f27af7938502b0013a6470824a77f8b1eb7587f3a22c05f9f36cf8a"
@@ -28038,6 +28073,121 @@
   "path": "docs/history/V8.9.0-CHANGELOG.md",
   "size": 7138,
   "sha256": "2e4ce90c6d3909a944eac978a4d438465780668b92d9355c38f9262d671ebc91"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-analytics-liveops.md",
+  "size": 7041,
+  "sha256": "ba1d2e277a7287a52ca19452bed45f51b762afc501ccd6b48e15bbf726fef951"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-architecture.md",
+  "size": 18689,
+  "sha256": "91aa293b48cfff61aca31fae4df68d9382544575147e3d3a43ec5a5c6ecd3a4a"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-audio.md",
+  "size": 5661,
+  "sha256": "90b2e22511a9c334a7a2780a15b9b3cba0397e44d0c698500ffb2d843beda0cb"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-characters-animation.md",
+  "size": 11233,
+  "sha256": "ee0b9c779d76d470bc25ee4ceac953cac5ded1c7a65a8cf37588c778812498d6"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-code-review.md",
+  "size": 16890,
+  "sha256": "913bd862eddaf4f16036c03321d5ff8fec2417a8d0c768f11a327cc47af79c1c"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-data-stores.md",
+  "size": 18743,
+  "sha256": "5a7969091087ea669ad6967d0656bfbae55e3ec7e844884436c9d379b801efde"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-game-systems.md",
+  "size": 24331,
+  "sha256": "a05cae28e6f3669a156fc3dc0a983e1bf7a1af8d8a64531e09a999aaa325cc9b"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-input.md",
+  "size": 8242,
+  "sha256": "911a5e3a980b050311deb7393409fb19d58b0c97dfc64c12d80b4c1eb85b0009"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-luau.md",
+  "size": 23774,
+  "sha256": "0d5279cb2c3f96835a4d4088bb7d24f3e3902aad11b627dc8e27420765cc8154"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-monetization.md",
+  "size": 13607,
+  "sha256": "933cfd1218623fc8193c5ad668e9dd054893ef8887129aa486b7d2ff2be379e3"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-networking.md",
+  "size": 12805,
+  "sha256": "4fe7fbc7cbdb767858be349b3642b779475688e5e42e0435f1cb58ed66b07571"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-npc-ai.md",
+  "size": 9591,
+  "sha256": "a350ead4c85b59f96efcd4da4c3049071b1777051954762b64dfffa2d9814c84"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-open-cloud.md",
+  "size": 11406,
+  "sha256": "93f614ad07af355886867a8d9923621225daa3db9500b65fdacc4f586fdc7229"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-performance.md",
+  "size": 10961,
+  "sha256": "40a6692a6632962091084051a44391b4561a27ddbe694b73da9c9de16e94d5cd"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-physics.md",
+  "size": 20539,
+  "sha256": "5f560a828794327e30dbad5acdf4846ff8806a53eb41b2c037490029239e41aa"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-security.md",
+  "size": 15245,
+  "sha256": "7fd05feabba4b6975c9b752ddddc35ecaab384d393d1804687963955a7e7d71e"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-studio-mcp.md",
+  "size": 8947,
+  "sha256": "f24dacb62cbdc50f5385e1370638685226244518c268697b6e666721d5e833dc"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-teleport-matchmaking.md",
+  "size": 7434,
+  "sha256": "e7005a5d06394152b85563843e5cdf29487cb4b1e826e0c03b402217667c3e50"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-testing.md",
+  "size": 9405,
+  "sha256": "0c10aeb86565c7005319f351c418b7508486675336fc4c7545d6de67d3400db0"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-text-chat.md",
+  "size": 11441,
+  "sha256": "a8827c68d21082dddff6b629adf353994bb34eb7dd26baecd0d46cbdc887d708"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-tooling.md",
+  "size": 8732,
+  "sha256": "cda5aa6bc3e3a50b068d7ec8a4c9110860366e26b6f3d998ce9069e083bcc9d3"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-ui.md",
+  "size": 12237,
+  "sha256": "625cceece9ecbec990371cff908524c4905182c051b500f37d304a18c90d509c"
+ },
+ {
+  "path": "docs/roblox-assistant-briefs/roblox-world-building.md",
+  "size": 7705,
+  "sha256": "db82d68df89aff0c619433a598f4c0f906dd5491c8f7ca9f1c935153584b149d"
  },
  {
   "path": "docs/superpowers/plans/2026-10-23-fresh-windows-recovery.md",
