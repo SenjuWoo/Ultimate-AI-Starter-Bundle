@@ -206,6 +206,9 @@ $ExcludePacks = @($ExcludePacks | ForEach-Object { $_ -split ',' } | ForEach-Obj
 foreach ($both in @($Packs | Where-Object { $ExcludePacks -contains $_ })) { throw "Pack '$both' is in both -Packs and -ExcludePacks." }
 
 $ErrorActionPreference = 'Stop'
+# Optional components that failed without invalidating the install. Reported in
+# the receipt and once at the end, so "complete" never hides a broken step.
+$script:Degraded = @()
 $PackRoot = $PSScriptRoot
 
 # Durable installer diagnostics. A double-clicked .bat used to vanish on the
@@ -2657,7 +2660,15 @@ Write-UabsStep "Post-install discovery"
 $disc = Join-Path $PackRoot 'TOOLS\discover_tools.ps1'
 if (Test-Path $disc) {
   # The table goes to the details log; TOOLBELT.md is the readable inventory.
-  if ((Invoke-UabsChildScript -Title 'discover_tools' -File $disc) -eq 0) { Write-UabsOk 'Installed tools located' }
+  $discExit = Invoke-UabsChildScript -Title 'discover_tools' -File $disc
+  if ($discExit -eq 0) {
+    Write-UabsOk 'Installed tools located'
+  } else {
+    # Discovery is diagnostic, not a gate: say so once, plainly, and keep the
+    # failure in the receipt and the doctor instead of printing a clean install.
+    $script:Degraded += 'tool discovery failed (exit ' + $discExit + '); tool states are unknown'
+    Write-UabsWarn ('DEGRADED: tool discovery failed (exit {0}); the install is complete but the tool inventory is unknown' -f $discExit)
+  }
 }
 
 $stateDir = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle'
@@ -2720,6 +2731,7 @@ version = $BundleVersion
   native_plugins = $nativePlugins
   pack_root = $PackRoot
 }
+if ($script:Degraded.Count) { $state.degraded = @($script:Degraded) }
 $state | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $stateDir 'install-state.json') -Encoding UTF8
 $log | Set-Content (Join-Path $stateDir 'install-log.txt') -Encoding UTF8
 

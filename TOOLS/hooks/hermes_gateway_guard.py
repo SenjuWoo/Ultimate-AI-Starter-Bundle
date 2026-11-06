@@ -27,9 +27,20 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
+import time
 from pathlib import Path
 
 MARKER = "UABS-HERMES-GATEWAY-GUARD"
+# The block is delimited so a foreign sitecustomize.py survives install,
+# reinstall and uninstall byte-for-byte. The old code appended on first install
+# and then overwrote the whole file on the next run, because the marker it used
+# to detect "ours" was present either way.
+BLOCK_BEGIN = "# >>> " + MARKER + " >>>"
+BLOCK_END = "# <<< " + MARKER + " <<<"
+# 75 = EX_TEMPFAIL. A blocked replace that could not restore a host must not
+# report success to the caller.
+EXIT_RECOVERY_FAILED = 75
 SPAWN_FLAG = "UABS_GATEWAY_GUARD_SPAWNED"
 GUARD_NAME = "hermes_gateway_guard.py"
 
@@ -218,10 +229,23 @@ def spawn_default_host(root: Path) -> bool:
         return False
 
 
-def _stop_process() -> None:
+def _stop_process(code: int = 0) -> None:
     # site.py execsitecustomize catches Exception only. SystemExit during
     # that import is "Fatal Python error: init_import_site" and exit 1.
-    os._exit(0)
+    os._exit(int(code))
+
+
+def wait_for_host(root: Path, seconds: float = 20.0, alive=pid_alive) -> bool:
+    """True once the default gateway really answers, not merely when it was spawned."""
+    deadline = time.monotonic() + seconds
+    while time.monotonic() < deadline:
+        try:
+            if host_is_multiplexer(read_host_state(root) or {}, root, alive):
+                return True
+        except Exception:
+            pass
+        time.sleep(0.5)
+    return False
 
 
 def _log(root: Path, line: str) -> None:
@@ -243,14 +267,21 @@ def guard_process(argv: list[str] | None = None, environ: dict[str, str] | None 
         return
     root = default_root(env)
     if host_is_multiplexer(read_host_state(root) or {}, root):
-        _log(root, f"blocked profile={profile} reason=host-alive")
-        _stop_process()
+        _log(root, f"blocked profile={profile} reason=host-alive host=ok")
+        _stop_process(0)
+    # The recovery spawn carries this flag. It must be ALLOWED through, or the
+    # replacement it just started exits immediately and nothing is running -
+    # which is how the old guard reported success while leaving no host.
     if env.get(SPAWN_FLAG) == "1":
-        _log(root, f"blocked profile={profile} reason=spawn-already-attempted")
-        _stop_process()
+        _log(root, f"allow profile={profile} reason=recovery-spawn")
+        return
     started = spawn_default_host(root)
-    _log(root, f"blocked profile={profile} reason=host-down started={int(started)}")
-    _stop_process()
+    healthy = bool(started) and wait_for_host(root)
+    _log(root, (f"blocked profile={profile} reason=host-down started={int(bool(started))} "
+                f"host={'ok' if healthy else 'missing'}"))
+    # A blocked replace that could not restore a host must not exit 0: the
+    # agent or updater that ran it would read success.
+    _stop_process(0 if healthy else EXIT_RECOVERY_FAILED)
 
 
 def block_body(profile: str) -> str:
@@ -314,40 +345,47 @@ def read_input(timeout: float = 2.0) -> dict:
     return loaded if isinstance(loaded, dict) else {}
 
 
-def sitecustomize_text() -> str:
-    return (
-        "# " + MARKER + "\n"
-        "# Installed by Ultimate-AI-Starter-Bundle. Replaced in full on reinstall.\n"
-        "def _uabs_hermes_gateway_guard():\n"
-        "    try:\n"
-        "        import importlib.util\n"
-        "        import os\n"
-        "        from pathlib import Path\n"
-        "        candidates = []\n"
-        "        env = os.environ.get('UABS_HERMES_GATEWAY_GUARD', '').strip()\n"
-        "        if env:\n"
-        "            candidates.append(Path(env))\n"
-        "        local = os.environ.get('LOCALAPPDATA', '').strip()\n"
-        "        if local:\n"
+def _guard_body(nl: str) -> str:
+    """The interception, as a delimited, reversible block."""
+    return nl.join([
+        "def _uabs_hermes_gateway_guard():",
+        "    try:",
+        "        import importlib.util",
+        "        import os",
+        "        from pathlib import Path",
+        "        candidates = []",
+        "        env = os.environ.get('UABS_HERMES_GATEWAY_GUARD', '').strip()",
+        "        if env:",
+        "            candidates.append(Path(env))",
+        "        local = os.environ.get('LOCALAPPDATA', '').strip()",
+        "        if local:",
         "            candidates.append(Path(local) / 'Ultimate-AI-Starter-Bundle' / 'hooks' / '"
-        + GUARD_NAME + "')\n"
-        "        candidates.append(Path(__file__).resolve().parent / 'uabs_hermes_gateway_guard.py')\n"
-        "        for path in candidates:\n"
-        "            if not path.is_file():\n"
-        "                continue\n"
-        "            spec = importlib.util.spec_from_file_location('uabs_hermes_gateway_guard', path)\n"
-        "            if spec is None or spec.loader is None:\n"
-        "                continue\n"
-        "            module = importlib.util.module_from_spec(spec)\n"
-        "            spec.loader.exec_module(module)\n"
-        "            module.guard_process()\n"
-        "            return\n"
-        "    except SystemExit:\n"
-        "        os._exit(0)\n"
-        "    except Exception:\n"
-        "        return\n"
-        "_uabs_hermes_gateway_guard()\n"
-    )
+        + GUARD_NAME + "')",
+        "        candidates.append(Path(__file__).resolve().parent / 'uabs_hermes_gateway_guard.py')",
+        "        for path in candidates:",
+        "            if not path.is_file():",
+        "                continue",
+        "            spec = importlib.util.spec_from_file_location('uabs_hermes_gateway_guard', path)",
+        "            if spec is None or spec.loader is None:",
+        "                continue",
+        "            module = importlib.util.module_from_spec(spec)",
+        "            spec.loader.exec_module(module)",
+        "            module.guard_process()",
+        "            return",
+        "    except SystemExit as exc:",
+        "        os._exit(int(exc.code or 0))",
+        "    except Exception:",
+        "        return",
+        "_uabs_hermes_gateway_guard()",
+        "",
+    ])
+
+
+def sitecustomize_text(block_only: bool = False) -> str:
+    """Text this pack writes. ``block_only`` omits the separating newlines."""
+    nl = chr(10)
+    body = BLOCK_BEGIN + nl + _guard_body(nl) + BLOCK_END + nl
+    return body if block_only else nl + nl + body
 
 
 def hermes_pythons(localappdata: Path) -> list[Path]:
@@ -370,7 +408,7 @@ def sitecustomize_missing(localappdata: Path) -> bool:
             text = target.read_text(encoding="utf-8", errors="replace")
         except OSError:
             return True
-        if MARKER not in text:
+        if BLOCK_BEGIN not in text:
             return True
     return False
 
@@ -393,9 +431,79 @@ def site_packages_dir(python: Path) -> Path | None:
     return Path(line[-1].strip())
 
 
-def install_sitecustomize(localappdata: Path, source: Path) -> list[Path]:
-    written: list[Path] = []
-    text = sitecustomize_text()
+def _read_any(path: Path) -> tuple:
+    """(text, had_bom, newline style) without losing bytes we did not write."""
+    raw = path.read_bytes()
+    bom = raw.startswith(b"\xef\xbb\xbf")
+    text = raw.decode("utf-8-sig", "replace")
+    nl = "\r\n" if "\r\n" in text else "\n"
+    return text, bom, nl
+
+
+def _atomic_write(path: Path, text: str, bom: bool) -> None:
+    """Write beside the target and replace it, so a crash cannot truncate it."""
+    data = (b"\xef\xbb\xbf" if bom else b"") + text.encode("utf-8")
+    fd, tmp = tempfile.mkstemp(prefix=path.name + ".uabs-", dir=str(path.parent))
+    try:
+        with os.fdopen(fd, "wb") as handle:
+            handle.write(data)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp, path)
+    finally:
+        if os.path.exists(tmp):
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+
+
+def upsert_block(text: str) -> str:
+    """Insert or refresh only this pack's block; never touch foreign text."""
+    nl = "\r\n" if "\r\n" in text else "\n"
+    block = sitecustomize_text().replace("\n", nl)
+    begin = text.find(BLOCK_BEGIN)
+    if begin >= 0:
+        end = text.find(BLOCK_END, begin)
+        if end < 0:
+            raise ValueError("guard block start found without its end")
+        end += len(BLOCK_END)
+        if text[end:end + 2] == nl:
+            end += 2
+        elif text[end:end + 1] in ("\n", "\r"):
+            end += 1
+        return text[:begin] + block.lstrip("\r\n") + text[end:]
+    return text + block
+
+
+def strip_block(text: str) -> str:
+    """Exact inverse of upsert_block: our bytes out, everything else intact."""
+    begin = text.find(BLOCK_BEGIN)
+    if begin < 0:
+        return text
+    # Take back the two separator newlines we added, so a foreign file returns
+    # byte-for-byte instead of gaining blank lines on every install cycle.
+    head = begin
+    for _ in range(2):
+        if text[head - 2:head] == "\r\n":
+            head -= 2
+        elif text[head - 1:head] in ("\n", "\r"):
+            head -= 1
+        else:
+            break
+    end = text.find(BLOCK_END, begin)
+    if end < 0:
+        raise ValueError("guard block start found without its end")
+    end += len(BLOCK_END)
+    if text[end:end + 2] == "\r\n":
+        end += 2
+    elif text[end:end + 1] in ("\n", "\r"):
+        end += 1
+    return text[:head] + text[end:]
+
+
+def install_sitecustomize(localappdata: Path, source: Path) -> list:
+    written = []
     module = source.read_bytes()
     for python in hermes_pythons(localappdata):
         site = site_packages_dir(python)
@@ -403,12 +511,19 @@ def install_sitecustomize(localappdata: Path, source: Path) -> list[Path]:
             continue
         site.mkdir(parents=True, exist_ok=True)
         target = site / "sitecustomize.py"
-        if target.is_file() and MARKER not in target.read_text(encoding="utf-8", errors="replace"):
-            existing = target.read_text(encoding="utf-8", errors="replace")
-            if "_uabs_hermes_gateway_guard()" not in existing:
-                target.write_text(existing.rstrip() + "\n\n" + text, encoding="utf-8")
+        if target.is_file():
+            text, bom, _ = _read_any(target)
+            # An older build wrote the whole file. That copy is ours only when
+            # our marker is its first line; anything else keeps a backup.
+            if BLOCK_BEGIN not in text and text.lstrip("\ufeff").startswith("# " + MARKER):
+                try:
+                    target.rename(target.with_suffix(".py.uabs-legacy-bak"))
+                except OSError:
+                    pass
+                text, bom = "", False
+            _atomic_write(target, upsert_block(text), bom)
         else:
-            target.write_text(text, encoding="utf-8")
+            _atomic_write(target, sitecustomize_text(), False)
         (site / "uabs_hermes_gateway_guard.py").write_bytes(module)
         written.append(target)
     return written
@@ -421,8 +536,17 @@ def remove_sitecustomize(localappdata: Path) -> None:
             continue
         target = site / "sitecustomize.py"
         module = site / "uabs_hermes_gateway_guard.py"
-        if target.is_file() and MARKER in target.read_text(encoding="utf-8", errors="replace"):
-            target.unlink()
+        if target.is_file():
+            text, bom, _ = _read_any(target)
+            if BLOCK_BEGIN in text:
+                rest = strip_block(text)
+                if rest.strip():
+                    _atomic_write(target, rest, bom)
+                else:
+                    target.unlink()
+            elif text.lstrip("\ufeff").startswith("# " + MARKER):
+                # Our pre-block install: the whole file is ours.
+                target.unlink()
         if module.is_file():
             module.unlink()
 
@@ -472,7 +596,7 @@ def selftest() -> int:
     expect("hermes shape", hermes_block.get("action") == "block" and "storage_unavailable" in hermes_block["message"])
     expect("claude shape", claude_block.get("hookSpecificOutput", {}).get("permissionDecision") == "deny")
     text = sitecustomize_text()
-    expect("marker", text.startswith("# " + MARKER) and "guard_process" in text)
+    expect("marker", BLOCK_BEGIN in text and BLOCK_END in text and "guard_process" in text)
     import tempfile
     with tempfile.TemporaryDirectory() as tmp:
         site = Path(tmp)

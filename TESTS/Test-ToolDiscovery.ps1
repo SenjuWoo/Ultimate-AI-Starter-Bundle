@@ -51,7 +51,8 @@ Check ($json.tools.'cli-anything-source'.state -eq 'DISCOVERED') 'source checkou
 $cfg = Join-Path $fx 'hermes.json'
 '{"mcp_servers":{"context7":{"enabled":true},"blender":{"enabled":false}}}' | Set-Content -LiteralPath $cfg -Encoding UTF8
 $json = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $script -Json -Isolated -SearchDir (Join-Path $fx 'empty') -HermesConfig $cfg | Out-String | ConvertFrom-Json
-Check ($json.tools.'mcp:context7'.state -eq 'CALLABLE') 'enabled MCP is CALLABLE'
+Check ($json.tools.'mcp:context7'.state -eq 'CONFIGURED') 'an enabled MCP entry is CONFIGURED, not proven CALLABLE'
+Check ($json.tools.'mcp:context7'.detail -match 'no tools/list probe') 'CONFIGURED says which probe is missing'
 Check ($json.tools.'mcp:blender'.state -eq 'INSTALLED' -and $json.tools.'mcp:blender'.detail -match 'inactive') 'installed but inactive MCP is distinguished'
 
 $cache = Join-Path $fx 'cache'

@@ -1,10 +1,37 @@
-# Bundle audit state
+# Bundle state
 
-## Handoff — public copy and last-review judgment — 2026-11-06
+## Current verified state
 
-- Not implemented. Assignment: `docs/dropoffs/2026-11-06-public-copy-and-judgment-gate.md`.
-- A later agent applies the paste-ready lines there. The pause before a proven-worse method is not a refusal and adds no content gate. Public GitHub README, CHANGELOG and release text stays free of personal and machine detail.
-- Do not commit, publish, or bump the version as part of picking up that file.
+| | |
+|---|---|
+| Release | `v8.36.0` at `4abba63` (published, 9 assets, digests verified) |
+| Branch | `main`, in sync with `origin/main` |
+| Next version | `v8.36.1` while this pass is in progress |
+| Evidence | `python TESTS/test_release_contract.py` (166), `TESTS/Test-Pack.ps1`, `TOOLS/Verify-Fast.ps1`, `gh run list --commit <sha>` |
+
+- Done and verified: reliability pass in 8.36.0 (atomic version bump,
+  receipt-gated cleanup, verified remote installs, reachable release recovery,
+  relocation resolver) and the public-text / last-review rules in every
+  instruction form.
+- In progress: the post-audit pass - gateway guard ownership and exit codes,
+  tool-discovery states, installer degraded reporting and remote rollback,
+  release state machine, this file's structure.
+- Known issues: `playwright-cli` 0.1.23 unevaluated (no Chrome distribution on
+  the build machine); Headroom 0.41.0 -> 0.43.1 held pending a schema measurement.
+- Next action: finish the pass, run the gates, publish the patch release.
+
+Older sections below are the history this state summarises; anything marked
+"not implemented" is superseded by the entry that implements it.
+
+## Handoff - public copy and last-review judgment - 2026-11-06 (superseded)
+
+- SUPERSEDED by "8.36.0 - public-text rule and last review". That work was
+  applied and shipped; the line below is kept only as the original assignment
+  record and must not be read as current status.
+- Assignment: `docs/dropoffs/2026-11-06-public-copy-and-judgment-gate.md`.
+- The pause before a proven-worse method is not a refusal and adds no content
+  gate. Public GitHub README, CHANGELOG and release text stays free of personal
+  and machine detail.
 
 ## 8.36.0 — public-text rule and last review — 2026-11-06
 

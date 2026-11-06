@@ -42,15 +42,16 @@ $ErrorActionPreference = 'Stop'
 
 $canonical = Join-Path (Split-Path -Parent $PSScriptRoot) '_CANONICAL-SKILLS\tool-discovery\scripts\discover_tools.ps1'
 
-if (-not (Test-Path -LiteralPath $canonical -PathType Leaf)) {{
+if (-not (Test-Path -LiteralPath $canonical -PathType Leaf)) {
 
   Write-Host "Tool discovery implementation missing: $canonical"
 
   exit 1
 
-}}
+}
 
 & $canonical @PSBoundParameters
 
-exit $LASTEXITCODE
+if ($null -eq $LASTEXITCODE) { exit 0 }
+exit [int]$LASTEXITCODE
 

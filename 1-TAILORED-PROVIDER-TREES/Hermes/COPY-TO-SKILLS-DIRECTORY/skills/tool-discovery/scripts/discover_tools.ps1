@@ -84,10 +84,12 @@ function Invoke-Probe {
 }
 
 # Report shape: legacy `status` (FOUND/MISSING) stays for old consumers; `state`
-# carries the precise value: VERIFIED, CALLABLE, INSTALLED, DISCOVERED, MISSING.
+# carries the precise value: VERIFIED, CALLABLE, CONFIGURED, INSTALLED,
+# DISCOVERED, MISSING. VERIFIED means a probe of the real entrypoint answered;
+# a directory or a config entry is not proof and must not claim that state.
 function New-Row {
   param([string]$State, [string]$Path, [string]$Install, [string]$Version, [string]$Detail)
-  $legacy = if ($State -in @('VERIFIED','CALLABLE','INSTALLED','DISCOVERED')) { 'FOUND' } else { 'MISSING' }
+  $legacy = if ($State -in @('VERIFIED','CALLABLE','CONFIGURED','INSTALLED','DISCOVERED')) { 'FOUND' } else { 'MISSING' }
   $row = [ordered]@{ status = $legacy; state = $State; path = $Path; install = $Install }
   if ($Version) { $row.version = $Version }
   if ($Detail) { $row.detail = $Detail }
@@ -166,12 +168,12 @@ $rtVersion = $null
 $rtVersionFile = Join-Path $rtRoot 'VERSION'
 if (Test-Path -LiteralPath $rtVersionFile -PathType Leaf) { $rtVersion = ([IO.File]::ReadAllText($rtVersionFile)).Trim() }
 $rtOk = (Test-Path -LiteralPath $rtRoot -PathType Container) -and (Test-Path -LiteralPath $rtBin -PathType Container)
-$report['reverse-this'] = if ($rtOk) { New-Row 'VERIFIED' $rtRoot 'https://github.com/SenjuWoo/reverse-this (owner kit; do not duplicate)' $rtVersion 'bin: ' + $rtBin }
+$report['reverse-this'] = if ($rtOk) { New-Row 'INSTALLED' $rtRoot 'https://github.com/SenjuWoo/reverse-this (owner kit; do not duplicate)' $rtVersion ('kit present at ' + $rtBin + '; the owner CLI was not probed') }
   else { New-Row 'MISSING' $null 'https://github.com/SenjuWoo/reverse-this (owner kit; do not duplicate)' }
 
 $sfRoot = Get-EnvAnyScope 'SKYRIM_FORGE_ROOT'
 if (-not $sfRoot) { $sfRoot = Join-Path $env:LOCALAPPDATA 'Skyrim-Tools\Skyrim-Forge' }
-$report['skyrim-forge'] = if (Test-Path -LiteralPath $sfRoot -PathType Container) { New-Row 'VERIFIED' $sfRoot 'https://github.com/SenjuWoo/SkyrimForge (owner tool; do not duplicate)' $null 'houseCARL is owned by Forge' }
+$report['skyrim-forge'] = if (Test-Path -LiteralPath $sfRoot -PathType Container) { New-Row 'INSTALLED' $sfRoot 'https://github.com/SenjuWoo/SkyrimForge (owner tool; do not duplicate)' $null 'kit present; houseCARL is owned by Forge and was not probed' }
   else { New-Row 'MISSING' $null 'https://github.com/SenjuWoo/SkyrimForge (owner tool; do not duplicate)' }
 
 foreach ($rt in @(@('python','https://www.python.org/downloads/'), @('node','https://nodejs.org/'), @('git','https://git-scm.com/'), @('gh','https://cli.github.com/'), @('uv','https://docs.astral.sh/uv/'))) {
@@ -298,7 +300,7 @@ if ($HermesConfig -and (Test-Path -LiteralPath $HermesConfig -PathType Leaf)) {
     foreach ($prop in $cfg.mcp_servers.PSObject.Properties) {
       $enabled = $true
       if ($prop.Value -and $prop.Value.PSObject.Properties['enabled']) { $enabled = [bool]$prop.Value.enabled }
-      $report['mcp:' + $prop.Name] = New-Row $(if ($enabled) { 'CALLABLE' } else { 'INSTALLED' }) $null 'Enable the server in the profile that needs it' $null $(if ($enabled) { 'configured and enabled' } else { 'configured but inactive in this profile' })
+      $report['mcp:' + $prop.Name] = New-Row $(if ($enabled) { 'CONFIGURED' } else { 'INSTALLED' }) $null 'Enable the server in the profile that needs it' $null $(if ($enabled) { 'configured and enabled; no tools/list probe was run' } else { 'configured but inactive in this profile' })
     }
   } catch { $meta.config_error = $_.Exception.Message }
 }

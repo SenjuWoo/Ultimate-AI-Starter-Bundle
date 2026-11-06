@@ -113,6 +113,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_release_contract.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_gateway_guard_lifecycle.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_version_bump.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_shared_shell.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_hermes_bootstrap.py

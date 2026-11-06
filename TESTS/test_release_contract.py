@@ -494,7 +494,11 @@ def test_gate_and_remote_fail_closed() -> None:
     )
 
     remote = read(ROOT / "INSTALL-REMOTE.ps1")
-    assert "if ($LASTEXITCODE -ne 0) { Fail" in remote, "remote installer can still print DONE after installer failure"
+    # The guard gained a rollback body, so assert the behaviour, not one spelling:
+    # a failing child must reach Fail carrying its exit code.
+    assert "if ($LASTEXITCODE -ne 0)" in remote, "remote installer ignores the child installer's exit code"
+    assert "Fail ('installer exit code: '" in remote, "remote installer can still print DONE after installer failure"
+    assert "restored the previous install" in remote, "a failed installer no longer rolls the tree back"
     assert "Programs\\Ultimate-AI-Starter-Bundle" in remote, "remote installer still uses a version-stamped/state path"
     assert "$dest = $DestRoot" in remote and "$dest + '.previous'" in remote, (
         "remote installer lacks stable destination plus rollback"
@@ -953,6 +957,17 @@ def test_retired_skills_are_declared_and_cannot_delete_a_live_skill() -> None:
             assert successor in canonical | set(json.loads(read(ROOT / "BUNDLED-TOOLS/PACKS.json"))["packs"]["skyrim"]["skills"]), (
                 f"{entry['name']} points at successor {successor!r}, which is not a shipped skill"
             )
+
+
+def test_state_md_opens_with_current_state_and_no_dead_status() -> None:
+    """The top of STATE.md is what a resuming agent reads first."""
+    state = read(ROOT / "STATE.md")
+    head = state[:2000]
+    assert "## Current verified state" in head, "STATE.md does not open with the current state"
+    assert "Release" in head and "Branch" in head and "Next action" in head, (
+        "the current-state block is missing the facts a resume needs")
+    assert "Not implemented" not in state, (
+        "STATE.md still marks work as not implemented; supersede it instead of leaving a contradiction")
 
 
 def test_retired_skill_deletion_requires_an_ownership_receipt() -> None:
@@ -1851,7 +1866,8 @@ def test_windows_ci_and_ps51_static_contract() -> None:
     remote = read(ROOT / 'INSTALL-REMOTE.ps1')
     assert remote.count("*-Full-Offline.zip") == 1, 'remote installer Full preference block duplicated'
     assert remote.count("*-Core.zip") == 1, 'remote installer Core fallback block duplicated'
-    assert "if ($LASTEXITCODE -ne 0) { Fail" in remote, 'remote installer must fail closed on child installer error'
+    assert "if ($LASTEXITCODE -ne 0)" in remote and "Fail ('installer exit code: '" in remote, (
+        "remote installer must fail closed on child installer error")
     ci = read(ROOT / ".github" / "workflows" / "ci.yml")
     for cmd in (
         "python TESTS/test_release_contract.py",
@@ -3099,6 +3115,7 @@ def main() -> int:
         test_hermes_tool_budget_is_data_and_internally_consistent,
         test_tool_budget_is_applied_without_overwriting_a_user_choice,
         test_retired_skills_are_declared_and_cannot_delete_a_live_skill,
+        test_state_md_opens_with_current_state_and_no_dead_status,
         test_retired_skill_deletion_requires_an_ownership_receipt,
         test_cleanup_is_dry_run_by_default_and_scoped_to_pack_files,
         test_tool_routing_stays_scoped_and_preserves_evidence_boundaries,

@@ -205,7 +205,18 @@ if ($InstallerArgs.Count) { $args += $InstallerArgs }
 Step "Running installer from $dest"
 $script:FailCode = 1
 & powershell @args
-if ($LASTEXITCODE -ne 0) { Fail ('installer exit code: ' + $LASTEXITCODE) }
+if ($LASTEXITCODE -ne 0) {
+  $instCode = $LASTEXITCODE
+  # The new tree failed its own installer. Put the working one back: an update
+  # that half-configures the machine and leaves the broken tree in place is
+  # worse than no update. The rollback copy stays until a later success.
+  if ((Test-Path -LiteralPath $previous) -and (Test-Path -LiteralPath (Join-Path $previous 'BUNDLED-TOOLS\CATALOG.json'))) {
+    if (Test-Path -LiteralPath $dest) { Remove-Item -LiteralPath $dest -Recurse -Force -ErrorAction SilentlyContinue }
+    Move-Item -LiteralPath $previous -Destination $dest -ErrorAction SilentlyContinue
+    Warn ("installer exit code {0}; restored the previous install at {1}" -f $instCode, $dest)
+  }
+  Fail ('installer exit code: ' + $instCode)
+}
 
 # V7 remote installs used version-named children inside the state directory.
 # Delete only children that carry the bundle catalog marker.

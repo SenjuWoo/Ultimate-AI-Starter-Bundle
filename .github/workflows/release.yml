@@ -62,9 +62,28 @@ jobs:
           # A newer main commit gets its own CI and its own release decision.
           if [ "$main" != "$SHA" ]; then echo "main is $main, not $SHA: skip"; echo "publish=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           # ls-remote fails the job on a network error instead of reading it as "no tag".
-          if [ -n "$(git ls-remote --tags origin "refs/tags/$tag")" ]; then echo "$tag exists: nothing to publish"; echo "publish=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          tag_sha="$(git ls-remote --tags origin "refs/tags/$tag" | awk 'NR==1{print $1}')"
+          if [ -n "$tag_sha" ]; then
+            # Immutable tags: a tag on another commit is a hard stop, never a retarget.
+            if [ "$tag_sha" != "$SHA" ]; then
+              echo "::error::$tag already points at $tag_sha, not $SHA - refusing to retarget a published tag"
+              exit 1
+            fi
+            # Same commit: a previous run may have failed after publishing. Do not
+            # rebuild (companion resolution is 'latest' and would differ); verify
+            # the bytes that are already published.
+            if gh release view "$tag" --repo "$REPO" >/dev/null 2>&1; then
+              echo "$tag already published at this SHA: verifying the published assets"
+              echo "publish=true" >> "$GITHUB_OUTPUT"; echo "mode=verify" >> "$GITHUB_OUTPUT"
+              echo "tag=$tag" >> "$GITHUB_OUTPUT"; echo "version=$version" >> "$GITHUB_OUTPUT"
+              echo "commit_time=$(git show -s --format=%cI HEAD)" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "::error::$tag exists at this SHA but has no release; publishing it is a manual decision"
+            exit 1
+          fi
           test -f "docs/history/V$version-CHANGELOG.md"
-          { echo "publish=true"; echo "tag=$tag"; echo "version=$version"; echo "commit_time=$(git show -s --format=%cI HEAD)"; } >> "$GITHUB_OUTPUT"
+          { echo "publish=true"; echo "mode=publish"; echo "tag=$tag"; echo "version=$version"; echo "commit_time=$(git show -s --format=%cI HEAD)"; } >> "$GITHUB_OUTPUT"
 
       - name: Wait for every other check on this SHA
         if: steps.decide.outputs.publish == 'true'
@@ -97,14 +116,14 @@ jobs:
           EOF
 
       - name: Fetch and verify the latest companion releases
-        if: steps.decide.outputs.publish == 'true'
+        if: steps.decide.outputs.publish == 'true' && steps.decide.outputs.mode == 'publish'
         shell: powershell
         run: |
           # In-process: the script throws on any failure, which fails the step.
           .\TOOLS\Get-Companions.ps1
 
       - name: Build twice and require identical bytes
-        if: steps.decide.outputs.publish == 'true'
+        if: steps.decide.outputs.publish == 'true' && steps.decide.outputs.mode == 'publish'
         run: |
           set -euo pipefail
           python TOOLS/build_release.py --root . --outdir "$RUNNER_TEMP/build-a" --require-companions
@@ -115,7 +134,7 @@ jobs:
           (cd "$RUNNER_TEMP/build-a" && sha256sum *.zip)
 
       - name: Write provenance (receipt, SBOM, observed checks, checksums)
-        if: steps.decide.outputs.publish == 'true'
+        if: steps.decide.outputs.publish == 'true' && steps.decide.outputs.mode == 'publish'
         run: |
           set -euo pipefail
           python TOOLS/release_provenance.py --dist "$RUNNER_TEMP/build-a" --checks "$RUNNER_TEMP/checks.json" \
@@ -123,7 +142,7 @@ jobs:
           test "$(ls "$RUNNER_TEMP/build-a" | wc -l)" -eq 9
 
       - name: Attest the build
-        if: steps.decide.outputs.publish == 'true'
+        if: steps.decide.outputs.publish == 'true' && steps.decide.outputs.mode == 'publish'
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-path: ${{ runner.temp }}/build-a/*.zip
@@ -135,6 +154,15 @@ jobs:
           VERSION: ${{ steps.decide.outputs.version }}
         run: |
           set -euo pipefail
+          if [ "${{ steps.decide.outputs.mode }}" = "verify" ]; then
+            # Re-run of a published release: the bytes are immutable, so only
+            # re-download and compare. No rebuild, no re-attest, no replacement.
+            rm -rf "$RUNNER_TEMP/published"
+            gh release download "$TAG" --repo "$REPO" --dir "$RUNNER_TEMP/published"
+            (cd "$RUNNER_TEMP/published" && sha256sum -c SHA256SUMS.txt)
+            echo "verified the published bytes of $TAG at $SHA"
+            exit 0
+          fi
           # A new user lands here first: say which file to take before the changelog.
           { 
             echo "**Which file?** Most people: \`Ultimate-AI-Starter-Bundle-$TAG-Full-Offline.zip\` (everything in one file). Smaller download: \`Ultimate-AI-Starter-Bundle-$TAG-Core.zip\` (the installer fetches the rest). Unzip it, double-click \`START-HERE.bat\`, then reopen your AI apps. The other files are checksums and build records for verifying the zip."

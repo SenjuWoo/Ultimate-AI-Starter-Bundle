@@ -89,6 +89,10 @@ def set_version(bare):
             # Calling m.group(1) on one raised IndexError, so --set crashed on
             # the first release that used it. Nothing to rewrite: skip it.
             if re.compile(pattern, re.M).groups == 0:
+                # Still prove the declaration is where it is expected: a file
+                # that lost the pattern would otherwise pass silently.
+                if not re.search(pattern, text, re.M):
+                    raise SystemExit("%s: no declaration matched for %s" % (rel, label))
                 continue
             text, count = re.subn(pattern, lambda m: m.group(0).replace(m.group(1), bare, 1), text, count=1, flags=re.M)
             if not count:
