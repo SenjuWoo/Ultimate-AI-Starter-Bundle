@@ -265,14 +265,14 @@ provider_routing:
   sort: price
   require_parameters: true
   only:
-  - StreamLake
-  - Particle AI
-  - Decart
-  - StepFun
-  - DeepInfra
-  - Cloudflare
-  - Baidu Qianfan
-  - GMICloud
+    - particle-ai
+    - streamlake
+    - deepinfra
+    - decart
+    - stepfun
+    - cloudflare
+    - deepseek
+    - baidu
 
 session_reset:
   mode: none
