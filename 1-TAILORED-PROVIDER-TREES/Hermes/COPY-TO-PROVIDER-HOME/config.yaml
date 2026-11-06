@@ -264,15 +264,6 @@ _config_version: 44
 provider_routing:
   sort: price
   require_parameters: true
-  only:
-    - particle-ai
-    - streamlake
-    - deepinfra
-    - decart
-    - stepfun
-    - cloudflare
-    - deepseek
-    - baidu
 
 session_reset:
   mode: none

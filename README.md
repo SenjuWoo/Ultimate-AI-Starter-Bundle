@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.37.5 -->
+<!-- Ultimate AI Starter Bundle v8.37.6 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.37.5
+# Ultimate AI Starter Bundle v8.37.6
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -191,13 +191,18 @@ MoA presets are still defined but **disabled**: the Particle-1 aggregator was th
 unreliable part, and a single model finishes more work per dollar. Re-enable with
 `moa.presets.deepseek_particle.enabled` if you want it.
 
-`provider_routing` sorts by price and **allowlists only the cheapest cache-read
-providers** for this model, by OpenRouter slug: `particle-ai`, `streamlake`,
-`deepinfra`, `decart`, `stepfun`, `cloudflare`, `deepseek`, `baidu` — cache read
-$0.0015–$0.0032 per 1M on 2026-11-06, all on ≥99.5% uptime. Everything else stays
-on OpenRouter's default (latest / auto). None of the allowlisted endpoints is fp4;
-OpenRouter still lists fp4 endpoints for this model, so exclude them on the
-OpenRouter side if you widen the list — quantization is not a Hermes routing key.
+`provider_routing` sorts by price with `require_parameters: true`, so OpenRouter
+routes to the cheapest provider that can actually run the tools. No provider list
+is hardcoded: prices move weekly. When you want to pin the cheapest **cache-read**
+providers instead, generate the list from live data:
+
+```
+python TOOLS/refresh-provider-routing.py                 # print the current list
+python TOOLS/refresh-provider-routing.py --write %LOCALAPPDATA%\hermes\config.yaml
+```
+
+It reads the model's endpoints API, skips fp4/int4 endpoints, and writes
+`provider_routing.only` for you. Nothing runs it automatically.
 There is **no fallback chain**: a silent downgrade is worse than a clear error.
 
 | Alias | Model | Use it for |
