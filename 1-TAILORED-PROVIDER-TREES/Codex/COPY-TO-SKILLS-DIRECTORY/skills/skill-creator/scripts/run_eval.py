@@ -7,9 +7,12 @@ for a set of queries. Outputs results as JSON.
 
 import argparse
 import json
+import shutil
 import os
 import select
 import subprocess
+import queue
+import threading
 import sys
 import time
 import uuid
@@ -92,38 +95,39 @@ def run_single_query(
 
         triggered = False
         start_time = time.time()
-        buffer = ""
-        # Track state for stream event detection
+        # Windows select() accepts sockets only: the old select() on a pipe raised
+        # OSError 10038, so trigger evaluation could never run there even with a
+        # Claude CLI present. A reader thread feeds the same line protocol.
         pending_tool_name = None
         accumulated_json = ""
+        line_queue = queue.Queue()
+
+        def _pump(stream):
+            try:
+                for raw in iter(stream.readline, b""):
+                    line_queue.put(raw.decode("utf-8", errors="replace"))
+            finally:
+                line_queue.put(None)
+
+        threading.Thread(target=_pump, args=(process.stdout,), daemon=True).start()
 
         try:
             while time.time() - start_time < timeout:
-                if process.poll() is not None:
-                    remaining = process.stdout.read()
-                    if remaining:
-                        buffer += remaining.decode("utf-8", errors="replace")
+                if process.poll() is not None and line_queue.empty():
                     break
-
-                ready, _, _ = select.select([process.stdout], [], [], 1.0)
-                if not ready:
+                try:
+                    line = line_queue.get(timeout=0.5)
+                except queue.Empty:
                     continue
-
-                chunk = os.read(process.stdout.fileno(), 8192)
-                if not chunk:
+                if line is None:
                     break
-                buffer += chunk.decode("utf-8", errors="replace")
-
-                while "\n" in buffer:
-                    line, buffer = buffer.split("\n", 1)
-                    line = line.strip()
-                    if not line:
-                        continue
-
-                    try:
-                        event = json.loads(line)
-                    except json.JSONDecodeError:
-                        continue
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    event = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
 
                     # Early detection via stream events
                     if event.get("type") == "stream_event":
@@ -268,6 +272,18 @@ def main():
     parser.add_argument("--model", default=None, help="Model to use for claude -p (default: user's configured model)")
     parser.add_argument("--verbose", action="store_true", help="Print progress to stderr")
     args = parser.parse_args()
+
+    if shutil.which("claude") is None:
+        # Report the missing capability instead of returning a 0% trigger rate,
+        # which reads as a bad skill. No other provider is spent silently.
+        print(
+            "Skill evaluation unavailable: no Claude-compatible CLI ('claude') on PATH.\n"
+            "Trigger evaluation needs a provider that can load the skill; this pack will not\n"
+            "silently spend another provider's usage. Static validation still works:\n"
+            "  python " + str(Path(__file__).with_name("quick_validate.py")) + " " + args.skill_path,
+            file=sys.stderr,
+        )
+        sys.exit(2)
 
     eval_set = json.loads(Path(args.eval_set).read_text())
     skill_path = Path(args.skill_path)

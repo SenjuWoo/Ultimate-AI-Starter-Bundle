@@ -117,6 +117,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_version_bump.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_skill_creator_eval.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_knowledge_contract.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_shared_shell.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_hermes_bootstrap.py

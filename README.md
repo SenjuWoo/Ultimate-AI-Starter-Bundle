@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.36.1 -->
+<!-- Ultimate AI Starter Bundle v8.37.0 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.36.1
+# Ultimate AI Starter Bundle v8.37.0
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -84,8 +84,8 @@ task needs by itself.
 
 | Release file | Pick it when |
 |---|---|
-| `…-Full-Offline.zip` | Default. Everything in one file, so the install downloads the least. |
-| `…-Core.zip` | You want a smaller download; the installer fetches the rest from GitHub. |
+| `…-Core.zip` | Ordinary connected install (~34 MiB). The installer fetches the bundled payloads from GitHub; same result as Full-Offline. |
+| `…-Full-Offline.zip` | You want one file for an unreliable or restricted network (~128 MiB). It carries the tool payload snapshots, **not** an offline model: inference still needs your provider or a local server. |
 | everything else | Checksums, build receipt, SBOM and CI results proving the zip is the one CI built. Not needed to install. |
 
 **After installing**

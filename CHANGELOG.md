@@ -1,3 +1,46 @@
+## Unreleased
+
+- Third-party Roblox skill pack integrated (MIT, https://github.com/EL4CTEO/roblox-skills, October 2026
+  snapshot): 23 Agent Skills under `_CANONICAL-SKILLS/roblox-*` and 23 Roblox-Assistant briefs under
+  `docs/roblox-assistant-briefs/`, with attribution in `docs/THIRD-PARTY-roblox-skills.md` and the
+  upstream licence at `_CANONICAL-SKILLS/ROBLOX-SKILLS-LICENSE.txt`. They are optional: the first-party
+  `roblox-game-development` skill remains the router and workflow contract. `MANIFEST.json` regenerated
+  for the 73 new files; the two pre-existing mismatches (`ci.yml`, `STATE.md`) are untouched.
+
+## 8.37.0 (2026-11-06)
+
+- Skill evaluation works on Windows and fails honestly elsewhere. `run_eval.py`
+  read the child process with `select()`, which Windows rejects on a pipe
+  (OSError 10038), so trigger evaluation could never run there even with Claude
+  installed; a reader thread replaces it. Both `run_eval.py` and
+  `improve_description.py` now check for a Claude-compatible CLI first and exit 2
+  with the missing capability named, instead of silently spending another
+  provider or reporting a 0% trigger rate. Static validation via
+  `quick_validate.py` keeps working with no model at all.
+- The project template gains a written knowledge contract
+  (`_PROJECT-TEMPLATE/MEMORY/README.md`): one home per fact, evidence for every
+  verified entry, labelled candidates, supersede-instead-of-sprout, selective
+  retrieval, and rebuildability from plain text. No new database, no background
+  summarizer, nothing always-on.
+- Creative projects gain a persistent art-direction source of truth
+  (`_PROJECT-TEMPLATE/VISION.md`) with an explicit user-corrections table that a
+  later session must not silently revert; `STATE.md` links it instead of copying
+  it. Utility projects are unaffected.
+- `code-review-skill` gains an advisory concern radar (unnecessary component,
+  duplicate tool, oversized artefact, stale assumption, vision conflict, early
+  stop) that reports evidence and impact and is explicitly not a gate.
+  `skill-creator` gains a capture checklist in
+  `references/learning-capture.md`: search before adding, validate before
+  shipping, never one skill per task.
+- Release guidance matches the artefacts: Core is recommended for an ordinary
+  connected install (~34 MiB) and Full-Offline for a restricted network
+  (~128 MiB), with the reminder that Full-Offline carries tool payloads, not an
+  offline model.
+- Tests: `TESTS/test_skill_creator_eval.py` (provider-absent exit codes, no
+  select on the pipe, offline validator) and `TESTS/test_knowledge_contract.py`
+  (template files, vision corrections, skill pointers, the 500-line ceiling).
+- Unrestrained/preamble source untouched; no companion pin changed; 81 canonical skills.
+
 ## 8.36.1 (2026-11-06)
 
 - The gateway guard no longer owns files it did not create. `sitecustomize.py` in

@@ -483,3 +483,9 @@ Repeating one more time the core loop here for emphasis:
 Please add steps to your TodoList, if you have such a thing, to make sure you don't forget. If you're in Cowork, please specifically put "Create evals JSON and run `eval-viewer/generate_review.py` so human can review test cases" in your TodoList to make sure it happens.
 
 Good luck!
+
+## Capture a lesson without polluting the catalog
+
+Search existing skills, project `MEMORY/` and installed tools first; edit what
+exists before adding a skill; validate with `quick_validate.py`. Full checklist:
+[references/learning-capture.md](references/learning-capture.md).

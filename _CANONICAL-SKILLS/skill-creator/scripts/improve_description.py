@@ -8,6 +8,7 @@ uses the session's Claude Code auth, no separate ANTHROPIC_API_KEY needed).
 
 import argparse
 import json
+import shutil
 import os
 import re
 import subprocess
@@ -199,6 +200,15 @@ def main():
     parser.add_argument("--model", required=True, help="Model for improvement")
     parser.add_argument("--verbose", action="store_true", help="Print thinking to stderr")
     args = parser.parse_args()
+
+    if shutil.which("claude") is None:
+        print(
+            "Description improvement unavailable: no Claude-compatible CLI ('claude') on PATH.\n"
+            "The eval results are unchanged; rerun this where that CLI exists, or edit the\n"
+            "description by hand. No other provider's usage is spent silently.",
+            file=sys.stderr,
+        )
+        sys.exit(2)
 
     skill_path = Path(args.skill_path)
     if not (skill_path / "SKILL.md").exists():

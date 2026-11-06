@@ -223,3 +223,21 @@ Language-agnostic patterns applicable to all code reviews:
 
 - [PR Review Template](assets/pr-review-template.md) - PR 审查评论模板
 - [Review Checklist](assets/review-checklist.md) - 快速参考清单
+## Concern radar (advisory)
+
+Before a costly implementation, release or architecture change, spend one pass on
+the concerns below. Report only what the evidence supports, in five lines each:
+observation, evidence, impact, adjustment, and whether the work continued.
+
+- A component is unnecessary for the people who will use it.
+- An installed tool already solves this; a new dependency duplicates it.
+- An offline artefact is being built for a user who only needs the online path.
+- The change grows size, cost, maintenance or install complexity without a
+  measurable benefit.
+- A version or compatibility assumption is stale (check, do not guess).
+- The approach contradicts the project's `VISION.md`.
+- The agent is about to stop after a partial result.
+
+Rules: never invent a concern to fill the list, never use this section to avoid
+finishing the task, and keep routine output to the findings that would change a
+decision. This is advice, not a gate — a confirmed instruction still wins.

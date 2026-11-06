@@ -36,8 +36,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 12129,
-  "sha256": "57dc48c97ff7d2fec10846d03a1c9d7e9c77ab074b583921deffbdad002e8951"
+  "size": 12349,
+  "sha256": "ee2b31ac7185f3239f4a068139c76b30961fdc34b4b60b468c13c8efaf9bec3e"
  },
  {
   "path": ".github/workflows/dependabot-auto-merge.yml",
@@ -441,8 +441,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/SKILL.md",
-  "size": 11302,
-  "sha256": "f430529d7c6f2414b01b4d3cc1bc77da380145f292ba06fd374bf252667c5730"
+  "size": 12297,
+  "sha256": "c713be905a3d3c36e2c03c8f5b85419be26244f36533e17c3d7069b5af220f89"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/assets/pr-review-template.md",
@@ -2391,8 +2391,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/SKILL.md",
-  "size": 33653,
-  "sha256": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9"
+  "size": 33937,
+  "sha256": "6fdb7e1d43a6b791ff6234c9d1c1aa85ce132c26d76a987a138b44d548db17bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/agents/analyzer.md",
@@ -2441,8 +2441,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/improve_description.py",
-  "size": 11363,
-  "sha256": "09425704c5717656fffd346ba075a390bb55d494dd1082bccd4fe2423117fa05"
+  "size": 11774,
+  "sha256": "3ba7f0d3e3ea71553ac7acad191d1ab9eb77aed223f13e2634c6b789c64d18d3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/package_skill.py",
@@ -2456,8 +2456,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 11774,
-  "sha256": "252ac58feedf233673d6a605661158db20806f724c7d1dd32c92ae316b24ef67"
+  "size": 12614,
+  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -3431,8 +3431,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/SKILL.md",
-  "size": 11302,
-  "sha256": "f430529d7c6f2414b01b4d3cc1bc77da380145f292ba06fd374bf252667c5730"
+  "size": 12297,
+  "sha256": "c713be905a3d3c36e2c03c8f5b85419be26244f36533e17c3d7069b5af220f89"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/assets/pr-review-template.md",
@@ -5381,8 +5381,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/SKILL.md",
-  "size": 33653,
-  "sha256": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9"
+  "size": 33937,
+  "sha256": "6fdb7e1d43a6b791ff6234c9d1c1aa85ce132c26d76a987a138b44d548db17bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/agents/analyzer.md",
@@ -5431,8 +5431,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/improve_description.py",
-  "size": 11363,
-  "sha256": "09425704c5717656fffd346ba075a390bb55d494dd1082bccd4fe2423117fa05"
+  "size": 11774,
+  "sha256": "3ba7f0d3e3ea71553ac7acad191d1ab9eb77aed223f13e2634c6b789c64d18d3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/package_skill.py",
@@ -5446,8 +5446,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 11774,
-  "sha256": "252ac58feedf233673d6a605661158db20806f724c7d1dd32c92ae316b24ef67"
+  "size": 12614,
+  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -6481,8 +6481,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/SKILL.md",
-  "size": 11302,
-  "sha256": "f430529d7c6f2414b01b4d3cc1bc77da380145f292ba06fd374bf252667c5730"
+  "size": 12297,
+  "sha256": "c713be905a3d3c36e2c03c8f5b85419be26244f36533e17c3d7069b5af220f89"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/assets/pr-review-template.md",
@@ -8431,8 +8431,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/SKILL.md",
-  "size": 33653,
-  "sha256": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9"
+  "size": 33937,
+  "sha256": "6fdb7e1d43a6b791ff6234c9d1c1aa85ce132c26d76a987a138b44d548db17bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/agents/analyzer.md",
@@ -8481,8 +8481,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/improve_description.py",
-  "size": 11363,
-  "sha256": "09425704c5717656fffd346ba075a390bb55d494dd1082bccd4fe2423117fa05"
+  "size": 11774,
+  "sha256": "3ba7f0d3e3ea71553ac7acad191d1ab9eb77aed223f13e2634c6b789c64d18d3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/package_skill.py",
@@ -8496,8 +8496,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 11774,
-  "sha256": "252ac58feedf233673d6a605661158db20806f724c7d1dd32c92ae316b24ef67"
+  "size": 12614,
+  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -9521,8 +9521,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/SKILL.md",
-  "size": 11302,
-  "sha256": "f430529d7c6f2414b01b4d3cc1bc77da380145f292ba06fd374bf252667c5730"
+  "size": 12297,
+  "sha256": "c713be905a3d3c36e2c03c8f5b85419be26244f36533e17c3d7069b5af220f89"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/assets/pr-review-template.md",
@@ -11471,8 +11471,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/SKILL.md",
-  "size": 33653,
-  "sha256": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9"
+  "size": 33937,
+  "sha256": "6fdb7e1d43a6b791ff6234c9d1c1aa85ce132c26d76a987a138b44d548db17bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/agents/analyzer.md",
@@ -11521,8 +11521,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/improve_description.py",
-  "size": 11363,
-  "sha256": "09425704c5717656fffd346ba075a390bb55d494dd1082bccd4fe2423117fa05"
+  "size": 11774,
+  "sha256": "3ba7f0d3e3ea71553ac7acad191d1ab9eb77aed223f13e2634c6b789c64d18d3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/package_skill.py",
@@ -11536,8 +11536,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 11774,
-  "sha256": "252ac58feedf233673d6a605661158db20806f724c7d1dd32c92ae316b24ef67"
+  "size": 12614,
+  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -12561,8 +12561,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/SKILL.md",
-  "size": 11302,
-  "sha256": "f430529d7c6f2414b01b4d3cc1bc77da380145f292ba06fd374bf252667c5730"
+  "size": 12297,
+  "sha256": "c713be905a3d3c36e2c03c8f5b85419be26244f36533e17c3d7069b5af220f89"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/assets/pr-review-template.md",
@@ -14511,8 +14511,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/SKILL.md",
-  "size": 33653,
-  "sha256": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9"
+  "size": 33937,
+  "sha256": "6fdb7e1d43a6b791ff6234c9d1c1aa85ce132c26d76a987a138b44d548db17bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/agents/analyzer.md",
@@ -14561,8 +14561,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/improve_description.py",
-  "size": 11363,
-  "sha256": "09425704c5717656fffd346ba075a390bb55d494dd1082bccd4fe2423117fa05"
+  "size": 11774,
+  "sha256": "3ba7f0d3e3ea71553ac7acad191d1ab9eb77aed223f13e2634c6b789c64d18d3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/package_skill.py",
@@ -14576,8 +14576,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 11774,
-  "sha256": "252ac58feedf233673d6a605661158db20806f724c7d1dd32c92ae316b24ef67"
+  "size": 12614,
+  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -15676,8 +15676,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/SKILL.md",
-  "size": 11302,
-  "sha256": "f430529d7c6f2414b01b4d3cc1bc77da380145f292ba06fd374bf252667c5730"
+  "size": 12297,
+  "sha256": "c713be905a3d3c36e2c03c8f5b85419be26244f36533e17c3d7069b5af220f89"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/code-review-skill/assets/pr-review-template.md",
@@ -17626,8 +17626,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/SKILL.md",
-  "size": 33653,
-  "sha256": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9"
+  "size": 33937,
+  "sha256": "6fdb7e1d43a6b791ff6234c9d1c1aa85ce132c26d76a987a138b44d548db17bb"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/agents/analyzer.md",
@@ -17676,8 +17676,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/improve_description.py",
-  "size": 11363,
-  "sha256": "09425704c5717656fffd346ba075a390bb55d494dd1082bccd4fe2423117fa05"
+  "size": 11774,
+  "sha256": "3ba7f0d3e3ea71553ac7acad191d1ab9eb77aed223f13e2634c6b789c64d18d3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/package_skill.py",
@@ -17691,8 +17691,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_eval.py",
-  "size": 11774,
-  "sha256": "252ac58feedf233673d6a605661158db20806f724c7d1dd32c92ae316b24ef67"
+  "size": 12614,
+  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/skill-creator/scripts/run_loop.py",
@@ -18692,12 +18692,12 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64142,
-  "sha256": "39f8c28624e29847954cb3ee4bedc7329f93fbe784a2d913a16d2b0ef68fce9f"
+  "sha256": "372efa06db081ab20c17f08f8131926af2c23f17e558ef3967ded1bb6fa86f1e"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "8cac4646cc4f124dd379ff3b54a93cfaf4e4973cd1d4bc71e079fc3ca146314a"
+  "sha256": "6def47f258dc33b003345b339abc1a988d4ca6fb71285dd30c6f46a221d8d9a6"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18707,7 +18707,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "5427eb4890bc329bdf194ebfa3e754ddaff282094d9bc881fbe1388f8a7fcb6a"
+  "sha256": "7ebc851917129c42d8772166ef74a801e888af76996939e4a172ce57e5aa35f9"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22761,8 +22761,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 288785,
-  "sha256": "0dba5213deffc10d10042fef807fc6d2b71346e1d80bde7c677c52ed11f0cdfb"
+  "size": 291608,
+  "sha256": "90be35dd5c28da788f4676dfab3eaa54cb47371411228e7fa48a4fc306908c6a"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22831,8 +22831,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/STATE.md",
-  "size": 9,
-  "sha256": "d2e20329667b0ebd1d2adaf20e368f4b8a651b6448929499e972711b798e0a50"
+  "size": 244,
+  "sha256": "5598bdb2649f6f950bbefe8bd3ffa9751ce04a31032d369302231daec9933f73"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/VALIDATION.md",
@@ -22896,8 +22896,8 @@
  },
  {
   "path": "README.md",
-  "size": 41606,
-  "sha256": "8aba00aa51c576e7603469e9ca73bcf78317665933fe0f416216f136e1ec67da"
+  "size": 41777,
+  "sha256": "66f8541d4ed7176c66cbf2f450d5297272c8918e34772bd798bd849055adf074"
  },
  {
   "path": "SECURITY.md",
@@ -22907,17 +22907,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "2d20494ce650cabd4bb26803337382e95a848d12d09c3b84d4c5d5dedb613e52"
+  "sha256": "800bfe36c38465170a033860f32d746222d7542d9657d7a51d7143c81989c2b7"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "2c6096437b76e5291528fe36ce793fcca1c1bc613a56123c2e8dd73ddaa8ae11"
+  "sha256": "aa44d9e5d74243f675fd5ba611fb5eafce7ad1568ffcd731c65ba568d035a9a8"
  },
  {
   "path": "STATE.md",
-  "size": 69997,
-  "sha256": "3dbec502712e84a9ea478c5a60e94d5aaef597b45f629abe8d5995112dbaeeb1"
+  "size": 70677,
+  "sha256": "22597431a0ff6efb7758735b11f7c2fd16ca8f76cc26221daafdda839b353acb"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -23857,7 +23857,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2781,
-  "sha256": "b250f57edf0495e048ec17253cb3a0e9bb5655c3a66fe6ba4af88fcbd92ad9ef"
+  "sha256": "6a5a927fd6463920f85a910a792760879281ec45fed9034b61e93bda6502d9fc"
  },
  {
   "path": "VALIDATION.md",
@@ -23867,7 +23867,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "e0aa79f2a13e3b08252a70dd0e78b624dbf2425c8202a524a3dba511352e741a"
+  "sha256": "715a563435f8127bb33e70619ed423af6177f5620560f30429e60e4a384fc19e"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24131,8 +24131,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/code-review-skill/SKILL.md",
-  "size": 11302,
-  "sha256": "f430529d7c6f2414b01b4d3cc1bc77da380145f292ba06fd374bf252667c5730"
+  "size": 12297,
+  "sha256": "c713be905a3d3c36e2c03c8f5b85419be26244f36533e17c3d7069b5af220f89"
  },
  {
   "path": "_CANONICAL-SKILLS/code-review-skill/assets/pr-review-template.md",
@@ -26081,8 +26081,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/skill-creator/SKILL.md",
-  "size": 33653,
-  "sha256": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9"
+  "size": 33937,
+  "sha256": "6fdb7e1d43a6b791ff6234c9d1c1aa85ce132c26d76a987a138b44d548db17bb"
  },
  {
   "path": "_CANONICAL-SKILLS/skill-creator/agents/analyzer.md",
@@ -26131,8 +26131,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/skill-creator/scripts/improve_description.py",
-  "size": 11363,
-  "sha256": "09425704c5717656fffd346ba075a390bb55d494dd1082bccd4fe2423117fa05"
+  "size": 11774,
+  "sha256": "3ba7f0d3e3ea71553ac7acad191d1ab9eb77aed223f13e2634c6b789c64d18d3"
  },
  {
   "path": "_CANONICAL-SKILLS/skill-creator/scripts/package_skill.py",
@@ -26146,8 +26146,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/skill-creator/scripts/run_eval.py",
-  "size": 11774,
-  "sha256": "252ac58feedf233673d6a605661158db20806f724c7d1dd32c92ae316b24ef67"
+  "size": 12614,
+  "sha256": "50f0635f12a10d2dc850126fa4ea35bb908649c97f653975367a9197a8746033"
  },
  {
   "path": "_CANONICAL-SKILLS/skill-creator/scripts/run_loop.py",
