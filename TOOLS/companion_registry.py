@@ -10,19 +10,21 @@ shows the owner's own entrypoint so the user (or an agent) can run it deliberate
     python TOOLS/companion_registry.py --roots "D:/Tools" --print-doctor roblox-forge
 """
 import argparse
+import glob
 import json
 import os
-import shutil
+import re
 import sys
+from urllib.parse import urlsplit
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REGISTRY = os.path.join(os.path.dirname(HERE), "BUNDLED-TOOLS", "COMPANIONS.json")
 
-# NOT_FOUND     nothing with this owner's markers on any searched root
-# DISCOVERED    the folder exists but a required marker is missing
-# INSTALLED     every marker is present
-# DEGRADED      installed, but a declared requirement is missing on this machine
-STATES = ("NOT_FOUND", "DISCOVERED", "INSTALLED", "DEGRADED")
+# NOT_FOUND             nothing with this owner's markers on any searched root
+# DISCOVERED            the folder exists but a required marker is missing
+# INSTALLED_UNVERIFIED  markers are present; no owner doctor has run
+# DEGRADED              a declared requirement is missing on this machine
+STATES = ("NOT_FOUND", "DISCOVERED", "INSTALLED_UNVERIFIED", "DEGRADED")
 
 DEFAULT_ROOTS = (
     os.path.join(os.environ.get("USERPROFILE", ""), "AppData", "Local"),
@@ -48,6 +50,26 @@ def load(path=REGISTRY):
     return data
 
 
+def _repo_parts(repo):
+    parts = urlsplit(repo)
+    if parts.scheme != "https" or parts.netloc.lower() != "github.com":
+        raise RegistryError("repo must be https://github.com/<owner>/<repo>, got %r" % repo)
+    if parts.query or parts.fragment or parts.username or parts.password or parts.port:
+        raise RegistryError("repo URL must not carry credentials, a port, a query or a fragment: %r" % repo)
+    segments = [s for s in parts.path.split("/") if s]
+    if len(segments) != 2:
+        raise RegistryError("repo path must be /<owner>/<repo>, got %r" % repo)
+    return segments[0], segments[1][:-4] if segments[1].endswith(".git") else segments[1]
+
+
+def _check_relative(cid, value, what):
+    if not isinstance(value, str) or not value.strip():
+        raise RegistryError("%s: %s must be a non-empty string" % (cid, what))
+    normal = value.replace("\\", "/")
+    if normal.startswith("/") or re.match(r"^[A-Za-z]:", normal) or ".." in normal.split("/"):
+        raise RegistryError("%s: %s must stay inside the owner root: %r" % (cid, what, value))
+
+
 def validate(data):
     """Schema and trust checks. A registry that fails these is never used."""
     if not isinstance(data, dict) or data.get("schema") != 1:
@@ -55,6 +77,15 @@ def validate(data):
     allow = data.get("owner_allowlist") or []
     if not allow:
         raise RegistryError("owner_allowlist is empty - refusing to trust any repository")
+    owners = set()
+    for value in allow:
+        parsed = urlsplit(value if "://" in value else "https://" + value)
+        if parsed.scheme != "https" or parsed.hostname != "github.com":
+            raise RegistryError("owner_allowlist entries must be HTTPS github.com owners")
+        parts = [p for p in parsed.path.split("/") if p]
+        if len(parts) != 1:
+            raise RegistryError("owner_allowlist entry must be github.com/<owner>/")
+        owners.add(parts[0].lower())
     companions = data.get("companions")
     if not isinstance(companions, dict) or not companions:
         raise RegistryError("no companions")
@@ -64,21 +95,35 @@ def validate(data):
         for field in ("title", "repo", "install", "markers", "platforms"):
             if field not in entry:
                 raise RegistryError("%s: missing %s" % (cid, field))
-        repo = entry["repo"]
-        if not any(allowed in repo for allowed in allow):
-            raise RegistryError("%s: repo %r is not on the owner allowlist" % (cid, repo))
-        if not repo.startswith("https://"):
-            raise RegistryError("%s: repo must be an https URL" % cid)
+        owner, _ = _repo_parts(entry["repo"])
+        if owner.lower() not in owners:
+            raise RegistryError("%s: owner %r is not on the allowlist" % (cid, owner))
         kind = entry["install"].get("kind")
-        if kind not in ("release_zip", "owner_installer", "source_only", "external_app", "gui_app"):
+        if kind not in ("release_zip", "source_zip", "owner_installer", "source_only", "external_app", "gui_app"):
             raise RegistryError("%s: unknown install kind %r" % (cid, kind))
-        if kind == "release_zip" and not entry["install"].get("asset"):
-            raise RegistryError("%s: a release_zip needs an asset pattern" % cid)
-        if kind == "source_only" and entry["install"].get("asset"):
-            raise RegistryError("%s: source_only must not advertise a downloadable asset" % cid)
+        if kind in ("release_zip", "source_zip", "gui_app") and not entry["install"].get("asset"):
+            raise RegistryError("%s: %s needs an asset pattern" % (cid, kind))
+        if kind in ("source_only", "owner_installer") and entry["install"].get("asset"):
+            raise RegistryError("%s: %s must not advertise a downloadable asset" % (cid, kind))
+        if kind == "owner_installer" and not entry["install"].get("entrypoint"):
+            raise RegistryError("%s: owner_installer needs an entrypoint" % cid)
         markers = entry["markers"]
         if not isinstance(markers, list) or not markers:
             raise RegistryError("%s: markers must be a non-empty list" % cid)
+        for marker in markers:
+            _check_relative(cid, marker, "marker")
+        cwd = (entry.get("doctor") or {}).get("cwd")
+        if cwd is not None:
+            _check_relative(cid, cwd, "doctor cwd")
+        cmd = (entry.get("doctor") or {}).get("entrypoint")
+        if cmd is not None:
+            if not isinstance(cmd, list) or not cmd or cmd[0] not in ("python", "python3", "powershell", "pwsh"):
+                raise RegistryError("%s: doctor interpreter is not allowed" % cid)
+            scripts = [part for part in cmd[1:] if part.endswith((".py", ".ps1"))]
+            if len(scripts) > 1 or (not scripts and "-m" not in cmd):
+                raise RegistryError("%s: doctor must name one script or a module" % cid)
+            for script in scripts:
+                _check_relative(cid, script, "doctor script")
     return data
 
 
@@ -122,22 +167,34 @@ def pointer_root(entry):
     return root if isinstance(root, str) and os.path.isdir(root) else None
 
 
+def _children(path):
+    try:
+        return os.listdir(path)
+    except OSError:
+        return []
+
+
+def _marker_present(root, marker):
+    if any(ch in marker for ch in "*?["):
+        return bool(glob.glob(os.path.join(root, marker)))
+    return os.path.exists(os.path.join(root, marker))
+
+
 def find(entry, search_roots):
-    """Owner pointer first, then the first directory containing every marker."""
+    """Owner pointer first, then a directory containing every marker."""
     markers = entry["markers"]
     pointer = pointer_root(entry)
-    if pointer and all(os.path.exists(os.path.join(pointer, m)) for m in markers):
+    if pointer and all(_marker_present(pointer, m) for m in markers):
         return pointer
+    wanted = owner_names(entry)
     for root in search_roots:
-        try:
-            children = os.listdir(root)
-        except OSError:
-            continue
-        for name in children:
+        if _norm(os.path.basename(root.rstrip("\\/"))) in wanted and all(_marker_present(root, m) for m in markers):
+            return root
+        for name in _children(root):
             candidate = os.path.join(root, name)
-            if not os.path.isdir(candidate) or _norm(name) not in owner_names(entry):
-                continue  # another owner's folder must never satisfy this entry
-            if all(os.path.exists(os.path.join(candidate, m)) for m in markers):
+            if not os.path.isdir(candidate) or _norm(name) not in wanted:
+                continue
+            if all(_marker_present(candidate, m) for m in markers):
                 return candidate
     return None
 
@@ -163,7 +220,7 @@ def status(search_roots, data=None):
     for cid, entry in sorted(data["companions"].items()):
         path = find(entry, search_roots)
         if path:
-            state = "INSTALLED"
+            state = "INSTALLED_UNVERIFIED"
         else:
             # Only an exact owner-named folder counts as a half-install; the game folder must never
             # be mistaken for its Forge.
@@ -171,7 +228,8 @@ def status(search_roots, data=None):
             state = "DISCOVERED" if path else "NOT_FOUND"
         report[cid] = {"state": state, "path": path, "title": entry["title"],
                        "repo": entry["repo"], "kind": entry["install"]["kind"],
-                       "doctor": entry.get("doctor", {}).get("entrypoint")}
+                       "doctor": (entry.get("doctor") or {}).get("entrypoint"),
+                       "ready": False, "evidence": "markers-only"}
     return report
 
 

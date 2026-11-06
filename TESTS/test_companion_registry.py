@@ -78,7 +78,7 @@ def test_detects_installed_and_missing():
         os.makedirs(installed)
         open(os.path.join(installed, "demo.exe"), "w").close()
         report = reg.status([root], _data())
-        assert report["demo"]["state"] == "INSTALLED", report
+        assert report["demo"]["state"] == "INSTALLED_UNVERIFIED", report
         assert report["demo"]["path"] == installed
 
         empty = tempfile.mkdtemp()
@@ -101,7 +101,7 @@ def test_owner_pointer_resolves_the_actual_kit_root():
         data["companions"]["demo"]["pointer"] = pointer
         data["companions"]["demo"]["markers"] = ["VERSION", "Install-Modkit.ps1", "sandbox/installed.json"]
         report = reg.status([], data)
-        assert report["demo"]["state"] == "INSTALLED", report
+        assert report["demo"]["state"] == "INSTALLED_UNVERIFIED", report
         assert report["demo"]["path"] == owner
 
 
@@ -127,6 +127,37 @@ def test_every_companion_declares_capabilities_and_platforms():
         assert entry.get("platforms"), cid
         caps = entry["capabilities"]
         assert any(k in caps for k in ("cli", "mcp", "skills", "gui")), cid
+
+
+def test_rejects_spoofed_repositories_and_escaping_markers():
+    data = _data()
+    data["companions"]["demo"]["repo"] = "https://github.com.evil.com/SenjuWoo/demo"
+    try:
+        reg.validate(data)
+    except reg.RegistryError as exc:
+        assert "owner" in str(exc).lower() or "repository" in str(exc).lower()
+    else:
+        raise AssertionError("a spoofed owner was accepted")
+
+    data = _data()
+    data["companions"]["demo"]["markers"] = ["../outside.exe"]
+    try:
+        reg.validate(data)
+    except reg.RegistryError as exc:
+        assert "escape" in str(exc).lower() or "inside" in str(exc).lower()
+    else:
+        raise AssertionError("an escaping marker was accepted")
+
+
+def test_versioned_asset_marker_is_detected_inside_its_owner():
+    with tempfile.TemporaryDirectory() as root:
+        owner = os.path.join(root, "Demo")
+        os.makedirs(owner)
+        open(os.path.join(owner, "Demo-1.2.3-STANDALONE.exe"), "w").close()
+        data = _data()
+        data["companions"]["demo"]["markers"] = ["Demo-*-STANDALONE.exe"]
+        report = reg.status([root], data)
+        assert report["demo"]["state"] == "INSTALLED_UNVERIFIED", report
 
 
 if __name__ == "__main__":

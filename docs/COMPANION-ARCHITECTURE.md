@@ -262,17 +262,23 @@ kind, owner entrypoints, markers used for detection, capabilities and platform n
 coordinates; it never installs on its own.
 
 ```
-python TOOLS/companion_registry.py --verify            # NOT_FOUND / DISCOVERED / INSTALLED per owner
+python TOOLS/companion_registry.py --verify            # NOT_FOUND / DISCOVERED / INSTALLED_UNVERIFIED per owner
 python TOOLS/companion_registry.py --verify --json     # machine-readable
 python TOOLS/companion_registry.py --print-doctor roblox-forge
 ```
 
 Rules the registry enforces (and `TESTS/test_companion_registry.py` checks):
 
-- Only repositories on the owner allowlist are trusted; a foreign URL fails validation.
+- Repositories are parsed as URLs and must be exactly HTTPS `github.com`; credentials, ports,
+  queries, fragments, suffix tricks and path traversal fail validation. The owner is checked as a
+  component, not as a substring.
 - A `source_only` owner may not advertise a downloadable asset, and a `release_zip` must name one.
 - A directory only counts when its name matches the owner's repository name, so a backup folder or
   an unrelated tool that happens to contain the same marker file cannot be mistaken for it.
+- Versioned GUI filenames are supported with an owner-scoped glob (for example
+  `FaceForge-*-STANDALONE.exe`); the match must live under the discovered owner root.
 - The registry contains no command runner: the bundle prints an owner's doctor command, it does not
   execute it from a downloaded manifest.
 - `DISCOVERED` means the folder exists but a marker is missing - a half-install, never "healthy".
+- `INSTALLED_UNVERIFIED` means the markers are present; it is not proof that the owner's doctor or
+  runtime works. A marker file, launcher or cached version never establishes readiness alone.

@@ -1,4 +1,4 @@
-<!-- Ultimate AI Starter Bundle v8.37.2 -->
+<!-- Ultimate AI Starter Bundle v8.37.3 -->
 
 <p align="center">
   <img src="assets/mark.svg" width="72" height="72" alt="Ultimate AI Starter Bundle mark">
@@ -6,7 +6,7 @@
 
 <div align="center">
 
-# Ultimate AI Starter Bundle v8.37.2
+# Ultimate AI Starter Bundle v8.37.3
 
 **Multi-provider AI starter kit. Not a Skyrim-only pack.**
 
@@ -160,7 +160,7 @@ reported instead of guessed. Move anything you like; nothing needs editing.
 
 | Moved out | Why | Where it lives now |
 |---|---|---|
-| Companion owners (Forge family, Reverse THIS!, comfy-kit, GUI apps) | `python TOOLS/companion_registry.py --verify` lists each owner as NOT_FOUND / DISCOVERED / INSTALLED |
+| Companion owners (Forge family, Reverse THIS!, comfy-kit, GUI apps) | `python TOOLS/companion_registry.py --verify` lists each owner as NOT_FOUND / DISCOVERED / INSTALLED_UNVERIFIED |
 | Image-generation stack (SwarmUI/ComfyUI presets, Anima pin) | it is an image pipeline, not an agent harness, and it changes on model timescales | its own repository (`SenjuWoo/comfy-kit`) |
 | `img2threejs` tool tree (489 files) | the capability belongs here, the tree does not | [img2threejs/img2threejs](https://github.com/img2threejs/img2threejs); the bundle keeps a pinned pointer skill |
 | WooMix-Anima model page and samples | model publication, not harness work | the model's own workspace |
