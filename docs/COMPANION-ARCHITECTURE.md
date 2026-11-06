@@ -225,6 +225,8 @@ Exercise each applicable owner/consumer path against the following states:
 | State or operation | Required assertion |
 | --- | --- |
 | Missing | Install selected capability through its owner; record provenance, version, path and successful validation |
+| Missing Reverse THIS! owner with a stale pointer | Fail explicitly (or report a typed deferred state); never record owner-managed success. A valid moved owner may be adopted only when its receipts still verify. |
+| Ambiguous Reverse THIS! candidates | Preserve and report the ambiguity; do not guess a root or overwrite the pointer. |
 | Older known-owned | Update to the owner's selected supported target; retain rollback files and user state |
 | Equal healthy | Reuse without payload replacement or configuration churn |
 | Newer compatible | Keep without downgrade; validate and record the actual version |
@@ -252,3 +254,25 @@ CLibDT and the distinct CommonLib forks belong to Forge's discovery/native build
 guidance. CommonLib source is pinned per plugin project, not auto-updated globally.
 Reverse THIS! reuses shared build tools when analysis requires compilation; none
 of these additions needs a second analysis-tool installer.
+
+## Companion registry (2026-11-06)
+
+`BUNDLED-TOOLS/COMPANIONS.json` is the single list of supported owners: repository, installation
+kind, owner entrypoints, markers used for detection, capabilities and platform notes. The bundle
+coordinates; it never installs on its own.
+
+```
+python TOOLS/companion_registry.py --verify            # NOT_FOUND / DISCOVERED / INSTALLED per owner
+python TOOLS/companion_registry.py --verify --json     # machine-readable
+python TOOLS/companion_registry.py --print-doctor roblox-forge
+```
+
+Rules the registry enforces (and `TESTS/test_companion_registry.py` checks):
+
+- Only repositories on the owner allowlist are trusted; a foreign URL fails validation.
+- A `source_only` owner may not advertise a downloadable asset, and a `release_zip` must name one.
+- A directory only counts when its name matches the owner's repository name, so a backup folder or
+  an unrelated tool that happens to contain the same marker file cannot be mistaken for it.
+- The registry contains no command runner: the bundle prints an owner's doctor command, it does not
+  execute it from a downloaded manifest.
+- `DISCOVERED` means the folder exists but a marker is missing - a half-install, never "healthy".

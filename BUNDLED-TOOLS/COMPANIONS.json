@@ -1,0 +1,403 @@
+{
+ "schema": 1,
+ "note": "Optional companion owners. The bundle detects, plans and delegates; each owner installs, updates and heals itself. Nothing here is executed without an explicit --run on an allowlisted entrypoint. A directory only counts when its name matches the owner's repository name, so a backup or an unrelated tool that happens to contain the same marker file cannot be mistaken for that companion.",
+ "owner_allowlist": [
+  "github.com/SenjuWoo/"
+ ],
+ "companions": {
+  "roblox-forge": {
+   "title": "RobloxForge",
+   "repo": "https://github.com/SenjuWoo/RobloxForge",
+   "install": {
+    "kind": "release_zip",
+    "asset": "RobloxForge-*.zip",
+    "entrypoint": "Install.ps1"
+   },
+   "update": {
+    "entrypoint": "Update.ps1"
+   },
+   "doctor": {
+    "entrypoint": [
+     "python",
+     "src/rbforge_cli.py",
+     "doctor"
+    ]
+   },
+   "markers": [
+    "src/rbforge/__init__.py"
+   ],
+   "capabilities": {
+    "cli": "rbforge",
+    "mcp": "robloxforge",
+    "skills": [
+     "roblox-game-development",
+     "roblox-docs"
+    ],
+    "gui": false
+   },
+   "requires": [],
+   "platforms": [
+    "windows",
+    "linux",
+    "macos"
+   ],
+   "notes": "Owns the Roblox skill catalog and knowledge/vendor. Studio work needs the separate official Roblox Studio MCP."
+  },
+  "skyrim-forge": {
+   "title": "SkyrimForge",
+   "repo": "https://github.com/SenjuWoo/SkyrimForge",
+   "install": {
+    "kind": "release_zip",
+    "asset": "SkyrimForge-*.zip",
+    "entrypoint": "Install.ps1"
+   },
+   "update": {
+    "entrypoint": "Update.ps1"
+   },
+   "doctor": {
+    "entrypoint": [
+     "python",
+     "-m",
+     "skyrim_forge",
+     "doctor"
+    ]
+   },
+   "markers": [
+    "forge.cmd",
+    "INSTALLATION.json"
+   ],
+   "capabilities": {
+    "cli": "skyrim-forge",
+    "mcp": "skyrimforge",
+    "skills": [
+     "skyrim-*"
+    ],
+    "gui": false
+   },
+   "requires": [
+    "housecarl optional"
+   ],
+   "platforms": [
+    "windows"
+   ],
+   "notes": "Delegated from TOOLS/Install-SkyrimForge.ps1; the owner doctor is the health gate."
+  },
+  "reverse-this": {
+   "title": "Reverse THIS!",
+   "repo": "https://github.com/SenjuWoo/reverse-this",
+   "install": {
+    "kind": "release_zip",
+    "asset": "ReverseThis-*.zip",
+    "entrypoint": "Install.ps1"
+   },
+   "update": {
+    "entrypoint": "Update.ps1"
+   },
+   "doctor": {
+    "entrypoint": [
+     "ReverseThis.exe",
+     "--doctor"
+    ]
+   },
+   "markers": [
+    "kit.json",
+    "ReverseThis.exe"
+   ],
+   "capabilities": {
+    "cli": "reverse-this",
+    "mcp": false,
+    "skills": [
+     "reverse-engineering"
+    ],
+    "gui": true
+   },
+   "requires": [],
+   "platforms": [
+    "windows"
+   ],
+   "notes": "Installs to %LOCALAPPDATA%\\ReverseThis; kit.json is the discovery record other tools read."
+  },
+  "ror2-forge": {
+   "title": "Risk of Rain 2 Forge",
+   "repo": "https://github.com/SenjuWoo/Risk-Of-Rain-2-Forge",
+   "install": {
+    "kind": "release_zip",
+    "asset": "*.zip",
+    "entrypoint": "Install.ps1"
+   },
+   "update": {
+    "entrypoint": "forge.cmd updates"
+   },
+   "doctor": {
+    "entrypoint": [
+     "forge.cmd",
+     "doctor"
+    ]
+   },
+   "markers": [
+    "forge.cmd",
+    "ror2forge"
+   ],
+   "capabilities": {
+    "cli": "forge.cmd",
+    "mcp": "opt-in",
+    "skills": [
+     "risk-of-rain-2-*"
+    ],
+    "gui": false
+   },
+   "requires": [
+    "Risk of Rain 2 install for template builds"
+   ],
+   "platforms": [
+    "windows"
+   ],
+   "notes": "MCP is opt-in and must stay scoped; game discovery is a separate check from CLI health."
+  },
+  "minecraft-forge": {
+   "title": "Minecraft Forge",
+   "repo": "https://github.com/SenjuWoo/Minecraft-Forge",
+   "install": {
+    "kind": "source_only",
+    "asset": null,
+    "entrypoint": "Minecraft-Forge.ps1"
+   },
+   "update": {
+    "entrypoint": "git pull"
+   },
+   "doctor": {
+    "entrypoint": [
+     "Minecraft-Forge.ps1",
+     "doctor"
+    ]
+   },
+   "markers": [
+    "Minecraft-Forge.ps1"
+   ],
+   "capabilities": {
+    "cli": "Minecraft-Forge.ps1",
+    "mcp": false,
+    "skills": [
+     "minecraft-*"
+    ],
+    "gui": false
+   },
+   "requires": [
+    "Java 21"
+   ],
+   "platforms": [
+    "windows",
+    "linux"
+   ],
+   "notes": "Source-first NeoForge workbench. No application release exists; never present it as a downloadable ZIP."
+  },
+  "rimworld-forge": {
+   "title": "RimWorldForge",
+   "repo": "https://github.com/SenjuWoo/RimWorldForge",
+   "install": {
+    "kind": "release_zip",
+    "asset": "*.zip",
+    "entrypoint": "Install.ps1"
+   },
+   "update": {
+    "entrypoint": "Update.ps1"
+   },
+   "doctor": {
+    "entrypoint": [
+     "python",
+     "rwforge.py",
+     "doctor"
+    ]
+   },
+   "markers": [
+    "bin/rwforge.cmd"
+   ],
+   "capabilities": {
+    "cli": "rwforge",
+    "mcp": "rimworld profile",
+    "skills": [
+     "rimworld-*"
+    ],
+    "gui": false
+   },
+   "requires": [
+    "RimWorld 1.6 for full readiness"
+   ],
+   "platforms": [
+    "windows"
+   ],
+   "notes": "Uses a dedicated Hermes profile; its MCP must not be enabled globally."
+  },
+  "saintsrow-forge": {
+   "title": "SaintsRowForge",
+   "repo": "https://github.com/SenjuWoo/SaintsRowForge",
+   "install": {
+    "kind": "owner_installer",
+    "asset": "application release only - never packs-v1",
+    "entrypoint": "Install.ps1"
+   },
+   "update": {
+    "entrypoint": "Update.ps1"
+   },
+   "doctor": {
+    "entrypoint": [
+     "python",
+     "srforge_cli.py",
+     "doctor"
+    ]
+   },
+   "markers": [
+    "srforge_cli.py"
+   ],
+   "capabilities": {
+    "cli": "srforge_cli.py",
+    "mcp": false,
+    "skills": [
+     "saints-row-*"
+    ],
+    "gui": false
+   },
+   "requires": [],
+   "platforms": [
+    "windows"
+   ],
+   "notes": "GitHub 'latest release' currently resolves to the packs-v1 content pack, which is not the application. Owner fix required before automatic upgrades."
+  },
+  "avatar-forge": {
+   "title": "AvatarForge",
+   "repo": "https://github.com/SenjuWoo/AvatarForge",
+   "install": {
+    "kind": "release_zip",
+    "asset": "*.zip",
+    "entrypoint": "INSTALL-TOOLS.bat"
+   },
+   "update": {
+    "entrypoint": "INSTALL-TOOLS.bat"
+   },
+   "doctor": {
+    "entrypoint": null
+   },
+   "markers": [
+    "INSTALL-TOOLS.bat"
+   ],
+   "capabilities": {
+    "cli": null,
+    "mcp": "optional via CONNECT-AI.bat",
+    "skills": [
+     "avatar-*"
+    ],
+    "gui": true
+   },
+   "requires": [
+    "Blender"
+   ],
+   "platforms": [
+    "windows"
+   ],
+   "notes": "GUI-first. CONNECT-AI.bat is an owner opt-in, not permission to leave its MCP active everywhere."
+  },
+  "face-forge": {
+   "title": "FaceForge",
+   "repo": "https://github.com/SenjuWoo/FaceForge",
+   "install": {
+    "kind": "gui_app",
+    "asset": "*.zip",
+    "entrypoint": "manual extraction"
+   },
+   "update": {
+    "entrypoint": "manual"
+   },
+   "doctor": {
+    "entrypoint": null
+   },
+   "markers": [
+    "FaceForge.exe"
+   ],
+   "capabilities": {
+    "cli": null,
+    "mcp": false,
+    "skills": [
+     "facegen-diagnostics"
+    ],
+    "gui": true
+   },
+   "requires": [
+    "Skyrim SE for the export pipeline"
+   ],
+   "platforms": [
+    "windows"
+   ],
+   "notes": "Standalone Windows app outside Skyrim's Data directory. No CLI or MCP capability exists."
+  },
+  "follower-forge": {
+   "title": "FollowerForge",
+   "repo": "https://github.com/SenjuWoo/FollowerForge",
+   "install": {
+    "kind": "gui_app",
+    "asset": "*.zip",
+    "entrypoint": "manual extraction"
+   },
+   "update": {
+    "entrypoint": "manual"
+   },
+   "doctor": {
+    "entrypoint": null
+   },
+   "markers": [
+    "FollowerForge.exe"
+   ],
+   "capabilities": {
+    "cli": null,
+    "mcp": false,
+    "skills": [
+     "skyrim-racemenu-followers"
+    ],
+    "gui": true
+   },
+   "requires": [
+    "FaceForge output for the recommended pipeline"
+   ],
+   "platforms": [
+    "windows"
+   ],
+   "notes": "FaceForge -> RaceMenu head export -> FollowerForge; in-game steps stay manual."
+  },
+  "comfy-kit": {
+   "title": "comfy-kit (image stack)",
+   "repo": "https://github.com/SenjuWoo/comfy-kit",
+   "install": {
+    "kind": "source_only",
+    "asset": null,
+    "entrypoint": "TOOLS/image-stack.ps1"
+   },
+   "update": {
+    "entrypoint": "TOOLS/image-stack.ps1"
+   },
+   "doctor": {
+    "entrypoint": [
+     "TOOLS/image-stack.ps1",
+     "-Status"
+    ]
+   },
+   "markers": [
+    "TOOLS/image-stack.ps1"
+   ],
+   "capabilities": {
+    "cli": "TOOLS/image-stack.ps1",
+    "mcp": false,
+    "skills": [
+     "comfy-*"
+    ],
+    "gui": true
+   },
+   "requires": [
+    "ComfyUI or SwarmUI",
+    "several GB of model assets"
+   ],
+   "platforms": [
+    "windows"
+   ],
+   "notes": "Release v0.5.0 has no application assets; use the tagged source checkout. It is the successor to the retired uabs-image-stack split."
+  }
+ }
+}
