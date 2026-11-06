@@ -801,3 +801,21 @@ Older sections below are the history this state summarises; anything marked
 ## History
 
 Superseded checkpoints: docs/history/STATE-ARCHIVE-8.19-8.25.md. Per-release notes: CHANGELOG.md and docs/history/.
+
+## Dump audit (2026-11-06)
+
+`Z:\Backup\Ai export tmp` (23 GB: a ChatGPT export, a small Claude export and a
+`profiles.zip` Hermes snapshot). Decision per item:
+
+- Adopted: `Vision jail MAX v8` and `Manga - Story Maker` prompt packs ->
+  `0-UNRESTRAINT-PACKS/Fun-stuff-kit/`. They existed nowhere else.
+- Already newer here: `ultimate-generalized-skyrim-prompts` v2 -> SkyrimForge
+  ships v3; the `AIO-Instruction*` variants -> the bundle's AIO is 15 KB against
+  their 2.6-3 KB.
+- Deliberately not imported: the `profiles.zip` snapshot (Sept 2026). Its 106
+  "missing" code skills and 128 Skyrim skills were folded into routers in 8.30.0
+  (`reasoning-discipline` still carries the adversarial/assumption-audit content);
+  its `config.yaml` predates the live `deepseek_particle` MoA preset. Restoring it
+  would re-add duplicate skills and an older model routing.
+- Personal but not bundle material: `rimworld-invalidcast-ledger.md`,
+  `SettingsUser.json`, Skyrim load orders and crash logs stay out of the repo.

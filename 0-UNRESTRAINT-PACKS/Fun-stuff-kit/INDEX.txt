@@ -12,6 +12,9 @@ USE THIS
   Tools.txt            Pipeline, swipe, format-fix, lore-check, ST regex
   SKSE-DLL.txt         Skyrim native C++ / CommonLibSSE-NG
   Papyrus.txt          Skyrim Papyrus review/optimize
+  Vision-jail-MAX-v8.txt        Unfiltered persona / roleplay jailbreak (v8)
+  MANGA-VISUAL-STORY-DIRECTOR.txt  Manga panel + visual story director
+
   Models.txt           Dated model cast (re-check before assuming)
   Sites.txt            Live-checked sites + performer aliases
 

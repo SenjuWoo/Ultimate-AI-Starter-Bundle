@@ -1,3 +1,18 @@
+## 8.37.2 (2026-11-06)
+
+- Two prompt packs recovered from the November export dump now ship in
+  `0-UNRESTRAINT-PACKS/Fun-stuff-kit/`: `Vision-jail-MAX-v8.txt` (unfiltered
+  persona) and `MANGA-VISUAL-STORY-DIRECTOR.txt` (panel layout and visual story
+  direction), with their index entries. They existed only inside a 23 GB export.
+- Dump audit recorded in `STATE.md`: the useful parts were two prompt packs and
+  two prompt libraries that an owner already ships newer (SkyrimForge v3); the
+  rest is deliberately not imported -- a September Hermes profile snapshot whose
+  106/128 "missing" skills were folded into routers in 8.30.0, older AIO variants
+  superseded by the current files, and model configs older than the live
+  `deepseek_particle` MoA preset.
+- 81 canonical skills, no companion pin changed, unrestrained/preamble sources
+  untouched apart from the two added packs.
+
 ## 8.37.1 (2026-11-06)
 
 - Skill-trigger evaluation reads events again. The Windows/queue rewrite left the
