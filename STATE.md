@@ -804,7 +804,7 @@ Superseded checkpoints: docs/history/STATE-ARCHIVE-8.19-8.25.md. Per-release not
 
 ## Dump audit (2026-11-06)
 
-`Z:\Backup\Ai export tmp` (23 GB: a ChatGPT export, a small Claude export and a
+The November export dump folder (23 GB: a ChatGPT export, a small Claude export and a
 `profiles.zip` Hermes snapshot). Decision per item:
 
 - Adopted: `Vision jail MAX v8` and `Manga - Story Maker` prompt packs ->
