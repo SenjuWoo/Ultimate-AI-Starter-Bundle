@@ -28,15 +28,13 @@ DEFAULT_ROOTS = (
     os.path.join(os.environ.get("USERPROFILE", ""), "AppData", "Local"),
     os.path.join(os.environ.get("USERPROFILE", ""), "AppData", "Local", "Skyrim-Tools"),
     os.path.join(os.environ.get("USERPROFILE", ""), "AppData", "Roaming"),
-    "Z:/Backup/Ai documentation/Tools/Ai tools",
-    "Z:/Backup/Ai documentation/Tools",
-    "Z:/Backup/!Skyrim/Skyrim tools",
     "C:/Program Files",
     "C:/Program Files (x86)",
-    "Z:/Backup/Ai apps",
-    "Z:/Backup/Ai documentation/Tools/Ai tools",
-    "S:/Apps",
 )
+
+# User-declared tool roots live outside the shipped bundle: one absolute path per line, '#' comments.
+# The bundle carries no maintainer paths, so a public checkout matches nobody's private layout.
+PROFILE_ROOTS = os.path.join(os.environ.get("USERPROFILE", ""), ".uabs", "profile", "TOOL-ROOTS.txt")
 
 
 class RegistryError(ValueError):
@@ -86,7 +84,12 @@ def validate(data):
 
 def roots(extra=None):
     seen, out = set(), []
-    for root in list(extra or []) + [r for r in os.environ.get("UABS_TOOL_ROOTS", "").split(os.pathsep) if r] + list(DEFAULT_ROOTS):
+    declared = [r.strip() for r in os.environ.get("UABS_TOOL_ROOTS", "").split(os.pathsep) if r.strip()]
+    if os.path.exists(PROFILE_ROOTS):
+        with open(PROFILE_ROOTS, encoding="utf-8") as fh:
+            declared += [line.strip() for line in fh
+                         if line.strip() and not line.lstrip().startswith("#")]
+    for root in list(extra or []) + declared + list(DEFAULT_ROOTS):
         norm = os.path.normcase(os.path.abspath(root)) if root else ""
         if root and norm not in seen and os.path.isdir(root):
             seen.add(norm)
@@ -104,9 +107,27 @@ def owner_names(entry):
     return {_norm(repo), _norm(entry.get("title", ""))}
 
 
+def pointer_root(entry):
+    """Resolve an owner pointer (e.g. Reverse THIS! kit.json) into its root."""
+    pointer = entry.get("pointer")
+    if not pointer:
+        return None
+    pointer = os.path.expandvars(pointer)
+    try:
+        with open(pointer, encoding="utf-8-sig") as fh:
+            receipt = json.load(fh)
+    except (OSError, ValueError):
+        return None
+    root = receipt.get("kit_root")
+    return root if isinstance(root, str) and os.path.isdir(root) else None
+
+
 def find(entry, search_roots):
-    """First directory containing every marker, or None."""
+    """Owner pointer first, then the first directory containing every marker."""
     markers = entry["markers"]
+    pointer = pointer_root(entry)
+    if pointer and all(os.path.exists(os.path.join(pointer, m)) for m in markers):
+        return pointer
     for root in search_roots:
         try:
             children = os.listdir(root)

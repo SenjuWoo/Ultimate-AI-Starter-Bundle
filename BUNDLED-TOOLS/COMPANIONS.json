@@ -41,18 +41,18 @@
     "linux",
     "macos"
    ],
-   "notes": "Owns the Roblox skill catalog and knowledge/vendor. Studio work needs the separate official Roblox Studio MCP."
+   "notes": "Owns the Roblox skill catalog (23 adopted + 2 first-party) and knowledge/vendor. Studio work needs the separate official Roblox Studio MCP."
   },
   "skyrim-forge": {
    "title": "SkyrimForge",
    "repo": "https://github.com/SenjuWoo/SkyrimForge",
    "install": {
     "kind": "release_zip",
-    "asset": "SkyrimForge-*.zip",
-    "entrypoint": "Install.ps1"
+    "asset": "Skyrim-Forge-*.zip",
+    "entrypoint": "Install-or-Update.ps1"
    },
    "update": {
-    "entrypoint": "Update.ps1"
+    "entrypoint": "Update-Forge.ps1"
    },
    "doctor": {
     "entrypoint": [
@@ -87,35 +87,40 @@
    "repo": "https://github.com/SenjuWoo/reverse-this",
    "install": {
     "kind": "release_zip",
-    "asset": "ReverseThis-*.zip",
-    "entrypoint": "Install.ps1"
+    "asset": "Reverse-This-*.zip",
+    "entrypoint": "Install-Modkit.ps1"
    },
    "update": {
-    "entrypoint": "Update.ps1"
+    "entrypoint": "Update-ReverseThis.ps1"
    },
    "doctor": {
     "entrypoint": [
-     "ReverseThis.exe",
-     "--doctor"
+     "powershell",
+     "-NoProfile",
+     "-File",
+     "Install-Modkit.ps1",
+     "-Doctor"
     ]
    },
    "markers": [
-    "kit.json",
-    "ReverseThis.exe"
+    "VERSION",
+    "Install-Modkit.ps1",
+    "sandbox/installed.json"
    ],
+   "pointer": "%LOCALAPPDATA%\\ReverseThis\\kit.json",
    "capabilities": {
-    "cli": "reverse-this",
+    "cli": "sandbox/bin",
     "mcp": false,
     "skills": [
      "reverse-engineering"
     ],
-    "gui": true
+    "gui": false
    },
    "requires": [],
    "platforms": [
     "windows"
    ],
-   "notes": "Installs to %LOCALAPPDATA%\\ReverseThis; kit.json is the discovery record other tools read."
+   "notes": "Installs to %LOCALAPPDATA%\\ReverseThis; kit.json is the owner pointer other tools read. The release ZIP and entrypoints are Install-Modkit.ps1 / Update-ReverseThis.ps1 / Install-Modkit.ps1 -Doctor."
   },
   "ror2-forge": {
    "title": "Risk of Rain 2 Forge",
@@ -261,7 +266,7 @@
    "platforms": [
     "windows"
    ],
-   "notes": "GitHub 'latest release' currently resolves to the packs-v1 content pack, which is not the application. Owner fix required before automatic upgrades."
+   "notes": "v0.2.3 stages the code, keeps the previous version and rolls back when the doctor fails; the packs-v1 content release is marked prerelease, so /releases/latest resolves to the application."
   },
   "avatar-forge": {
    "title": "AvatarForge",

@@ -86,6 +86,25 @@ def test_detects_installed_and_missing():
         assert report["demo"]["state"] == "NOT_FOUND", report
 
 
+def test_owner_pointer_resolves_the_actual_kit_root():
+    with tempfile.TemporaryDirectory() as root:
+        owner = os.path.join(root, "kit")
+        os.makedirs(os.path.join(owner, "sandbox"))
+        for marker in ("VERSION", "Install-Modkit.ps1", os.path.join("sandbox", "installed.json")):
+            target = os.path.join(owner, marker)
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            open(target, "w").close()
+        pointer = os.path.join(root, "kit.json")
+        with open(pointer, "w", encoding="utf-8") as fh:
+            json.dump({"kit_root": owner}, fh)
+        data = _data()
+        data["companions"]["demo"]["pointer"] = pointer
+        data["companions"]["demo"]["markers"] = ["VERSION", "Install-Modkit.ps1", "sandbox/installed.json"]
+        report = reg.status([], data)
+        assert report["demo"]["state"] == "INSTALLED", report
+        assert report["demo"]["path"] == owner
+
+
 def test_partial_folder_is_discovered_not_installed():
     with tempfile.TemporaryDirectory() as root:
         partial = os.path.join(root, "demo")

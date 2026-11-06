@@ -11,12 +11,12 @@ Detected with `python TOOLS/companion_registry.py --verify`.
 |---|---|---|---|---|---|
 | Ultimate AI Starter Bundle | `cc6f1c1` | `v8.37.0` | 9 | — (foundation) | source |
 | SkyrimForge | `7afa175` | `v6.11.4` | zip | release_zip | **INSTALLED** `%LOCALAPPDATA%\Skyrim-Tools\Skyrim-Forge` |
-| Reverse THIS! | `fd26a39` | `v1.14.6` | zip | release_zip | **DISCOVERED** `%LOCALAPPDATA%\ReverseThis` (state only, app dir absent) |
-| RobloxForge | `03b2741` | `v0.13.5` | zip | release_zip | **INSTALLED** `Z:\…\Tools\Ai tools\RobloxForge` |
+| Reverse THIS! | `fd26a39` | `v1.14.6` | zip | release_zip | **INSTALLED** `Tools\Github\reverse-this` (state dir also present) |
+| RobloxForge | `03b2741` | `v0.13.6` | zip | release_zip | **INSTALLED** `Tools\Ai tools\RobloxForge` (0.13.6, checksum verified) |
 | Risk of Rain 2 Forge | `399d1d8` | `v1.13.8` | zip | release_zip | **INSTALLED** `Z:\…\Tools\Ai tools\Risk-Of-Rain-2-Forge` |
 | Minecraft Forge | `ad68171` | none | — | source_only | **INSTALLED** (source workbench, no release exists) |
 | RimWorldForge | `5f5893a` | `v0.4.0` | zip | release_zip | **INSTALLED** `%LOCALAPPDATA%\RimWorldForge` |
-| SaintsRowForge | `59777d8` | `packs-v1` (!) | zip | owner_installer | **NOT_FOUND** |
+| SaintsRowForge | `68a361b` | `v0.2.3` | zip + sha256 | owner_installer | **NOT_FOUND** (release now correct; not installed here) |
 | AvatarForge | `f1e51e2` | `v0.2.8` | zip | release_zip | **NOT_FOUND** |
 | FaceForge | `8e8b510` | `v0.24.3` | zip | gui_app | **NOT_FOUND** |
 | FollowerForge | `8509f54` | `v3.7.4` | zip | gui_app | **NOT_FOUND** |
@@ -39,7 +39,7 @@ Detected with `python TOOLS/companion_registry.py --verify`.
 | Command | Result |
 |---|---|
 | `python TESTS/test_companion_registry.py` | **0 failed** (8 cases) |
-| `python TOOLS/companion_registry.py --verify` | `INSTALLED=5, DISCOVERED=1, NOT_FOUND=5` |
+| `python TOOLS/companion_registry.py --verify` | `INSTALLED=6, NOT_FOUND=5` |
 | `python TOOLS/generate_manifest.py` | 5,621 files, 162.2 MB (regenerated, then reverted — see issue 6) |
 | RobloxForge `python tests/run_tests.py` | 88 passed, 0 failed (`03b2741`) |
 | RobloxForge CI + CodeQL | **success** on `03b2741` |
@@ -51,39 +51,35 @@ comfy-kit installation, multiplayer or published-place behaviour, and the DEADZO
 
 | Owner | Source SHA | Release | CI | Installed version |
 |---|---|---|---|---|
-| UABS | `cc6f1c1` (+ pending 8.37.1 work in the tree) | `v8.37.0` | green | source |
-| RobloxForge | `03b2741` | `v0.13.5` published, source says **0.13.6** | green | 0.13.6 source → release gap, issue 5 |
-| SkyrimForge | `7afa175` | `v6.11.4` published | green per owner | installed copy predates `7afa175` |
-| Reverse THIS! | `fd26a39` | `v1.14.6` | — | app not installed |
+| UABS | `e19752e` | `v8.37.1` (this pass) | see run | source |
+| RobloxForge | `03b2741` | **`v0.13.6`**, zip + sha256 verified | green | 0.13.6 |
+| SaintsRowForge | `68a361b` | **`v0.2.3`**, zip + sha256 verified; `packs-v1` now prerelease | green | not installed here |
+| SkyrimForge | `7afa175` | `v6.11.4` | owner CI | installed copy predates `7afa175` |
+| Reverse THIS! | `fd26a39` | `v1.14.6` | — | installed at `Tools\Github\reverse-this` |
 | RoR2 Forge | `399d1d8` | `v1.13.8` | — | source checkout |
-| SaintsRowForge | `59777d8` | `packs-v1` is "latest" | — | not installed |
+| Minecraft Forge | `ad68171` | none (source-only) | — | source workbench |
+| RimWorldForge | `5f5893a` | `v0.4.0` | — | `%LOCALAPPDATA%\RimWorldForge` |
 | comfy-kit | `f9c5314` | `v0.5.0`, no assets | — | not installed |
 
 ## 5. FINAL-ISSUES
 
-1. **SaintsRowForge (P1, owner repo).** `/releases/latest` resolves to the `packs-v1` game-content
-   pack, not the application. Its installer mirrors with `robocopy /MIR` and has no staging or
-   rollback, and a failing doctor still prints completion. Not fixable from the bundle without
-   becoming a second installer. Next step: owner publishes an application-tagged release, stages
-   `Install.ps1`/`Update.ps1` with backup+rollback, and makes a failed doctor exit non-zero.
-   The registry records `asset: "application release only - never packs-v1"` so no automation can
-   mistake the content pack for the Forge.
-2. **comfy-kit (P2).** `v0.5.0` has zero uploaded assets; only a tagged source checkout works today.
-   Its documented Anima setup also needs several GB of models, so it stays a deliberate opt-in.
-3. **GUI apps (P2).** AvatarForge, FaceForge and FollowerForge are not installed here. The
+1. **comfy-kit (P2).** `v0.5.0` has no uploaded assets, so only the tagged source checkout works. Its
+   Anima setup also needs several GB of models, so it stays a deliberate opt-in.
+2. **GUI apps (P2).** AvatarForge, FaceForge and FollowerForge are not installed here. The
    FaceForge → RaceMenu head export → FollowerForge handoff is unverified end to end.
-4. **Reverse THIS! (P2).** `%LOCALAPPDATA%\ReverseThis` holds `kit.json` plus four stale backups
-   (`pre-1.14.4`, `pre-1.14.5`, `pre-1.14.6`, `stale-20261105`) but no application directory, so the
-   state survives an uninstall. Reinstall through the owner installer before relying on it.
-5. **RobloxForge release gap (P2).** `main` is at 0.13.6 with the adopted Roblox skill catalog and
-   the 23 assistant briefs, but the newest published release is `v0.13.5`. The skills this owner now
-   owns are not in the released artifact. Fix: tag and publish 0.13.6 from `03b2741`.
-6. **UABS tree is mid-flight (P2).** `CHANGELOG.md`, `README.md` and 46 other paths carry another
-   agent's unpublished 8.37.1 work. This pass committed only its own four paths and reverted the
-   regenerated `MANIFEST.json` so it cannot describe files that are not committed. Regenerate the
-   manifest once that work lands.
+3. **SkyrimForge installed copy (P2).** The release is `v6.11.4`; the installed tree at
+   `%LOCALAPPDATA%\Skyrim-Tools\Skyrim-Forge` predates `7afa175`. Re-run the owner updater before
+   relying on the newest source.
+4. **Reverse THIS! state (P3).** `%LOCALAPPDATA%\ReverseThis` still carries four stale backups
+   (`pre-1.14.4`, `pre-1.14.5`, `pre-1.14.6`, `stale-20261105`) beside the live `kit.json`. Harmless,
+   but they predate the installed app and can confuse a future restore.
+5. **DEADZONE: HAVEN (P2, separate work).** The Forge is verified; the game is not. Its real project
+   push, gameplay smoke, multiplayer and published-place behaviour were not exercised in this pass.
+6. **Cross-host integration (P2).** Only Hermes was exercised. Claude Code, Codex, Grok, Kimi and
+   Antigravity were not connected or handshaked here, and no claim is made about them.
 
 ## 6. Registry contract
+
 
 `BUNDLED-TOOLS/COMPANIONS.json` is the single list of supported owners. It deliberately contains
 **no** install logic and **no** command runner: the bundle detects, reports and prints owner

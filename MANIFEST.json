@@ -18726,8 +18726,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
-  "size": 9123,
-  "sha256": "a6e75f88f9d7b3264b38a0e7a1dc44e80136ad52c572bac38b3dccebf19ce27b"
+  "size": 9482,
+  "sha256": "6de99d2b28b2fe70110a6aa28301046e99673b49bac86f2ea93931b7f3898101"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
@@ -23356,8 +23356,8 @@
  },
  {
   "path": "TESTS/test_companion_registry.py",
-  "size": 4065,
-  "sha256": "85a8b35e87d90f1a93f85a67d26594acc1dd995ae22c1de16320c2389badfd0f"
+  "size": 5002,
+  "sha256": "470848ae02f6ac98bdbfc62bc4865937e2463503b602bc5e7353728c29c51bb1"
  },
  {
   "path": "TESTS/test_free_game_tools.py",
@@ -23411,8 +23411,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 366617,
-  "sha256": "75158d6f2c1ac146717af4167f98982087222359decd89015f9fbe8625454c63"
+  "size": 368248,
+  "sha256": "c01ef18cddb0c7a21e7fc3af5fedfe47df7a4d9525f159c5e5c94b5fd7f6a4cf"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23736,8 +23736,8 @@
  },
  {
   "path": "TOOLS/companion_registry.py",
-  "size": 7784,
-  "sha256": "74bcec16db2ce18948802a7cfdb9a26c47f50d9efdc484ce3140d8430e1bf15b"
+  "size": 8788,
+  "sha256": "30229de330c36f4775c3078bc0b34ac156481a4754461fa8640f810a4fbdf94a"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -26961,8 +26961,8 @@
  },
  {
   "path": "docs/INTEGRATION-REPORT-2026-11-06.md",
-  "size": 6251,
-  "sha256": "1892257439bcf5529088e53ffcb48c73004291f37d8ff56eab3c0421c248126f"
+  "size": 5785,
+  "sha256": "7155e7018652240fcf7af8ffc138037b3eaac57160341056df3faec38c9a4747"
  },
  {
   "path": "docs/OPERATOR-PROFILES.md",

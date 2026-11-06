@@ -3064,6 +3064,28 @@ def test_compression_caps_reach_existing_profiles() -> None:
     assert one == two, "the two Hermes starter templates diverged"
 
 
+def test_installed_state_doctor_checks_the_reverse_owner() -> None:
+    """A catalog/install-state row is not proof the Reverse owner is ready."""
+    script = read(ROOT / "TOOLS" / "Test-Installed-State.ps1")
+    for needle in ("reverse_this=$reverseHealth", "Reverse THIS! owner readiness failed",
+                   "owner pointer is missing", "owner doctor failed",
+                   "REA 6.8.0 is not compatible with Ghidra 12.2"):
+        assert needle in script, f"installed-state doctor lost {needle}"
+
+
+def test_companion_registry_uses_the_published_owner_contracts() -> None:
+    """The registry cannot point at a different asset or entrypoint than the owners ship."""
+    registry = json.loads(read(ROOT / "BUNDLED-TOOLS" / "COMPANIONS.json"))["companions"]
+    catalog = json.loads(read(ROOT / "BUNDLED-TOOLS" / "CATALOG.json"))["components"]
+    reverse = next(c for c in catalog if c["id"] == "reverse-this")
+    assert registry["reverse-this"]["install"]["asset"] == reverse["asset_template"].replace("{version}", "*")
+    assert registry["reverse-this"]["install"]["entrypoint"] == "Install-Modkit.ps1"
+    assert registry["reverse-this"]["update"]["entrypoint"] == "Update-ReverseThis.ps1"
+    assert registry["reverse-this"]["pointer"] == "%LOCALAPPDATA%\\ReverseThis\\kit.json"
+    skyrim = next(c for c in catalog if c["id"] == "skyrim-forge")
+    assert registry["skyrim-forge"]["install"]["asset"] == skyrim["asset_template"].replace("{version}", "*")
+
+
 def test_reverse_missing_owner_is_not_reported_as_success() -> None:
     """A stale owner pointer cannot fall through to owner-managed success."""
     script = read(ROOT / "TOOLS" / "Install-ReverseThis.ps1")
@@ -3264,6 +3286,8 @@ def main() -> int:
         test_verification_tiers_and_tooling_decisions,
         test_creative_direction_and_capability_discovery,
         test_compression_caps_reach_existing_profiles,
+        test_installed_state_doctor_checks_the_reverse_owner,
+        test_companion_registry_uses_the_published_owner_contracts,
         test_reverse_missing_owner_is_not_reported_as_success,
         test_reverse_kit_is_adopted_after_a_move,
         test_release_workflow_publishes_only_a_green_untagged_main_sha,
