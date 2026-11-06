@@ -23450,6 +23450,11 @@
   "sha256": "30592662bd49cec7deb980cb2bb0e70ddf2afa133568d367356173318d93a446"
  },
  {
+  "path": "TESTS/test_task_state.py",
+  "size": 5149,
+  "sha256": "8c22df4be4a3c38cd7d8fc7dcf11b6754a2e47442cc06b7d93a6a78aad6b2f9f"
+ },
+ {
   "path": "TESTS/test_toolbox.py",
   "size": 15467,
   "sha256": "62bf9522d06f62de8a6ea65f64892e492ce434bdce05f5ebeb9bcb1bdf418ef8"
@@ -23888,6 +23893,11 @@
   "path": "TOOLS/release_provenance.py",
   "size": 7716,
   "sha256": "45a995d3f7188c13754a7b2b80192dc86f264a49eea2937fb2c5fb836bf79bf2"
+ },
+ {
+  "path": "TOOLS/task_state.py",
+  "size": 11817,
+  "sha256": "050407bcc26d18dfdc01ddcc99d8bafc64e4e1e9e83036622f1d24c84799e765"
  },
  {
   "path": "TOOLS/uabs_hermes_openrouter_catalog.py",
@@ -27873,6 +27883,11 @@
   "path": "docs/history/V8.37.6-CHANGELOG.md",
   "size": 390,
   "sha256": "ceb7d5638d3fb86294d003640bde9c19e207e837f88cba9498f2f55b2f8adbe4"
+ },
+ {
+  "path": "docs/history/V8.37.7-CHANGELOG.md",
+  "size": 945,
+  "sha256": "6038009155fbc2e7763aab7d041b42943d6fe1ac0a423eab550df45c340d7cc3"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",
