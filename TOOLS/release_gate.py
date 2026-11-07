@@ -28,6 +28,7 @@ def steps(root):
         ("provider routing safety", [py, "TESTS/test_provider_routing.py"]),
         ("companion registry", [py, "TESTS/test_companion_registry.py"]),
         ("upstream drift report", [py, "TESTS/test_upstream_drift.py"]),
+        ("line endings", [py, "TESTS/test_line_endings.py"]),
         ("privacy boundary", [py, "TESTS/test_privacy_boundary.py"]),
         ("pack gate", pw + ["TESTS/Test-Pack.ps1"]),
     ]

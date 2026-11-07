@@ -1,3 +1,17 @@
+## 8.37.16 (2026-11-07)
+
+- `docs/GUIDE.md` is CRLF again (8.37.15 shipped it LF, which made the release diff
+  for a 9-line documentation change look like a rewrite).
+- New `TOOLS/check_line_endings.py` and `TOOLS/restore_crlf.py`: the first reports
+  any tracked text file whose bytes lost their CRLF versus HEAD (`--staged` for the
+  index), the second puts them back without touching content. A local `pre-commit`
+  hook runs the check, so the conversion that shipped three times now fails before
+  the commit instead of after the release.
+- `TESTS/test_line_endings.py` proves the guard catches a converted file, ignores a
+  file that was always LF, and that the restore keeps the content; wired into CI and
+  the release gate.
+- 81 canonical skills, no companion pin changed.
+
 ## 8.37.15 (2026-11-07)
 
 - Line endings: the AssetForge documentation edit converted `README.md`, the
