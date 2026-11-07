@@ -2554,6 +2554,10 @@ def test_recommended_engine_pack_is_pinned_and_attributed() -> None:
     entry = registry["recommended"]["awesome-gamedev-agent-skills"]
     doc = read(ROOT / "docs" / "RECOMMENDED-GAME-DEV-SKILLS.md")
     assert entry["pin"] in doc, "the reviewed revision is not the one documented"
+    assert "cp LICENSE NOTICE" not in doc, "the invalid two-source copy instruction is back"
+    assert "Copy-Item" in doc, "the documented copy step must work on the bundle's main platform"
+    assert "MARKERS_FOUND" in doc and "pinned revision" in doc, (
+        "the doc must say detection is markers-only, not revision-verified")
     assert entry["license"] == "Apache-2.0"
     assert "Apache-2.0" in doc and "NOTICE" in doc
     assert "never installs" in doc.replace(chr(10), " ")

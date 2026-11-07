@@ -176,7 +176,7 @@ def test_recommended_pack_is_data_only_and_detectable():
         open(os.path.join(root, "router", "SKILL.md"), "w").close()
         open(os.path.join(root, "LICENSE"), "w").close()
         found = reg.recommended_status([tmp], data)["awesome-gamedev-agent-skills"]
-        assert found["state"] == "INSTALLED", found
+        assert found["state"] == "MARKERS_FOUND", (found, "a marker hit must not claim verification")
         assert found["path"].replace("\\", "/").endswith("awesome-gamedev-agent-skills")
 
         missing = reg.recommended_status([os.path.join(tmp, "nowhere")], data)

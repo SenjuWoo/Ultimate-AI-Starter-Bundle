@@ -46,11 +46,21 @@ python scripts/validate-skills.py                        # the project's own gat
 Then copy only the skills for the engine you actually use into your provider's
 skills directory, keeping `NOTICE` and `LICENSE` beside them:
 
-```sh
-# example: Godot only, into a Claude-style skills directory
-cp -r skills/godot/* "$HOME/.claude/skills/"
-cp LICENSE NOTICE "$HOME/.claude/skills/godot-pack-LICENSE.txt" 2>/dev/null || true
+PowerShell, the bundle's main platform (Godot only, into a Claude-style skills
+directory). Copy the license and notice as two separate files next to the skills:
+
+```powershell
+$pack   = "$HOMEwesome-gamedev-agent-skills"
+$target = "$HOME\.claude\skills"
+New-Item -ItemType Directory -Force -Path $target | Out-Null
+Copy-Item -Path (Join-Path $pack "skills\godot\*") -Destination $target -Recurse -Force
+Copy-Item (Join-Path $pack "LICENSE") (Join-Path $target "godot-pack-LICENSE.txt") -Force
+Copy-Item (Join-Path $pack "NOTICE")  (Join-Path $target "godot-pack-NOTICE.txt")  -Force
 ```
+
+On a POSIX shell the same two copies are `cp -r skills/godot/* "$HOME/.claude/skills/"`
+followed by a separate `cp LICENSE ...` and `cp NOTICE ...` — one file per command,
+because `cp` treats the second path as a directory when given two sources.
 
 Do not copy `router/` into a provider that already has the bundle's routing
 skills; two routers answering the same question is the overlap this document
@@ -66,13 +76,45 @@ Applied in this order, first match wins:
 4. This pack's generic skill for the same engine and discipline.
 5. The bundle's engine-neutral guidance (`game-dev-starter`, `capability-routing`).
 
-## When it loads
+## What the bundle actually does: discovery, not loading
 
-- The project's engine matches a category in the pack (`project.godot`,
-  `Assets/` + `ProjectSettings/`, an `.uproject`, a web-engine `package.json`).
-- The task is engine-specific and no Forge owns the project.
-- Nothing loads for a non-game task, and nothing loads merely because the pack is
-  installed.
+The bundle runs no install step and loads none of these skills. What exists today:
+
+- `BUNDLED-TOOLS/COMPANIONS.json` records the pack under `recommended`, with its
+  license, the reviewed revision and the marker files used for detection.
+- `python TOOLS/companion_registry.py` reports, per pack:
+  - `MARKERS_FOUND` — the marker files exist under a folder named after the
+    repository, so this *looks like* a checkout. It says nothing about which
+    revision is present, whether the skills were copied anywhere, or whether they
+    parse; verify with `git -C <path> rev-parse HEAD` against the pin.
+  - `NOT_FOUND` — no such folder in the searched roots.
+- That is the whole integration. Reading a skill is still the agent's decision,
+  made through `game-dev-starter` and `capability-routing`.
+
+### How the detector finds a manual clone
+
+It searches, in order, and stops at the first folder whose name matches the
+repository and which contains the markers (`router/SKILL.md`, `skills`, `LICENSE`):
+
+1. Directories passed with `--roots` (`--roots D:\Tools`).
+2. `UABS_TOOL_ROOTS`, split on the platform path separator.
+3. `%USERPROFILE%\.uabs\profile\TOOL-ROOTS.txt` — one absolute path per line, `#`
+   for comments; the same list the bundle's tool discovery uses.
+4. The bundle's default search roots.
+
+A clone anywhere on those roots is found; a clone in an unrelated folder is not,
+and the fix is `--roots`, not a drive walk.
+
+## When an agent may read the pack
+
+Nothing here is automatic. If, and only if, the project is a real engine project
+and no Forge owns it, an agent may read the pack's skill for that engine:
+
+- The engine is detectable (`project.godot`, `Assets/` + `ProjectSettings/`, an
+  `.uproject`, a web-engine `package.json`).
+- The task is engine-specific.
+- Nothing is read for a non-game task, and nothing is read merely because the pack
+  was detected.
 
 ## Updating and removing
 
@@ -86,6 +128,8 @@ Applied in this order, first match wins:
 
 - Not tested against the bundle's own contract suite; it is a pointer, not a
   dependency.
+- Detection is marker-only and never proves the pinned revision, so re-check the
+  clone yourself after an update.
 - The pack's router assumes it is the only router. With this bundle installed, the
   bundle's routing skills decide, and the pack supplies content only.
 - Roblox skills in its `other-engines` category are generic; RobloxForge remains

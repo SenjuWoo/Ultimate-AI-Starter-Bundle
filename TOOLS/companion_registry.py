@@ -278,7 +278,7 @@ def recommended_status(search_roots, data=None):
     out = {}
     for rid, entry in sorted((data.get("recommended") or {}).items()):
         path = find(entry, search_roots)
-        out[rid] = {"state": "INSTALLED" if path else "NOT_FOUND", "path": path,
+        out[rid] = {"state": "MARKERS_FOUND" if path else "NOT_FOUND", "path": path,
                     "title": entry["title"], "repo": entry["repo"], "pin": entry["pin"],
                     "license": entry["license"], "docs": entry["docs"], "ready": False,
                     "evidence": "markers-only"}

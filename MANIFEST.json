@@ -18737,7 +18737,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64144,
-  "sha256": "839ff58c1cbd5a3041e379160f3815d2c940e50800a58bbf9c0dfed0bea5fccd"
+  "sha256": "2b768f81e603a0fb6ee03353a955ddd2826fc5c7fdef2682b71be4715e3865cc"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18747,7 +18747,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "862d0853c779bd0be42ad5e107197aa35a66cf7c2180723e6879dfa5e6ccf4de"
+  "sha256": "91661ff316c2c3672a6851b28f92a4434fe35a6063fc71dce28192aee411fba2"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18757,7 +18757,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40571,
-  "sha256": "bb2f329b1b7743cf6d7d5ea89b7896cab025c221b844d16f5a4cad1007d75228"
+  "sha256": "d7b582baf46b8ec2d94139c67bc7f0963ee1021249cea31bdd85a02e3e4e0e75"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22811,8 +22811,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 303861,
-  "sha256": "08f17d1ae66af48b300370bff70d34e8183162f73dbb3f17691f3763be55c293"
+  "size": 304904,
+  "sha256": "f378932a19f0b3ad6446869007742fcdeea0a1a790e616aeaa5940ead5088835"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22957,7 +22957,7 @@
  {
   "path": "README.md",
   "size": 15130,
-  "sha256": "bbc1966a8ed7e0ac88ea391d09b21960f038f713fb561ad3e19fc568728b16cd"
+  "sha256": "d8b1b51dc72d594a5bb91ea489ced4960753638cafba91d7fc357df3546088e2"
  },
  {
   "path": "SECURITY.md",
@@ -22967,12 +22967,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1054,
-  "sha256": "3760087168b18c2beb1e47db863874e4e74a40f373880fb5059f5ade74fd070f"
+  "sha256": "bc070f077d558567302e1aa8fdf05145f5868bd259f918fa01ebbdc2c3db6f47"
  },
  {
   "path": "START-HERE.txt",
   "size": 4105,
-  "sha256": "fedf9c52108bc5cd4e9cee47db624c8d1cdc5c494fcefc8335d86ffa8a12fdb6"
+  "sha256": "196bdd466e43dc7e89572120e09624430cd7da2dee2814452999f1aa4eaeb59d"
  },
  {
   "path": "STATE.md",
@@ -23371,8 +23371,8 @@
  },
  {
   "path": "TESTS/test_companion_registry.py",
-  "size": 9302,
-  "sha256": "0b55970b0de444fa96670c3511afca83f0d651a6316db9a93dae62984a687b38"
+  "size": 9117,
+  "sha256": "30de12dc44e14bad0edd6548bb13534c7bfef7d69574ac628b40823205972a2d"
  },
  {
   "path": "TESTS/test_free_game_tools.py",
@@ -23431,8 +23431,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 371886,
-  "sha256": "6d48d54300f1a0e80944d675fb7d190511440ee34184f4657ef6b2e4bfe23353"
+  "size": 365501,
+  "sha256": "4cc14eb9a9d670f2eb6fed7bec072e9c3039ae45b5081d764a2dcdaeb52a6f8e"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23761,8 +23761,8 @@
  },
  {
   "path": "TOOLS/companion_registry.py",
-  "size": 15133,
-  "sha256": "722e14f59fd92a9056851de5c902f897c4299329edf3ad54e17e9eaef5778ade"
+  "size": 15137,
+  "sha256": "f5e092ea689efdb55bad5710c7d07a1f54b11c97daed78d92690e17db0b44fa2"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -23967,7 +23967,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2783,
-  "sha256": "ac37faabe42513115f220c53875dd7d251de08d6710653a1c277a2d89c76a497"
+  "sha256": "8120088de0a1ffb350eacabdcf48d1806b8ac803192bb626afec3d1f674b2310"
  },
  {
   "path": "VALIDATION.md",
@@ -23977,7 +23977,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "4b9e2c0cb5dd87e425d50950dceb7b5c03c7a309c6254da0319e94bbc9597399"
+  "sha256": "747db825a4bcac7737fe3ee5f89c84fe72c2b573f87501002fa5895543481c37"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -27011,8 +27011,8 @@
  },
  {
   "path": "docs/RECOMMENDED-GAME-DEV-SKILLS.md",
-  "size": 4684,
-  "sha256": "a7e20cc5689a1919fdd53575fd75f2c34a650d20b19328564e5c74f0dc75c2f8"
+  "size": 7058,
+  "sha256": "ba15c21b5944e5e3b765548fdc27513ccec6b8602490b9bebed97308a851d315"
  },
  {
   "path": "docs/TASK-ROUTING.md",

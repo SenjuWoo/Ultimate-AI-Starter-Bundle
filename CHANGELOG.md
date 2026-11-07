@@ -1,3 +1,21 @@
+## 8.37.12 (2026-11-07)
+
+- The engine-pack doc told readers to run `cp LICENSE NOTICE <file>`, which cannot
+  work: with two sources `cp` treats the last argument as a directory. It now shows
+  PowerShell that copies `LICENSE` and `NOTICE` as two files, and says why the
+  one-line form was wrong.
+- Documented how detection actually finds a manual clone: `--roots`,
+  `UABS_TOOL_ROOTS`, `%USERPROFILE%\.uabs\profile\TOOL-ROOTS.txt`, then the default
+  roots.
+- The recommended state is now `MARKERS_FOUND` instead of `INSTALLED` - a marker hit
+  means a checkout-shaped folder, not the pinned revision or a working install. The
+  doc says so and tells the reader to compare `git rev-parse HEAD` with the pin.
+- Wording corrected: this integration is documentation plus detection. Nothing is
+  installed, routed or loaded automatically.
+- Contract test rejects the old two-source copy command and requires the
+  marker-only wording; companion test follows the renamed state.
+- 81 canonical skills, no companion pin changed.
+
 ## 8.37.11 (2026-11-07)
 
 - `awesome-gamedev-agent-skills` is now a **recommended engine pack**, not a
