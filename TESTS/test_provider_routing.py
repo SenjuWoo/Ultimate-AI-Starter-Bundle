@@ -47,7 +47,7 @@ class RoutingTests(unittest.TestCase):
     def test_dry_run_changes_nothing(self):
         self.write()
         before = self.cfg.read_bytes()
-        new_text, old = refresh.replace_only(self.cfg.read_text(encoding="utf-8", newline=""), SLUGS)
+        new_text, old = refresh.replace_only(self.cfg.read_bytes().decode("utf-8"), SLUGS)
         self.assertIn("stale-one", old)
         self.assertEqual(before, self.cfg.read_bytes())
         self.assertIn("cheap-a", new_text)

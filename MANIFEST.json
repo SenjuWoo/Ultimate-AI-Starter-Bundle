@@ -23421,8 +23421,8 @@
  },
  {
   "path": "TESTS/test_provider_routing.py",
-  "size": 4863,
-  "sha256": "52d0bc840d312902b0d89cd78b177a33f002413db6557cc4719d40adea878c2b"
+  "size": 4852,
+  "sha256": "6531e511265a7494282e6671d58db19f6718d613821d05c4445156aecd7b40eb"
  },
  {
   "path": "TESTS/test_release_contract.py",
