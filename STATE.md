@@ -32,7 +32,16 @@
   starter keeps `null`, `true` and `0`. The live values are the operator's own, so
   nothing was changed; `compression.threshold_tokens` is a cap on the ratio
   trigger, not a floor, and was left alone.
-- Next action: run the gates and publish 8.37.3.
+- Hardening audit (v8.37.14 -> 8.37.15): CRLF restored in README and the
+  game-dev-starter copies (the AssetForge doc edit had converted eight files to
+  LF; the canonical skill and all six provider copies are byte-identical again),
+  `STATE.md` no longer names a release to publish, and
+  `TOOLS/check_upstream_drift.py` reports pinned revisions without fetching or
+  writing. Deferred with reasons: a disposable-profile clean-Windows install
+  smoke test (needs a machine-wide profile sandbox the installer does not have)
+  and the opt-in benchmark harness (no fixture that exercises a model offline).
+- Next action: run the gates and publish the current version; the tag and
+  `VERSION.txt` are the source of truth, so this line carries no number.
 
 Older sections below are the history this state summarises; anything marked
 "not implemented" is superseded by the entry that implements it.

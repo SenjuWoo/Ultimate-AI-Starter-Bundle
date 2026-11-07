@@ -250,6 +250,33 @@ class StateTests(unittest.TestCase):
             code2, out2 = run("resume", root, "--fix")
             self.assertIn("nothing written", out2)
 
+    def test_resume_repairs_a_half_written_state_file(self):
+        # An interrupted write leaves a file that stops mid-field; repair must not crash.
+        with tempfile.TemporaryDirectory() as d:
+            row = "| T1 | a | complete | - | file:a.txt | - |" + chr(10) + "| T2 | b | pending | T1 | - | - |" + chr(10)
+            state = "GOAL: ship" + chr(10) + "CURRENT TASK: T9" + chr(10) + "NEXT AC"
+            root = write(d, row, state=state)
+            code, out = run("resume", root, "--fix")
+            self.assertEqual(code, 1, out)          # the contradiction it just repaired is reported
+            self.assertIn("STATE.md updated", out)
+            code2, out2 = run("resume", root, "--fix")
+            self.assertEqual(code2, 0, out2)        # nothing left to report
+            text = (root / "STATE.md").read_text(encoding="utf-8")
+            self.assertIn("CURRENT TASK: T2", text)
+            self.assertIn("NEXT ACTION:", text)
+            self.assertFalse(text.rstrip().endswith("NEXT AC"), text)
+
+    def test_repair_keeps_fields_it_does_not_own(self):
+        with tempfile.TemporaryDirectory() as d:
+            row = "| T1 | a | complete | - | file:a.txt | - |" + chr(10) + "| T2 | b | pending | T1 | - | - |" + chr(10)
+            state = ("GOAL: ship" + chr(10) + "CURRENT TASK: T9" + chr(10)
+                     + "NOTES: keep me" + chr(10) + "SHA: " + chr(10))
+            root = write(d, row, state=state)
+            run("resume", root, "--fix")
+            text = (root / "STATE.md").read_text(encoding="utf-8")
+            self.assertIn("NOTES: keep me", text)
+            self.assertIn("CURRENT TASK: T2", text)
+
     def test_two_agents_resuming_converge(self):
         with tempfile.TemporaryDirectory() as d:
             row = "| T1 | a | complete | - | file:a.txt | - |\n| T2 | b | pending | T1 | - | - |\n"

@@ -1,3 +1,24 @@
+## 8.37.15 (2026-11-07)
+
+- Line endings: the AssetForge documentation edit converted `README.md`, the
+  canonical `game-dev-starter` skill and its six provider copies to LF, so a small
+  change looked like a rewrite. All eight files are CRLF again, the canonical skill
+  is byte-identical to every provider copy, and no file in the release diff changes
+  more than 60 lines.
+- `STATE.md` no longer tells anyone to publish 8.37.3; the next action carries no
+  release number, because the tag and `VERSION.txt` already own that fact.
+- New `TOOLS/check_upstream_drift.py`: prints every pinned or recommended
+  third-party repository with the revision this bundle records and the current
+  upstream head when `gh` can reach GitHub. `--offline` shows pins only. It never
+  fetches, pulls or writes, and an unreachable network is `unknown`, not a failure.
+- `TESTS/test_upstream_drift.py` covers offline, matching, drifted and
+  network-missing cases plus a guard that the tool contains no fetch or write path;
+  wired into CI and the local release gate.
+- Deferred with reasons recorded in `STATE.md`: a disposable-profile clean-Windows
+  install smoke test (the installer has no machine-wide profile sandbox) and the
+  opt-in benchmark harness (no offline fixture that exercises a model).
+- 81 canonical skills, no companion pin changed.
+
 ## 8.37.14 (2026-11-07)
 
 - AssetForge is a detected owner, not a dependency: the companion registry now

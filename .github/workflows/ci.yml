@@ -123,6 +123,8 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_companion_registry.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_upstream_drift.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_task_state.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_provider_routing.py

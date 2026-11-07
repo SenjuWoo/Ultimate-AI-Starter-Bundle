@@ -985,6 +985,15 @@ old decisions live in [docs/history/](https://github.com/SenjuWoo/Ultimate-AI-St
 
 Workflow audit of 2026-10-22: [findings, fixes and evidence](docs/AUDIT-2026-10-22.md).
 
+### Upstream drift report
+
+`python TOOLS/check_upstream_drift.py` prints every pinned or recommended
+third-party repository, the revision this bundle records, and the current
+upstream head when `gh` can reach GitHub. `--offline` prints the pins only.
+It never fetches, pulls or writes: an unreachable network is reported as
+`unknown`, not as a failure, and a recommended pack that moved upstream is
+`drifted` until a human re-reviews it.
+
 ## Validation and diagnostics
 
 ```powershell
