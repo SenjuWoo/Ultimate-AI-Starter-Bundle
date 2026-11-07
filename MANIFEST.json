@@ -23475,6 +23475,11 @@
   "sha256": "1a449a08232ab71607c145c716e33f4b60f0562e419f56ad6eb949855e914a76"
  },
  {
+  "path": "TESTS/test_upstream_drift.py",
+  "size": 2321,
+  "sha256": "c2eff87b534842e852c53ab724fe34a547b47e012ab6b1bb0ad2e3f6bcbab879"
+ },
+ {
   "path": "TESTS/test_version_bump.py",
   "size": 3839,
   "sha256": "fa360c59baca58bd95799e62779422e9b1b2ca82cbf592823dee9dac0d6d9e96"
@@ -23758,6 +23763,11 @@
   "path": "TOOLS/build_release.py",
   "size": 14213,
   "sha256": "1d7b4119e50324322a430535d9c0902b18ae7137c82740400853d1e06b52bd01"
+ },
+ {
+  "path": "TOOLS/check_upstream_drift.py",
+  "size": 2959,
+  "sha256": "ec87ad6924787ae2226e45001f81eb488d179c94eaf8feb7cff26ea5a1e0410f"
  },
  {
   "path": "TOOLS/companion_registry.py",
@@ -27913,6 +27923,11 @@
   "path": "docs/history/V8.37.14-CHANGELOG.md",
   "size": 856,
   "sha256": "c70845dc071b99351c77e410faa14280166ff0928d84e5b3a480777af3b42151"
+ },
+ {
+  "path": "docs/history/V8.37.15-CHANGELOG.md",
+  "size": 1355,
+  "sha256": "c54e381c2c9790e9c8558f47a6b05b7556f7539412de605c15962d3d3aebc067"
  },
  {
   "path": "docs/history/V8.37.2-CHANGELOG.md",
