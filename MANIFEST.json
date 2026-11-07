@@ -23420,6 +23420,11 @@
   "sha256": "34c8d623aceccb5ad151f878c467546c14e040f8b79964e89f2cb67acd646b98"
  },
  {
+  "path": "TESTS/test_provider_routing.py",
+  "size": 4863,
+  "sha256": "52d0bc840d312902b0d89cd78b177a33f002413db6557cc4719d40adea878c2b"
+ },
+ {
   "path": "TESTS/test_release_contract.py",
   "size": 370183,
   "sha256": "c3296b18d1ff9faabc42dcbacc43d6bef7b0d66bd1fbff8de672b5dcc090a53f"
@@ -23888,6 +23893,11 @@
   "path": "TOOLS/refresh_universal_modder.py",
   "size": 18182,
   "sha256": "7eaafa38fef7db0c53d0c956f7c6a98ddac1f4fc3fdb94102bf047e4e1837739"
+ },
+ {
+  "path": "TOOLS/release_gate.py",
+  "size": 2969,
+  "sha256": "80ae72b85570c263b040f7e0c0cda71658987a31b2c3a37e2ffe9751e5aef298"
  },
  {
   "path": "TOOLS/release_provenance.py",
@@ -27075,6 +27085,11 @@
   "sha256": "062daf2cf4c46b8d98faa97dc9b5c0d398337cdbd7098903b4c480a6860f5cd4"
  },
  {
+  "path": "docs/history/STATE-ARCHIVE-2026-11-07.md",
+  "size": 69949,
+  "sha256": "82a4d503d9d39691488754e2affef99d2e516964022865a65c55299db9c4a0fc"
+ },
+ {
   "path": "docs/history/STATE-ARCHIVE-8.19-8.25.md",
   "size": 92841,
   "sha256": "e4a3c79e3f7fc50c206e276c8355dc390a028abf47a3feca8bea5b34866d3556"
@@ -27893,6 +27908,11 @@
   "path": "docs/history/V8.37.8-CHANGELOG.md",
   "size": 1331,
   "sha256": "95d5ec4d4d786680dfa00324299df1f2885dc9c0758ec4ebe2eabe5105470efc"
+ },
+ {
+  "path": "docs/history/V8.37.9-CHANGELOG.md",
+  "size": 2680,
+  "sha256": "4b83b413fead9313f14d0ac8ab9c06699185c18343d9a8972ee845c4caba368c"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",
