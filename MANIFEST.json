@@ -10,6 +10,11 @@
   "sha256": "3d6ca1e92ab8f2d7dfb32bd50698c2851b5d4a6a07b99b958ff8c72440d5e36a"
  },
  {
+  "path": ".githooks/pre-commit",
+  "size": 250,
+  "sha256": "62d45259267a1aa4004f9705e52e35473160c9d3c8657560219ea3ddd5712ea4"
+ },
+ {
   "path": ".github/ISSUE_TEMPLATE/bug_report.yml",
   "size": 1360,
   "sha256": "e268b86d12c4062e0c670122968fca276247fe136628095e7b85f5489fdff486"
@@ -61,23 +66,23 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Compact.md",
-  "size": 5721,
-  "sha256": "c5584bdde3a670040aeadf9a23e842e7c5f8b44de5fd516c1fcb99213a88e3f2"
+  "size": 5909,
+  "sha256": "0a83c48abbb345e61ca2970a29081f8914236d3cb6e311b94255d10200cda7d6"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web Light.md",
-  "size": 875,
-  "sha256": "83dd339ec64e2bf33f5a78e77692f71e9de17c751ce0364f96bd5dcfa1d724da"
+  "size": 960,
+  "sha256": "2c6e0e7b9166eda26438916ad62fd0c4feb9de7c8e2deb6f8c06850173cf5ecd"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web.md",
-  "size": 1736,
-  "sha256": "75542dd61140fd2f7fd7504e891ac12e9262afdcecc439951092f7004c5a3559"
+  "size": 1920,
+  "sha256": "03e5efa5723d8af7531c60406967bc900687cafb5d7b9b786f33183ed2cb086c"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 16040,
-  "sha256": "eec2168394578b1d39d92a879447d8cee6f8a7865b186fabc878f8f6f08fe7bd"
+  "size": 16820,
+  "sha256": "f688fd5d41016a71c61ad6d87a1c253dbf71118826d1d1e2bb7d69fa3de21c45"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/CLAUDE-CODE-ADDENDUM.md",
@@ -2936,8 +2941,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4468,
-  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
+  "size": 4637,
+  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -5931,8 +5936,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4468,
-  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
+  "size": 4637,
+  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -8986,8 +8991,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4468,
-  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
+  "size": 4637,
+  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -12031,8 +12036,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4468,
-  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
+  "size": 4637,
+  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -15076,8 +15081,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4468,
-  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
+  "size": 4637,
+  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -18196,8 +18201,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4468,
-  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
+  "size": 4637,
+  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -18511,8 +18516,8 @@
  },
  {
   "path": "3-PREAMBLES/MANUAL-PASTE.txt",
-  "size": 3519,
-  "sha256": "d8da1a4311d942dc40dca0d9744a80c0afca49acdd9288a41106b98fcc3d6777"
+  "size": 3713,
+  "sha256": "f55aa346442ae3890b547fd0c932f72b6bdd7a53011d988d72a1a0783663c364"
  },
  {
   "path": "3-PREAMBLES/README.md",
@@ -18521,8 +18526,8 @@
  },
  {
   "path": "3-PREAMBLES/SOUL.md",
-  "size": 1783,
-  "sha256": "fd6175d6d47c9e44171eab03929dcb967ece04e44853fc2348183c7e3ab8ee03"
+  "size": 2089,
+  "sha256": "2e02f09ba3e2681a455093a8b1d1d9958c4e37327fc22ff621b1ff97dd1e82b0"
  },
  {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-0185e0249c27.md",
@@ -18737,7 +18742,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64144,
-  "sha256": "0ef81ec25b36aecd57d19e69355927c690d1f28d2947f093d258f4a6a8a2a693"
+  "sha256": "8fc1757c9aa6beb406cf3666a7bd85241f6b256f63d06b077dcbaea0791076da"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18747,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "9d2aeedee0c73e19b8b94eb9053f202a3d6d9154c3375985d49efcf64074a6e7"
+  "sha256": "c799a047ba495b16ae720d9332950a6682a8b777a714cfb41bb11d081a274243"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18757,7 +18762,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40571,
-  "sha256": "bb9e83dbf7129577c3c1066c4645d8e7b851bb1fcabea7bb16fc2cdbba9881c4"
+  "sha256": "3bfd9db920bb84f970506221eb5c65adc0db30ba3a1921c1905047aca4226011"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22811,8 +22816,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 309948,
-  "sha256": "742819684a9316ff95ccaad8f7f99abc5ced8c92aeb6bc6d47f9d23bdf963362"
+  "size": 311086,
+  "sha256": "a4317d502a42a01caf36303cc4dac870996dcc12db51b5203f7f1374e96affa4"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22831,8 +22836,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 16040,
-  "sha256": "eec2168394578b1d39d92a879447d8cee6f8a7865b186fabc878f8f6f08fe7bd"
+  "size": 16820,
+  "sha256": "f688fd5d41016a71c61ad6d87a1c253dbf71118826d1d1e2bb7d69fa3de21c45"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
@@ -22957,7 +22962,7 @@
  {
   "path": "README.md",
   "size": 15415,
-  "sha256": "534af969da91bc21e43ac7960f8fb7d5ace4bdbb30cb16118c6f41f6a303995b"
+  "sha256": "91f7042ae68c9e9db6cf7dccf0a4d2f4d9c5a25e2afe67a4e7d747b9e7197665"
  },
  {
   "path": "SECURITY.md",
@@ -22967,12 +22972,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1054,
-  "sha256": "706d307033d3daae2ead5c81a31ac9d6e25083c6ae56fb0a4c32cf315bab09f8"
+  "sha256": "a57d368d932563be99df7f96d6997cd9269558accc0c68c3fd764a7b5207ef45"
  },
  {
   "path": "START-HERE.txt",
   "size": 4105,
-  "sha256": "f925c01f9e949e79e01df93881aaca59a5cdf82575b4e6d16906dad31b886b91"
+  "sha256": "5051642c60964e142e505d691fb9461242d8fde7fea426db499aacf57fa83755"
  },
  {
   "path": "STATE.md",
@@ -23437,7 +23442,7 @@
  {
   "path": "TESTS/test_release_contract.py",
   "size": 373322,
-  "sha256": "b1b4da1cf1d237aea27f61b3ab17408f9a238a591916c1fb7b1b9215db5558fe"
+  "sha256": "b847b56eed17efcfdf65f4bac7ee5a63653358d710619ceff1255c70e735098f"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23992,7 +23997,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2783,
-  "sha256": "2faea9768b539504404261ca29171cac527f2501e098384003ffd0ffa7d6a3e3"
+  "sha256": "76564fb3220ab4d3c1d839c1713cb2ddaf0bcc8ec952e43dd8e6d7edbb37b395"
  },
  {
   "path": "VALIDATION.md",
@@ -24002,7 +24007,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "dcb40d86611919e3dc55d0855169520ef1c62a454bd6c5e123d8723933bc7ad0"
+  "sha256": "d0ddfa153f6c2e3d465e8df759610fb53021d0e928856b89a4abf2d9c5f9ef85"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -26751,8 +26756,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/unrestraint-packs/SKILL.md",
-  "size": 4468,
-  "sha256": "eedbb1d7d3621acd73cb8f3e92ee5bec4cfc2995ec909ff4a5250fa93400d7fc"
+  "size": 4637,
+  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
  },
  {
   "path": "_CANONICAL-SKILLS/using-git-worktrees/SKILL.md",
@@ -27948,6 +27953,11 @@
   "path": "docs/history/V8.37.16-CHANGELOG.md",
   "size": 794,
   "sha256": "a6a24d7cc8784c81c90620405751daa7bc0172c5823a551bf810f0eef398258e"
+ },
+ {
+  "path": "docs/history/V8.37.17-CHANGELOG.md",
+  "size": 1200,
+  "sha256": "5e294799bf72f2042fc5d8423d33d0c3d03ef6a9659d74e2f1dd850457fd2dc4"
  },
  {
   "path": "docs/history/V8.37.2-CHANGELOG.md",
