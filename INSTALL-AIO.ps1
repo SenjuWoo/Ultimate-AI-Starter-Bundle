@@ -2678,6 +2678,13 @@ New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
 try {
   Copy-Item -LiteralPath (Join-Path $PackRoot 'BUNDLED-TOOLS\PROFILES.json') -Destination (Join-Path $stateDir 'toolbox-profiles.json') -Force
 } catch { Write-UabsWarn ('Toolbox catalog copy failed: ' + $_.Exception.Message) }
+# Same reason as the catalog: the task controller must outlive the checkout, so
+# an agent in any project can run it by the path MACHINE-MAP.md records.
+try {
+  $taskDir = Join-Path $stateDir 'tools'
+  New-Item -ItemType Directory -Force -Path $taskDir | Out-Null
+  Copy-Item -LiteralPath (Join-Path $PackRoot 'TOOLS\task_state.py') -Destination (Join-Path $taskDir 'task_state.py') -Force
+} catch { Write-UabsWarn ('Task controller copy failed: ' + $_.Exception.Message) }
 
 # A partial run must update what it touched without forgetting everything else.
 # native_plugins is always provider-scoped; components are carried forward only

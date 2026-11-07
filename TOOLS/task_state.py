@@ -30,7 +30,11 @@ STATUSES = {"pending", "active", "complete", "failed", "blocked", "superseded"}
 # Only a completed task satisfies a dependency. A superseded task is retired, not
 # done: its dependents must be repointed at whatever replaced it.
 SATISFIES = {"complete"}
-PASS_WORDS = re.compile(r"(?i)\b(pass|passed|verified|ok)\b|verified@")
+# Evidence is a record, not prose. `cmd:<command> @ <sha> exit=<n>` is the only
+# form this tool can re-check. `verified@<sha>` only reports a claim.
+RECORD = re.compile(r"(?i)^cmd:(?P<cmd>.+?)\s+@\s*(?P<sha>[0-9a-f]{7,40})\s+exit=(?P<code>\d+)$")
+REPORTED = re.compile(r"(?i)^verified@(?P<sha>[0-9a-f]{7,40})$")
+FAIL_WORDS = re.compile(r"(?i)(^|\W)(fail|failed|failure|not verified|unverified|broken)($|\W)")
 
 
 class Task:
@@ -143,34 +147,57 @@ def git_sha(root):
 
 
 def verify_of(task):
-    """(kind, value) where kind is file, cmd or none. Never a shell call."""
+    """(kind, value): file, cmd, ambiguous or none. Never a shell call.
+
+    A bare value is a path only when it cannot be a command; anything with a
+    space or a shell character must be declared, so nothing is guessed.
+    """
     raw = (task.verify or "").strip()
-    if raw in ("", "-", "\u2013"):
+    if raw in ("", "-", "–"):
         return "none", ""
     low = raw.lower()
     if low.startswith("cmd:"):
         return "cmd", raw[4:].strip()
     if low.startswith("file:"):
         return "file", raw[5:].strip()
-    if re.search(r"[|&;<>$`\"']", raw):
-        return "cmd", raw
+    if re.search(r"[\s|&;<>$`\"']", raw):
+        return "ambiguous", raw
     return "file", raw
 
 
-def unverified_reason(task, root):
-    """Why a task marked complete is not actually verified, or None."""
+def evidence_state(task, root, head):
+    """(verified, note). True only for a check this tool can repeat itself."""
     if task.status != "complete":
-        return None
+        return True, ""
     kind, value = verify_of(task)
-    evidence = (task.evidence or "").strip()
-    passed = bool(evidence) and evidence not in ("-", "\u2013") and bool(PASS_WORDS.search(evidence))
+    cell = (task.evidence or "").strip()
     if kind == "none":
-        return "no verification recorded"
-    if kind == "cmd":
-        return None if passed else "command never run (%s)" % value
-    if not (root / value).exists():
-        return "evidence missing (%s)" % value
-    return None
+        return False, "no verification recorded"
+    if kind == "ambiguous":
+        return False, "Verify is ambiguous (%s) - use file:<path> or cmd:<command>" % value
+    if FAIL_WORDS.search(cell):
+        return False, "evidence records a failure (%s)" % cell[:60]
+    if kind == "file":
+        if not (root / value).exists():
+            return False, "artifact missing (%s)" % value
+        return True, "artifact exists; contents not checked"
+    record = RECORD.match(cell)
+    if record:
+        if record.group("cmd").strip() != value.strip():
+            return False, "evidence names a different command (%s)" % record.group("cmd").strip()[:50]
+        if int(record.group("code")) != 0:
+            return False, "recorded exit=%s" % record.group("code")
+        sha = record.group("sha")
+        if head and not head.startswith(sha):
+            return False, "stale evidence @%s (HEAD is %s)" % (sha[:12], head[:12])
+        return True, "command exit=0 @%s" % sha[:12]
+    if cell in ("", "-", "–"):
+        return False, "no verification recorded"
+    reported = REPORTED.match(cell)
+    if reported:
+        return False, "reported only (verified@%s) - rerun and record cmd:%s @ <sha> exit=0" % (
+            reported.group("sha")[:12], value[:40])
+    return False, "evidence is not a record (%s) - expected cmd:<command> @ <sha> exit=0" % (cell[:50] or "empty")
 
 
 def actionable(tasks):
@@ -192,8 +219,11 @@ def superseded_deps(tasks):
 
 def report(root, tasks, problems, state=None, sha=None):
     """Shared verdict: the exit code every command must agree on."""
-    unverified = [(t.tid, unverified_reason(t, root)) for t in tasks if t.status == "complete"]
-    unverified = [(tid, why) for tid, why in unverified if why]
+    unverified = []
+    for t in tasks:
+        ok, note = evidence_state(t, root, sha or "")
+        if not ok:
+            unverified.append((t.tid, note))
     for tid, why in unverified:
         print("problem: %s complete but unverified - %s" % (tid, why))
     problems = problems + superseded_deps(tasks)
@@ -285,7 +315,8 @@ def cmd_resume(root, fix=False):
     if not loaded:
         return 2
     _goal, tasks, errors = loaded
-    problems = plan_problems(tasks, errors)
+    structural = plan_problems(tasks, errors)
+    problems = list(structural)
     state_path = root / "STATE.md"
     state = parse_state(state_path)
     sha = git_sha(root)
@@ -297,7 +328,9 @@ def cmd_resume(root, fix=False):
     elif next_task and state.get("CURRENT TASK") and state["CURRENT TASK"] != next_task.tid:
         problems.append("STATE.md current task %s, plan says %s" % (state["CURRENT TASK"], next_task.tid))
 
-    if fix:
+    if fix and structural:
+        print("plan is invalid; STATE.md left untouched until it is repaired")
+    elif fix:
         if not state_path.exists():
             print("no STATE.md to repair in %s" % root)
         else:

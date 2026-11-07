@@ -1,0 +1,74 @@
+"""Run every release check in order and stop at the first failure.
+
+A single combined command must never hide an earlier failure, so each step's exit
+code is checked immediately and the gate returns the failing step's code.
+
+    python TOOLS/release_gate.py              # full local gate
+    python TOOLS/release_gate.py --list       # show the steps
+    python TOOLS/release_gate.py --extra "cmd"  # prove fail-fast on purpose
+"""
+
+import argparse
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def steps(root):
+    py = sys.executable
+    pw = ["powershell.exe", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-File"]
+    return [
+        ("manifest matches the tree", [py, "TOOLS/verify_manifest.py"]),
+        ("docs gate", [py, "TOOLS/verify_docs.py"]),
+        ("version declarations agree", [py, ".github/scripts/check_versions.py"]),
+        ("release contracts", [py, "TESTS/test_release_contract.py"]),
+        ("task controller", [py, "TESTS/test_task_state.py"]),
+        ("provider routing safety", [py, "TESTS/test_provider_routing.py"]),
+        ("companion registry", [py, "TESTS/test_companion_registry.py"]),
+        ("privacy boundary", [py, "TESTS/test_privacy_boundary.py"]),
+        ("pack gate", pw + ["TESTS/Test-Pack.ps1"]),
+    ]
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--list", action="store_true")
+    ap.add_argument("--extra", action="append", default=[],
+                    help="run this command after the listed steps; used to prove fail-fast")
+    args = ap.parse_args()
+
+    plan = steps(ROOT)
+    if args.list:
+        for name, cmd in plan:
+            print("%-32s %s" % (name, " ".join(cmd)))
+        return 0
+
+    for name, cmd in plan:
+        print("==> %s" % name, flush=True)
+        # Capture so a failure prints its own reason instead of vanishing above
+        # the next step's output; a passing step keeps only its last line.
+        result = subprocess.run(cmd, cwd=str(ROOT), capture_output=True, text=True,
+                                errors="replace")
+        tail = [l for l in (result.stdout + result.stderr).splitlines() if l.strip()]
+        if result.returncode != 0:
+            print(chr(10).join(tail[-40:]))
+            print("RELEASE GATE: FAIL at '%s' (exit %d)" % (name, result.returncode))
+            return result.returncode
+        if tail:
+            print("    %s" % tail[-1])
+
+    for cmd in args.extra:
+        print("==> extra: %s" % cmd, flush=True)
+        result = subprocess.run(cmd, cwd=str(ROOT), shell=True)
+        if result.returncode != 0:
+            print("RELEASE GATE: FAIL at extra step (exit %d)" % result.returncode)
+            return result.returncode
+
+    print("RELEASE GATE: PASS (%d checks)" % (len(plan) + len(args.extra)))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

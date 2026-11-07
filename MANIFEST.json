@@ -36,8 +36,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 12614,
-  "sha256": "82b9ce062f9417eb4faffa2f7861b3868baac96fa4aa54de376b15245b2a32a8"
+  "size": 12781,
+  "sha256": "045c02523497dd526617b3cc8f2bd868c5b8157c2c03aa6d20fed5be490fda96"
  },
  {
   "path": ".github/workflows/dependabot-auto-merge.yml",
@@ -396,8 +396,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 11495,
-  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
+  "size": 12923,
+  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -1096,8 +1096,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1230,
-  "sha256": "93a5f403e7ab1ce9981ee9c4cc06536c95182ea03fb68ebc7a39db1a5c557dc7"
+  "size": 1922,
+  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -2496,8 +2496,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 3392,
-  "sha256": "5f349aa858b7f7e21ce414076ceb561715c7943ad9f28560477753d90a536c13"
+  "size": 3259,
+  "sha256": "37c89b1d6f0afc3ad1eee4a2deed11440ff79ceabce7616e1aa5ecf8d89516a1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -3391,8 +3391,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 11495,
-  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
+  "size": 12923,
+  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -4091,8 +4091,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1230,
-  "sha256": "93a5f403e7ab1ce9981ee9c4cc06536c95182ea03fb68ebc7a39db1a5c557dc7"
+  "size": 1922,
+  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -5491,8 +5491,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 3392,
-  "sha256": "5f349aa858b7f7e21ce414076ceb561715c7943ad9f28560477753d90a536c13"
+  "size": 3259,
+  "sha256": "37c89b1d6f0afc3ad1eee4a2deed11440ff79ceabce7616e1aa5ecf8d89516a1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -6446,8 +6446,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 11495,
-  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
+  "size": 12923,
+  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -7146,8 +7146,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1230,
-  "sha256": "93a5f403e7ab1ce9981ee9c4cc06536c95182ea03fb68ebc7a39db1a5c557dc7"
+  "size": 1922,
+  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -8546,8 +8546,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 3392,
-  "sha256": "5f349aa858b7f7e21ce414076ceb561715c7943ad9f28560477753d90a536c13"
+  "size": 3259,
+  "sha256": "37c89b1d6f0afc3ad1eee4a2deed11440ff79ceabce7616e1aa5ecf8d89516a1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -9491,8 +9491,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 11495,
-  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
+  "size": 12923,
+  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -10191,8 +10191,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1230,
-  "sha256": "93a5f403e7ab1ce9981ee9c4cc06536c95182ea03fb68ebc7a39db1a5c557dc7"
+  "size": 1922,
+  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -11591,8 +11591,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 3392,
-  "sha256": "5f349aa858b7f7e21ce414076ceb561715c7943ad9f28560477753d90a536c13"
+  "size": 3259,
+  "sha256": "37c89b1d6f0afc3ad1eee4a2deed11440ff79ceabce7616e1aa5ecf8d89516a1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -12536,8 +12536,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 11495,
-  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
+  "size": 12923,
+  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -13236,8 +13236,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1230,
-  "sha256": "93a5f403e7ab1ce9981ee9c4cc06536c95182ea03fb68ebc7a39db1a5c557dc7"
+  "size": 1922,
+  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -14636,8 +14636,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 3392,
-  "sha256": "5f349aa858b7f7e21ce414076ceb561715c7943ad9f28560477753d90a536c13"
+  "size": 3259,
+  "sha256": "37c89b1d6f0afc3ad1eee4a2deed11440ff79ceabce7616e1aa5ecf8d89516a1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -15656,8 +15656,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 11495,
-  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
+  "size": 12923,
+  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -16356,8 +16356,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1230,
-  "sha256": "93a5f403e7ab1ce9981ee9c4cc06536c95182ea03fb68ebc7a39db1a5c557dc7"
+  "size": 1922,
+  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -17756,8 +17756,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/state-resumption/SKILL.md",
-  "size": 3392,
-  "sha256": "5f349aa858b7f7e21ce414076ceb561715c7943ad9f28560477753d90a536c13"
+  "size": 3259,
+  "sha256": "37c89b1d6f0afc3ad1eee4a2deed11440ff79ceabce7616e1aa5ecf8d89516a1"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/subagent-driven-development/SKILL.md",
@@ -18732,7 +18732,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64142,
-  "sha256": "fb1e6e1d26c98ed22ea468d40f51b725e0c9fd1438106a2bbfb052e84ba81305"
+  "sha256": "e9dceac980ff42a6b8832153ce3159a489ace9f16a904ce56c16dcef737bd2ee"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18742,7 +18742,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "1a183a3e3478e95bf7226433655193d6301a07102a69e87fa0053169125e64fa"
+  "sha256": "435fe12cc80b1b0254e68502538d4e049397d39901a0952afaa019bb7cbf8182"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18752,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "4426100f77ff877e532a4fa245e845255747fbc5860c1ea886c9300fc4f2a60c"
+  "sha256": "35da886f0af68f6ba55479d2bd3d73e6a6e49771fd6737e6516767ab55c9818b"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22806,8 +22806,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 298797,
-  "sha256": "7f836b46dc065845f5b40d347eeb2c0cf46d2da358b3d63cfa4ecc843f992e15"
+  "size": 301479,
+  "sha256": "76bec9a214b6377eae59e9fd15f00df11fcea46320b9c0f3cc7284851b97994b"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22906,8 +22906,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 181244,
-  "sha256": "0cf1f8e3bc6d0b82c859ab35738cd90fc2d1213c5d702ba3f00923f8981f3626"
+  "size": 181725,
+  "sha256": "ce3880e1ed3febfd356f9f3486ccab88ce91a533dbac7679f6d795af0a0b6ca8"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -22926,8 +22926,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 51457,
-  "sha256": "f8f1bae739cda0026cd37bfd6cc7653c7f8d0cc5d72e9626849cd48d949321ac"
+  "size": 51663,
+  "sha256": "2417aca9615798e712747d45a9e47ede3aaeb9053340636837c6adff1bc89c96"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -22951,8 +22951,8 @@
  },
  {
   "path": "README.md",
-  "size": 44307,
-  "sha256": "c70d4ed5c789909b4811dcac6a41d8b6df4e51c7000aeddcd52ceefe04c9443c"
+  "size": 14721,
+  "sha256": "c4fdf056ed9b49031ecde0b3a7d2b8fc09418fa377a1bd7f1e0213501e627afc"
  },
  {
   "path": "SECURITY.md",
@@ -22962,17 +22962,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "363a93fab3e9b6b2c6cb82a7a069385095ca10d03a3e63426ef71fa1bae2cc5f"
+  "sha256": "aefd22cd7da75761905c181ecd189e17ff066d1be5a767d196239c9577eafdcb"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "591ade0cd2e07a7fc1b65d93bf487ecd24e0e253eba7ab0ccb938550b8eee8f7"
+  "sha256": "af8eef21a5c15b6fd16b0f094abcca00dd8c931de3c667f1c31e56925da614b4"
  },
  {
   "path": "STATE.md",
-  "size": 72274,
-  "sha256": "7b9ec50c759634dc54e2c40c56b0e0a09be733c3e8bbe27ec132c7febd0db780"
+  "size": 2615,
+  "sha256": "a814ebfd47286ec49b4f61a02ab6e21da1f187da0e1ea88f793fa8a50ab35128"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -23421,8 +23421,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 369294,
-  "sha256": "6f8a493b5767ad6f6c39c8b5679ec191a808102c1e5c4c200fed3cfb1736b660"
+  "size": 370183,
+  "sha256": "c3296b18d1ff9faabc42dcbacc43d6bef7b0d66bd1fbff8de672b5dcc090a53f"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23451,8 +23451,8 @@
  },
  {
   "path": "TESTS/test_task_state.py",
-  "size": 10633,
-  "sha256": "16407461592964c8b757dd87dc77470470dfbd649ee89d8c8ffd8466c8461abd"
+  "size": 13232,
+  "sha256": "d3b93ee5a1b64b2ed1377df75b37b0034cc624c07527c37d35c4ff9a871bc2c6"
  },
  {
   "path": "TESTS/test_toolbox.py",
@@ -23491,8 +23491,8 @@
  },
  {
   "path": "TOOLS/Build-MachineMap.ps1",
-  "size": 7315,
-  "sha256": "b77de30f290ccdbfa40b4afbcc2590322dc3833a5c41568667f55ca6dc931ec1"
+  "size": 7917,
+  "sha256": "0160b713765667ca18ea826ea0f89739ce61385c94cc3bf002e15ae68a04b642"
  },
  {
   "path": "TOOLS/Build-Release.ps1",
@@ -23881,8 +23881,8 @@
  },
  {
   "path": "TOOLS/refresh-provider-routing.py",
-  "size": 3469,
-  "sha256": "a7402b04e391a51b812781c999b6e32c68c22b7e3627dd7d528cdb9f5da86809"
+  "size": 6013,
+  "sha256": "94cfc2efdd92bbdb2ddfe0d2fc1917d493a06e38ebe189b42484db3ef4fb9d1a"
  },
  {
   "path": "TOOLS/refresh_universal_modder.py",
@@ -23896,8 +23896,8 @@
  },
  {
   "path": "TOOLS/task_state.py",
-  "size": 14107,
-  "sha256": "3a86688fbfaf5ef344052269f8bc41f0e0bcaf7a5b5ce67ff07752645b9ec3a8"
+  "size": 16201,
+  "sha256": "42b199b1f9b50d864fdaf57eca2271e02e77d0ee3ea143bd17b2e569bbd6d2c4"
  },
  {
   "path": "TOOLS/uabs_hermes_openrouter_catalog.py",
@@ -23952,7 +23952,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2781,
-  "sha256": "ec3c3aa9bcae9fe7a9cddc5f9f75e46e01bdcd894a299f63a84fd6812a441969"
+  "sha256": "4c26b6a1f733cd14a47c4653017aa2283b71500d57386aa03448f101baf1c4c0"
  },
  {
   "path": "VALIDATION.md",
@@ -23962,7 +23962,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "4a88fe2d029914e5cb1bf4bf2934d26db746fa184c712556956696fd0ad637c6"
+  "sha256": "06dfb8595083873ab1c1a563f100def5b7864ffc7e8851c6c4a1fae97380547c"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24171,8 +24171,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/capability-routing/SKILL.md",
-  "size": 11495,
-  "sha256": "e3e179d48e38fd21b5c50f33547aec36e2ce8b0af8bae8ddc5b00121da104ce1"
+  "size": 12923,
+  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
  },
  {
   "path": "_CANONICAL-SKILLS/check-work/SKILL.md",
@@ -24871,8 +24871,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/img2threejs/SKILL.md",
-  "size": 1230,
-  "sha256": "93a5f403e7ab1ce9981ee9c4cc06536c95182ea03fb68ebc7a39db1a5c557dc7"
+  "size": 1922,
+  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/LICENSE",
@@ -26271,8 +26271,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/state-resumption/SKILL.md",
-  "size": 3392,
-  "sha256": "5f349aa858b7f7e21ce414076ceb561715c7943ad9f28560477753d90a536c13"
+  "size": 3259,
+  "sha256": "37c89b1d6f0afc3ad1eee4a2deed11440ff79ceabce7616e1aa5ecf8d89516a1"
  },
  {
   "path": "_CANONICAL-SKILLS/subagent-driven-development/SKILL.md",
@@ -26976,13 +26976,13 @@
  },
  {
   "path": "docs/GUIDE.md",
-  "size": 65108,
-  "sha256": "9491218c873249629ba92dc75461d7fd94324c336987feb927bf2b0b86560e5c"
+  "size": 78053,
+  "sha256": "fcf37594ca8f19e1b78bdb08a0b5e0f0c666d2188f78705836661116735b7995"
  },
  {
   "path": "docs/HERMES-MODELS.md",
-  "size": 7231,
-  "sha256": "7f2ef3729711193af234a14a6b46029b26985f98e39a5e4e113d57f3a0781640"
+  "size": 7346,
+  "sha256": "9edfc0fc0112b482efdf36735e3e2121203aa92357dd5f7537d9af18fdf515be"
  },
  {
   "path": "docs/OPERATOR-PROFILES.md",

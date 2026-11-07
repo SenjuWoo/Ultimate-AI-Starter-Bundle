@@ -310,6 +310,19 @@ def test_state_header_cannot_drift_from_the_release():
                        "literal or update it" % (", ".join(stale), version))
 
 
+def test_public_model_docs_match_the_effective_starter_default() -> None:
+    """Three pages cannot disagree with the config about the shipped model."""
+    starter = HERMES_STARTER.read_text(encoding="utf-8")
+    match = re.search(r"(?m)^  default: (\S+)$", starter)
+    assert match, "the starter no longer declares model.default"
+    default = match.group(1)
+    for page in ("README.md", "docs/HERMES-MODELS.md", "docs/GUIDE.md"):
+        text = read(ROOT / page)
+        assert default in text, f"{page} never names the shipped default {default}"
+        stale = re.search(r"(default|main model)[^\n]{0,60}particle-ai/particle-1", text, re.I)
+        assert not stale, f"{page} still calls another model the default: {stale.group(0)!r}"
+
+
 def test_documented_skill_counts() -> None:
     actual = len(list(CANON.glob("*/SKILL.md")))
     # No pinned number here: the count is whatever the tree holds, and every
@@ -3073,8 +3086,8 @@ def test_compression_caps_reach_existing_profiles() -> None:
     for key in ("compression.threshold_tokens", "compression.proactive_prune_tokens"):
         assert key in installer, f"installer does not reclaim {key}"
     docs = read(ROOT / "docs" / "HERMES-MODELS.md")
-    assert "2026-11-05" in docs and "$0.05/M" in docs and "$0.016" in docs, (
-        "compression cost illustration is not dated against the current catalog")
+    assert "2026-11-06" in docs and "$0.048" in docs and "$0.00096" in docs, (
+        "compression cost illustration is not dated against the shipped model's catalog rates")
     one = read(ROOT / "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml")
     two = read(ROOT / "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml")
     assert one == two, "the two Hermes starter templates diverged"
@@ -3165,6 +3178,7 @@ def main() -> int:
         test_retired_skills_are_declared_and_cannot_delete_a_live_skill,
         test_state_md_opens_with_current_state_and_no_dead_status,
         test_state_header_cannot_drift_from_the_release,
+        test_public_model_docs_match_the_effective_starter_default,
         test_retired_skill_deletion_requires_an_ownership_receipt,
         test_cleanup_is_dry_run_by_default_and_scoped_to_pack_files,
         test_tool_routing_stays_scoped_and_preserves_evidence_boundaries,
@@ -4152,7 +4166,7 @@ def test_local_model_ops_carries_what_actually_blocks_a_local_run() -> None:
     assert "65,536" in body or "65536" in body, (
         "local-model-ops states the floor but not the setting that clears it"
     )
-    assert "65,536" in read(ROOT / "README.md") or "65536" in read(ROOT / "README.md"), (
+    assert "65,536" in read(ROOT / "docs" / "GUIDE.md") or "65536" in read(ROOT / "docs" / "GUIDE.md"), (
         "the README states the floor but never the value to set"
     )
     for key in ("model_aliases", "provider: lmstudio", "base_url"):
@@ -4220,7 +4234,7 @@ def test_rtk_catalog_entry_keeps_its_windows_caveat() -> None:
         "to the catalog's off policy"
     )
 
-    readme = read(ROOT / "README.md")
+    readme = read(ROOT / "docs" / "GUIDE.md")
     live = readme.split("### rtk:", 1)[1].split("### claude-mem", 1)[0]
     assert "rtk init" not in live, (
         "the live README still gives a copy-paste hook command even though the "
@@ -4411,7 +4425,7 @@ def test_readme_does_not_promise_a_web_backend_the_pack_never_installs() -> None
     user to a backend that silently is not there, which is the same class of
     failure as an enabled plugin with no payload.
     """
-    readme = read(ROOT / "README.md")
+    readme = read(ROOT / "docs" / "GUIDE.md")
     assert "pip install ddgs" in readme, (
         "the README recommends the DuckDuckGo backend without the install step"
     )
@@ -4869,7 +4883,7 @@ def test_rtk_is_documented_as_a_git_tool_not_a_general_filter() -> None:
     entry = next((c for c in catalog["components"] if c.get("id") == "rtk"), None)
     assert entry, "CATALOG.json no longer lists rtk"
     note = entry["scope_note"]
-    readme = read(ROOT / "README.md")
+    readme = read(ROOT / "docs" / "GUIDE.md")
 
     # 1. The broken subcommand, in both places.
     for where, text in (("catalog note", note), ("README", readme)):
@@ -6083,7 +6097,7 @@ def test_claude_starter_keeps_skill_descriptions_listed() -> None:
     settings = json.loads(read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Claude" / "COPY-TO-PROVIDER-HOME" / "settings.json"))
     fraction = settings.get("skillListingBudgetFraction")
     assert isinstance(fraction, (int, float)) and 0.02 <= fraction <= 0.05, f"Claude skill listing budget is {fraction!r}"
-    assert "skillListingBudgetFraction" in read(ROOT / "README.md"), "README does not explain the raised skill listing budget"
+    assert "skillListingBudgetFraction" in read(ROOT / "docs" / "GUIDE.md"), "README does not explain the raised skill listing budget"
 
 
 def test_batch_launchers_drop_incompatible_powershell_module_roots() -> None:

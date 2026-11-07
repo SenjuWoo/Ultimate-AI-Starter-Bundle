@@ -103,6 +103,11 @@ foreach ($h in @(
 )) { if (Test-Path -LiteralPath $h[1]) { $homes += ($h[0] + ' ' + (Short $h[1])) } }
 Add 'AI app homes' $homes
 Add 'This bundle' @((Short $PackRoot))
+# The task controller is a plain script: an agent in any project runs it by
+# this absolute path instead of guessing where the bundle lives.
+$taskCopy = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\tools\task_state.py'
+$taskPath = if (Test-Path -LiteralPath $taskCopy -PathType Leaf) { $taskCopy } else { Join-Path $PackRoot 'TOOLS\task_state.py' }
+Add 'Task controller' @('python ' + (Short $taskPath) + ' next|status|resume|handoff --root <project>')
 
 $gh = Get-Command gh -ErrorAction SilentlyContinue
 if ($gh) {

@@ -30,3 +30,16 @@ run `forge/...` through `scripts/uabs-python.ps1` for UTF-8.
 
 When the repository is unavailable and the task needs it, say so and continue with
 a plain Three.js factory or a GLB; never fake a reconstruction.
+
+## When to reach for it
+
+Use it at the start of game or app asset work when there is **no model to
+import**: a concept image, a screenshot, or a written description becomes a
+procedural Three.js object you can edit in code.
+
+- Good: props, furniture, vehicles, buildings, level dressing, stylised
+  characters, and prototyping silhouette and scale before real modelling.
+- Output: a factory or GLB you own outright, so no external asset licence.
+- Not it: rigging, animation authoring, texture baking, hero assets. Take its
+  base mesh into Blender or the engine for those.
+- Check `MACHINE-MAP.md` for an existing checkout before cloning again.

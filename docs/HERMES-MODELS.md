@@ -11,12 +11,15 @@ evidence, not a quality benchmark or guaranteed availability.
 `hermes model` opens the provider/model picker. `hermes model --refresh` clears
 its cache and refetches catalogs; `/model` switches inside a chat. Compare task
 accuracy, latency, modalities and budget, not release date alone. The starter
-default is `particle-ai/particle-1` with `agent.reasoning_effort: high`;
-verify its current context, price and modality listing on OpenRouter before
-quoting a number. Upgrades do not replace an existing main or auxiliary choice
-with a newer paid model.
+default is `deepseek/deepseek-v4.1-flash-1017` with
+`agent.reasoning_effort: high`; `VERSION.txt`-adjacent starter config and
+`1-TAILORED-PROVIDER-TREES/Hermes/config.yaml` are the source of truth for that
+ID, and `TESTS/test_release_contract.py` fails if this page disagrees. Verify the
+current context, price and modality listing on OpenRouter before quoting a
+number. Upgrades do not replace an existing main or auxiliary choice with a
+newer paid model.
 
-Currently listed candidates for deliberate comparison:
+Dated snapshot (2026-11-06) for deliberate comparison only; nothing here is a default:
 
 | Model ID | Context tokens | Base input / output USD per 1M tokens |
 | --- | ---: | ---: |
@@ -29,24 +32,22 @@ tier at 272,000 tokens: $4 / $15. Cached input, reasoning output, search and
 provider routing can change the bill. These are dated catalog rates, not task
 quotes. None was benchmarked or promoted to a default by this update.
 
-## Planner/worker: Particle runs, DeepSeek plans
+## One shipped default, no planner/worker split
 
-Catalog check: **2026-11-04**. The starter spends its money where a second model
-buys completion quality, and nowhere else:
+Catalog check: **2026-11-06**. The starter runs one model end to end:
 
-- **Main model:** `particle-ai/particle-1`. Every ordinary turn is single-model.
+- **Main model:** `deepseek/deepseek-v4.1-flash-1017`, reasoning effort `high`.
+  Every ordinary turn is single-model.
 - **Auxiliary tasks:** `provider: auto` with an empty model, so they follow the
   main model. Automatic title generation and background review are **off**.
-- **Delegation:** `backend: model_map` with exactly two routes — `execute` on
-  Particle-1 at medium reasoning (the default), `research` on
-  `deepseek/deepseek-v4.1-flash-1017` at high reasoning. Concurrency is capped
-  at 2. Delegation is on demand; no turn spawns subagents on its own.
-- **MoA:** exactly one preset, `deepseek_particle`, available through `/moa`
-  and the model picker. Reference: DeepSeek V4.1 Flash 1017 at high reasoning.
-  Aggregator: Particle-1 at high reasoning. `fanout: user_turn` means the
-  advisor runs once per user message and Particle runs the tool loop. The
-  preset is never the regular main model, so an enabled preset is not an active
-  MoA session.
+- **Delegation:** `backend: model_map`; `execute` and `research` both resolve to
+  the same model, so a subagent never silently bills a second provider.
+- **MoA:** the `deepseek_particle` preset is kept but disabled
+  (`moa.enabled: false`, `default_preset: ''`). Its Particle-1 aggregator was the
+  unreliable part; enabling it is a deliberate user choice, never a default.
+- Dated comparisons of other models live in
+  `docs/history/V8.37.8-CHANGELOG.md` and the release notes, not on this page;
+  prices move weekly and a landing page should not carry them.
 - `prompt_caching.cache_ttl` is `1h`; `provider_routing` sorts by price and
   requires parameters; `openrouter.response_cache` stays off (that's response
   caching, not prompt caching, and it can serve stale answers).
@@ -89,13 +90,13 @@ turn and past the range where most models hold quality. 320k keeps the working
 set large enough for multi-file work while bounding per-turn input cost and cache
 invalidation frequency.
 
-Cost at 320,000 input tokens, OpenRouter catalog checked **2026-11-05**:
-`particle-ai/particle-1` lists $0.05/M uncached input, $0.003/M cached input and
-$0.50/M output, so the prompt is **$0.016** uncached or **$0.00096** fully cached;
-output is billed separately. `deepseek/deepseek-v4.1-flash-1017` lists $0.15/M
-input, $0.003/M cached and $0.60/M output ($0.048 / $0.00096 at the same size).
-These are catalog rates, not a bill: reasoning, retries and cache misses change
-the total.
+Cost at 320,000 input tokens for the shipped model,
+`deepseek/deepseek-v4.1-flash-1017`, OpenRouter catalog checked **2026-11-06**:
+$0.15/M input, $0.003/M cached input and $0.60/M output, so the prompt is
+**$0.048** uncached or **$0.00096** fully cached; output is billed separately.
+`python TOOLS/refresh-provider-routing.py` prints the live per-provider
+cache-read prices rather than quoting a table that goes stale. These are catalog
+rates, not a bill: reasoning, retries and cache misses change the total.
 
 `proactive_prune_tokens: 80000` reclaims stale large tool results before a
 summary is needed; `target_ratio: 0.20`, `tail_mode: lean`, `protect_last_n: 20`

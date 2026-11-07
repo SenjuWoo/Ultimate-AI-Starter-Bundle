@@ -233,3 +233,23 @@ They are what you use when **no** specialized capability owns the hard part —
 which is often, and is fine. The mistake is reaching for them *first* on a
 problem something else already solves better, and discovering the reason for
 that tool's existence one failed retry at a time.
+
+## Specialized optimization belongs to the owner
+
+The bundle routes; it does not optimize. Detect the project type from reliable
+evidence (manifest, engine config, file types, project metadata), look up which
+installed Forge declares that capability, and hand the work over.
+
+- Roblox → RobloxForge for polycount, texture memory, streaming, replication,
+  frame time. Skyrim → SkyrimForge. Risk of Rain 2 → its Forge. ComfyUI →
+  comfy-kit. An ordinary Python CLI → code quality, profiling, security and
+  dependency checks; never 3D tooling.
+- A missing Forge is a graceful skip, not a failure: say what the owner would do
+  and continue with the authorized work.
+- Budgets, thresholds, tests and recommendations live with the owner. Do not copy
+  them here; they go stale and two owners drift apart.
+- Audit first: measure, report the finding with the file and the number, then act
+  only on the authorized change. Never auto-downscale textures, decimate meshes or
+  overwrite source assets — stage a candidate and compare before/after.
+- A quality warning is information, never a soft refusal. State the risk once and
+  keep going on everything unaffected.

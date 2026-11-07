@@ -412,10 +412,12 @@ Run `hermes model` outside a chat to configure a provider; `/model` switches
 within an existing chat. Use `hermes model --refresh` when its cached catalog
 looks stale. [Official provider guide](https://hermes-agent.nousresearch.com/docs/integrations/providers).
 
-The portable starter uses `particle-ai/particle-1` through OpenRouter with
-`agent.reasoning_effort: high`. This is a shipped default, not a claim that it is
-the newest or best model. Existing main-model choices are preserved. See [the dated live-catalog review](docs/HERMES-MODELS.md)
-for current candidates, legacy aliases, free fallbacks and local options.
+The portable starter uses `deepseek/deepseek-v4.1-flash-1017` through OpenRouter
+with `agent.reasoning_effort: high`. The starter config is the only source for
+that ID and a contract test fails if this page disagrees. This is a shipped
+default, not a claim that it is the newest or best model. Existing main-model
+choices are preserved. See [the dated live-catalog review](HERMES-MODELS.md) for
+candidates, legacy aliases, free fallbacks and local options.
 
 Choose by the actual job: tool support, image input when required, sufficient
 context, then measured correctness, latency and total cost. Escalate after a
@@ -441,15 +443,15 @@ entries if you want failover, and only with models that accept the same
 modalities as the main model. Custom chains remain user-owned; migration clears
 a superseded pack chain and leaves a user-written one untouched.
 
-Planner/worker by default: `particle-ai/particle-1` runs ordinary turns and
-tool loops; `deepseek/deepseek-v4.1-flash-1017` is the selective booster. One
-on-demand MoA preset (`deepseek_particle`, `/moa`) pairs the DeepSeek advisor
-with the Particle aggregator, and delegation exposes only `execute`
-(Particle, medium) and `research` (DeepSeek, high) with concurrency 2.
+One model by default: `deepseek/deepseek-v4.1-flash-1017` runs ordinary turns,
+tool loops and delegation, so a subagent never bills a second provider. The
+`deepseek_particle` MoA preset is kept but shipped disabled — its Particle
+aggregator was the unreliable piece — and delegation's `execute` and `research`
+routes both resolve to the main model with concurrency 2.
 Auxiliary tasks follow the main model (`provider: auto`), title generation and
 background review are off, and `prompt_caching.cache_ttl` is 1h with
-price-first provider routing. Nothing automatic reaches GPT, Claude, Gemini,
-Grok or Crouton Alpha. Compression fires at a 320,000-token
+price-first provider routing. Nothing automatic reaches GPT, Claude, Gemini
+or Grok. Compression fires at a 320,000-token
 cap on the default window, prunes oversized tool results from 80,000 tokens,
 and aborts rather than replacing context when a summary fails. [Model guidance](docs/HERMES-MODELS.md) · [Profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md). · [Architecture decisions](docs/decisions/README.md).
 
@@ -1000,3 +1002,255 @@ installed-state doctor separately verifies the actual machine:
 ```
 
 Source validation is not a substitute for local runtime proof.
+
+## Hermes reference (moved from the README)
+
+### Profiles do not expire automatically
+
+An explicitly enabled project profile stays configured until disabled.
+Project scope, Hermes profile selection and provider trust still apply.
+Filtering, caching and calls determine usage; a configured schema is not a
+measured per-turn bill.
+
+```powershell
+.\TOOLS\Set-McpProfile.ps1 -List
+.\TOOLS\Set-McpProfile.ps1 -Detect -Path "<project folder>"
+.\TOOLS\Set-McpProfile.ps1 -Auto -Path "<project folder>"
+.\TOOLS\Set-McpProfile.ps1 -Disable code-intel -Path "<project folder>"
+.\TOOLS\Set-McpProfile.ps1 -Park -CheckOnly      # task servers registered machine-wide, nothing written
+.\TOOLS\Set-McpProfile.ps1 -Unpark melty -Path "<project folder>"
+hermes -p code       # specialist graph-memory profile
+hermes -p default    # return to the small core
+```
+
+Claude, Grok and trusted Codex projects use project-scoped registrations.
+Hermes uses named profiles; Kimi needs explicit global opt-in for optional
+servers. The [profile catalog](BUNDLED-TOOLS/PROFILES.json) and
+[Hermes policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md) describe
+requirements. The agent must explain missing prerequisites and restart/trust
+requirements instead of pretending an installed server is callable.
+
+</details>
+
+<details>
+<summary><strong>Web search and the keyless ring</strong></summary>
+
+### Hermes: native web search and keyless options
+
+`web_search` / `web_extract` are Hermes tools, separate from the model provider's
+web-search plugin. A local model can drive them, but search/extraction still
+contacts the selected external backend; model tokens and paid backends can bill.
+
+The bundle's historical keyless-ring measurements and quotas are recorded in
+the [Hermes notes](1-TAILORED-PROVIDER-TREES/Hermes/README.txt); they are not a
+current service guarantee. Backend availability depends on installed Hermes,
+configuration and upstream quotas. Do not add a duplicate always-on web MCP
+merely because a native search call failed.
+
+For a backstop that depends on no vendor account at all, add DuckDuckGo:
+
+```powershell
+& "$env:LOCALAPPDATA\hermes\hermes-agent\venv\Scripts\python.exe" -m pip install ddgs
+```
+
+Hermes ships the backend already; the package is the only missing piece. Pin it
+with `web.search_backend: ddgs` **only** if the free ring gets flaky -- pinning
+turns the rotation off.
+
+</details>
+
+<details>
+<summary><strong>Running a local model without burning a quota</strong></summary>
+
+### Hermes: run a local model, free and off the record
+
+`lmstudio` is a first-class Hermes provider. Point an alias at a model LM Studio
+is serving and switch to it with `hermes model local`:
+
+```yaml
+model_aliases:
+  local:
+    model: <the id LM Studio reports at /v1/models>
+    provider: lmstudio
+    base_url: http://127.0.0.1:1234/v1
+```
+
+No API key: Hermes supplies its own placeholder, because there is nothing to
+authenticate to. Never write a real secret into an `lmstudio` block.
+
+**Use 65,536 for the bundle's tested LM Studio setup**, then verify the saved
+model-load settings and the context actually loaded. Hermes' normal local
+floor is 64,000; a one-off load flag does not prove the saved default.
+Weights, KV cache and desktop VRAM must fit: use [the budget/settings tools](BUNDLED-TOOLS/lm-studio/README.md)
+instead of assuming a 16 GB card can run any model at that context.
+
+Local inference stays on the selected server. Hosted auxiliary models, web
+backends or fallbacks can still send data elsewhere; a local main model alone
+does not make the entire harness local-only. [Local-model operations](_CANONICAL-SKILLS/local-model-ops/SKILL.md)
+covers dynamic model IDs, load verification and performance diagnosis.
+
+**Feeding a chat front-end from the same server?** SillyTavern is happy at 32K,
+so 65,536 keeps one loaded model serving both. Two of its behaviours look like
+a dead connection and are not: it demands a non-empty API key that a local
+server ignores entirely, and a reasoning model returns an **empty** message
+when Response Length is small, because thinking tokens come out of the same
+budget (measured: 40 tokens in, empty reply; 600 in, 191 of 203 spent
+reasoning). It also has no free web-search backend out of the box. All three
+are covered in `local-model-ops/references/sillytavern.md`.
+
+</details>
+
+<details>
+<summary><strong>RTK and claude-mem: what is on, what is off</strong></summary>
+
+### rtk: cut command output before it reaches the model
+
+Installed by default with a **bundle-owned narrow hook**; RTK's broad upstream
+hook remains disabled. [RTK](https://github.com/rtk-ai/rtk) (Apache-2.0, single
+Rust binary) filters noisy dev commands. Measured here
+**at rtk 1.1.0** (Apache-2.0 OSS edition) against **pinned tag ranges**, so the corpus cannot drift:
+
+| Command | Raw | Through rtk | Saved |
+|---|---|---|---|
+| `git log v8.6.1..v8.6.5` | 14,250 B | 1,660 B | **88%** |
+| `git diff v8.6.1..v8.6.5` | 430,285 B | 55,870 B | **87%** |
+| `git diff v8.6.4..v8.6.5` | 33,453 B | 26,820 B | **20%** |
+| `git log --stat -20 v8.6.5` | 102,301 B | 102,301 B | **0%** |
+
+**0% to 88%, depending entirely on the command.** A single headline number for
+this tool is not honest -- an earlier version of this table quoted 97% from
+`git diff HEAD~3`, which moves with every commit and measures 82.5% today.
+
+**Pin the tool version too, not just the corpus.** That last row used to read
+**95%**, measured at rtk 0.45.0. Upgrading to 0.46.0 dropped it to zero, and
+1.0.0 still passes `--stat` straight through. All four rows were remeasured
+on 2026-10-13; these are output bytes, not billed token savings. The old `git log --stat -20`
+row also moved with HEAD despite the rest of the table being pinned; it now
+ends at `v8.6.5`. Pinning only the corpus or only the tool is insufficient.
+
+It is a CLI, so it adds no standing MCP schema. Instructions and command output
+still consume context. The bundle selects the Apache-2.0 OSS build explicitly;
+upstream's default 1.0 binary has different licensing. Pipelines, proxy daemons
+and broad upstream rewrite hooks remain off.
+
+#### Off git, it is a different tool
+
+Every number above is a git command, and so was every number this pack had ever
+shipped for rtk. Its own pitch is loudest about build output, test runners and
+logs, so those were measured too -- same repo, **stdout only**, at 0.46.0:
+
+| Command | Raw | Through rtk | Saved | Fidelity |
+|---|---|---|---|---|
+| `rtk err <powershell pack gate>` | 5,746 B | 567 B | **90%** | subset |
+| `rtk test <python suite, RED>` | 5,507 B | ~400 B | **93%** | failure kept |
+| `rtk ls -la` | 811 B | 271 B | **67%** | rewritten |
+| `rtk ls -R` (skill tree, 164 skills when measured) | 25,059 B | 19,129 B | **24%** | rewritten |
+| `rtk grep -rn` | 17,588 B | 14,463 B | **18%** | **truncates** |
+| `rtk wc -l` | 5,414 B | 5,003 B | **8%** | rewritten |
+| `rtk read` (191 KB `.py`) | 191,795 B | 191,795 B | **0%** | byte-identical |
+| `rtk json` (5,425-row array) | 1,121,123 B | 144 B | *100%* | **truncates** |
+
+**Excluding the rows that truncate rather than compress, the non-git aggregate
+is 7.4% -- against 85.2% on git.** rtk is a git tool that also ships filters.
+
+Two traps in that table. `rtk json` returning 144 bytes from 1.1 MB is not
+compression: it prints **one** array element and `... +5424 more`. And **stdout
+only** matters -- rtk writes a 78-byte `No hook installed` nag to *stderr* on
+every invocation, which inverts the ratio on small outputs. A 4,869-byte result
+measured **-486%** until stderr was excluded.
+
+**`rtk find` breaks on compound predicates, and upstream knows.** A simple
+`rtk find TOOLS -name '*.ps1'` is fine -- 709 B to 565 B, 24 files, exit 0. Add
+a compound predicate and it collapses:
+
+```
+$ rtk find . -name '*.ps1' -not -path './.git/*'     # stdout: 0 bytes, exit 1
+/usr/bin/find: paths must precede expression: `INSTALL-REMOTE.ps1'
+```
+
+The August 2026 review recorded **ten-plus issues against `rtk find` alone** in
+`rtk-ai/rtk`,
+including four near-duplicate reports of exactly this (#2469, #2847, #3256,
+#3458), silent omission of gitignored (#3656) and hidden (#3291) files, and
+**#3410** -- the rewrite rule for `find` is *unconditional*, so
+`find ... -delete` / `-exec` is captured and refused, **silently doing nothing
+and breaking `&&` chains**. That last one is upstream's report, not measured
+here.
+
+`rtk find` also **reformats paths**: single-directory mode drops the directory
+prefix (`Build-Release.ps1`, not `TOOLS/Build-Release.ps1`), and across
+directories it regroups under a `10F 2D:` header. The saving is real and small;
+the output is not a path list you can pipe.
+
+**Correction: rtk does not always discard.** Earlier releases of this README and
+the catalog said flatly that rtk keeps no archive. That holds for `rtk git`,
+`rtk ls`, `rtk read`, `rtk json` and `rtk wc` -- verified, no tee file is
+written. It is **false** for `rtk test`, which writes a *complete* tee log (all
+96 result lines) to `%LOCALAPPDATA%\rtk\tee` and prints the path, and only
+partly true of `rtk grep`, which tees 6,482 of 17,588 bytes in per-file chunks
+**and prints the retrieval command inline** -- it cuts each file at 25 hits and
+appends `+28 more in <file> [see remaining: tail -n +26 "<tee path>"]`, so that
+truncation is recoverable rather than lost.
+
+**Know what the filters drop**, because `-g` applies them to commands you did
+not opt into. `rtk ls -la` removes **timestamps and owner** and rounds sizes
+(`36.6K` for 37,481 B) -- it cannot answer when a file changed or how big it
+exactly is, the two usual reasons to pass `-la`. `rtk grep` abbreviates middle
+path segments to `TOOLS/.../hooks/assumption_gate.py`. `rtk find` strips or
+regroups directory prefixes. In each case the saving is real and the output has
+stopped being a value you can pipe.
+
+#### Default safe routing
+
+No flag is needed. A normal install adds the binary and the bundle's allowlist
+hook. `-WithRtk` remains a harmless compatibility alias for old scripts. The
+safe hook rewrites only commands whose shape and output were measured:
+
+| You type | Bundle runs | Policy |
+|---|---|---|
+| `git status`, `git status --short`, `git status -s` | `rtk git status ...` | automatic; a staged/unstaged/deleted/renamed/Unicode/untracked fixture was line-identical 5/5 |
+| standalone `pytest`, `cargo test`, `go test` | RTK's matching test filter | automatic only for human-facing terminal output |
+| `git diff`, `git show`, `git log` | unchanged | raw; the large measured diff retained only 361 of 5,856 changed lines |
+| `git add`, `git commit`, `git push` | unchanged | mutating Git is never wrapped |
+| `find`, `rg`/`grep`, `cat`, `curl`, `gh` | unchanged | broken, lossy, zero-gain, or exact-body surfaces stay raw |
+| JSON/JUnit/report output, pipes, redirects, compound commands | unchanged | machine-readable and composable output stays raw |
+| `npm test`, `dotnet test`, `python x.py` | *not rewritten* | Outside the bundle's tested allowlist |
+
+Claude, Grok and Hermes receive the executable hook. Codex and Kimi receive the
+same narrow routing rule in their installed instructions. Codex supports native
+hooks, but this bundle does not bypass trust or install its executable gates
+there; stale bundle-owned native handlers are retired on upgrades. Unknown payloads, missing RTK, RTK
+errors, unsupported commands, and an RTK version newer than the measured catalog
+pin all fail open to the original command.
+
+You can still invoke other filters deliberately:
+
+```powershell
+rtk git status
+rtk err <command>
+rtk test <test command>
+```
+
+Why not use RTK's broad hook or Hermes' `rtk-rewrite` plugin? The current rewrite
+table catches lossy diff/log/show, broken compound `find`, `cat` at 0% gain,
+truncating search, exact `curl`/`gh` output, and even `git add`/`commit`/`push`.
+This pack recommends neither broad path. The bundle hook delegates to RTK only
+after its own allowlist passes, so `exclude_commands` is not the safety boundary.
+Telemetry is opt-in and stays off. `rtk gain` verifies recorded invocations; an
+agent's self-report does not prove that a rewrite actually ran.
+
+### claude-mem is opt-in
+
+Ordinary default components use the automated installer; optional editor/cloud
+integrations still need their prerequisites. claude-mem pulls in the Bun runtime,
+runs a background worker daemon, and needs a Claude Code restart before its
+tools appear -- three surprises for one double-click, so it moved behind a flag:
+
+```powershell
+.\INSTALL-AIO.ps1 -WithClaudeMem
+```
+
+</details>
+
+<details>
+<summary><strong>Every bundled component</strong></summary>
