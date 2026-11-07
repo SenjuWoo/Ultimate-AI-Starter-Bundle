@@ -2556,6 +2556,9 @@ def test_recommended_engine_pack_is_pinned_and_attributed() -> None:
     assert entry["pin"] in doc, "the reviewed revision is not the one documented"
     assert "cp LICENSE NOTICE" not in doc, "the invalid two-source copy instruction is back"
     assert "Copy-Item" in doc, "the documented copy step must work on the bundle's main platform"
+    assert not [ch for ch in doc if ord(ch) < 9 or 13 < ord(ch) < 32], (
+        "a control character made it into the engine-pack doc")
+    assert "(Get-Location).Path" in doc, "the copy example must not depend on a typed path"
     assert "MARKERS_FOUND" in doc and "pinned revision" in doc, (
         "the doc must say detection is markers-only, not revision-verified")
     assert entry["license"] == "Apache-2.0"

@@ -46,13 +46,19 @@ python scripts/validate-skills.py                        # the project's own gat
 Then copy only the skills for the engine you actually use into your provider's
 skills directory, keeping `NOTICE` and `LICENSE` beside them:
 
-PowerShell, the bundle's main platform (Godot only, into a Claude-style skills
-directory). Copy the license and notice as two separate files next to the skills:
+PowerShell, the bundle's main platform, run from the clone's root (Godot only,
+into a Claude-style skills directory). Copy the license and notice as two separate
+files next to the skills; back up an existing `godot` folder first if you have one:
 
 ```powershell
-$pack   = "$HOMEwesome-gamedev-agent-skills"
+$pack   = (Get-Location).Path
 $target = "$HOME\.claude\skills"
 New-Item -ItemType Directory -Force -Path $target | Out-Null
+# Back up any skill folder this pack is about to replace; nothing is overwritten silently.
+Get-ChildItem (Join-Path $pack "skills\godot") -Directory | ForEach-Object {
+    $dest = Join-Path $target $_.Name
+    if (Test-Path $dest) { Move-Item $dest ($dest + ".backup-" + (Get-Date -Format yyyyMMdd-HHmmss)) }
+}
 Copy-Item -Path (Join-Path $pack "skills\godot\*") -Destination $target -Recurse -Force
 Copy-Item (Join-Path $pack "LICENSE") (Join-Path $target "godot-pack-LICENSE.txt") -Force
 Copy-Item (Join-Path $pack "NOTICE")  (Join-Path $target "godot-pack-NOTICE.txt")  -Force
