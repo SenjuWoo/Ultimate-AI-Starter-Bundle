@@ -23400,6 +23400,11 @@
   "sha256": "01493db651d2769eb7c256922c8551f46ecf095ceac4aab20844fa53db814757"
  },
  {
+  "path": "TESTS/test_line_endings.py",
+  "size": 2181,
+  "sha256": "2162335d7a82f81d3cb0a0d8147f2ad110efc6ac23f46b3fb0f049e8e2cb4bc1"
+ },
+ {
   "path": "TESTS/test_maintainability_audit.py",
   "size": 2695,
   "sha256": "cc26dc0757b42a790b06cec0f369536ab86bad54c4c70b8b6da50d015491e122"
@@ -23765,6 +23770,11 @@
   "sha256": "1d7b4119e50324322a430535d9c0902b18ae7137c82740400853d1e06b52bd01"
  },
  {
+  "path": "TOOLS/check_line_endings.py",
+  "size": 2006,
+  "sha256": "73f7922c27d174b72f53d62bb063007a8e9ef00ff75505d54e2f18eedb43b1a1"
+ },
+ {
   "path": "TOOLS/check_upstream_drift.py",
   "size": 2959,
   "sha256": "ec87ad6924787ae2226e45001f81eb488d179c94eaf8feb7cff26ea5a1e0410f"
@@ -23918,6 +23928,11 @@
   "path": "TOOLS/release_provenance.py",
   "size": 7716,
   "sha256": "45a995d3f7188c13754a7b2b80192dc86f264a49eea2937fb2c5fb836bf79bf2"
+ },
+ {
+  "path": "TOOLS/restore_crlf.py",
+  "size": 1617,
+  "sha256": "7d259d3d8dc1e8473e0e50a2431dafe0212bbdbd1e624724707278109f5c9f6f"
  },
  {
   "path": "TOOLS/task_state.py",
@@ -27928,6 +27943,11 @@
   "path": "docs/history/V8.37.15-CHANGELOG.md",
   "size": 1355,
   "sha256": "c54e381c2c9790e9c8558f47a6b05b7556f7539412de605c15962d3d3aebc067"
+ },
+ {
+  "path": "docs/history/V8.37.16-CHANGELOG.md",
+  "size": 794,
+  "sha256": "a6a24d7cc8784c81c90620405751daa7bc0172c5823a551bf810f0eef398258e"
  },
  {
   "path": "docs/history/V8.37.2-CHANGELOG.md",
