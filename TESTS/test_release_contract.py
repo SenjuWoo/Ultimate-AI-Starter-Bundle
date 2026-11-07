@@ -2547,6 +2547,15 @@ def test_free_model_routing_stays_off() -> None:
     assert "temporary rate limits" in text and "Retry-After" in text, "429 is not always daily quota exhaustion"
 
 
+def test_write_refusal_rule_ships_to_every_provider() -> None:
+    """A refused write may not be forced through a second writer."""
+    aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md")
+    assert "WRITE REFUSALS ARE INFORMATION" in aio, "the refusal rule fell out of the shared contract"
+    assert "Never route around the refusal" in aio
+    assert read(ROOT / "COPY-TO-YOUR-WORKSPACE" / "AIO-INSTRUCTION.txt").strip() == aio.strip(), (
+        "the workspace copy of the contract drifted from the canonical one")
+
+
 def test_wired_preamble_prefix_is_stable() -> None:
     """The wired SOUL + AIO block is the stable prompt prefix.
 
@@ -2558,7 +2567,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "082dec1adb3b216eef4cb9ac2f417c3384351e3dae3377c7ebaf9a158d136835", (
+    assert digest == "4c8e87ffb017f4a937347ff5233313d12a9c48f19635c0d8c1503a488bbf9c4c", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -3249,6 +3258,7 @@ def main() -> int:
         test_a_profile_scoped_hermes_home_resolves_to_the_real_home,
         test_preamble_is_plain_text_without_markers,
         test_wired_preamble_prefix_is_stable,
+        test_write_refusal_rule_ships_to_every_provider,
         test_free_model_routing_stays_off,
         test_bundle_forge_install_has_single_skill_writer,
         test_forge_skill_has_one_canonical_source,
