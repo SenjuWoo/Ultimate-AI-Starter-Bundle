@@ -18595,6 +18595,11 @@
   "sha256": "d85fdefb2267a829dae57aec6509e71c77cef9567981f623efad4aff79fdd4e7"
  },
  {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-7d146d58c0a8.md",
+  "size": 15501,
+  "sha256": "26164b90b7b67c56aa23e363dc06dfabdf0b5ca42526f0812fdffadb194ccefb"
+ },
+ {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-992154f29409.md",
   "size": 10332,
   "sha256": "5e9b4c195aafc842aba7fff387055f8068b30c3733020e68a45470423b4bfae0"
@@ -26990,6 +26995,11 @@
   "sha256": "fcf37594ca8f19e1b78bdb08a0b5e0f0c666d2188f78705836661116735b7995"
  },
  {
+  "path": "docs/HERMES-FILE-GUARD-BUG.md",
+  "size": 2423,
+  "sha256": "188135c1ea91dbfdc3217d7d231798095c561bf15feb924ab461c879da6d2d21"
+ },
+ {
   "path": "docs/HERMES-MODELS.md",
   "size": 7346,
   "sha256": "9edfc0fc0112b482efdf36735e3e2121203aa92357dd5f7537d9af18fdf515be"
@@ -27875,6 +27885,11 @@
   "sha256": "8d90836ad9e2cb3b7545ed158154aee2f8948c5dcf8229386a3e271d5feb01db"
  },
  {
+  "path": "docs/history/V8.37.10-CHANGELOG.md",
+  "size": 1150,
+  "sha256": "fcf8659b3581a8262e40de41331be9118f3e38bd870c1dd4eba1187ec44341a7"
+ },
+ {
   "path": "docs/history/V8.37.2-CHANGELOG.md",
   "size": 899,
   "sha256": "17998c780269344cc6a526cc2dba2942c9ef68db81ef0b05b02c62b9e9b7b531"
@@ -28213,5 +28228,10 @@
   "path": "docs/superpowers/plans/2026-10-23-fresh-windows-recovery.md",
   "size": 3573,
   "sha256": "37c997ac45b957d1d42f4df12573a599ede6b81a0a7824b8ad5f4ee792cb5902"
+ },
+ {
+  "path": "zForgeNote.txt",
+  "size": 292,
+  "sha256": "a9dadfcea1aea3ffc2af313942ed0244b614b560278bf52995925747901a53ad"
  }
 ]
