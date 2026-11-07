@@ -816,8 +816,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 10632,
-  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
+  "size": 10832,
+  "sha256": "97c9fe3aade4093ecb9cce733c25c785758009c2e360c44638ff00059505d776"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -3811,8 +3811,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 10632,
-  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
+  "size": 10832,
+  "sha256": "97c9fe3aade4093ecb9cce733c25c785758009c2e360c44638ff00059505d776"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -6866,8 +6866,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 10632,
-  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
+  "size": 10832,
+  "sha256": "97c9fe3aade4093ecb9cce733c25c785758009c2e360c44638ff00059505d776"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -9911,8 +9911,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 10632,
-  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
+  "size": 10832,
+  "sha256": "97c9fe3aade4093ecb9cce733c25c785758009c2e360c44638ff00059505d776"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -12956,8 +12956,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 10632,
-  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
+  "size": 10832,
+  "sha256": "97c9fe3aade4093ecb9cce733c25c785758009c2e360c44638ff00059505d776"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -16076,8 +16076,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 10632,
-  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
+  "size": 10832,
+  "sha256": "97c9fe3aade4093ecb9cce733c25c785758009c2e360c44638ff00059505d776"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -18737,17 +18737,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64144,
-  "sha256": "12b8c1492330cda429ea3729e2dfc93ba647898639d9d87b3c57e2607fd0b2f5"
+  "sha256": "c322bdcbf665edcece67deb06722b1d7d6ca181f70c8cf6b9ebebae9914e2700"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
-  "size": 10209,
-  "sha256": "3dc7093680313851eae46a374051d9615f41928e20df013e257729c91663fec3"
+  "size": 10914,
+  "sha256": "b36c63fc9349b0fd85032d5ed53c339aa400c5e8da56eeaa4a253da3576034d2"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "15158f6fdf6854495c046ea21b842fc689eff3ebea264dc95a2e58d8d7289ae9"
+  "sha256": "930b26f8293036c2f3ba9b043cf3da2bd49425340fec45709f2cc5b4ecf8bd04"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18757,7 +18757,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40571,
-  "sha256": "4aaa65451464c55d986fb6a851a073e2b98060a177cabd803f9ae72eea86391d"
+  "sha256": "4353de65d8b34025ca866207a227b2e27bff417c51320ff60851e92f0fe790e2"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22811,8 +22811,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 305735,
-  "sha256": "741fd061c061f7b377f70c29940fd8f261a6337d8eb1e51c1da182c463f2a504"
+  "size": 306593,
+  "sha256": "ac53010c33adcd325a574223166cadc9787140dfa9de17f9732f2fa8a722acfa"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22956,8 +22956,8 @@
  },
  {
   "path": "README.md",
-  "size": 15130,
-  "sha256": "c892bcb41fee9740d2f11ea990cb6c4a57f1583e35825b8d5eb3050345617521"
+  "size": 15204,
+  "sha256": "cecc3ea9b17c08ffba4ca1e99036b2c0010ad5edc40dca3ac34f2d7f9e6fed79"
  },
  {
   "path": "SECURITY.md",
@@ -22967,12 +22967,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1054,
-  "sha256": "2e8a5be279b2f86548410223cf7fa5a60a1551aa79d88307a10e0a16615b0db6"
+  "sha256": "0f2b06d944fe58a6924f742e2b1273ec6d0b3177206da8616dc2b98073a44e76"
  },
  {
   "path": "START-HERE.txt",
   "size": 4105,
-  "sha256": "b4a8c6cef57c7d9e8badfef2506d8815e90daf5a6aadef3806c3da572d9f893e"
+  "sha256": "d3dfbd2682404de99103c04a05b0be6f4202e28a3fddea747c9794bf88105a58"
  },
  {
   "path": "STATE.md",
@@ -23431,8 +23431,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 372456,
-  "sha256": "f26f13d41695433af64e53157d54a2e1dc98352d3a1dc70fd3cd426884b54821"
+  "size": 373322,
+  "sha256": "b1b4da1cf1d237aea27f61b3ab17408f9a238a591916c1fb7b1b9215db5558fe"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23967,7 +23967,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2783,
-  "sha256": "21b496f404748586d4dae669765efc5e2277fbbb297c7b3d9542267b9463b551"
+  "sha256": "6070a022c4b506003989e5e07fd2219c30c7be2d2a3ef6aaa957ae2609f8e5f9"
  },
  {
   "path": "VALIDATION.md",
@@ -23977,7 +23977,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "9cefe30d18a4df735fb0b2ac915e399523a57a5f92bdde6fe1ec70ca6f1a21da"
+  "sha256": "585c848fbaa6ffd5c5308b11f637ca90e8c7a282516b5fa2de51d52e9efa2804"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24606,8 +24606,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-dev-starter/SKILL.md",
-  "size": 10632,
-  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
+  "size": 10832,
+  "sha256": "97c9fe3aade4093ecb9cce733c25c785758009c2e360c44638ff00059505d776"
  },
  {
   "path": "_CANONICAL-SKILLS/game-dev-starter/references/free-creative-tools.md",

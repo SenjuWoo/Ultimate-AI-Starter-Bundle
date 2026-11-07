@@ -1,3 +1,17 @@
+## 8.37.14 (2026-11-07)
+
+- AssetForge is a detected owner, not a dependency: the companion registry now
+  carries it (`release_zip`, `AssetForge-*.zip`, `Install.ps1`, `Update.ps1`,
+  doctor `python -m assetforge doctor --json`) with markers `VERSION`,
+  `src/assetforge/__init__.py` and `Install.ps1`. Verified against an installed
+  0.1.0 checkout: `asset-forge INSTALLED_UNVERIFIED` is reported from the tool root.
+- `game-dev-starter` now says asset production has an owner: the skill plans the
+  asset family and layout, AssetForge does conversion, validation and export, and
+  optional providers (Blender, glTF-Transform, comfy-kit) are discovered rather
+  than installed. README gains the same row.
+- Contract test pins the registry entry, the README mention and the ownership
+  sentence. 81 canonical skills, no companion pin changed.
+
 ## 8.37.13 (2026-11-07)
 
 - The PowerShell copy example had a path escape interpreted as a BEL control

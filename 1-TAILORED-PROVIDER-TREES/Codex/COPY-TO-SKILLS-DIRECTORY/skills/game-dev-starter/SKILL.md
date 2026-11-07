@@ -34,6 +34,14 @@ Use the engine the operator already knows when it can deliver the core loop.
 Do not scaffold three stacks to avoid choosing. Pick one, list the rejected
 options in one line, and start.
 
+## Asset production has an owner
+
+When AssetForge is installed (`assetforge doctor` answers), it owns asset
+production, validation and export: GLB/image pipelines, engine export and provider
+checks. This skill then plans the asset family and the project layout; it does not
+re-implement converters. The bundle only detects it - see
+`TOOLS/companion_registry.py` and the README table.
+
 ## Engine skill packs (optional, never vendored)
 
 When the project is a real game engine and no Forge owns it, an engine-specific

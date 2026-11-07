@@ -2547,6 +2547,21 @@ def test_free_model_routing_stays_off() -> None:
     assert "temporary rate limits" in text and "Retry-After" in text, "429 is not always daily quota exhaustion"
 
 
+def test_asset_forge_is_a_detected_owner() -> None:
+    """AssetForge owns asset work; the bundle only detects it."""
+    import json as _json
+    registry = _json.loads(read(ROOT / "BUNDLED-TOOLS" / "COMPANIONS.json"))
+    entry = registry["companions"]["asset-forge"]
+    assert entry["repo"] == "https://github.com/SenjuWoo/AssetForge"
+    assert entry["install"]["kind"] == "release_zip"
+    assert entry["doctor"]["entrypoint"][1:3] == ["-m", "assetforge"]
+    assert entry["markers"] == ["VERSION", "src/assetforge/__init__.py", "Install.ps1"]
+    assert entry["capabilities"]["cli"] == "assetforge"
+    assert "SenjuWoo/AssetForge" in read(ROOT / "README.md")
+    starter = read(ROOT / "_CANONICAL-SKILLS" / "game-dev-starter" / "SKILL.md")
+    assert "Asset production has an owner" in starter
+
+
 def test_recommended_engine_pack_is_pinned_and_attributed() -> None:
     """The engine pack is a pinned pointer: license, revision and precedence all recorded."""
     import json as _json
@@ -3284,6 +3299,7 @@ def main() -> int:
         test_wired_preamble_prefix_is_stable,
         test_write_refusal_rule_ships_to_every_provider,
         test_recommended_engine_pack_is_pinned_and_attributed,
+        test_asset_forge_is_a_detected_owner,
         test_free_model_routing_stays_off,
         test_bundle_forge_install_has_single_skill_writer,
         test_forge_skill_has_one_canonical_source,

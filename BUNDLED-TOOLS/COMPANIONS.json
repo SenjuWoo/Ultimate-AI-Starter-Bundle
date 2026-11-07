@@ -394,6 +394,25 @@
     "windows"
    ],
    "notes": "Release v0.5.0 has no application assets; use the tagged source checkout. It is the successor to the retired uabs-image-stack split."
+  },
+  "asset-forge": {
+   "title": "AssetForge",
+   "repo": "https://github.com/SenjuWoo/AssetForge",
+   "install": {
+    "kind": "release_zip",
+    "asset": "AssetForge-*.zip",
+    "entrypoint": "Install.ps1"
+   },
+   "update": {
+    "entrypoint": "Update.ps1"
+   },
+   "doctor": {
+    "entrypoint": ["python", "-m", "assetforge", "doctor", "--json"]
+   },
+   "markers": ["VERSION", "src/assetforge/__init__.py", "Install.ps1"],
+   "capabilities": {"cli": "assetforge", "mcp": false, "skills": [], "gui": false},
+   "platforms": ["windows", "linux", "macos"],
+   "notes": "Owns asset production, validation and export. Optional providers are detected, never installed by the bundle."
   }
  },
  "recommended": {
