@@ -160,6 +160,45 @@ def test_versioned_asset_marker_is_detected_inside_its_owner():
         assert report["demo"]["state"] == "INSTALLED_UNVERIFIED", report
 
 
+def test_recommended_pack_is_data_only_and_detectable():
+    """A recommended pack is a pointer: detected, never installed or executed."""
+    data = reg.load()
+    entry = data["recommended"]["awesome-gamedev-agent-skills"]
+    assert entry["license"] == "Apache-2.0"
+    assert len(entry["pin"]) == 40
+    for banned in ("install", "update", "doctor"):
+        assert banned not in entry
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = os.path.join(tmp, "awesome-gamedev-agent-skills")
+        os.makedirs(os.path.join(root, "router"))
+        os.makedirs(os.path.join(root, "skills"))
+        open(os.path.join(root, "router", "SKILL.md"), "w").close()
+        open(os.path.join(root, "LICENSE"), "w").close()
+        found = reg.recommended_status([tmp], data)["awesome-gamedev-agent-skills"]
+        assert found["state"] == "INSTALLED", found
+        assert found["path"].replace("\\", "/").endswith("awesome-gamedev-agent-skills")
+
+        missing = reg.recommended_status([os.path.join(tmp, "nowhere")], data)
+        assert missing["awesome-gamedev-agent-skills"]["state"] == "NOT_FOUND"
+
+
+def test_rejects_a_recommended_entry_that_could_execute():
+    data = _data()
+    data["recommended"] = {"pack": {"title": "p",
+                                    "repo": "https://github.com/gamedev-skills/x",
+                                    "pin": "19d93f97c9c1ea0f8b306e77aa81e0d3e352d3e9",
+                                    "license": "Apache-2.0",
+                                    "markers": ["LICENSE"],
+                                    "docs": "docs/X.md",
+                                    "install": {"kind": "source_only"}}}
+    try:
+        reg.validate(data)
+    except reg.RegistryError as exc:
+        assert "must not declare" in str(exc)
+    else:
+        raise AssertionError("an executable recommended entry was accepted")
+
 if __name__ == "__main__":
     failures = 0
     for name, fn in sorted(globals().items()):

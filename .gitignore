@@ -82,3 +82,8 @@ BUNDLED-TOOLS/offline/Reverse-This-*.zip
 
 # FAST verification cache (content-addressed, regenerable)
 .uabs-cache/
+
+# Private archive snapshots stay out of the repository (GitHub rejects >100 MB, and they are not shipped).
+PRIVATE-TWEAKS/
+PRIVATE-TWEAKS/**/*.zip
+PRIVATE-TWEAKS/**/*.7z

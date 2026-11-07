@@ -34,6 +34,21 @@ Use the engine the operator already knows when it can deliver the core loop.
 Do not scaffold three stacks to avoid choosing. Pick one, list the rejected
 options in one line, and start.
 
+## Engine skill packs (optional, never vendored)
+
+When the project is a real game engine and no Forge owns it, an engine-specific
+skill pack may be loaded on top of this one: `awesome-gamedev-agent-skills`
+(Apache-2.0, pinned revision) carries Godot, Unity, Unreal, web-engine, genre and
+discipline notes. It is a pointer, not a dependency: the bundle installs nothing,
+and `docs/RECOMMENDED-GAME-DEV-SKILLS.md` records the revision, license and the
+manual install, update and removal steps.
+
+Precedence, first match wins: the project's own instructions and code; the engine
+version installed and its official docs; the owning Forge (RobloxForge,
+SkyrimForge); the engine pack; this skill. Never copy that pack's router into a
+provider that already has these routing skills, and never let generic guidance
+overrule a detector or an engine version.
+
 ## Procedural asset generators
 
 All of these are free/open-source or CC0 at the source. For local AI generation (images, image-to-3D, music,

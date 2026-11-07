@@ -395,5 +395,16 @@
    ],
    "notes": "Release v0.5.0 has no application assets; use the tagged source checkout. It is the successor to the retired uabs-image-stack split."
   }
+ },
+ "recommended": {
+  "awesome-gamedev-agent-skills": {
+   "title": "awesome-gamedev-agent-skills",
+   "repo": "https://github.com/gamedev-skills/awesome-gamedev-agent-skills",
+   "pin": "19d93f97c9c1ea0f8b306e77aa81e0d3e352d3e9",
+   "license": "Apache-2.0",
+   "engines": ["godot", "unity", "unreal", "web-engines", "other-engines", "genres", "disciplines", "workflows"],
+   "markers": ["router/SKILL.md", "skills", "LICENSE"],
+   "docs": "docs/RECOMMENDED-GAME-DEV-SKILLS.md"
+  }
  }
 }

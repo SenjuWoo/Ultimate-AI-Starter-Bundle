@@ -2547,6 +2547,23 @@ def test_free_model_routing_stays_off() -> None:
     assert "temporary rate limits" in text and "Retry-After" in text, "429 is not always daily quota exhaustion"
 
 
+def test_recommended_engine_pack_is_pinned_and_attributed() -> None:
+    """The engine pack is a pinned pointer: license, revision and precedence all recorded."""
+    import json as _json
+    registry = _json.loads(read(ROOT / "BUNDLED-TOOLS" / "COMPANIONS.json"))
+    entry = registry["recommended"]["awesome-gamedev-agent-skills"]
+    doc = read(ROOT / "docs" / "RECOMMENDED-GAME-DEV-SKILLS.md")
+    assert entry["pin"] in doc, "the reviewed revision is not the one documented"
+    assert entry["license"] == "Apache-2.0"
+    assert "Apache-2.0" in doc and "NOTICE" in doc
+    assert "never installs" in doc.replace(chr(10), " ")
+    assert entry["pin"][:7] in read(ROOT / "README.md"), "README points at an unpinned revision"
+
+    starter = read(ROOT / "_CANONICAL-SKILLS" / "game-dev-starter" / "SKILL.md")
+    assert "Engine skill packs (optional, never vendored)" in starter
+    assert "first match wins" in starter, "the precedence order is missing"
+    assert "RobloxForge" in starter and "SkyrimForge" in starter
+
 def test_write_refusal_rule_ships_to_every_provider() -> None:
     """A refused write may not be forced through a second writer."""
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md")
@@ -3259,6 +3276,7 @@ def main() -> int:
         test_preamble_is_plain_text_without_markers,
         test_wired_preamble_prefix_is_stable,
         test_write_refusal_rule_ships_to_every_provider,
+        test_recommended_engine_pack_is_pinned_and_attributed,
         test_free_model_routing_stays_off,
         test_bundle_forge_install_has_single_skill_writer,
         test_forge_skill_has_one_canonical_source,

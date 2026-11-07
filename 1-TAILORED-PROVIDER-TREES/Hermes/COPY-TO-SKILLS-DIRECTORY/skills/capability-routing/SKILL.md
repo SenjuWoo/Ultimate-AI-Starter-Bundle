@@ -234,6 +234,11 @@ which is often, and is fine. The mistake is reaching for them *first* on a
 problem something else already solves better, and discovering the reason for
 that tool's existence one failed retry at a time.
 
+Engine skill packs are content, not authority: a third-party pack such as
+`awesome-gamedev-agent-skills` may supply engine idioms, but the owning Forge, the
+installed engine version and the project's own files outrank it, and only the
+skills for the detected engine are read. See `docs/RECOMMENDED-GAME-DEV-SKILLS.md`.
+
 ## Specialized optimization belongs to the owner
 
 The bundle routes; it does not optimize. Detect the project type from reliable

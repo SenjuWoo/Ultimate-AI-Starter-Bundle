@@ -124,6 +124,30 @@ def validate(data):
                 raise RegistryError("%s: doctor must name one script or a module" % cid)
             for script in scripts:
                 _check_relative(cid, script, "doctor script")
+    recommended = data.get("recommended") or {}
+    if not isinstance(recommended, dict):
+        raise RegistryError("recommended must be an object")
+    for rid, entry in recommended.items():
+        if not isinstance(entry, dict):
+            raise RegistryError("%s: recommended entry is not an object" % rid)
+        # A recommended pack is a pointer. It is never installed, updated or executed by the
+        # bundle, so any executable field is a schema error rather than a silent extra feature.
+        for banned in ("install", "update", "doctor", "entrypoint"):
+            if banned in entry:
+                raise RegistryError("%s: recommended packs must not declare %r" % (rid, banned))
+        for field in ("title", "repo", "pin", "license", "markers", "docs"):
+            if not entry.get(field):
+                raise RegistryError("%s: recommended entry missing %s" % (rid, field))
+        parsed = urlsplit(entry["repo"] if "://" in entry["repo"] else "https://" + entry["repo"])
+        if parsed.scheme != "https" or parsed.hostname != "github.com":
+            raise RegistryError("%s: recommended repo must be HTTPS github.com" % rid)
+        if not isinstance(entry["markers"], list) or not entry["markers"]:
+            raise RegistryError("%s: recommended markers must be a non-empty list" % rid)
+        for marker in entry["markers"]:
+            _check_relative(rid, marker, "marker")
+        if not all(c in "0123456789abcdef" for c in entry["pin"].lower()) or len(entry["pin"]) < 7:
+            raise RegistryError("%s: pin must be a git object id" % rid)
+        _check_relative(rid, entry["docs"], "docs")
     return data
 
 
@@ -248,6 +272,19 @@ def status(search_roots, data=None):
     return report
 
 
+def recommended_status(search_roots, data=None):
+    """Detect recommended third-party packs. Nothing here is installed or run by the bundle."""
+    data = data or load()
+    out = {}
+    for rid, entry in sorted((data.get("recommended") or {}).items()):
+        path = find(entry, search_roots)
+        out[rid] = {"state": "INSTALLED" if path else "NOT_FOUND", "path": path,
+                    "title": entry["title"], "repo": entry["repo"], "pin": entry["pin"],
+                    "license": entry["license"], "docs": entry["docs"], "ready": False,
+                    "evidence": "markers-only"}
+    return out
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Detect installed companion owners (never installs)")
     ap.add_argument("--verify", action="store_true", help="report every companion's state")
@@ -273,10 +310,16 @@ def main(argv=None):
 
     report = status(roots(args.roots), data)
     if args.json:
-        print(json.dumps(report, indent=1))
+        print(json.dumps({"companions": report,
+                          "recommended": recommended_status(roots(args.roots), data)}, indent=1))
         return 0
     for cid, row in report.items():
         print("%-16s %-10s %s" % (cid, row["state"], row["path"] or row["repo"]))
+    rec = recommended_status(roots(args.roots), data)
+    if rec:
+        print()
+        for rid, row in rec.items():
+            print("%-16s %-10s %s" % (rid, row["state"], row["path"] or row["repo"] + "@" + row["pin"][:7]))
     counts = {}
     for row in report.values():
         counts[row["state"]] = counts.get(row["state"], 0) + 1

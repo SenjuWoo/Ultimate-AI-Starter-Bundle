@@ -1,3 +1,23 @@
+## 8.37.11 (2026-11-07)
+
+- `awesome-gamedev-agent-skills` is now a **recommended engine pack**, not a
+  dependency: `BUNDLED-TOOLS/COMPANIONS.json` records it under `recommended` with
+  its Apache-2.0 license, a pinned revision (`19d93f9`) and detection markers, and
+  `TOOLS/companion_registry.py` reports `INSTALLED`/`NOT_FOUND` for it without ever
+  installing or executing anything. Validation rejects any recommended entry that
+  declares an install, update or doctor entrypoint, so a third-party pack can never
+  become an execution path.
+- `docs/RECOMMENDED-GAME-DEV-SKILLS.md` records what the pack is, why 77 skills are
+  not vendored, the license and NOTICE requirement, manual install/update/removal,
+  and the precedence order: project files, installed engine version, owning Forge,
+  the pack, then the bundle's engine-neutral guidance.
+- `game-dev-starter` and `capability-routing` point at the pack and state that
+  engine packs are content, not authority. Both fanned out to all six provider
+  trees.
+- 2 new companion-registry tests (detection, executable-entry rejection) and 1 new
+  release contract (pin, license, precedence, README link). 81 canonical skills, no
+  companion pin changed.
+
 ## 8.37.10 (2026-11-07)
 
 - The shared contract now says what to do when a writing tool refuses an edit:

@@ -51,8 +51,8 @@
  },
  {
   "path": ".gitignore",
-  "size": 2496,
-  "sha256": "ac034f98e4b71df99a98c38cc1dc12eac606b3ccc6056601d265dca13857ee71"
+  "size": 2656,
+  "sha256": "fc1613a8ccd266ed2d96f24b2b39702d966ecb7e17181cd35399bf92e3d75883"
  },
  {
   "path": ".ignore",
@@ -396,8 +396,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 12923,
-  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
+  "size": 13248,
+  "sha256": "996720c3ed431a7bb3f931fd509a6293923d45c02033a429eb2de58acdff95ba"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -816,8 +816,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9768,
-  "sha256": "b08a0c34ac9f04d66b2d68a30a54e486228260dfc62089fa6badd819359917d3"
+  "size": 10632,
+  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -3391,8 +3391,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 12923,
-  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
+  "size": 13248,
+  "sha256": "996720c3ed431a7bb3f931fd509a6293923d45c02033a429eb2de58acdff95ba"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -3811,8 +3811,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9768,
-  "sha256": "b08a0c34ac9f04d66b2d68a30a54e486228260dfc62089fa6badd819359917d3"
+  "size": 10632,
+  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -6446,8 +6446,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 12923,
-  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
+  "size": 13248,
+  "sha256": "996720c3ed431a7bb3f931fd509a6293923d45c02033a429eb2de58acdff95ba"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -6866,8 +6866,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9768,
-  "sha256": "b08a0c34ac9f04d66b2d68a30a54e486228260dfc62089fa6badd819359917d3"
+  "size": 10632,
+  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -9491,8 +9491,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 12923,
-  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
+  "size": 13248,
+  "sha256": "996720c3ed431a7bb3f931fd509a6293923d45c02033a429eb2de58acdff95ba"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -9911,8 +9911,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9768,
-  "sha256": "b08a0c34ac9f04d66b2d68a30a54e486228260dfc62089fa6badd819359917d3"
+  "size": 10632,
+  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -12536,8 +12536,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 12923,
-  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
+  "size": 13248,
+  "sha256": "996720c3ed431a7bb3f931fd509a6293923d45c02033a429eb2de58acdff95ba"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -12956,8 +12956,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9768,
-  "sha256": "b08a0c34ac9f04d66b2d68a30a54e486228260dfc62089fa6badd819359917d3"
+  "size": 10632,
+  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -15656,8 +15656,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 12923,
-  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
+  "size": 13248,
+  "sha256": "996720c3ed431a7bb3f931fd509a6293923d45c02033a429eb2de58acdff95ba"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -16076,8 +16076,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/SKILL.md",
-  "size": 9768,
-  "sha256": "b08a0c34ac9f04d66b2d68a30a54e486228260dfc62089fa6badd819359917d3"
+  "size": 10632,
+  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-dev-starter/references/free-creative-tools.md",
@@ -18737,17 +18737,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64144,
-  "sha256": "cfaa632c14cea2c7479058becd7888ff75cbb9ad166e2a2b20856f0e1d942c98"
+  "sha256": "839ff58c1cbd5a3041e379160f3815d2c940e50800a58bbf9c0dfed0bea5fccd"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
-  "size": 9714,
-  "sha256": "18dbf3afc844beffdae022e63652d02bc8ce1b32a0132a2a6051011e1c7f0b06"
+  "size": 10209,
+  "sha256": "3dc7093680313851eae46a374051d9615f41928e20df013e257729c91663fec3"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "edfe5ec139cdfe38fc13b653706ee2d18604b0ce8d7235657167421d8b2de956"
+  "sha256": "862d0853c779bd0be42ad5e107197aa35a66cf7c2180723e6879dfa5e6ccf4de"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18757,7 +18757,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40571,
-  "sha256": "9f4e29d8456ddafd8a679d4db9c729e21d717a176d4a9bb8139fb9eeeb3e2c36"
+  "sha256": "bb2f329b1b7743cf6d7d5ea89b7896cab025c221b844d16f5a4cad1007d75228"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22811,8 +22811,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 302631,
-  "sha256": "f500402c7c8cc203cf18ad5a0e7222fba1b7d0cfe3ab11fbdbf4c1e90bbac83f"
+  "size": 303861,
+  "sha256": "08f17d1ae66af48b300370bff70d34e8183162f73dbb3f17691f3763be55c293"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22956,8 +22956,8 @@
  },
  {
   "path": "README.md",
-  "size": 14723,
-  "sha256": "28c7c6e7df9f6349afd765e3e905a7ae26b0c47cd07971baab9f213a99a7a9b7"
+  "size": 15130,
+  "sha256": "bbc1966a8ed7e0ac88ea391d09b21960f038f713fb561ad3e19fc568728b16cd"
  },
  {
   "path": "SECURITY.md",
@@ -22967,12 +22967,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1054,
-  "sha256": "40b0688548ceb13d72d4d1f3e06497e4f0d2a4fde3ba14a77acbd550c8874cc5"
+  "sha256": "3760087168b18c2beb1e47db863874e4e74a40f373880fb5059f5ade74fd070f"
  },
  {
   "path": "START-HERE.txt",
   "size": 4105,
-  "sha256": "0f4214eb0de72b524f761c0334cb25b488c083055aa9609cde8b40a0f242600e"
+  "sha256": "fedf9c52108bc5cd4e9cee47db624c8d1cdc5c494fcefc8335d86ffa8a12fdb6"
  },
  {
   "path": "STATE.md",
@@ -23371,8 +23371,8 @@
  },
  {
   "path": "TESTS/test_companion_registry.py",
-  "size": 7393,
-  "sha256": "4ce2a9e7e315b5fc2772dc940b8948c7b87b419a4cda18a6ac343005e1c06b5c"
+  "size": 9302,
+  "sha256": "0b55970b0de444fa96670c3511afca83f0d651a6316db9a93dae62984a687b38"
  },
  {
   "path": "TESTS/test_free_game_tools.py",
@@ -23431,8 +23431,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 370782,
-  "sha256": "9bb52b8435b3f6b6c4abea7ea15dfffc29b0921dd6e6150c6dee23dddcaa916a"
+  "size": 371886,
+  "sha256": "6d48d54300f1a0e80944d675fb7d190511440ee34184f4657ef6b2e4bfe23353"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23761,8 +23761,8 @@
  },
  {
   "path": "TOOLS/companion_registry.py",
-  "size": 12500,
-  "sha256": "46e6fa7609927b7d39e479d4d4c16492d3caa8247e7afe1f929f3ab247c668ab"
+  "size": 15133,
+  "sha256": "722e14f59fd92a9056851de5c902f897c4299329edf3ad54e17e9eaef5778ade"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -23967,7 +23967,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2783,
-  "sha256": "3c9e3a6b4184cd27d3c2eeeb1574d86db6ed3773c4bdf0a9839003e33df7a642"
+  "sha256": "ac37faabe42513115f220c53875dd7d251de08d6710653a1c277a2d89c76a497"
  },
  {
   "path": "VALIDATION.md",
@@ -23977,7 +23977,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "7484966ba17a25ae8b7b9b5e2cea64aa669631836a889062514e3e4071d946d0"
+  "sha256": "4b9e2c0cb5dd87e425d50950dceb7b5c03c7a309c6254da0319e94bbc9597399"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24186,8 +24186,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/capability-routing/SKILL.md",
-  "size": 12923,
-  "sha256": "b37ea047e87ceeadbb8f07fa32f7832fefad95831aca77a62052b9d66798d995"
+  "size": 13248,
+  "sha256": "996720c3ed431a7bb3f931fd509a6293923d45c02033a429eb2de58acdff95ba"
  },
  {
   "path": "_CANONICAL-SKILLS/check-work/SKILL.md",
@@ -24606,8 +24606,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-dev-starter/SKILL.md",
-  "size": 9768,
-  "sha256": "b08a0c34ac9f04d66b2d68a30a54e486228260dfc62089fa6badd819359917d3"
+  "size": 10632,
+  "sha256": "76a5c6a7bf2a73bf653f26149dec7f8b7d55bad04c8a6b98d633d5d8c142e59c"
  },
  {
   "path": "_CANONICAL-SKILLS/game-dev-starter/references/free-creative-tools.md",
@@ -27010,6 +27010,11 @@
   "sha256": "25c40b267c6af90aa43265f43057350e8f35312bee035cde6c75d468d3c42d07"
  },
  {
+  "path": "docs/RECOMMENDED-GAME-DEV-SKILLS.md",
+  "size": 4684,
+  "sha256": "a7e20cc5689a1919fdd53575fd75f2c34a650d20b19328564e5c74f0dc75c2f8"
+ },
+ {
   "path": "docs/TASK-ROUTING.md",
   "size": 4464,
   "sha256": "67086657c696fbb1914350ce903a09e5923bb8d60b6e0c50918eb127b68a9966"
@@ -27888,6 +27893,11 @@
   "path": "docs/history/V8.37.10-CHANGELOG.md",
   "size": 1150,
   "sha256": "fcf8659b3581a8262e40de41331be9118f3e38bd870c1dd4eba1187ec44341a7"
+ },
+ {
+  "path": "docs/history/V8.37.11-CHANGELOG.md",
+  "size": 1228,
+  "sha256": "3722ec0474b3fb27121652d6de70a4d8540f8b80096bca5e39a8bca2c28276d9"
  },
  {
   "path": "docs/history/V8.37.2-CHANGELOG.md",
