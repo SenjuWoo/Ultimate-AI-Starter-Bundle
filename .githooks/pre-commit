@@ -1,0 +1,4 @@
+#!/bin/sh
+# Refuse a commit that silently converts CRLF files to LF (this repo stores bytes as-is).
+# Enable once per clone: git config core.hooksPath .githooks
+python "$(git rev-parse --show-toplevel)/TOOLS/check_line_endings.py" --staged || exit 1

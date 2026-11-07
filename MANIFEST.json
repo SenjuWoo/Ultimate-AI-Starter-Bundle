@@ -36,8 +36,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 12991,
-  "sha256": "f57be51c82ac1c2777ca63ac37d8f875f1e4e7b3bd25064f7cf882d05feb3a41"
+  "size": 13323,
+  "sha256": "6f78044382387feccde156ce17c8b2142736e63c434d0ee5ee5225735c13e5a5"
  },
  {
   "path": ".github/workflows/dependabot-auto-merge.yml",
@@ -18737,7 +18737,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64144,
-  "sha256": "47d38e53828814f05faa789df84652029e38558b50b6118f6d0ba7cfd51160d4"
+  "sha256": "0ef81ec25b36aecd57d19e69355927c690d1f28d2947f093d258f4a6a8a2a693"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18747,7 +18747,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "ad07dd932e554ee1934258baac491a712ca007f3f945e6df01cba435a129bbcb"
+  "sha256": "9d2aeedee0c73e19b8b94eb9053f202a3d6d9154c3375985d49efcf64074a6e7"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18757,7 +18757,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40571,
-  "sha256": "f2f852c5f9cbddea4c4d5c7e054d66dfc19cf186c1fd63ece70651c15dcf23b4"
+  "sha256": "bb9e83dbf7129577c3c1066c4645d8e7b851bb1fcabea7bb16fc2cdbba9881c4"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22811,8 +22811,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 308746,
-  "sha256": "2bfd1ed2ba7f78db28766154283e3e623210b96bf0a540b5307352dc09c521cf"
+  "size": 309948,
+  "sha256": "742819684a9316ff95ccaad8f7f99abc5ced8c92aeb6bc6d47f9d23bdf963362"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22957,7 +22957,7 @@
  {
   "path": "README.md",
   "size": 15415,
-  "sha256": "50915635e24098a09ffdcea03b7acb30d36bc2524cfb6cd91a0b464ec7061415"
+  "sha256": "534af969da91bc21e43ac7960f8fb7d5ace4bdbb30cb16118c6f41f6a303995b"
  },
  {
   "path": "SECURITY.md",
@@ -22967,12 +22967,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1054,
-  "sha256": "fea092ad811aa537772f05307359f9519ea7f204f0430c855e452c7e64bbec66"
+  "sha256": "706d307033d3daae2ead5c81a31ac9d6e25083c6ae56fb0a4c32cf315bab09f8"
  },
  {
   "path": "START-HERE.txt",
   "size": 4105,
-  "sha256": "9fd462996ece4135fec8bb769293881dec73b506e21d8b36d48a0cbca5a812cc"
+  "sha256": "f925c01f9e949e79e01df93881aaca59a5cdf82575b4e6d16906dad31b886b91"
  },
  {
   "path": "STATE.md",
@@ -23401,8 +23401,8 @@
  },
  {
   "path": "TESTS/test_line_endings.py",
-  "size": 2181,
-  "sha256": "2162335d7a82f81d3cb0a0d8147f2ad110efc6ac23f46b3fb0f049e8e2cb4bc1"
+  "size": 3662,
+  "sha256": "3acf2697bb75eeea4e744f244591b4e82685acf317495ac615289b634ed12340"
  },
  {
   "path": "TESTS/test_maintainability_audit.py",
@@ -23771,8 +23771,8 @@
  },
  {
   "path": "TOOLS/check_line_endings.py",
-  "size": 2006,
-  "sha256": "73f7922c27d174b72f53d62bb063007a8e9ef00ff75505d54e2f18eedb43b1a1"
+  "size": 3144,
+  "sha256": "a5012f968842c24f9d110024c65d2192fa06fd79c194f49194556d1a22fc23ec"
  },
  {
   "path": "TOOLS/check_upstream_drift.py",
@@ -23921,8 +23921,8 @@
  },
  {
   "path": "TOOLS/release_gate.py",
-  "size": 3106,
-  "sha256": "596c86b443b325c6510ec53f260cab7c7f5e4de8f5fbac11e003776424c9536d"
+  "size": 3577,
+  "sha256": "f7ccd94afa6cc4e552b80d698ddfa240087066b17334ebcadb6ac6e235c7ccfa"
  },
  {
   "path": "TOOLS/release_provenance.py",
@@ -23932,7 +23932,7 @@
  {
   "path": "TOOLS/restore_crlf.py",
   "size": 1617,
-  "sha256": "7d259d3d8dc1e8473e0e50a2431dafe0212bbdbd1e624724707278109f5c9f6f"
+  "sha256": "464638b29858707c2e380515bf6e0a02c8e06431daf5b8c82043a77d6f2c1f88"
  },
  {
   "path": "TOOLS/task_state.py",
@@ -23992,7 +23992,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2783,
-  "sha256": "b6bb1980d67d60b2cb6df08628396baa7f1b67a0cfb9a05f7e2fcd6bdf157114"
+  "sha256": "2faea9768b539504404261ca29171cac527f2501e098384003ffd0ffa7d6a3e3"
  },
  {
   "path": "VALIDATION.md",
@@ -24002,7 +24002,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "0964cbc9b04f43c8d7f8f908951711b25041d859624a2a9aa29958a7449d5e75"
+  "sha256": "dcb40d86611919e3dc55d0855169520ef1c62a454bd6c5e123d8723933bc7ad0"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",

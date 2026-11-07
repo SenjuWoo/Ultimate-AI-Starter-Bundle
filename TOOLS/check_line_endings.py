@@ -17,20 +17,41 @@ ROOT = Path(__file__).resolve().parent.parent
 TEXT = (".md", ".py", ".ps1", ".psm1", ".json", ".txt", ".yml", ".yaml", ".cmd", ".bat")
 
 
-def git(*args, binary=False, root=None):
+def _git(*args, binary=False, root=None):
     out = subprocess.run(["git", "-C", str(root or ROOT)] + list(args), capture_output=True)
     return out.stdout if binary else out.stdout.decode("utf-8", "replace")
 
 
-def offenders(staged=False, root=None):
-    names = git("diff", "--cached", "--name-only", root=root) if staged else git("diff", "--name-only", root=root)
+def _changed(mode, base, root):
+    if mode == "staged":
+        listing = _git("diff", "--cached", "--name-only", root=root)
+    elif mode == "base":
+        listing = _git("diff", "--name-only", "%s..HEAD" % base, root=root)
+    else:
+        listing = _git("diff", "--name-only", root=root)
+    return [n for n in listing.splitlines() if n.endswith(TEXT)]
+
+
+def offenders(staged=False, root=None, base=None):
+    """Files whose current bytes are LF-only where the comparison revision's were CRLF.
+
+    `root` selects the repository: nothing is read from this checkout unless asked.
+    """
+    root_path = Path(root or ROOT)
+    mode = "staged" if staged else ("base" if base else "tree")
+    old_rev = "HEAD" if mode != "base" else base
     bad = []
-    for name in [n for n in names.splitlines() if n.endswith(TEXT)]:
-        old = git("show", "HEAD:%s" % name, binary=True, root=root)
+    for name in _changed(mode, base, root):
+        old = _git("show", "%s:%s" % (old_rev, name), binary=True, root=root)
         if b"\r\n" not in old:
-            continue
-        new = git("show", ":%s" % name, binary=True) if staged else (ROOT / name).read_bytes() \
-            if (ROOT / name).exists() else b""
+            continue  # already LF-only there: not a regression
+        if mode == "staged":
+            new = _git("show", ":" + name, binary=True, root=root)
+        elif mode == "base":
+            new = _git("show", "HEAD:" + name, binary=True, root=root)
+        else:
+            path = root_path / name
+            new = path.read_bytes() if path.exists() else b""
         if new and b"\r\n" not in new:
             bad.append(name)
     return bad
@@ -39,8 +60,13 @@ def offenders(staged=False, root=None):
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Report files that lost their CRLF line endings")
     ap.add_argument("--staged", action="store_true", help="compare the index with HEAD")
+    ap.add_argument("--base", metavar="REV",
+                    help="compare commits REV..HEAD (what a release would publish)")
+    ap.add_argument("--root", help="repository to inspect (defaults to this checkout)")
     args = ap.parse_args(argv)
-    bad = offenders(staged=args.staged)
+    if args.staged and args.base:
+        ap.error("--staged and --base compare different things; pick one")
+    bad = offenders(staged=args.staged, root=args.root, base=args.base)
     for name in bad:
         print("line endings changed to LF: %s" % name)
     if bad:

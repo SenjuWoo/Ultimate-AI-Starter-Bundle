@@ -20,45 +20,72 @@ def _git(repo, *args):
     return subprocess.run(["git", "-C", str(repo)] + list(args), capture_output=True)
 
 
-def _make_repo(tmp):
+def _commit(repo, message):
+    _git(repo, "add", "-A")
+    _git(repo, "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", message)
+
+
+def _repo(tmp, always_lf=None):
+    """One CRLF file plus, optionally, a file that was always LF; both committed."""
     repo = Path(tmp)
     _git(repo, "init", "-q")
     (repo / ".gitattributes").write_bytes(b"* -text\r\n")
     (repo / "notes.md").write_bytes(b"one\r\ntwo\r\n")
-    _git(repo, "add", "-A")
-    _git(repo, "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qm", "init")
+    if always_lf:
+        (repo / always_lf).write_bytes(b"alpha\nbeta\n")
+    _commit(repo, "init")
     return repo
 
 
-def test_the_guard_flags_a_file_that_lost_its_crlf():
+def test_working_tree_regression_is_reported_and_fixed():
     with tempfile.TemporaryDirectory() as tmp:
-        repo = _make_repo(tmp)
-        old_root = guard.ROOT
-        guard.ROOT = repo
-        try:
-            assert guard.offenders() == []
-            (repo / "notes.md").write_bytes(b"one\ntwo\n")
-            assert guard.offenders() == ["notes.md"]
-            assert guard.main([]) == 1
-        finally:
-            guard.ROOT = old_root
-
-
-def test_restore_puts_the_crlf_back_and_keeps_content():
-    with tempfile.TemporaryDirectory() as tmp:
-        repo = _make_repo(tmp)
-        (repo / "notes.md").write_bytes(b"one\ntwo\nthree\n")
-        restore.main(root=repo, base="HEAD")
-        data = (repo / "notes.md").read_bytes()
-        assert data.count(b"\r\n") == 3, data
-        assert b"three" in data
-
-
-def test_a_feature_file_is_left_alone():
-    with tempfile.TemporaryDirectory() as tmp:
-        repo = _make_repo(tmp)
-        (repo / "notes.md").write_bytes(b"one\ntwo\n")     # a file that was always LF
+        repo = _repo(tmp)
         assert guard.offenders(root=repo) == []
+        (repo / "notes.md").write_bytes(b"one\ntwo\n")
+        assert guard.offenders(root=repo) == ["notes.md"], "the working-tree mode missed it"
+        assert guard.main(["--root", str(repo)]) == 1
+        restore.main(root=repo, base="HEAD")
+        assert (repo / "notes.md").read_bytes() == b"one\r\ntwo\r\n"
+        assert guard.offenders(root=repo) == []
+
+
+def test_staged_regression_is_reported_from_the_index():
+    with tempfile.TemporaryDirectory() as tmp:
+        repo = _repo(tmp)
+        (repo / "notes.md").write_bytes(b"one\ntwo\nthree\n")
+        _git(repo, "add", "-A")
+        assert guard.offenders(staged=True, root=repo) == ["notes.md"]
+        assert guard.main(["--staged", "--root", str(repo)]) == 1
+
+
+def test_a_file_that_was_always_lf_is_not_a_regression():
+    with tempfile.TemporaryDirectory() as tmp:
+        repo = _repo(tmp, always_lf="feature.md")
+        (repo / "feature.md").write_bytes(b"alpha\nbeta\ngamma\n")
+        assert guard.offenders(root=repo) == [], "a born-LF file was reported as churn"
+
+
+def test_a_committed_range_is_what_ci_judges():
+    with tempfile.TemporaryDirectory() as tmp:
+        repo = _repo(tmp)
+        base = subprocess.run(["git", "-C", str(repo), "rev-parse", "HEAD"],
+                              capture_output=True, text=True).stdout.strip()
+        (repo / "notes.md").write_bytes(b"one\ntwo\n")
+        _commit(repo, "convert line endings")
+        assert guard.offenders(base=base, root=repo) == ["notes.md"], "the committed range missed it"
+        assert guard.main(["--base", base, "--root", str(repo)]) == 1
+
+
+def test_clean_history_passes_every_mode():
+    with tempfile.TemporaryDirectory() as tmp:
+        repo = _repo(tmp)
+        base = subprocess.run(["git", "-C", str(repo), "rev-parse", "HEAD"],
+                              capture_output=True, text=True).stdout.strip()
+        (repo / "notes.md").write_bytes(b"one\r\ntwo\r\nthree\r\n")
+        _commit(repo, "append a line")
+        assert guard.offenders(root=repo) == []
+        assert guard.offenders(base=base, root=repo) == []
+        assert guard.main(["--base", base, "--root", str(repo)]) == 0
 
 
 if __name__ == "__main__":

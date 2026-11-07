@@ -16,8 +16,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 
+def base_args(root):
+    """Compare against the last release tag: the commits a release would publish."""
+    out = subprocess.run(["git", "-C", str(root), "describe", "--tags", "--abbrev=0"],
+                         capture_output=True, text=True)
+    tag = out.stdout.strip()
+    return ["--base", tag] if out.returncode == 0 and tag else []
+
+
 def steps(root):
     py = sys.executable
+    base_args_ = base_args(root)
     pw = ["powershell.exe", "-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-File"]
     return [
         ("manifest matches the tree", [py, "TOOLS/verify_manifest.py"]),
@@ -29,6 +38,7 @@ def steps(root):
         ("companion registry", [py, "TESTS/test_companion_registry.py"]),
         ("upstream drift report", [py, "TESTS/test_upstream_drift.py"]),
         ("line endings", [py, "TESTS/test_line_endings.py"]),
+        ("line-ending churn", [py, "TOOLS/check_line_endings.py"] + base_args_),
         ("privacy boundary", [py, "TESTS/test_privacy_boundary.py"]),
         ("pack gate", pw + ["TESTS/Test-Pack.ps1"]),
     ]

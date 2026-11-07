@@ -22,7 +22,7 @@ def main(root=None, base=None):
     base = base or BASE
     names = [n for n in git("diff", "--name-only", base + "..HEAD" if base != "HEAD" else base,
                             binary=False, root=root).splitlines() if n.endswith(TEXT)]
-    if BASE == "HEAD":
+    if base == "HEAD":
         names += [n for n in git("diff", "--name-only", binary=False, root=root).splitlines() if n.endswith(TEXT)]
     converted = []
     for name in dict.fromkeys(names):
