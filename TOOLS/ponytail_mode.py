@@ -127,10 +127,17 @@ def status(home=None):
     effective = "UNKNOWN" if err else native
     if requested == "auto" and native == "off" and not leaks:
         effective = "auto (hook decides per turn; nothing loaded by default)"
+    # An enabled plugin also *registers* its bundled skills. That is not injection -
+    # the hook stays silent at off - but it does mean the skills can be invoked or
+    # matched by a model, so it is reported rather than hidden behind "no leaks".
+    plugin_skills = []
+    plug_dir = provider_homes(home)["Hermes"] / "plugins" / SKILL_PREFIX / "skills"
+    if plug_dir.is_dir():
+        plugin_skills = sorted(p.name for p in plug_dir.iterdir() if p.is_dir())
     return {"requested": requested, "native": native, "configured": configured,
             "env_override": env_mode, "effective": effective,
             "native_config": str(native_config()), "providers": rows,
-            "leaks": leaks, "mismatches": mismatches,
+            "leaks": leaks, "mismatches": mismatches, "plugin_skills": plugin_skills,
             # A JSON value is configuration, never proof of what a live session got.
             "runtime_verified": False,
             "note": "native config applies to new sessions; a JSON value is not runtime proof"}
@@ -228,10 +235,13 @@ def execute(actions, stamp=None):
             src, dest = Path(action["src"]), Path(action["dest"])
             if dest.exists():
                 if _tree_digest(src) == _tree_digest(dest):
-                    # An identical copy is already archived (a provider re-copied
-                    # it); drop the duplicate from the live tree, not the archive.
-                    shutil.rmtree(src)
-                    results.append(dict(action, ok=True, message="deduped: identical archive exists"))
+                    # Identical to the archive: move the live duplicate into a
+                    # quarantine folder rather than deleting it, so nothing the tool
+                    # did not create can ever vanish.
+                    quarantine = dest.parent / "_duplicates" / ("%s__%s" % (src.name, stamp))
+                    quarantine.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.move(str(src), str(quarantine))
+                    results.append(dict(action, ok=True, message="duplicate moved to _duplicates"))
                 else:
                     data_dest = dest.with_name(dest.name + "__" + _tree_digest(src)[:8])
                     if data_dest.exists():
@@ -286,6 +296,9 @@ def main(argv=None):
             print("  LEAK: %s" % leak)
         for mismatch in report["mismatches"]:
             print("  MISMATCH: %s" % mismatch)
+        if report.get("plugin_skills"):
+            print("  registered by the plugin (not injected at off): %s"
+                  % ", ".join(report["plugin_skills"]))
         print(report["note"])
         return 0 if not (report["leaks"] or report["mismatches"]) else 1
 

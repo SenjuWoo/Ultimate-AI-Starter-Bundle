@@ -163,6 +163,13 @@ class PonytailModeTests(unittest.TestCase):
         report = pm.status(home=self.home)
         self.assertTrue(report["leaks"], "skills loaded while native mode is off must be a leak")
 
+    def test_off_reports_plugin_skills_separately_from_leaks(self):
+        # The plugin registers its bundles skills even at off. That is not injection,
+        # but claiming "no leaks" without saying so would overstate the guarantee.
+        report = pm.status(home=self.home)
+        self.assertIn("plugin_skills", report)
+        self.assertIsInstance(report["plugin_skills"], list)
+
     def test_unknown_mode_is_refused(self):
         with self.assertRaises(SystemExit):
             pm.plan("turbo", home=self.home)

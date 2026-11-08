@@ -47,6 +47,31 @@ hermes plugins disable superpowers        # Hermes only, reversible
 and toggle the `superpowers@superpowers` entry in `~/.claude/settings.json` for
 Claude Code. Both are user decisions; the bundle does not make them.
 
+## How this was verified
+
+The hook contract was exercised the way a provider calls it, not only through
+`resolve()` in a test:
+
+```
+printf %s '{"prompt":"fix the crash in app.py line 12", ...}' \
+  | python TOOLS/hooks/ponytail_auto.py hook --format claude
+# OFF (this machine): 0 bytes on stdout, for both --format claude and --format hermes
+```
+
+With a temporary `LOCALAPPDATA` holding `{"mode": "auto"}`:
+
+- narrow fix -> a `UserPromptSubmit` envelope carrying `PONYTAIL MODE: LITE`
+- "design a magic system for my game" -> 0 bytes
+- `status` -> `selected_mode: auto`, `would_inject: true`
+
+On the real machine `status` reports `selected_mode: off`, `would_inject: false`,
+and `hermes_hook: on`, `claude_hook: on` - the hook is installed and inert.
+
+Not verified: a live conversational turn inside Claude Code or a Hermes chat window.
+That needs a paid model turn in another app, so it was not run; the evidence above is
+the exact byte stream those providers would hand the model, and the doctor refuses an
+install when any provider still loads the skills.
+
 ## Not implemented, deliberately
 
 - No second router, gate, classifier or memory promoter. The existing FAST/FULL

@@ -41,8 +41,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 13428,
-  "sha256": "886069abdd3adf0c296881b7689153bf113bcd1e0a2c6edc479045b8441e823e"
+  "size": 13540,
+  "sha256": "e4b4565303c13b292119b738bb4ce0b891af6fd2dd14f44ceb4ea73cd42e8674"
  },
  {
   "path": ".github/workflows/dependabot-auto-merge.yml",
@@ -18752,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64144,
-  "sha256": "2a8f5a5679c3601e9b4adf707af1c841d7813a96931de38cf8ce8f978e5cd9f2"
+  "sha256": "6b58b4bfc3be842490c62d8272a83cd2614515cd2bcc08c80c9130081d0ba4a4"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18762,7 +18762,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "89bed1530d8e64750fa80f03857d06d87d0c2a4a8470cb8f254dc6a1749ae65f"
+  "sha256": "d19d5c22a4947fd5ab8cd8dfa2e016c2ab30190a048a7c1f29c348b422e8aa8c"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18772,7 +18772,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40571,
-  "sha256": "9b53218716a42ac421b504e5429b9993137adfe92b3f931bffa3f2d0d1d500e2"
+  "sha256": "e1cd638e9439415464e3835883bed28bdad408c98c4ce7092622c3c43f39c1c0"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22826,8 +22826,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 317264,
-  "sha256": "5914e95f6ec51d49051aa44ee74643e5a7ae4bbb02ce052f16ebeb829d33c567"
+  "size": 318950,
+  "sha256": "b086b34db03c66f1532ec31830bacf25981cf42e60a71639912e34a34f369e9b"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22972,7 +22972,7 @@
  {
   "path": "README.md",
   "size": 15622,
-  "sha256": "098b462badfd331d3eedb7267a46723122843c8b56aa8ac1effb74b333d881b9"
+  "sha256": "b602b51e8efbb93f8f36d6457bfa6c230179a42c9b2c39001185c8d89e457883"
  },
  {
   "path": "SECURITY.md",
@@ -22982,12 +22982,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1054,
-  "sha256": "647c0b363e3c0caebe85d2013e97fdb115257f5f1b460cc4310e55abe8cbb86d"
+  "sha256": "fc8017f828de981f7c74d43c0ad4f21214e4e795eabaad08270877c403262e01"
  },
  {
   "path": "START-HERE.txt",
   "size": 4105,
-  "sha256": "3f5f999e8b10af7f5faaafccee28a7ae87f998cee857512d0115cbd5efc2fb25"
+  "sha256": "1b36f4b5eeb7fcc106d6aa456e0ca4355807e808150a0072635c80b3164dd817"
  },
  {
   "path": "STATE.md",
@@ -23441,8 +23441,8 @@
  },
  {
   "path": "TESTS/test_ponytail_mode.py",
-  "size": 8181,
-  "sha256": "f3aa23a1a8f0e82914c6aab9db10d694016e8b6bec8ad26d0dc7c5c4c48db967"
+  "size": 8577,
+  "sha256": "ba361dddbea9a0cc0ea9ef3de41ee8cd5b02feeb0c0f73367db39427f241ebae"
  },
  {
   "path": "TESTS/test_privacy_boundary.py",
@@ -23886,8 +23886,8 @@
  },
  {
   "path": "TOOLS/hooks/ponytail_auto.py",
-  "size": 20098,
-  "sha256": "431852ad861a9a6775e991e025f120cb34f3de7a95ba2c1337241e0bb1ac2ff7"
+  "size": 21552,
+  "sha256": "a7701f879c1f9ba0686587df46f58919b1358b84d499c5e6aeb8287156a53c31"
  },
  {
   "path": "TOOLS/hooks/rtk_safe_hook.py",
@@ -23936,8 +23936,8 @@
  },
  {
   "path": "TOOLS/ponytail_mode.py",
-  "size": 15370,
-  "sha256": "a109a16fe0463e9ce729923a07fefe808ecbd145befd96f85cf5240b14b068e8"
+  "size": 16285,
+  "sha256": "55584932cef4beee9cf492ebb598672116c7da9278622bc6b876e50378ad8537"
  },
  {
   "path": "TOOLS/presentation_check.py",
@@ -23956,8 +23956,8 @@
  },
  {
   "path": "TOOLS/release_gate.py",
-  "size": 3642,
-  "sha256": "756e19cafc6b3ddfb44af059b8eb33e12feecd9d5012d7ab2583b88537a9c369"
+  "size": 3721,
+  "sha256": "45f38685143125d74689e6dae7fd3c2b3115182b8cc676b30e58be9711f6e85b"
  },
  {
   "path": "TOOLS/release_provenance.py",
@@ -24027,7 +24027,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2783,
-  "sha256": "624bab94272f5329adbba8b0abce1999dc0fb80b6866ae0f069b772e362b4bbe"
+  "sha256": "ea72fab354d421200e9644d6fc7cff955326145f303d2dcd6b7296810e225e40"
  },
  {
   "path": "VALIDATION.md",
@@ -24037,7 +24037,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "9e1e8392673e7a0e2049525c65ada3418f87d8c948368913fd2700b2e2cc72a0"
+  "sha256": "8b5d91198cb392ad9bffac5669f2769ca9007c1825e52968c7052b99618832fe"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -27051,8 +27051,8 @@
  },
  {
   "path": "docs/GLOBAL-INSTRUCTION-AUDIT.md",
-  "size": 3433,
-  "sha256": "e8e71c17840b735623dafe18bdb399098e22217e9d1ca94b22c9d6d4a4b11cb7"
+  "size": 4494,
+  "sha256": "20f0e1ff2cb53f39ba8692787d89bd24f88f33dc8fd3af90c84d6ca9d04d2595"
  },
  {
   "path": "docs/GUIDE.md",

@@ -162,12 +162,35 @@ def classify(prompt: str) -> tuple[str, str]:
     return "off", "no clear coding task"
 
 
+MODE_STATE = STATE_DIR / "ponytail-mode" / "state.json"
+
+
+def selected_mode() -> str:
+    """The operator's choice from TOOLS/ponytail_mode.py - the one authority.
+
+    Missing, unreadable or unknown state means OFF: a hook must never invent a
+    level the operator did not ask for.
+    """
+    data = _load_json(MODE_STATE)
+    mode = str(data.get("mode", "")).lower()
+    return mode if mode in ("off", "lite", "full", "ultra", "auto") else "off"
+
+
 def resolve(prompt: str, session_id: str | None = None, cwd: Path | None = None,
             global_config: dict | None = None) -> dict:
-    """Full decision: explicit > session > project > classification > default."""
+    """Full decision: selected mode > explicit > session > project > classification."""
     text = prompt or ""
     global_config = _load_json(STATE_DIR / "ponytail-auto.json") if global_config is None else global_config
     project = _project_config(cwd)
+
+    # The chosen mode wins over everything. Only AUTO delegates the decision, and
+    # the plugin itself already injects a manual level, so the hook must stay silent
+    # there instead of adding a competing instruction.
+    chosen = selected_mode()
+    if chosen != "auto":
+        reason = ("the selected mode is off" if chosen == "off"
+                  else "the selected mode is %s; the plugin injects it, the hook does not" % chosen)
+        return {"mode": "off", "source": "mode", "reason": reason}
 
     if RE_OFF.search(text):
         _session_state(session_id, "off")
@@ -238,11 +261,19 @@ def emit(raw: str, fmt: str = "hermes") -> str:
 def status() -> dict:
     state = _load_json(STATE)
     sessions = len(state.get("sessions") or {})
+    chosen = selected_mode()
+    config = _load_json(STATE_DIR / "ponytail-auto.json")
+    would_inject = chosen == "auto" and config.get("auto") is not False
     return {
-        "auto": "on",
-        "ceiling": "full",
+        # "auto" here is the hook's own switch; the operator's selected mode decides
+        # whether that switch is reachable at all.
+        "auto": "on" if would_inject else "off",
+        "selected_mode": chosen,
+        "would_inject": would_inject,
+        "ceiling": str(config.get("max", "full")),
         "sessions": sessions,
         "state": str(STATE),
+        "mode_state": str(MODE_STATE),
         "hermes_hook": _wired("hermes"),
         "claude_hook": _wired("claude"),
         "script": str(Path(__file__).resolve()),
