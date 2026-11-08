@@ -88,9 +88,9 @@ until blocked; a security or release surface promotes a "simple" change to the l
 - **Licensing.** Both packs' LICENSE files are installed at
   `<provider>/references/<pack>-LICENSE.txt`, and each installed skill's frontmatter names
   the licence and the upstream pin.
-- **Durable install.** Each move is journaled (`pending`) before it happens; a copy
-  failure restores the user's skill at once and a crashed run is recovered on the next
-  install or remove. Fault-injection covers the exact window between backup and receipt.
+- **Durable install.** Copies are staged beside the destination and swapped in under a
+  journal phase; a crash discards staging, removes an uncommitted destination and puts
+  the user's original back. Fault-injection and partial-destination tests cover it.
 - **Token disambiguation.** LLM token/context cost requests no longer reach
   `security-and-hardening`; credential tokens still do.
 
@@ -104,3 +104,15 @@ until blocked; a security or release surface promotes a "simple" change to the l
   `recommended_skills.py install` again.
 - Pocock's `domain-modeling` etc. are only present when installed; the bundle's own 81
   skills remain the always-available baseline.
+
+## Post-release corrections (v8.38.1)
+
+- Provider availability is real: the router scans the selected provider's skills
+  directory, labels source-only skills `source`, and reports `unavailable` rather than
+  claiming an install that is not there.
+- Security and token-cost detection are independent signals; a mixed OAuth + token-cost
+  request stays a security lifecycle.
+- `install` requires `--apply`, like `remove`.
+- Workflow selection is automatic: a Claude `UserPromptSubmit` / Hermes `pre_llm_call`
+  hook injects one routing line only when the route is not the default lightweight one,
+  installed outside the repo so it works from any project directory.

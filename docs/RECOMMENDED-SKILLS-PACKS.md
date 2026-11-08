@@ -55,7 +55,9 @@ the same pack replaces its own copy in place, so `install -> install -> remove` 
 user's original skill back byte for byte, with one `.backup-<utc>` folder and no nesting.
 Receipts are keyed by destination root, so two homes (or two providers) never share
 state; the receipt is rewritten after every item, so an interrupted download is still
-removable. `remove` deletes only receipt paths, then restores anything that was backed up.
+removable. `remove` deletes only receipt paths, then restores anything that was backed up. Copies
+are staged beside the destination and swapped in, so a crash can never leave a
+half-copied skill: recovery discards the staging folder and puts the original back.
 
 Updating is a deliberate `install` at a newer pin, never an automatic overwrite. An
 installed skill carries `license: MIT` and `upstream: <repo>@<pin>` in its frontmatter and
@@ -88,5 +90,6 @@ never returns a skill that does not exist.
 
 Both require their copyright and permission notice when redistributed. The pinned
 tarball is fetched from `codeload.github.com` at that exact SHA; nothing upstream is
-executed. Keep each repository's `LICENSE` beside the installed skills if you
-redistribute them; the installer does not copy it automatically.
+executed. Each pack's `LICENSE` is installed at
+`<provider>/references/<pack>-LICENSE.txt` and every installed skill carries
+`license: MIT` and `upstream: <repo>@<pin>` in its frontmatter.

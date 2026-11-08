@@ -181,61 +181,73 @@ def _namespaced(md, name, spec):
 
 
 def _recover_pending(data, checkpoint):
-    """Undo a half-finished move recorded by a crashed install, then clear the journal."""
+    """Finish or undo a transaction a crashed run left behind.
+
+    Staging is discarded, and anything at `dest` is treated as uncommitted until the
+    journal is cleared: the destination is removed and the user's backup restored. A run
+    that crashed just after a successful swap loses that one copy and retries next time,
+    which is the safe direction - user data always wins over an install.
+    """
     pending = data.get("pending")
     if not pending:
         return []
     dest = Path(pending["dest"])
     backup = Path(pending["backup"]) if pending.get("backup") else None
+    staging = Path(pending["staging"]) if pending.get("staging") else None
     restored = []
-    if not dest.exists() and backup and backup.exists():
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.move(str(backup), str(dest))
-        if data.get("backups", {}).get(str(dest)) == str(backup):
-            data["backups"].pop(str(dest), None)
-        restored.append(str(dest))
+    if staging and staging.exists():
+        shutil.rmtree(staging, ignore_errors=True) if staging.is_dir() else staging.unlink()
+    # Phase "copied" means the swap had not completed: whatever sits at dest is either
+    # absent or a partial copy, so it is discarded and the backup goes back.
+    if pending.get("phase", "copied") != "committed":
+        if dest.exists():
+            shutil.rmtree(dest) if dest.is_dir() else dest.unlink()
+        if backup and backup.exists():
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.move(str(backup), str(dest))
+            if data.get("backups", {}).get(str(dest)) == str(backup):
+                data["backups"].pop(str(dest), None)
+            restored.append(str(dest))
     data.pop("pending", None)
     checkpoint(data)
     return restored
 
 
 def _place(src, dest, data, stamp, checkpoint):
-    """Copy one item with a durable journal, so a crash cannot strand a user's skill.
+    """Copy one item through a staging folder, journaling every destructive step.
 
-    Order: record the pending move, do the destructive step, copy, clear the journal.
-    If the copy fails, the backup is put back immediately; if the process dies instead,
-    `_recover_pending` does the same on the next install or remove.
+    Order: copy into `<dest>.staging-<stamp>` first, then record the pending move, then
+    swap it in. A crash at any point leaves either the user's original or a complete
+    replacement at `dest` - never a half-copied one - and `_recover_pending` finishes the
+    job on the next run.
     """
     dest = Path(dest)
+    staging = dest.with_name(dest.name + ".staging-" + stamp)
+    if staging.exists():
+        shutil.rmtree(staging) if staging.is_dir() else staging.unlink()
     backup = None
+    try:
+        staging.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(src, staging) if src.is_dir() else shutil.copy2(src, staging)
+    except Exception:
+        if staging.exists():
+            shutil.rmtree(staging) if staging.is_dir() else staging.unlink()
+        raise
+
+    if dest.exists() and str(dest) not in set(data["owned"]):
+        backup = dest.with_name(dest.name + ".backup-" + stamp)
+        if backup.exists():
+            backup = dest.with_name(dest.name + ".backup-" + stamp + "-2")
+    data["pending"] = {"dest": str(dest), "staging": str(staging),
+                       "backup": str(backup) if backup else None, "phase": "copied"}
+    checkpoint(data)
     if dest.exists():
         if str(dest) in set(data["owned"]):
-            data["pending"] = {"dest": str(dest), "backup": None}
-            checkpoint(data)
             shutil.rmtree(dest) if dest.is_dir() else dest.unlink()  # our own older copy
         else:
-            backup = dest.with_name(dest.name + ".backup-" + stamp)
-            if backup.exists():
-                backup = dest.with_name(dest.name + ".backup-" + stamp + "-2")
-            data["pending"] = {"dest": str(dest), "backup": str(backup)}
-            checkpoint(data)
             shutil.move(str(dest), str(backup))
             data["backups"][str(dest)] = str(backup)
-    else:
-        data["pending"] = {"dest": str(dest), "backup": None}
-        checkpoint(data)
-    try:
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copytree(src, dest) if src.is_dir() else shutil.copy2(src, dest)
-    except Exception:
-        if dest.exists():
-            shutil.rmtree(dest) if dest.is_dir() else dest.unlink()
-        if backup and backup.exists():
-            shutil.move(str(backup), str(dest))
-            data["backups"].pop(str(dest), None)
-        data.pop("pending", None)
-        checkpoint(data)
-        raise
+    shutil.move(str(staging), str(dest))
     data.pop("pending", None)
 
 
@@ -324,6 +336,12 @@ def main(argv=None):
             return 0
         for path in remove(args.pack, args.provider, args.home):
             print("  removed %s" % path)
+        return 0
+
+    if args.command == "install" and not args.apply:
+        for action in plan(args.pack, args.provider, args.home, args.tree):
+            print("  %-9s %s" % (action["kind"], action["dest"]))
+        print("dry-run: nothing copied (add --apply)")
         return 0
 
     tree = args.tree or str(fetch_tree(args.pack))

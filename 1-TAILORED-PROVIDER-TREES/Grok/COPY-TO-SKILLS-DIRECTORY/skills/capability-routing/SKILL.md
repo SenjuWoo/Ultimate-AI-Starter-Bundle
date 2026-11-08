@@ -1,6 +1,6 @@
 ---
 name: capability-routing
-description: Use when choosing tools for a crawler, parser, browser automation or API wrapper instead of shell/Python/Node; when fetches are blocked or incomplete, or an approach failed twice.
+description: Use when a task needs a tool or workflow chosen for it - instead of a shell/Python/Node one-off, and for crawlers, parsers, browser automation, API wrappers, feature work, bug fixes, refactors, game/modding changes or releases - and when fetches are blocked, an approach failed twice, or more than one skill could own the next step.
 ---
 
 # Capability routing

@@ -358,6 +358,27 @@ if (Test-Path -LiteralPath $autoSrc) {
   }
 }
 
+# Task router: the same prompt-time injection point, one line naming the workflow. It
+# copies its two local dependencies so it also runs from the installed folder, away from
+# the repository checkout.
+$routerSrc = Join-Path $hooksSrc 'task_router_hook.py'
+$routerDest = Join-Path $installRoot 'task_router_hook.py'
+if (Test-Path -LiteralPath $routerSrc) {
+  Copy-Item -LiteralPath $routerSrc -Destination $routerDest -Force
+  foreach ($dep in @('task_route.py', 'recommended_skills.py')) {
+    $depSrc = Join-Path (Split-Path -Parent $hooksSrc) $dep
+    if (Test-Path -LiteralPath $depSrc) { Copy-Item -LiteralPath $depSrc -Destination (Join-Path $installRoot $dep) -Force }
+  }
+  $routerEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  try { $routerCheck = & $python $routerDest self-check 2>&1 | Out-String } finally { $ErrorActionPreference = $routerEap }
+  if ($LASTEXITCODE -eq 0) {
+    Write-Host ("task router: " + $routerCheck.Trim())
+    & $python $routerDest wire all | ForEach-Object { Write-Host ("task router: " + $_) }
+  } else {
+    Write-Host "task router: self-check failed, leaving the hook unwired" -ForegroundColor Yellow
+  }
+}
+
 $block = New-HookBlock -Py $python -Root $installRoot
 
 foreach ($p in $Providers) {

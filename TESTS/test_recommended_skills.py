@@ -166,7 +166,7 @@ class RecommendedSkillsTests(unittest.TestCase):
         state = {"failed": False}
 
         def boom(src, dst, *a, **k):
-            if Path(dst).name == "pocock-retro" and not Path(dst).exists() and not state["failed"]:
+            if Path(dst).name.startswith("pocock-retro.staging-") and not state["failed"]:
                 state["failed"] = True
                 raise OSError("disk full")
             return real(src, dst, *a, **k)
@@ -203,6 +203,41 @@ class RecommendedSkillsTests(unittest.TestCase):
         self.assertTrue((target / "SKILL.md").is_file())
         rs.remove("pocock", "claude", home=self.home)
         self.assertEqual((target / "SKILL.md").read_text(encoding="utf-8"), "mine")
+
+    def test_partial_copy_in_the_destination_is_rolled_back(self):
+        """A crash after the original moved aside must never leave a partial copy."""
+        target = self.skills() / "pocock-retro"
+        target.mkdir(parents=True)
+        (target / "SKILL.md").write_text("ORIGINAL", encoding="utf-8")
+        backup = self.skills() / "pocock-retro.backup-CRASH"
+        staging = self.skills() / "pocock-retro.staging-CRASH"
+        import shutil
+        shutil.move(str(target), str(backup))
+        target.mkdir()                      # half-copied replacement
+        (target / "SKILL.md").write_text("PART", encoding="utf-8")
+        staging.mkdir()
+        (staging / "SKILL.md").write_text("PART", encoding="utf-8")
+        receipt = rs.receipt_path("pocock", "claude", self.home)
+        rs._save(receipt, {"owned": [], "backups": {str(target): str(backup)},
+                           "pending": {"dest": str(target), "backup": str(backup),
+                                       "staging": str(staging), "phase": "copied"}},
+                 "pocock", "claude", rs.PACKS["pocock"]["pin"])
+        rs.install("pocock", "claude", home=self.home, tree=self.tree, stamp="T2")
+        self.assertFalse(staging.exists(), "partial staging must be discarded")
+        rs.remove("pocock", "claude", home=self.home)
+        self.assertEqual((target / "SKILL.md").read_text(encoding="utf-8"), "ORIGINAL")
+        self.assertEqual([p.name for p in self.skills().iterdir()], ["pocock-retro"])
+
+    def test_install_without_apply_changes_nothing(self):
+        code = rs.main(["install", "pocock", "--home", str(self.home), "--tree", str(self.tree)])
+        self.assertEqual(code, 0)
+        self.assertEqual([p.name for p in self.skills().iterdir()], [])
+
+    def test_install_with_apply_writes(self):
+        code = rs.main(["install", "pocock", "--home", str(self.home),
+                        "--tree", str(self.tree), "--apply"])
+        self.assertEqual(code, 0)
+        self.assertIn("pocock-retro", [p.name for p in self.skills().iterdir()])
 
     def test_claude_config_dir_is_honoured(self):
         custom = Path(self._tmp.name) / "claude-custom"

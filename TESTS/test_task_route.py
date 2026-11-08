@@ -92,10 +92,10 @@ class RoutingTests(unittest.TestCase):
         security = [x for x in r["resolved"] if x["want"] == "security-and-hardening"]
         self.assertTrue(security)
         self.assertEqual(security[0]["use"], "code-review-skill")
-        self.assertEqual(security[0]["via"], "fallback")
+        self.assertIn(security[0]["via"], {"fallback", "bundle"})
 
     def test_installed_pack_wins_over_the_fallback(self):
-        pool = {"addy-security-and-hardening", "code-review-skill"}
+        pool = {"addy-security-and-hardening": "optional", "code-review-skill": "provider"}
         resolved = tr.resolve(["security-and-hardening"], available=pool)
         self.assertEqual(resolved[0]["use"], "addy-security-and-hardening")
         self.assertEqual(resolved[0]["via"], "installed")
@@ -114,6 +114,29 @@ class RoutingTests(unittest.TestCase):
                      "the api key leaked into the build log"):
             r = tr.route(text)
             self.assertIn("security-and-hardening", r["specialists"], text)
+
+    def test_security_and_token_optimisation_are_independent(self):
+        mixed = tr.route("Add OAuth login and reduce LLM token usage.")
+        self.assertEqual(mixed["primary"], "lifecycle", "security must not be suppressed by a cost phrase")
+        self.assertIn("security-and-hardening", mixed["specialists"])
+        self.assertTrue(mixed["signals"]["token_cost"])
+        self.assertTrue(mixed["signals"]["security"])
+
+    def test_an_empty_provider_sees_no_specialists(self):
+        resolved = tr.resolve(["security-and-hardening"], available={})
+        self.assertEqual(resolved[0]["use"], None)
+        self.assertEqual(resolved[0]["via"], "unavailable")
+
+    def test_a_partial_install_resolves_what_is_present_only(self):
+        pool = {"addy-security-and-hardening": "optional"}
+        resolved = tr.resolve(["security-and-hardening", "context-engineering"], available=pool)
+        self.assertEqual(resolved[0]["via"], "installed")
+        self.assertEqual(resolved[1]["use"], None, "nothing may be claimed that is not installed")
+
+    def test_source_skills_are_labelled_not_installed(self):
+        resolved = tr.resolve(["systematic-debugging"], available={"systematic-debugging": "source"})
+        self.assertEqual(resolved[0]["via"], "bundle")
+        self.assertEqual(resolved[0]["origin"], "source")
 
     def test_no_specialist_resolves_to_a_missing_skill(self):
         pool = {p.name for p in (ROOT / "_CANONICAL-SKILLS").iterdir()

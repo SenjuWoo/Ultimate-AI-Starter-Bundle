@@ -67,7 +67,7 @@ def signals(text):
         "release": bool(RE_RELEASE.search(text)),
         "design": bool(RE_DESIGN.search(text)),
         "game": bool(RE_GAME.search(text)),
-        "security": bool(RE_SECURITY.search(text)) and not RE_TOKEN_COST.search(text),
+        "security": bool(RE_SECURITY.search(text)),
         "token_cost": bool(RE_TOKEN_COST.search(text)),
         "autonomy": bool(RE_AUTONOMY.search(text)),
         "vague": bool(RE_VAGUE.search(text)),
@@ -175,39 +175,56 @@ BUNDLE_SKILLS = Path(__file__).resolve().parents[1] / "_CANONICAL-SKILLS"
 
 
 def available_skills(provider=None, home=None):
-    """Bundle skills plus whatever the optional installer currently owns."""
-    names = set()
-    if BUNDLE_SKILLS.is_dir():
-        names = {p.name for p in BUNDLE_SKILLS.iterdir() if (p / "SKILL.md").is_file()}
+    """What this provider can actually see: a dict of name -> origin.
+
+    A skill sitting in the bundle's source tree is not installed anywhere. Only when no
+    provider is given (CLI use inside the repo) do we report source skills, and they are
+    labelled `source` so nothing claims they are discoverable.
+    """
+    found = {}
     if provider:
         try:
             import recommended_skills as rs
-            receipt = rs.receipt_path("addy", provider, home)
-            sibling = rs.receipt_path("pocock", provider, home)
-            for path in (receipt, sibling):
-                if path.exists():
-                    data = rs._load(path)
-                    names |= {Path(p).name for p in data.get("owned", []) if Path(p).is_dir()}
+            root = rs.provider_dirs(home)[provider]
+            if root.is_dir():
+                found.update({p.name: "provider" for p in root.iterdir() if (p / "SKILL.md").is_file()})
+            for pack in ("addy", "pocock"):
+                receipt = rs.receipt_path(pack, provider, home)
+                if receipt.exists():
+                    data = rs._load(receipt)
+                    for path in data.get("owned", []):
+                        item = Path(path)
+                        if item.is_dir() and (item / "SKILL.md").is_file() and item.parent == root:
+                            found[item.name] = "optional"
         except Exception:
             pass  # an unreadable receipt must not break routing
-    return names
+        return found
+    if BUNDLE_SKILLS.is_dir():
+        found = {p.name: "source" for p in BUNDLE_SKILLS.iterdir() if (p / "SKILL.md").is_file()}
+    return found
 
 
 def resolve(specialists, available=None):
-    """Map each specialist intent to a skill that actually exists right now."""
-    pool = set(available if available is not None else available_skills())
+    """Map each specialist intent to a skill that exists in the place we looked."""
+    pool = available if isinstance(available, dict) else {n: "source" for n in (available or ())}
     resolved = []
     for want in specialists:
         candidates = ["addy-" + want, "pocock-" + want, want] + FALLBACKS.get(want, [])
         for candidate in candidates:
             if candidate in pool:
-                resolved.append({"want": want, "use": candidate,
-                                 "via": "bundle" if candidate == want else
-                                        ("installed" if candidate.endswith("-" + want) and candidate != want
-                                         else "fallback")})
+                origin = pool[candidate]
+                if candidate == want:
+                    via = "bundle" if origin == "source" else "installed"
+                elif origin == "source":
+                    via = "bundle"
+                elif candidate.endswith("-" + want) and not candidate.startswith(tuple(FALLBACKS.get(want, ["\0"]))):
+                    via = "installed"
+                else:
+                    via = "fallback"
+                resolved.append({"want": want, "use": candidate, "via": via, "origin": origin})
                 break
         else:
-            resolved.append({"want": want, "use": None, "via": "unavailable"})
+            resolved.append({"want": want, "use": None, "via": "unavailable", "origin": None})
     return resolved
 
 

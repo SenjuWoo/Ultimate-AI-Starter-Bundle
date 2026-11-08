@@ -40,6 +40,7 @@ def steps(root):
         ("recommended skill packs", [py, "TESTS/test_recommended_skills.py"]),
         ("skill routing", [py, "TESTS/test_skill_routing.py"]),
         ("task routing", [py, "TESTS/test_task_route.py"]),
+        ("task router hook", [py, "TESTS/test_task_router_hook.py"]),
         ("ponytail mode", [py, "TESTS/test_ponytail_mode.py"]),
         ("ponytail integration", [py, "TESTS/test_ponytail_integration.py"]),
         ("line endings", [py, "TESTS/test_line_endings.py"]),
