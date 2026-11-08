@@ -18752,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64144,
-  "sha256": "2a2ae26af1333be5952e79a8c33227ccc1654ca771a84dabee1d0cda2540f6e2"
+  "sha256": "2a8f5a5679c3601e9b4adf707af1c841d7813a96931de38cf8ce8f978e5cd9f2"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18762,7 +18762,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "19834a6e4a7b020b53306eec6067caa245c4779770ebe0dd3f37113564bbffd0"
+  "sha256": "89bed1530d8e64750fa80f03857d06d87d0c2a4a8470cb8f254dc6a1749ae65f"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18772,7 +18772,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40571,
-  "sha256": "5c4bc50045452e4b9c843e0df3c119804a89c89c00d720086cf4c1bb0fc76b32"
+  "sha256": "9b53218716a42ac421b504e5429b9993137adfe92b3f931bffa3f2d0d1d500e2"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22826,8 +22826,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 316550,
-  "sha256": "6af60d1d7d87731b74dd9fa2595d0197eb178d830da79838edcce4da90cc5a5a"
+  "size": 317264,
+  "sha256": "5914e95f6ec51d49051aa44ee74643e5a7ae4bbb02ce052f16ebeb829d33c567"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22972,7 +22972,7 @@
  {
   "path": "README.md",
   "size": 15622,
-  "sha256": "d705e87d5670cecaf2945a92969c8b9d16538a99d2dff8505a89dcfd47002ecc"
+  "sha256": "098b462badfd331d3eedb7267a46723122843c8b56aa8ac1effb74b333d881b9"
  },
  {
   "path": "SECURITY.md",
@@ -22982,12 +22982,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1054,
-  "sha256": "09351a09cb9c2edf72640fe46ad04d3158d4a52395fdc90e4fbd0ba637ab9d4b"
+  "sha256": "647c0b363e3c0caebe85d2013e97fdb115257f5f1b460cc4310e55abe8cbb86d"
  },
  {
   "path": "START-HERE.txt",
   "size": 4105,
-  "sha256": "d74fcb9408becb081aa3c768742ef8b19fdc81079927e5b1c538342d79e3ccce"
+  "sha256": "3f5f999e8b10af7f5faaafccee28a7ae87f998cee857512d0115cbd5efc2fb25"
  },
  {
   "path": "STATE.md",
@@ -23441,8 +23441,8 @@
  },
  {
   "path": "TESTS/test_ponytail_mode.py",
-  "size": 8056,
-  "sha256": "8b8bcb99d9f5177cb66164c4545fdb12fc1ee8012e2b2fad1fbe27cd43879e30"
+  "size": 8181,
+  "sha256": "f3aa23a1a8f0e82914c6aab9db10d694016e8b6bec8ad26d0dc7c5c4c48db967"
  },
  {
   "path": "TESTS/test_privacy_boundary.py",
@@ -23936,8 +23936,8 @@
  },
  {
   "path": "TOOLS/ponytail_mode.py",
-  "size": 15134,
-  "sha256": "68323798168571db042923b9d04e7cdec935ee4ae0a4574efb697715901b71df"
+  "size": 15370,
+  "sha256": "a109a16fe0463e9ce729923a07fefe808ecbd145befd96f85cf5240b14b068e8"
  },
  {
   "path": "TOOLS/presentation_check.py",
@@ -24027,7 +24027,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2783,
-  "sha256": "51251662256eda032f9799dc93ac403063e0190325ca3d8de1142935beccebde"
+  "sha256": "624bab94272f5329adbba8b0abce1999dc0fb80b6866ae0f069b772e362b4bbe"
  },
  {
   "path": "VALIDATION.md",
@@ -24037,7 +24037,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "7d6f551bb5fe626dac949cac3bb5ec0942793c9964f229a8a058ff6b1a3bbaf2"
+  "sha256": "9e1e8392673e7a0e2049525c65ada3418f87d8c948368913fd2700b2e2cc72a0"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",

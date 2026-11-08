@@ -291,11 +291,15 @@ def main(argv=None):
 
     mode = args.mode
     if mode == "init":
+        # Installers re-copy skill folders on every run, so init must re-assert the
+        # chosen mode rather than only recording it: an idempotent pass parks what
+        # the copy step just laid down.
         existing = read_state().get("mode")
         if existing:
             print("existing choice kept: %s" % existing)
-            return 0
-        mode = "off"
+            mode = existing
+        else:
+            mode = "off"
 
     actions = plan(mode, source_tree=_tree(args))
     if args.json:

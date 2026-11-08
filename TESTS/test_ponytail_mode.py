@@ -147,12 +147,14 @@ class PonytailModeTests(unittest.TestCase):
         self.assertTrue(any("PONYTAIL_DEFAULT_MODE" in m for m in report["mismatches"]))
         self.assertFalse(report["runtime_verified"])
 
-    def test_init_keeps_an_explicit_choice(self):
+    def test_init_keeps_an_explicit_choice_and_re_asserts_it(self):
         pm.STATE.mkdir(parents=True, exist_ok=True)
         (pm.STATE / "state.json").write_text(json.dumps({"mode": "ultra"}), encoding="utf-8")
         self.assertEqual(pm.main(["init", "--apply"]), 0)
         self.assertEqual(json.loads((pm.STATE / "state.json").read_text())["mode"], "ultra")
-        self.assertFalse((Path(os.environ["APPDATA"]) / "ponytail" / "config.json").exists())
+        # An installer re-copies skills, so init must also re-assert the native value
+        # instead of only recording the choice.
+        self.assertEqual(self._native()["defaultMode"], "ultra")
 
     def test_off_with_loaded_skills_reports_a_leak(self):
         cfg = Path(os.environ["APPDATA"]) / "ponytail"
