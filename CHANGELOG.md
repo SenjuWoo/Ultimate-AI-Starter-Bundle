@@ -1,3 +1,49 @@
+## 8.37.20 (2026-11-08)
+
+- **Ponytail Auto**: the mode is now decided outside the model, deterministically,
+  with no extra call. `TOOLS/hooks/ponytail_auto.py` reads the prompt, a project
+  `.ponytail.json` and the session, then injects one instruction or nothing.
+  Conservative by design: creative, exploratory and open questions stay OFF;
+  a fix needs a concrete target (path, extension, issue, line, stack trace) to
+  reach LITE; only a requested simplification or named maintenance reaches FULL;
+  ULTRA is explicit-only. `max` caps what classification may pick.
+- Wired only where a provider can inject context before the request: Hermes
+  (`pre_llm_call`, context appended to the user message) and Claude Code
+  (`UserPromptSubmit`, `additionalContext`). Codex, Grok, Kimi, Antigravity,
+  Copilot and Cursor keep the manual `/ponytail` commands instead of a hook that
+  would never fire.
+- Explicit `stop ponytail` / `normal mode` sticks for the session; so does an
+  explicit level. Project preferences can pin a level or disable auto.
+- `Install-Completeness-Gate.ps1` copies the hook, runs its self-check and wires
+  it; a failed check leaves it unwired. Wired commands are approved in the
+  Hermes allowlist, and a temp-staged copy is refused so a dead path is never
+  written into a provider config.
+- `TESTS/test_ponytail_auto.py` (14 cases) covers the decision corpus, overrides,
+  project file, ceiling, the exact text sent per mode, the Claude envelope and
+  idempotent wiring. `docs/PONYTAIL-AUTO.md` documents the rules and limits.
+
+## 8.37.19 (2026-11-08)
+
+- Ponytail is now **off by default** and a fresh install cannot inject its
+  minimalism into creative, architectural or game work. Measured before the change:
+  the Claude plugin was enabled, the Hermes plugin was enabled and every skill-based
+  provider carried the six ponytail skills.
+- `TOOLS/ponytail_mode.py` is the single control surface:
+  `status`, `off|lite|full|ultra --apply`, and `init` for install time. `off`
+  disables the Claude and Hermes plugins and parks the copied skills under
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\parked\ponytail`; the other levels
+  restore them. A deliberate level survives reinstall because `init` only writes
+  `off` when no choice exists.
+- The level itself stays with upstream (`/ponytail full`), since that is where the
+  plugin reads it; the bundle controls whether any instructions reach the model.
+  AUTO is deliberately not implemented and is recorded as `off`.
+- The installed-state doctor fails when the mode is `off` but a provider can still
+  inject ponytail instructions, and treats parked skills as expected rather than
+  missing.
+- `TESTS/test_ponytail_mode.py` covers off, restore, a surviving explicit choice,
+  auto-as-off and an unknown level; wired into CI and the release gate.
+- 81 canonical skills, no companion pin changed.
+
 ## 8.37.18 (2026-11-07)
 
 - Unrestraint content audited against the commit that reinforced it (411cd5e):

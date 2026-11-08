@@ -41,8 +41,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 13323,
-  "sha256": "6f78044382387feccde156ce17c8b2142736e63c434d0ee5ee5225735c13e5a5"
+  "size": 13428,
+  "sha256": "886069abdd3adf0c296881b7689153bf113bcd1e0a2c6edc479045b8441e823e"
  },
  {
   "path": ".github/workflows/dependabot-auto-merge.yml",
@@ -18645,6 +18645,11 @@
   "sha256": "649d8d278fe4b9d19d9932ace976039d0ad5fda663f93bd497f9557164d731de"
  },
  {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-d52ecdb22fae.md",
+  "size": 16040,
+  "sha256": "eec2168394578b1d39d92a879447d8cee6f8a7865b186fabc878f8f6f08fe7bd"
+ },
+ {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-d68d7d9cd705.md",
   "size": 10527,
   "sha256": "0c9cdcdb8792782359606f462371560497e81d6f7fbb60069e0093c62cacb2dd"
@@ -18715,6 +18720,11 @@
   "sha256": "71d67cab470815d38d6bbbb047547041169c9263dce21a76895b9110ea244eaa"
  },
  {
+  "path": "3-PREAMBLES/history/SOUL-d9a9a0df3d04.md",
+  "size": 1783,
+  "sha256": "fd6175d6d47c9e44171eab03929dcb967ece04e44853fc2348183c7e3ab8ee03"
+ },
+ {
   "path": "3-PREAMBLES/history/provider-general-90e1bfb9417c.md",
   "size": 17534,
   "sha256": "ab43eb93af5da6454197b5c5c4440da783fecf8528b0b0fef2f71d20e303bf95"
@@ -18742,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64144,
-  "sha256": "8fc1757c9aa6beb406cf3666a7bd85241f6b256f63d06b077dcbaea0791076da"
+  "sha256": "2cc45f65be49022d5773f78b7222db1543ec573d2e5a10a73469f6f05f1aa941"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18752,7 +18762,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "c799a047ba495b16ae720d9332950a6682a8b777a714cfb41bb11d081a274243"
+  "sha256": "796d49efde890adafa6a780339437d1f764555aec174e79b7c3b4aaf4d6ad0ec"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18762,7 +18772,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40571,
-  "sha256": "3bfd9db920bb84f970506221eb5c65adc0db30ba3a1921c1905047aca4226011"
+  "sha256": "16793d520487978aa45782bf1c410e136221eaea6c9f6e513ba6814b12844a3f"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22816,8 +22826,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 311086,
-  "sha256": "a4317d502a42a01caf36303cc4dac870996dcc12db51b5203f7f1374e96affa4"
+  "size": 314009,
+  "sha256": "9b5efe75e8dea2a8d70e4216da1e2a47360f5f6d302abdaa1cb0b8148a765eb0"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22916,8 +22926,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 181725,
-  "sha256": "ce3880e1ed3febfd356f9f3486ccab88ce91a533dbac7679f6d795af0a0b6ca8"
+  "size": 182362,
+  "sha256": "8687959b2878521679ba1046a59bda404c3b101588e198f069e99d5fff1feef0"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -22936,8 +22946,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 52314,
-  "sha256": "7a1f4e275039f32fa780e1d68b033255c1d30d8538f1c545d58cb72940416204"
+  "size": 52528,
+  "sha256": "3f3b66ee929ba8d3db82c71624526976575cbfe1d8a76a4a1955384f724ca0e1"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -22961,8 +22971,8 @@
  },
  {
   "path": "README.md",
-  "size": 15415,
-  "sha256": "91f7042ae68c9e9db6cf7dccf0a4d2f4d9c5a25e2afe67a4e7d747b9e7197665"
+  "size": 15553,
+  "sha256": "41c993475da101863dfb314861cd086f7864b1871a4e47225a55883562577c6e"
  },
  {
   "path": "SECURITY.md",
@@ -22972,12 +22982,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1054,
-  "sha256": "a57d368d932563be99df7f96d6997cd9269558accc0c68c3fd764a7b5207ef45"
+  "sha256": "8ce097cfae12ee87496076ee471bb0f860074f33a2fa324fa28e16b206abf740"
  },
  {
   "path": "START-HERE.txt",
   "size": 4105,
-  "sha256": "5051642c60964e142e505d691fb9461242d8fde7fea426db499aacf57fa83755"
+  "sha256": "309b2b26f2cc91a8867f3670f487a280e7933c08964ed5b15ece82e51f9e2f38"
  },
  {
   "path": "STATE.md",
@@ -23591,8 +23601,8 @@
  },
  {
   "path": "TOOLS/Install-Completeness-Gate.ps1",
-  "size": 25102,
-  "sha256": "771dfb8c31d47acaac30a53fc37db41aa6e998a4e88c94936d8ce15e354d5cfe"
+  "size": 26519,
+  "sha256": "5b076313e6b0fdc9456da8e125ba39cb5b0a9cbf8d9d810fabfab48cd3a38765"
  },
  {
   "path": "TOOLS/Install-GitHooks.ps1",
@@ -23691,8 +23701,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 67748,
-  "sha256": "a34d44476e55c32fcb8d227fbaa76a8f2e005525dc32a41421492e268ab75b07"
+  "size": 69468,
+  "sha256": "6ba534d214df39d69566d8246c83cb0d918b096d547496c2d615e1e78a17d5ac"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -23926,8 +23936,8 @@
  },
  {
   "path": "TOOLS/release_gate.py",
-  "size": 3577,
-  "sha256": "f7ccd94afa6cc4e552b80d698ddfa240087066b17334ebcadb6ac6e235c7ccfa"
+  "size": 3642,
+  "sha256": "756e19cafc6b3ddfb44af059b8eb33e12feecd9d5012d7ab2583b88537a9c369"
  },
  {
   "path": "TOOLS/release_provenance.py",
@@ -23997,7 +24007,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2783,
-  "sha256": "76564fb3220ab4d3c1d839c1713cb2ddaf0bcc8ec952e43dd8e6d7edbb37b395"
+  "sha256": "3022a0b3048992853ea8e0805cf30fbc7800ff814b0c6d66e174e6c16e89738c"
  },
  {
   "path": "VALIDATION.md",
@@ -24007,7 +24017,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "d0ddfa153f6c2e3d465e8df759610fb53021d0e928856b89a4abf2d9c5f9ef85"
+  "sha256": "11bb5f6f4a068247316d1c9f2a9db9a09233e44ac44e6a63d631601d4f031ef1"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -27021,8 +27031,8 @@
  },
  {
   "path": "docs/GUIDE.md",
-  "size": 78501,
-  "sha256": "a181d14523321b5760ee9327eb65acedbfe4673ba1e301cb1aa2bb773b44cfb4"
+  "size": 79862,
+  "sha256": "625f83ef046dd0e8016a92022b48400d1ede0cf0b88a85e341e34eed5b9b0c94"
  },
  {
   "path": "docs/HERMES-FILE-GUARD-BUG.md",
@@ -27958,6 +27968,11 @@
   "path": "docs/history/V8.37.17-CHANGELOG.md",
   "size": 1200,
   "sha256": "5e294799bf72f2042fc5d8423d33d0c3d03ef6a9659d74e2f1dd850457fd2dc4"
+ },
+ {
+  "path": "docs/history/V8.37.18-CHANGELOG.md",
+  "size": 1136,
+  "sha256": "5b52012ca7666cd4db8f5e48ad47585d03e5d621d2ba52ed97fb1917ef4fd59a"
  },
  {
   "path": "docs/history/V8.37.2-CHANGELOG.md",

@@ -341,6 +341,23 @@ if (-not $CheckOnly) {
 Write-Host "interpreter: $python"
 Remove-DeadDrops
 
+# Ponytail Auto: the mode is decided from the prompt outside the model, so no extra
+# call is spent and the choice is reproducible. Only Hermes and Claude expose a
+# prompt-time injection point; the other providers keep the manual commands.
+$autoSrc = Join-Path $hooksSrc 'ponytail_auto.py'
+$autoDest = Join-Path $installRoot 'ponytail_auto.py'
+if (Test-Path -LiteralPath $autoSrc) {
+  Copy-Item -LiteralPath $autoSrc -Destination $autoDest -Force
+  $autoEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  try { $autoCheck = & $python $autoDest self-check 2>&1 | Out-String } finally { $ErrorActionPreference = $autoEap }
+  if ($LASTEXITCODE -eq 0) {
+    Write-Host ("ponytail auto: " + $autoCheck.Trim())
+    & $python $autoDest wire all | ForEach-Object { Write-Host ("ponytail auto: " + $_) }
+  } else {
+    Write-Host "ponytail auto: self-check failed, leaving the hook unwired" -ForegroundColor Yellow
+  }
+}
+
 $block = New-HookBlock -Py $python -Root $installRoot
 
 foreach ($p in $Providers) {
