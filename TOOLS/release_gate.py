@@ -37,6 +37,7 @@ def steps(root):
         ("provider routing safety", [py, "TESTS/test_provider_routing.py"]),
         ("companion registry", [py, "TESTS/test_companion_registry.py"]),
         ("upstream drift report", [py, "TESTS/test_upstream_drift.py"]),
+        ("ponytail mode", [py, "TESTS/test_ponytail_mode.py"]),
         ("line endings", [py, "TESTS/test_line_endings.py"]),
         ("line-ending churn", [py, "TOOLS/check_line_endings.py"] + base_args_),
         ("privacy boundary", [py, "TESTS/test_privacy_boundary.py"]),

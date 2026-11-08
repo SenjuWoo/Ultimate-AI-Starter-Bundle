@@ -2949,6 +2949,17 @@ if (-not $ToolsOnly) {
   }
 }
 
+# Ponytail default: installed and available, but OFF unless the operator already
+# chose a level. `init` never overwrites an existing choice, so a deliberate
+# lite/full/ultra survives every reinstall.
+$ponyScript = Join-Path $PackRoot 'TOOLS\ponytail_mode.py'
+if (Test-Path -LiteralPath $ponyScript -PathType Leaf) {
+  Write-UabsStep 'Ponytail mode (default off)'
+  $ponyOut = @(& (Get-Command python -ErrorAction Stop).Source $ponyScript 'init' '--apply' 2>&1)
+  foreach ($line in $ponyOut) { Write-Host ('  ' + [string]$line) }
+  Add-UabsDetails -Title 'Ponytail mode' -Lines @($ponyOut | ForEach-Object { [string]$_ })
+}
+
 # Final fail-closed proof. Avoid -Switch:$false because powershell.exe -File on
 # Windows PowerShell 5.1 cannot bind explicit Boolean values to [switch].
 $doctorScript = Join-Path $PackRoot 'TOOLS\Test-Installed-State.ps1'

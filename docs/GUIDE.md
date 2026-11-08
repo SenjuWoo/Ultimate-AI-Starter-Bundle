@@ -985,6 +985,46 @@ old decisions live in [docs/history/](https://github.com/SenjuWoo/Ultimate-AI-St
 
 Workflow audit of 2026-10-22: [findings, fixes and evidence](docs/AUDIT-2026-10-22.md).
 
+### Ponytail mode
+
+Ponytail is installed but **off by default**: a fresh machine sets Ponytail's own
+`defaultMode` to `off`, so no "smallest change" philosophy is imposed on creative or
+architectural work. The plugin stays enabled, which keeps `/ponytail` and the
+statusline available the moment you want them - upstream skips activation entirely
+at `off`, so nothing reaches the model until you ask.
+
+```
+python TOOLS/ponytail_mode.py status              # read-only; exits 1 on a real leak
+python TOOLS/ponytail_mode.py lite   --apply       # or full / ultra / auto / off
+python TOOLS/ponytail_mode.py init   --apply       # install time: off only if never chosen
+```
+
+- The switch is Ponytail's native setting: `%APPDATA%\ponytail\config.json`
+  (`defaultMode`), written with a backup and with every other key preserved. That is
+  the same value the `/ponytail` command changes, so there is no second mode system
+  to drift.
+- `off` also parks the copied skill folders under
+  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\ponytail-mode\parked`, because a skill
+  description can trigger by itself. Parking never deletes: each archive carries a
+  hash of its original path, and a collision is reported rather than resolved.
+- `lite`/`full`/`ultra` restore the parked copies (original bytes first) and set the
+  native default, so the level is stable across restarts without typing a command.
+- `auto` parks the same skill copies and keeps the native default at `off`, so the
+  deterministic classifier in `TOOLS/hooks/ponytail_auto.py` is the only path that
+  can inject a level for a prompt; it never selects `ultra` and keeps creative work
+  off. Leaving the skills loaded would let a description trigger on its own and
+  override the classifier.
+- `status` compares what you asked for with the value upstream will actually read,
+  reports a `PONYTAIL_DEFAULT_MODE` override, and exits 1 on a leak or a mismatch. It
+  also states that a JSON value is configuration, not proof of a running session.
+- A running session keeps its mode: the change lands on the next session.
+- The installed-state doctor fails when the mode is `off` and any provider still has
+  ponytail skills loaded.
+
+What else is always injected - Superpowers' startup skill, the reason it is kept
+enabled, and the switch to scope it - is measured in
+[GLOBAL-INSTRUCTION-AUDIT.md](GLOBAL-INSTRUCTION-AUDIT.md).
+
 ### Upstream drift report
 
 `python TOOLS/check_upstream_drift.py` prints every pinned or recommended

@@ -126,6 +126,8 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_upstream_drift.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_ponytail_mode.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_line_endings.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $base = git describe --tags --abbrev=0 2>$null

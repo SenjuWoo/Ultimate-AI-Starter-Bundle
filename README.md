@@ -1,5 +1,5 @@
-<!-- Ultimate AI Starter Bundle v8.37.18 -->
-# Ultimate AI Starter Bundle v8.37.18
+<!-- Ultimate AI Starter Bundle v8.37.21 -->
+# Ultimate AI Starter Bundle v8.37.21
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
@@ -181,6 +181,7 @@ Additional canonical payloads without separate tool-catalog entries:
 |---|---|---|
 | `img2threejs` | [img2threejs/img2threejs](https://github.com/img2threejs/img2threejs) | Pinned pointer skill (v1.5.1); the tool tree lives in its own repo |
 | AssetForge | [SenjuWoo/AssetForge](https://github.com/SenjuWoo/AssetForge) | Owns 2D/3D asset production, validation and engine export (MIT). Detected by the companion registry; optional providers (Blender, glTF-Transform, comfy-kit) are discovered, never installed by the bundle |
+| Ponytail | off by default through its own `defaultMode`; `python TOOLS/ponytail_mode.py lite|full|ultra|auto|off --apply` | no minimalism imposed on creative work; plugin and `/ponytail` stay available |
 | `awesome-gamedev-agent-skills` | [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) | Optional engine pack (Apache-2.0, pinned `19d93f9`, 2026-10-28). Not vendored and never installed by the bundle: the detector reports it, routing picks the engine, and [the review](docs/RECOMMENDED-GAME-DEV-SKILLS.md) covers install, precedence and removal |
 | `skill-creator`, `build-mcp-server`, `build-mcpb`, `build-mcp-app` | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | Selected cross-provider skills, not the entire marketplace |
 | Hermes native Unity bridge | [CoplayDev/unity-mcp](https://github.com/CoplayDev/unity-mcp) | Existing Coplay editor backend, isolated in `unity`/`creative`; distinct from the IvanMurzak project route |

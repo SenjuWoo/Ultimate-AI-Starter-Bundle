@@ -1,3 +1,32 @@
+## 8.37.21 (2026-11-08)
+
+- Corrects the 8.37.19 control surface after an independent review found three real
+  defects. A dry run wrote files: `off` without `--apply` parked skills and rewrote
+  state. Parking replaced an existing archive with `rmtree`, so a second run could
+  destroy a copy it did not create. And `off` disabled the Claude and Hermes
+  plugins, which removed the `/ponytail` UI instead of switching the behaviour.
+- The switch is now Ponytail's own setting: `%APPDATA%\ponytail\config.json`
+  `defaultMode`, written with a backup and every other key preserved. Upstream skips
+  activation at `off`, so plugins stay enabled and the UI keeps working while no
+  rules reach the model.
+- Every change is planned first and executed second: `plan()` is pure and returns
+  the actions, `execute()` applies them. A dry run prints the plan and writes
+  nothing. Parked copies are archived under a hash of their original path and are
+  never overwritten; a collision is reported and both copies stay. Restoring prefers
+  the parked original, so a round trip returns the exact original bytes.
+- A malformed `config.json` is reported and left untouched instead of being replaced
+  by a fresh file.
+- Status reports requested mode, native value, per-provider skills and real leaks;
+  it exits 1 when a provider still loads ponytail skills at `off`. The installed-state
+  doctor keys off that leak list rather than treating an enabled plugin as a fault.
+- `TESTS/test_ponytail_mode.py` grows to twelve cases: dry-run purity by tree digest,
+  config write with foreign keys preserved, malformed config untouched, parking
+  without overwrite, byte-exact round trip, `auto` parking its skills, a requested
+  value that disagrees with the native one, a `PONYTAIL_DEFAULT_MODE` override,
+  `init` keeping an explicit choice, leak reporting and an unknown level.
+  `TESTS/test_ponytail_auto.py` passes unchanged.
+- 81 canonical skills, no companion pin changed.
+
 ## 8.37.20 (2026-11-08)
 
 - **Ponytail Auto**: the mode is now decided outside the model, deterministically,
@@ -24,24 +53,30 @@
 
 ## 8.37.19 (2026-11-08)
 
-- Ponytail is now **off by default** and a fresh install cannot inject its
-  minimalism into creative, architectural or game work. Measured before the change:
-  the Claude plugin was enabled, the Hermes plugin was enabled and every skill-based
+- Ponytail is now **off by default**, through Ponytail's own setting rather than a
+  parallel one: the bundle writes `defaultMode: off` to
+  `%APPDATA%\ponytail\config.json`, which is the value upstream reads before it
+  injects anything. Measured before the change: the native mode was unset (upstream
+  default `full`), the Claude and Hermes plugins were enabled and every skill-based
   provider carried the six ponytail skills.
-- `TOOLS/ponytail_mode.py` is the single control surface:
-  `status`, `off|lite|full|ultra --apply`, and `init` for install time. `off`
-  disables the Claude and Hermes plugins and parks the copied skills under
-  `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\parked\ponytail`; the other levels
-  restore them. A deliberate level survives reinstall because `init` only writes
-  `off` when no choice exists.
-- The level itself stays with upstream (`/ponytail full`), since that is where the
-  plugin reads it; the bundle controls whether any instructions reach the model.
-  AUTO is deliberately not implemented and is recorded as `off`.
-- The installed-state doctor fails when the mode is `off` but a provider can still
-  inject ponytail instructions, and treats parked skills as expected rather than
-  missing.
-- `TESTS/test_ponytail_mode.py` covers off, restore, a surviving explicit choice,
-  auto-as-off and an unknown level; wired into CI and the release gate.
+- `TOOLS/ponytail_mode.py` is the control surface: `status` (read-only, exits 1 on a
+  real leak), `off|lite|full|ultra|auto --apply`, and `init` for install time. A dry
+  run writes nothing; every change is planned first and executed second.
+- Plugins stay enabled on purpose: at `off` upstream skips activation, so `/ponytail`
+  and the statusline keep working while no rules reach the model. Copied skill
+  folders are parked because their descriptions can trigger on their own; parking
+  archives each copy under a hash of its original path and never deletes or
+  overwrites anything. Restoring prefers the parked original over the bundle copy.
+- `auto` keeps the skills, pins the native default to `off`, and lets the
+  deterministic classifier in `TOOLS/hooks/ponytail_auto.py` decide per prompt
+  (never `ultra`; creative work stays off).
+- The installed-state doctor fails when the mode is `off` and a provider still loads
+  ponytail skills, and treats parked skills as expected rather than missing.
+- `TESTS/test_ponytail_mode.py` covers ten cases: dry-run purity (tree digest before
+  and after), native config with other keys preserved, a malformed config left
+  untouched, parking without overwriting, a byte-exact round trip, `auto`, an
+  explicit choice surviving `init`, leak reporting, and an unknown level. Wired into
+  CI and the release gate.
 - 81 canonical skills, no companion pin changed.
 
 ## 8.37.18 (2026-11-07)

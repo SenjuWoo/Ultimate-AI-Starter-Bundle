@@ -29,6 +29,14 @@ function Resolve-Exe([string]$Provider) {
   return (Resolve-UabsProviderExe -Provider $Provider)
 }
 Write-UabsStep 'Final installed-state doctor'
+
+# Ponytail parking is a deliberate state: record it once so every check agrees.
+$script:ponyOff = $false
+$ponyStatePath = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\ponytail-mode\state.json'
+if (Test-Path -LiteralPath $ponyStatePath -PathType Leaf) {
+  # [IO.File]::ReadAllText avoids the ANSI decoding that Get-Content applies.
+  try { $script:ponyOff = (([IO.File]::ReadAllText($ponyStatePath) | ConvertFrom-Json).mode -in @('off', 'auto')) } catch { $script:ponyOff = $false }
+}
 foreach ($issue in @(Repair-UabsHookShellPath -CheckOnly)) { Err $issue }
 # VERSION.txt is the one source. The doctor used to restate 7.8.0 in four
 # places, so a release bump could leave the doctor failing a correct install.
@@ -271,6 +279,9 @@ if(-not $SkipSkills){
     $builtinOwned=0
     foreach($skillDir in $expectedSkills){
       $skill=$skillDir.Name
+      # Ponytail is installed-but-parked when its mode is off; a missing copy is the
+      # intended state, not a missing skill.
+      if($script:ponyOff -and $skill -like 'ponytail*'){continue}
       if($preserved -contains $skill){$localOwned++;continue}
       $src=Join-Path $skillDir.FullName 'SKILL.md'
       $dst=Join-Path $destSkills ("$skill\SKILL.md")
@@ -1187,6 +1198,24 @@ $autostartReport = @($autostarts | ForEach-Object {
 })
 
 $doctorResult = if ($errors.Count) { 'FAIL' } else { 'PASS' }
+
+# Ponytail must be reported honestly: an "off" mode that still injects is a failure.
+$ponyReport = $null
+$ponyScriptPath = Join-Path $PSScriptRoot 'ponytail_mode.py'
+if (Test-Path -LiteralPath $ponyScriptPath -PathType Leaf) {
+  $prevEapP = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  $ponyJson = @(& (Get-Command python -ErrorAction Stop).Source $ponyScriptPath 'status' '--json' 2>&1) -join "`n"
+  $ErrorActionPreference = $prevEapP
+  try { $ponyReport = $ponyJson | ConvertFrom-Json } catch { $ponyReport = $null }
+  if ($ponyReport) {
+    # The tool already decides what counts as a leak: an enabled plugin at mode
+    # off emits nothing (upstream skips activation), only loaded skill copies do.
+    if (@($ponyReport.leaks).Count -gt 0) {
+      $errors += "ponytail mode is off but instructions can still reach the model: " + (@($ponyReport.leaks) -join '; ')
+    }
+    elseif ($ponyReport.effective) { $warnings += ("ponytail: " + $ponyReport.effective) }
+  }
+}
 $report=[ordered]@{version=$packBare;checked_utc=[DateTime]::UtcNow.ToString('o');errors=@($errors);warnings=@($warnings);reverse_this=$reverseHealth;rtk_runtime=$rtkRuntime;capability_states=@($capabilityStates);hermes_tool_budgets=@($hermesBudgets);hermes_plugin_issues=@($hermesPluginIssues);hermes_discouraged_plugin_issues=@($hermesDiscouragedPluginIssues);hermes_hook_issues=@($hermesHookIssues);codex_skill_index=$script:codexSkillIndex;ai_autostarts=@($autostartReport);hook_misdirection=@($hookMisdirection);shadowed_tools=@($shadowReport);result=$doctorResult}
 $reportPath=Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\installed-state-doctor.json'
 $report['grok_hook_issues'] = @($grokHookIssues)
