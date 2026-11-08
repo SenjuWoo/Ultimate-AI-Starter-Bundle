@@ -39,7 +39,7 @@ the bundle keeps no second copy. If the forge is absent, say which repository ow
 | RimWorld 1.6 | `RimWorldForge` | `START-HERE.bat`, `rwforge doctor`, `rwforge capabilities`; skill `rimworld-forge` | `UABS_TOOL_ROOTS` |
 | Saints Row: The Third / IV | `SaintsRowForge` | `START-HERE.bat`; `srforge doctor`; `AI-INTEGRATION.md`, `knowledge/` | `%LOCALAPPDATA%\SaintsRowForge` |
 | VRChat avatar from Blender/XPS/MMD/VRM/Source | `AvatarForge` | release ZIP, `INSTALL-TOOLS.bat`; skill `avatarforge` | the user's install |
-| Binary/app reverse engineering, game hooks | `reverse-this` (Reverse THIS!) | `Install-Modkit.ps1 -Doctor`; skill `reverse-engineering` | installed kit manifest |
+| Binary/app reverse engineering, game hooks, website API reconstruction | `reverse-this` (Reverse THIS!) | `Install-Modkit.ps1 -Doctor`; skill `reverse-engineering`; `reverse-api-engineer.cmd` for private web APIs | installed kit manifest |
 
 Minecraft Fabric/Quilt and other loaders have no forge: use their official docs (docs.fabricmc.net,
 quiltmc.org) and `game-modding`'s laws. A game with no forge uses `game-modding`.

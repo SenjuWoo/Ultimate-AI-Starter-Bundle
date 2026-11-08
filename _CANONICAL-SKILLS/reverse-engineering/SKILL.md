@@ -34,6 +34,19 @@ writing code.
 | Capture | `renderdoccmd.cmd` |
 | Android | `jadx.cmd` |
 | REA evidence workflow | `rea.cmd` |
+| Website HTTP API reconstruction | `reverse-api-engineer.cmd` |
+
+## Route website APIs separately
+
+Use `reverse-api-engineer.cmd` only when the task is to discover a website's
+private HTTP API and produce a usable client, and no official API or maintained
+SDK already covers it. Resolve the shim from the installed manifest; do not
+assume it is installed and do not install a second copy. Read
+`<kit_root>\docs\web-api.md` for the verified workflow. Keep the browser capture,
+HAR, generated client and credentials under an ignored work directory; the tool
+does not register an MCP server or start a browser at install time. It is a
+different capability from REA and from game-binary analysis; do not force it
+onto a game merely because the game has an online service.
 
 `AGENTS.md` carries the full catalog (Source, REDengine, FromSoftware,
 GameMaker, Total War and the rest). `installed.json` decides which of these are
