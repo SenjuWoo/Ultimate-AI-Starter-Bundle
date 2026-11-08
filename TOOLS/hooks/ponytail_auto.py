@@ -80,7 +80,11 @@ RE_SIMPLIFY = re.compile(
     r"reduce (?:the )?(?:code|complexity|size)|make it (?:smaller|simpler)|clean ?up)\b", re.I)
 RE_FIX = re.compile(
     r"\b(fix|fixes|fixed|typo|rename|bump|patch|revert|hotfix|crash(?:es|ed)?|regression|"
-    r"broken|fails?|failing|failure|traceback|exception|error|bug)\b", re.I)
+    r"broken|fails?|failing|failure|traceback|exception|error|bug)\b|"
+    r"\b\w*(?:Error|Exception)\b|\bexit code\b|\bbuild fails?\b", re.I)
+# Compiler / toolchain codes such as MSB3073 or C1083: concrete evidence of a real
+# failure, even when the prompt names no file.
+RE_CODE = re.compile(r"\b[A-Z]{2,}\d{3,}\b")
 RE_ARTIFACT = re.compile(
     r"\b(manifest|changelog|release notes?|readme|docs?|documentation|version|tests?|suite|workflow|installer)\b", re.I)
 RE_MAINT = re.compile(
@@ -140,7 +144,8 @@ def classify(prompt: str) -> tuple[str, str]:
     if not text:
         return "off", "empty prompt"
 
-    concrete = bool(RE_PATH.search(text) or RE_ISSUE.search(text) or RE_FENCE.search(text) or RE_STACK.search(text))
+    concrete = bool(RE_PATH.search(text) or RE_ISSUE.search(text) or RE_FENCE.search(text)
+                    or RE_STACK.search(text) or RE_CODE.search(text))
     creative = bool(RE_CREATIVE.search(text))
     simplify = bool(RE_SIMPLIFY.search(text))
     fix = bool(RE_FIX.search(text))

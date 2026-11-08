@@ -18752,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64144,
-  "sha256": "6b58b4bfc3be842490c62d8272a83cd2614515cd2bcc08c80c9130081d0ba4a4"
+  "sha256": "23f22046912c7927063c36be69826d87b30d4912944e6ce0e431eb88c8b16117"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18762,7 +18762,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "d19d5c22a4947fd5ab8cd8dfa2e016c2ab30190a048a7c1f29c348b422e8aa8c"
+  "sha256": "6e49518371151b9f83c4b5feb760829ed90fee83ce0c7fc889f636ac43f3cf8c"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18772,7 +18772,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40571,
-  "sha256": "e1cd638e9439415464e3835883bed28bdad408c98c4ce7092622c3c43f39c1c0"
+  "sha256": "6ecb2117948b4d4eb3d4eccbea1e0401f6ecdccd45c2dc0a8b7f9b477c77c7af"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22826,8 +22826,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 318950,
-  "sha256": "b086b34db03c66f1532ec31830bacf25981cf42e60a71639912e34a34f369e9b"
+  "size": 320007,
+  "sha256": "588bb51bb60e24686546ba3159829dd37044999e1a25196580fc0761aac7b192"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22972,7 +22972,7 @@
  {
   "path": "README.md",
   "size": 15622,
-  "sha256": "b602b51e8efbb93f8f36d6457bfa6c230179a42c9b2c39001185c8d89e457883"
+  "sha256": "2ea8be98612b7369e4dab6b2f87201d8d7ff70ca119907e1df5c73154970b783"
  },
  {
   "path": "SECURITY.md",
@@ -22982,12 +22982,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1054,
-  "sha256": "fc8017f828de981f7c74d43c0ad4f21214e4e795eabaad08270877c403262e01"
+  "sha256": "b928abd6803dcfcefac25da8d70e46fba6a513473962354050afb4929b8f005c"
  },
  {
   "path": "START-HERE.txt",
   "size": 4105,
-  "sha256": "1b36f4b5eeb7fcc106d6aa456e0ca4355807e808150a0072635c80b3164dd817"
+  "sha256": "55751d80e7b34a1dad349b31ea387e48d1f4f4017a2b4a126c4d9bb9218cb42e"
  },
  {
   "path": "STATE.md",
@@ -23436,8 +23436,13 @@
  },
  {
   "path": "TESTS/test_ponytail_auto.py",
-  "size": 7700,
-  "sha256": "61aabbcee2a7e714b81fa577b78cb05052bf8abd6b0735056ab3672f1c2f830e"
+  "size": 8772,
+  "sha256": "66b1b27c01b71ff8e2271a16e98c06368df00c228d23f7d407eaa04238a078a7"
+ },
+ {
+  "path": "TESTS/test_ponytail_integration.py",
+  "size": 5718,
+  "sha256": "4081c360e18f805ad936ad27e039594fbe6db68cc403581c182cf97b613429ea"
  },
  {
   "path": "TESTS/test_ponytail_mode.py",
@@ -23886,8 +23891,8 @@
  },
  {
   "path": "TOOLS/hooks/ponytail_auto.py",
-  "size": 21552,
-  "sha256": "a7701f879c1f9ba0686587df46f58919b1358b84d499c5e6aeb8287156a53c31"
+  "size": 21842,
+  "sha256": "190c3c8b1ec57fba7fa5a4f87c61b843c58047b471e7495e4a3c6172af26b6d2"
  },
  {
   "path": "TOOLS/hooks/rtk_safe_hook.py",
@@ -24027,7 +24032,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2783,
-  "sha256": "ea72fab354d421200e9644d6fc7cff955326145f303d2dcd6b7296810e225e40"
+  "sha256": "d413f531285fa77f8ab63ee8f85db5b76438a863f7098d205020763f2d5959d2"
  },
  {
   "path": "VALIDATION.md",
@@ -24037,7 +24042,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "8b5d91198cb392ad9bffac5669f2769ca9007c1825e52968c7052b99618832fe"
+  "sha256": "ed25b02422a8aa5b7bb2bc74a39968f42c205eb6aae6bf24b9d66871c361fd16"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -28005,6 +28010,11 @@
   "sha256": "5b52012ca7666cd4db8f5e48ad47585d03e5d621d2ba52ed97fb1917ef4fd59a"
  },
  {
+  "path": "docs/history/V8.37.19-CHANGELOG.md",
+  "size": 1894,
+  "sha256": "e5b859160f6264d622874b4b044ede9f1011e796cad46f552606a04472bf24ff"
+ },
+ {
   "path": "docs/history/V8.37.2-CHANGELOG.md",
   "size": 899,
   "sha256": "17998c780269344cc6a526cc2dba2942c9ef68db81ef0b05b02c62b9e9b7b531"
@@ -28018,6 +28028,11 @@
   "path": "docs/history/V8.37.22-CHANGELOG.md",
   "size": 712,
   "sha256": "496bb815b34a435c3fdbc514b55d2e0a6dd2b3189bcb7fa8efcba792253403f4"
+ },
+ {
+  "path": "docs/history/V8.37.24-CHANGELOG.md",
+  "size": 1684,
+  "sha256": "3acb0039591e70add127682718749c65f2cb47b7ec729f9e0ab22ae77491f8ae"
  },
  {
   "path": "docs/history/V8.37.3-CHANGELOG.md",

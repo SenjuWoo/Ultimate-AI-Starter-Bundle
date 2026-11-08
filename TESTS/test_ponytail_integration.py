@@ -73,6 +73,15 @@ class ModeAndHookAgreeTests(unittest.TestCase):
         self.assertEqual(narrow["mode"], "lite")
         self.assertTrue(hook.instruction(narrow["mode"]))
 
+    def test_auto_recognises_a_stack_trace_and_a_build_code(self):
+        # Both were false negatives in the first corpus: an exception name and a
+        # toolchain code are concrete evidence even without a path.
+        self._choose("auto")
+        self.assertEqual(hook.classify("TypeError: 'NoneType' object is not subscriptable in loader.py:88")[0], "lite")
+        self.assertEqual(hook.classify("the build fails with MSB3073, here is the log")[0], "lite")
+        # and they must not drag creative work into a mode
+        self.assertEqual(hook.classify("design a magic system for my game")[0], "off")
+
     def test_auto_never_reaches_ultra(self):
         self._choose("auto")
         for prompt in ("delete everything you can and simplify hard",

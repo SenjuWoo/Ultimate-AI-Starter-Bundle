@@ -25,10 +25,18 @@ class DecisionTests(unittest.TestCase):
         self._dir = tempfile.TemporaryDirectory()
         pa.STATE = Path(self._dir.name) / "ponytail-auto.json"
         pa.STATE_DIR = Path(self._dir.name)
+        # The selected mode is the single authority now, so these classification
+        # cases run under AUTO and restore the real setting afterwards.
+        self._mode_state = pa.MODE_STATE
+        pa.MODE_STATE = Path(self._dir.name) / "ponytail-mode" / "state.json"
+        pa.MODE_STATE.parent.mkdir(parents=True, exist_ok=True)
+        pa.MODE_STATE.write_text('{"mode": "auto"}', encoding="utf-8")
         self.cwd = Path(self._dir.name)
 
     def tearDown(self):
         pa.STATE = self._state
+        if hasattr(self, "_mode_state"):
+            pa.MODE_STATE = self._mode_state
         self._dir.cleanup()
 
     def decide(self, prompt, **kwargs):
@@ -105,9 +113,17 @@ class EmissionTests(unittest.TestCase):
         self._dir = tempfile.TemporaryDirectory()
         pa.STATE = Path(self._dir.name) / "ponytail-auto.json"
         pa.STATE_DIR = Path(self._dir.name)
+        # The selected mode is the single authority now, so these classification
+        # cases run under AUTO and restore the real setting afterwards.
+        self._mode_state = pa.MODE_STATE
+        pa.MODE_STATE = Path(self._dir.name) / "ponytail-mode" / "state.json"
+        pa.MODE_STATE.parent.mkdir(parents=True, exist_ok=True)
+        pa.MODE_STATE.write_text('{"mode": "auto"}', encoding="utf-8")
 
     def tearDown(self):
         pa.STATE = self._state
+        if hasattr(self, "_mode_state"):
+            pa.MODE_STATE = self._mode_state
         self._dir.cleanup()
 
     def test_the_text_sent_matches_the_selected_mode(self):
@@ -150,6 +166,8 @@ class WireTests(unittest.TestCase):
         else:
             os.environ["PONYTAIL_HERMES_CONFIG"] = self._env
         pa.STATE = self._state
+        if hasattr(self, "_mode_state"):
+            pa.MODE_STATE = self._mode_state
         self._dir.cleanup()
 
     def test_wiring_is_idempotent_and_preserves_the_owner_config(self):
