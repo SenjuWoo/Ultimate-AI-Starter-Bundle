@@ -138,6 +138,9 @@ def route(text, provider=None, home=None):
         specialists.append("security-and-hardening")
         if primary == "lightweight":
             primary, why = "lifecycle", "touches authentication, money or personal data"
+            checkpoints = "phase gates"
+        elif primary == "requirements-pass":
+            checkpoints = "ask once, then phase gates"
     if s["game"]:
         specialists.append("capability-routing")
     if s["design"] and "impeccable" not in specialists:

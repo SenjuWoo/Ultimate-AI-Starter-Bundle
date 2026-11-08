@@ -1,3 +1,24 @@
+## 8.38.2 (2026-11-08)
+
+- Crash recovery can no longer delete a user's skill. The journal records whether a
+  destination existed before the transaction, and recovery follows an unambiguous state
+  model: no original -> clear our copy; original with a backup -> restore it; original
+  with no backup -> the destination is still the user's and is never touched. The exact
+  reproduced state (original present, staging present, journal present, no backup) now
+  preserves the original.
+- A failed item rolls back before the next one runs: a failure before the backup move,
+  after it, or while swapping staging all leave the user's skill in place and no pending
+  journal behind. Install twice then remove was proven byte-identical.
+- Security promotion sets checkpoints: a lightweight OAuth request promoted to `lifecycle`
+  now carries `phase gates`, while an explicitly authorized unattended run stays
+  `superpowers-autonomous` with no checkpoints.
+- Hermes hook wiring is shared, not duplicated: `ponytail_auto.wire_hermes_script()` owns
+  the YAML round-trip and the `shell-hooks-allowlist.json` approval, and the task router
+  uses it for the root config and every named profile.
+- Tests: installer 21 (fault injection at three points plus the no-backup crash state),
+  task routing 27, hook 8 (real stdin/stdout, settings merge, Hermes approval), skill
+  routing 6, release contracts 175. 81 canonical skills unchanged.
+
 ## 8.38.1 (2026-11-08)
 
 - Installer copies are staged beside the destination and swapped in, with a journal

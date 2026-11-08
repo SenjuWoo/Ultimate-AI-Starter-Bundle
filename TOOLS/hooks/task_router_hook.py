@@ -127,37 +127,36 @@ def wire_claude(enable=True):
     return [("wired" if enable else "removed") + " Claude UserPromptSubmit hook"]
 
 
+def _hermes_configs():
+    """Root config plus every named profile, so a desktop profile is not left blind."""
+    configs = []
+    root = _hermes_config()
+    if root:
+        configs.append(root)
+    import os
+    profiles = Path(os.environ.get("LOCALAPPDATA", "")) / "hermes" / "profiles"
+    if profiles.is_dir():
+        for candidate in sorted(profiles.glob("*/config.yaml")):
+            if candidate not in configs:
+                configs.append(candidate)
+    return configs
+
+
 def wire_hermes(enable=True):
-    cfg = _hermes_config()
-    if not cfg:
-        return ["Hermes config not found; hook not wired"]
+    """Reuse Ponytail's Hermes writer: same YAML round-trip, same allowlist approval."""
+    sys.path.insert(0, str(HERE))
     try:
-        from ruamel.yaml import YAML
-        from io import StringIO
-    except ImportError:
-        return ["ruamel.yaml unavailable; Hermes hook not wired"]
-    original = cfg.read_text(encoding="utf-8")
-    yaml = YAML(typ="rt")
-    yaml.preserve_quotes = True
-    yaml.width = 4096
-    document = yaml.load(original) or {}
-    hooks = document.setdefault("hooks", {})
-    current = [e for e in (hooks.get("pre_llm_call") or [])
-               if "task_router_hook.py" not in str(e.get("command", ""))]
-    if enable:
-        current.append({"command": _hook_command("hermes"), "timeout": 10})
-    if current:
-        hooks["pre_llm_call"] = current
-    else:
-        hooks.pop("pre_llm_call", None)
-    buffer = StringIO()
-    yaml.dump(document, buffer)
-    updated = buffer.getvalue()
-    if updated != original:
-        cfg.with_suffix(cfg.suffix + ".bak-task-router").write_text(original, encoding="utf-8")
-        cfg.write_text(updated, encoding="utf-8")
-        return [("wired" if enable else "removed") + " Hermes pre_llm_call hook"]
-    return ["Hermes hook already current"]
+        import ponytail_auto as pa
+    except Exception as exc:
+        return ["ponytail_auto.py unavailable (%s); Hermes hook not wired" % exc]
+    actions = []
+    for config in _hermes_configs():
+        try:
+            for action in pa.wire_hermes_script(Path(__file__), enable=enable, config=config):
+                actions.append("%s: %s" % (config.parent.name, action))
+        except Exception as exc:
+            actions.append("%s: failed (%s)" % (config, exc))
+    return actions or ["Hermes config not found; hook not wired"]
 
 
 def self_check():
@@ -175,6 +174,7 @@ def main(argv=None):
     ap.add_argument("command", choices=("hook", "wire", "status", "self-check"))
     ap.add_argument("target", nargs="?", default="all", choices=("all", "claude", "hermes"))
     ap.add_argument("--format", default="hermes", choices=("hermes", "claude"))
+    ap.add_argument("--event", default="pre_llm_call")
     args = ap.parse_args(argv)
 
     if args.command == "hook":

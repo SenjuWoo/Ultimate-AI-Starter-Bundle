@@ -220,13 +220,92 @@ class RecommendedSkillsTests(unittest.TestCase):
         receipt = rs.receipt_path("pocock", "claude", self.home)
         rs._save(receipt, {"owned": [], "backups": {str(target): str(backup)},
                            "pending": {"dest": str(target), "backup": str(backup),
-                                       "staging": str(staging), "phase": "copied"}},
+                                       "staging": str(staging), "stage": "backed_up"}},
                  "pocock", "claude", rs.PACKS["pocock"]["pin"])
         rs.install("pocock", "claude", home=self.home, tree=self.tree, stamp="T2")
         self.assertFalse(staging.exists(), "partial staging must be discarded")
         rs.remove("pocock", "claude", home=self.home)
         self.assertEqual((target / "SKILL.md").read_text(encoding="utf-8"), "ORIGINAL")
         self.assertEqual([p.name for p in self.skills().iterdir()], ["pocock-retro"])
+
+    def test_journal_without_a_backup_never_deletes_the_original(self):
+        """The exact crash state: original at dest, staging present, no backup yet."""
+        target = self.skills() / "pocock-retro"
+        target.mkdir(parents=True)
+        (target / "SKILL.md").write_text("ORIGINAL", encoding="utf-8")
+        staging = self.skills() / "pocock-retro.staging-CRASH"
+        staging.mkdir()
+        (staging / "SKILL.md").write_text("PART", encoding="utf-8")
+        receipt = rs.receipt_path("pocock", "claude", self.home)
+        data = {"owned": [], "backups": {},
+                "pending": {"dest": str(target), "staging": str(staging),
+                            "backup": None, "had_dest": True}}
+        rs._save(receipt, data, "pocock", "claude", rs.PACKS["pocock"]["pin"])
+        rs._recover_pending(data, lambda d: rs._save(receipt, d, "pocock", "claude",
+                                                     rs.PACKS["pocock"]["pin"]))
+        self.assertEqual((target / "SKILL.md").read_text(encoding="utf-8"), "ORIGINAL",
+                         "an unbacked-up destination is the user's skill and must survive")
+        self.assertFalse(staging.exists())
+
+    def test_failure_before_the_backup_move_leaves_the_original(self):
+        target = self.skills() / "pocock-retro"
+        target.mkdir(parents=True)
+        (target / "SKILL.md").write_text("ORIGINAL", encoding="utf-8")
+        real = rs.shutil.move
+
+        def boom(src, dst, *a, **k):
+            if Path(dst).name.startswith("pocock-retro.backup-"):
+                raise OSError("cannot move original")
+            return real(src, dst, *a, **k)
+
+        rs.shutil.move = boom
+        try:
+            results, _ = rs.install("pocock", "claude", home=self.home, tree=self.tree, stamp="T")
+        finally:
+            rs.shutil.move = real
+        self.assertTrue(any(not r["ok"] for r in results))
+        self.assertEqual((target / "SKILL.md").read_text(encoding="utf-8"), "ORIGINAL")
+        receipt = json.loads(rs.receipt_path("pocock", "claude", self.home).read_text(encoding="utf-8"))
+        self.assertNotIn("pending", receipt)
+        self.assertEqual(receipt["backups"], {})
+
+    def test_failure_while_swapping_staging_restores_the_backup(self):
+        target = self.skills() / "pocock-retro"
+        target.mkdir(parents=True)
+        (target / "SKILL.md").write_text("ORIGINAL", encoding="utf-8")
+        real = rs.shutil.move
+        state = {"hit": False}
+
+        def boom(src, dst, *a, **k):
+            if Path(src).name.startswith("pocock-retro.staging-") and not state["hit"]:
+                state["hit"] = True
+                raise OSError("swap failed")
+            return real(src, dst, *a, **k)
+
+        rs.shutil.move = boom
+        try:
+            results, _ = rs.install("pocock", "claude", home=self.home, tree=self.tree, stamp="T")
+        finally:
+            rs.shutil.move = real
+        self.assertTrue(state["hit"])
+        self.assertTrue(any(not r["ok"] for r in results))
+        self.assertEqual((target / "SKILL.md").read_text(encoding="utf-8"), "ORIGINAL",
+                         "a failed swap must put the user's skill back before moving on")
+        receipt = json.loads(rs.receipt_path("pocock", "claude", self.home).read_text(encoding="utf-8"))
+        self.assertNotIn("pending", receipt)
+
+    def test_install_install_remove_is_byte_identical(self):
+        import hashlib
+        target = self.skills() / "pocock-retro"
+        target.mkdir(parents=True)
+        (target / "SKILL.md").write_text("ORIGINAL", encoding="utf-8")
+        (target / "notes.txt").write_text("keep me" + chr(10), encoding="utf-8")
+        before = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in target.iterdir()}
+        for stamp in ("T1", "T2"):
+            rs.install("pocock", "claude", home=self.home, tree=self.tree, stamp=stamp)
+        rs.remove("pocock", "claude", home=self.home)
+        after = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in target.iterdir()}
+        self.assertEqual(before, after)
 
     def test_install_without_apply_changes_nothing(self):
         code = rs.main(["install", "pocock", "--home", str(self.home), "--tree", str(self.tree)])

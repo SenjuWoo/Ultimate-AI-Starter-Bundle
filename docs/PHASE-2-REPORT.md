@@ -116,3 +116,14 @@ until blocked; a security or release surface promotes a "simple" change to the l
 - Workflow selection is automatic: a Claude `UserPromptSubmit` / Hermes `pre_llm_call`
   hook injects one routing line only when the route is not the default lightweight one,
   installed outside the repo so it works from any project directory.
+
+## Post-release corrections (v8.38.2)
+
+- Recovery uses an explicit transaction state (`had_dest`, `stage`), so a crash
+  before the backup move never deletes the user's skill, and a crash after it always
+  restores it. Three fault-injection points are tested, plus install/install/remove
+  byte equality.
+- Security promotion is consistent: `lifecycle` carries `phase gates`; an explicitly
+  authorized unattended run stays autonomous with none.
+- Hermes hook wiring goes through one shared writer and records the shell-hook
+  approval for the root config and each named profile.

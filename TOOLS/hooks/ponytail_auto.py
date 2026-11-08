@@ -332,12 +332,23 @@ def _wired(provider: str) -> str:
 
 def wire_hermes(enable: bool = True) -> list[str]:
     """Merge one pre_llm_call hook into Hermes's real config, preserving the file."""
-    cfg = _hermes_config()
+    return wire_hermes_script(Path(__file__), enable=enable)
+
+
+def wire_hermes_script(script, enable: bool = True, config=None, event: str = "pre_llm_call") -> list[str]:
+    """Shared Hermes hook writer: one command, one event, other hooks untouched.
+
+    Used by the Ponytail hook and by the task router so both go through the same YAML
+    round-trip and the same approval record instead of two fragile copies.
+    """
+    cfg = Path(config) if config else _hermes_config()
     if not cfg:
         return ["Hermes config not found (is `hermes` on PATH?)"]
     from ruamel.yaml import YAML
 
-    command = _hook_command(sys.executable, "hermes")
+    script = Path(script).resolve()
+    marker = script.name
+    command = "%s %s hook --event %s --format hermes" % (_quote(sys.executable), _quote(str(script)), event)
     original = cfg.read_text(encoding="utf-8")
     yaml = YAML(typ="rt")
     yaml.preserve_quotes = True
@@ -347,14 +358,14 @@ def wire_hermes(enable: bool = True) -> list[str]:
     if hooks is None:
         hooks = {}
         document["hooks"] = hooks
-    current = hooks.get("pre_llm_call") or []
-    kept = [entry for entry in current if "ponytail_auto.py" not in str(entry.get("command", ""))]
+    current = hooks.get(event) or []
+    kept = [entry for entry in current if marker not in str(entry.get("command", ""))]
     actions = []
     if enable:
         kept.append({"command": command, "timeout": 15})
-    hooks["pre_llm_call"] = kept
+    hooks[event] = kept
     if not kept:
-        del hooks["pre_llm_call"]
+        del hooks[event]
 
     from io import StringIO
     buffer = StringIO()
@@ -363,11 +374,11 @@ def wire_hermes(enable: bool = True) -> list[str]:
     if updated == original:
         actions.append("Hermes hook already current")
     else:
-        cfg.with_suffix(cfg.suffix + ".bak-ponytail-auto").write_text(original, encoding="utf-8")
+        cfg.with_suffix(cfg.suffix + ".bak-" + marker).write_text(original, encoding="utf-8")
         cfg.write_text(updated, encoding="utf-8")
-        actions.append(("wired" if enable else "removed") + " Hermes pre_llm_call hook")
+        actions.append(("wired" if enable else "removed") + " Hermes %s hook" % event)
     if enable:
-        _approve(cfg.parent, "pre_llm_call", command)
+        _approve(cfg.parent, event, command)
         actions.append("approved the hook in shell-hooks-allowlist.json")
     return actions
 

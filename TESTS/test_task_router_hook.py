@@ -69,6 +69,30 @@ class HookTests(unittest.TestCase):
             self.assertIn("other", text, "an unrelated hook must survive")
             self.assertEqual(text.count("task_router_hook.py"), 1, "wire must not duplicate itself")
 
+    def test_hermes_wiring_preserves_foreign_hooks_and_approves(self):
+        try:
+            import ruamel.yaml  # noqa: F401
+        except ImportError:
+            self.skipTest("ruamel.yaml not available")
+        sys.path.insert(0, str(ROOT / "TOOLS" / "hooks"))
+        import ponytail_auto as pa
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg = Path(tmp) / "config.yaml"
+            cfg.write_text("model:" + chr(10) + "  default: keep" + chr(10) + "hooks:" + chr(10)
+                           + "  pre_llm_call:" + chr(10) + "    - command: other-tool" + chr(10),
+                           encoding="utf-8")
+            for _ in range(2):
+                actions = pa.wire_hermes_script(HOOK, enable=True, config=cfg)
+                self.assertTrue(actions)
+            text = cfg.read_text(encoding="utf-8")
+            self.assertIn("keep", text)
+            self.assertIn("other-tool", text, "an unrelated hook must survive")
+            self.assertEqual(text.count("task_router_hook.py"), 1, "wiring must be idempotent")
+            approvals = json.loads((Path(tmp) / "shell-hooks-allowlist.json").read_text(encoding="utf-8"))
+            self.assertTrue(any("task_router_hook.py" in a.get("command", "")
+                                for a in approvals["approvals"]),
+                            "the hook must be approved or Hermes will refuse to run it")
+
     def test_self_check_passes(self):
         out = subprocess.run([sys.executable, str(HOOK), "self-check"],
                              capture_output=True, text=True, timeout=60)

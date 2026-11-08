@@ -115,6 +115,16 @@ class RoutingTests(unittest.TestCase):
             r = tr.route(text)
             self.assertIn("security-and-hardening", r["specialists"], text)
 
+    def test_promotion_to_lifecycle_sets_checkpoints(self):
+        r = tr.route("add oauth login with tests before merge")
+        self.assertEqual(r["primary"], "lifecycle")
+        self.assertEqual(r["checkpoints"], "phase gates")
+
+    def test_authorised_unattended_security_keeps_no_checkpoints(self):
+        r = tr.route("add oauth login and finish it while I'm away, no questions")
+        self.assertEqual(r["primary"], "superpowers-autonomous")
+        self.assertEqual(r["checkpoints"], "none until blocked")
+
     def test_security_and_token_optimisation_are_independent(self):
         mixed = tr.route("Add OAuth login and reduce LLM token usage.")
         self.assertEqual(mixed["primary"], "lifecycle", "security must not be suppressed by a cost phrase")
