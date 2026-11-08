@@ -18752,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64144,
-  "sha256": "f0e10b849f6ad8647982e25c89af767bea21f816cc8be1c3ade49070ad2df1f8"
+  "sha256": "57dd951fcd6a1cdf78c215c764e7c73a967f9d8de77b5601f50277e8e9fb95eb"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18762,7 +18762,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "8262a7a53240f5de865f61c2d462575157f743e5e2b3c08a2237295476703666"
+  "sha256": "72cf5418c7db7f4ff56cee6109d119dee5ad17e57283c17462e0df04901b4bca"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18772,7 +18772,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40571,
-  "sha256": "03c678153e4e0959850acb84eb42fec9d7962842c74983a4e9f833ad58052794"
+  "sha256": "4ec4ae7fcf18dcba5aec3420ec784886146b55e4843d270df77fd4c6c3c26f38"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22826,8 +22826,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 320648,
-  "sha256": "1117166ef6085cbd7a276d9023e40a98615cc8de5f7cc312c6cab46b03694e2c"
+  "size": 322436,
+  "sha256": "73b69f4456160890ec18466e0786035e20fe833e9685c6d270e8649ebf34a07e"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22972,7 +22972,7 @@
  {
   "path": "README.md",
   "size": 15622,
-  "sha256": "a93665357423e40ed8b4a953dab303b8a197f3b54385986c33f5d88f4ab59e00"
+  "sha256": "a45ae7936c903e082aa62fdeb62b6d5c5187c79137199ba257d05b1d426d0601"
  },
  {
   "path": "SECURITY.md",
@@ -22982,12 +22982,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1054,
-  "sha256": "dc42fac70fd0cdc0979ce29c7b01da7d998ee84a84f8988cbc6794cba8647506"
+  "sha256": "d4868b7c7ab2af800892cc264fe044d48314e987f20833e75eebde6be618ad6b"
  },
  {
   "path": "START-HERE.txt",
   "size": 4105,
-  "sha256": "d882f69ece733232a062b00ee8baa10f4bac051ae6875e78041b2893055a8dde"
+  "sha256": "89be72080d83ee33c2f86f9394e12e32b6be3b2872d60b256ad6958fb182bec6"
  },
  {
   "path": "STATE.md",
@@ -23446,8 +23446,8 @@
  },
  {
   "path": "TESTS/test_ponytail_mode.py",
-  "size": 8577,
-  "sha256": "ba361dddbea9a0cc0ea9ef3de41ee8cd5b02feeb0c0f73367db39427f241ebae"
+  "size": 12031,
+  "sha256": "3f63519e725a70eeccd543f74dc22ceddaa4c27d3732fc9381c9d848d241a34c"
  },
  {
   "path": "TESTS/test_privacy_boundary.py",
@@ -23941,8 +23941,8 @@
  },
  {
   "path": "TOOLS/ponytail_mode.py",
-  "size": 16285,
-  "sha256": "55584932cef4beee9cf492ebb598672116c7da9278622bc6b876e50378ad8537"
+  "size": 17520,
+  "sha256": "2c4d0aa6b6fea190ecc688164b64adec43ded7f02d68592191bb54fa5bb1996f"
  },
  {
   "path": "TOOLS/presentation_check.py",
@@ -24032,7 +24032,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2783,
-  "sha256": "70db72ea5e48f222f4129b8eeb9e85e551179a8ec0e20d621d8b6445a0f8a0bd"
+  "sha256": "60635c96b4cb23dcad84f50765e140387202273567575d356ce9e85a959a5105"
  },
  {
   "path": "VALIDATION.md",
@@ -24042,7 +24042,7 @@
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "f7ddb2866648fabeb85bb393eedafb6c22708ea40e519a2e6682746236ac7780"
+  "sha256": "2f605d36dffe74e65419575f7b787f68ca6115f797ae538a72f4396cff951ec5"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -27061,8 +27061,8 @@
  },
  {
   "path": "docs/GUIDE.md",
-  "size": 80922,
-  "sha256": "c932b2820b7c667acaed29e9741b95572bd72e07b20679f9b7ce04b6908f464d"
+  "size": 81233,
+  "sha256": "fc6c2ccaa3b952a33e7047c9e1df798542ce36fc41262ce78228bebc77f1b9f3"
  },
  {
   "path": "docs/HERMES-FILE-GUARD-BUG.md",
@@ -28043,6 +28043,11 @@
   "path": "docs/history/V8.37.25-CHANGELOG.md",
   "size": 1055,
   "sha256": "7b5640fd554fffd5649525eb40f17540a267d2e275b363d7a6e0249952d976f1"
+ },
+ {
+  "path": "docs/history/V8.37.26-CHANGELOG.md",
+  "size": 639,
+  "sha256": "a7bdd5a6bb113a236be84eb45eabea48de1721df8b4ffa8fbba252d104588e9d"
  },
  {
   "path": "docs/history/V8.37.3-CHANGELOG.md",

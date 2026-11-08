@@ -47,17 +47,22 @@ class PonytailModeTests(unittest.TestCase):
         self._tmp = tempfile.TemporaryDirectory()
         base = Path(self._tmp.name)
         self.home = _home(base)
-        self._saved = (pm.STATE, pm.PARKED, os.environ.get("APPDATA"))
+        self._saved = (pm.STATE, pm.PARKED, os.environ.get("APPDATA"),
+                       os.environ.get("XDG_CONFIG_HOME"), os.environ.get("CLAUDE_CONFIG_DIR"))
         pm.STATE = base / "state" / "ponytail-mode"
         pm.PARKED = pm.STATE / "parked"
         os.environ["APPDATA"] = str(base / "appdata")
+        os.environ.pop("XDG_CONFIG_HOME", None)
+        os.environ.pop("CLAUDE_CONFIG_DIR", None)
 
     def tearDown(self):
-        pm.STATE, pm.PARKED, appdata = self._saved
-        if appdata is None:
-            os.environ.pop("APPDATA", None)
-        else:
-            os.environ["APPDATA"] = appdata
+        pm.STATE, pm.PARKED, appdata, xdg, claude_dir = self._saved
+        for key, value in (("APPDATA", appdata), ("XDG_CONFIG_HOME", xdg),
+                           ("CLAUDE_CONFIG_DIR", claude_dir)):
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
         self._tmp.cleanup()
 
     def _native(self):
@@ -169,6 +174,52 @@ class PonytailModeTests(unittest.TestCase):
         report = pm.status(home=self.home)
         self.assertIn("plugin_skills", report)
         self.assertIsInstance(report["plugin_skills"], list)
+
+    def test_duplicates_are_never_restored_into_a_provider(self):
+        # OFF -> OFF again (a reinstall re-copies skills, creating _duplicates) ->
+        # LITE -> OFF. The quarantine folder must never land in a live skills dir.
+        pm.execute(pm.plan("off", home=self.home))
+        archive = Path(pm.PARKED) / "Grok"
+        (archive / "_duplicates" / "ponytail__deadbeef").mkdir(parents=True)
+        (archive / "_duplicates" / "ponytail__deadbeef" / "SKILL.md").write_text("x", encoding="utf-8")
+        (self.home / ".grok" / "skills" / "ponytail").mkdir(parents=True)
+        (self.home / ".grok" / "skills" / "ponytail" / "SKILL.md").write_text("re-copied", encoding="utf-8")
+        pm.execute(pm.plan("off", home=self.home))           # reinstall pass
+        pm.execute(pm.plan("lite", home=self.home, source_tree=None))
+        self.assertFalse((self.home / ".grok" / "skills" / "_duplicates").exists())
+        self.assertTrue((self.home / ".grok" / "skills" / "ponytail" / "SKILL.md").is_file())
+        self.assertTrue((archive / "_duplicates").is_dir(), "quarantined content must survive")
+        pm.execute(pm.plan("off", home=self.home))
+        self.assertFalse((self.home / ".grok" / "skills" / "ponytail").exists())
+
+    def test_xdg_config_home_wins_over_appdata(self):
+        xdg = Path(self._tmp.name) / "xdg"
+        (xdg / "ponytail").mkdir(parents=True)
+        (xdg / "ponytail" / "config.json").write_text('{"defaultMode": "lite"}', encoding="utf-8")
+        appdata = Path(os.environ["APPDATA"]) / "ponytail"
+        appdata.mkdir(parents=True)
+        (appdata / "config.json").write_text('{"defaultMode": "full"}', encoding="utf-8")
+        os.environ["XDG_CONFIG_HOME"] = str(xdg)
+        self.assertEqual(pm.native_config(), xdg / "ponytail" / "config.json")
+        report = pm.status(home=self.home)
+        self.assertEqual(report["native"], "lite", "XDG outranks APPDATA upstream")
+        pm.execute(pm.plan("off", home=self.home))
+        self.assertEqual(json.loads((xdg / "ponytail" / "config.json").read_text())["defaultMode"], "off")
+        self.assertEqual(json.loads((appdata / "config.json").read_text())["defaultMode"], "full",
+                         "the non-authoritative file is left alone")
+
+    def test_claude_config_dir_is_honoured(self):
+        custom = Path(self._tmp.name) / "claude-custom"
+        (custom / "skills" / "ponytail").mkdir(parents=True)
+        (custom / "skills" / "ponytail" / "SKILL.md").write_text("x", encoding="utf-8")
+        os.environ["CLAUDE_CONFIG_DIR"] = str(custom)
+        self.assertEqual(pm.provider_homes(self.home)["Claude"], custom)
+        report = pm.status(home=self.home)
+        self.assertIn("ponytail", report["providers"]["Claude"]["skills"])
+        pm.execute(pm.plan("off", home=self.home))
+        self.assertFalse((custom / "skills" / "ponytail").exists())
+        self.assertTrue((self.home / ".claude" / "skills" / "ponytail").exists(),
+                        "CLAUDE_CONFIG_DIR replaces ~/.claude; the other folder is out of scope")
 
     def test_unknown_mode_is_refused(self):
         with self.assertRaises(SystemExit):

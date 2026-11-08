@@ -37,15 +37,34 @@ PARKED = STATE / "parked"
 
 
 def native_config():
-    base = os.environ.get("APPDATA") or (Path.home() / "AppData" / "Roaming")
-    return Path(base) / "ponytail" / "config.json"
+    """Exactly upstream's order: XDG_CONFIG_HOME, then APPDATA, then ~/.config.
+
+    Upstream ponytail-config.js checks XDG_CONFIG_HOME on every platform before the
+    Windows %APPDATA% fallback; reading only APPDATA would report OFF while the plugin
+    still resolved FULL.
+    """
+    xdg = os.environ.get("XDG_CONFIG_HOME")
+    if xdg:
+        return Path(xdg) / "ponytail" / "config.json"
+    if os.name == "nt":
+        base = os.environ.get("APPDATA") or (Path.home() / "AppData" / "Roaming")
+        return Path(base) / "ponytail" / "config.json"
+    return Path.home() / ".config" / "ponytail" / "config.json"
+
+
+def claude_home(home=None):
+    """CLAUDE_CONFIG_DIR overrides ~/.claude, the same way Claude Code resolves it."""
+    custom = os.environ.get("CLAUDE_CONFIG_DIR")
+    if custom:
+        return Path(custom)
+    return Path(home or Path.home()) / ".claude"
 
 
 def provider_homes(home=None):
     home = Path(home or Path.home())
     local = Path(os.environ.get("LOCALAPPDATA", home / "AppData" / "Local"))
     homes = {
-        "Claude": home / ".claude",
+        "Claude": claude_home(home),
         "Codex": home / ".agents",
         "Grok": home / ".grok",
         "Kimi": home / ".kimi-code",
@@ -199,7 +218,14 @@ def plan(mode, home=None, source_tree=None):
             if archive.is_dir():
                 for entry in sorted(archive.iterdir()):
                     original = entry.name.split("__")[0]
-                    if entry.is_dir() and original not in present:
+                    # Only real parked skills come back. `_duplicates` is an archive of
+                    # extra copies, never something a provider may load, and a folder
+                    # without a SKILL.md is not a skill at all.
+                    if not entry.is_dir() or entry.name == "_duplicates":
+                        continue
+                    if not original.startswith(SKILL_PREFIX) or not (entry / "SKILL.md").is_file():
+                        continue
+                    if original not in present:
                         actions.append({"kind": "restore_parked", "provider": name,
                                         "src": str(entry), "dest": str(home_dir / "skills" / original)})
                         present.add(original)

@@ -1,3 +1,29 @@
+## 8.37.27 (2026-11-08)
+
+- **Quarantine can no longer be restored into a provider.** `plan()` used to treat
+  every folder in the parked archive as a skill, including `_duplicates`, which a
+  repeated install creates. It now restores only directories whose name starts with
+  `ponytail` and which contain a `SKILL.md`, and it skips `_duplicates` outright. The
+  quarantine itself is never touched. A regression test walks OFF -> reinstall OFF ->
+  LITE -> OFF and asserts a provider's `skills` folder never receives `_duplicates`
+  while the quarantined content survives and the real skills come back.
+- **Configuration precedence now matches upstream exactly.** Upstream
+  `hooks/ponytail-config.js` checks `XDG_CONFIG_HOME` before `%APPDATA%` on every
+  platform; the bundle read only `%APPDATA%`, so it could report OFF while the plugin
+  resolved FULL. `native_config()` follows the same order -
+  `XDG_CONFIG_HOME`, then `%APPDATA%` on Windows, then `~/.config` - and a
+  cross-check against the real upstream module agrees on OFF, LITE, FULL and ULTRA. A
+  test sets both variables with conflicting values and asserts XDG wins, that the
+  authoritative file is edited, and that the other file is left alone.
+- **`CLAUDE_CONFIG_DIR` is honoured.** Claude's home is that variable when set,
+  otherwise `~/.claude`; parking, restoration, `status` and the doctor all use the same
+  resolution. Tested with a temporary custom directory holding ponytail skills: status
+  sees them and OFF parks them.
+- Audited the machine for stray `skills/_duplicates` folders: none exist in any live
+  provider tree; the quarantine copies are inside the bundle's own parked archive, where
+  they stay.
+- 16 mode tests (was 13), 81 canonical skills, no companion pin changed.
+
 ## 8.37.26 (2026-11-08)
 
 - Adds `docs/PHASE-1-REPORT.md`: the mode matrix through the shipped plugin and hook,

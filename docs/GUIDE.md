@@ -999,10 +999,14 @@ python TOOLS/ponytail_mode.py lite   --apply       # or full / ultra / auto / of
 python TOOLS/ponytail_mode.py init   --apply       # install time: off only if never chosen
 ```
 
-- The switch is Ponytail's native setting: `%APPDATA%\ponytail\config.json`
-  (`defaultMode`), written with a backup and with every other key preserved. That is
-  the same value the `/ponytail` command changes, so there is no second mode system
-  to drift.
+- The switch is Ponytail's native setting, resolved exactly as upstream does:
+  `XDG_CONFIG_HOME/ponytail/config.json` first, then `%APPDATA%\ponytail\config.json`
+  on Windows, then `~/.config/ponytail/config.json`. Written with a backup and with
+  every other key preserved. That is the same value the `/ponytail` command changes, so
+  there is no second mode system to drift.
+- Claude's folder is `CLAUDE_CONFIG_DIR` when it is set, otherwise `~/.claude`, matching
+  how Claude Code resolves it; parking, restoring, `status` and the doctor all use that
+  path.
 - `off` also parks the copied skill folders under
   `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\ponytail-mode\parked`, because a skill
   description can trigger by itself. Parking never deletes: each archive carries a
