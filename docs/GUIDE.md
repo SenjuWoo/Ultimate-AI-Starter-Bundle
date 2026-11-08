@@ -985,6 +985,21 @@ old decisions live in [docs/history/](https://github.com/SenjuWoo/Ultimate-AI-St
 
 Workflow audit of 2026-10-22: [findings, fixes and evidence](docs/AUDIT-2026-10-22.md).
 
+### One workflow per task
+
+`python TOOLS/task_route.py "<request>"` maps a request to exactly one primary workflow plus
+the specialists it needs, from named signals - no model call, no interview for a clear task,
+no second pipeline for a mixed one. Interrupted work resumes through
+`TOOLS/task_state.py next|status|resume|handoff` rather than reloading the whole history.
+
+### Optional skill packs
+
+`mattpocock/skills` and `addyosmani/agent-skills` are MIT and useful, but 64 skills
+installed everywhere would collide with the bundle's own owners. A curated subset is
+installed on request, namespaced, recorded in a receipt and removable - see
+[RECOMMENDED-SKILLS-PACKS.md](RECOMMENDED-SKILLS-PACKS.md) for the per-skill matrix
+and `python TOOLS/recommended_skills.py list`.
+
 ### Ponytail mode
 
 Ponytail is installed but **off by default**: a fresh machine sets Ponytail's own

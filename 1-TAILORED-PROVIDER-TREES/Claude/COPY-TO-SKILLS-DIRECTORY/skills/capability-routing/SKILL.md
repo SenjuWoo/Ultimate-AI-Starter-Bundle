@@ -258,3 +258,25 @@ installed Forge declares that capability, and hand the work over.
   overwrite source assets — stage a candidate and compare before/after.
 - A quality warning is information, never a soft refusal. State the risk once and
   keep going on everything unaffected.
+
+## Choosing the workflow
+
+Three methodologies are available - this bundle's skills, Superpowers' long-run
+pipeline, and the optional Pocock/Addy packs. The user never picks between them:
+`python TOOLS/task_route.py "<the request>"` returns **one** primary workflow plus the
+specialists the task actually needs, from named signals (bug, feature, research, docs,
+release, design, game, security, autonomy, vagueness, breadth). It is a lookup, not a
+model call, so a cheap model routes exactly like an expensive one.
+
+- Small and clear -> lightweight; no interview, no plan ceremony.
+- Genuinely ambiguous -> one requirements pass (`brainstorming`, `pocock-to-spec` if
+  installed), then proceed.
+- Long and authorized -> Superpowers' pipeline, no checkpoints until blocked.
+- Reaches release, security or several phases -> lifecycle with phase gates.
+- Specialists (`security-and-hardening`, `impeccable`, `visual-verification`,
+  `capability-routing`) are borrowed by the one running workflow, never run as a second
+  pipeline.
+
+Interrupted work resumes from recorded progress, not from the whole history:
+`TOOLS/task_state.py next|status|resume|handoff` reads the project's `PLAN.md`/`STATE.md`
+and reports outstanding work, decisions and test results.
