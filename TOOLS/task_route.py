@@ -25,7 +25,11 @@ RE_DOCS = re.compile(r"\b(readme|docs?|documentation|changelog|guide|release not
 RE_RELEASE = re.compile(r"\b(release|publish|ship|tag|deploy|version bump)\b", re.I)
 RE_DESIGN = re.compile(r"\b(ui|frontend|design|layout|component|css|screenshot|mockup)\b", re.I)
 RE_GAME = re.compile(r"\b(mod|skyrim|roblox|unity|unreal|godot|rimworld|game)\b", re.I)
-RE_SECURITY = re.compile(r"\b(auth|oauth|login|password|token|payment|pii|gdpr|owasp|secrets?|privilege|security|vulnerab\w*)\b", re.I)
+RE_SECURITY = re.compile(r"\b(auth|oauth|login|password|payment|pii|gdpr|owasp|secrets?|privilege|security|vulnerab\w*)\b"
+                         r"|\b(api[- ]?key|access[- ]token|bearer|credentials?|session token)\b", re.I)
+# "token" alone is ambiguous: LLM token budgets are a cost topic, not a security one.
+RE_TOKEN_COST = re.compile(r"\b(token (usage|budget|cost|count|limit|spend)|context (window|tokens)|"
+                           r"tokens? per|prompt tokens|reduce tokens|cheaper tokens)\b", re.I)
 RE_AUTONOMY = re.compile(r"\b(unattended|overnight|walk away|autonomous|while i'?m (away|out)|no questions)\b", re.I)
 RE_VAGUE = re.compile(r"^\s*(make it better|improve (this|it)|clean (this|it) up|somehow|maybe)\b|"
                       r"\b(i think|not sure|something like|vague|idea)\b", re.I)
@@ -63,7 +67,8 @@ def signals(text):
         "release": bool(RE_RELEASE.search(text)),
         "design": bool(RE_DESIGN.search(text)),
         "game": bool(RE_GAME.search(text)),
-        "security": bool(RE_SECURITY.search(text)),
+        "security": bool(RE_SECURITY.search(text)) and not RE_TOKEN_COST.search(text),
+        "token_cost": bool(RE_TOKEN_COST.search(text)),
         "autonomy": bool(RE_AUTONOMY.search(text)),
         "vague": bool(RE_VAGUE.search(text)),
         "multi": bool(RE_MULTI.search(text)),

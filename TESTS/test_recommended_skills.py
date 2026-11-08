@@ -50,6 +50,9 @@ class RecommendedSkillsTests(unittest.TestCase):
             os.environ["CLAUDE_CONFIG_DIR"] = claude_dir
         self._tmp.cleanup()
 
+    def skills(self):
+        return self.home / ".claude" / "skills"
+
     def test_plan_is_pure_and_namespaced(self):
         before = sorted(p.name for p in (self.home / ".claude" / "skills").iterdir())
         actions = rs.plan("pocock", "claude", home=self.home, tree=self.tree)
@@ -154,6 +157,52 @@ class RecommendedSkillsTests(unittest.TestCase):
     def test_remove_without_a_receipt_is_refused(self):
         with self.assertRaises(SystemExit):
             rs.remove("pocock", "grok", home=self.home)
+
+    def test_copy_failure_restores_the_user_skill(self):
+        target = self.skills() / "pocock-retro"
+        target.mkdir(parents=True)
+        (target / "SKILL.md").write_text("mine", encoding="utf-8")
+        real = rs.shutil.copytree
+        state = {"failed": False}
+
+        def boom(src, dst, *a, **k):
+            if Path(dst).name == "pocock-retro" and not Path(dst).exists() and not state["failed"]:
+                state["failed"] = True
+                raise OSError("disk full")
+            return real(src, dst, *a, **k)
+
+        rs.shutil.copytree = boom
+        try:
+            results, _ = rs.install("pocock", "claude", home=self.home, tree=self.tree, stamp="T")
+        finally:
+            rs.shutil.copytree = real
+        self.assertTrue(state["failed"])
+        self.assertTrue(any(not r["ok"] for r in results), "the failed copy must be reported")
+        self.assertEqual((target / "SKILL.md").read_text(encoding="utf-8"), "mine",
+                         "the user's original must be back after a copy failure")
+        self.assertEqual(list(self.skills().glob("*.backup-*")), [],
+                         "a rolled-back backup must not be left behind")
+        receipt = json.loads(rs.receipt_path("pocock", "claude", self.home).read_text(encoding="utf-8"))
+        self.assertNotIn("pending", receipt)
+        rs.remove("pocock", "claude", home=self.home)
+        self.assertEqual((target / "SKILL.md").read_text(encoding="utf-8"), "mine")
+
+    def test_a_crashed_move_is_recovered_on_the_next_run(self):
+        target = self.skills() / "pocock-retro"
+        target.mkdir(parents=True)
+        (target / "SKILL.md").write_text("mine", encoding="utf-8")
+        backup = self.skills() / "pocock-retro.backup-CRASH"
+        import shutil
+        shutil.move(str(target), str(backup))  # a process died right after the move
+        receipt = rs.receipt_path("pocock", "claude", self.home)
+        rs._save(receipt, {"owned": [], "backups": {str(target): str(backup)},
+                           "pending": {"dest": str(target), "backup": str(backup)}},
+                 "pocock", "claude", rs.PACKS["pocock"]["pin"])
+        results, _ = rs.install("pocock", "claude", home=self.home, tree=self.tree, stamp="T2")
+        self.assertTrue(any(r["kind"] == "recovered" for r in results))
+        self.assertTrue((target / "SKILL.md").is_file())
+        rs.remove("pocock", "claude", home=self.home)
+        self.assertEqual((target / "SKILL.md").read_text(encoding="utf-8"), "mine")
 
     def test_claude_config_dir_is_honoured(self):
         custom = Path(self._tmp.name) / "claude-custom"

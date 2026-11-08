@@ -180,20 +180,63 @@ def _namespaced(md, name, spec):
     md.write_text(head + rest, encoding="utf-8")
 
 
-def _place(src, dest, data, stamp):
-    """Copy one item, backing up only something this tool does not already own."""
+def _recover_pending(data, checkpoint):
+    """Undo a half-finished move recorded by a crashed install, then clear the journal."""
+    pending = data.get("pending")
+    if not pending:
+        return []
+    dest = Path(pending["dest"])
+    backup = Path(pending["backup"]) if pending.get("backup") else None
+    restored = []
+    if not dest.exists() and backup and backup.exists():
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.move(str(backup), str(dest))
+        if data.get("backups", {}).get(str(dest)) == str(backup):
+            data["backups"].pop(str(dest), None)
+        restored.append(str(dest))
+    data.pop("pending", None)
+    checkpoint(data)
+    return restored
+
+
+def _place(src, dest, data, stamp, checkpoint):
+    """Copy one item with a durable journal, so a crash cannot strand a user's skill.
+
+    Order: record the pending move, do the destructive step, copy, clear the journal.
+    If the copy fails, the backup is put back immediately; if the process dies instead,
+    `_recover_pending` does the same on the next install or remove.
+    """
     dest = Path(dest)
+    backup = None
     if dest.exists():
         if str(dest) in set(data["owned"]):
+            data["pending"] = {"dest": str(dest), "backup": None}
+            checkpoint(data)
             shutil.rmtree(dest) if dest.is_dir() else dest.unlink()  # our own older copy
         else:
             backup = dest.with_name(dest.name + ".backup-" + stamp)
             if backup.exists():
                 backup = dest.with_name(dest.name + ".backup-" + stamp + "-2")
+            data["pending"] = {"dest": str(dest), "backup": str(backup)}
+            checkpoint(data)
             shutil.move(str(dest), str(backup))
             data["backups"][str(dest)] = str(backup)
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(src, dest) if src.is_dir() else shutil.copy2(src, dest)
+    else:
+        data["pending"] = {"dest": str(dest), "backup": None}
+        checkpoint(data)
+    try:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(src, dest) if src.is_dir() else shutil.copy2(src, dest)
+    except Exception:
+        if dest.exists():
+            shutil.rmtree(dest) if dest.is_dir() else dest.unlink()
+        if backup and backup.exists():
+            shutil.move(str(backup), str(dest))
+            data["backups"].pop(str(dest), None)
+        data.pop("pending", None)
+        checkpoint(data)
+        raise
+    data.pop("pending", None)
 
 
 def install(pack, provider, home=None, tree=None, stamp=None):
@@ -201,13 +244,21 @@ def install(pack, provider, home=None, tree=None, stamp=None):
     stamp = stamp or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     receipt = receipt_path(pack, provider, home)
     data = _load(receipt)
+    checkpoint = lambda d: _save(receipt, d, pack, provider, spec["pin"])  # noqa: E731
     results = []
+    for path in _recover_pending(data, checkpoint):
+        results.append({"kind": "recovered", "name": Path(path).name, "dest": path,
+                        "src": None, "exists": True, "ok": True})
     for action in plan(pack, provider, home, tree):
         src, dest = Path(action["src"]), Path(action["dest"])
         if not src.exists():
             results.append(dict(action, ok=False, message="missing in the upstream tree"))
             continue
-        _place(src, dest, data, stamp)
+        try:
+            _place(src, dest, data, stamp, checkpoint)
+        except Exception as exc:  # rollback already happened inside _place
+            results.append(dict(action, ok=False, message="copy failed: %s" % exc))
+            continue
         if str(dest) not in data["owned"]:
             data["owned"].append(str(dest))
         if action["kind"] == "skill":
@@ -226,6 +277,7 @@ def remove(pack, provider, home=None):
     if not receipt.exists():
         raise SystemExit("no receipt for %s on %s; nothing to remove" % (pack, provider))
     data = _load(receipt)
+    _recover_pending(data, lambda d: _save(receipt, d, pack, provider, PACKS[pack]["pin"]))
     removed = []
     for path in data["owned"]:
         target = Path(path)

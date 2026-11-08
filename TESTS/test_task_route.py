@@ -100,6 +100,21 @@ class RoutingTests(unittest.TestCase):
         self.assertEqual(resolved[0]["use"], "addy-security-and-hardening")
         self.assertEqual(resolved[0]["via"], "installed")
 
+    def test_ai_token_costs_are_not_a_security_signal(self):
+        for text in ("reduce AI token usage across the prompts to cut cost",
+                     "trim the context window tokens so requests are cheaper",
+                     "lower tokens per request in the summariser"):
+            r = tr.route(text)
+            self.assertNotIn("security-and-hardening", r["specialists"], text)
+            self.assertNotEqual(r["primary"], "lifecycle", text)
+
+    def test_credential_tokens_are_a_security_signal(self):
+        for text in ("rotate the access token used by the API client",
+                     "store the session token in an http-only cookie",
+                     "the api key leaked into the build log"):
+            r = tr.route(text)
+            self.assertIn("security-and-hardening", r["specialists"], text)
+
     def test_no_specialist_resolves_to_a_missing_skill(self):
         pool = {p.name for p in (ROOT / "_CANONICAL-SKILLS").iterdir()
                 if (p / "SKILL.md").is_file()}

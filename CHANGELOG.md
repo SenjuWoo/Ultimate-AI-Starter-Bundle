@@ -42,6 +42,14 @@
   back to an installed bundle skill when a pack is absent (`bundle`/`installed`/`fallback`).
   Ambiguity now requires a thin request (`detail` score), so a concrete work order that
   happens to contain the word "idea" is not interviewed.
+- The installer journals each move: a `pending` record is written before anything is
+  moved or deleted, a copy failure restores the user's skill immediately, and a run that
+  dies mid-copy is recovered on the next install or remove. A fault-injection test forces
+  `copytree` to fail in exactly that window and asserts the original is back and no backup
+  is stranded.
+- Bare "token" no longer implies security: LLM token/context-cost requests stay out of
+  `security-and-hardening`, while `access token`, `session token`, `api key`, `bearer` and
+  `credential` still count. Tests cover both readings.
 
 ## 8.37.27 (2026-11-08)
 

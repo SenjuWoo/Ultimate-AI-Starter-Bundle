@@ -88,6 +88,11 @@ until blocked; a security or release surface promotes a "simple" change to the l
 - **Licensing.** Both packs' LICENSE files are installed at
   `<provider>/references/<pack>-LICENSE.txt`, and each installed skill's frontmatter names
   the licence and the upstream pin.
+- **Durable install.** Each move is journaled (`pending`) before it happens; a copy
+  failure restores the user's skill at once and a crashed run is recovered on the next
+  install or remove. Fault-injection covers the exact window between backup and receipt.
+- **Token disambiguation.** LLM token/context cost requests no longer reach
+  `security-and-hardening`; credential tokens still do.
 
 ## Remaining limitations
 
