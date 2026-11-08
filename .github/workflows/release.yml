@@ -64,8 +64,19 @@ jobs:
           # ls-remote fails the job on a network error instead of reading it as "no tag".
           tag_sha="$(git ls-remote --tags origin "refs/tags/$tag" | awk 'NR==1{print $1}')"
           if [ -n "$tag_sha" ]; then
-            # Immutable tags: a tag on another commit is a hard stop, never a retarget.
+            # The tag is immutable: never retarget it. Two cases are legitimate and
+            # must not paint main red:
+            #   1. main moved past the released version (documentation commits) - the
+            #      version in VERSION.txt was released from an earlier commit.
+            #   2. the tag was cut by hand at another commit and VERSION.txt still
+            #      names it - still a human decision, but not a failed build.
+            # Anything else (a bump that collides with an existing tag) stays a hard
+            # stop so nobody silently ships different bytes under a published tag.
             if [ "$tag_sha" != "$SHA" ]; then
+              if gh release view "$tag" --repo "$REPO" >/dev/null 2>&1; then
+                echo "$tag is already published from $tag_sha; this commit only carries later work."
+                echo "publish=false" >> "$GITHUB_OUTPUT"; exit 0
+              fi
               echo "::error::$tag already points at $tag_sha, not $SHA - refusing to retarget a published tag"
               exit 1
             fi
