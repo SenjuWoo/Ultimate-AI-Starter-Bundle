@@ -134,7 +134,11 @@ def _hermes_configs():
     if root:
         configs.append(root)
     import os
-    profiles = Path(os.environ.get("LOCALAPPDATA", "")) / "hermes" / "profiles"
+    base = Path(os.environ.get("LOCALAPPDATA", "")) / "hermes"
+    default = base / "config.yaml"
+    if default.is_file() and default not in configs:
+        configs.append(default)
+    profiles = base / "profiles"
     if profiles.is_dir():
         for candidate in sorted(profiles.glob("*/config.yaml")):
             if candidate not in configs:
@@ -165,7 +169,9 @@ def self_check():
     loud = line_for("add oauth login with tests before merge")
     oauth_quiet = line_for("reduce AI token usage in the prompts")
     ok = quiet == "" and "lifecycle" in loud and oauth_quiet == ""
-    print("PASS" if ok else "FAIL: %r / %r / %r" % (quiet, loud, oauth_quiet))
+    # Never echo the prompt-derived text: a hook log is not a place for user input.
+    print("PASS" if ok else "FAIL: quiet=%s lifecycle=%s token_quiet=%s"
+          % (quiet == "", "lifecycle" in loud, oauth_quiet == ""))
     return 0 if ok else 1
 
 

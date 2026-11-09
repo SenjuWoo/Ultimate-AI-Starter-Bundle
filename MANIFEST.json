@@ -18752,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64142,
-  "sha256": "7b5f2ee8ebf97ad0be65f2656c105dfd36e5d6e16afe6113e6b573a529765283"
+  "sha256": "0fc0668b5ba548a667acf28ba823a111ab255900551f81640e0b7a5e0d8b2980"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18762,7 +18762,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "fe339f7d1697f2148b92706156f67959f2718665f6b96330113c8c2d257fd33c"
+  "sha256": "c7340a61a915882b97823666616176eaff47cb50dcde5680199562af47bc41d9"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18772,7 +18772,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "428c4303246c43f7e431735718283f7de16f190a2bbffc608a506c2f67515fba"
+  "sha256": "5a8c53844aae1da1e3476304fcbf4e25a6e1ec1af33ea669ff74364b19b52358"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22826,8 +22826,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 329576,
-  "sha256": "da05274cf944abf2d04620b28db9f2963ab53ab6daf902c4f538b1ac611f47a1"
+  "size": 330040,
+  "sha256": "6eee105fa172cfdb84750fd648009cb5ea8a9ad417bb466c546eb89b8c5e4e4f"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22972,7 +22972,7 @@
  {
   "path": "README.md",
   "size": 15861,
-  "sha256": "31076dcf7c55dec5747f1547d9a4f704b3a69bbf034ccc8badda9590e75c62b2"
+  "sha256": "d961876310c5c1842a1c48037e32abffaee12f83b1a7ad996dba2282c6130508"
  },
  {
   "path": "SECURITY.md",
@@ -22982,12 +22982,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "a9a967ea592bb65c87f4e503841bf37935fa44b6df48861fa0202ea0bca1fb75"
+  "sha256": "b7efaa1b5afadba4ffac8d301e35c840260569d730daa6430d46dab054f8bbf5"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "e2338d781182dc5355aec5dd92c490499f02398460f7365cb68d288790ad81f9"
+  "sha256": "8e7b585c638392cf888f86e4ddea3338af3ff5beac7da2dab10e55aed20dcce5"
  },
  {
   "path": "STATE.md",
@@ -23921,8 +23921,8 @@
  },
  {
   "path": "TOOLS/hooks/task_router_hook.py",
-  "size": 7470,
-  "sha256": "b16a0f64d16d31ea2908b3acd272a92ed5131e36a2531813d8e69765ad95bcf3"
+  "size": 7751,
+  "sha256": "225e7100c6eef0d8b65b64cb74cddd896e72f19f059807da1f979b6dab334ddd"
  },
  {
   "path": "TOOLS/hooks/ultimate-bundle.json",
@@ -24067,7 +24067,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2781,
-  "sha256": "0cb4cdfdbb58ca5286bfb9d6a27f1e705dee02aad31117f5a41b8bb5d38bcd16"
+  "sha256": "6183c625d93054e4ffb23dfbfc6a9ef3b541ee51c96a04f97634d50e5eeebd81"
  },
  {
   "path": "VALIDATION.md",
@@ -24077,7 +24077,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "0cf13b2adf3e6b232efef036cb9f169f5ddd39239b134b60afe73485fe6d3187"
+  "sha256": "c54d47b8b91a14db23247a636debc98696e9d7c391e5cc3be62fe0b78d04cf2a"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -28148,6 +28148,11 @@
   "path": "docs/history/V8.38.2-CHANGELOG.md",
   "size": 1446,
   "sha256": "3e382d2d21a04cb28371387ec19d51ed1299415e00b9b92856df913b3c24f70d"
+ },
+ {
+  "path": "docs/history/V8.38.3-CHANGELOG.md",
+  "size": 462,
+  "sha256": "19b219924eaa8c6217eed906a5c9c90257893bff3203782c484818dc4a57ccae"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",
