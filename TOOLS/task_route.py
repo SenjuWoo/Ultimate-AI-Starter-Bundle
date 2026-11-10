@@ -1,4 +1,4 @@
-"""Pick one workflow for a task, deterministically, so the user never chooses a framework.
+"""Suggest a workflow from prompt signals without overriding the requested outcome.
 
 The bundle now carries three methodologies: its own skills, Superpowers' long-run
 pipeline, and optionally Pocock's requirement grilling or Addy's lifecycle commands.
@@ -36,6 +36,13 @@ RE_VAGUE = re.compile(r"^\s*(make it better|improve (this|it)|clean (this|it) up
 RE_MULTI = re.compile(r"\b(then|also|after that|plus|and then)\b", re.I)
 RE_SMALL = re.compile(r"\b(typo|rename|bump|one[- ]line|small|quick|single file)\b", re.I)
 RE_LARGE = re.compile(r"\b(whole|entire|end[- ]to[- ]end|from scratch|architecture|system|refactor)\b", re.I)
+# A story can contain a login, a secret, a crash and a release. Those words do
+# not turn it into a software change. Mixed implementation requests still use
+# the engineering route; uncertain requests remain the agent's decision.
+RE_CREATIVE = re.compile(r"\b(story|stories|poem|novel|chapter|dialogue|lore|lyrics|"
+                         r"worldbuilding|magic system|character backstory)\b", re.I)
+RE_IMPLEMENTATION = re.compile(r"\b(implement|debug|code|repository|codebase|"
+                               r"endpoint|api|compiler|unit test)\b", re.I)
 
 # Detail is the counterweight to a vague word: a request that names files, commands,
 # acceptance criteria or a number is actionable even if it says "idea" somewhere.
@@ -79,7 +86,7 @@ def signals(text):
 
 
 def route(text, provider=None, home=None):
-    """One primary workflow plus the specialists worth invoking, with a reason."""
+    """Advisory signals, never authority to ask, publish, delegate or cut scope."""
     text = text or ""
     s = signals(text)
     specialists = []
@@ -88,7 +95,12 @@ def route(text, provider=None, home=None):
     # X, it must do Y, here is the file" is a work order with the word "idea" in it.
     ambiguous = s["vague"] and s["detail"] <= 1
 
-    if ambiguous:
+    creative = bool(RE_CREATIVE.search(text)) and not (
+        RE_IMPLEMENTATION.search(text) or RE_CONCRETE.search(text))
+    if creative:
+        primary, why = "lightweight", "creative deliverable; preserve the requested scope and voice"
+        checkpoints = "none"
+    elif ambiguous:
         primary, why = "requirements-pass", "the request does not yet name a concrete outcome"
         specialists += ["brainstorming", "to-spec"]
         checkpoints = "ask once, then proceed"
@@ -134,21 +146,21 @@ def route(text, provider=None, home=None):
         primary, why = "lightweight", "no signal that any heavier workflow would pay for itself"
         checkpoints = "none"
 
-    if s["security"]:
+    if s["security"] and not creative:
         specialists.append("security-and-hardening")
         if primary == "lightweight":
             primary, why = "lifecycle", "touches authentication, money or personal data"
             checkpoints = "phase gates"
         elif primary == "requirements-pass":
             checkpoints = "ask once, then phase gates"
-    if s["game"]:
+    if s["game"] and not creative:
         specialists.append("capability-routing")
-    if s["design"] and "impeccable" not in specialists:
+    if s["design"] and not creative and "impeccable" not in specialists:
         specialists.append("impeccable")
 
     # One primary workflow only: a mixed task still runs one pipeline and borrows
     # specialists, rather than chaining three methodologies.
-    return {"primary": primary, "specialists": specialists, "checkpoints": checkpoints,
+    return {"advisory": True, "primary": primary, "specialists": specialists, "checkpoints": checkpoints,
             "reason": why, "signals": {k: v for k, v in s.items() if v},
             "resolved": resolve(specialists, available_skills(provider, home)),
             "continuity": "TOOLS/task_state.py next|resume keeps progress across sessions"}

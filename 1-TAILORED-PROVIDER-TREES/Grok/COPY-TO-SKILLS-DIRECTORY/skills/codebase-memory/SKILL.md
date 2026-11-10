@@ -5,7 +5,9 @@ description: Use when exploring a codebase graph, tracing callers/dependencies, 
 
 # Codebase Memory — Knowledge Graph Tools
 
-Graph tools return precise structural results in ~500 tokens vs ~80K for grep.
+Use the graph for structural questions when its root and indexed source are
+current. Use text search for exact text and unsupported languages. Savings
+depend on the query and index coverage; do not infer a token bill from tool size.
 
 **Two halves to this skill.** Querying (below) is easy. **Indexing is where it goes
 wrong** — a careless `index_repository` on a Skyrim mod tree produces a 200,000-node
@@ -28,10 +30,19 @@ graph of animation files that costs tokens on every query and answers nothing. R
 | Text search | `search_code` or Grep |
 
 ## Exploration Workflow
-1. `list_projects` — check if project is indexed
+1. `list_projects` — check if project is indexed and its recorded root still exists
 2. `get_graph_schema` — understand node/edge types
 3. `search_graph(label="Function", name_pattern=".*Pattern.*")` — find code
 4. `get_code_snippet(qualified_name="project.path.FuncName")` — read source
+
+For a moved project, verify its owner record and existing `.cbmignore`, back up
+the local graph store with a consistent SQLite backup, then re-index using the
+same stable project name and the new root. Verify `list_projects` and a source
+query afterwards. Check the returned project identity too: naming overrides can
+interact with existing registrations. Do not delete the old graph first.
+Exclude private recovery folders, personal configuration, caches and generated
+provider copies as well as dependencies and assets. Prefer the owner's existing
+ignore rules; the Skyrim-oriented scope generator is not a generic replacement.
 
 ## Tracing Workflow
 1. `search_graph(name_pattern=".*FuncName.*")` — discover exact name
@@ -40,8 +51,9 @@ graph of animation files that costs tokens on every query and answers nothing. R
 
 ## Quality Analysis
 - Dead code: `search_graph(max_degree=0, exclude_entry_points=true)`
-- High fan-out: `search_graph(min_degree=10, relationship="CALLS", direction="outbound")`
-- High fan-in: `search_graph(min_degree=10, relationship="CALLS", direction="inbound")`
+- Highly connected code: `search_graph(min_degree=10, relationship="CALLS")`;
+  inspect the returned in/out counts or trace the chosen node to distinguish callers
+  from callees. Check the installed schema before supplying additional arguments.
 
 ## 17 MCP Tools
 `index_repository`, `index_status`, `list_projects`, `delete_project`,
@@ -60,11 +72,13 @@ fixed surface is ~6,260. Use Claude/Grok/trusted Codex project scope or Hermes' 
 
 `list_projects` returns each project's `root_path`. A moved or renamed repo
 leaves a healthy-looking graph pointing at the old path — every query then
-answers about a tree that no longer exists. On 2026-10-31 the bundle graph still
-pointed at `Ultimate-AI-Starter-Bundle-v8.21.0` after the repo moved to
-`Ultimate-AI-Starter-Bundle`; `index_status` looked ready, but the root was
-gone. If the root does not match the checkout, delete that project and reindex
-the current root; do not trust node counts alone.
+answers about a tree that no longer exists. Back up the store, verify the current
+source owner, and refresh that stable project name before retiring any old graph.
+Check the returned identity, root and source query; node counts alone prove little.
+An installed binary package with JSON/XML documentation is not a source checkout.
+It can produce a large graph while exposing no functions from the actual program.
+Archive and retire such registrations when source ownership cannot be established;
+the installed tool remains usable through its native CLI or MCP.
 
 ## The `cli` mode (v0.11.0+) — every tool is terminal-drivable
 

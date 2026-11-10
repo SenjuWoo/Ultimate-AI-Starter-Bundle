@@ -113,8 +113,16 @@ function Get-ToolDirectoryIndex {
     $hints = [Environment]::GetEnvironmentVariable('UABS_TOOL_ROOTS', $scope)
     if ($hints) { foreach ($h in ($hints -split ';')) { if ($h) { [void]$roots.Add($h) } } }
   }
-  foreach ($p in @((Join-Path $env:USERPROFILE 'Tools'), (Join-Path $env:USERPROFILE 'Documents\Tools'), 'C:\Tools')) {
+  foreach ($p in @((Join-Path $env:USERPROFILE 'Tools'), (Join-Path $env:USERPROFILE 'Documents\Tools'), (Join-Path $env:SystemDrive 'Tools'))) {
     [void]$roots.Add($p)
+  }
+  # The user-declared roots file companion_registry.py reads; one path per line.
+  $declared = Join-Path $env:USERPROFILE '.uabs\profile\TOOL-ROOTS.txt'
+  if (Test-Path -LiteralPath $declared -PathType Leaf) {
+    foreach ($line in [IO.File]::ReadAllLines($declared)) {
+      $v = $line.Trim()
+      if ($v -and -not $v.StartsWith('#')) { [void]$roots.Add([Environment]::ExpandEnvironmentVariables($v)) }
+    }
   }
   $map = Join-Path $env:USERPROFILE '.uabs\profile\MACHINE-MAP.md'
   if (Test-Path -LiteralPath $map -PathType Leaf) {
@@ -200,6 +208,10 @@ function Resolve-LivePath([string]$dead) {
   # both fit, report it and let a human choose. Deepest segment first, because
   # that is the smallest substitution that can work.
   for ($i = $parts.Count - 2; $i -ge 1; $i--) {
+    # A unique filename under a different owner is not owner identity. The
+    # arbitrary-sibling rule is only for content-addressed runtime directories;
+    # ordinary moved/renamed owners use the anchored discovery rule below.
+    if ($parts[$i] -notmatch '^[0-9a-fA-F]{16,64}$') { continue }
     $parent = ($parts[0..($i - 1)] -join '\')
     if (-not $parent -or -not (Test-Path -LiteralPath $parent -PathType Container)) { continue }
     $tail = ($parts[($i + 1)..($parts.Count - 1)]) -join '\'
@@ -222,7 +234,7 @@ function Resolve-LivePath([string]$dead) {
     foreach ($envMcp in @($env:HOUSECARL_MCP, [Environment]::GetEnvironmentVariable('HOUSECARL_MCP','User'))) {
       if ($envMcp -and (Test-Path -LiteralPath (Get-NormalPath $envMcp))) { return (Get-NormalPath $envMcp) }
     }
-
+  }
 
   # Relocated owner folder. A tool can move to a completely different parent:
   # a server under one tools root ends up under a different one. Every rule
@@ -231,6 +243,12 @@ function Resolve-LivePath([string]$dead) {
   # folders the user actually keeps tools in (UABS_TOOL_ROOTS + the machine map)
   # for a folder with the same name and the same remaining tail. Uniqueness is
   # required: two hits is a question for a human, not a guess.
+  #
+  # Names compare without case or punctuation (RobloxForge == Roblox-Forge ==
+  # roblox_forge), the same rule companion_registry.py uses for owner folders.
+  # A rename that only adds a hyphen is still the same owner. This block used to
+  # sit inside the houseCARL branch above by a missing brace, so it never ran for
+  # any other server and a moved RobloxForge stayed "DEAD (no replacement found)".
   $index = @()
   if (Get-Command Get-ToolDirectoryIndex -ErrorAction SilentlyContinue) { $index = Get-ToolDirectoryIndex }
   if ($index.Count -gt 0) {
@@ -239,25 +257,25 @@ function Resolve-LivePath([string]$dead) {
     # server at an unrelated binary.
     $generic = @('bin', 'lib', 'libs', 'obj', 'dist', 'build', 'src', 'out', 'release',
                  'debug', 'x64', 'x86', 'amd64', 'windows', 'win64', 'cmd', 'app',
-                 'data', 'assets', 'resources', 'runtime', 'server')
+                 'data', 'assets', 'resources', 'runtime', 'server', 'mcp_server', 'tools', 'scripts')
     for ($i = $parts.Count - 2; $i -ge 1; $i--) {
       $name = $parts[$i]
       if ($name -notmatch '^[A-Za-z0-9][A-Za-z0-9._ -]*$') { continue }
       if ($generic -contains $name.ToLowerInvariant()) { continue }
       if ($name -match '^\d+(\.\d+)*$') { continue }
+      $key = ($name -replace '[^A-Za-z0-9]', '').ToLowerInvariant()
+      if (-not $key) { continue }
       $tail = ($parts[($i + 1)..($parts.Count - 1)]) -join '\'
       if (-not $tail) { continue }
       $hits = @()
       foreach ($dir in $index) {
-        if ((Split-Path -Leaf $dir) -ine $name) { continue }
+        if (((Split-Path -Leaf $dir) -replace '[^A-Za-z0-9]', '').ToLowerInvariant() -ne $key) { continue }
         $full = Join-Path $dir $tail
-        if (Test-Path -LiteralPath $full -PathType Leaf) { $hits += $full }
+        if (Test-Path -LiteralPath $full -PathType Leaf) { $hits += (Get-Item -LiteralPath $full).FullName }
       }
-      $hits = @($hits | Select-Object -Unique)
+      $hits = @($hits | Sort-Object -Unique)
       if ($hits.Count -eq 1) { return $hits[0] }
     }
-  }
-
   }
   return $null
 }

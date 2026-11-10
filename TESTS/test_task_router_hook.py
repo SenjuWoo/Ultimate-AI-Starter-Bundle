@@ -35,12 +35,50 @@ class HookTests(unittest.TestCase):
         payload = json.loads(out)
         text = payload["hookSpecificOutput"]["additionalContext"]
         self.assertIn("lifecycle", text)
-        self.assertIn("One workflow", text)
+        self.assertIn("Advisory only", text)
+        self.assertNotIn("checkpoints", text)
         self.assertLessEqual(len(text), 240)
 
     def test_hermes_shape_is_a_context_field(self):
         out, _ = run_hook("add oauth login with tests before merge", fmt="hermes")
         self.assertIn("context", json.loads(out))
+
+    def test_creative_request_with_software_words_stays_quiet(self):
+        out, code = run_hook("Write a story about a security guard with a secret password")
+        self.assertEqual((out, code), ("", 0))
+
+    def test_wiring_preserves_foreign_sibling_and_invalid_settings(self):
+        sys.path.insert(0, str(ROOT / "TOOLS" / "hooks"))
+        import ponytail_auto as pa
+        with tempfile.TemporaryDirectory() as tmp:
+            settings = Path(tmp) / "settings.json"
+            settings.write_text(json.dumps({"hooks": {"UserPromptSubmit": [{
+                "matcher": "keep", "hooks": [
+                    {"type": "command", "command": '"python" "%s" hook --format claude' % HOOK},
+                    {"type": "command", "command": "foreign-check"}]}]}}), encoding="utf-8")
+            pa.wire_claude_script(HOOK, settings=settings)
+            groups = json.loads(settings.read_text())["hooks"]["UserPromptSubmit"]
+            self.assertEqual(groups[0]["matcher"], "keep")
+            self.assertEqual(groups[0]["hooks"][0]["command"], "foreign-check")
+            before = settings.stat().st_mtime_ns
+            pa.wire_claude_script(HOOK, settings=settings)
+            self.assertEqual(settings.stat().st_mtime_ns, before)
+            self.assertEqual(len(list(Path(tmp).glob("*.bak-*"))), 1)
+            settings.write_text('{"broken":', encoding="utf-8")
+            with self.assertRaises(ValueError):
+                pa.wire_claude_script(HOOK, settings=settings)
+            self.assertEqual(settings.read_text(), '{"broken":')
+
+    def test_same_basename_personal_hook_is_not_owned(self):
+        sys.path.insert(0, str(ROOT / "TOOLS" / "hooks"))
+        import ponytail_auto as pa
+        with tempfile.TemporaryDirectory() as tmp:
+            settings = Path(tmp) / "settings.json"
+            command = '"python" "%s" hook --format claude' % (Path(tmp) / HOOK.name)
+            settings.write_text(json.dumps({"hooks": {"UserPromptSubmit": [{"hooks": [
+                {"type": "command", "command": command}]}]}}), encoding="utf-8")
+            pa.wire_claude_script(HOOK, settings=settings)
+            self.assertIn(command, [h["command"] for g in json.loads(settings.read_text())["hooks"]["UserPromptSubmit"] for h in g["hooks"]])
 
     def test_ai_token_cost_does_not_trigger_security(self):
         out, _ = run_hook("reduce AI token usage in the prompts")
@@ -92,6 +130,13 @@ class HookTests(unittest.TestCase):
             self.assertTrue(any("task_router_hook.py" in a.get("command", "")
                                 for a in approvals["approvals"]),
                             "the hook must be approved or Hermes will refuse to run it")
+            import time
+            approval = next(a for a in approvals["approvals"] if "task_router_hook.py" in a["command"])
+            self.assertEqual(approval["script_mtime_at_approval"], time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(HOOK.stat().st_mtime)))
+            allowlist = Path(tmp) / "shell-hooks-allowlist.json"
+            before = (cfg.stat().st_mtime_ns, allowlist.stat().st_mtime_ns)
+            pa.wire_hermes_script(HOOK, config=cfg)
+            self.assertEqual(before, (cfg.stat().st_mtime_ns, allowlist.stat().st_mtime_ns))
 
     def test_self_check_passes(self):
         out = subprocess.run([sys.executable, str(HOOK), "self-check"],

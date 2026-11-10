@@ -6,6 +6,7 @@
   ],
   "companions": {
     "roblox-forge": {
+      "root_env": "ROBLOX_FORGE_ROOT",
       "title": "RobloxForge",
       "repo": "https://github.com/SenjuWoo/RobloxForge",
       "install": {
@@ -41,6 +42,7 @@
       "notes": "Owns the Roblox skill catalog and knowledge/vendor; the bundle never copies it. Studio work needs the separate official Roblox Studio MCP."
     },
     "skyrim-forge": {
+      "root_env": "SKYRIM_FORGE_ROOT",
       "title": "SkyrimForge",
       "repo": "https://github.com/SenjuWoo/SkyrimForge",
       "install": {
@@ -120,6 +122,7 @@
       "notes": "Installs to %LOCALAPPDATA%\\ReverseThis; kit.json is the owner pointer other tools read. The release ZIP and entrypoints are Install-Modkit.ps1 / Update-ReverseThis.ps1 / Install-Modkit.ps1 -Doctor."
     },
     "ror2-forge": {
+      "root_env": "ROR2_FORGE_ROOT",
       "title": "Risk of Rain 2 Forge",
       "repo": "https://github.com/SenjuWoo/Risk-Of-Rain-2-Forge",
       "install": {

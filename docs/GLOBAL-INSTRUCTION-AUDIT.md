@@ -1,5 +1,26 @@
 # Global instruction audit (Phase 1, 2026-11-08)
 
+## Follow-up findings
+
+The original conclusions below were narrower than their wording suggested.
+Recovered installed-state evidence found duplicated owned paragraphs and a
+generated machine map that exceeded the combined profile limit, preventing
+refreshes. The installer now removes exact standalone copies of current owned
+paragraphs while preserving edited personal text. An oversized generated map is
+referenced on demand when the personal profile itself still fits the limit.
+
+The task hook now emits an advisory workflow suggestion. Keyword matches are
+not evidence that a plan approval, another methodology or a smaller creative
+scope is needed. Creative prose is covered by quiet-output regression cases;
+architecture is excluded from automatic Ponytail minimalism. Manual choices
+still take precedence, and the fresh-install Ponytail default remains off.
+
+Claude hook registration now preserves unrelated children within a shared hook
+group, respects the configured provider home, rejects malformed settings without
+rewriting them, and makes no write when the semantic configuration is unchanged.
+These are deterministic contract tests, not a claim of improved model success
+rates or measured billing savings.
+
 What is injected into every conversation on this machine, measured rather than
 assumed, and what was changed or deliberately left alone. This is a read-only audit
 of the operator's install; nothing here edits upstream skill text.

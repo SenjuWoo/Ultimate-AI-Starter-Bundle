@@ -88,6 +88,12 @@ class ModeAndHookAgreeTests(unittest.TestCase):
                        "make this as small as possible, remove code"):
             self.assertNotEqual(hook.resolve(prompt, session_id="u1")["mode"], "ultra")
 
+    def test_automatic_minimalism_does_not_take_over_architecture(self):
+        self._choose("auto")
+        for prompt in ("simplify the whole system architecture", "major rework of the installer",
+                       "refactor the architecture in app.py", "build a new product from scratch"):
+            self.assertEqual(hook.resolve(prompt, session_id="architecture")["mode"], "off", prompt)
+
     def test_auto_respects_an_explicit_session_override(self):
         self._choose("auto")
         hook.resolve("/ponytail ultra", session_id="s2")

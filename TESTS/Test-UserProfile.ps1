@@ -26,6 +26,11 @@ try {
   $threw = $false
   try { Get-UabsProfileText -Root $root -MaxChars 10 | Out-Null } catch { $threw = $_.Exception.Message -match 'cap' }
   Assert $threw 'An oversized profile was not refused.'
+  [IO.File]::WriteAllText((Join-Path $root 'MACHINE-MAP.md'), ('inventory ' * 700))
+  $deferred = Get-UabsProfileText -Root $root
+  Assert ($deferred -match '## Me' -and $deferred -match 'MACHINE-MAP.md' -and $deferred.Length -lt 6000) 'A large generated map prevented preference refresh.'
+  Assert ([IO.File]::ReadAllText((Join-Path $root 'MACHINE-MAP.md')).Length -eq 7000) 'Deferring the map truncated its source.'
+  [IO.File]::WriteAllText((Join-Path $root 'MACHINE-MAP.md'), "## Machine map`n- Steam: X`n")
   Assert ((Get-UabsProfileRoot (Join-Path $fx 'x')) -eq [IO.Path]::GetFullPath((Join-Path $fx 'x'))) 'Explicit profile root ignored.'
 
   # Placement: after the last pack block; refresh in place; full removal.
@@ -54,6 +59,15 @@ try {
   [void](Update-UabsInstructionProfile -Path $mixed -Text 'P')
   Assert ([IO.File]::ReadAllText($mixed).Contains("Tail one`nTail two")) 'Profile writer rewrote LF text it does not own.'
   Assert (-not (Update-UabsInstructionProfile -Path $mixed -Text 'P')) 'Profile writer is not idempotent on a mixed-ending file.'
+  # Appending a preamble with CRLF boundaries must not change an LF profile.
+  $lf = Join-Path $fx 'home\leading-lf.md'
+  [IO.File]::WriteAllText($lf, "Mine`n")
+  [void](Update-UabsInstructionProfile -Path $lf -Text 'P')
+  [IO.File]::AppendAllText($lf, "`r`n<!-- UABS-PREAMBLE -->`r`nOwned`r`n<!-- /UABS-PREAMBLE -->`r`n")
+  # One pass may normalize the final newline, but must preserve the profile's LF.
+  [void](Update-UabsInstructionProfile -Path $lf -Text 'P')
+  Assert ([IO.File]::ReadAllText($lf).StartsWith("<!-- UABS-PROFILE -->`nP`n")) 'A later CRLF block changed the leading profile newline.'
+  Assert (-not (Update-UabsInstructionProfile -Path $lf -Text 'P')) 'Mixed profile/preamble did not converge.'
 
   # Plain file without packs: the block goes first, then the user text.
   $plain = Join-Path $fx 'home\AGENTS.md'

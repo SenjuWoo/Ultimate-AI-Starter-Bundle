@@ -1,3 +1,28 @@
+## 8.39.0 (2026-11-10)
+
+- Workflow hints are advisory. Creative requests stay quiet, and automatic
+  Ponytail activation leaves architectural work unconstrained. Explicit mode
+  choices remain authoritative.
+- Companion discovery shares a bounded inventory, recognizes relocated owner
+  names, prefers verified environment roots and owner pointers, and reports
+  ambiguous copies instead of choosing one silently. MCP path repair no longer
+  substitutes an unrelated sibling project.
+- The installed-state doctor detects missing absolute MCP executables and
+  scripts across global settings, recorded projects and named Hermes profiles.
+  Disabled entries and credential fields are excluded from this check.
+- Prompt hook installation respects selected providers and check-only mode.
+  Updates preserve foreign handlers, use exact script ownership, keep distinct
+  backups and approve the actual target script's timestamp. Self-checks do not
+  depend on the operator's current Ponytail mode.
+- Instruction refresh uses stable ownership markers and consolidates exact
+  duplicate bundle paragraphs. Large generated maps can be read on demand
+  without freezing personal preference updates. Mixed newline files converge.
+- Interrupted legacy skill backups are retained and missing skills restored
+  before synchronization, instead of deleting the recovery copy.
+- The deterministic memory index includes hooks, companion owners and capability
+  profiles. Graph guidance covers moved roots, consistent backups and source-only
+  indexing; private recovery folders are excluded.
+
 ## 8.38.3 (2026-11-08)
 
 - The hook's self-check no longer echoes prompt-derived text; a failure prints booleans.

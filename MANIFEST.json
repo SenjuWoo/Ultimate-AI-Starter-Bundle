@@ -1,8 +1,8 @@
 [
  {
   "path": ".cbmignore",
-  "size": 446,
-  "sha256": "9e9a656be25be82fce22fa43e050fff120cdd7d7d03e65780147fd41768f86cf"
+  "size": 555,
+  "sha256": "4464af646d1cf8f48b35c7de43b22eae0dd9a5c6480331be2164ed9c322f4e8d"
  },
  {
   "path": ".gitattributes",
@@ -661,8 +661,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 20962,
-  "sha256": "98b0237aeb779de774c3b060b43a6114e5245d4cec56edecc1088cc09bbbc6bf"
+  "size": 22051,
+  "sha256": "3526b4a8b261f1a87605cb9d4e7bebfed986f1a5901e094df4a51db693d8c782"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -3656,8 +3656,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 20962,
-  "sha256": "98b0237aeb779de774c3b060b43a6114e5245d4cec56edecc1088cc09bbbc6bf"
+  "size": 22051,
+  "sha256": "3526b4a8b261f1a87605cb9d4e7bebfed986f1a5901e094df4a51db693d8c782"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -6711,8 +6711,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 20962,
-  "sha256": "98b0237aeb779de774c3b060b43a6114e5245d4cec56edecc1088cc09bbbc6bf"
+  "size": 22051,
+  "sha256": "3526b4a8b261f1a87605cb9d4e7bebfed986f1a5901e094df4a51db693d8c782"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -9756,8 +9756,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 20962,
-  "sha256": "98b0237aeb779de774c3b060b43a6114e5245d4cec56edecc1088cc09bbbc6bf"
+  "size": 22051,
+  "sha256": "3526b4a8b261f1a87605cb9d4e7bebfed986f1a5901e094df4a51db693d8c782"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -12801,8 +12801,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 20962,
-  "sha256": "98b0237aeb779de774c3b060b43a6114e5245d4cec56edecc1088cc09bbbc6bf"
+  "size": 22051,
+  "sha256": "3526b4a8b261f1a87605cb9d4e7bebfed986f1a5901e094df4a51db693d8c782"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -15921,8 +15921,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/codebase-memory/SKILL.md",
-  "size": 20962,
-  "sha256": "98b0237aeb779de774c3b060b43a6114e5245d4cec56edecc1088cc09bbbc6bf"
+  "size": 22051,
+  "sha256": "3526b4a8b261f1a87605cb9d4e7bebfed986f1a5901e094df4a51db693d8c782"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/codeburn/SKILL.md",
@@ -18752,17 +18752,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64142,
-  "sha256": "0fc0668b5ba548a667acf28ba823a111ab255900551f81640e0b7a5e0d8b2980"
+  "sha256": "4e23f57a9f09068054b41b9f458d50ad152083b46456d090289dab1b2ff236ec"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
-  "size": 13686,
-  "sha256": "771950c34cdbb2eb18f5394f3e4a7dd1ba792b904b866e0302b4ba6dc0113ea4"
+  "size": 13804,
+  "sha256": "acd6c60e15367ff8411a2776f6c426a38a99c3a0fc71f8210fa3a21d8aa15eed"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "c7340a61a915882b97823666616176eaff47cb50dcde5680199562af47bc41d9"
+  "sha256": "895931cb84efd6d094f5b6b69e5e763f16a19ab4cfeb393e50c416a1871ece35"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18772,7 +18772,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "5a8c53844aae1da1e3476304fcbf4e25a6e1ec1af33ea669ff74364b19b52358"
+  "sha256": "d34e7a4be53ff03e9991f35797d5abbdd68408c9bae8abb98bf3f288573606ad"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22826,8 +22826,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 330040,
-  "sha256": "6eee105fa172cfdb84750fd648009cb5ea8a9ad417bb466c546eb89b8c5e4e4f"
+  "size": 331640,
+  "sha256": "62f82c83d5246adc51ec86674be22423e21ae69315484e5955ce7e1648a99160"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22926,8 +22926,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 182362,
-  "sha256": "8687959b2878521679ba1046a59bda404c3b101588e198f069e99d5fff1feef0"
+  "size": 184669,
+  "sha256": "7f43ab9b2bca256f6d8dc6ca245ea2b59eb6f5526201d032647d46c54f99d8ee"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -22946,8 +22946,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 53151,
-  "sha256": "1d741a5f32a27cce93cf0e726720401c27705595dd71605fbed5b64bde40cc93"
+  "size": 60290,
+  "sha256": "e372949a8352aaeec258ed65cb323d60890a0daa179bd2b83de5a591480e4206"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -22971,8 +22971,8 @@
  },
  {
   "path": "README.md",
-  "size": 15861,
-  "sha256": "d961876310c5c1842a1c48037e32abffaee12f83b1a7ad996dba2282c6130508"
+  "size": 16097,
+  "sha256": "0bc7c6a82d3021a7b2e0b2f66c7927200f85a2101d95267c47ea14b9865685b5"
  },
  {
   "path": "SECURITY.md",
@@ -22982,17 +22982,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "b7efaa1b5afadba4ffac8d301e35c840260569d730daa6430d46dab054f8bbf5"
+  "sha256": "9a8af7e62e9668b2ce8fdf947894b1e10aedd555d70628cb369c9c4f584dd4c8"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "8e7b585c638392cf888f86e4ddea3338af3ff5beac7da2dab10e55aed20dcce5"
+  "sha256": "71f49f5dfe6be9203289c580bb20bcf72e7a95976130e49ee531d9f44cac2c8c"
  },
  {
   "path": "STATE.md",
-  "size": 3284,
-  "sha256": "11ada0442a08c594290ff8433b4f89816edb2611c6badc1a722c8acae80349a1"
+  "size": 2935,
+  "sha256": "eca6342225bc1a2d094be3a0163ad6cdca57a2bb0ce9c2c746babe27f8144530"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -23031,8 +23031,8 @@
  },
  {
   "path": "TESTS/Test-ForgeRootResolution.ps1",
-  "size": 8653,
-  "sha256": "7fc641af45ac1ee0a9dc384b62122b46d4772ee42abde12fffbf763a5856bbff"
+  "size": 11451,
+  "sha256": "9c4d0e8d4111eb9fc5bcf1b25469a119bd678509db7440dd93495104f32eed83"
  },
  {
   "path": "TESTS/Test-ForgeRuntimeVersion.ps1",
@@ -23100,6 +23100,11 @@
   "sha256": "5c7478332426da55a82ca5da82b6af30ab180b60c742ece5d4a83f5bab4745c6"
  },
  {
+  "path": "TESTS/Test-McpLaunchPaths.ps1",
+  "size": 2958,
+  "sha256": "56dd108049751417ed9b2b795c5f888fb145d7a403e6f76e7896b0333168401a"
+ },
+ {
   "path": "TESTS/Test-McpPark.ps1",
   "size": 11701,
   "sha256": "df04cfad937a0bed06af3e76fa930869e7579e6f3124185085ce6073b95202d3"
@@ -23121,8 +23126,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 71359,
-  "sha256": "2eb6999ed933d867242855a360fae0361ae1bfd1c8243927cd2a07235234a07b"
+  "size": 74591,
+  "sha256": "f356c243eb4415657cb33c8a96bdd6a948d185e8d43e31327da2108fcc34823b"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -23131,8 +23136,8 @@
  },
  {
   "path": "TESTS/Test-PreamblePreservation.ps1",
-  "size": 3668,
-  "sha256": "4e21f71d4eaf63052abc1459b8250d8a59c914efd2dfdf0b3ce145d32bb87a25"
+  "size": 5365,
+  "sha256": "29a148aac54d1426c2376a5c523b5d8827ce25a6ef540cebe97a2e3bc7d9efda"
  },
  {
   "path": "TESTS/Test-ProviderBootstrap.ps1",
@@ -23146,13 +23151,13 @@
  },
  {
   "path": "TESTS/Test-ProviderHookScope.ps1",
-  "size": 12804,
-  "sha256": "3328d184224cc4f9957c39a6ac3fe2c9fd223dd702260a4a32c62b9102d40a58"
+  "size": 13469,
+  "sha256": "c9a3ff2be389fcc6b4743a2f5592f6b6a04b3fcb96188b8fc14c6b603ba36e96"
  },
  {
   "path": "TESTS/Test-ProviderSkillSync.ps1",
-  "size": 11697,
-  "sha256": "e72d43751401d61dec56b9b321a14381275bb0179e1a0c58b4f3c71e16bb06a8"
+  "size": 12457,
+  "sha256": "9991d86e0b485019093d2f005a50b17375d9a180f12321e1583ca6d36e3fc4eb"
  },
  {
   "path": "TESTS/Test-ReleaseAssetCache.ps1",
@@ -23191,8 +23196,8 @@
  },
  {
   "path": "TESTS/Test-UserProfile.ps1",
-  "size": 9581,
-  "sha256": "771b8878e2fef99e4d26320b4ab256ad8aa773af6abbda09dd092a5e0a77f64b"
+  "size": 10807,
+  "sha256": "becc8ea8a13cc1e033d56bace68dd6b3d9081255f9fa308f3e68f643d40b423c"
  },
  {
   "path": "TESTS/Test-VersionProbes.ps1",
@@ -23386,8 +23391,8 @@
  },
  {
   "path": "TESTS/test_companion_registry.py",
-  "size": 9352,
-  "sha256": "a89705edc42faaf416da9b0f9af8388ad98047e5bd6c4a837aa0838c5aab9b03"
+  "size": 10752,
+  "sha256": "a6775f3c29ce83d85e3afba9ff76eaf8ed29bde69f2352d3b6cafeb1ec792cdf"
  },
  {
   "path": "TESTS/test_free_game_tools.py",
@@ -23426,8 +23431,8 @@
  },
  {
   "path": "TESTS/test_maintainer_contract.py",
-  "size": 18698,
-  "sha256": "5e7735955574a57ba6c7bb3528f20d8b1aa56bb5e182c520bf57a9e1a542fc42"
+  "size": 18894,
+  "sha256": "a12f25c11cd34fea023677fcc7f3a4b96c619b79623849eb5206f181923c4f40"
  },
  {
   "path": "TESTS/test_mcp_protocol.py",
@@ -23441,8 +23446,8 @@
  },
  {
   "path": "TESTS/test_ponytail_integration.py",
-  "size": 5718,
-  "sha256": "4081c360e18f805ad936ad27e039594fbe6db68cc403581c182cf97b613429ea"
+  "size": 6119,
+  "sha256": "db6384bb1c87f511c726bc4fc0080ab0d6a1f4643da902c87027e34d42c71d5d"
  },
  {
   "path": "TESTS/test_ponytail_mode.py",
@@ -23471,8 +23476,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 373322,
-  "sha256": "b847b56eed17efcfdf65f4bac7ee5a63653358d710619ceff1255c70e735098f"
+  "size": 373388,
+  "sha256": "c02abeeb02065780943ef50881e54f4c6b30cffa4ae59beae8a32ab766ee508a"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23506,13 +23511,13 @@
  },
  {
   "path": "TESTS/test_task_route.py",
-  "size": 8224,
-  "sha256": "fbfc1a91d01cea0812aef4f25951e1ca749eff43d354cc18d4942f4f4970b428"
+  "size": 8738,
+  "sha256": "9714931a67fdfc40597da3dbb89582528f1e689a0b4b7482e1402c970517553f"
  },
  {
   "path": "TESTS/test_task_router_hook.py",
-  "size": 4834,
-  "sha256": "f05d10bacd07732594a136255397f94dce52a7e30f408fb08f83f193224e3e4e"
+  "size": 7702,
+  "sha256": "b4cb69add24d6606a382c2dd511a5773541779fb264565b7f97985b97626ac0b"
  },
  {
   "path": "TESTS/test_task_state.py",
@@ -23636,8 +23641,8 @@
  },
  {
   "path": "TOOLS/Install-Completeness-Gate.ps1",
-  "size": 27709,
-  "sha256": "2cb93dd8634e50fc64f0543d8495deb66b1ab97f61601e71c5786c8bf7de5e91"
+  "size": 29126,
+  "sha256": "2022b4cde5f182cd46ba0b2533336fa1577e1babc860495b95e56c36b0e993e9"
  },
  {
   "path": "TOOLS/Install-GitHooks.ps1",
@@ -23691,8 +23696,8 @@
  },
  {
   "path": "TOOLS/Repair-McpPaths.ps1",
-  "size": 18286,
-  "sha256": "7e9f3e6b45d50e6b182e6d1f322da0c4d96a921d400c06e16f29d2294a71a72d"
+  "size": 19642,
+  "sha256": "58d66f6d5268effbd7211ad1479790e5f7c4fe84df3a433c9466422218d00a93"
  },
  {
   "path": "TOOLS/Set-GitHubProtection.ps1",
@@ -23736,8 +23741,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 69428,
-  "sha256": "b94a532e146f6f750171ddc564e6855061c16eb13e93cca34fb655ee3b52f2d9"
+  "size": 71054,
+  "sha256": "9e0d956dcbfe153baf87a32a149a97f9b18a8a04f3df46cf966de80344d344a6"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -23751,13 +23756,13 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 169260,
-  "sha256": "ed8a2eda349d7f96a7ff7dab6b26f3b4b6fe6d4514e3ad7386c8911a9469b471"
+  "size": 170946,
+  "sha256": "48fa7e8771e25a49cee77de0717b3269977b1da493755aa6e06586ba6509af19"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
-  "size": 14771,
-  "sha256": "95e391f202b8e689f9313a245693dbc4bec1342754c3675fed7d5fc59ccd65ad"
+  "size": 16294,
+  "sha256": "89d77b952a4817caeb6c1551128974292f55ad4cfe20401e8469ff7ea9bd2ff2"
  },
  {
   "path": "TOOLS/UABS-Mcp-Write.ps1",
@@ -23831,8 +23836,8 @@
  },
  {
   "path": "TOOLS/companion_registry.py",
-  "size": 15137,
-  "sha256": "f5e092ea689efdb55bad5710c7d07a1f54b11c97daed78d92690e17db0b44fa2"
+  "size": 17087,
+  "sha256": "6a4cd552790f9457de263b580f1b790f6e23c7a1cab25c15ed404f708d661ae2"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -23911,8 +23916,8 @@
  },
  {
   "path": "TOOLS/hooks/ponytail_auto.py",
-  "size": 22365,
-  "sha256": "1d9e7a6f9b4dd7abb587e79bd46e6737a8686b8f5ca8e5e04676240618ec22a4"
+  "size": 24978,
+  "sha256": "1103222030ad3ea24f94aab8a8cd8214eeccdea772e4d98e24ae670676c46581"
  },
  {
   "path": "TOOLS/hooks/rtk_safe_hook.py",
@@ -23921,8 +23926,8 @@
  },
  {
   "path": "TOOLS/hooks/task_router_hook.py",
-  "size": 7751,
-  "sha256": "225e7100c6eef0d8b65b64cb74cddd896e72f19f059807da1f979b6dab334ddd"
+  "size": 6880,
+  "sha256": "5cc217af70a3f557521456e759bdc39377e7b3080c071d288accacb2c3954899"
  },
  {
   "path": "TOOLS/hooks/ultimate-bundle.json",
@@ -23966,8 +23971,8 @@
  },
  {
   "path": "TOOLS/ponytail_mode.py",
-  "size": 17520,
-  "sha256": "2c4d0aa6b6fea190ecc688164b64adec43ded7f02d68592191bb54fa5bb1996f"
+  "size": 17599,
+  "sha256": "38d674af135570a0133f556001b107eb7e144890b8cb94c2c1fe956e4a8e2f3a"
  },
  {
   "path": "TOOLS/presentation_check.py",
@@ -23991,8 +23996,8 @@
  },
  {
   "path": "TOOLS/release_gate.py",
-  "size": 3998,
-  "sha256": "8d531f6d70d5ee6f2d981b73619e37e2935ffbe1e921eb116726df37ec2869d6"
+  "size": 4445,
+  "sha256": "a344e369d7cb9ca9e3ef4f5f1134dc5ef149a0ae3d165eafd7667e7f3c209a8b"
  },
  {
   "path": "TOOLS/release_provenance.py",
@@ -24006,8 +24011,8 @@
  },
  {
   "path": "TOOLS/task_route.py",
-  "size": 12480,
-  "sha256": "13d748ab21f56641b85d6f5e5c54f6d97ae553b1418461acbac6ddfb47502ccf"
+  "size": 13372,
+  "sha256": "8038c31606c71ba2d777f56c9fef30faf4883b0ba0a5b10c67a84c08bc40f303"
  },
  {
   "path": "TOOLS/task_state.py",
@@ -24026,8 +24031,8 @@
  },
  {
   "path": "TOOLS/update_memory_index.py",
-  "size": 5855,
-  "sha256": "ef793b4ad2dec272995863c40c4294fcac7b251eb521716911979fe8c79840fd"
+  "size": 6854,
+  "sha256": "0e6ab766c61e1d81894d78bb03dafeaa51952e5c3fd03c9c090d880228bed7cd"
  },
  {
   "path": "TOOLS/usage_report.py",
@@ -24067,7 +24072,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2781,
-  "sha256": "6183c625d93054e4ffb23dfbfc6a9ef3b541ee51c96a04f97634d50e5eeebd81"
+  "sha256": "2ce38b56db626fe70434d0b8e9d15ac924a45e565a8d9a0ce5a2d04ebaaa7954"
  },
  {
   "path": "VALIDATION.md",
@@ -24077,7 +24082,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "c54d47b8b91a14db23247a636debc98696e9d7c391e5cc3be62fe0b78d04cf2a"
+  "sha256": "1b6e534b41f2186755cac59767bd1c0f4febd8788200d9f4b85192bebbc60b43"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24546,8 +24551,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/codebase-memory/SKILL.md",
-  "size": 20962,
-  "sha256": "98b0237aeb779de774c3b060b43a6114e5245d4cec56edecc1088cc09bbbc6bf"
+  "size": 22051,
+  "sha256": "3526b4a8b261f1a87605cb9d4e7bebfed986f1a5901e094df4a51db693d8c782"
  },
  {
   "path": "_CANONICAL-SKILLS/codeburn/SKILL.md",
@@ -27091,8 +27096,8 @@
  },
  {
   "path": "docs/GLOBAL-INSTRUCTION-AUDIT.md",
-  "size": 4494,
-  "sha256": "20f0e1ff2cb53f39ba8692787d89bd24f88f33dc8fd3af90c84d6ca9d04d2595"
+  "size": 5715,
+  "sha256": "9548edac0060c2b8fa99ae9ade9419a0d2b08940bab1fbec038cc1f9843a1896"
  },
  {
   "path": "docs/GUIDE.md",
@@ -27126,8 +27131,8 @@
  },
  {
   "path": "docs/PONYTAIL-AUTO.md",
-  "size": 4790,
-  "sha256": "6a7b3fb84df9f1d8af4512fc8389caec058113277d61ab3f014f7e2e029028c0"
+  "size": 5025,
+  "sha256": "c35d38f13d47b006c50716a7f250c98e97bd72c087d5a0b9d6b05ca1b1c899ef"
  },
  {
   "path": "docs/RECOMMENDED-GAME-DEV-SKILLS.md",
@@ -27176,8 +27181,8 @@
  },
  {
   "path": "docs/decisions/0003-planner-worker-routing.md",
-  "size": 1524,
-  "sha256": "d2853c89392e02ebf2f923e30969e102ffc4697bd4c9c9a56574126da6f6d3ee"
+  "size": 1957,
+  "sha256": "22e723fab9cc81605532f6ef6d361cc2da082ddeb606c6b736f9eefa3b792958"
  },
  {
   "path": "docs/decisions/0004-generated-release-metadata.md",
@@ -27195,9 +27200,14 @@
   "sha256": "152036c3703083ca50a3167fe4a1ba6143a973800791d18472b0ea82834a444c"
  },
  {
+  "path": "docs/decisions/0007-advisory-discovery.md",
+  "size": 3964,
+  "sha256": "368ad4d7847b5112e15124ac3ccbe3034e99c467d537b925740a0d0f3a35b11c"
+ },
+ {
   "path": "docs/decisions/README.md",
-  "size": 1060,
-  "sha256": "d2011654537e4f4af901454f924c537e414ec3e3ce7586d3c76eaef346ecf1ee"
+  "size": 1198,
+  "sha256": "645716ce03d3b60b072686be18434c866c21225c3f3d408a342e0d2089baa8ad"
  },
  {
   "path": "docs/dropoffs/2026-11-06-free-agent-quality-efficiency.md",
@@ -28153,6 +28163,11 @@
   "path": "docs/history/V8.38.3-CHANGELOG.md",
   "size": 462,
   "sha256": "19b219924eaa8c6217eed906a5c9c90257893bff3203782c484818dc4a57ccae"
+ },
+ {
+  "path": "docs/history/V8.39.0-CHANGELOG.md",
+  "size": 1009,
+  "sha256": "a8deb52a3ffdd0e9e9558ee3a4a1199ed926904327c12ee712f92e5fa7f383c8"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

@@ -1435,6 +1435,13 @@ function Get-UabsProfileText {
     }
   }
   $text = ($parts -join "`n`n")
+  # A growing generated inventory must not freeze personal preference refreshes.
+  # Keep the complete map on disk and defer it; never truncate the user's rules.
+  if ($text.Length -gt $MaxChars -and $parts.Count -gt 1) {
+    $mapPath = Join-Path $Root 'MACHINE-MAP.md'
+    $deferred = $parts[0] + "`n`nMachine paths: read " + $mapPath + ' when locating a project or tool; verify moved paths before use.'
+    if ($deferred.Length -le $MaxChars) { return $deferred }
+  }
   if ($text.Length -gt $MaxChars) {
     throw ("Profile text is {0} characters; the cap is {1} because it is sent with every request. Shorten {2}." -f $text.Length, $MaxChars, (Join-Path $Root 'PROFILE.md'))
   }
@@ -1451,7 +1458,9 @@ function Update-UabsInstructionProfile {
   if (-not $Text -and $pre -notmatch '<!-- UABS-PROFILE -->') { return $false }
   $bom = $false
   if ($exists) { $b = [IO.File]::ReadAllBytes($Path); $bom = ($b.Length -ge 3 -and $b[0] -eq 0xEF -and $b[1] -eq 0xBB -and $b[2] -eq 0xBF) }
-  $nl = if ($pre -match "`r`n") { "`r`n" } else { "`n" }
+  # Follow the leading text, not a CRLF appearing later in a mixed file.
+  # The preamble writer may append CRLF boundaries to an existing LF file.
+  $nl = if ([regex]::Match($pre, '\r?\n').Value -eq "`r`n") { "`r`n" } else { "`n" }
   $knownProfiles = @()
   if ($Text) { $knownProfiles += $Text.Trim() }
   foreach ($m in [regex]::Matches($pre, '(?ms)^<!--[ \t]*UABS-PROFILE[ \t]*-->\r?\n(?<text>.*?)^<!--[ \t]*/UABS-PROFILE[ \t]*-->')) {
@@ -1558,11 +1567,6 @@ function Sync-UabsProviderSkills(
   foreach ($name in $preserved) { Write-UabsOk ($Provider + ': verified local skill override preserved: ' + $name) }
   New-Item -ItemType Directory -Force -Path $To | Out-Null
 
-  # Clean interrupted V8 staging only. The exact prefix is bundle-owned.
-  Get-ChildItem -LiteralPath $To -Directory -Force -ErrorAction SilentlyContinue |
-    Where-Object { $_.Name -like '.uabs-skill-stage-*' -or $_.Name -like '.uabs-skill-backup-*' } |
-    Remove-Item -Recurse -Force
-
   $currentNames = @(Get-ChildItem -LiteralPath $From -Directory -Force |
     Where-Object { Test-Path -LiteralPath (Join-Path $_.FullName 'SKILL.md') } |
     Where-Object { $ExcludeNames -notcontains $_.Name } |
@@ -1596,12 +1600,20 @@ function Sync-UabsProviderSkills(
   New-Item -ItemType Directory -Force -Path $To | Out-Null
   $workRoot = Join-Path (Split-Path -Parent ([IO.Path]::GetFullPath($To).TrimEnd('\'))) '.uabs-skill-work'
   New-Item -ItemType Directory -Force -Path $workRoot | Out-Null
-  # Older installers staged inside the skills root. Restore an orphaned backup
-  # whose skill is missing (an interrupted swap); drop every other leftover.
+  # Older installers staged inside the skills root. Keep every leftover outside
+  # the indexed directory; a backup may be the only copy of a user's edits.
   foreach ($left in @(Get-ChildItem -LiteralPath $To -Directory -Force -ErrorAction SilentlyContinue | Where-Object { $_.Name -match '^\.uabs-skill-(stage|backup)-(.+)-[0-9a-f]{32}$' })) {
-    $owner = Join-Path $To $Matches[2]
-    if ($Matches[1] -eq 'backup' -and -not (Test-Path -LiteralPath $owner)) { Move-Item -LiteralPath $left.FullName -Destination $owner; Write-UabsWarn ('restored interrupted skill swap: ' + $Matches[2]) }
-    else { Remove-Item -LiteralPath $left.FullName -Recurse -Force }
+    $match = [regex]::Match($left.Name, '^\.uabs-skill-(stage|backup)-(.+)-[0-9a-f]{32}$')
+    $owner = Join-Path $To $match.Groups[2].Value
+    $recovery = Join-Path $workRoot ('recovered-' + $left.Name + '-' + [guid]::NewGuid().ToString('N'))
+    if (-not (Test-UabsPathWithin -Path $left.FullName -Root $To) -or
+        -not (Test-UabsPathWithin -Path $recovery -Root $workRoot) -or
+        ($left.Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'Unsafe legacy skill recovery path' }
+    Move-Item -LiteralPath $left.FullName -Destination $recovery
+    if ($match.Groups[1].Value -eq 'backup' -and -not (Test-Path -LiteralPath $owner)) {
+      Copy-Item -LiteralPath $recovery -Destination $owner -Recurse
+      Write-UabsWarn ('restored interrupted skill swap; recovery retained: ' + $recovery)
+    }
   }
 
   foreach ($skillDir in @(Get-ChildItem -LiteralPath $From -Directory -Force -ErrorAction Stop)) {
@@ -2090,11 +2102,9 @@ function Get-UabsGrokHookIssues {
 # v7.5.0: SOUL + AIO preamble wiring. Appends (or replaces) the pack preamble
 # block in an agent instruction file. Idempotent, backup first.
 # Existing files keep their own encoding; writes are UTF-8 without BOM.
-# v8.7.23: the HTML comment markers are gone. v7.5-v8.7 wrapped the block in
-# `<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL ... -->` so it could be found again;
-# every provider paid for those lines on every request and they instructed
-# nothing. Match complete owned content, never an opening line through EOF:
-# users can append instructions after the block or reuse its opening sentence.
+# Short ownership markers allow safe replacement after source edits. Historical
+# unmarked installs migrate only exact owned content, never an opening line
+# through EOF: users may append instructions or reuse an opening sentence.
 function Install-UabsPreambleBlock {
   param(
     [string]$Path,
@@ -2112,8 +2122,9 @@ function Install-UabsPreambleBlock {
   $soul = ([IO.File]::ReadAllText($SoulFile)).Trim()
   $aio  = ([IO.File]::ReadAllText($AioFile)).Trim()
   $nl = "`r`n"
-  # Plain text: the soul, a blank line, then the operating contract.
-  $block = $soul + $nl + $nl + $aio
+  # Stable ownership boundaries survive edits to the sources. Their small fixed
+  # size avoids keeping whole historical copies in every installed instruction.
+  $block = '<!-- UABS-PREAMBLE -->' + $nl + $soul + $nl + $nl + $aio + $nl + '<!-- /UABS-PREAMBLE -->'
   $dir = Split-Path $Path -Parent
   if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
   $pre = ''
@@ -2127,12 +2138,24 @@ function Install-UabsPreambleBlock {
   # only if its entire text matches a source block (LF/CRLF both accepted).
   # Unknown/edited old text stays intact; a generic first line is not ownership.
   $legacy = '(?ms)^[ \t]*<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL[^\r\n]*-->[ \t]*\r?\n.*?^[ \t]*<!-- /ULTIMATE-AI-STARTER-BUNDLE SOUL -->[ \t]*(?:\r?\n|$)'
-  $remaining = [regex]::Replace($pre, $legacy, '')
+  $managed = '(?ms)^[ \t]*<!-- UABS-PREAMBLE -->[ \t]*\r?\n.*?^[ \t]*<!-- /UABS-PREAMBLE -->[ \t]*(?:\r?\n|$)'
+  $remaining = [regex]::Replace([regex]::Replace($pre, $managed, ''), $legacy, '')
   foreach ($owned in @($soul, $aio)) {
     if (-not $owned) { throw 'preamble source must not be empty' }
     $lines = @($owned -split '\r?\n' | ForEach-Object { [regex]::Escape($_) })
     $exact = '(?m)^' + ($lines -join '\r?\n') + '(?=\r?$)(?:\r?\n)?'
     $remaining = [regex]::Replace($remaining, $exact, '')
+  }
+  # Old installs also appended individual operating paragraphs outside the
+  # complete preamble. Retire only exact paragraphs from today's owned sources,
+  # with blank-line boundaries. Similar or edited personal text stays intact.
+  foreach ($owned in @($soul, $aio)) {
+    foreach ($paragraph in @([regex]::Split($owned, '\r?\n[ \t]*\r?\n'))) {
+      if ($paragraph.Length -lt 80) { continue }
+      $lines = @($paragraph.Trim() -split '\r?\n' | ForEach-Object { [regex]::Escape($_) })
+      $exactParagraph = '(?m)(?:\A|(?<=\n)\r?\n)' + ($lines -join '\r?\n') + '(?=\r?\n[ \t]*\r?\n|\r?\n?\z)'
+      $remaining = [regex]::Replace($remaining, $exactParagraph, '')
+    }
   }
   # The pack's own text changes between releases, and a machine wired by an
   # older release still carries that exact block - which the source match

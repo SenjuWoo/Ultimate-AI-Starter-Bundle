@@ -13,7 +13,8 @@ and a collision is reported instead of resolved by destruction.
 
 `auto` is the third state: a deterministic classifier in TOOLS/hooks/ponytail_auto.py
 reads each prompt and decides off/lite/full (never ultra; creative work stays off).
-Here it means "native default off, skills kept, hook decides per turn".
+Here it means "native default off, copied activation skills parked, hook decides
+per turn". Native plugin commands remain available for explicit use.
 
     python TOOLS/ponytail_mode.py status            # read-only
     python TOOLS/ponytail_mode.py off               # dry-run: prints the plan

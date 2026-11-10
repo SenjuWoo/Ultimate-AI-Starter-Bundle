@@ -1,9 +1,15 @@
 # ADR-0003: cheap worker, selective planner, on-demand MoA
 
-Status: accepted
+Status: historical model selection; superseded by operator-owned host routing
 Date: 2026-11-05
 
 ## Context
+The named model comparison below records a past configuration, not a current
+ranking or installation default. Current settings are owned by the host and
+operator; see `docs/HERMES-MODELS.md` and ADR-0005. The bundle must preserve
+existing model and reasoning choices. Re-evaluate any model recommendation
+against current primary sources and measured task outcomes.
+
 Particle-1 is an efficient executor; DeepSeek V4.1 Flash is stronger at planning and
 research and is cheaper per token on current OpenRouter offers. Always-on Mixture of
 Agents doubles calls and defeats the point of a cheap default.

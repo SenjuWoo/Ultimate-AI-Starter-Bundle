@@ -2510,16 +2510,15 @@ def test_a_profile_scoped_hermes_home_resolves_to_the_real_home() -> None:
     )
 
 
-def test_preamble_is_plain_text_without_markers() -> None:
-    """The preamble rides on every request. Comment markers around it are paid
-    for by every provider and instruct nothing, so v8.7.23 removed them; the
-    writer recognizes complete owned source text instead."""
+def test_preamble_has_stable_ownership_boundaries() -> None:
+    """Short fixed boundaries permit safe replacement after source text changes.
+    The migration still recognizes complete historical owned text."""
     common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
-    assert "$block = $soul + $nl + $nl + $aio" in common, (
-        "the preamble writer no longer builds a marker-free block"
+    assert "$block = '<!-- UABS-PREAMBLE -->' + $nl + $soul + $nl + $nl + $aio + $nl + '<!-- /UABS-PREAMBLE -->'" in common, (
+        "the preamble writer lost its bounded owned block"
     )
     assert "$open = '<!-- ULTIMATE-AI-STARTER-BUNDLE SOUL" not in common, (
-        "the preamble writer still stamps an opening marker"
+        "the preamble writer restored the obsolete long marker"
     )
     for rel in (
         "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-PROVIDER-HOME/CLAUDE.md",
@@ -2627,7 +2626,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     start = common.find("function Install-UabsPreambleBlock")
     end = common.find("function Remove-UabsHermesForeignHarnessDirs")
     body = common[start:end]
-    assert "$block = $soul + $nl + $nl + $aio" in body
+    assert "$block = '<!-- UABS-PREAMBLE -->' + $nl + $soul + $nl + $nl + $aio + $nl + '<!-- /UABS-PREAMBLE -->'" in body
     assert "-Provider" not in body, "the preamble writer branches on provider"
     assert "$nl = \"`r`n\"" in body, "the wired prefix newline is no longer CRLF"
 
@@ -3295,7 +3294,7 @@ def main() -> int:
         test_hermes_openrouter_picker_uses_the_live_tool_catalog,
         test_hermes_receives_the_combined_soul_and_aio_contract,
         test_a_profile_scoped_hermes_home_resolves_to_the_real_home,
-        test_preamble_is_plain_text_without_markers,
+        test_preamble_has_stable_ownership_boundaries,
         test_wired_preamble_prefix_is_stable,
         test_write_refusal_rule_ships_to_every_provider,
         test_recommended_engine_pack_is_pinned_and_attributed,

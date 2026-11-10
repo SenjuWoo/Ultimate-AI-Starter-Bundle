@@ -53,6 +53,24 @@ try {
         if ([IO.File]::ReadAllText($target) -cne $after) { throw "Not idempotent: $($case.Name)" }
         Write-Output "PASS $($case.Name)"
     }
+    $ownedRule = 'Public documents describe the product. Keep machine-specific paths and private settings in the local profile.'
+    [IO.File]::WriteAllText($aioFile, "$aio`n`n$ownedRule", $utf8)
+    $personalRule = $ownedRule.Replace('local profile.', 'my own notes instead.')
+    [IO.File]::WriteAllText($target, "$prefix`n`n$ownedRule`n`n$personalRule`n`n$soul`n`n$aio`n`n$ownedRule`n`n$suffix", $utf8)
+    Install-UabsPreambleBlock -Path $target -SoulFile $soulFile -AioFile $aioFile
+    $after = [IO.File]::ReadAllText($target)
+    if ([regex]::Matches($after, [regex]::Escape($ownedRule)).Count -ne 1) { throw 'An exact duplicated owned paragraph survived' }
+    if (-not $after.Contains($personalRule) -or -not $after.Contains($suffix)) { throw 'Paragraph cleanup removed personal text' }
+    Install-UabsPreambleBlock -Path $target -SoulFile $soulFile -AioFile $aioFile
+    if ([IO.File]::ReadAllText($target) -cne $after) { throw 'Paragraph cleanup is not idempotent' }
+    Write-Output 'PASS duplicated owned paragraphs; edited personal rules preserved'
+    # Source text can change without first creating a historical exact copy.
+    [IO.File]::WriteAllText($soulFile, 'A new bundle-owned soul body.', $utf8)
+    Install-UabsPreambleBlock -Path $target -SoulFile $soulFile -AioFile $aioFile
+    $after = [IO.File]::ReadAllText($target)
+    if ($after.Contains($soul) -or -not $after.Contains($personalRule)) { throw 'Managed boundary failed to replace old text or preserve personal text' }
+    if ([regex]::Matches($after, '<!-- UABS-PREAMBLE -->').Count -ne 1) { throw 'Managed preamble boundary duplicated' }
+    Write-Output 'PASS source revision replaces only its managed preamble'
 } finally {
     # This exact GUID directory was created by this test under OS temp.
     Remove-Item -LiteralPath $scratch -Recurse -Force

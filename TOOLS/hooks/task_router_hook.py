@@ -45,13 +45,14 @@ def line_for(prompt, provider=None):
     speaks = result["primary"] != "lightweight" or bool(HIGH_VALUE & set(result["specialists"]))
     if not speaks:
         return ""
-    parts = ["Routing: %s" % result["primary"]]
+    parts = ["Workflow suggestion: %s" % result["primary"]]
     usable = [x["use"] or x["want"] for x in result["resolved"] if x["use"]]
     if usable:
         parts.append("specialists: %s" % ", ".join(usable[:3]))
-    if result["checkpoints"] != "none":
-        parts.append("checkpoints: %s" % result["checkpoints"])
-    return ("; ".join(parts) + ". One workflow; do not start a second methodology.")[:240]
+    # A keyword classifier cannot know the project's state, permissions or
+    # creative intent. Never inject invented approval checkpoints or mandates.
+    suffix = ". Advisory only; follow the request and project evidence. Preserve creative scope."
+    return "; ".join(parts)[:240 - len(suffix)] + suffix
 
 
 def emit(raw, fmt="hermes"):
@@ -68,18 +69,6 @@ def emit(raw, fmt="hermes"):
         return json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit",
                                                    "additionalContext": text}})
     return json.dumps({"context": text})
-
-
-def _python():
-    return sys.executable
-
-
-def _quote(value):
-    return '"' + str(value).replace('"', "") + '"'
-
-
-def _hook_command(fmt):
-    return "%s %s hook --format %s" % (_quote(_python()), _quote(Path(__file__).resolve()), fmt)
 
 
 def _claude_settings():
@@ -103,28 +92,8 @@ def _hermes_config():
 
 
 def wire_claude(enable=True):
-    path = _claude_settings()
-    data = {}
-    if path.is_file():
-        try:
-            data = json.loads(path.read_text(encoding="utf-8"))
-        except ValueError:
-            return ["Claude settings.json is not valid JSON; left untouched"]
-    hooks = data.setdefault("hooks", {})
-    groups = [g for g in (hooks.get("UserPromptSubmit") or [])
-              if "task_router_hook.py" not in json.dumps(g)]
-    if enable:
-        groups.append({"hooks": [{"type": "command", "command": _hook_command("claude"), "timeout": 10}]})
-    if groups:
-        hooks["UserPromptSubmit"] = groups
-    else:
-        hooks.pop("UserPromptSubmit", None)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    if path.is_file():
-        path.with_suffix(".json.bak-task-router").write_text(
-            path.read_text(encoding="utf-8"), encoding="utf-8")
-    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
-    return [("wired" if enable else "removed") + " Claude UserPromptSubmit hook"]
+    import ponytail_auto as pa
+    return pa.wire_claude_script(Path(__file__), enable=enable, settings=_claude_settings())
 
 
 def _hermes_configs():
@@ -159,7 +128,7 @@ def wire_hermes(enable=True):
             for action in pa.wire_hermes_script(Path(__file__), enable=enable, config=config):
                 actions.append("%s: %s" % (config.parent.name, action))
         except Exception as exc:
-            actions.append("%s: failed (%s)" % (config, exc))
+            raise RuntimeError("Hermes hook wiring failed for %s" % config) from exc
     return actions or ["Hermes config not found; hook not wired"]
 
 
@@ -181,6 +150,7 @@ def main(argv=None):
     ap.add_argument("target", nargs="?", default="all", choices=("all", "claude", "hermes"))
     ap.add_argument("--format", default="hermes", choices=("hermes", "claude"))
     ap.add_argument("--event", default="pre_llm_call")
+    ap.add_argument("--remove", action="store_true")
     args = ap.parse_args(argv)
 
     if args.command == "hook":
@@ -191,9 +161,9 @@ def main(argv=None):
     if args.command == "wire":
         actions = []
         if args.target in ("all", "claude"):
-            actions += wire_claude()
+            actions += wire_claude(enable=not args.remove)
         if args.target in ("all", "hermes"):
-            actions += wire_hermes()
+            actions += wire_hermes(enable=not args.remove)
         for action in actions:
             print(action)
         return 0

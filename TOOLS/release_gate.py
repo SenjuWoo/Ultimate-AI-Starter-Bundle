@@ -9,6 +9,7 @@ code is checked immediately and the gate returns the failing step's code.
 """
 
 import argparse
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -67,8 +68,14 @@ def main():
         print("==> %s" % name, flush=True)
         # Capture so a failure prints its own reason instead of vanishing above
         # the next step's output; a passing step keeps only its last line.
+        env = os.environ.copy()
+        if Path(cmd[0]).name.lower() == "powershell.exe":
+            # Python does not perform PowerShell 7's compatibility launch cleanup.
+            # An inherited PS7 module path can shadow WinPS 5.1's standard modules
+            # and make Get-FileHash disappear. Let the child build its own defaults.
+            env = {k: v for k, v in env.items() if k.upper() != "PSMODULEPATH"}
         result = subprocess.run(cmd, cwd=str(ROOT), capture_output=True, text=True,
-                                errors="replace")
+                                errors="replace", env=env)
         tail = [l for l in (result.stdout + result.stderr).splitlines() if l.strip()]
         if result.returncode != 0:
             print(chr(10).join(tail[-40:]))

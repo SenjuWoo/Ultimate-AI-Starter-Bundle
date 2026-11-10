@@ -11,3 +11,11 @@ artifacts/
 dist/
 __pycache__/
 BUNDLED-TOOLS/cache/
+LOCAL-ONLY/
+PRIVATE-TWEAKS/
+.uabs-cache/
+.codex/
+.grok/
+.serena/
+BUNDLED-TOOLS/offline/
+3-PREAMBLES/history/

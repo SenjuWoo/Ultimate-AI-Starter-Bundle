@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
   Ultimate AI Starter Bundle - All-In-One installer for skills, plugins, MCP tools, and houseCARL (MO2/Vortex).
 
@@ -2595,36 +2595,78 @@ if (-not $ToolsOnly -and -not $SkillsOnly -and $skyrimPackOn) {
   $installed['game-mcp-global-migration'] = @{ status='profile-only'; removed_from=$cleaned }
 }
 
+# companion_registry.py already resolves owners that were moved or renamed
+# (RobloxForge -> Tools\Ai tools\Roblox-Forge) from TOOL-ROOTS.txt and
+# UABS_TOOL_ROOTS. Ask it once instead of keeping a second folder-name list.
+$script:UabsCompanionReport = $null
+function Get-UabsCompanionEntry([string]$CompanionId) {
+  if ($null -eq $script:UabsCompanionReport) {
+    $script:UabsCompanionReport = @{}
+    try {
+      $registry = Join-Path $PackRoot 'TOOLS\companion_registry.py'
+      $json = & $runtimePython $registry --verify --json 2>$null | Out-String
+      if ($LASTEXITCODE -eq 0 -and $json) {
+        foreach ($p in ($json | ConvertFrom-Json).companions.PSObject.Properties) {
+          $script:UabsCompanionReport[$p.Name] = $p.Value
+        }
+      }
+    } catch { $script:UabsCompanionReport = @{} }
+  }
+  return $script:UabsCompanionReport[$CompanionId]
+}
+
 # Discover separately installed game Forges without baking this maintainer's
 # drive letter into a shipped provider config. Existing valid choices win.
 function Set-UabsDiscoveredGameForgeRoot {
-  param([string]$Variable, [string]$Marker, [string[]]$RelativeCandidates)
-  $root = [Environment]::GetEnvironmentVariable($Variable, 'User')
-  if (-not $root) { $root = [Environment]::GetEnvironmentVariable($Variable, 'Process') }
-  if ($root -and (Test-Path -LiteralPath (Join-Path $root $Marker) -PathType Leaf)) {
-    Set-Item -Path ("Env:" + $Variable) -Value $root
-    return $root
-  }
-  $bases = @($env:LOCALAPPDATA)
-  foreach ($letter in @('C','D','E','F','G','H','S','T','Z')) {
-    $drive = "${letter}:\"
-    if (Test-Path -LiteralPath $drive) { $bases += $drive }
-  }
-  foreach ($base in @($bases | Where-Object { $_ } | Select-Object -Unique)) {
-    foreach ($relative in $RelativeCandidates) {
-      $candidate = Join-Path $base $relative
-      if (-not (Test-Path -LiteralPath (Join-Path $candidate $Marker) -PathType Leaf)) { continue }
-      Set-UabsUserEnv $Variable $candidate
-      Set-Item -Path ("Env:" + $Variable) -Value $candidate
-      Write-UabsOk ("{0} discovered: {1}" -f $Variable, $candidate)
-      return $candidate
+  param([string]$Variable, [string]$Marker, [string[]]$RelativeCandidates, [string]$CompanionId)
+  $root = $null
+  foreach ($scope in @('Process', 'User')) {
+    $candidateRoot = [Environment]::GetEnvironmentVariable($Variable, $scope)
+    if (-not $root -and $candidateRoot) { $root = $candidateRoot }
+    if ($candidateRoot -and (Test-Path -LiteralPath (Join-Path $candidateRoot $Marker) -PathType Leaf)) {
+      Set-Item -Path ("Env:" + $Variable) -Value $candidateRoot
+      return $candidateRoot
     }
   }
+  $stale = $root
+  $candidates = @()
+  if ($CompanionId) {
+    $entry = Get-UabsCompanionEntry $CompanionId
+    if ($entry -and $entry.state -eq 'AMBIGUOUS') {
+      Write-UabsWarn ("{0}: multiple companion owners found; set {1} to the chosen root. Existing configuration retained." -f $CompanionId, $Variable)
+      return $null
+    }
+    if ($entry -and $entry.state -eq 'INSTALLED_UNVERIFIED' -and $entry.path -and
+        (Test-Path -LiteralPath (Join-Path $entry.path $Marker) -PathType Leaf)) {
+      Set-UabsUserEnv $Variable $entry.path
+      Set-Item -Path ("Env:" + $Variable) -Value $entry.path
+      Write-UabsOk ("{0} discovered: {1}" -f $Variable, $entry.path)
+      return $entry.path
+    }
+  }
+  # Every fixed drive this PC actually has, not a guessed letter list.
+  $bases = @($env:LOCALAPPDATA) + @([IO.DriveInfo]::GetDrives() | Where-Object { $_.DriveType -eq 'Fixed' -and $_.IsReady } | ForEach-Object { $_.RootDirectory.FullName })
+  foreach ($base in @($bases | Where-Object { $_ } | Select-Object -Unique)) {
+    foreach ($relative in $RelativeCandidates) { $candidates += (Join-Path $base $relative) }
+  }
+  $matches = @($candidates | Where-Object { Test-Path -LiteralPath (Join-Path $_ $Marker) -PathType Leaf } | Sort-Object -Unique)
+  if ($matches.Count -gt 1) {
+    Write-UabsWarn ("{0}: multiple fallback roots found; existing configuration retained." -f $Variable)
+    return $null
+  }
+  foreach ($candidate in $matches) {
+    Set-UabsUserEnv $Variable $candidate
+    Set-Item -Path ("Env:" + $Variable) -Value $candidate
+    if ($stale) { Write-UabsOk ("{0} moved: {1} -> {2}" -f $Variable, $stale, $candidate) }
+    else { Write-UabsOk ("{0} discovered: {1}" -f $Variable, $candidate) }
+    return $candidate
+  }
+  if ($stale) { Write-UabsWarn ("{0} points to a missing folder ({1}); no moved copy was found, so it was left as is" -f $Variable, $stale) }
   return $null
 }
 
-$robloxForge = Set-UabsDiscoveredGameForgeRoot -Variable 'ROBLOX_FORGE_ROOT' -Marker 'mcp_server\server.py' -RelativeCandidates @('RobloxForge','Apps\Roblox Tools\RobloxForge')
-$saintsForge = Set-UabsDiscoveredGameForgeRoot -Variable 'SAINTSROW_FORGE_ROOT' -Marker 'mcp_server\server.py' -RelativeCandidates @('SaintsRowForge','Apps\Saints Row Tools\SaintsRowForge')
+$robloxForge = Set-UabsDiscoveredGameForgeRoot -Variable 'ROBLOX_FORGE_ROOT' -Marker 'mcp_server\server.py' -RelativeCandidates @('RobloxForge','Apps\Roblox Tools\RobloxForge') -CompanionId 'roblox-forge'
+$saintsForge = Set-UabsDiscoveredGameForgeRoot -Variable 'SAINTSROW_FORGE_ROOT' -Marker 'mcp_server\server.py' -RelativeCandidates @('SaintsRowForge','Apps\Saints Row Tools\SaintsRowForge') -CompanionId 'saintsrow-forge'
 $installed['roblox-forge-discovery'] = @{ status=$(if($robloxForge){'found'}else{'not-installed'}); root=$robloxForge }
 $installed['saints-row-forge-discovery'] = @{ status=$(if($saintsForge){'found'}else{'not-installed'}); root=$saintsForge }
 

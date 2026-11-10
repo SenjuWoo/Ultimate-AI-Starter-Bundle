@@ -1,9 +1,13 @@
-<!-- Ultimate AI Starter Bundle v8.38.3 -->
-# Ultimate AI Starter Bundle v8.38.3
+<!-- Ultimate AI Starter Bundle v8.39.0 -->
+# Ultimate AI Starter Bundle v8.39.0
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
 games, mods and tools live.
+
+Workflow hints remain advisory. Creative work keeps its scope, tool discovery
+uses verified owners and bounded local roots, and detailed inventories are read
+when needed. Existing model choices and personal settings are preserved.
 
 **What it is not:** another model, a hosted service, or a package manager for
 other people's tools. It is the foundation those tools plug into.

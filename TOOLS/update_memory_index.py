@@ -50,7 +50,8 @@ def generate(root: Path) -> str:
               "Update-MemoryIndex.ps1": "reasoning-discipline", "update_memory_index.py": "reasoning-discipline",
               "verify_docs.py": "check-work", "verify_manifest.py": "verification-discipline",
               "verify_product.py": "verification-discipline"}
-    for path in sorted((root / "TOOLS").iterdir()):
+    tool_paths = list((root / "TOOLS").iterdir()) + list((root / "TOOLS" / "hooks").glob("*.py"))
+    for path in sorted(tool_paths):
         if not path.is_file() or path.suffix.lower() not in {".py", ".ps1", ".bat", ".cmd", ".psm1"}:
             continue
         text = path.read_text(encoding="utf-8-sig")
@@ -61,7 +62,8 @@ def generate(root: Path) -> str:
             match = re.search(r"(?im)^\s*(?:#\s*(?!>|<)([^\n]+)|\.SYNOPSIS\s*\n\s*([^\n]+)|rem\s+([^\n]+))", text)
             if match:
                 description = next(x.strip() for x in match.groups() if x)
-        add("tool:" + path.name, description or "Maintainer tool; read its parameter/help header.",
+        identity = path.relative_to(root / "TOOLS").as_posix()
+        add("tool:" + identity, description or "Maintainer tool; read its parameter/help header.",
             path.relative_to(root).as_posix(), "powershell -NoProfile -ExecutionPolicy Bypass -File TESTS/Test-Pack.ps1",
             owners.get(path.name, "tool-discovery"))
 
@@ -73,12 +75,24 @@ def generate(root: Path) -> str:
         add("catalog:" + name, str(purpose).split(". ")[0], catalog_path,
             "python .github/scripts/check_versions.py", component.get("owner", "ai-tooling-stack"))
 
+    # These already own discovery and activation. Index them without copying
+    # runtime state or maintaining another capability catalog.
+    companion_path = "BUNDLED-TOOLS/COMPANIONS.json"
+    companions = json.loads((root / companion_path).read_text(encoding="utf-8-sig"))
+    for name, entry in sorted(companions["companions"].items()):
+        add("companion:" + name, entry.get("notes") or entry["title"], companion_path,
+            "python TOOLS/companion_registry.py --verify", entry["repo"])
+    profile_path = "BUNDLED-TOOLS/PROFILES.json"
+    for profile in json.loads((root / profile_path).read_text(encoding="utf-8-sig"))["profiles"]:
+        add("profile:" + profile["id"], profile["title"], profile_path,
+            "powershell -NoProfile -File TOOLS/Set-McpProfile.ps1 -List", "capability-profiles")
+
     lines = ["# Maintainer memory index", "", "Generated; do not hand-edit. Regenerate: `powershell -NoProfile -ExecutionPolicy Bypass -File TOOLS/Update-MemoryIndex.ps1`.",
              "Source routing only. Progress belongs in STATE.md; machine paths/preferences belong in MACHINE-MAP.md / PROFILE.md.", "",
              "| Question | Source | Command |", "|---|---|---|",
              "| Which gates exist / run the full gate? | TESTS/Test-Pack.ps1 | `powershell -NoProfile -ExecutionPolicy Bypass -File TESTS/Test-Pack.ps1` |",
              "| CI convergence for this commit? | TOOLS/Wait-External.ps1; _CANONICAL-SKILLS/ci-convergence/SKILL.md | `powershell -NoProfile -ExecutionPolicy Bypass -File TOOLS/Wait-External.ps1 -GitHubRun auto -Repo OWNER/REPO -Sha FULL_SHA` |",
-             "| Catalog / companion owners? | BUNDLED-TOOLS/CATALOG.json | `python .github/scripts/check_versions.py` |",
+             "| Catalog / companion owners? | BUNDLED-TOOLS/CATALOG.json; BUNDLED-TOOLS/COMPANIONS.json | `python TOOLS/companion_registry.py --verify` |",
              "| Docs / index current? | TOOLS/verify_docs.py | `python TOOLS/verify_docs.py` |", "",
              "| Name | What it does | Path | Verify command | Owning skill / project |", "|---|---|---|---|---|"]
     for row in sorted(rows.values()):

@@ -62,7 +62,13 @@ try {
     $customFile = Join-Path $customSkill 'SKILL.md'
     [IO.File]::WriteAllText($customFile, 'user-owned', $utf8)
 
+    $legacy = Join-Path $dstRoot ('.uabs-skill-backup-personal-recovered-' + ('a' * 32))
+    New-Item -ItemType Directory -Force -Path $legacy | Out-Null
+    [IO.File]::WriteAllText((Join-Path $legacy 'SKILL.md'), 'only surviving personal copy', $utf8)
     Sync-UabsProviderSkills -From $srcRoot -To $dstRoot -Provider Test
+    if ([IO.File]::ReadAllText((Join-Path $dstRoot 'personal-recovered/SKILL.md')) -cne 'only surviving personal copy') { throw 'Interrupted skill backup was lost.' }
+    $savedLegacy = @(Get-ChildItem -LiteralPath (Join-Path (Split-Path -Parent $dstRoot) '.uabs-skill-work') -Directory -Filter 'recovered-*')
+    if ($savedLegacy.Count -ne 1 -or [IO.File]::ReadAllText((Join-Path $savedLegacy[0].FullName 'SKILL.md')) -cne 'only surviving personal copy') { throw 'Legacy recovery copy was not retained.' }
 
     $actual = [IO.File]::ReadAllText($dstFile)
     if ($actual -cne $new) {

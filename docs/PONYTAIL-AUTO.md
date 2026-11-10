@@ -5,7 +5,7 @@ reads the prompt, the project file and the current session, then either injects
 one instruction or nothing at all. No model call is spent on the decision, and
 the same prompt always gets the same answer.
 
-Default is **OFF**. Auto only nudges a turn when the request is provably a
+Default is **OFF**. Auto only nudges a turn when its signals indicate a
 narrow fix or clearly requested simplification; everything else stays silent.
 
 ## Where it can run
@@ -20,6 +20,9 @@ If a provider cannot inject context before the request, it gets no hook. A hook
 that silently never fires is worse than a documented manual command.
 
 ## Decision order
+
+The selected native mode is checked first. Only `auto` reaches this decision
+order; manual modes use the plugin, and `off` injects nothing.
 
 1. **Explicit request in the prompt** — `stop ponytail`, `normal mode`,
    `ponytail off`, `/ponytail lite|full|ultra`, `be lazy`, `simplest solution`,
@@ -40,6 +43,7 @@ default `full`) caps what classification may choose.
 | Signal | Result |
 |---|---|
 | Creative or exploratory words (story, scene, design, brainstorm, write me, logo, mood board, …) | OFF |
+| Architecture, a new product, a major rework, or work from scratch | OFF |
 | An open question with no artifact (`what`, `why`, `should I`, `how would you`, `fix it`, `make it better`) | OFF |
 | Simplification words (simplify, refactor this, dedupe, dead code, over-engineered, reduce complexity) | FULL |
 | Maintenance words plus a named artifact or path (changelog, regenerate the manifest, bump version, update the docs) | FULL |
@@ -93,5 +97,5 @@ untouched.
 - The decision is per turn. A task that starts as a fix and turns creative is
   not reclassified mid-task unless the prompt changes.
 - Auto never edits upstream Ponytail, and never overrides an explicit command.
-- The hook costs one interpreter start per turn (~0.1 s here); it does no
+- The hook costs one interpreter start per turn; measure timing on the target host. It does no
   network and writes nothing but the session file.

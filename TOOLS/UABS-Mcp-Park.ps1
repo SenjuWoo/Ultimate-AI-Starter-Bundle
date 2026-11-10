@@ -68,9 +68,10 @@ function Test-UabsGithubMcpParked {
 function Get-UabsHermesDefaultEntries {
   <# Hermes' default profile, read for REPORTING only. Hermes profiles are native
      and its desktop app rewrites config.yaml from memory, so nothing here edits it. #>
-  $hp = Get-UabsHermesPaths
-  if (-not $hp -or -not (Test-UabsPath -LiteralPath $hp.Config -PathType Leaf)) { return }
-  $yaml = [IO.File]::ReadAllText($hp.Config)
+  param([string]$ConfigPath, [string]$Provider = 'Hermes')
+  if (-not $ConfigPath) { $hp = Get-UabsHermesPaths; if ($hp) { $ConfigPath = $hp.Config } }
+  if (-not (Test-UabsPath -LiteralPath $ConfigPath -PathType Leaf)) { return }
+  $yaml = [IO.File]::ReadAllText($ConfigPath)
   $m = [regex]::Match($yaml, '(?ms)^mcp_servers:[ \t]*\r?\n(?<b>(?:^[ \t].*(?:\r?\n|$))*)')
   if (-not $m.Success) { return }
   $name = $null; $buf = New-Object System.Text.StringBuilder
@@ -78,7 +79,7 @@ function Get-UabsHermesDefaultEntries {
     if ($name) {
       $block = $buf.ToString()
       [pscustomobject]@{
-        Provider = 'Hermes'; Id = $name; Style = 'yaml'; Path = $hp.Config; Section = 'mcp_servers'
+        Provider = $Provider; Id = $name; Style = 'yaml'; Path = $ConfigPath; Section = 'mcp_servers'
         Text = $block; Definition = $null; Block = $block
         Disabled = [bool]($block -match '(?im)^\s+enabled:\s*false\b')
       }
@@ -96,14 +97,18 @@ function Get-UabsGlobalMcpEntries {
   <# Every machine-wide server the file-based provider configs declare. Hermes
      keeps named YAML profiles that Migrate-HermesProfiles.ps1 owns, so it is
      not read here. #>
-  param([string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes', 'Antigravity'))
+  param([string[]]$Providers = @('Claude', 'Codex', 'Grok', 'Kimi', 'Hermes', 'Antigravity'), [string]$ProjectPath)
   $targets = Get-UabsMcpTargets
   foreach ($provider in $Providers) {
-    if ($provider -eq 'Hermes') { Get-UabsHermesDefaultEntries; continue }
-    $t = $targets[$provider]
+    if ($provider -eq 'Hermes') { if (-not $ProjectPath) { Get-UabsHermesDefaultEntries }; continue }
+    $t = if ($ProjectPath) { Get-UabsProviderProjectTarget -Provider $provider -ProjectPath $ProjectPath } else { $targets[$provider] }
     if (-not $t -or -not (Test-UabsPath -LiteralPath $t.Path -PathType Leaf)) { continue }
     if ($t.Style -eq 'json') {
       $doc = Read-UabsJsonDocument -Path $t.Path
+      if ($t.ProjectKey) {
+        if (-not $doc['projects'] -or -not $doc['projects'][$t.ProjectKey]) { continue }
+        $doc = $doc['projects'][$t.ProjectKey]
+      }
       $map = Get-UabsJsonSection -Container $doc -Section $t.Section
       if ($null -eq $map) { continue }
       foreach ($name in @($map.Keys)) {
@@ -129,6 +134,26 @@ function Get-UabsGlobalMcpEntries {
         Provider = $provider; Id = [string]$n; Style = 'toml'; Path = $t.Path; Section = $t.Section
         Text = $byName[$n]; Definition = $null; Block = $byName[$n]
         Disabled = [bool]($byName[$n] -match '(?im)^\s*enabled\s*=\s*false\b')
+      }
+    }
+  }
+}
+
+function Get-UabsDeadMcpLaunchPaths {
+  <# Inspect launch fields only. Never inspect/print headers, env, prompts or
+     arbitrary historical paths elsewhere in a provider configuration.
+     Existing files do not prove a handshake; this check only disproves a
+     launch whose absolute executable or script path is missing. #>
+  param([object[]]$Entries)
+  $pattern = '(?<p>[A-Za-z]:[\\/](?:[^"''\r\n;]*?)\.(?:exe|cmd|bat|ps1|py|mjs|cjs|js))(?=["''\s,\]]|$)'
+  foreach ($entry in $Entries) {
+    if ($entry.Disabled) { continue }
+    $seen = New-Object 'System.Collections.Generic.HashSet[string]'
+    foreach ($match in [regex]::Matches((Get-UabsMcpLaunchText -Entry $entry), $pattern)) {
+      $path = $match.Groups['p'].Value.Replace('\\', '\').Replace('/', '\')
+      $path = [Environment]::ExpandEnvironmentVariables($path)
+      if ($seen.Add($path.ToLowerInvariant()) -and -not (Test-UabsPath -LiteralPath $path -PathType Leaf)) {
+        [pscustomobject]@{ provider = $entry.Provider; server = $entry.Id; config = $entry.Path; missing_path = $path }
       }
     }
   }

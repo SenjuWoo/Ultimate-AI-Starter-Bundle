@@ -317,6 +317,20 @@ if ($Uninstall) {
       & $python (Join-Path $hooksSrc 'hermes_gateway_guard.py') --remove-sitecustomize
     }
   }
+  if (-not $CheckOnly) {
+    foreach ($provider in @($Providers | Where-Object { $_ -in @('Claude','Hermes') })) {
+      foreach ($name in @('ponytail_auto.py','task_router_hook.py')) {
+        $script = Join-Path $installRoot $name
+        if (-not (Test-Path -LiteralPath $script)) { continue }
+        $wireArgs = @($script, 'wire', $provider.ToLowerInvariant(), '--remove')
+        if ($provider -eq 'Hermes') {
+          if (-not $hx) { continue }
+          Invoke-UabsHermesPython -HermesExe $hx -PythonArgs $wireArgs
+        } else { & $python @wireArgs }
+        if ($LASTEXITCODE -ne 0) { throw "$provider prompt hook removal failed for $name." }
+      }
+    }
+  }
   Write-Host 'Codex: disable [plugins."completeness-gate@ultimate-bundle"] in ~/.codex/config.toml'
   exit 0
 }
@@ -346,15 +360,23 @@ Remove-DeadDrops
 # prompt-time injection point; the other providers keep the manual commands.
 $autoSrc = Join-Path $hooksSrc 'ponytail_auto.py'
 $autoDest = Join-Path $installRoot 'ponytail_auto.py'
-if (Test-Path -LiteralPath $autoSrc) {
+if (-not $CheckOnly -and (Test-Path -LiteralPath $autoSrc)) {
   Copy-Item -LiteralPath $autoSrc -Destination $autoDest -Force
   $autoEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
   try { $autoCheck = & $python $autoDest self-check 2>&1 | Out-String } finally { $ErrorActionPreference = $autoEap }
   if ($LASTEXITCODE -eq 0) {
     Write-Host ("ponytail auto: " + $autoCheck.Trim())
-    & $python $autoDest wire all | ForEach-Object { Write-Host ("ponytail auto: " + $_) }
+    # Only the selected providers may be changed. CheckOnly must not copy or wire.
+    foreach ($provider in @($Providers | Where-Object { $_ -in @('Claude','Hermes') })) {
+      if ($provider -eq 'Hermes') {
+        $hx = Get-HermesExe
+        if (-not $hx) { continue }
+        Invoke-UabsHermesPython -HermesExe $hx -PythonArgs @($autoDest, 'wire', 'hermes')
+      } else { & $python $autoDest wire claude }
+      if ($LASTEXITCODE -ne 0) { throw "$provider Ponytail hook wiring failed." }
+    }
   } else {
-    Write-Host "ponytail auto: self-check failed, leaving the hook unwired" -ForegroundColor Yellow
+    throw "Ponytail prompt hook self-check failed: $autoCheck"
   }
 }
 
@@ -363,7 +385,7 @@ if (Test-Path -LiteralPath $autoSrc) {
 # the repository checkout.
 $routerSrc = Join-Path $hooksSrc 'task_router_hook.py'
 $routerDest = Join-Path $installRoot 'task_router_hook.py'
-if (Test-Path -LiteralPath $routerSrc) {
+if (-not $CheckOnly -and (Test-Path -LiteralPath $routerSrc)) {
   Copy-Item -LiteralPath $routerSrc -Destination $routerDest -Force
   foreach ($dep in @('task_route.py', 'recommended_skills.py')) {
     $depSrc = Join-Path (Split-Path -Parent $hooksSrc) $dep
@@ -373,9 +395,16 @@ if (Test-Path -LiteralPath $routerSrc) {
   try { $routerCheck = & $python $routerDest self-check 2>&1 | Out-String } finally { $ErrorActionPreference = $routerEap }
   if ($LASTEXITCODE -eq 0) {
     Write-Host ("task router: " + $routerCheck.Trim())
-    & $python $routerDest wire all | ForEach-Object { Write-Host ("task router: " + $_) }
+    foreach ($provider in @($Providers | Where-Object { $_ -in @('Claude','Hermes') })) {
+      if ($provider -eq 'Hermes') {
+        $hx = Get-HermesExe
+        if (-not $hx) { continue }
+        Invoke-UabsHermesPython -HermesExe $hx -PythonArgs @($routerDest, 'wire', 'hermes')
+      } else { & $python $routerDest wire claude }
+      if ($LASTEXITCODE -ne 0) { throw "$provider task router hook wiring failed." }
+    }
   } else {
-    Write-Host "task router: self-check failed, leaving the hook unwired" -ForegroundColor Yellow
+    throw "Task router hook self-check failed: $routerCheck"
   }
 }
 

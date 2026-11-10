@@ -4,7 +4,8 @@ The model is not asked to choose a mode, and nothing here calls a model. A short
 rule set reads the operator's prompt plus two small config files and emits the
 exact instruction the next request will carry, or nothing at all.
 
-Contract, in priority order:
+The operator's selected mode is authoritative; this hook acts only in AUTO.
+Within AUTO, the priority order is:
 
 1. An explicit request in the prompt wins ("stop ponytail", "ponytail lite").
 2. A choice made earlier in the same session sticks, so a mode does not flip
@@ -72,6 +73,8 @@ RE_CREATIVE = re.compile(
     r"\b(story|stories|poem|scene|chapter|novel|character|characters|dialogue|lore|brainstorm|"
     r"ideas?|design|mockup|mock-up|concept|mood ?board|poster|logo|thumbnail|video|compose|"
     r"write me|write a|draft|marketing|tagline|pitch|essay|article|script for)\b", re.I)
+RE_ARCHITECTURE = re.compile(r"\b(architecture|architectural|from scratch|"
+                             r"major rework|redesign|new product|whole system)\b", re.I)
 RE_AMBIGUOUS = re.compile(
     r"^\s*(what|why|how|should|can|could|would|is|are|do|does|thoughts|opinions?)\b|"
     r"\bwhat do you think\b|\bshould i\b|\bhow would you\b", re.I)
@@ -152,8 +155,8 @@ def classify(prompt: str) -> tuple[str, str]:
     maint = bool(RE_MAINT.search(text))
     question = bool(RE_AMBIGUOUS.search(text))
 
-    if creative:
-        return "off", "creative or exploratory request"
+    if creative or RE_ARCHITECTURE.search(text):
+        return "off", "creative, architectural or exploratory request"
     if question and not (concrete and (fix or maint)):
         return "off", "open question without a concrete target"
     if simplify and not creative:
@@ -323,7 +326,7 @@ def _wired(provider: str) -> str:
         if not cfg or not cfg.exists():
             return "unknown"
         return "on" if "ponytail_auto.py" in cfg.read_text(encoding="utf-8-sig", errors="ignore") else "off"
-    settings = Path.home() / ".claude" / "settings.json"
+    settings = Path(os.environ.get("CLAUDE_CONFIG_DIR") or Path.home() / ".claude") / "settings.json"
     if not settings.exists():
         return "missing"
     data = _load_json(settings)
@@ -354,12 +357,14 @@ def wire_hermes_script(script, enable: bool = True, config=None, event: str = "p
     yaml.preserve_quotes = True
     yaml.width = 4096
     document = yaml.load(original) or {}
+    if not enable and (not document.get("hooks") or event not in document["hooks"]):
+        return ["Hermes hook already absent"]
     hooks = document.get("hooks")
     if hooks is None:
         hooks = {}
         document["hooks"] = hooks
     current = hooks.get(event) or []
-    kept = [entry for entry in current if marker not in str(entry.get("command", ""))]
+    kept = [entry for entry in current if not _owns_command(entry.get("command", ""), script)]
     actions = []
     if enable:
         kept.append({"command": command, "timeout": 15})
@@ -374,49 +379,91 @@ def wire_hermes_script(script, enable: bool = True, config=None, event: str = "p
     if updated == original:
         actions.append("Hermes hook already current")
     else:
-        cfg.with_suffix(cfg.suffix + ".bak-" + marker).write_text(original, encoding="utf-8")
+        _backup(cfg, marker)
         cfg.write_text(updated, encoding="utf-8")
         actions.append(("wired" if enable else "removed") + " Hermes %s hook" % event)
     if enable:
-        _approve(cfg.parent, event, command)
+        _approve(cfg.parent, event, command, script)
         actions.append("approved the hook in shell-hooks-allowlist.json")
     return actions
 
 
-def _approve(folder: Path, event: str, command: str) -> None:
+def _backup(path: Path, label: str) -> None:
+    import uuid
+    path.with_name(path.name + ".bak-" + label + "-" + uuid.uuid4().hex).write_bytes(path.read_bytes())
+
+
+def _owns_command(command, script: Path) -> bool:
+    # Match the full script argument and generated command shape. A personal
+    # script with the same basename, or a chained command, is not bundle-owned.
+    match = re.fullmatch(r'\s*(?:"[^"]+"|\S+)\s+"([^"]+)"\s+hook'
+                         r'(?:\s+--event\s+pre_llm_call)?\s+--format\s+(?:claude|hermes)\s*', str(command))
+    return bool(match and os.path.normcase(os.path.abspath(match[1])) == os.path.normcase(str(script.resolve())))
+
+
+def _approve(folder: Path, event: str, command: str, script: Path) -> None:
     path = folder / "shell-hooks-allowlist.json"
-    data = _load_json(path) or {"approvals": []}
+    data = json.loads(path.read_text(encoding="utf-8-sig")) if path.exists() else {"approvals": []}
+    stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(script.stat().st_mtime))
+    if any(isinstance(a, dict) and a.get("event") == event and a.get("command") == command
+           and a.get("script_mtime_at_approval") == stamp for a in data.get("approvals", [])):
+        return
     approvals = [a for a in data.get("approvals", [])
                  if not (isinstance(a, dict) and a.get("event") == event and a.get("command") == command)]
     approvals.append({
         "event": event,
         "command": command,
         "approved_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        "script_mtime_at_approval": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(Path(__file__).stat().st_mtime)),
+        "script_mtime_at_approval": stamp,
     })
     data["approvals"] = approvals
     if path.exists():
-        path.with_suffix(path.suffix + ".bak-ponytail-auto").write_text(json.dumps(_load_json(path), indent=2), encoding="utf-8")
+        _backup(path, script.stem)
     path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def wire_claude(enable: bool = True) -> list[str]:
     """Merge a UserPromptSubmit hook into ~/.claude/settings.json."""
-    settings = Path.home() / ".claude" / "settings.json"
-    if not settings.exists():
-        return ["Claude settings not found"]
-    data = _load_json(settings)
-    hooks = data.get("hooks") if isinstance(data.get("hooks"), dict) else {}
-    groups = [g for g in (hooks.get("UserPromptSubmit") or [])
-              if not any("ponytail_auto.py" in str(h.get("command", "")) for h in (g.get("hooks") or []))]
+    return wire_claude_script(Path(__file__), enable=enable)
+
+
+def wire_claude_script(script, enable=True, settings=None) -> list[str]:
+    """Own one child hook, never the other hooks sharing its matcher group."""
+    settings = Path(settings) if settings else Path(
+        os.environ.get("CLAUDE_CONFIG_DIR") or Path.home() / ".claude") / "settings.json"
+    original = settings.read_bytes() if settings.exists() else b""
+    data = json.loads(original.decode("utf-8-sig")) if original else {}
+    if not isinstance(data, dict):
+        raise ValueError("Claude settings must be an object; left untouched")
+    if not enable and (not data.get("hooks") or "UserPromptSubmit" not in data["hooks"]):
+        return ["Claude hook already absent"]
+    hooks = data.setdefault("hooks", {})
+    if not isinstance(hooks, dict) or not isinstance(hooks.get("UserPromptSubmit", []), list):
+        raise ValueError("Claude hooks have an unsupported shape; left untouched")
+    script = Path(script).resolve()
+    groups = []
+    for group in hooks.get("UserPromptSubmit", []):
+        if not isinstance(group, dict) or not isinstance(group.get("hooks"), list):
+            raise ValueError("Claude hook group has an unsupported shape; left untouched")
+        remaining = [h for h in group["hooks"] if not (
+            isinstance(h, dict) and _owns_command(h.get("command", ""), script))]
+        if remaining or not group["hooks"]:
+            groups.append({**group, "hooks": remaining})
     if enable:
-        groups.append({"hooks": [{"type": "command", "command": _hook_command(sys.executable, "claude"), "timeout": 15}]})
+        command = "%s %s hook --format claude" % (_quote(sys.executable), _quote(script))
+        groups.append({"hooks": [{"type": "command", "command": command, "timeout": 15}]})
     if groups:
         hooks["UserPromptSubmit"] = groups
     else:
         hooks.pop("UserPromptSubmit", None)
-    data["hooks"] = hooks
-    settings.with_suffix(".json.bak-ponytail-auto").write_text(json.dumps(_load_json(settings), indent=2), encoding="utf-8")
+    # Semantic no-op: preserve formatting, mtime and the original recovery copy.
+    if original and json.loads(original.decode("utf-8-sig")) == data:
+        return ["Claude hook already current"]
+    settings.parent.mkdir(parents=True, exist_ok=True)
+    if original:
+        import uuid
+        backup = settings.with_name(settings.name + ".bak-" + script.stem + "-" + uuid.uuid4().hex)
+        backup.write_bytes(original)
     settings.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
     return [("wired" if enable else "removed") + " Claude UserPromptSubmit hook"]
 
@@ -477,14 +524,11 @@ def _self_check() -> int:
         ("refactor the whole app into services", "full"),
         ("fix the typo in README.md line 12", "lite"),
         ("why is the sky blue?", "off"),
-        ("/ponytail ultra", "ultra"),
-        ("stop ponytail", "off"),
+        ("major rework of the installer architecture", "off"),
     ]
     bad = 0
     for prompt, want in cases:
         got, reason = classify(prompt)
-        if prompt.startswith(("/ponytail", "stop")):
-            got = resolve(prompt)["mode"]
         if got != want:
             print(f"FAIL {want}!={got}: {prompt} ({reason})")
             bad += 1

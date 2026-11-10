@@ -26,6 +26,8 @@ class MaintainerTests(unittest.TestCase):
         (root / "_CANONICAL-SKILLS/one").mkdir(parents=True)
         (root / "_CANONICAL-SKILLS/one/SKILL.md").write_text("---\nname: one\ndescription: One precise task.\n---\n", encoding="utf-8")
         (root / "BUNDLED-TOOLS/CATALOG.json").write_text('{"components": []}', encoding="utf-8")
+        (root / "BUNDLED-TOOLS/COMPANIONS.json").write_text('{"companions": {}}', encoding="utf-8")
+        (root / "BUNDLED-TOOLS/PROFILES.json").write_text('{"profiles": []}', encoding="utf-8")
         for name in verify_docs.DOCS:
             (root / name).write_text("`TOOLS/real.py`\n", encoding="utf-8")
         (root / "TOOLS/real.py").write_text('"""Real command."""\n', encoding="utf-8")

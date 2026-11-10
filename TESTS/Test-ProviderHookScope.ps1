@@ -40,10 +40,13 @@ try {
     # The production merge runs unchanged. Disable only persistent PATH repair;
     # Python is a full executable path captured before the environment is isolated.
     Put (Join-Path $testPack 'TOOLS\UABS-Common.ps1') (". '$common'`nfunction Repair-UabsHookShellPath { param([switch]`$CheckOnly) }`nfunction Get-UabsPythonExecutable { return `$env:UABS_HOOK_TEST_PYTHON }`n")
-    foreach ($name in @('completeness_gate.py','assumption_gate.py','rtk_safe_hook.py','hermes_gateway_guard.py')) {
+    foreach ($name in @('completeness_gate.py','assumption_gate.py','rtk_safe_hook.py','hermes_gateway_guard.py','ponytail_auto.py','task_router_hook.py')) {
         $destination = Join-Path $testPack ('TOOLS\hooks\' + $name)
         [void][IO.Directory]::CreateDirectory((Split-Path -Parent $destination))
         [IO.File]::Copy((Join-Path $PackRoot ('TOOLS\hooks\' + $name)), $destination)
+    }
+    foreach ($name in @('task_route.py','recommended_skills.py')) {
+        [IO.File]::Copy((Join-Path $PackRoot ('TOOLS\' + $name)), (Join-Path $testPack ('TOOLS\' + $name)))
     }
     $env:USERPROFILE = Join-Path $fixture 'default user'
     $env:LOCALAPPDATA = Join-Path $fixture 'local'
@@ -68,6 +71,9 @@ try {
     Assert ($resolvedHermes -ceq $modernHermes) 'Hook setup missed the modern Hermes launcher on a cold PATH.'
     [IO.File]::Delete($modernHermes)
     $root = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\hooks'
+    # A cold dry run must not create the hook directory or any provider config.
+    Run-Gate Claude -CheckOnly
+    Assert (-not (Test-Path -LiteralPath $root)) 'CheckOnly created installed prompt hooks.'
     $owned = '"python.exe" "' + (Join-Path $root 'completeness_gate.py') + '" --pre'
     $personal = '"python.exe" "C:\personal\completeness_gate.py" --pre'
     $initial = [ordered]@{ personal='keep'; hooks=[ordered]@{ PreToolUse=@(
@@ -89,6 +95,7 @@ try {
     Assert (@(Read-Commands $doc | Where-Object { $_ -like ('*' + $root + '*') }).Count -eq 6) ('Custom Claude home did not receive the bundle hooks: ' + $script:lastGateOutput)
     Assert ($doc.hooks.PreToolUse[0].future -eq 'keep' -and $doc.hooks.PreToolUse[0].hooks[0].future -eq 'keep' -and $doc.personal -eq 'keep') 'Custom sibling or group metadata was changed.'
     Assert ([IO.File]::ReadAllText($defaultClaude) -ceq '{"personal":"default profile"}') 'A custom-home install changed the default Claude profile.'
+    Assert ($doc.hooks.UserPromptSubmit.Count -eq 2) 'The selected Claude profile lacks its prompt hooks.'
     foreach ($path in $untouched.Keys) { Assert ([IO.File]::ReadAllText($path) -ceq $untouched[$path]) ('An unselected provider file changed: ' + $path) }
     $beforeCheck = [IO.File]::ReadAllText($claude)
     Run-Gate Claude -CheckOnly
@@ -96,6 +103,7 @@ try {
     Run-Gate Claude -Uninstall
     $doc = [IO.File]::ReadAllText($claude) | ConvertFrom-Json
     Assert (@(Read-Commands $doc).Count -eq 2 -and @(Read-Commands $doc) -contains $personal) 'Selected uninstall removed personal handlers or retained bundle handlers.'
+    Assert (-not $doc.hooks.UserPromptSubmit) 'Selected uninstall retained bundle prompt hooks.'
     Put $claude '{ "personal": "untouched selected profile" }'
     Run-Gate Claude -Uninstall
     Assert ([IO.File]::ReadAllText($claude) -ceq '{ "personal": "untouched selected profile" }') 'Uninstall rewrote a selected file without any bundle hooks.'
@@ -143,8 +151,8 @@ function Invoke-UabsHermesPython {
     Run-Gate Hermes -Uninstall
     Assert (Test-Path -LiteralPath $vendorMarker) 'Hermes uninstall bypassed the vendor dependency runtime.'
     $invocations = @([IO.File]::ReadAllLines($vendorMarker) | ForEach-Object { $_ | ConvertFrom-Json })
-    Assert ($invocations.Count -eq 4) 'Hermes uninstall did not remove each of the four bundle gates.'
-    foreach ($invocation in $invocations) {
+    Assert ($invocations.Count -eq 6) 'Hermes uninstall did not remove the four gates and two prompt hooks.'
+    foreach ($invocation in @($invocations | Select-Object -First 4)) {
         Assert ($invocation.executable -ceq $modernHermes -and $invocation.arguments[0] -ceq $wireFixture -and $invocation.arguments[1] -ceq $modernHermes -and $invocation.arguments -contains '--remove') 'Hermes uninstall passed the wrong runtime or removal arguments.'
     }
     Put $vendorFailure 'fail'

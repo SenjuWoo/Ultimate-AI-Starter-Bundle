@@ -14,6 +14,15 @@ import task_route as tr  # noqa: E402
 
 
 class RoutingTests(unittest.TestCase):
+    def test_suggestions_cannot_override_user_intent(self):
+        for text in ("Write a story about a security guard", "Design a magic system for my game"):
+            result = tr.route(text)
+            self.assertTrue(result["advisory"])
+            self.assertEqual(result["primary"], "lightweight")
+            self.assertEqual(result["specialists"], [])
+        result = tr.route("Implement a dialogue endpoint in api.py with OAuth")
+        self.assertIn("security-and-hardening", result["specialists"])
+
     def test_small_bug_stays_lightweight(self):
         r = tr.route("fix the typo in main.py")
         self.assertEqual(r["primary"], "lightweight")

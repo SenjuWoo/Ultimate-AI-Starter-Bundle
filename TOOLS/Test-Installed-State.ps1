@@ -514,6 +514,7 @@ if(-not $SkipForge){
 # Registered-but-useless and installed-but-deliberately-unregistered look
 # identical from the outside; they are opposite situations.
 $capabilityStates = @()
+$mcpPathIssues = @()
 $capRecordDir = Join-Path $PackRoot 'BUNDLED-TOOLS\capability-records'
 try { $capCatalog = Get-UabsCatalog } catch { $capCatalog = $null }
 try { $mcpTargets = Get-UabsMcpTargets } catch { $mcpTargets = @{} }
@@ -538,6 +539,31 @@ if (Test-Path -LiteralPath $profileStatePath -PathType Leaf) {
   } catch { }
 }
 $hermesHomeRoot = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }
+# Configuration presence is not launchability. Use the same scoped entry reader
+# as parking, including named Hermes profiles and known project registrations.
+try {
+  . (Join-Path $PackRoot 'TOOLS\UABS-Mcp-Park.ps1')
+  $launchEntries = @(Get-UabsGlobalMcpEntries -Providers $Providers)
+  $projectPaths = @($PackRoot)
+  if ($profileState -and $profileState.profiles) {
+    foreach ($pp in $profileState.profiles.PSObject.Properties) {
+      if ($pp.Value.projects) { $projectPaths += @($pp.Value.projects.PSObject.Properties.Name) }
+    }
+  }
+  foreach ($projectPath in @($projectPaths | Sort-Object -Unique)) {
+    $launchEntries += @(Get-UabsGlobalMcpEntries -Providers $Providers -ProjectPath $projectPath)
+  }
+  if ($Providers -contains 'Hermes') {
+    foreach ($cfg in @(Get-ChildItem -Path (Join-Path $hermesHomeRoot 'profiles\*\config.yaml') -File -ErrorAction SilentlyContinue)) {
+      $launchEntries += @(Get-UabsHermesDefaultEntries -ConfigPath $cfg.FullName -Provider ('Hermes/' + $cfg.Directory.Name))
+    }
+  }
+  $mcpPathIssues = @(Get-UabsDeadMcpLaunchPaths -Entries $launchEntries | Sort-Object provider,server,config,missing_path -Unique)
+  foreach ($issue in $mcpPathIssues) {
+    Err ('{0}/{1}: configured MCP launch path is missing: {2}. Run TOOLS\Repair-McpPaths.ps1 to inspect a repair.' -f $issue.provider, $issue.server, $issue.missing_path)
+  }
+  if (-not $mcpPathIssues.Count) { Write-UabsOk 'configured MCP absolute launch paths exist (connection not tested)' }
+} catch { Warn ('MCP launch-path check unavailable: ' + $_.Exception.Message) }
 if ($capCatalog) {
   foreach ($comp in @($capCatalog.components | Where-Object { $_.mcp })) {
     # $capState, not $state: $state holds the parsed install-state.json that
@@ -1197,7 +1223,6 @@ $autostartReport = @($autostarts | ForEach-Object {
   [ordered]@{ name = $_.Name; source = $_.Source; dead = $_.Dead; missing_targets = @($_.MissingTargets) }
 })
 
-$doctorResult = if ($errors.Count) { 'FAIL' } else { 'PASS' }
 
 # Ponytail must be reported honestly: an "off" mode that still injects is a failure.
 $ponyReport = $null
@@ -1216,10 +1241,12 @@ if (Test-Path -LiteralPath $ponyScriptPath -PathType Leaf) {
     elseif ($ponyReport.effective) { $warnings += ("ponytail: " + $ponyReport.effective) }
   }
 }
-$report=[ordered]@{version=$packBare;checked_utc=[DateTime]::UtcNow.ToString('o');errors=@($errors);warnings=@($warnings);reverse_this=$reverseHealth;rtk_runtime=$rtkRuntime;capability_states=@($capabilityStates);hermes_tool_budgets=@($hermesBudgets);hermes_plugin_issues=@($hermesPluginIssues);hermes_discouraged_plugin_issues=@($hermesDiscouragedPluginIssues);hermes_hook_issues=@($hermesHookIssues);codex_skill_index=$script:codexSkillIndex;ai_autostarts=@($autostartReport);hook_misdirection=@($hookMisdirection);shadowed_tools=@($shadowReport);result=$doctorResult}
+$report=[ordered]@{version=$packBare;checked_utc=[DateTime]::UtcNow.ToString('o');errors=@($errors);warnings=@($warnings);reverse_this=$reverseHealth;rtk_runtime=$rtkRuntime;capability_states=@($capabilityStates);hermes_tool_budgets=@($hermesBudgets);hermes_plugin_issues=@($hermesPluginIssues);hermes_discouraged_plugin_issues=@($hermesDiscouragedPluginIssues);hermes_hook_issues=@($hermesHookIssues);codex_skill_index=$script:codexSkillIndex;ai_autostarts=@($autostartReport);hook_misdirection=@($hookMisdirection);shadowed_tools=@($shadowReport)}
+$report['result'] = if ($errors.Count) { 'FAIL' } else { 'PASS' }
 $reportPath=Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\installed-state-doctor.json'
 $report['grok_hook_issues'] = @($grokHookIssues)
 $report['codex_hook_issues'] = @($codexHookIssues)
+$report['mcp_launch_path_issues'] = @($mcpPathIssues)
 $enc=New-Object System.Text.UTF8Encoding($false); [IO.File]::WriteAllText($reportPath,($report|ConvertTo-Json -Depth 8),$enc)
 if($errors.Count){Write-UabsBad ("Installed-state doctor FAIL ($($errors.Count) error(s)). Report: $reportPath");exit 1}
 Write-UabsOk ("Installed-state doctor PASS. Report: $reportPath")

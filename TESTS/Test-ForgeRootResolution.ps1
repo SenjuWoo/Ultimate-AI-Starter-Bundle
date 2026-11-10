@@ -31,6 +31,8 @@ if (-not (Test-Path -LiteralPath $script -PathType Leaf)) { throw "Missing $scri
 
 $fail = 0
 $sand = $null; $sand2 = $null; $sand3 = $null; $sand4 = $null
+$sand5 = $null
+$priorLocalAppData = $env:LOCALAPPDATA
 
 function Resolve-Target([string]$declared) {
   # -ResolveOnly prints exactly one line, the resolved root, and stops before
@@ -77,6 +79,39 @@ function Check([string]$label, [string]$got, [string]$want) {
 }
 
 try {
+  # Exercise the real discovery functions without running the installer or
+  # writing persistent user environment values. Registry ambiguity must not
+  # fall through to a convenient but unchosen legacy folder.
+  $installerText = [IO.File]::ReadAllText((Join-Path $PackRoot 'INSTALL-AIO.ps1'))
+  foreach ($name in @('Get-UabsCompanionEntry', 'Set-UabsDiscoveredGameForgeRoot')) {
+    $definition = [regex]::Match($installerText, '(?ms)^function ' + $name + '\b.*?^\}').Value
+    if (-not $definition) { throw "Missing installer function: $name" }
+    Invoke-Expression $definition
+  }
+  function Set-UabsUserEnv([string]$Name, [string]$Value) { Set-Item -Path ('Env:' + $Name) -Value $Value }
+  function Write-UabsOk([string]$Message) { }
+  function Write-UabsWarn([string]$Message) { }
+  $sand5 = Join-Path $env:TEMP ('forge-discovery-' + [guid]::NewGuid().ToString('N'))
+  $env:LOCALAPPDATA = $sand5
+  foreach ($name in @('FallbackOne', 'FallbackTwo', 'Chosen')) {
+    New-Item -ItemType Directory -Path (Join-Path $sand5 $name) -Force | Out-Null
+    [IO.File]::WriteAllText((Join-Path $sand5 ($name + '\marker.txt')), 'fixture')
+  }
+  $script:UabsCompanionReport = @{ fixture = [pscustomobject]@{ state='AMBIGUOUS'; path=$null } }
+  $env:UABS_TEST_DISCOVERY_ROOT = $null
+  $discoveryArgs = @{ Variable='UABS_TEST_DISCOVERY_ROOT'; Marker='marker.txt'; CompanionId='fixture'; RelativeCandidates=@('FallbackOne') }
+  Check 'ambiguous registry cannot fall through to legacy root' ([string](Set-UabsDiscoveredGameForgeRoot @discoveryArgs)) ''
+  Check 'ambiguity leaves persistent selection untouched' ([string]$env:UABS_TEST_DISCOVERY_ROOT) ''
+  $env:UABS_TEST_DISCOVERY_ROOT = Join-Path $sand5 'Chosen'
+  Check 'valid explicit selection outranks registry ambiguity' (Set-UabsDiscoveredGameForgeRoot @discoveryArgs) (Join-Path $sand5 'Chosen')
+  $env:UABS_TEST_DISCOVERY_ROOT = $null
+  $script:UabsCompanionReport = @{}
+  $discoveryArgs.RelativeCandidates = @('FallbackOne','FallbackTwo')
+  Check 'multiple fallback roots require an owner selection' ([string](Set-UabsDiscoveredGameForgeRoot @discoveryArgs)) ''
+  $script:UabsCompanionReport = @{ fixture = [pscustomobject]@{ state='INSTALLED_UNVERIFIED'; path=(Join-Path $sand5 'Chosen') } }
+  Check 'verified registry selection precedes legacy roots' (Set-UabsDiscoveredGameForgeRoot @discoveryArgs) (Join-Path $sand5 'Chosen')
+  $env:LOCALAPPDATA = $priorLocalAppData
+
   $sand = Join-Path $env:TEMP ('forgeroot-a-' + [guid]::NewGuid().ToString('N'))
   New-Item -ItemType Directory -Force -Path $sand | Out-Null
 
@@ -145,6 +180,11 @@ try {
   Check 'installer code does not hardcode a Forge version' ($restated.Count.ToString()) '0'
 }
 finally {
+  $env:LOCALAPPDATA = $priorLocalAppData
+  $env:UABS_TEST_DISCOVERY_ROOT = $null
+  if ($sand5 -and [IO.Path]::GetFullPath($sand5).StartsWith([IO.Path]::GetFullPath($env:TEMP).TrimEnd('\') + '\', [StringComparison]::OrdinalIgnoreCase)) {
+    Remove-Item -LiteralPath $sand5 -Recurse -Force -ErrorAction SilentlyContinue
+  }
   $env:SKYRIM_FORGE_ROOT = $null
   foreach ($d in @($sand, $sand2, $sand3, $sand4)) {
     if ($d -and (Test-Path -LiteralPath $d)) { Remove-Item -LiteralPath $d -Recurse -Force -ErrorAction SilentlyContinue }

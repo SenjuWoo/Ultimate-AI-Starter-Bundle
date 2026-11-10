@@ -24,19 +24,20 @@ REGISTRY = os.path.join(os.path.dirname(HERE), "BUNDLED-TOOLS", "COMPANIONS.json
 # DISCOVERED            the folder exists but a required marker is missing
 # INSTALLED_UNVERIFIED  markers are present; no owner doctor has run
 # DEGRADED              a declared requirement is missing on this machine
-STATES = ("NOT_FOUND", "DISCOVERED", "INSTALLED_UNVERIFIED", "DEGRADED")
+STATES = ("NOT_FOUND", "DISCOVERED", "INSTALLED_UNVERIFIED", "DEGRADED", "AMBIGUOUS")
 
 DEFAULT_ROOTS = (
-    os.path.join(os.environ.get("USERPROFILE", ""), "AppData", "Local"),
-    os.path.join(os.environ.get("USERPROFILE", ""), "AppData", "Local", "Skyrim-Tools"),
-    os.path.join(os.environ.get("USERPROFILE", ""), "AppData", "Roaming"),
-    "C:/Program Files",
-    "C:/Program Files (x86)",
+    os.environ.get("LOCALAPPDATA", os.path.expanduser("~/AppData/Local")),
+    os.path.join(os.environ.get("LOCALAPPDATA", os.path.expanduser("~/AppData/Local")), "Skyrim-Tools"),
+    os.environ.get("APPDATA", os.path.expanduser("~/AppData/Roaming")),
+    os.environ.get("ProgramFiles", ""),
+    os.environ.get("ProgramFiles(x86)", ""),
 )
 
 # User-declared tool roots live outside the shipped bundle: one absolute path per line, '#' comments.
 # The bundle carries no maintainer paths, so a public checkout matches nobody's private layout.
-PROFILE_ROOTS = os.path.join(os.environ.get("USERPROFILE", ""), ".uabs", "profile", "TOOL-ROOTS.txt")
+PROFILE_ROOTS = os.path.join(os.environ.get("UABS_PROFILE_ROOT") or
+                            os.path.join(os.path.expanduser("~"), ".uabs", "profile"), "TOOL-ROOTS.txt")
 
 
 class RegistryError(ValueError):
@@ -155,11 +156,12 @@ def roots(extra=None):
     seen, out = set(), []
     declared = [r.strip() for r in os.environ.get("UABS_TOOL_ROOTS", "").split(os.pathsep) if r.strip()]
     if os.path.exists(PROFILE_ROOTS):
-        with open(PROFILE_ROOTS, encoding="utf-8") as fh:
+        with open(PROFILE_ROOTS, encoding="utf-8-sig") as fh:
             declared += [line.strip() for line in fh
                          if line.strip() and not line.lstrip().startswith("#")]
     for root in list(extra or []) + declared + list(DEFAULT_ROOTS):
-        norm = os.path.normcase(os.path.abspath(root)) if root else ""
+        root = os.path.expanduser(os.path.expandvars(root)) if root else ""
+        norm = os.path.normcase(os.path.realpath(root)) if root else ""
         if root and norm not in seen and os.path.isdir(root):
             seen.add(norm)
             out.append(root)
@@ -204,38 +206,66 @@ def _marker_present(root, marker):
     return os.path.exists(os.path.join(root, marker))
 
 
-def _subdirs(root, depth=2):
+SKIP_DIRS = {".git", ".venv", "venv", "node_modules", "__pycache__", "build", "dist",
+             "artifacts", "cache", "caches", "local-only", "private-tweaks", "textures", "meshes"}
+
+
+def _subdirs(root, depth=3):
     """Breadth-first subdirectories, bounded. A moved owner is usually one level
     down; a whole-drive walk is not worth the seconds it costs."""
     level = [root]
     for _ in range(depth):
         nxt = []
         for parent in level:
-            for name in _children(parent):
+            for name in sorted(_children(parent)):
                 candidate = os.path.join(parent, name)
-                if os.path.isdir(candidate):
+                if name.lower() not in SKIP_DIRS and os.path.isdir(candidate) and not os.path.islink(candidate):
                     nxt.append(candidate)
         for candidate in nxt:
             yield candidate
         level = nxt
 
 
-def find(entry, search_roots):
-    """Owner pointer first, then a directory containing every marker."""
+def directory_index(search_roots):
+    """One bounded inventory per report, shared by every companion lookup."""
+    seen, result = set(), []
+    for root in search_roots:
+        for candidate in _with_root(root):
+            key = os.path.normcase(os.path.realpath(candidate))
+            if key in seen:
+                continue
+            seen.add(key)
+            result.append(candidate)
+            if len(result) >= 5000:
+                return result
+    return result
+
+
+def _with_root(root):
+    yield root
+    yield from _subdirs(root)
+
+
+def discover(entry, search_roots, directories=None):
+    """A valid explicit owner wins. Otherwise require one unique marker match."""
     markers = entry["markers"]
+    env_root = os.environ.get(entry.get("root_env", ""), "")
+    if env_root:
+        env_root = os.path.expanduser(os.path.expandvars(env_root))
+        if all(_marker_present(env_root, m) for m in markers):
+            return env_root, [env_root], "environment"
     pointer = pointer_root(entry)
     if pointer and all(_marker_present(pointer, m) for m in markers):
-        return pointer
+        return pointer, [pointer], "owner-pointer"
     wanted = owner_names(entry)
-    for root in search_roots:
-        if _norm(os.path.basename(root.rstrip("\\/"))) in wanted and all(_marker_present(root, m) for m in markers):
-            return root
-        for candidate in _subdirs(root):
-            if _norm(os.path.basename(candidate)) not in wanted:
-                continue
-            if all(_marker_present(candidate, m) for m in markers):
-                return candidate
-    return None
+    directories = directory_index(search_roots) if directories is None else directories
+    candidates = [p for p in directories if _norm(os.path.basename(p.rstrip("\\/"))) in wanted
+                  and all(_marker_present(p, m) for m in markers)]
+    return (candidates[0] if len(candidates) == 1 else None), candidates, "bounded-discovery"
+
+
+def find(entry, search_roots):
+    return discover(entry, search_roots)[0]
 
 
 def find_partial(entry, search_roots):
@@ -253,31 +283,37 @@ def find_partial(entry, search_roots):
     return None
 
 
-def status(search_roots, data=None):
+def status(search_roots, data=None, directories=None):
     data = data or load()
     report = {}
+    directories = directory_index(search_roots) if directories is None else directories
     for cid, entry in sorted(data["companions"].items()):
-        path = find(entry, search_roots)
+        path, candidates, source = discover(entry, search_roots, directories)
         if path:
             state = "INSTALLED_UNVERIFIED"
+        elif len(candidates) > 1:
+            state = "AMBIGUOUS"
         else:
             # Only an exact owner-named folder counts as a half-install; the game folder must never
             # be mistaken for its Forge.
-            path = find_partial(entry, search_roots)
+            wanted = owner_names(entry)
+            path = next((p for p in directories if _norm(os.path.basename(p)) in wanted), None)
             state = "DISCOVERED" if path else "NOT_FOUND"
         report[cid] = {"state": state, "path": path, "title": entry["title"],
                        "repo": entry["repo"], "kind": entry["install"]["kind"],
                        "doctor": (entry.get("doctor") or {}).get("entrypoint"),
-                       "ready": False, "evidence": "markers-only"}
+                       "ready": False, "evidence": "markers-only", "source": source,
+                       "candidates": candidates}
     return report
 
 
-def recommended_status(search_roots, data=None):
+def recommended_status(search_roots, data=None, directories=None):
     """Detect recommended third-party packs. Nothing here is installed or run by the bundle."""
     data = data or load()
     out = {}
+    directories = directory_index(search_roots) if directories is None else directories
     for rid, entry in sorted((data.get("recommended") or {}).items()):
-        path = find(entry, search_roots)
+        path, candidates, source = discover(entry, search_roots, directories)
         out[rid] = {"state": "MARKERS_FOUND" if path else "NOT_FOUND", "path": path,
                     "title": entry["title"], "repo": entry["repo"], "pin": entry["pin"],
                     "license": entry["license"], "docs": entry["docs"], "ready": False,
@@ -308,14 +344,16 @@ def main(argv=None):
         print(" ".join(cmd) if isinstance(cmd, list) else (cmd or "no doctor declared"))
         return 0
 
-    report = status(roots(args.roots), data)
+    search_roots = roots(args.roots)
+    directories = directory_index(search_roots)
+    report = status(search_roots, data, directories)
+    rec = recommended_status(search_roots, data, directories)
     if args.json:
         print(json.dumps({"companions": report,
-                          "recommended": recommended_status(roots(args.roots), data)}, indent=1))
+                          "recommended": rec}, indent=1))
         return 0
     for cid, row in report.items():
         print("%-16s %-10s %s" % (cid, row["state"], row["path"] or row["repo"]))
-    rec = recommended_status(roots(args.roots), data)
     if rec:
         print()
         for rid, row in rec.items():

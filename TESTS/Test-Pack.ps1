@@ -360,7 +360,7 @@ if ($soulTxt) {
         # scaffolding that every provider paid for on every request; stacking
         # copies is what put the operating contract into Hermes' SOUL.md twice.
         $markers = ([regex]::Matches($wired, [regex]::Escape('ULTIMATE-AI-STARTER-BUNDLE'))).Count
-        if ($markers -eq 0) { Good 'wired preamble carries no comment markers' }
+        if ($markers -eq 0 -and $wired.Contains('<!-- UABS-PREAMBLE -->') -and $wired.Contains('<!-- /UABS-PREAMBLE -->')) { Good 'wired preamble has stable ownership boundaries without legacy version markers' }
         else { Bad ("wired preamble still carries $markers marker string(s)") }
         Install-UabsPreambleBlock -Path $probeSoul -SoulFile $soulF -AioFile $aioF
         $again = [IO.File]::ReadAllText($probeSoul)
@@ -543,10 +543,50 @@ else {
                 if ($moved -eq $movedExe) { Good 'resolver follows an owner folder that moved to another root' }
                 else { Bad "moved-folder resolver returned '$moved', expected '$movedExe'" }
             } finally { $env:UABS_TOOL_ROOTS = $prevRoots }
+
+            # The case above is also satisfied by the sibling rule, so it never
+            # proved the tool-root search ran (it did not: a misplaced brace kept
+            # that search inside the houseCARL branch). Here the dead tree is gone
+            # entirely, the owner was renamed the way RobloxForge became
+            # Roblox-Forge, and a second owner also carries mcp_server\server.py,
+            # so only a normalised owner-name anchor gives a unique answer. Owner
+            # names are sandbox-unique because the index also reads the real
+            # User-scope roots of whoever runs the test.
+            $liveRoot = Join-Path $sandbox 'tools2\Ai tools'
+            $liveRoblox = Join-Path $liveRoot 'Zq-Widget-Forge\mcp_server'
+            $decoy = Join-Path $liveRoot 'Zq-Gadget-Forge\mcp_server'
+            New-Item -ItemType Directory -Force -Path $liveRoblox, $decoy | Out-Null
+            Set-Content -LiteralPath (Join-Path $liveRoblox 'server.py') -Value 'x'
+            Set-Content -LiteralPath (Join-Path $decoy 'server.py') -Value 'x'
+            $deadRenamed = Join-Path $sandbox 'gone\Ai tools\ZqWidgetForge\mcp_server\server.py'
+            $prevRoots = $env:UABS_TOOL_ROOTS
+            try {
+                $env:UABS_TOOL_ROOTS = (Join-Path $sandbox 'tools2')
+                $script:ToolDirectoryIndex = $null
+                $renamed = Resolve-LivePath $deadRenamed
+                $wantRenamed = (Get-Item -LiteralPath (Join-Path $liveRoblox 'server.py')).FullName
+                if ($renamed -eq $wantRenamed) { Good 'resolver follows a renamed owner (ZqWidgetForge -> Zq-Widget-Forge) across roots' }
+                else { Bad "renamed-owner resolver returned '$renamed', expected '$wantRenamed'" }
+                # Two owners with the same tail and no distinguishing name: refuse.
+                $script:ToolDirectoryIndex = $null
+                $ambiguous = Resolve-LivePath (Join-Path $sandbox 'gone\Ai tools\Nobody\mcp_server\server.py')
+                if ($null -eq $ambiguous) { Good 'resolver refuses an ambiguous relocated tail' }
+                else { Bad "resolver guessed between two owners: $ambiguous" }
+            } finally { $env:UABS_TOOL_ROOTS = $prevRoots; $script:ToolDirectoryIndex = $null }
             # No version-stamped folder in the path: it must refuse to guess.
             $got2 = Resolve-LivePath (Join-Path (Join-Path $sandbox 'nothing') 'here.exe')
             if ($null -eq $got2) { Good 'resolver refuses to guess unversioned paths' }
             else { Bad "resolver invented a replacement: $got2" }
+            # A single unrelated sibling is still the wrong owner, even when it
+            # has exactly the same conventional server filename.
+            $wrongOwner = Join-Path $sandbox 'unrelated\OtherOwner\mcp_server'
+            New-Item -ItemType Directory -Path $wrongOwner -Force | Out-Null
+            Set-Content -LiteralPath (Join-Path $wrongOwner 'server.py') -Value 'x'
+            $script:ToolDirectoryIndex = @((Split-Path -Parent $wrongOwner), $wrongOwner)
+            $wrong = Resolve-LivePath (Join-Path $sandbox 'unrelated\MissingOwner\mcp_server\server.py')
+            if ($null -eq $wrong) { Good 'resolver does not substitute an unrelated sole sibling' }
+            else { Bad "resolver selected an unrelated owner: $wrong" }
+            $script:ToolDirectoryIndex = $null
 
             # The bundle registers houseCARL via the HOUSECARL_MCP env, and the
             # resolver must repoint a dead housecarl-mcp.exe from that registry
@@ -1018,7 +1058,7 @@ if (-not (Test-UabsPackPath $detectGate)) {
     }
 }
 
-foreach ($freshGate in @('Test-ProviderBootstrap.ps1','Test-WorkspaceSeeding.ps1','Test-InstallerPreservation.ps1','Test-ProviderHookScope.ps1','Test-DoctorProviderScope.ps1')) {
+foreach ($freshGate in @('Test-ProviderBootstrap.ps1','Test-WorkspaceSeeding.ps1','Test-InstallerPreservation.ps1','Test-ProviderHookScope.ps1','Test-DoctorProviderScope.ps1','Test-McpLaunchPaths.ps1')) {
     # PS5.1 wraps successful native stderr as ErrorRecords. Capture diagnostics
     # without treating them as process failure; require exit 0 AND a final proof.
     $freshEap = $ErrorActionPreference; $ErrorActionPreference = 'Continue'

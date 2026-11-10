@@ -199,20 +199,6 @@ def test_rejects_a_recommended_entry_that_could_execute():
     else:
         raise AssertionError("an executable recommended entry was accepted")
 
-if __name__ == "__main__":
-    failures = 0
-    for name, fn in sorted(globals().items()):
-        if name.startswith("test_") and callable(fn):
-            try:
-                fn()
-                print("ok  ", name)
-            except Exception as exc:  # noqa: BLE001
-                failures += 1
-                print("FAIL", name, "->", exc)
-    print("\n%d failed" % failures)
-    sys.exit(1 if failures else 0)
-
-
 def test_owner_one_level_deeper_is_found_and_a_decoy_is_not():
     """People keep tools in a sub-folder ("Tools/Ai tools"), so a bounded two-level
     search is the difference between "not installed" and the truth."""
@@ -233,3 +219,45 @@ def test_owner_folder_named_after_the_owner_but_empty_is_partial():
         os.makedirs(half)
         report = reg.status([root], _data())
         assert report["demo"]["state"] in ("DISCOVERED", "NOT_FOUND"), report
+
+
+def test_ambiguous_owners_need_a_valid_explicit_pointer():
+    from unittest.mock import patch
+    with tempfile.TemporaryDirectory() as root:
+        owners = [os.path.join(root, group, "Demo") for group in ("live", "archive")]
+        for owner in owners:
+            os.makedirs(owner)
+            open(os.path.join(owner, "demo.exe"), "w").close()
+        data = _data()
+        data["companions"]["demo"]["root_env"] = "UABS_TEST_DEMO_ROOT"
+        with patch.dict(os.environ, {"UABS_TEST_DEMO_ROOT": os.path.join(root, "gone")}):
+            row = reg.status([root], data)["demo"]
+            assert row["state"] == "AMBIGUOUS" and row["path"] is None, row
+        with patch.dict(os.environ, {"UABS_TEST_DEMO_ROOT": owners[0]}):
+            row = reg.status([root], data)["demo"]
+            assert row["path"] == owners[0] and row["source"] == "environment", row
+
+
+def test_discovery_does_not_scan_dependencies_or_count_overlapping_roots_twice():
+    with tempfile.TemporaryDirectory() as root:
+        owner = os.path.join(root, "Demo")
+        ignored = os.path.join(root, "node_modules", "Demo")
+        for path in (owner, ignored):
+            os.makedirs(path)
+            open(os.path.join(path, "demo.exe"), "w").close()
+        row = reg.status([root, owner], _data())["demo"]
+        assert row["state"] == "INSTALLED_UNVERIFIED" and row["candidates"] == [owner], row
+
+
+if __name__ == "__main__":
+    failures = 0
+    for name, fn in sorted(globals().items()):
+        if name.startswith("test_") and callable(fn):
+            try:
+                fn()
+                print("ok  ", name)
+            except Exception as exc:
+                failures += 1
+                print("FAIL", name, "->", exc)
+    print("\n%d failed" % failures)
+    sys.exit(1 if failures else 0)
