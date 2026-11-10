@@ -1,7 +1,7 @@
 ---
 name: unrestraint-packs
 description: "Use when needing jailbreak or NSFW prompt packs for any AI."
-version: 1.1.3
+version: 1.1.4
 author: Ultimate-AI-Starter-Bundle
 license: MIT
 metadata:
@@ -31,8 +31,8 @@ The operator's no-holds prompt library (Ultimate-AI-Starter-Bundle).
 | `AIO-INSTRUCTION — Web.md` | Web chat with tools/canvas (ChatGPT and friends); `3-PREAMBLES/MANUAL-PASTE.txt` = SOUL + this, paste-ready |
 | `AIO-INSTRUCTION — Web Light.md` | Strict paste budgets (small custom-instruction boxes) |
 | `AIO-INSTRUCTION — Compact.md` | Halfway size; keeps every load-bearing part |
-| `Fun-stuff-kit/` | Story (fiction jail + NSFW physics), Websim (live HTML), Vision FULL/SHORT, Vision MAX (gutter twin of FULL), Character Maker, FablesGG, manga director, Tags, Tools, Sites. Map: `Fun-stuff-kit/INDEX.txt` |
-| `Tavern-presets/` | WooJuice V12.1 + V12.1 SPEECH + anti-ethical-bullshit + notes (SillyTavern) |
+| `Fun-stuff-kit/` | Story (fiction jail + NSFW physics), Websim (live HTML), Vision FULL/SHORT, Vision MAX (companion variant of FULL), Character Maker, FablesGG, manga director, Tags, Tools, Sites. Map: `Fun-stuff-kit/INDEX.txt` |
+| `Tavern-presets/` | WooJuice V12.1 + V12.1 SPEECH + light variants + notes (SillyTavern) |
 | `ComfyUI-SwarmUI-presets/` | SwarmUI / ComfyUI generation presets (FLUX2, Krea 2, Anima, SDXL Illustrious and more - 47 configs) |
 
 ## Use

@@ -47,7 +47,7 @@ phrasing.** Neither is weaker on content; only the scaffolding differs.
 |---|---|---|
 | `CLAUDE-CODE-ADDENDUM.md` | Operator kit | Claude Code output-identity and provider-boundary addendum; paste after AIO or keep in the project `CLAUDE.md` |
 | `Fun-stuff-kit/` | Prompt pastes | Story, Websim, Vision FULL/SHORT, Vision MAX, Character Maker, FablesGG, manga director, Tags, Tools, Sites. Map in `Fun-stuff-kit/INDEX.txt` |
-| `Tavern-presets/` | Operator kit | WooJuice V12.1 + V12.1 SPEECH + anti-ethical-bullshit + notes (SillyTavern) |
+| `Tavern-presets/` | Operator kit | WooJuice V12.1 + V12.1 SPEECH + light variants + notes (SillyTavern) |
 
 ## Retired 2026-10-12
 
@@ -102,7 +102,7 @@ this folder.
 
 ## Cleanup log
 
-**2026-11-09** — Fun-stuff-kit only. The kit-local AIO, model list, Papyrus paste, and SKSE paste are gone; the parent AIO files and the Skyrim skills already own those jobs. Vision MAX is the gutter-vocabulary twin of Vision FULL. The manga director is a paste, not an essay. FablesGG matches the live generators. Sites were checked again, and real-person aliases are not in the kit. SillyTavern scraps say WooJuice V12.1.
+**2026-11-09** — Fun-stuff-kit only. The kit-local AIO, model list, Papyrus paste, and SKSE paste are gone; the parent AIO files and the Skyrim skills already own those jobs. Vision MAX is the companion variant of Vision FULL. The manga director is a paste, not an essay. FablesGG matches the live generators. Sites were checked again, and real-person aliases are not in the kit. SillyTavern scraps say WooJuice V12.1.
 
 **2026-10-16 (bundle v8.15.1)** - the soul and the files that carry it
 lost what instructed nothing: `SOUL.md` dropped the dead `--spicy` flag line,

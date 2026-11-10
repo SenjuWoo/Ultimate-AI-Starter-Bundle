@@ -29,6 +29,6 @@ Optional / watch-outs:
 - Settings: squash_system_messages true (merges the top consecutive system blocks; the post-history
   lock is unaffected), reasoning_effort low for main / min for SPEECH,
   max_tokens 40000 — flip if not intended.
-- V7 SPEECH once used bias preset "New-light-anti-ai-ethical-bullshit"; now "Default" (logit_bias
+- V7 SPEECH once used a light bias preset; now "Default" (logit_bias
   needs a provider that supports it).
 - SPEECH preset untouched since V11; nothing lost vs V9/V7 versions.

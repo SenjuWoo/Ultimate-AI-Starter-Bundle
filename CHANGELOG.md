@@ -1,14 +1,22 @@
+## 8.39.2 (2026-11-10)
+
+- Public wording uses neutral names for the private prompt collection in the
+  release notes, changelog and current library index.
+- The added Tavern preset variant is stored as `Light-variant-2.json`; preset
+  content is unchanged.
+- No installer, MCP, discovery, path or skill-inventory behavior changed; the
+  bundle still ships 81 canonical skills.
+
 ## 8.39.1 (2026-11-10)
 
 - The Fun-stuff prompt kit is consolidated. Its kit-local general AIO, dated
   model list, Papyrus paste and SKSE paste are gone; the parent AIO files and
   the Skyrim skills already own those jobs.
-- Vision MAX ships as the gutter-vocabulary twin of Vision FULL, and the manga
+- Vision MAX ships as the companion variant of Vision FULL, and the manga
   director is a compact paste rather than an essay document.
 - `unrestraint-packs` 1.1.3 points at the kit's `INDEX.txt` for the live file
   map instead of listing files the kit no longer carries.
-- A lighter anti-ethics SillyTavern preset variant is added to the Tavern
-  preset collection.
+- A lighter Tavern preset variant is added to the preset collection.
 - README and kit notes record the cleanup so old copies are not mistaken for
   current pastes.
 
