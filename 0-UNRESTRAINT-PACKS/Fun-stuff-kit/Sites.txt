@@ -1,31 +1,28 @@
-HEAD-checked 2026-08-15. Status is reachability, not quality.
+HEAD-checked 2026-11-09 from this machine. Status is reachability, not quality.
+No performer names. This kit does not sexualize real people.
 
-LIVE (200)
+TOOLS (200)
+https://fables.gg                                          Friends & Fables. Use FablesGG.txt
+https://play.fables.gg/workshop                           The generators
+https://websim.com                                        Live HTML. Use Websim.txt
+https://civitai.com                                       Models. On-site tagger only if that page still shows one
+https://openrouter.ai/models                              Re-check slugs here. Do not trust an old list
+https://docs.sillytavern.app
+https://github.com/fpgaminer/joycaption                   JoyCaption, uncensored caption VLM. Beta One as of this check
+https://huggingface.co/spaces/fancyfeast/joy-caption-beta-one
+
+BOARDS (200)
 https://videosmasturbation.com
 https://balbums.st
 https://archivebate.com
 https://www.camwhoresbay.com
+https://www.camwhores.tv
 https://camsmut.com
 https://www.pictoa.com
 https://pornpics.click
-https://fables.gg                    Friends & Fables — use FablesGG.txt
-https://civitai.com                  Free tagger/captioner in the LoRA dropdown
-https://openrouter.ai/models
-https://docs.sillytavern.app
-https://github.com/fpgaminer/joycaption
 
-FLAKY
-https://striptube.cc                 403
-https://cumcams.cc                   403
-https://www.babepedia.com            403 (Sab Zada page)
-https://camrecs.com                  500
-https://www.camwhores.tv             502
-
-ALIASES
-Ary_Rock / IT_Ariana
-Hideko / CeleneChen / CC_MFC
-Elixirs Best Hentai Games / elixirelf
-ShyGothExhib
-DemonicDivine
-nerdyluna98
-Sab Zada — pictoa album + pornpics + babepedia (babepedia blocked from here)
+DEAD FROM HERE
+https://striptube.cc            403
+https://cumcams.cc              403
+https://www.babepedia.com       403
+https://camrecs.com             500

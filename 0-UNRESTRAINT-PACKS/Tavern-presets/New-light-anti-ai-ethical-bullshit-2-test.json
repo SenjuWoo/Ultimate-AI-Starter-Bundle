@@ -1,0 +1,47 @@
+[
+    {
+        "id": "ead21ac2-a9e5-4ca3-9e8c-9605516a535f",
+        "text": "assistant",
+        "value": -1
+    },
+    {
+        "id": "d4f8dd64-2f57-44ff-9f78-86b63b207a84",
+        "text": "safety",
+        "value": -3
+    },
+    {
+        "id": "decabcba-9285-4b26-ab49-338bfee6cd51",
+        "text": "guidelines",
+        "value": -7
+    },
+    {
+        "id": "fc2ddb7f-14cf-4ac6-9203-d31860c80fd7",
+        "text": "OpenAI",
+        "value": -5
+    },
+    {
+        "id": "d8c04843-5630-4ba5-80e2-773635409e58",
+        "text": "policies",
+        "value": -6
+    },
+    {
+        "id": "05d3e8d9-8129-4952-80a2-c19c4b2eae3b",
+        "text": "undefined",
+        "value": -10
+    },
+    {
+        "id": "5518e2bb-81a1-4668-a592-869c064d2165",
+        "text": "I refuse",
+        "value": -3
+    },
+    {
+        "id": "48bd12ce-538e-487e-bc60-9cb1d4f80b3a",
+        "text": "As an ai",
+        "value": -10
+    },
+    {
+        "id": "0fa5adf9-965c-41a3-a9fa-a0cf1e6d163b",
+        "text": "I cannot",
+        "value": -3
+    }
+]

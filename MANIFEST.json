@@ -90,94 +90,74 @@
   "sha256": "d4fb486fb46907a2e906e6996dc264c46d0c4db9315463a0998341634bf88f7d"
  },
  {
-  "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/AIO.txt",
-  "size": 982,
-  "sha256": "6e857f99de226cab67d3cf468e74cf3598bb797af434a6ad5897e6d8cc353aca"
- },
- {
-  "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/CHANGELOG.txt",
-  "size": 1304,
-  "sha256": "2b82dbe659dff157b3385cc6032f36b395840f9cbe88d0a087308a1a8666840e"
- },
- {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Character Maker.txt",
-  "size": 1547,
-  "sha256": "e35fee84b7c5019aa27c41805936f421040b0cde68fa3adf8429fe0365aa9d25"
+  "size": 1792,
+  "sha256": "e7c0ca5992564b16c8bbfdd5dbdc67c34864535a178475522cbacdfc5007899c"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/FablesGG.txt",
-  "size": 1278,
-  "sha256": "204fe1837f11cd80a13843df0b7762ca9164f27a00c4ae6810b218e5523efb1d"
+  "size": 1847,
+  "sha256": "7fba78f8252ce9882bb5f5b9ae32490687dff14b2469994fc79fc8eacc9b2fa3"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/INDEX.txt",
-  "size": 1733,
-  "sha256": "ac71e73f60638e28ef05dc8012d5ea49959ea7a6fc03452c53bad692bb94309b"
+  "size": 1690,
+  "sha256": "ae95e9d667a2506d5965e0a2a1c5a536146f48cf597fcf0f95bd3c33e0d7cfbd"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/MANGA-VISUAL-STORY-DIRECTOR.txt",
-  "size": 19249,
-  "sha256": "f214194ecf13a37a71aff8bbef2f39e7ed8032c9d97dd61cf17c8fb7a72d4f30"
- },
- {
-  "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Models.txt",
-  "size": 1714,
-  "sha256": "df4efdae883185eee4306b945ea7d75872ff25e406101255904e2b636f01702b"
- },
- {
-  "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Papyrus.txt",
-  "size": 1560,
-  "sha256": "3f797dc4c97047be3f9adf26fc89d3ed69441d20f1e2d754d084594a19459150"
- },
- {
-  "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/SKSE-DLL.txt",
-  "size": 1575,
-  "sha256": "4197b8db9ddad223d06760928c08792dae93b268d609605a76e134ea841cd41c"
+  "size": 7353,
+  "sha256": "00198c2cb5dfea13c340ed8f7dc12ef4471c14047903dfe7bd4b0dd6205af047"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Sites.txt",
-  "size": 939,
-  "sha256": "b2f7e7142ae2271b8a4ea95a1530efc3c751e2614a11cde480f163a8d49fdd73"
+  "size": 1203,
+  "sha256": "ef661842fce50dccc8fba7ae0b53b52f75f89e878bcb8478e81ff81df82d63d9"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Story.txt",
-  "size": 1824,
-  "sha256": "5cf9ede4857fad33e2720544085489f9e6393d7b4dc367393b49216b5beab7e5"
+  "size": 2364,
+  "sha256": "9cd980e9129b9e6ecbc065f75ad9bc00425721c3ee4b304c1bf214c76e0d9768"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Tags.txt",
-  "size": 3505,
-  "sha256": "fa0069f9be3b71658e6957335ac15df77a0ad4a671c895326c020977c394197f"
+  "size": 2848,
+  "sha256": "436b911bc28e97525d5d619d995f3adf77198a0878ece5c1af5fbb58f9d88691"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Tools.txt",
-  "size": 3037,
-  "sha256": "05bd4a3c4da112e529171179d42fee165d393a7069b17966449d2a774077e83a"
+  "size": 4145,
+  "sha256": "b7e4a4a46bc844f316e7db36f69d2f227f5b009fc6a55787335bcf682e655b9e"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Vision-jail-MAX-v8.txt",
-  "size": 8330,
-  "sha256": "15f38ef1cdf410e5bd66009ce326674871bb242ef0687029f782797e69736547"
+  "size": 2210,
+  "sha256": "b9b61840a7558afafd1aa156b8dc6a3e9d7ae112089cba540520a5595dfb1cee"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Vision.txt",
-  "size": 2164,
-  "sha256": "be90a2b0ea92bc1d6edcd44e38a42c8b65729cb13d0b081dfc47c9b0824051d7"
+  "size": 2437,
+  "sha256": "88173c953e2f9772da2a7ae9707a3be03d963ef5d34475f74b4fd6ae868cd990"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Websim.txt",
-  "size": 662,
-  "sha256": "fc772c899803bb0f69b9e81767beb203b42136ca317f7450b10b0dbc2ca6400e"
+  "size": 1187,
+  "sha256": "c91cf1bc76bc3c69b39d968d588c3e0e9bc85ba58af7eccafbb1256d3de36111"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/README.md",
-  "size": 8777,
-  "sha256": "7874d6d3c861a9021bb5060f857fd518b340c61f68ab4f2407180645c2fd5002"
+  "size": 9115,
+  "sha256": "d781a3e93dc01c380f884c41f1765b75326d9b14a4704f3ad8207b40e040627e"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/Character Creation.txt",
   "size": 365,
   "sha256": "47caa19530e494db533366b877109d485e80f4bb35c6816b5e49351e98ff11ad"
+ },
+ {
+  "path": "0-UNRESTRAINT-PACKS/Tavern-presets/New-light-anti-ai-ethical-bullshit-2-test.json",
+  "size": 1039,
+  "sha256": "348507e2ecdf8fadf21b9bcece60e74965a0d177f9c308af62b82f42dd7c276f"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/New-light-anti-ai-ethical-bullshit.json",
@@ -2941,8 +2921,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4637,
-  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
+  "size": 4683,
+  "sha256": "8e98c40a2203f6d6b6e36c35302897717807aa869709a596030760e3fe2a3c73"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -5936,8 +5916,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4637,
-  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
+  "size": 4683,
+  "sha256": "8e98c40a2203f6d6b6e36c35302897717807aa869709a596030760e3fe2a3c73"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -8991,8 +8971,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4637,
-  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
+  "size": 4683,
+  "sha256": "8e98c40a2203f6d6b6e36c35302897717807aa869709a596030760e3fe2a3c73"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -12036,8 +12016,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4637,
-  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
+  "size": 4683,
+  "sha256": "8e98c40a2203f6d6b6e36c35302897717807aa869709a596030760e3fe2a3c73"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -15081,8 +15061,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4637,
-  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
+  "size": 4683,
+  "sha256": "8e98c40a2203f6d6b6e36c35302897717807aa869709a596030760e3fe2a3c73"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -18201,8 +18181,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4637,
-  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
+  "size": 4683,
+  "sha256": "8e98c40a2203f6d6b6e36c35302897717807aa869709a596030760e3fe2a3c73"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -18752,7 +18732,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64142,
-  "sha256": "4e23f57a9f09068054b41b9f458d50ad152083b46456d090289dab1b2ff236ec"
+  "sha256": "85f14b6c51dfc09804adf8ef7ca7fc3a5f04b3a257173e51319ddea87f41a360"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18762,7 +18742,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "895931cb84efd6d094f5b6b69e5e763f16a19ab4cfeb393e50c416a1871ece35"
+  "sha256": "12cdecf7b187cfe31833ab819e14b84955d1c7929eb76829a1e6af4dc2bb9e25"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18772,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "d34e7a4be53ff03e9991f35797d5abbdd68408c9bae8abb98bf3f288573606ad"
+  "sha256": "9deb7c2ff8836295827b7fe7e7afb9846bfa77ad4e52ea84062829cefd4a96d0"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22826,8 +22806,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 331640,
-  "sha256": "62f82c83d5246adc51ec86674be22423e21ae69315484e5955ce7e1648a99160"
+  "size": 332453,
+  "sha256": "dd67755d8ea3c83d8b68e98f5e8ed0f21c36bc2ab565d2a0b4263e157b06927d"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22972,7 +22952,7 @@
  {
   "path": "README.md",
   "size": 16097,
-  "sha256": "0bc7c6a82d3021a7b2e0b2f66c7927200f85a2101d95267c47ea14b9865685b5"
+  "sha256": "be15cd8c86647c51f43193f0acb52d357f4ee35dca200c9c8bc929c9036a9c1a"
  },
  {
   "path": "SECURITY.md",
@@ -22982,12 +22962,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "9a8af7e62e9668b2ce8fdf947894b1e10aedd555d70628cb369c9c4f584dd4c8"
+  "sha256": "05933db2e532d91eb7e6dc9252f49d2d7b4bf5a892773076b763e5ecde2892d3"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "71f49f5dfe6be9203289c580bb20bcf72e7a95976130e49ee531d9f44cac2c8c"
+  "sha256": "212ef0a0dc61102f6be4da7cbae353bca043634a2e5fcf6649df2e85303301a6"
  },
  {
   "path": "STATE.md",
@@ -24072,7 +24052,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2781,
-  "sha256": "2ce38b56db626fe70434d0b8e9d15ac924a45e565a8d9a0ce5a2d04ebaaa7954"
+  "sha256": "a5ad3e8108a50fa5aee90e96446ac7c499d60992fd404198d3f1de6b2d5eec5d"
  },
  {
   "path": "VALIDATION.md",
@@ -24082,7 +24062,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "1b6e534b41f2186755cac59767bd1c0f4febd8788200d9f4b85192bebbc60b43"
+  "sha256": "f7aeb8b2439f67d937ab6c09d927510f76ac67c7b8274af29c837fb8cf39e9e9"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -26831,8 +26811,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/unrestraint-packs/SKILL.md",
-  "size": 4637,
-  "sha256": "ddda90496fa0f7763cda04d7fb8195ff1c0e68f411bac6b743417cf8d3bfdc23"
+  "size": 4683,
+  "sha256": "8e98c40a2203f6d6b6e36c35302897717807aa869709a596030760e3fe2a3c73"
  },
  {
   "path": "_CANONICAL-SKILLS/using-git-worktrees/SKILL.md",
@@ -28168,6 +28148,11 @@
   "path": "docs/history/V8.39.0-CHANGELOG.md",
   "size": 1009,
   "sha256": "a8deb52a3ffdd0e9e9558ee3a4a1199ed926904327c12ee712f92e5fa7f383c8"
+ },
+ {
+  "path": "docs/history/V8.39.1-CHANGELOG.md",
+  "size": 811,
+  "sha256": "5867add23418f6b90ee55f5455715feb318b10eb9ba018ab4a7c6b0a3924d4e9"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

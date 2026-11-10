@@ -1,3 +1,20 @@
+## 8.39.1 (2026-11-10)
+
+- The Fun-stuff prompt kit is consolidated. Its kit-local general AIO, dated
+  model list, Papyrus paste and SKSE paste are gone; the parent AIO files and
+  the Skyrim skills already own those jobs.
+- Vision MAX ships as the gutter-vocabulary twin of Vision FULL, and the manga
+  director is a compact paste rather than an essay document.
+- `unrestraint-packs` 1.1.3 points at the kit's `INDEX.txt` for the live file
+  map instead of listing files the kit no longer carries.
+- A lighter anti-ethics SillyTavern preset variant is added to the Tavern
+  preset collection.
+- README and kit notes record the cleanup so old copies are not mistaken for
+  current pastes.
+
+The bundle still ships 81 canonical skills; the cleanup changes prompt
+content, not the skill inventory.
+
 ## 8.39.0 (2026-11-10)
 
 - Workflow hints are advisory. Creative requests stay quiet, and automatic

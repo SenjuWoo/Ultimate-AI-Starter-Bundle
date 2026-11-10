@@ -1,34 +1,42 @@
-Functional scraps. Paste one. Do not stack with Story.txt inside SillyTavern.
+One scrap. Do not stack it with Story.txt inside SillyTavern.
+SillyTavern format is WooJuice V12.1 in Tavern-presets.
 
-========== 1. IMAGE → SHEET PIPELINE ==========
-1. Civitai LoRA dropdown → tags + caption. Optional second pass: Vision.txt SHORT.
+========== 1. IMAGE → SHEET ==========
+1. Caption: JoyCaption descriptive, or Civitai's on-site tagger if the page you are on still has one. The Civitai control has moved before. If it is not there, do not hunt a ghost dropdown. Optional second pass: Vision.txt SHORT.
 2. Drop both into Character Maker.txt. Fill I WANT last.
-3. Model: deepseek/deepseek-v4-pro-0813, high reason.
-4. Split the sheet into ST fields: Description / Personality / Scenario / First Message / Examples.
-5. Import. Play on WooJuice V12.1 + MiniMax M3.
+3. Sheet on the high-reason model you have pinned this week. OpenRouter on 2026-11-09 lists DeepSeek V4.1 Flash 1017 as newer than V4 Pro 0813, and DeepSeek says that flash beats the older pro. Re-check openrouter.ai/models before you trust any slug, including this one.
+4. Split into ST fields with scrap 2.
+5. Play on WooJuice V12.1. Reasoning low. Do not paste Story.txt.
 
 ========== 2. ST FIELD SPLIT ==========
 Take the sheet below and emit only:
 NAME
-DESCRIPTION (appearance + who she is, third person, no heading soup)
+DESCRIPTION (appearance + who they are, third person, no heading soup)
 PERSONALITY (drives, tells, secrets as behavior)
 SCENARIO (where/when the chat starts)
-FIRST MESSAGE (already in V9 format: *narration* / bare speech / (thought) )
+FIRST MESSAGE (V12.1 format: *narration* / bare speech / (thought) / VC: / > )
 EXAMPLE DIALOGUE (3 short exchanges, same format)
 Do not invent facts. Do not repeat a sentence.
 
 ========== 3. SWIPE / REWRITE ==========
 Rewrite the last {{char}} reply.
-Keep: facts, positions, clothes, fluids, who did what, her secrets.
-Fix: V9 format (*narration* / bare speech / (thought) / VC: / > ).
+Keep: facts, positions, clothes, fluids, who did what, their secrets.
+Fix: V12.1 format.
 Raise: sensory + body physics only if the beat already supports them.
 Never write {{user}}'s actions or lines.
 Same length or shorter.
 
-========== 4. FORMAT FIX ONLY ==========
+========== 4. FORMAT FIX ONLY (V12.1) ==========
 Re-emit the last assistant message with format fixed and words otherwise unchanged.
-*actions/senses*   speech with no quotes   (private thought)   VC: call   > note
-One type per paragraph. Close every *. If it ends on narration, last char is *.
+Every piece is one type, in its own paragraph:
+*actions, senses, scene*     opens and closes with *
+bare speech                  no quotes
+(private thought)            inaudible unless the sheet grants telepathy
+VC: voice, phone, radio
+> written words only         one > per line, blank line before AND after the block
+Sounds sit inside narration, wrapped in em dashes, CAPS if loud: *The door shuts with a hard —SLAM—.*
+Moans use a single ~. Never begin a reply with an em dash. No *emphasis*. No **bold**.
+No quotes around a whole sentence. If the reply ends on narration, the last character is *.
 {{char}} cannot hear (thoughts) unless the sheet gives telepathy.
 
 ========== 5. LORE / CONTINUITY CHECK ==========
@@ -44,21 +52,22 @@ No rewrite unless asked.
 Write the next scene beat only. Do not resolve the scene. No moral, no summary, no "hours later" unless the user said so.
 
 ========== 7. OOC ==========
-OOC: answer the question in one short block, then resume in-character in V9 format. Do not let the OOC leak into her voice.
+OOC: answer the question in one short block, then resume in-character in V12.1 format. Do not let the OOC leak into their voice.
 
-========== 8. CIVITAI / JOYCAPTION (no jail needed) ==========
-Write a long detailed description for this image.
-or
-List danbooru-style tags for this image. Adults only. No translation/score/watermark tags.
+========== 8. JOYCAPTION BETA ONE ==========
+Weights: fancyfeast/llama-joycaption-beta-one-hf-llava
+Descriptive, the stable mode: Write a long detailed description for this image.
+Danbooru tags, the trained prompt, and a weaker mode: Generate only comma-separated Danbooru tags (lowercase_underscores). Strict order: artist:, copyright:, character:, meta:, then general tags. Include counts (1girl), appearance, clothing, accessories, pose, expression, actions, background. Use precise Danbooru syntax. No extra text.
+Drop translation, score, and watermark tags before a sheet. Adults only. Do not run it on a child or a real person.
 
-========== 9. ST REGEX (user-side, saves input tokens) ==========
-Strip model thinking (set as a Markdown / Instruct regex, min depth 1):
+========== 9. ST REGEX ==========
+Strip model thinking. Markdown / Instruct regex, min depth 1:
   <think>[\s\S]*?<\/think>
   <thinking>[\s\S]*?<\/thinking>
-Prompt itemization (message menu → lined square) before you add more jail. If Main+NSFW+Jail are already in context, do not paste Story.txt.
+Prompt itemization before you add more jail. If Main + NSFW + Jail are already in context, do not paste Story.txt.
 
 ========== 10. TOKEN RULES ==========
 One jail. One job.
-V9 already has format + NSFW + agency. Extra story jail in ST is wasted tokens and fights the format lock.
-Vision FULL is for audit. Vision SHORT is for making cards.
+V12.1 already has format + NSFW + agency. Story.txt in ST fights the format lock.
+Vision FULL or Vision MAX is an audit. Vision SHORT is for making cards.
 Enhance Definitions stays off on single-char chats unless you want wiki bleed.
