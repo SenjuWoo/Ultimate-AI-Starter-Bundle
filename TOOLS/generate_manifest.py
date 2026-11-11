@@ -19,6 +19,10 @@ SKIP_NAMES = {'MANIFEST.json', '.git', '.coverage', 'coverage.xml', '.DS_Store',
               # proves scenario C still fails. Output of a fixture, not content.
               'app.log', 'config.MAINTAINER.yaml'}
 
+# Machine caches and recovery exports never belong to the public payload.
+# Prune them before walking, rather than visiting every file just to reject it.
+SKIP_DIRS.update({'.uabs-cache', 'LOCAL-ONLY', 'PRIVATE-TWEAKS'})
+
 
 def main():
     root = sys.argv[1] if len(sys.argv) > 1 else '.'

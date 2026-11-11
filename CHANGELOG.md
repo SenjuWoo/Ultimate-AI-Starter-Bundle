@@ -1,3 +1,12 @@
+## 8.39.3 (2026-11-11)
+
+- Manifest generation skips ignored machine caches and private recovery trees.
+- Task-state updates preserve literal Windows paths and reject empty verification targets.
+- MCP diagnostics ignore comments without discarding quoted hash characters, and
+  Hermes server discovery excludes unrelated YAML sections.
+- The release gate checks staged and unstaged line-ending changes as well as
+  committed release changes. The bundle retains 81 canonical skills.
+
 ## 8.39.2 (2026-11-10)
 
 - Public wording uses neutral names for the private prompt collection in the

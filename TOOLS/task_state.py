@@ -156,6 +156,8 @@ def verify_of(task):
     if raw in ("", "-", "–"):
         return "none", ""
     low = raw.lower()
+    if low in ("cmd:", "file:"):
+        return "none", ""
     if low.startswith("cmd:"):
         return "cmd", raw[4:].strip()
     if low.startswith("file:"):
@@ -298,7 +300,9 @@ def desired_state(text, task, sha):
     for key, value in updates.items():
         pattern = re.compile(r"(?m)^%s:.*$" % re.escape(key))
         if pattern.search(text):
-            new = pattern.sub("%s: %s" % (key, value), text, count=1)
+            # Verification paths/commands are literal text, not regex replacement
+            # templates: Windows backslashes can otherwise crash or become tabs.
+            new = pattern.sub(lambda _match: "%s: %s" % (key, value), text, count=1)
             if new != text:
                 changed.append(key)
             text = new

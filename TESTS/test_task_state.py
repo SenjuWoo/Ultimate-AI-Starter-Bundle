@@ -50,6 +50,13 @@ STATE = "GOAL: ship\nCURRENT TASK: T2\nNEXT ACTION: run the tests\nSHA: \n"
 
 
 class ValidationTests(unittest.TestCase):
+    def test_empty_verification_targets_are_not_evidence(self):
+        for verify in ("file:", "file:   ", "cmd:"):
+            with self.subTest(verify=verify), tempfile.TemporaryDirectory() as d:
+                code, out = run("status", write(d, "| T1 | ship | complete | - | " + verify + " | - |\n"))
+                self.assertEqual(code, 1, out)
+                self.assertIn("no verification recorded", out)
+
     def test_fresh_project_picks_the_first_ready_task(self):
         with tempfile.TemporaryDirectory() as d:
             row = "| T1 | read | complete | - | file:a.txt | - |\n| T2 | build | pending | T1 | - | - |\n"
@@ -228,6 +235,23 @@ class StateTests(unittest.TestCase):
             self.assertEqual(after_first, (root / "STATE.md").read_bytes(), "second repair rewrote the file")
             self.assertEqual(stamp, (root / "STATE.md").stat().st_mtime_ns, "second repair touched mtime")
             self.assertIn("nothing written", out2)
+
+    def test_resume_preserves_literal_windows_verification_paths(self):
+        for verify in (r"file:C:\Users\operator\artifact.txt",
+                       r"cmd:python .\tests\new_case.py"):
+            with self.subTest(verify=verify), tempfile.TemporaryDirectory() as d:
+                root = write(d, "| T1 | verify | pending | - | " + verify + " | - |\n",
+                             state="GOAL: ship\nCURRENT TASK: T1\nNEXT ACTION: old\nSHA: \n")
+                code, out = run("resume", root, "--fix")
+                self.assertEqual(code, 0, out)
+                self.assertIn("NEXT ACTION: " + verify,
+                              (root / "STATE.md").read_text(encoding="utf-8").splitlines())
+                before = (root / "STATE.md").read_bytes()
+                stamp = (root / "STATE.md").stat().st_mtime_ns
+                code, out = run("resume", root, "--fix")
+                self.assertEqual(code, 0, out)
+                self.assertEqual((root / "STATE.md").read_bytes(), before)
+                self.assertEqual((root / "STATE.md").stat().st_mtime_ns, stamp)
 
     def test_invalid_plan_blocks_repair_writes(self):
         with tempfile.TemporaryDirectory() as d:

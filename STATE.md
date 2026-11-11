@@ -15,8 +15,9 @@
 - Recovery: machine inventories, session exports, graph snapshots and deployment
   receipts stay outside the public payload. Private historical exports are not
   live provider configuration. No source or game tree is moved just to rename it.
-- Separate unfinished prompt-pack edits remain local and are not part of this
-  maintenance candidate.
+- Prompt-library consolidation is published; temporary checkouts and aliases retired.
+- Audit fixes: literal Windows task paths, empty evidence, MCP section/comment
+  isolation, uncommitted line-ending checks and bounded manifest traversal.
 - Validation commands: `python TOOLS/release_gate.py`; installed diagnostics:
   `powershell -NoProfile -ExecutionPolicy Bypass -File TOOLS/Test-Installed-State.ps1`.
 
@@ -42,5 +43,9 @@
   deployment evidence locally and published receipts with the release assets.
 
 ## History
+
+Final audit: 20 local gate stages and 175 release contracts passed, including
+Windows-path and MCP parsing regressions. Installed-state diagnostics passed.
+Exact-commit CI and downloadable build receipts remain the release evidence.
 
 Release notes before this trim: `docs/history/STATE-ARCHIVE-2026-11-07.md`. Older releases: `docs/history/V<version>-CHANGELOG.md`.

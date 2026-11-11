@@ -72,7 +72,7 @@ function Get-UabsHermesDefaultEntries {
   if (-not $ConfigPath) { $hp = Get-UabsHermesPaths; if ($hp) { $ConfigPath = $hp.Config } }
   if (-not (Test-UabsPath -LiteralPath $ConfigPath -PathType Leaf)) { return }
   $yaml = [IO.File]::ReadAllText($ConfigPath)
-  $m = [regex]::Match($yaml, '(?ms)^mcp_servers:[ \t]*\r?\n(?<b>(?:^[ \t].*(?:\r?\n|$))*)')
+  $m = [regex]::Match($yaml, '(?ms)^mcp_servers:[ \t]*\r?\n(?<b>.*?)(?=^[^ \t\r\n#]|\z)')
   if (-not $m.Success) { return }
   $name = $null; $buf = New-Object System.Text.StringBuilder
   $flush = {
@@ -168,12 +168,18 @@ function Get-UabsMcpLaunchText {
   }
   if ($Entry.Style -eq 'toml') {
     # Only the server's own table, never its env/header subtables or comments.
-    $body = @([regex]::Split($Entry.Text, '(?m)^\[[^\]\r\n]+\][ \t]*\r?$'))[1]
+    $body = @([regex]::Split($Entry.Text, '(?m)^\[[^\]\r\n]+\][ \t]*(?:#[^\r\n]*)?\r?$'))[1]
     $pattern = '(?ms)^[ \t]*(?:command|args|url)[ \t]*=[ \t]*(?:\[[^\]]*\]|[^\r\n]*)'
   } else {
     $body = $Entry.Text
     $pattern = '(?ms)^    (?:command|args|url):[ \t]*(?:\[[^\]]*\]|[^\r\n]*(?:\r?\n(?:    |      )-[^\r\n]*)*)'
   }
+  # Ignore comments while retaining hashes inside quoted paths and URLs.
+  $body = [regex]::Replace([string]$body, '("(?:[^"\\]|\\.)*"|''[^'']*'')|#[^\r\n]*', [System.Text.RegularExpressions.MatchEvaluator]{
+    param($m)
+    if ($m.Groups[1].Success) { return $m.Value }
+    return ''
+  })
   return (@([regex]::Matches([string]$body, $pattern) | ForEach-Object { $_.Value }) -join "`n")
 }
 

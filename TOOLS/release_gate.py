@@ -46,6 +46,8 @@ def steps(root):
         ("ponytail integration", [py, "TESTS/test_ponytail_integration.py"]),
         ("line endings", [py, "TESTS/test_line_endings.py"]),
         ("line-ending churn", [py, "TOOLS/check_line_endings.py"] + base_args_),
+        ("working-tree line endings", [py, "TOOLS/check_line_endings.py"]),
+        ("staged line endings", [py, "TOOLS/check_line_endings.py", "--staged"]),
         ("privacy boundary", [py, "TESTS/test_privacy_boundary.py"]),
         ("pack gate", pw + ["TESTS/Test-Pack.ps1"]),
     ]

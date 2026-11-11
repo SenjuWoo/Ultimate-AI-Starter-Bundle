@@ -25,11 +25,22 @@ try {
     $entry | Add-Member NoteProperty Text "[mcp_servers.demo]`ncommand = 'python'`nargs = ['$missing']`n[mcp_servers.demo.env]`ncommand = '$(Join-Path $fixture 'env.exe')'`n"
     $issues = @(Get-UabsDeadMcpLaunchPaths -Entries @($entry))
     if ($issues.Count -ne 1 -or $issues[0].missing_path -ne $missing) { throw 'TOML launch fields or subtable isolation failed' }
+    $originalToml = $entry.Text
+    $entry.Text = "[mcp_servers.demo] # header`ncommand = 'python' # old $missing`nargs = []`n"
+    if (@(Get-UabsDeadMcpLaunchPaths -Entries @($entry)).Count) { throw 'TOML comments treated as launch fields' }
+    $hashPath = Join-Path $fixture 'missing#script.py'
+    $entry.Text = "[mcp_servers.demo]`ncommand = '$hashPath' # ignore $missing`n"
+    $issues = @(Get-UabsDeadMcpLaunchPaths -Entries @($entry))
+    if ($issues.Count -ne 1 -or $issues[0].missing_path -ne $hashPath) { throw 'Quoted hash path was lost' }
+    $entry.Text = $originalToml
     $yaml = Join-Path $fixture 'config.yaml'
     [IO.File]::WriteAllText($yaml, "mcp_servers:`n  demo:`n    command: python`n    args:`n      - '$missing'`n    env:`n      SECRET: never-print`n")
     $entries = @(Get-UabsHermesDefaultEntries -ConfigPath $yaml -Provider 'Hermes/test')
     $issues = @(Get-UabsDeadMcpLaunchPaths -Entries $entries)
     if ($issues.Count -ne 1 -or $issues[0].provider -ne 'Hermes/test') { throw 'Named Hermes profile was not checked' }
+    [IO.File]::AppendAllText($yaml, "`nlogging:`n  other:`n    command: '$hashPath'`n")
+    $entries = @(Get-UabsHermesDefaultEntries -ConfigPath $yaml -Provider 'Hermes/test')
+    if ($entries.Count -ne 1 -or $entries[0].Text -match 'logging:|other:') { throw 'Unrelated YAML sections were read as MCP servers' }
     $project = Join-Path $fixture 'project'
     New-Item -ItemType Directory -Path (Join-Path $project '.codex') -Force | Out-Null
     [IO.File]::WriteAllText((Join-Path $project '.codex\config.toml'), $entry.Text)
