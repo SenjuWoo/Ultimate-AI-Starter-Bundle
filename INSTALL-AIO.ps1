@@ -714,8 +714,15 @@ if (-not $SkillsOnly -and $packSel.Enabled -contains 'reverse') {
   $reverseArgs=@('-PackRoot',$PackRoot)
   if ($Mode -eq 'BundledOnly') { $reverseArgs+='-Offline' } elseif ($Mode -eq 'BundledFirst') { $reverseArgs+='-PreferBundled' }
   if ($NoToolUpdates) { $reverseArgs+='-NoUpdate' }
-  if ((Invoke-UabsChildScript -Title 'Reverse THIS! companion' -File (Join-Path $PackRoot 'TOOLS\Install-ReverseThis.ps1') -ArgList $reverseArgs) -ne 0) { throw 'Reverse THIS! companion update failed; its owner logs contain the cause.' }
+  $reverseExit = Invoke-UabsChildScript -Title 'Reverse THIS! companion' -File (Join-Path $PackRoot 'TOOLS\Install-ReverseThis.ps1') -ArgList $reverseArgs
+  # 3 = the owner doctor passed but some tool updates failed (kept their previous
+  # version). That is a warning for one companion, not a reason to abort every other step.
+  if ($reverseExit -ne 0 -and $reverseExit -ne 3) { throw 'Reverse THIS! companion update failed; its owner logs contain the cause.' }
   $installed['reverse-this']=@{status='owner-managed';pointer=(Join-Path $env:LOCALAPPDATA 'ReverseThis\kit.json')}
+  if ($reverseExit -eq 3) {
+    $installed['reverse-this'].degraded = 'some tool updates failed; see the owner sandbox\last-run.json'
+    Write-UabsWarn 'Reverse THIS! is ready with some tool updates pending; re-run START-HERE.bat when you can answer admin prompts.'
+  }
 }
 
 

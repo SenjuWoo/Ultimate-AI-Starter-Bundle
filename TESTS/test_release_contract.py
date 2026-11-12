@@ -3182,6 +3182,20 @@ def test_reverse_missing_owner_is_not_reported_as_success() -> None:
     assert "Test-ReverseOwnerState" in script
 
 
+def test_partial_reverse_run_degrades_instead_of_aborting() -> None:
+    """Some failed Reverse THIS! tool updates (an unanswered UAC prompt) warn; they do not abort the install."""
+    script = read(ROOT / "TOOLS" / "Install-ReverseThis.ps1")
+    assert "sandbox\\last-run.json" in script, "only the owner's own run result may prove a partial run"
+    assert "LastWriteTimeUtc -ge $ownerStarted" in script, "a stale last-run.json from an earlier run must not count"
+    assert "-not @($lastRun.ok).Count -or -not @($lastRun.failed).Count" in script, "a run with no successes stays fatal"
+    doctor = script.index("Reverse THIS! doctor failed.")
+    assert script.index("$script:ReverseExit=3") > doctor, "degraded is reported only after the owner doctor passed"
+    assert "throw 'Reverse THIS! tool update failed.'" in script, "an unproven failure is still fatal"
+    installer = read(ROOT / "INSTALL-AIO.ps1")
+    assert "$reverseExit -ne 0 -and $reverseExit -ne 3" in installer
+    assert "degraded = 'some tool updates failed" in installer
+
+
 def test_reverse_kit_is_adopted_after_a_move() -> None:
     """A moved Reverse THIS! kit is found in the tool roots, not re-installed."""
     script = read(ROOT / "TOOLS" / "Install-ReverseThis.ps1")
@@ -3310,6 +3324,7 @@ def main() -> int:
         test_recommended_engine_pack_is_pinned_and_attributed,
         test_asset_forge_is_a_detected_owner,
         test_skills_git_survives_an_upstream_folder_move,
+        test_partial_reverse_run_degrades_instead_of_aborting,
         test_free_model_routing_stays_off,
         test_bundle_forge_install_has_single_skill_writer,
         test_forge_skill_has_one_canonical_source,

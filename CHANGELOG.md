@@ -1,3 +1,14 @@
+## 8.39.5 (2026-11-12)
+
+- A partial Reverse THIS! run no longer aborts the whole install. When some of
+  its tool updates fail (for example an administrator prompt nobody answered)
+  and its doctor still passes, the install finishes with a warning, and the
+  failed tools keep their previous version. Proof comes only from the owner's
+  fresh `sandbox/last-run.json` (Reverse THIS! 1.15.2 or newer); any other
+  failure is still fatal.
+- No skill inventory or MCP wiring changed; the bundle still ships 81 canonical
+  skills.
+
 ## 8.39.4 (2026-11-12)
 
 - The image-stack companion follows its rename: `comfy-kit` is now `comfy-forge`

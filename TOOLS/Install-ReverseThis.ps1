@@ -210,11 +210,31 @@ try {
         $selected=@($state.tools.PSObject.Properties.Name)
         if ($selected.Count) { $ownerArgs+=@('-Only',($selected -join ',')); $doctorArgs+=@('-Only',($selected -join ',')) }
     }
+    $ownerStarted=[DateTime]::UtcNow.AddSeconds(-2)
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $installer @ownerArgs
-    if ($LASTEXITCODE -ne 0) { throw 'Reverse THIS! tool update failed.' }
+    $partialFailed=@()
+    if ($LASTEXITCODE -ne 0) {
+        # A partial owner run (some tool updates failed, e.g. an unanswered UAC
+        # prompt) is degraded, not fatal: failed tools keep their previous version
+        # and the owner doctor below still has to pass. Only the owner's own fresh
+        # sandbox\last-run.json (Reverse THIS! 1.15.2+) proves which part failed;
+        # anything else stays the old hard failure.
+        $lastRunFile=Join-Path $target 'sandbox\last-run.json'
+        $lastRun=$null
+        if ((Test-Path -LiteralPath $lastRunFile -PathType Leaf) -and -not (Test-ReverseReparse $lastRunFile) -and
+            (Get-Item -LiteralPath $lastRunFile).LastWriteTimeUtc -ge $ownerStarted) {
+            try { $lastRun=[IO.File]::ReadAllText($lastRunFile) | ConvertFrom-Json } catch { $lastRun=$null }
+        }
+        if (-not $lastRun -or $lastRun.schema -ne 1 -or -not @($lastRun.ok).Count -or -not @($lastRun.failed).Count) { throw 'Reverse THIS! tool update failed.' }
+        $partialFailed=@($lastRun.failed | ForEach-Object { [string]$_ })
+        Write-UabsWarn ('Reverse THIS! updated {0} tool(s); {1} kept their previous version: {2}. Owner log: {3}' -f @($lastRun.ok).Count, $partialFailed.Count, ($partialFailed -join ', '), (Join-Path $target 'sandbox\log\modkit.log'))
+    }
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $installer @doctorArgs
     if ($LASTEXITCODE -ne 0) { throw 'Reverse THIS! doctor failed.' }
     Write-UabsOk ('Reverse THIS! ready ('+([IO.File]::ReadAllText((Join-Path $target 'VERSION'))).Trim()+'): '+$target)
+    # 3 = ready but degraded; the caller warns instead of aborting the whole install.
+    if ($partialFailed.Count) { $script:ReverseExit=3 }
 } finally {
     if ($temp -and (Test-Path -LiteralPath $temp)) { Remove-Item -LiteralPath $temp -Recurse -Force }
 }
+if ($script:ReverseExit) { exit $script:ReverseExit }

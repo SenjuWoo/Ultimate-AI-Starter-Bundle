@@ -18732,7 +18732,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64159,
-  "sha256": "fd77376edd9f929a9a5b7f57aedfc8a0402a3a78252392db0d1b94f02b8b1bc5"
+  "sha256": "aae06d5705287bbe36f723859ef4489d6c72a59ca3f8c73e3af37a40a60e0cc7"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18742,7 +18742,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "bc56e3a103bb23c40609fbe44fb4a393c1e81ab289008cd6285b3cd5e57e71ec"
+  "sha256": "662c8475ae4f844713c668f35fc8bd97b600d02ceff2a3dcb012b21f57192e72"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18752,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "534b869bbeb264b039903c88601bfde38156b51d6f6e2be2baf0be95e50dae4c"
+  "sha256": "2cfbd7e6d24e3579cf06b1bcfa97b2b0a14783da2027acf9f42d742ed32db41f"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22806,8 +22806,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 334260,
-  "sha256": "f8ee14fde08562a9f04e98ffb1d32dd81cf7e398d69d2ffdaa6d9532c573b90c"
+  "size": 334798,
+  "sha256": "164967a8f7cb865f7745ede7b26db179103893ee807488c8704c4eaa9fc7435d"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22906,8 +22906,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 185578,
-  "sha256": "960d9e4c7bb9de297d01eee1f0a7b566a3d03c5b5e1c907f1624a32585c34182"
+  "size": 186081,
+  "sha256": "956f174e7df6034f55f4301041b29416e134128ab11c23b89d3a3ec5dc81f756"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -22952,7 +22952,7 @@
  {
   "path": "README.md",
   "size": 16101,
-  "sha256": "8832a6313d903a38b8defe2af965f371fc9f330cd08b261b05fb92d5529285b3"
+  "sha256": "12b13c35a5636845fa8c57eb81100b93a82549ede3afb82bd54d779723a10bb9"
  },
  {
   "path": "SECURITY.md",
@@ -22962,12 +22962,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "ec8bc0ee1d40f856340952c180bd363f10d9bf34a252f8be2a14ea05fab36881"
+  "sha256": "9ab751614e5ca135e3cd81f06a105e610d0a67ad3d15392e35c5707832b2420b"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "87078bbb27205b8c97fd2efeadac8bbbee2fb74e251058ddc6875624670b2015"
+  "sha256": "7bfb7d2613fd4c9d2479d716cd6f703cc53a1113ed7fd13e34ec052b60d18ef8"
  },
  {
   "path": "STATE.md",
@@ -23456,8 +23456,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 374050,
-  "sha256": "c4051d8bcd70d9367fe637d873390b95bef28b99d653ec9dcd2c0e79b87887f6"
+  "size": 375176,
+  "sha256": "283ba44bf51ee4f7b99761487d4ad774bd0214ff7698ea46aa1778475500566d"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23636,8 +23636,8 @@
  },
  {
   "path": "TOOLS/Install-ReverseThis.ps1",
-  "size": 14149,
-  "sha256": "86da1e79581474dbfffa380a92cd8bbd68b57be56b3b26146cd6a2906f8f2aed"
+  "size": 15663,
+  "sha256": "0da7db5042da1654ee4995ac356f50a43460635b1f35697ffe35776a59e58feb"
  },
  {
   "path": "TOOLS/Install-SillyTavernGateway.ps1",
@@ -24052,7 +24052,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2781,
-  "sha256": "a7eb383f4f2915ec250a379d0ec92f970da33c8d6ec0622e292edda0d4d7b24d"
+  "sha256": "1721b0b3c06149fd81b714dd697e4d9fc795a1bd61e32f6b95ead9cd6eede8ff"
  },
  {
   "path": "VALIDATION.md",
@@ -24062,7 +24062,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "4296240e1fa274675c3e8e5d21869271150b6f5bf95d3d5f9f2ade422f9e5236"
+  "sha256": "52d59a27026bceb04d438da1aebc39c0ff80013aedfff1836f3e8dd720faaa29"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -28168,6 +28168,11 @@
   "path": "docs/history/V8.39.4-CHANGELOG.md",
   "size": 959,
   "sha256": "14fcd63d7ab3923bfc543ac2d6d20b89f903c1f75f00c31cbc6b7c2ef487a6f3"
+ },
+ {
+  "path": "docs/history/V8.39.5-CHANGELOG.md",
+  "size": 536,
+  "sha256": "933eac5b408e889479d972bbf889980f6fc68b50cdda669fc4f82f6d77432f58"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",
