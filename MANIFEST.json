@@ -23386,13 +23386,13 @@
  },
  {
   "path": "TESTS/test_audit_regressions.py",
-  "size": 20960,
-  "sha256": "f2eebd559b0d83a2211086ddeda962a8e0366f135915ab3224b0c90349557451"
+  "size": 23920,
+  "sha256": "981107fa3350a4e9fc10687820d06582a93184c3e4971cc89d623ec20609d6f1"
  },
  {
   "path": "TESTS/test_awkward_paths.py",
-  "size": 9016,
-  "sha256": "3664467ee94315937ef91eb804c8ae45029d6c513c3548f3e309a39fc77a4274"
+  "size": 9198,
+  "sha256": "67d8174115a4ddd7723897c527d60fc0773ae045b397a4cb873535ede60e5d0a"
  },
  {
   "path": "TESTS/test_codex_native_profiles.py",
@@ -23886,18 +23886,18 @@
  },
  {
   "path": "TOOLS/hooks/assumption_gate.py",
-  "size": 21425,
-  "sha256": "3d281cb37f8b21178a5290fdf959e8db06d85b2d7be82cac470a463d39099e12"
+  "size": 21562,
+  "sha256": "ec9a65202e12385fb0b95d3141ee1a9207faeff87c508085a5f0eb5844928d88"
  },
  {
   "path": "TOOLS/hooks/completeness_gate.py",
-  "size": 18572,
-  "sha256": "9da669f0fc0e8e5f6bfe7f130c5477c884cea307d51d8748ea58a9ebd4a53df9"
+  "size": 18709,
+  "sha256": "330f8bd461d2de7a721cdffd95bc7be3810e8ae7c11147e590b0a2a0611c2016"
  },
  {
   "path": "TOOLS/hooks/hermes_gateway_guard.py",
-  "size": 28194,
-  "sha256": "d49f4a565aa774a810b6c0ec090a79a03abe8cb43cf89bef6302ed5b77404b06"
+  "size": 28333,
+  "sha256": "7ad49719b94c4ffcde41192567da812ae313bc41725cc9e223f64f09a75d5b58"
  },
  {
   "path": "TOOLS/hooks/hermes_wire.py",
@@ -23911,8 +23911,8 @@
  },
  {
   "path": "TOOLS/hooks/rtk_safe_hook.py",
-  "size": 8839,
-  "sha256": "e23c9fc27c3e9d00d4505b280c6c302c0925631fcd9d6abfda9b0c0139625497"
+  "size": 8976,
+  "sha256": "1abe64f70a154c8b238ddf3cf8d4e9c59c10e1321197156419e62164a27c4986"
  },
  {
   "path": "TOOLS/hooks/task_router_hook.py",

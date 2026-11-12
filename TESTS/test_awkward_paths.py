@@ -52,7 +52,9 @@ def load_tool(name, path):
 class AwkwardFolder(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix="uabs awkward ")
-        self.folder = Path(self.temp.name) / AWKWARD
+        # resolve(): the temp root can be an 8.3 short name (RUNNER~1) while a child
+        # process reports the long one. The paths under test are then the same string.
+        self.folder = Path(self.temp.name).resolve() / AWKWARD
         self.folder.mkdir()
 
     def tearDown(self):

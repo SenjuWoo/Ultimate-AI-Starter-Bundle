@@ -105,8 +105,10 @@ if __name__ == "__main__" and "--pre" in sys.argv[1:] and "--selftest" not in sy
     _RAW = _read_stdin()
     _low = _RAW.lower()
     # Only the tool input is inspected later. Starting at its key keeps the
-    # host's own cwd and transcript paths from matching on every call.
-    _keys = [_at for _at in (_low.find(b'"tool_input"'), _low.find(b'"toolinput"')) if _at >= 0]
+    # host's own cwd and transcript paths from matching on every call. Every
+    # key a gate may read its command from is listed, so the earliest one wins.
+    _keys = [_at for _at in (_low.find(b'"tool_input"'), _low.find(b'"toolinput"'),
+                             _low.find(b'"args"')) if _at >= 0]
     _scope = _low[min(_keys):] if _keys else _low
     if not any(_needle in _scope for _needle in _NEEDLES) and not _has_unicode_escape(_scope):
         os._exit(0)
