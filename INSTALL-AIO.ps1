@@ -2236,7 +2236,17 @@ if (-not $SkillsOnly) {
           $pairs = @()
           if ($comp.skills_subdir) {
             $srcRoot = Join-Path $stage $comp.skills_subdir
-            if (-not (Test-Path $srcRoot)) { throw "${id}: expected '$($comp.skills_subdir)' in the repo" }
+            if (-not (Test-Path $srcRoot)) {
+              # Upstreams move their skills folder (obsidian-skills went to
+              # plugins/obsidian/skills). Find the one folder of SKILL.md
+              # children before failing, so a layout change is not an abort.
+              $leaf = Split-Path -Leaf $comp.skills_subdir
+              $found = @(Get-ChildItem -LiteralPath $stage -Directory -Recurse -Depth 3 -Filter $leaf -EA SilentlyContinue |
+                Where-Object { $_.FullName -notmatch '[\\/]\.git([\\/]|$)' -and @(Get-ChildItem -LiteralPath $_.FullName -Filter SKILL.md -Recurse -Depth 1 -File -EA SilentlyContinue).Count })
+              if ($found.Count -ne 1) { throw "${id}: expected '$($comp.skills_subdir)' in the repo ($($found.Count) moved candidates)" }
+              Write-UabsWarn ("{0}: '{1}' moved upstream; using {2}" -f $id, $comp.skills_subdir, $found[0].FullName.Substring($stage.Length).TrimStart('\','/'))
+              $srcRoot = $found[0].FullName
+            }
             foreach ($sk in Get-ChildItem $srcRoot -Directory) { $pairs += @{ name = $sk.Name; path = $sk.FullName } }
           } else {
             $pairs += @{ name = $comp.skill_folder; path = $stage }

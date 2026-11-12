@@ -413,7 +413,7 @@
         "repo": "obsidian-skills"
       },
       "git_url": "https://github.com/kepano/obsidian-skills.git",
-      "skills_subdir": "skills",
+      "skills_subdir": "plugins/obsidian/skills",
       "skill_folder": null,
       "providers": [
         "Claude",

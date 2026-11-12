@@ -18731,8 +18731,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 64142,
-  "sha256": "fb21d44ee4fecc03f93b1affa29f8459b8a361c6d3dd3ce70145e49226841885"
+  "size": 64159,
+  "sha256": "fd77376edd9f929a9a5b7f57aedfc8a0402a3a78252392db0d1b94f02b8b1bc5"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -22806,8 +22806,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 334038,
-  "sha256": "5317a1bedc697cd15720c3ab247c479d8b4a83e77d0c601107a4ecd678373664"
+  "size": 334260,
+  "sha256": "f8ee14fde08562a9f04e98ffb1d32dd81cf7e398d69d2ffdaa6d9532c573b90c"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22906,8 +22906,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 184669,
-  "sha256": "7f43ab9b2bca256f6d8dc6ca245ea2b59eb6f5526201d032647d46c54f99d8ee"
+  "size": 185578,
+  "sha256": "960d9e4c7bb9de297d01eee1f0a7b566a3d03c5b5e1c907f1624a32585c34182"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -23456,8 +23456,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 373388,
-  "sha256": "c02abeeb02065780943ef50881e54f4c6b30cffa4ae59beae8a32ab766ee508a"
+  "size": 374050,
+  "sha256": "c4051d8bcd70d9367fe637d873390b95bef28b99d653ec9dcd2c0e79b87887f6"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -28163,6 +28163,11 @@
   "path": "docs/history/V8.39.3-CHANGELOG.md",
   "size": 481,
   "sha256": "8ba561bb2c4735d6fa265a43b5f29cf1fe68e521b0095ed4d27f7069df41f591"
+ },
+ {
+  "path": "docs/history/V8.39.4-CHANGELOG.md",
+  "size": 959,
+  "sha256": "14fcd63d7ab3923bfc543ac2d6d20b89f903c1f75f00c31cbc6b7c2ef487a6f3"
  },
  {
   "path": "docs/history/V8.4.0-CHANGELOG.md",

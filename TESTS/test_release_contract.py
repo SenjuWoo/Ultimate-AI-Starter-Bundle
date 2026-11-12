@@ -2561,6 +2561,16 @@ def test_asset_forge_is_a_detected_owner() -> None:
     assert "Asset production has an owner" in starter
 
 
+def test_skills_git_survives_an_upstream_folder_move() -> None:
+    """obsidian-skills moved skills/ to plugins/obsidian/skills; a move is a warning, not an abort."""
+    catalog = json.loads(read(ROOT / "BUNDLED-TOOLS" / "CATALOG.json"))["components"]
+    obsidian = next(c for c in catalog if c["id"] == "obsidian-skills")
+    assert obsidian["skills_subdir"] == "plugins/obsidian/skills"
+    installer = read(ROOT / "INSTALL-AIO.ps1")
+    assert "moved upstream; using" in installer
+    assert "moved candidates" in installer, "an unfound folder must still fail with its candidate count"
+
+
 def test_recommended_engine_pack_is_pinned_and_attributed() -> None:
     """The engine pack is a pinned pointer: license, revision and precedence all recorded."""
     import json as _json
@@ -3299,6 +3309,7 @@ def main() -> int:
         test_write_refusal_rule_ships_to_every_provider,
         test_recommended_engine_pack_is_pinned_and_attributed,
         test_asset_forge_is_a_detected_owner,
+        test_skills_git_survives_an_upstream_folder_move,
         test_free_model_routing_stays_off,
         test_bundle_forge_install_has_single_skill_writer,
         test_forge_skill_has_one_canonical_source,
