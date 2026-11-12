@@ -145,6 +145,24 @@ def plan(pack, provider, home=None, tree=None):
     return actions
 
 
+def _replace(src, dst, attempts=6):
+    """os.replace with a short retry.
+
+    On Windows a virus scanner or the search indexer can hold a just-written file
+    open for a moment, and the rename then fails with PermissionError although
+    nothing is wrong. Retrying keeps the write atomic; the last error still raises.
+    """
+    import time as _time
+    for attempt in range(attempts):
+        try:
+            os.replace(src, dst)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            _time.sleep(0.05 * (2 ** attempt))
+
+
 def _load(receipt):
     if not receipt.exists():
         return {"owned": [], "backups": {}}
@@ -160,7 +178,7 @@ def _save(receipt, data, pack, provider, pin):
                  "updated": datetime.now(timezone.utc).isoformat(timespec="seconds")})
     tmp = receipt.with_suffix(".tmp")
     tmp.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
-    os.replace(tmp, receipt)
+    _replace(tmp, receipt)
 
 
 def _namespaced(md, name, spec):

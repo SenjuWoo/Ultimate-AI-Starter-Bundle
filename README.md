@@ -1,5 +1,5 @@
-<!-- Ultimate AI Starter Bundle v8.39.5 -->
-# Ultimate AI Starter Bundle v8.39.5
+<!-- Ultimate AI Starter Bundle v8.40.0 -->
+# Ultimate AI Starter Bundle v8.40.0
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
@@ -58,10 +58,13 @@ same skills and instructions in its own format; apps you do not have are skipped
 ## Add-ons stay independent
 
 Forge families, Reverse THIS! and comfy-forge own their own code, releases and
-doctors. The bundle only **discovers** them:
+doctors. The bundle only **discovers** them, and reports a source checkout and its
+installed runtime as one owner:
 
 ```
 python TOOLS/companion_registry.py --verify     # NOT_FOUND / DISCOVERED / INSTALLED_UNVERIFIED
+python TOOLS/companion_registry.py --print-doctor skyrim-forge --json   # its doctor as argv + working directory
+python TOOLS/graph_roots.py                     # code-graph projects whose folder has moved
 ```
 
 The base packs are `automatic when Skyrim or Forge is found` and

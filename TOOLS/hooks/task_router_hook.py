@@ -16,6 +16,7 @@ security or game-modding. One line, no methodology prose, no second router.
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -37,9 +38,17 @@ def _prompt(payload):
     return str(text)
 
 
+# A host also fires the prompt hook for its own traffic: a finished background
+# task, a CI event, the echo of a local command. Nobody asked for anything there,
+# so a workflow suggestion would be advice about a message no person wrote.
+MACHINE_MESSAGE = re.compile(
+    r"^\s*(?:\[SYSTEM NOTIFICATION|<(?:task-notification|ci-monitor-event|side-sessions-event|"
+    r"local-command-[a-z]+|system-reminder|command-name)\b)", re.I)
+
+
 def line_for(prompt, provider=None):
     """The injection, or '' when the default lightweight path needs no announcement."""
-    if not prompt.strip():
+    if not prompt.strip() or MACHINE_MESSAGE.match(prompt):
         return ""
     result = tr.route(prompt, provider=provider)
     speaks = result["primary"] != "lightweight" or bool(HIGH_VALUE & set(result["specialists"]))

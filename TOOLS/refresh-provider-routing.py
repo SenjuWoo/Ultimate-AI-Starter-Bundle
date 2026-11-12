@@ -28,6 +28,24 @@ API = "https://openrouter.ai/api/v1/models/%s/endpoints"
 BANNED = {"fp4", "int4"}  # the operator does not run these
 
 
+def _replace(src, dst, attempts=6):
+    """os.replace with a short retry.
+
+    On Windows a virus scanner or the search indexer can hold a just-written file
+    open for a moment, and the rename then fails with PermissionError although
+    nothing is wrong. Retrying keeps the write atomic; the last error still raises.
+    """
+    import time as _time
+    for attempt in range(attempts):
+        try:
+            os.replace(src, dst)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            _time.sleep(0.05 * (2 ** attempt))
+
+
 def endpoints(model, timeout=30):
     req = urllib.request.Request(API % model, headers={"User-Agent": "uabs-refresh-routing"})
     with urllib.request.urlopen(req, timeout=timeout) as fh:
@@ -107,7 +125,7 @@ def write_config(path, slugs):
     try:
         with os.fdopen(fd, "w", encoding="utf-8", newline="") as fh:
             fh.write(new_text)
-        os.replace(tmp, path)
+        _replace(tmp, path)
     except BaseException:
         os.unlink(tmp)
         raise

@@ -134,7 +134,7 @@
         "entrypoint": null,
         "note": "forge.cmd updates only checks for a newer Forge; it does not install one"
       },
-      "doctor": null,
+      "doctor": {"entrypoint": ["python", "forge.py", "doctor"]},
       "markers": [
         "forge.cmd",
         "ror2forge"
@@ -167,7 +167,7 @@
         "entrypoint": null,
         "note": "source-first project; update from its own source tree"
       },
-      "doctor": null,
+      "doctor": {"entrypoint": ["python", "-m", "mcforge", "doctor"]},
       "markers": [
         "Minecraft-Forge.ps1"
       ],

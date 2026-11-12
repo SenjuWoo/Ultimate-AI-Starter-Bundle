@@ -109,7 +109,6 @@ if (-not $PackRoot) {
   $PackRoot = Split-Path -Parent $here
 }
 $hooksSrc  = Join-Path $PackRoot 'TOOLS\hooks'
-$pluginSrc = Join-Path $hooksSrc 'plugin'
 $wireSrc   = Join-Path $hooksSrc 'hermes_wire.py'
 
 # Share the verified Python resolver and configuration merge with the AIO.

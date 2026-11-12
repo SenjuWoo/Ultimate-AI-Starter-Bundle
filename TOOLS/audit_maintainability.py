@@ -26,13 +26,12 @@ GENERATED = (
 VENDORED = ("BUNDLED-TOOLS/plugins/",)
 SKILL_LINE_CEILING = 500
 # Known mirrors the pack keeps on purpose: the workspace AIO copy is asserted
-# identical by the release contract, the hook is duplicated into its plugin
-# payload, and the LICENSE must ship beside the vendored toolbox.
+# identical by the release contract, and the LICENSE must ship beside the
+# vendored toolbox.
 ALLOWED_DUPLICATES = {
     ("0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md", "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt"),
     ("BUNDLED-TOOLS/uabs-toolbox/LICENSE", "LICENSE"),
     ("COPY-TO-YOUR-WORKSPACE/AGENTS.md", "COPY-TO-YOUR-WORKSPACE/CLAUDE.md"),
-    ("TOOLS/hooks/completeness_gate.py", "TOOLS/hooks/plugin/completeness-gate/hooks/completeness_gate.py"),
 }
 
 

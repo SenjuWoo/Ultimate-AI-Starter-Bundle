@@ -3205,6 +3205,59 @@ def test_reverse_kit_is_adopted_after_a_move() -> None:
     assert "UABS_TOOL_ROOTS" in script
 
 
+def test_pre_tool_hooks_leave_before_their_imports() -> None:
+    """A gate spawned for every shell call must not load its modules to learn it has nothing to do."""
+    for name in ("completeness_gate.py", "assumption_gate.py", "rtk_safe_hook.py", "hermes_gateway_guard.py"):
+        text = read(ROOT / "TOOLS" / "hooks" / name)
+        prefilter = text.index("os._exit(0)")
+        assert "_NEEDLES = (" in text[:prefilter], name + " has no prefilter needles"
+        assert "_has_unicode_escape(_scope)" in text[:prefilter], name + " could skip an escaped needle"
+        assert text.index("import json") > prefilter, name + " imports before the prefilter can leave"
+        assert '"--selftest" not in sys.argv[1:]' in text[:prefilter], name + " prefilter would swallow its own self-test"
+
+
+def test_retired_codex_hook_plugin_stays_removed() -> None:
+    """The bundle wires no executable gate into Codex, so it ships no plugin copy of one to drift."""
+    assert not (ROOT / "TOOLS" / "hooks" / "plugin").exists(), "the unused hook plugin copy is back"
+    assert "$pluginSrc" not in read(ROOT / "TOOLS" / "Install-Completeness-Gate.ps1")
+
+
+def test_doctor_keeps_its_result_lists_appendable() -> None:
+    """`$list += x` turns a generic list into a fixed array; the next Warn/Err then aborts the doctor."""
+    doctor = read(ROOT / "TOOLS" / "Test-Installed-State.ps1")
+    assert not re.search(r"\$(warnings|errors)\s*\+=", doctor), "the doctor converts its result list into an array"
+    assert "$report['stale_graph_roots']" in doctor and "$report['dead_path_entries']" in doctor, (
+        "moved code-graph roots or dead PATH entries are no longer reported")
+    assert "graph_roots.py" in doctor
+
+
+def test_remote_installer_rolls_back_only_what_it_replaced() -> None:
+    """Reusing the current copy defines no rollback folder; the failure path must not read one."""
+    remote = read(ROOT / "INSTALL-REMOTE.ps1")
+    assert remote.index("$previous = $null") < remote.index("# ---------- 3. Download"), (
+        "the rollback folder is undefined when the stable copy is reused")
+    assert "if ($previous -and (Test-Path -LiteralPath $previous)" in remote
+
+
+def test_companion_registry_separates_source_from_runtime() -> None:
+    """A checkout beside its installed runtime is one owner, and the registry still runs nothing."""
+    registry = read(ROOT / "TOOLS" / "companion_registry.py")
+    assert '"source_path"' in registry and "def _pick(candidates):" in registry
+    assert "def doctor_command(entry, owner_root):" in registry, "the doctor is no longer offered as argv"
+    for forbidden in ("subprocess", "os.system"):
+        assert forbidden not in registry, "the companion registry must not execute commands"
+
+
+def test_forge_standard_is_a_reference_not_another_skill() -> None:
+    """The bar for a forge loads on demand; it does not spend every provider's skill index."""
+    skill = ROOT / "_CANONICAL-SKILLS" / "ai-tooling-stack"
+    standard = read(skill / "references" / "forge-standard.md")
+    for required in ("doctor", "Evidence, in separate tiers", "identical bytes", "Quick audit"):
+        assert required in standard, "forge standard lost: " + required
+    assert "references/forge-standard.md" in read(skill / "SKILL.md")
+    assert not (ROOT / "_CANONICAL-SKILLS" / "forge-authoring").exists()
+
+
 def main() -> int:
     # A failed gate must report Unicode paths on legacy Windows consoles too.
     sys.stdout.reconfigure(errors="backslashreplace")
@@ -3325,6 +3378,12 @@ def main() -> int:
         test_asset_forge_is_a_detected_owner,
         test_skills_git_survives_an_upstream_folder_move,
         test_partial_reverse_run_degrades_instead_of_aborting,
+        test_pre_tool_hooks_leave_before_their_imports,
+        test_retired_codex_hook_plugin_stays_removed,
+        test_doctor_keeps_its_result_lists_appendable,
+        test_remote_installer_rolls_back_only_what_it_replaced,
+        test_companion_registry_separates_source_from_runtime,
+        test_forge_standard_is_a_reference_not_another_skill,
         test_free_model_routing_stays_off,
         test_bundle_forge_install_has_single_skill_writer,
         test_forge_skill_has_one_canonical_source,

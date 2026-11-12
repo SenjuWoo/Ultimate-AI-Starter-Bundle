@@ -33,6 +33,24 @@ from pathlib import Path
 MARKER = "completeness_gate.py"
 
 
+def _replace(src, dst, attempts=6):
+    """os.replace with a short retry.
+
+    On Windows a virus scanner or the search indexer can hold a just-written file
+    open for a moment, and the rename then fails with PermissionError although
+    nothing is wrong. Retrying keeps the write atomic; the last error still raises.
+    """
+    import time as _time
+    for attempt in range(attempts):
+        try:
+            os.replace(src, dst)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            _time.sleep(0.05 * (2 ** attempt))
+
+
 def owned_gate_command(command: object, gate: str) -> bool:
     """Only the generated command for this exact owned gate is replaceable."""
     if not isinstance(command, str):
@@ -123,7 +141,7 @@ def update_allowlist(cfg: Path, command: str, gate: Path, event: str,
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
             json.dump(data, handle, indent=2, sort_keys=True)
-        os.replace(temp_name, path)
+        _replace(temp_name, path)
     except Exception:
         try:
             os.unlink(temp_name)
@@ -516,7 +534,7 @@ def main() -> int:
         try:
             with os.fdopen(descriptor, 'wb') as stream:
                 stream.write(payload)
-            os.replace(temporary, cfg)
+            _replace(temporary, cfg)
         finally:
             Path(temporary).unlink(missing_ok=True)
 

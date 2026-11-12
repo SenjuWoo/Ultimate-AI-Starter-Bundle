@@ -12,6 +12,24 @@ from pathlib import Path
 LEGACY = {"openrouter-extra", "custom:openrouter-extra"}
 
 
+def _replace(src, dst, attempts=6):
+    """os.replace with a short retry.
+
+    On Windows a virus scanner or the search indexer can hold a just-written file
+    open for a moment, and the rename then fails with PermissionError although
+    nothing is wrong. Retrying keeps the write atomic; the last error still raises.
+    """
+    import time as _time
+    for attempt in range(attempts):
+        try:
+            os.replace(src, dst)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            _time.sleep(0.05 * (2 ** attempt))
+
+
 def migrate(db_path: Path) -> int:
     if not db_path.is_file():
         print("migrated=0 state_db=missing")
@@ -66,7 +84,7 @@ def migrate(db_path: Path) -> int:
         ],
     }
     backup_tmp.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    os.replace(backup_tmp, backup)
+    _replace(backup_tmp, backup)
 
     try:
         db.execute("begin immediate")

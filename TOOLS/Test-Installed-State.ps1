@@ -954,21 +954,21 @@ if ($hermesPluginIssues.Count -or $hermesDiscouragedPluginIssues.Count -or $herm
   Write-UabsStep 'Hermes plugins and shell hooks'
   foreach ($m in $hermesPluginIssues) {
     Write-UabsWarn $m
-    $warnings += $m
+    [void]$warnings.Add($m)
   }
   if ($hermesPluginIssues.Count) {
     Write-Host '     A cloned profile copies the enabled list, never the payload. Fix: TOOLS\Migrate-HermesProfiles.ps1 -Apply' -ForegroundColor DarkGray
   }
   foreach ($m in $hermesDiscouragedPluginIssues) {
     Write-UabsWarn $m
-    $warnings += $m
+    [void]$warnings.Add($m)
   }
   if ($hermesDiscouragedPluginIssues.Count) {
     Write-Host '     Fix with backup and verification: TOOLS\Migrate-HermesProfiles.ps1 -Apply' -ForegroundColor DarkGray
   }
   foreach ($m in $hermesHookIssues) {
     Write-UabsWarn $m
-    $warnings += $m
+    [void]$warnings.Add($m)
   }
   if ($hermesHookIssues.Count) {
     Write-Host '     Consent is deliberately interactive. Grant once: hermes --accept-hooks   then re-run: hermes hooks doctor' -ForegroundColor DarkGray
@@ -1109,7 +1109,7 @@ if ($hookMisdirection.Count) {
   Write-UabsStep 'Session hooks pointing at unregistered MCP servers'
   foreach ($m in ($hookMisdirection | Select-Object -Unique)) {
     Write-UabsWarn $m
-    $warnings += $m
+    [void]$warnings.Add($m)
   }
   Write-Host '     Those instructions reach the model on every session; the tools do not.' -ForegroundColor DarkGray
   Write-Host '     Either register the server for the projects that need it' -ForegroundColor DarkGray
@@ -1178,7 +1178,7 @@ if ($shadowed.Count) {
   foreach ($s in $shadowed) {
     $m = ('{0}: this pack installed {1}, but PATH resolves {2} first' -f $s.component, $s.installed, $s.wins)
     Write-UabsWarn $m
-    $warnings += $m
+    [void]$warnings.Add($m)
   }
   Write-Host '     Whichever comes first on PATH is what every caller gets, including' -ForegroundColor DarkGray
   Write-Host '     hooks that hardcode a path. An update can succeed and change nothing.' -ForegroundColor DarkGray
@@ -1209,7 +1209,7 @@ if ($autostarts.Count) {
     if ($a.Dead) {
       $m = ('autostart ''{0}'' runs at every boot but its target is missing: {1}' -f $a.Name, ($a.MissingTargets -join '; '))
       Write-UabsWarn $m
-      $warnings += $m
+      [void]$warnings.Add($m)
     } else {
       Write-Host ('  {0,-34} {1}' -f $a.Name, $a.Source) -ForegroundColor DarkGray
     }
@@ -1236,9 +1236,48 @@ if (Test-Path -LiteralPath $ponyScriptPath -PathType Leaf) {
     # The tool already decides what counts as a leak: an enabled plugin at mode
     # off emits nothing (upstream skips activation), only loaded skill copies do.
     if (@($ponyReport.leaks).Count -gt 0) {
-      $errors += "ponytail mode is off but instructions can still reach the model: " + (@($ponyReport.leaks) -join '; ')
+      [void]$errors.Add("ponytail mode is off but instructions can still reach the model: " + (@($ponyReport.leaks) -join '; '))
     }
-    elseif ($ponyReport.effective) { $warnings += ("ponytail: " + $ponyReport.effective) }
+    elseif ($ponyReport.effective) { [void]$warnings.Add("ponytail: " + $ponyReport.effective) }
+  }
+}
+# ---------------------------------------------------------- dead PATH entries ---
+# A PATH entry whose folder is gone is probed on every command lookup and hides
+# which runtime is the live one. Moved tool folders and removed SDKs leave them
+# behind. Reported only: the pack did not add most of them and removes none.
+$deadPathEntries = @()
+foreach ($pathScope in 'User', 'Machine') {
+  $pathRaw = [Environment]::GetEnvironmentVariable('Path', $pathScope)
+  foreach ($pathEntry in @(([string]$pathRaw) -split ';' | ForEach-Object { $_.Trim() } | Where-Object { $_ })) {
+    $pathExpanded = [Environment]::ExpandEnvironmentVariables($pathEntry)
+    # A folder this account may not read still exists; only a clean 'no' counts.
+    $pathExists = $true
+    try { $pathExists = Test-Path -LiteralPath $pathExpanded -PathType Container -ErrorAction Stop } catch { $pathExists = $true }
+    if (-not $pathExists) { $deadPathEntries += [ordered]@{ scope = $pathScope; entry = $pathEntry } }
+  }
+}
+if ($deadPathEntries.Count) {
+  $deadShown = @($deadPathEntries | Select-Object -First 6 | ForEach-Object { $_.entry }) -join '; '
+  $deadMore = if ($deadPathEntries.Count -gt 6) { ' (+{0} more in the report)' -f ($deadPathEntries.Count - 6) } else { '' }
+  Warn ('{0} PATH entr{1} name a folder that no longer exists: {2}{3}. Remove them under Environment Variables; the pack leaves PATH as it found it.' -f $deadPathEntries.Count, $(if ($deadPathEntries.Count -eq 1) { 'y' } else { 'ies' }), $deadShown, $deadMore)
+}
+
+# A code graph keeps answering after its project folder is moved or renamed, and
+# nothing in a query result says the structure is stale. Report it; never repair it.
+$staleGraphRoots = @()
+$graphScript = Join-Path $PSScriptRoot 'graph_roots.py'
+$graphPython = Get-UabsPythonExecutable
+if ($graphPython -and (Test-Path -LiteralPath $graphScript -PathType Leaf)) {
+  $prevEapG = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  $graphJson = @(& $graphPython $graphScript '--json' 2>$null) -join "`n"
+  $ErrorActionPreference = $prevEapG
+  try { $graphReport = $graphJson | ConvertFrom-Json } catch { $graphReport = $null }
+  if ($graphReport -and $graphReport.available) {
+    foreach ($row in @($graphReport.projects | Where-Object { -not $_.exists })) {
+      $where = if ($row.moved_to) { ('; the project is now at ' + $row.moved_to) } else { '' }
+      Warn ("code graph '{0}' points at a folder that is gone: {1}{2}. Index its current root under the same name." -f $row.name, $row.root, $where)
+      $staleGraphRoots += [ordered]@{ name = $row.name; root = $row.root; moved_to = $row.moved_to }
+    }
   }
 }
 $report=[ordered]@{version=$packBare;checked_utc=[DateTime]::UtcNow.ToString('o');errors=@($errors);warnings=@($warnings);reverse_this=$reverseHealth;rtk_runtime=$rtkRuntime;capability_states=@($capabilityStates);hermes_tool_budgets=@($hermesBudgets);hermes_plugin_issues=@($hermesPluginIssues);hermes_discouraged_plugin_issues=@($hermesDiscouragedPluginIssues);hermes_hook_issues=@($hermesHookIssues);codex_skill_index=$script:codexSkillIndex;ai_autostarts=@($autostartReport);hook_misdirection=@($hookMisdirection);shadowed_tools=@($shadowReport)}
@@ -1247,6 +1286,8 @@ $reportPath=Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\installed-st
 $report['grok_hook_issues'] = @($grokHookIssues)
 $report['codex_hook_issues'] = @($codexHookIssues)
 $report['mcp_launch_path_issues'] = @($mcpPathIssues)
+$report['stale_graph_roots'] = @($staleGraphRoots)
+$report['dead_path_entries'] = @($deadPathEntries)
 $enc=New-Object System.Text.UTF8Encoding($false); [IO.File]::WriteAllText($reportPath,($report|ConvertTo-Json -Depth 8),$enc)
 if($errors.Count){Write-UabsBad ("Installed-state doctor FAIL ($($errors.Count) error(s)). Report: $reportPath");exit 1}
 Write-UabsOk ("Installed-state doctor PASS. Report: $reportPath")

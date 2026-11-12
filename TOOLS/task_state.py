@@ -45,6 +45,24 @@ class Task:
         self.deps, self.verify, self.evidence = deps, verify, evidence
 
 
+def _replace(src, dst, attempts=6):
+    """os.replace with a short retry.
+
+    On Windows a virus scanner or the search indexer can hold a just-written file
+    open for a moment, and the rename then fails with PermissionError although
+    nothing is wrong. Retrying keeps the write atomic; the last error still raises.
+    """
+    import time as _time
+    for attempt in range(attempts):
+        try:
+            os.replace(src, dst)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            _time.sleep(0.05 * (2 ** attempt))
+
+
 def split_row(line):
     return [c.strip().strip("`") for c in line.strip().strip("|").split("|")]
 
@@ -343,7 +361,7 @@ def cmd_resume(root, fix=False):
             if updated != original:
                 tmp = state_path.with_suffix(".md.tmp")
                 tmp.write_bytes(updated.encode("utf-8"))
-                os.replace(tmp, state_path)
+                _replace(tmp, state_path)
                 print("STATE.md updated: %s" % ", ".join(changed))
                 if missing:
                     print("STATE.md was missing: %s (added)" % ", ".join(missing))

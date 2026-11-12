@@ -39,11 +39,81 @@ Modes
 """
 from __future__ import annotations
 
-import json
 import os
+import sys
+
+# Fast exit before the heavier imports. A host spawns this file for every shell
+# call and almost none of them can concern it, so the first test runs on the raw
+# payload bytes with only os and sys loaded. It is a superset test: it may pass an
+# irrelevant payload on to the real checks, never drop a relevant one.
+_NEEDLES = (b":\\", b":/", b"/home/", b"|")
+_RAW = None  # payload bytes the prefilter already consumed
+
+
+def _read_stdin(timeout: float = 2.0) -> bytes:
+    """Read the hook payload from stdin without ever blocking the host.
+
+    `sys.stdin.read()` waits for EOF. A host that spawns the hook but never
+    closes the pipe (Grok CLI 1.0.4 does not) leaves that read hanging until
+    the host's own hook timeout fires -- measured at 60s per turn. Every field
+    is optional, so time-box the read and continue without the payload.
+    """
+    import threading
+    box: dict = {}
+
+    def slurp() -> None:
+        # os.read on the raw fd, not sys.stdin.read: a thread parked inside
+        # sys.stdin's BufferedReader holds that object's lock, and interpreter
+        # shutdown then blocks trying to finalise it -- which reintroduces the
+        # exact hang this function exists to avoid.
+        chunks = []
+        try:
+            fd = sys.stdin.fileno()
+            while True:
+                part = os.read(fd, 65536)
+                if not part:
+                    break
+                chunks.append(part)
+        except Exception:
+            pass
+        box["raw"] = b"".join(chunks)
+
+    reader = threading.Thread(target=slurp, daemon=True)
+    reader.start()
+    reader.join(timeout)
+    return box.get("raw") or b""
+
+
+def _has_unicode_escape(raw: bytes) -> bool:
+    """True for a real JSON \\uXXXX escape, which could spell a needle invisibly.
+
+    A Windows path such as C:\\\\Users is an escaped backslash followed by a
+    letter, not an escape, so the backslashes before each match are counted.
+    """
+    at = raw.find(b"\\u")
+    while at != -1:
+        start = at
+        while start > 0 and raw[start - 1] == 0x5C:
+            start -= 1
+        if (at - start) % 2 == 0:
+            return True
+        at = raw.find(b"\\u", at + 2)
+    return False
+
+
+if __name__ == "__main__" and "--pre" in sys.argv[1:] and "--selftest" not in sys.argv[1:]:
+    _RAW = _read_stdin()
+    _low = _RAW.lower()
+    # Only the tool input is inspected later. Starting at its key keeps the
+    # host's own cwd and transcript paths from matching on every call.
+    _keys = [_at for _at in (_low.find(b'"tool_input"'), _low.find(b'"toolinput"')) if _at >= 0]
+    _scope = _low[min(_keys):] if _keys else _low
+    if not any(_needle in _scope for _needle in _NEEDLES) and not _has_unicode_escape(_scope):
+        os._exit(0)
+
+import json
 import re
 import subprocess
-import sys
 import threading
 from pathlib import Path
 
@@ -242,38 +312,8 @@ def run(args: list[str], cwd: Path) -> str:
 
 
 def read_input(timeout: float = 2.0) -> dict:
-    """Read the hook payload from stdin without ever blocking the host.
-
-    `sys.stdin.read()` waits for EOF. A host that spawns the hook but never
-    closes the pipe (Grok CLI 1.0.4 does not) leaves that read hanging until
-    the host's own hook timeout fires -- measured at 60s per turn, two Stop
-    hooks at 30s each. Design rule 3 above is "fail open", and a read that can
-    hang the caller breaks it. Every field below is optional, so time-box the
-    read and continue without the payload rather than hold up a turn.
-    """
-    box: dict = {}
-
-    def slurp() -> None:
-        # os.read on the raw fd, not sys.stdin.read: a thread parked inside
-        # sys.stdin's BufferedReader holds that object's lock, and interpreter
-        # shutdown then blocks trying to finalise it -- which reintroduces the
-        # exact hang this function exists to avoid.
-        chunks = []
-        try:
-            fd = sys.stdin.fileno()
-            while True:
-                part = os.read(fd, 65536)
-                if not part:
-                    break
-                chunks.append(part)
-        except Exception:
-            pass
-        box["raw"] = b"".join(chunks).decode("utf-8", "replace")
-
-    reader = threading.Thread(target=slurp, daemon=True)
-    reader.start()
-    reader.join(timeout)
-    raw = box.get("raw") or ""
+    """The hook payload as a dict; empty when absent, late or malformed."""
+    raw = (_RAW if _RAW is not None else _read_stdin(timeout)).decode("utf-8", "replace")
     try:
         return json.loads(raw) if raw.strip() else {}
     except Exception:

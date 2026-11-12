@@ -1,7 +1,7 @@
 {
   "_comment": [
     "Ultimate AI Starter Bundle - completeness + assumption gates + safe RTK routing + Hermes multiplex guard.",
-    "Claude-compatible hook shape. Grok and Codex plugins read this format too.",
+    "Claude-compatible hook shape. Grok reads this format too; Codex is not wired.",
     "Kimi has a hook engine, but its config schema is not established - this file is not written there.",
     "Hermes is wired by hermes_wire.py, not this file.",
     "Replace <PYTHON> and <HOOKS> at install time; Install-Completeness-Gate.ps1 does this."

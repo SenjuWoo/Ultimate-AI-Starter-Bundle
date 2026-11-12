@@ -249,6 +249,95 @@ def test_discovery_does_not_scan_dependencies_or_count_overlapping_roots_twice()
         assert row["state"] == "INSTALLED_UNVERIFIED" and row["candidates"] == [owner], row
 
 
+# Folder names an owner really lives under: '!' breaks cmd delayed expansion, the
+# space and parentheses break unquoted shells, and the accent breaks byte-wise code.
+AWKWARD = "!Sky tools (x) \u00e9"
+
+
+def _owner(parent, name="Demo", checkout=False):
+    owner = os.path.join(parent, name)
+    os.makedirs(owner)
+    open(os.path.join(owner, "demo.exe"), "w").close()
+    if checkout:
+        os.makedirs(os.path.join(owner, ".git"))
+    return owner
+
+
+def test_checkout_plus_runtime_is_one_owner_not_an_ambiguity():
+    with tempfile.TemporaryDirectory() as root:
+        source = _owner(os.path.join(root, AWKWARD), checkout=True)
+        runtime = _owner(os.path.join(root, "installed"))
+        row = reg.status([root], _data())["demo"]
+        assert row["state"] == "INSTALLED_UNVERIFIED" and row["path"] == runtime, row
+        assert row["source_path"] == source, row
+
+
+def test_two_checkouts_without_a_runtime_stay_ambiguous():
+    with tempfile.TemporaryDirectory() as root:
+        first = _owner(os.path.join(root, "a"), checkout=True)
+        second = _owner(os.path.join(root, "b"), checkout=True)
+        row = reg.status([root], _data())["demo"]
+        assert row["state"] == "AMBIGUOUS" and row["path"] is None, row
+        assert row["source_path"] is None and sorted(row["source_candidates"]) == [first, second], row
+
+
+def test_moved_source_is_found_at_its_new_awkward_path():
+    """The source follows the folder: no record of the old location is consulted."""
+    import shutil
+    with tempfile.TemporaryDirectory() as root:
+        old = _owner(os.path.join(root, "general tools"), checkout=True)
+        new_parent = os.path.join(root, AWKWARD)
+        os.makedirs(new_parent)
+        moved = shutil.move(old, os.path.join(new_parent, "Demo"))
+        row = reg.status([root], _data())["demo"]
+        assert row["path"] == moved and row["source_path"] == moved, row
+
+
+def test_doctor_command_is_argv_with_the_owner_interpreter():
+    with tempfile.TemporaryDirectory() as root:
+        owner = _owner(os.path.join(root, AWKWARD))
+        scripts = os.path.join(owner, ".venv", "Scripts")
+        os.makedirs(scripts)
+        open(os.path.join(scripts, "python.exe"), "w").close()
+        entry = dict(_data()["companions"]["demo"], doctor={"entrypoint": ["python", "-m", "demo", "doctor"]})
+        plan = reg.doctor_command(entry, owner)
+        assert plan["cwd"] == owner and plan["argv"][1:] == ["-m", "demo", "doctor"], plan
+        assert plan["argv"][0] == os.path.join(scripts, "python.exe"), plan
+        assert reg.doctor_command(_data()["companions"]["demo"], owner) is None
+        assert reg.doctor_command(entry, None) is None
+
+
+def test_awkward_owner_path_survives_a_real_process_boundary():
+    """argv plus cwd must reach a child process byte-for-byte, with no shell in between."""
+    import subprocess
+    with tempfile.TemporaryDirectory() as root:
+        owner = _owner(os.path.join(root, AWKWARD))
+        with open(os.path.join(owner, "doctor.py"), "w", encoding="utf-8") as fh:
+            fh.write("import os, sys\nsys.stdout.buffer.write(os.getcwd().encode('utf-8'))\n")
+        entry = dict(_data()["companions"]["demo"], doctor={"entrypoint": ["python", "doctor.py"]})
+        plan = reg.doctor_command(entry, owner)
+        argv = [sys.executable] + plan["argv"][1:]
+        done = subprocess.run(argv, cwd=plan["cwd"], capture_output=True, timeout=60)
+        assert done.returncode == 0, done.stderr
+        assert os.path.normcase(done.stdout.decode("utf-8")) == os.path.normcase(os.path.realpath(owner)) \
+            or os.path.normcase(done.stdout.decode("utf-8")) == os.path.normcase(owner), done.stdout
+
+
+def test_print_doctor_handles_an_owner_that_declares_none():
+    """An owner without a doctor is written as null or as a null entrypoint; neither may crash."""
+    import contextlib
+    import io
+    from unittest.mock import patch
+    for shape in (None, {"entrypoint": None}):
+        data = _data()
+        data["companions"]["demo"]["doctor"] = shape
+        for flags in ([], ["--json"]):
+            out = io.StringIO()
+            with patch.object(reg, "load", lambda data=data: data), contextlib.redirect_stdout(out):
+                assert reg.main(["--print-doctor", "demo"] + flags) == 0
+            assert ("no doctor declared" in out.getvalue()) or ('"argv": null' in out.getvalue()), out.getvalue()
+
+
 if __name__ == "__main__":
     failures = 0
     for name, fn in sorted(globals().items()):

@@ -104,6 +104,8 @@ if (-not $tag) {
 
 # ---------- 2. Reuse current stable copy ----------
 $dest = $DestRoot
+# Set only when this run replaces an install. A reused copy has nothing to roll back to.
+$previous = $null
 $catalog = Join-Path $dest 'BUNDLED-TOOLS\CATALOG.json'
 $installedVersion = ''
 $versionFile = Join-Path $dest 'VERSION.txt'
@@ -210,7 +212,7 @@ if ($LASTEXITCODE -ne 0) {
   # The new tree failed its own installer. Put the working one back: an update
   # that half-configures the machine and leaves the broken tree in place is
   # worse than no update. The rollback copy stays until a later success.
-  if ((Test-Path -LiteralPath $previous) -and (Test-Path -LiteralPath (Join-Path $previous 'BUNDLED-TOOLS\CATALOG.json'))) {
+  if ($previous -and (Test-Path -LiteralPath $previous) -and (Test-Path -LiteralPath (Join-Path $previous 'BUNDLED-TOOLS\CATALOG.json'))) {
     if (Test-Path -LiteralPath $dest) { Remove-Item -LiteralPath $dest -Recurse -Force -ErrorAction SilentlyContinue }
     Move-Item -LiteralPath $previous -Destination $dest -ErrorAction SilentlyContinue
     Warn ("installer exit code {0}; restored the previous install at {1}" -f $instCode, $dest)

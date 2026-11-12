@@ -33,7 +33,7 @@ if ($PSCmdlet.ParameterSetName -eq 'CommandLine') {
     # Legacy -Command explicitly accepts a Windows shell command. Prefer argv
     # for executable paths with spaces; never interpolate untrusted input here.
     $Executable = $env:ComSpec
-    $Arguments = @('/d', '/s', '/c', $Command)
+    $Arguments = @('/d', '/v:off', '/s', '/c', $Command)
   } else {
     $Executable = (Resolve-Path -LiteralPath $Command).Path
     $Arguments = @()

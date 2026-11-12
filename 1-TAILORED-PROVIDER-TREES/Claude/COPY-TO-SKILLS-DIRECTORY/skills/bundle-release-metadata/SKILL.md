@@ -67,7 +67,7 @@ history.
 
 `python TOOLS/audit_maintainability.py . --strict` reports duplicate
 non-generated files, skills over 500 lines, orphaned tools and TODO markers.
-Known mirrors (workspace AIO, hook plugin copy, LICENSE) are allowlisted by
+Known mirrors (workspace AIO, LICENSE) are allowlisted by
 path. The pack gate runs it, so a new hard duplicate fails CI.
 
 ## Pre-push hook

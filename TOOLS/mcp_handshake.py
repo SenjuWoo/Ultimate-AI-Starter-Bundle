@@ -41,7 +41,7 @@ def probe(command: str, args: list[str], timeout: int, shell_command: str | None
             return {"ok": False, "reason": "shell_command is a Windows command line; use command/args on other systems"}
         # -Command is explicitly shell syntax. Do not feed it through
         # list2cmdline as an argument: its backslash-quoted quotes break cmd.exe.
-        argv = subprocess.list2cmdline([os.environ["COMSPEC"]]) + ' /d /s /c "' + shell_command + '"'
+        argv = subprocess.list2cmdline([os.environ["COMSPEC"]]) + ' /d /v:off /s /c "' + shell_command + '"'
     try:
         proc = subprocess.Popen(
             argv,

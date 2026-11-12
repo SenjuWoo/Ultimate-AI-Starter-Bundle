@@ -30,6 +30,19 @@ class HookTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertEqual(out, "")
 
+    def test_host_traffic_is_not_a_request(self):
+        """A finished background task or a local command echo is not a person asking."""
+        loud = "audit the whole release pipeline for security problems across all phases and publish"
+        self.assertNotEqual(run_hook(loud)[0], "", "the control prompt must speak or this test proves nothing")
+        for wrapper in ("[SYSTEM NOTIFICATION - NOT USER INPUT] %s",
+                        "<task-notification><summary>%s</summary></task-notification>",
+                        "  <local-command-stdout>%s</local-command-stdout>",
+                        "<ci-monitor-event>%s</ci-monitor-event>"):
+            out, code = run_hook(wrapper % loud)
+            self.assertEqual((out, code), ("", 0), wrapper)
+        # A person quoting such a tag mid-sentence is still a person.
+        self.assertNotEqual(run_hook(loud + " (the log said <task-notification>)")[0], "")
+
     def test_a_security_change_names_one_workflow(self):
         out, _ = run_hook("add oauth login with tests before merge")
         payload = json.loads(out)

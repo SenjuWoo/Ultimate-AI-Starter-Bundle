@@ -24,6 +24,11 @@ REGISTRY = os.path.join(os.path.dirname(HERE), "BUNDLED-TOOLS", "COMPANIONS.json
 # DISCOVERED            the folder exists but a required marker is missing
 # INSTALLED_UNVERIFIED  markers are present; no owner doctor has run
 # DEGRADED              a declared requirement is missing on this machine
+# AMBIGUOUS             several folders qualify and nothing says which one is live
+#
+# These states stop at "on disk". Whether the owner is configured, callable and
+# working is the owner doctor's verdict: `--print-doctor ID --json` gives the
+# exact argv and working directory to run, and this module never runs it.
 STATES = ("NOT_FOUND", "DISCOVERED", "INSTALLED_UNVERIFIED", "DEGRADED", "AMBIGUOUS")
 
 DEFAULT_ROOTS = (
@@ -246,6 +251,55 @@ def _with_root(root):
     yield from _subdirs(root)
 
 
+def _is_checkout(path):
+    return os.path.exists(os.path.join(path, ".git"))
+
+
+def _pick(candidates):
+    """The one live owner among several folders that carry its markers.
+
+    An owner can legitimately exist twice: the git checkout it is developed in and
+    the runtime its installer produced. The runtime is the copy to use. Two
+    runtimes, or several checkouts and no runtime, stay ambiguous.
+    """
+    runtimes = [path for path in candidates if not _is_checkout(path)]
+    if len(runtimes) == 1:
+        return runtimes[0]
+    if not runtimes and len(candidates) == 1:
+        return candidates[0]
+    return None
+
+
+def checkouts(entry, directories):
+    """Git checkouts named after this owner: where its source lives, wherever it was moved."""
+    wanted = owner_names(entry)
+    return [path for path in directories
+            if _norm(os.path.basename(path.rstrip("/" + os.sep))) in wanted and _is_checkout(path)]
+
+
+def doctor_command(entry, owner_root):
+    """The owner doctor as argv plus working directory; None when it declares none.
+
+    Returned as data so a caller passes it to a process API unquoted. Owner roots
+    contain spaces, '!' and parentheses, and a shell string built from them is
+    where those characters get mangled.
+    """
+    doctor = entry.get("doctor") or {}
+    argv = doctor.get("entrypoint")
+    if not isinstance(argv, list) or not argv or not owner_root:
+        return None
+    argv = list(argv)
+    if argv[0] in ("python", "python3"):
+        # An owner that ships its own environment is diagnosed with that interpreter.
+        for relative in (os.path.join(".venv", "Scripts", "python.exe"), os.path.join(".venv", "bin", "python")):
+            own = os.path.join(owner_root, relative)
+            if os.path.isfile(own):
+                argv[0] = own
+                break
+    cwd = os.path.join(owner_root, doctor["cwd"]) if doctor.get("cwd") else owner_root
+    return {"argv": argv, "cwd": cwd}
+
+
 def discover(entry, search_roots, directories=None):
     """A valid explicit owner wins. Otherwise require one unique marker match."""
     markers = entry["markers"]
@@ -261,7 +315,7 @@ def discover(entry, search_roots, directories=None):
     directories = directory_index(search_roots) if directories is None else directories
     candidates = [p for p in directories if _norm(os.path.basename(p.rstrip("\\/"))) in wanted
                   and all(_marker_present(p, m) for m in markers)]
-    return (candidates[0] if len(candidates) == 1 else None), candidates, "bounded-discovery"
+    return _pick(candidates), candidates, "bounded-discovery"
 
 
 def find(entry, search_roots):
@@ -299,11 +353,15 @@ def status(search_roots, data=None, directories=None):
             wanted = owner_names(entry)
             path = next((p for p in directories if _norm(os.path.basename(p)) in wanted), None)
             state = "DISCOVERED" if path else "NOT_FOUND"
+        sources = checkouts(entry, directories)
         report[cid] = {"state": state, "path": path, "title": entry["title"],
                        "repo": entry["repo"], "kind": entry["install"]["kind"],
                        "doctor": (entry.get("doctor") or {}).get("entrypoint"),
                        "ready": False, "evidence": "markers-only", "source": source,
-                       "candidates": candidates}
+                       "candidates": candidates,
+                       # Where the owner's source is developed, when that is one known place.
+                       "source_path": sources[0] if len(sources) == 1 else None,
+                       "source_candidates": sources if len(sources) > 1 else []}
     return report
 
 
@@ -340,7 +398,13 @@ def main(argv=None):
         if not entry:
             print("unknown companion %r" % args.print_doctor)
             return 2
-        cmd = entry.get("doctor", {}).get("entrypoint")
+        cmd = (entry.get("doctor") or {}).get("entrypoint")
+        if args.json:
+            owner_root = find(entry, roots(args.roots))
+            plan = doctor_command(entry, owner_root) or {"argv": None, "cwd": None}
+            plan.update({"id": args.print_doctor, "root": owner_root})
+            print(json.dumps(plan, indent=1))
+            return 0
         print(" ".join(cmd) if isinstance(cmd, list) else (cmd or "no doctor declared"))
         return 0
 
@@ -354,6 +418,8 @@ def main(argv=None):
         return 0
     for cid, row in report.items():
         print("%-16s %-10s %s" % (cid, row["state"], row["path"] or row["repo"]))
+        if row["source_path"] and row["source_path"] != row["path"]:
+            print("%-16s %-10s %s" % ("", "source", row["source_path"]))
     if rec:
         print()
         for rid, row in rec.items():

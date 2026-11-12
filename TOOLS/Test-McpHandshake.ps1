@@ -218,7 +218,7 @@ function Invoke-McpHandshake {
     $argv = @((Join-UabsPath $nodeDir 'node_modules\npm\bin\npx-cli.js')) + @($Arguments)
   } elseif ($Command -notmatch '[\\/]' -and $Command -notmatch '\.exe$') {
     $exe = $env:ComSpec
-    $argv = @('/d', '/s', '/c', $Command) + @($Arguments)
+    $argv = @('/d', '/v:off', '/s', '/c', $Command) + @($Arguments)
   }
 
   $spec = @{ command = $exe; args = $argv; timeout = $TimeoutSeconds } | ConvertTo-Json -Depth 4 -Compress

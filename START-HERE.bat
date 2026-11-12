@@ -1,10 +1,12 @@
 @echo off
-setlocal
+rem Paths here can contain '!' (for example a folder named !Games). With delayed
+rem expansion on - a registry default or cmd /v:on - cmd would eat that character.
+setlocal DisableDelayedExpansion
 set "PSModulePath="
 rem Stay outside the pack folder: an update replaces it, and Windows cannot
 rem rename a folder that this console is using as its working directory.
 cd /d "%~dp0.."
-title Ultimate AI Starter Bundle v8.39.5
+title Ultimate AI Starter Bundle v8.40.0
 if /I "%~1"=="-?" goto help
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0INSTALL-AIO.ps1" %*
 set "EXITCODE=%ERRORLEVEL%"

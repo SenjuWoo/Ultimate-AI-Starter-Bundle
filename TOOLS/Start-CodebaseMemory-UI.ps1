@@ -18,7 +18,9 @@ if ($listening) {
 }
 # --ui=true is persisted globally by the tool; the hidden console only keeps
 # this process alive. Do not add --ui to any provider's MCP args.
-Start-Process -FilePath $env:ComSpec -ArgumentList '/c', "`"$Exe`" --ui=true" -WindowStyle Hidden
+# /s plus an outer pair of quotes: without them cmd drops the quotes around a path
+# that contains ( ) or &, and /v:off keeps a '!' in the path literal.
+Start-Process -FilePath $env:ComSpec -ArgumentList '/d', '/v:off', '/s', '/c', "`"`"$Exe`" --ui=true`"" -WindowStyle Hidden
 Start-Sleep -Seconds 2
 $listening = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
 if (-not $listening) { throw "codebase-memory UI did not bind http://127.0.0.1:$Port/" }

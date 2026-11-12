@@ -1,5 +1,7 @@
 @echo off
-setlocal
+rem Paths here can contain '!' (for example a folder named !Games). With delayed
+rem expansion on - a registry default or cmd /v:on - cmd would eat that character.
+setlocal DisableDelayedExpansion
 set "PSModulePath="
 title Ultimate AI Starter Bundle - Remote Installer
 echo.

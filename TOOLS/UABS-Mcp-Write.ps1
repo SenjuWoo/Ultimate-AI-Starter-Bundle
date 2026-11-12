@@ -765,6 +765,16 @@ function Get-UabsTomlTableFingerprint([string]$Text) {
   return (($shape -replace ',\]', ']') + '|' + ($strings -join '|'))
 }
 
+function ConvertTo-UabsTomlString {
+  <# A TOML basic string. Escaping only the backslash left an argument that
+     carries a double quote (inline JSON, a quoted filter) as invalid TOML,
+     which a provider then rejects for the whole file. #>
+  param([string]$Value)
+  $text = $Value -replace '\\', '\\' -replace '"', '\"'
+  $text = $text.Replace("`r", '\r').Replace("`n", '\n').Replace("`t", '\t')
+  return '"' + $text + '"'
+}
+
 function Add-UabsMcpToml {
   <# Append rather than round-trip. Re-serializing the user's TOML would
      reorder and strip the comments in a file they own. #>
@@ -784,9 +794,9 @@ function Add-UabsMcpToml {
     $argv = Resolve-UabsServerArgs -Server $s -Provider $Provider -ProjectPath $ProjectPath -Scope $Scope
     # TOML escapes a backslash as exactly two. Four parses back to a doubled
     # separator and a command that does not exist.
-    $cmdToml = $cmd -replace '\\', '\\'
-    $argList = ($argv | ForEach-Object { '"' + ($_ -replace '\\', '\\') + '"' }) -join ', '
-    $block = "`r`n# $($s['note'])`r`n$header`r`ncommand = `"$cmdToml`"`r`nargs = [$argList]`r`n"
+    $cmdToml = ConvertTo-UabsTomlString $cmd
+    $argList = ($argv | ForEach-Object { ConvertTo-UabsTomlString ([string]$_) }) -join ', '
+    $block = "`r`n# $($s['note'])`r`n$header`r`ncommand = $cmdToml`r`nargs = [$argList]`r`n"
     if ($GrokTimeout) { $block += "startup_timeout_sec = 90`r`n" }
     # A server that passes long calls through (the toolbox) declares its own limit;
     # Codex and Grok read the same key.
@@ -796,7 +806,7 @@ function Add-UabsMcpToml {
     if ($envBlock.Count) {
       $block += "[$Section.$($s['id']).env]`r`n"
       foreach ($k in ($envBlock.Keys | Sort-Object)) {
-        $block += ("{0} = `"{1}`"`r`n" -f $k, ($envBlock[$k] -replace '\\', '\\'))
+        $block += ("{0} = {1}`r`n" -f $k, (ConvertTo-UabsTomlString ([string]$envBlock[$k])))
       }
     }
     if ($declared) {

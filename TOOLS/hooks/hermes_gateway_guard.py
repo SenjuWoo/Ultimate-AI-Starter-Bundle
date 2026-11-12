@@ -22,11 +22,81 @@ named-profile replace, do not fall through into it.
 """
 from __future__ import annotations
 
-import json
 import os
+import sys
+
+# Fast exit before the heavier imports. A host spawns this file for every shell
+# call and almost none of them can concern it, so the first test runs on the raw
+# payload bytes with only os and sys loaded. It is a superset test: it may pass an
+# irrelevant payload on to the real checks, never drop a relevant one.
+_NEEDLES = (b"hermes",)
+_RAW = None  # payload bytes the prefilter already consumed
+
+
+def _read_stdin(timeout: float = 2.0) -> bytes:
+    """Read the hook payload from stdin without ever blocking the host.
+
+    `sys.stdin.read()` waits for EOF. A host that spawns the hook but never
+    closes the pipe (Grok CLI 1.0.4 does not) leaves that read hanging until
+    the host's own hook timeout fires -- measured at 60s per turn. Every field
+    is optional, so time-box the read and continue without the payload.
+    """
+    import threading
+    box: dict = {}
+
+    def slurp() -> None:
+        # os.read on the raw fd, not sys.stdin.read: a thread parked inside
+        # sys.stdin's BufferedReader holds that object's lock, and interpreter
+        # shutdown then blocks trying to finalise it -- which reintroduces the
+        # exact hang this function exists to avoid.
+        chunks = []
+        try:
+            fd = sys.stdin.fileno()
+            while True:
+                part = os.read(fd, 65536)
+                if not part:
+                    break
+                chunks.append(part)
+        except Exception:
+            pass
+        box["raw"] = b"".join(chunks)
+
+    reader = threading.Thread(target=slurp, daemon=True)
+    reader.start()
+    reader.join(timeout)
+    return box.get("raw") or b""
+
+
+def _has_unicode_escape(raw: bytes) -> bool:
+    """True for a real JSON \\uXXXX escape, which could spell a needle invisibly.
+
+    A Windows path such as C:\\\\Users is an escaped backslash followed by a
+    letter, not an escape, so the backslashes before each match are counted.
+    """
+    at = raw.find(b"\\u")
+    while at != -1:
+        start = at
+        while start > 0 and raw[start - 1] == 0x5C:
+            start -= 1
+        if (at - start) % 2 == 0:
+            return True
+        at = raw.find(b"\\u", at + 2)
+    return False
+
+
+if __name__ == "__main__" and "--pre" in sys.argv[1:] and "--selftest" not in sys.argv[1:]:
+    _RAW = _read_stdin()
+    _low = _RAW.lower()
+    # Only the tool input is inspected later. Starting at its key keeps the
+    # host's own cwd and transcript paths from matching on every call.
+    _keys = [_at for _at in (_low.find(b'"tool_input"'), _low.find(b'"toolinput"')) if _at >= 0]
+    _scope = _low[min(_keys):] if _keys else _low
+    if not any(_needle in _scope for _needle in _NEEDLES) and not _has_unicode_escape(_scope):
+        os._exit(0)
+
+import json
 import re
 import subprocess
-import sys
 import tempfile
 import time
 from pathlib import Path
@@ -185,7 +255,7 @@ def restart_command(root: Path, hermes: Path) -> str | None:
     if not _quote_ok(home) or not _quote_ok(exe):
         return None
     return (
-        'cmd.exe /d /s /c "set HERMES_HOME=' + home
+        'cmd.exe /d /v:off /s /c "set HERMES_HOME=' + home
         + "&& set " + SPAWN_FLAG + '=1&& "' + exe + '" gateway run --replace"'
     )
 
@@ -318,26 +388,8 @@ def _tool_command(payload: dict) -> str:
 
 
 def read_input(timeout: float = 2.0) -> dict:
-    box: dict = {}
-
-    def slurp() -> None:
-        chunks = []
-        try:
-            fd = sys.stdin.fileno()
-            while True:
-                part = os.read(fd, 65536)
-                if not part:
-                    break
-                chunks.append(part)
-        except Exception:
-            pass
-        box["raw"] = b"".join(chunks).decode("utf-8", "replace")
-
-    import threading
-    reader = threading.Thread(target=slurp, daemon=True)
-    reader.start()
-    reader.join(timeout)
-    raw = box.get("raw") or ""
+    """The hook payload as a dict; empty when absent, late or malformed."""
+    raw = (_RAW if _RAW is not None else _read_stdin(timeout)).decode("utf-8", "replace")
     try:
         loaded = json.loads(raw) if raw.strip() else {}
     except Exception:
@@ -440,6 +492,24 @@ def _read_any(path: Path) -> tuple:
     return text, bom, nl
 
 
+def _replace(src, dst, attempts=6):
+    """os.replace with a short retry.
+
+    On Windows a virus scanner or the search indexer can hold a just-written file
+    open for a moment, and the rename then fails with PermissionError although
+    nothing is wrong. Retrying keeps the write atomic; the last error still raises.
+    """
+    import time as _time
+    for attempt in range(attempts):
+        try:
+            os.replace(src, dst)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            _time.sleep(0.05 * (2 ** attempt))
+
+
 def _atomic_write(path: Path, text: str, bom: bool) -> None:
     """Write beside the target and replace it, so a crash cannot truncate it."""
     data = (b"\xef\xbb\xbf" if bom else b"") + text.encode("utf-8")
@@ -449,7 +519,7 @@ def _atomic_write(path: Path, text: str, bom: bool) -> None:
             handle.write(data)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(tmp, path)
+        _replace(tmp, path)
     finally:
         if os.path.exists(tmp):
             try:
@@ -631,7 +701,9 @@ def main() -> int:
     if "--pre" not in sys.argv:
         return 0
     # Repair only when the store Python lost the guard (a Hermes Python
-    # upgrade replaces that directory). A present guard costs one stat.
+    # upgrade replaces that directory). A present guard costs one stat. The
+    # prefilter above limits this to payloads that mention Hermes, which is
+    # the moment the guard has to be in place.
     try:
         if os.environ.get("UABS_GATEWAY_GUARD_REPAIR", "1") != "0" and sitecustomize_missing(local):
             install_sitecustomize(local, source)
