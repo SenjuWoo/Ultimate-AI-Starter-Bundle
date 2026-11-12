@@ -1,8 +1,8 @@
 ---
 name: ai-tooling-stack
-description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, VRChat avatars and reverse engineering. Discover installs before installing.
+description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, VRChat avatars, reverse engineering, asset production (AssetForge), ComfyUI images (comfy-forge) and Koikatsu/Honey Select 2 cards (illusion-forge). Discover installs before installing.
 metadata:
-  version: 7.0.0
+  version: 7.1.0
 ---
 
 # AI tooling stack
@@ -20,7 +20,7 @@ proof that a tool is installed, enabled or healthy. Preserve models, reasoning, 
 | Context and token management | `headroom`, `token-efficiency`; measure real usage, not schema bytes as billed tokens |
 | Coding, tests, releases | `coding-discipline`, `check-work`, `release-checklist`, authenticated `gh` |
 | Compilers, shared Python/Node | the bundle's prerequisite installer; reuse current tools, keep project pins |
-| Free procedural assets: 3D, textures, images, music, sound, games | `game-dev-starter` (`references/free-creative-tools.md`), `img2threejs` |
+| Free procedural assets: 3D, textures, images, music, sound, games | `game-dev-starter` (`references/free-creative-tools.md`), `img2threejs`; AssetForge and comfy-forge when installed |
 | Unknown game: engine recon, sprites, gameplay video | `universal-modder` (`um`), then the engine skill (`unity-`/`unreal-mod-frameworks`, `game-modding`) |
 
 ## Specialist forges (separate public repositories)
@@ -40,6 +40,9 @@ the bundle keeps no second copy. If the forge is absent, say which repository ow
 | Saints Row: The Third / IV | `SaintsRowForge` | `START-HERE.bat`; `srforge doctor`; `AI-INTEGRATION.md`, `knowledge/` | `%LOCALAPPDATA%\SaintsRowForge` |
 | VRChat avatar from Blender/XPS/MMD/VRM/Source | `AvatarForge` | release ZIP, `INSTALL-TOOLS.bat`; skill `avatarforge` | the user's install |
 | Binary/app reverse engineering, game hooks, website API reconstruction | `reverse-this` (Reverse THIS!) | `Install-Modkit.ps1 -Doctor`; skill `reverse-engineering`; `reverse-api-engineer.cmd` for private web APIs | installed kit manifest |
+| 2D/3D asset production, validation, game-ready meshes, engine export | `AssetForge` | release ZIP, `Install.ps1`; `assetforge doctor` | `UABS_TOOL_ROOTS` |
+| Anima images on ComfyUI/SwarmUI, checkpoint merges, LoRA captions, image-to-3D | `comfy-forge` | `TOOLS\image-stack.ps1 status`, then `install` / `generate`; finished `.glb` goes to AssetForge via `TOOLS\game-ready.ps1` | `UABS_TOOL_ROOTS` |
+| Koikatsu / Honey Select 2 character cards from a prompt | `illusion-forge` | `Install.ps1`, `forge.cmd doctor`; skill `illusion-forge`; MCP `illusionforge mcp` scoped to the task | `UABS_TOOL_ROOTS`; games via `ILLUSION_KK_ROOT` / `ILLUSION_HS2_ROOT` |
 
 Minecraft Fabric/Quilt and other loaders have no forge: use their official docs (docs.fabricmc.net,
 quiltmc.org) and `game-modding`'s laws. A game with no forge uses `game-modding`.

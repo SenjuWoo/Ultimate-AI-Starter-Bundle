@@ -247,7 +247,7 @@ installed Forge declares that capability, and hand the work over.
 
 - Roblox → RobloxForge for polycount, texture memory, streaming, replication,
   frame time. Skyrim → SkyrimForge. Risk of Rain 2 → its Forge. ComfyUI →
-  comfy-kit. An ordinary Python CLI → code quality, profiling, security and
+  comfy-forge. An ordinary Python CLI → code quality, profiling, security and
   dependency checks; never 3D tooling.
 - A missing Forge is a graceful skip, not a failure: say what the owner would do
   and continue with the authorized work.

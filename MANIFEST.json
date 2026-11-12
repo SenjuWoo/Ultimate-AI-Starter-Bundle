@@ -201,8 +201,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 4376,
-  "sha256": "f8bbec707d4282917b0ab2bbba49c4ba8cee1ecd1361fe52f59cb195f1137186"
+  "size": 5185,
+  "sha256": "154dc69983cdad515c2812f669a386b8502f4ca75015fc1cfee879165ddb8403"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -381,8 +381,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 14677,
-  "sha256": "190a4ad598376e0b19889ad21eb85473f0e4d6ee9b32eb15b45da1ae7d69a2a3"
+  "size": 14679,
+  "sha256": "ad55e9374df0d935b5de76e6ee1748068b36668bebec46b47d7f5b6cfc5ffd9e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -3196,8 +3196,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 4376,
-  "sha256": "f8bbec707d4282917b0ab2bbba49c4ba8cee1ecd1361fe52f59cb195f1137186"
+  "size": 5185,
+  "sha256": "154dc69983cdad515c2812f669a386b8502f4ca75015fc1cfee879165ddb8403"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -3376,8 +3376,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 14677,
-  "sha256": "190a4ad598376e0b19889ad21eb85473f0e4d6ee9b32eb15b45da1ae7d69a2a3"
+  "size": 14679,
+  "sha256": "ad55e9374df0d935b5de76e6ee1748068b36668bebec46b47d7f5b6cfc5ffd9e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -6251,8 +6251,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 4376,
-  "sha256": "f8bbec707d4282917b0ab2bbba49c4ba8cee1ecd1361fe52f59cb195f1137186"
+  "size": 5185,
+  "sha256": "154dc69983cdad515c2812f669a386b8502f4ca75015fc1cfee879165ddb8403"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -6431,8 +6431,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 14677,
-  "sha256": "190a4ad598376e0b19889ad21eb85473f0e4d6ee9b32eb15b45da1ae7d69a2a3"
+  "size": 14679,
+  "sha256": "ad55e9374df0d935b5de76e6ee1748068b36668bebec46b47d7f5b6cfc5ffd9e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -9296,8 +9296,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 4376,
-  "sha256": "f8bbec707d4282917b0ab2bbba49c4ba8cee1ecd1361fe52f59cb195f1137186"
+  "size": 5185,
+  "sha256": "154dc69983cdad515c2812f669a386b8502f4ca75015fc1cfee879165ddb8403"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -9476,8 +9476,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 14677,
-  "sha256": "190a4ad598376e0b19889ad21eb85473f0e4d6ee9b32eb15b45da1ae7d69a2a3"
+  "size": 14679,
+  "sha256": "ad55e9374df0d935b5de76e6ee1748068b36668bebec46b47d7f5b6cfc5ffd9e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -12341,8 +12341,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 4376,
-  "sha256": "f8bbec707d4282917b0ab2bbba49c4ba8cee1ecd1361fe52f59cb195f1137186"
+  "size": 5185,
+  "sha256": "154dc69983cdad515c2812f669a386b8502f4ca75015fc1cfee879165ddb8403"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -12521,8 +12521,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 14677,
-  "sha256": "190a4ad598376e0b19889ad21eb85473f0e4d6ee9b32eb15b45da1ae7d69a2a3"
+  "size": 14679,
+  "sha256": "ad55e9374df0d935b5de76e6ee1748068b36668bebec46b47d7f5b6cfc5ffd9e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -15461,8 +15461,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 4376,
-  "sha256": "f8bbec707d4282917b0ab2bbba49c4ba8cee1ecd1361fe52f59cb195f1137186"
+  "size": 5185,
+  "sha256": "154dc69983cdad515c2812f669a386b8502f4ca75015fc1cfee879165ddb8403"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -15641,8 +15641,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-routing/SKILL.md",
-  "size": 14677,
-  "sha256": "190a4ad598376e0b19889ad21eb85473f0e4d6ee9b32eb15b45da1ae7d69a2a3"
+  "size": 14679,
+  "sha256": "ad55e9374df0d935b5de76e6ee1748068b36668bebec46b47d7f5b6cfc5ffd9e"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/check-work/SKILL.md",
@@ -18732,17 +18732,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64142,
-  "sha256": "fb37c48acf1de3867bb0ae4f5264b76b8816030fdd82bf70642ecb9b4185ba43"
+  "sha256": "fb21d44ee4fecc03f93b1affa29f8459b8a361c6d3dd3ce70145e49226841885"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
-  "size": 13804,
-  "sha256": "acd6c60e15367ff8411a2776f6c426a38a99c3a0fc71f8210fa3a21d8aa15eed"
+  "size": 15544,
+  "sha256": "14a208b10b6e0eb906c06076b835d53ad75fb048c0bcb14735ef5d7a46efac59"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "0ebdb069bda86ffb5c8d821bbf08c77d38b62fcaacbead93cdb9883ae81eff29"
+  "sha256": "bc56e3a103bb23c40609fbe44fb4a393c1e81ab289008cd6285b3cd5e57e71ec"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18752,7 +18752,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "0a6cea24588b073257b5744246f68a29cf3afbce61810153d34de9467abe9738"
+  "sha256": "534b869bbeb264b039903c88601bfde38156b51d6f6e2be2baf0be95e50dae4c"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22806,8 +22806,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 333299,
-  "sha256": "6e191161d584d7b0bc2ce706b420b398b6c2c23da1136e408b24b1627548cf40"
+  "size": 334038,
+  "sha256": "5317a1bedc697cd15720c3ab247c479d8b4a83e77d0c601107a4ecd678373664"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22926,8 +22926,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 60290,
-  "sha256": "e372949a8352aaeec258ed65cb323d60890a0daa179bd2b83de5a591480e4206"
+  "size": 61034,
+  "sha256": "57b1225965fe8d55188cb610c1caec0a1a81689dbc817da0d30bf234b12b7c2c"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -22951,8 +22951,8 @@
  },
  {
   "path": "README.md",
-  "size": 16097,
-  "sha256": "3de992c68da41aecfad8f02807b14760ba1649eae667918279036de59f21871a"
+  "size": 16101,
+  "sha256": "8832a6313d903a38b8defe2af965f371fc9f330cd08b261b05fb92d5529285b3"
  },
  {
   "path": "SECURITY.md",
@@ -22962,12 +22962,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1053,
-  "sha256": "fd522715238914eea95875cf0eb87faed27dcdfa30b6fcab91905d0e87ac592a"
+  "sha256": "ec8bc0ee1d40f856340952c180bd363f10d9bf34a252f8be2a14ea05fab36881"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "463b3b52675f3bcfe59ff492710c1a0d59f080c54af3e81a4374021942921201"
+  "sha256": "87078bbb27205b8c97fd2efeadac8bbbee2fb74e251058ddc6875624670b2015"
  },
  {
   "path": "STATE.md",
@@ -24052,7 +24052,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2781,
-  "sha256": "57937d48c8e8aa8c91e23f8a44d1b0fa0adaf8b6e6b8c6e7eeada44294b38085"
+  "sha256": "a7eb383f4f2915ec250a379d0ec92f970da33c8d6ec0622e292edda0d4d7b24d"
  },
  {
   "path": "VALIDATION.md",
@@ -24062,7 +24062,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "4c3c6a0cbd8661fb291dce6da38ea60106ed422d754796b7fdbd28b68d32c153"
+  "sha256": "4296240e1fa274675c3e8e5d21869271150b6f5bf95d3d5f9f2ade422f9e5236"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24091,8 +24091,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/SKILL.md",
-  "size": 4376,
-  "sha256": "f8bbec707d4282917b0ab2bbba49c4ba8cee1ecd1361fe52f59cb195f1137186"
+  "size": 5185,
+  "sha256": "154dc69983cdad515c2812f669a386b8502f4ca75015fc1cfee879165ddb8403"
  },
  {
   "path": "_CANONICAL-SKILLS/bethesda-creation-modding/SKILL.md",
@@ -24271,8 +24271,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/capability-routing/SKILL.md",
-  "size": 14677,
-  "sha256": "190a4ad598376e0b19889ad21eb85473f0e4d6ee9b32eb15b45da1ae7d69a2a3"
+  "size": 14679,
+  "sha256": "ad55e9374df0d935b5de76e6ee1748068b36668bebec46b47d7f5b6cfc5ffd9e"
  },
  {
   "path": "_CANONICAL-SKILLS/check-work/SKILL.md",

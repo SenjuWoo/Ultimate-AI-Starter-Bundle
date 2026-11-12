@@ -1,5 +1,5 @@
-<!-- Ultimate AI Starter Bundle v8.39.3 -->
-# Ultimate AI Starter Bundle v8.39.3
+<!-- Ultimate AI Starter Bundle v8.39.4 -->
+# Ultimate AI Starter Bundle v8.39.4
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
@@ -57,7 +57,7 @@ same skills and instructions in its own format; apps you do not have are skipped
 
 ## Add-ons stay independent
 
-Forge families, Reverse THIS! and comfy-kit own their own code, releases and
+Forge families, Reverse THIS! and comfy-forge own their own code, releases and
 doctors. The bundle only **discovers** them:
 
 ```
@@ -184,7 +184,7 @@ Additional canonical payloads without separate tool-catalog entries:
 | Payload | Upstream | Integration |
 |---|---|---|
 | `img2threejs` | [img2threejs/img2threejs](https://github.com/img2threejs/img2threejs) | Pinned pointer skill (v1.5.1); the tool tree lives in its own repo |
-| AssetForge | [SenjuWoo/AssetForge](https://github.com/SenjuWoo/AssetForge) | Owns 2D/3D asset production, validation and engine export (MIT). Detected by the companion registry; optional providers (Blender, glTF-Transform, comfy-kit) are discovered, never installed by the bundle |
+| AssetForge | [SenjuWoo/AssetForge](https://github.com/SenjuWoo/AssetForge) | Owns 2D/3D asset production, validation and engine export (MIT). Detected by the companion registry; optional providers (Blender, glTF-Transform, comfy-forge) are discovered, never installed by the bundle |
 | Ponytail | off by default through its own `defaultMode`; `python TOOLS/ponytail_mode.py lite|full|ultra|auto|off --apply` | no minimalism imposed on creative work; plugin and `/ponytail` stay available |
 | `mattpocock/skills`, `addyosmani/agent-skills` | curated, namespaced subset installed on request: `python TOOLS/recommended_skills.py install pocock|addy --provider <name> --apply` | no 64 always-on descriptions; MIT, pinned, removable |
 | `awesome-gamedev-agent-skills` | [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) | Optional engine pack (Apache-2.0, pinned `19d93f9`, 2026-10-28). Not vendored and never installed by the bundle: the detector reports it, routing picks the engine, and [the review](docs/RECOMMENDED-GAME-DEV-SKILLS.md) covers install, precedence and removal |

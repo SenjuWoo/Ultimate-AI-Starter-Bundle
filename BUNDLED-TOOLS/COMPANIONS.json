@@ -365,9 +365,9 @@
       ],
       "notes": "FaceForge -> RaceMenu head export -> FollowerForge; in-game steps stay manual."
     },
-    "comfy-kit": {
-      "title": "comfy-kit (image stack)",
-      "repo": "https://github.com/SenjuWoo/comfy-kit",
+    "comfy-forge": {
+      "title": "comfy-forge (image stack)",
+      "repo": "https://github.com/SenjuWoo/comfy-forge",
       "install": {
         "kind": "source_only",
         "asset": null,
@@ -377,16 +377,23 @@
         "entrypoint": null,
         "note": "source-only release; update from its own source tree"
       },
-      "doctor": null,
+      "doctor": {
+        "entrypoint": [
+          "powershell",
+          "-NoProfile",
+          "-File",
+          "TOOLS/image-stack.ps1",
+          "status"
+        ]
+      },
       "markers": [
+        "VERSION",
         "TOOLS/image-stack.ps1"
       ],
       "capabilities": {
         "cli": "TOOLS/image-stack.ps1",
         "mcp": false,
-        "skills": [
-          "comfy-*"
-        ],
+        "skills": [],
         "gui": true
       },
       "requires": [
@@ -396,7 +403,7 @@
       "platforms": [
         "windows"
       ],
-      "notes": "Release v0.5.0 has no application assets; use the tagged source checkout. It is the successor to the retired uabs-image-stack split."
+      "notes": "Renamed from comfy-kit in v0.6.0. Anima image presets, checkpoint merges, LoRA captioning and image-to-3D templates; game-ready.ps1 hands a finished .glb to AssetForge. Releases carry no application assets; use the tagged source checkout."
     },
     "asset-forge": {
       "title": "AssetForge",
@@ -435,6 +442,49 @@
         "macos"
       ],
       "notes": "Owns asset production, validation and export. Optional providers are detected, never installed by the bundle."
+    },
+    "illusion-forge": {
+      "title": "Illusion Forge",
+      "repo": "https://github.com/SenjuWoo/illusion-forge",
+      "install": {
+        "kind": "source_only",
+        "asset": null,
+        "entrypoint": "Install.ps1"
+      },
+      "update": {
+        "entrypoint": null,
+        "note": "update from its own source tree; the release also carries a wheel and the maker-bridge zip"
+      },
+      "doctor": {
+        "entrypoint": [
+          "python",
+          "forge.py",
+          "doctor"
+        ]
+      },
+      "markers": [
+        "forge.py",
+        "src/illusionforge/__init__.py"
+      ],
+      "capabilities": {
+        "cli": "illusionforge",
+        "mcp": true,
+        "skills": [
+          "illusion-forge"
+        ],
+        "gui": false
+      },
+      "requires": [
+        "python 3.10+",
+        "a local Koikatsu or Honey Select 2 install for real cards",
+        ".NET SDK 10 and BepInEx for the maker plugin"
+      ],
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "notes": "Edits Koikatsu and Honey Select 2 character cards from a prompt; the maker plugin is Windows-only and installs only with --approve. Install.ps1 creates .venv with kkloader; forge.cmd doctor runs the doctor in it (the bare python form needs those dependencies). MCP over stdio (illusionforge mcp, working directory = the forge); keep it scoped to that task, never global."
     }
   },
   "recommended": {

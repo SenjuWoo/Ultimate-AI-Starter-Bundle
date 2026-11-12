@@ -1,3 +1,16 @@
+## 8.39.4 (2026-11-12)
+
+- The image-stack companion follows its rename: `comfy-kit` is now `comfy-forge`
+  in the companion registry, README and capability routing. Detection matches the
+  renamed folder, the entry carries the owner's `image-stack.ps1 status` check, and
+  the old `comfy-*` skill claim is gone because the owner ships no skills.
+- Illusion Forge (Koikatsu and Honey Select 2 character cards) is a detected
+  companion with its own doctor, skill and task-scoped MCP.
+- `ai-tooling-stack` 7.1.0 routes asset production to AssetForge, ComfyUI image
+  work to comfy-forge and character cards to Illusion Forge.
+- No installer, MCP wiring or skill inventory changed; the bundle still ships 81
+  canonical skills.
+
 ## 8.39.3 (2026-11-11)
 
 - Manifest generation skips ignored machine caches and private recovery trees.
