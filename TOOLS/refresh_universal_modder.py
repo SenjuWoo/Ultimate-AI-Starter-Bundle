@@ -45,6 +45,19 @@ SUBSET = ("um", "knowledge", "tests", "pyproject.toml", "README.md", "LICENSE")
 # Upstream may not have the text any more: a patch whose search string is gone
 # is reported, not silently skipped.
 PATCHES: list[tuple[str, str, str]] = [
+    # Every command group is imported to build the parser, so one group whose own
+    # dependency is missing (iwi needs numpy and Pillow at import time) used to
+    # take every other command down with it, `um kb` included.
+    ("um/cli.py",
+     '    for g in GROUPS:\n        importlib.import_module(f"um.{g}").register(sub)\n',
+     '    for g in GROUPS:\n'
+     '        try:\n'
+     '            module = importlib.import_module(f"um.{g}")\n'
+     '        except ImportError as exc:  # UABS: a group\'s missing dependency must not hide the others\n'
+     '            needed = getattr(exc, "name", None) or str(exc)\n'
+     '            sub.add_parser(g, help=f"unavailable: needs {needed} (installing universal-modder brings it)")\n'
+     '            continue\n'
+     '        module.register(sub)\n'),
     ("pyproject.toml", 'version = "0.2.0"', 'version = "0.2.0+uabs.__SHA7__"'),
     ("pyproject.toml", 'requires-python = ">=3.10"', 'requires-python = ">=3.12"'),
     ("pyproject.toml", '    "pillow>=10",\n', '    "pillow==13.0.0",\n'),

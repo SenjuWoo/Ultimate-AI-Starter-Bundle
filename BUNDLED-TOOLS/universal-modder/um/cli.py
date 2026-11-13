@@ -22,7 +22,13 @@ def main(argv=None):
     ap.add_argument("--version", action="version", version=f"universal-modder {__version__}")
     sub = ap.add_subparsers(dest="group", metavar="<group>")
     for g in GROUPS:
-        importlib.import_module(f"um.{g}").register(sub)
+        try:
+            module = importlib.import_module(f"um.{g}")
+        except ImportError as exc:  # UABS: a group's missing dependency must not hide the others
+            needed = getattr(exc, "name", None) or str(exc)
+            sub.add_parser(g, help=f"unavailable: needs {needed} (installing universal-modder brings it)")
+            continue
+        module.register(sub)
     args = ap.parse_args(argv)
     if not getattr(args, "func", None):
         # a group without a command: show that group's help

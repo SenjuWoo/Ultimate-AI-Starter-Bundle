@@ -37,6 +37,10 @@ full record is in `docs/TOOL-EVALUATIONS.md`.
   stays an evaluation entry with its new repository link.
 - **Recommended packs re-reviewed:** awesome-gamedev-agent-skills c6ca6c4 (two
   new skills, standard-library check scripts only) and mattpocock/skills 5863806.
+- **`um` keeps working when one command group's dependency is missing.** Universal Modder
+  imports every group to build its parser, and the new Call of Duty texture group needs NumPy at
+  import time; without it every `um` command failed. A group that cannot load is now listed as
+  unavailable with the package it needs. The wheel installs NumPy, so installed copies were not affected.
 - **A GitHub "Download ZIP" folder is recognised.** The companion registry now
   treats `<repo>-main` and `<repo>-master` as the owner's folder, so a pack or
   forge fetched that way is no longer reported as missing.
