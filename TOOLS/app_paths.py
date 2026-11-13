@@ -52,7 +52,7 @@ APPS = (
      "globs": (r"%ProgramFiles%\Blender Foundation\*\blender.exe",
                r"%LOCALAPPDATA%\Programs\Blender Foundation\*\blender.exe"),
      "steam": ("Blender",), "portable": ("blender*/blender.exe", "*/blender*/blender.exe", "*/*/blender*/blender.exe"),
-     "version": ("--version",)},
+     "version": ("--version",), "addons": "blender"},
     {"id": "ffmpeg", "command": "ffmpeg", "exe": ("ffmpeg.exe",),
      "globs": (r"%LOCALAPPDATA%\Microsoft\WinGet\Packages\Gyan.FFmpeg*\*\bin\ffmpeg.exe",
                r"%LOCALAPPDATA%\Microsoft\WinGet\Links\ffmpeg.exe",
@@ -396,6 +396,61 @@ def version_of(path, args, timeout=25):
     return match.group(0) if match else None
 
 
+def _version_key(name):
+    return tuple(int(part) for part in name.split("."))
+
+
+def blender_profiles():
+    """Where Blender keeps one settings folder per version (5.2, 5.3, ...)."""
+    if IS_WIN:
+        return os.path.join(os.environ.get("APPDATA", ""), "Blender Foundation", "Blender")
+    if sys.platform == "darwin":
+        return os.path.join(os.path.expanduser("~"), "Library", "Application Support", "Blender")
+    return os.path.join(os.environ.get("XDG_CONFIG_HOME") or os.path.join(os.path.expanduser("~"), ".config"), "blender")
+
+
+def addon_gap(exe, profiles=None):
+    """Add-ons left in an older version's profile after Blender updated itself.
+
+    Blender keeps user add-ons per minor version. A store or package update
+    replaces the program and starts a new, empty profile, so the add-ons an
+    agent relies on (an MCP bridge, an exporter) silently stop loading. Blender
+    offers to import the old settings once, on the first interactive start; a
+    headless start never does.
+    """
+    def names(folder):
+        try:
+            found = os.listdir(os.path.join(folder, "scripts", "addons"))
+        except OSError:
+            return []
+        return sorted({os.path.splitext(name)[0] for name in found if not name.startswith(("__", "."))})
+
+    try:
+        shipped = [name for name in os.listdir(os.path.dirname(exe)) if re.fullmatch(r"\d+\.\d+", name)]
+    except OSError:
+        return None
+    if not shipped:
+        return None
+    current = max(shipped, key=_version_key)
+    profiles = profiles or blender_profiles()
+    try:
+        older = [name for name in os.listdir(profiles)
+                 if re.fullmatch(r"\d+\.\d+", name) and _version_key(name) < _version_key(current)
+                 and names(os.path.join(profiles, name))]
+    except OSError:
+        return None
+    if not older:
+        return None
+    previous = max(older, key=_version_key)
+    have = names(os.path.join(profiles, current))
+    missing = [name for name in names(os.path.join(profiles, previous)) if name not in have]
+    if not missing:
+        return None
+    return {"current": current, "previous": previous, "missing": missing,
+            "from": os.path.join(profiles, previous, "scripts", "addons"),
+            "to": os.path.join(profiles, current, "scripts", "addons")}
+
+
 def hermes_wrapper(path):
     """The profile name when this file is a Hermes profile wrapper, else None."""
     if os.path.splitext(path)[1].lower() not in (".bat", ".cmd"):
@@ -463,6 +518,10 @@ def survey(store, machine, shim_dir, versions=True, apps=APPS, registry=None, st
         row["path"] = real
         if versions:
             row["version"] = version_of(real, app.get("version") or ())
+        if app.get("addons") == "blender" and not machine.isolated:
+            gap = addon_gap(real)
+            if gap:
+                row["addon_gap"] = gap      # reported, never changed: it is the app's own profile
         if app.get("record_only"):
             row["status"] = "recorded"
             continue
@@ -689,6 +748,10 @@ def render(report):
                 "not-on-path": "installed, not on PATH", "shadowed": "another file answers first: %s"
                 % ((row.get("shadow") or {}).get("path") or "?")}[row["status"]]
         lines.append("%-20s %-12s %s  (%s)" % (row["command"], row["version"] or "-", row["path"], note))
+        gap = row.get("addon_gap")
+        if gap:
+            lines.append("    %s %s runs, but these add-ons are only in its %s profile: %s\n    copy them from %s\n    to %s and enable them under Preferences > Add-ons"
+                         % (row["command"], gap["current"], gap["previous"], ", ".join(gap["missing"]), gap["from"], gap["to"]))
     missing = [row["command"] for row in report["apps"] if row["status"] == "missing"]
     if missing:
         lines.append("not installed: " + ", ".join(missing))

@@ -248,6 +248,48 @@ class PruneDeadEntries(unittest.TestCase):
         self.assertTrue(app_paths._is_dead(stale))
 
 
+class AddonsLeftBehind(unittest.TestCase):
+    def _blender(self, box, version):
+        exe = touch(os.path.join(box.root, "Blender", "blender.exe"))
+        os.makedirs(os.path.join(box.root, "Blender", version))
+        return exe
+
+    def test_addons_in_an_older_profile_are_named_with_both_folders(self):
+        box = Box(self)
+        exe = self._blender(box, "5.3")
+        profiles = os.path.join(box.root, "profiles")
+        touch(os.path.join(profiles, "5.2", "scripts", "addons", "bridge.py"))
+        touch(os.path.join(profiles, "5.2", "scripts", "addons", "Importer", "__init__.py"))
+        touch(os.path.join(profiles, "5.2", "scripts", "addons", "__pycache__", "bridge.pyc"))
+        touch(os.path.join(profiles, "5.1", "scripts", "addons", "ancient.py"))
+        os.makedirs(os.path.join(profiles, "5.3", "config"))
+        gap = app_paths.addon_gap(exe, profiles)
+        self.assertEqual((gap["current"], gap["previous"]), ("5.3", "5.2"))
+        self.assertEqual(gap["missing"], ["Importer", "bridge"], "the newest older profile is the source")
+        self.assertTrue(gap["from"].endswith(os.path.join("5.2", "scripts", "addons")))
+        self.assertTrue(gap["to"].endswith(os.path.join("5.3", "scripts", "addons")))
+
+    def test_no_gap_when_the_current_profile_has_them_or_nothing_is_older(self):
+        box = Box(self)
+        exe = self._blender(box, "5.3")
+        profiles = os.path.join(box.root, "profiles")
+        self.assertIsNone(app_paths.addon_gap(exe, profiles), "no profiles at all")
+        touch(os.path.join(profiles, "5.2", "scripts", "addons", "bridge.py"))
+        touch(os.path.join(profiles, "5.3", "scripts", "addons", "bridge.py"))
+        self.assertIsNone(app_paths.addon_gap(exe, profiles))
+        touch(os.path.join(profiles, "5.4", "scripts", "addons", "newer.py"))
+        self.assertIsNone(app_paths.addon_gap(exe, profiles), "a newer profile is not a source")
+        touch(os.path.join(profiles, "5.2", "scripts", "addons", "exporter.py"))
+        self.assertEqual(app_paths.addon_gap(exe, profiles)["missing"], ["exporter"])
+
+    def test_versions_compare_as_numbers(self):
+        box = Box(self)
+        exe = self._blender(box, "5.10")
+        profiles = os.path.join(box.root, "profiles")
+        touch(os.path.join(profiles, "5.9", "scripts", "addons", "bridge.py"))
+        self.assertEqual(app_paths.addon_gap(exe, profiles)["previous"], "5.9")
+
+
 class CommandLine(unittest.TestCase):
     def test_check_fails_until_fixed(self):
         box = Box(self)

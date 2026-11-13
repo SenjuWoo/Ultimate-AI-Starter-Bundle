@@ -1257,12 +1257,6 @@ foreach ($pathScope in 'User', 'Machine') {
     if (-not $pathExists) { $deadPathEntries += [ordered]@{ scope = $pathScope; entry = $pathEntry } }
   }
 }
-if ($deadPathEntries.Count) {
-  $deadShown = @($deadPathEntries | Select-Object -First 6 | ForEach-Object { $_.entry }) -join '; '
-  $deadMore = if ($deadPathEntries.Count -gt 6) { ' (+{0} more in the report)' -f ($deadPathEntries.Count - 6) } else { '' }
-  Warn ('{0} PATH entr{1} name a folder that no longer exists: {2}{3}. Run `python TOOLS\app_paths.py --fix --prune-dead` in the bundle (the old PATH is saved first), or the installer with -PrunePath; machine-wide entries need Environment Variables as an administrator.' -f $deadPathEntries.Count, $(if ($deadPathEntries.Count -eq 1) { 'y' } else { 'ies' }), $deadShown, $deadMore)
-}
-
 # An installed app or owner forge that does not answer by its name sends an
 # agent off to download a second copy. app_paths.py reports it; --fix repairs it.
 $appNameIssues = @()
@@ -1279,12 +1273,30 @@ if ($appNamePython -and (Test-Path -LiteralPath $appNameScript -PathType Leaf)) 
       Warn ("'{0}' is installed at {1} but typing its name does not start it: {2}. Run `python TOOLS\app_paths.py --fix` in the bundle." -f $row.command, $row.path, $why)
       $appNameIssues += [ordered]@{ command = $row.command; path = $row.path; status = $row.status }
     }
+    foreach ($row in @($appNameReport.apps | Where-Object { $_.addon_gap })) {
+      Warn ("{0} {1} is the version that runs, but {2} add-on(s) are only in its {3} profile: {4}. Copy them from {5} to {6} and enable them under Preferences > Add-ons." -f $row.command, $row.addon_gap.current, @($row.addon_gap.missing).Count, $row.addon_gap.previous, (@($row.addon_gap.missing) -join ', '), $row.addon_gap.from, $row.addon_gap.to)
+      $appNameIssues += [ordered]@{ command = $row.command; path = $row.addon_gap.to; status = 'addons-in-older-profile' }
+    }
     $noLauncher = @($appNameReport.forges | Where-Object { $_.status -eq 'needs-launcher' } | ForEach-Object { $_.name })
     if ($noLauncher.Count) {
       Warn ('owner forge command(s) without a launcher: ' + ($noLauncher -join ', ') + '. Run `python TOOLS\app_paths.py --fix` in the bundle.')
       $appNameIssues += [ordered]@{ command = ($noLauncher -join ','); path = $appNameReport.shim_dir; status = 'needs-launcher' }
     }
   }
+}
+
+# The fixer decides what is dead in the user PATH: it keeps a folder a tool
+# creates on first use (~\.dotnet\tools), so the warning and the fix never disagree.
+if ($appNameReport -and $null -ne $appNameReport.path) {
+  $deadPathEntries = @($deadPathEntries | Where-Object { $_.scope -ne 'User' }) + @(@($appNameReport.path.dead) | Where-Object { $_ } | ForEach-Object { [ordered]@{ scope = 'User'; entry = [string]$_ } })
+}
+$deadUser = @($deadPathEntries | Where-Object { $_.scope -eq 'User' } | ForEach-Object { $_.entry })
+$deadMachine = @($deadPathEntries | Where-Object { $_.scope -eq 'Machine' } | ForEach-Object { $_.entry })
+if ($deadUser.Count) {
+  Warn ('{0} user PATH folder(s) no longer exist: {1}. Run `python TOOLS\app_paths.py --fix --prune-dead` in the bundle (the old PATH is saved first), or the installer with -PrunePath.' -f $deadUser.Count, (@($deadUser | Select-Object -First 6) -join '; '))
+}
+if ($deadMachine.Count) {
+  Warn ('{0} machine-wide PATH folder(s) no longer exist: {1}. Removing them needs an administrator: Environment Variables, System variables, Path.' -f $deadMachine.Count, (@($deadMachine | Select-Object -First 6) -join '; '))
 }
 
 # A machine map imported into Hermes memory is frozen and repeated to every profile.
