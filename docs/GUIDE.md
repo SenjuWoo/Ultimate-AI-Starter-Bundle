@@ -114,6 +114,13 @@ off; `-PrunePath` also removes user PATH folders that no longer exist. Run
 `python TOOLS\app_paths.py` yourself to see what each name starts. Restart AI
 apps and terminals afterwards: a running program keeps the PATH it started with.
 
+Creative programs are reported, not installed, by default. `python
+TOOLS\free_game_tools.py` lists Blender, Godot, FFmpeg, ImageMagick and the rest
+with what each is for; a missing one of those four is named in `MACHINE-MAP.md`
+so an agent offers it when a task needs it. `python TOOLS\free_game_tools.py
+--install <id>` installs one from its publisher's winget package, and the
+installer switch `-CreativeTools` installs the four in one go.
+
 If Hermes imported an instruction file this bundle wrote, its memory holds a
 frozen copy of the machine map that every profile repeats. The install replaces
 that block with a pointer to the live file (`TOOLS\hermes_memory.py --fix`, a
@@ -754,7 +761,7 @@ and the `reverse-engineering` task recipe. REA is CLI-first, not another global
 170-tool MCP or duplicate tool-suite installer. Existing modding specialists
 and your discovered Reverse THIS! shims remain the implementation tools.
 
-Use the [start/resume prompts](PROMPTS/START-AND-RESUME.md) once per chat.
+Use the [start, resume and upgrade-audit prompts](PROMPTS/START-AND-RESUME.md) once per chat.
 [CodeBurn recommendations](_CANONICAL-SKILLS/codeburn/references/recommendations.md)
 are evidence candidates, not automatic deletion or guaranteed usage savings.
 

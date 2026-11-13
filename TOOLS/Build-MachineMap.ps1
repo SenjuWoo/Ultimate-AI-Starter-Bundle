@@ -144,6 +144,19 @@ if ($python -and (Test-Path -LiteralPath $appScript -PathType Leaf)) {
   }
 }
 
+# The four programs an asset or game task reaches for first. A missing one is
+# named so an agent offers it instead of failing or downloading a stray copy.
+$creativeScript = Join-Path $PackRoot 'TOOLS\free_game_tools.py'
+if ($python -and (Test-Path -LiteralPath $creativeScript -PathType Leaf)) {
+  $prevCreative = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  try { $creativeJson = @(& $python $creativeScript '--json' 2>$null) -join "`n" } finally { $ErrorActionPreference = $prevCreative }
+  try { $creativeRows = $creativeJson | ConvertFrom-Json } catch { $creativeRows = @() }
+  $creativeMissing = @($creativeRows | Where-Object { $_.core -and -not $_.installed } | ForEach-Object { $_.id })
+  if ($creativeMissing.Count) {
+    Add ('Creative tools not installed (offer one when a task needs it, then: python ' + (Short $creativeScript) + ' --install <id>)') $creativeMissing
+  }
+}
+
 $text = "## Machine map (generated " + (Get-Date -Format 'yyyy-MM-dd') + " by the bundle installer; your own folders go in " + (Short (Join-Path $ProfileRoot 'PROFILE.md')) + ")`n" + ($lines -join "`n") + "`n"
 if ($Print) { Write-Output $text; return }
 New-Item -ItemType Directory -Force -Path $ProfileRoot | Out-Null

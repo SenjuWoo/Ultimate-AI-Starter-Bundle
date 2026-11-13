@@ -188,7 +188,11 @@ param(
   # forge launchers. -SkipAppPaths leaves PATH alone; -PrunePath also drops
   # user PATH folders that no longer exist. The previous PATH is saved first.
   [switch]$SkipAppPaths,
-  [switch]$PrunePath
+  [switch]$PrunePath,
+  # Blender, FFmpeg, ImageMagick and Godot are reported when missing, never
+  # installed by default. -CreativeTools installs the missing ones from their
+  # publishers' winget packages (TOOLS\free_game_tools.py --install core).
+  [switch]$CreativeTools
 )
 
 # Match -Providers: powershell -File forwards comma-separated names as one string.
@@ -1726,6 +1730,32 @@ if (-not $ToolsOnly -and ($Providers -contains 'Codex')) {
 # Before the machine map, so the map records what a bare name starts. Its own
 # block: TESTS\Test-UserProfile.ps1 executes the instruction section below for
 # real, and that test must never reach a step that edits PATH.
+if (-not $ToolsOnly) {
+  try {
+    $creativePython = Get-UabsPythonExecutable
+    $creativeScript = Join-Path $PackRoot 'TOOLS\free_game_tools.py'
+    if ($creativePython -and (Test-Path -LiteralPath $creativeScript -PathType Leaf)) {
+      $prevEapCreative = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+      try {
+        if ($CreativeTools) {
+          Write-UabsStep 'Creative tools (Blender, FFmpeg, ImageMagick, Godot)'
+          $creativeLines = @(& $creativePython $creativeScript '--install' 'core' 2>&1 | ForEach-Object { [string]$_ })
+          Add-UabsDetails -Title 'Creative tools' -Lines $creativeLines
+          foreach ($line in @($creativeLines | Where-Object { $_ -match '^(OK|FAIL|--) ' })) {
+            if ($line -match '^OK ') { Write-UabsOk $line.Substring(2).Trim() } else { Write-UabsWarn $line.Substring(4).Trim() }
+          }
+        }
+        $creativeJson = @(& $creativePython $creativeScript '--json' 2>$null) -join "`n"
+      } finally { $ErrorActionPreference = $prevEapCreative }
+      try { $creativeRows = $creativeJson | ConvertFrom-Json } catch { $creativeRows = @() }
+      $creativeMissing = @($creativeRows | Where-Object { $_.core -and -not $_.installed } | ForEach-Object { $_.id })
+      if ($creativeMissing.Count -and -not $CreativeTools) {
+        Write-UabsInfo ('Not installed: ' + ($creativeMissing -join ', ') + '. Your AI offers one when a task needs it; to add them now, run the installer with -CreativeTools.')
+      }
+    }
+  } catch { Write-UabsWarn ('creative tools: ' + $_.Exception.Message) }
+}
+
 if (-not $ToolsOnly -and -not $SkipAppPaths) {
   try {
     $appPython = Get-UabsPythonExecutable

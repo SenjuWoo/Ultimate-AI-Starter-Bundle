@@ -2,7 +2,7 @@
 name: tool-discovery
 description: Resolve optional AI tooling on the current machine without assuming drive letters or usernames. Use at session start, when a tool path is unknown, or before recommending install.
 metadata:
-  version: 6.1.0
+  version: 6.2.0
 ---
 
 # Tool discovery (portable)
@@ -80,6 +80,11 @@ Two traps it exists for: a POSIX shell never resolves a `.bat` or `.cmd`, so
 `command not found` in Git Bash can sit next to a working name in PowerShell;
 and a session keeps the PATH it started with, so after a repair use the full
 path from the report until the AI app is restarted.
+
+For Blender, Godot, FFmpeg, ImageMagick and the other creative programs, read
+[what each is for and how to get one](references/creative-cli.md). A missing
+one is offered to the user, then installed by name with
+`python TOOLS\free_game_tools.py --install <id>`; nothing is installed unasked.
 
 ## Host capability inventory
 

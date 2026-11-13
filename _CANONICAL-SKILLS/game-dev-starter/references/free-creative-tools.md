@@ -53,5 +53,7 @@ knowledge is reusable (`skill-creator`). Prove it on a real input before relying
 
 ## Probe
 
-`python TOOLS/free_game_tools.py` (or `--json`) lists which of the desktop tools above are installed and the official
-page for each missing one. It never installs anything.
+`python TOOLS/free_game_tools.py` (or `--json`) lists which of the desktop tools above are installed, what each is
+for and the official page for each missing one. It installs nothing unless you name a tool: after the user agrees,
+`python TOOLS/free_game_tools.py --install ffmpeg` (or `--install core` for Blender, FFmpeg, ImageMagick and Godot)
+installs that program from its publisher's winget package and makes its name work.

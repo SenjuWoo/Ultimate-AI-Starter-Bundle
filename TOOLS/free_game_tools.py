@@ -1,19 +1,25 @@
 #!/usr/bin/env python3
-"""Report which free game/app tools are present on this machine.
+"""Report which free game/app tools are present on this machine, and install one on request.
 
-No install, no network, no key. The goal is to make the free starter concrete:
-the AI can see what already exists before downloading anything, and the human
-gets the official project page for whatever is missing.
+The report needs no network and no key: the AI sees what already exists before
+downloading anything, what each program is for, and the official page for
+whatever is missing. Nothing is installed unless a tool is named with
+--install; then only that program is installed, from its publisher's own winget
+package.
 
 Usage:
     python TOOLS/free_game_tools.py
     python TOOLS/free_game_tools.py --json
+    python TOOLS/free_game_tools.py --install ffmpeg godot
+    python TOOLS/free_game_tools.py --install core     (blender, ffmpeg, imagemagick, godot)
 """
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import shutil
+import subprocess
 import sys
 
 # Each entry is (id, label, command candidates, official free page).
@@ -39,6 +45,46 @@ TOOLS = [
     ("audacity", "Audacity (audio edit)", ("audacity",), "https://www.audacityteam.org/download/"),
     ("fluidsynth", "FluidSynth (MIDI to audio)", ("fluidsynth",), "https://github.com/FluidSynth/fluidsynth/releases"),
 ]
+
+# What each program is for, and the first headless command an agent reaches for.
+USES = {
+    "godot": ("game engine; run or test a project headless, import-check an exported asset", "godot --headless --path PROJECT --import"),
+    "blender": ("3D modelling, rigging, format conversion and renders by script", "blender --background --python make.py"),
+    "material-maker": ("procedural PBR materials exported as texture maps", ""),
+    "pixelorama": ("pixel art, sprites and tiles", ""),
+    "krita": ("painting and textures; kritarunner runs scripts", "kritarunner -s script"),
+    "inkscape": ("vector art and UI; SVG to PNG at a size", "inkscape in.svg --export-type=png -w 512"),
+    "imagemagick": ("convert and resize images in bulk, contact sheets, atlases, DDS and EXR", "magick in.png -resize 512x512 out.png"),
+    "ffmpeg": ("convert audio and video, frames to video, trim; ffprobe reads media facts", "ffmpeg -i in.wav out.ogg"),
+    "node": ("JavaScript runtime for web and desktop apps and their build tools", "node --version"),
+    "npm": ("JavaScript packages", "npm ci"),
+    "python": ("scripts, tools and APIs", "python -m venv .venv"),
+    "uv": ("isolated Python tools and environments", "uv venv"),
+    "dotnet": ("C# builds and tools", "dotnet build"),
+    "cargo": ("Rust builds (Bevy and CLI tools)", "cargo build --release"),
+    "love": ("2D games in Lua", "love ."),
+    "git": ("version control", "git status"),
+    "lmms": ("music production", ""),
+    "musescore": ("scores and notation to audio", ""),
+    "audacity": ("audio editing", ""),
+    "fluidsynth": ("MIDI to audio with a SoundFont", "fluidsynth -F out.wav font.sf2 song.mid"),
+}
+
+# The publisher's own winget package for each program this file may install.
+# Ids were checked against `winget show`; a tool without one is never installed
+# here (Python is the bundle's shared runtime, .NET is versioned per project).
+WINGET = {
+    "godot": "GodotEngine.GodotEngine", "blender": "BlenderFoundation.Blender",
+    "material-maker": "RodZill4.MaterialMaker", "pixelorama": "OramaInteractive.Pixelorama",
+    "krita": "KDE.Krita", "inkscape": "Inkscape.Inkscape", "imagemagick": "ImageMagick.ImageMagick",
+    "ffmpeg": "Gyan.FFmpeg", "node": "OpenJS.NodeJS.LTS", "npm": "OpenJS.NodeJS.LTS", "uv": "astral-sh.uv",
+    "cargo": "Rustlang.Rustup", "love": "Love2d.Love2d", "git": "Git.Git", "lmms": "LMMS.LMMS",
+    "musescore": "Musescore.Musescore", "audacity": "Audacity.Audacity",
+}
+
+# The four an asset or game task reaches for first. `--install core` and the
+# installer's -CreativeTools switch mean exactly these.
+CORE = ("blender", "ffmpeg", "imagemagick", "godot")
 
 # Extra Windows locations, keyed by tool id. A shared list credited the first
 # hit to whichever catalog row was missing: Godot absent and Blender present
@@ -141,19 +187,75 @@ def collect() -> list[dict]:
                     break
         if not path:
             path = find_installed_app(key)
+        use, example = USES.get(key, ("", ""))
+        package = WINGET.get(key, "")
         rows.append({
             "id": key,
             "label": label,
             "installed": bool(path),
             "path": path or "",
             "free_url": url,
+            "use": use,
+            "example": example,
+            "core": key in CORE,
+            "winget": package,
+            "install": ("python TOOLS/free_game_tools.py --install " + key) if package else "",
         })
     return rows
 
 
-def main() -> int:
+def _winget(command: list[str]) -> int:
+    return subprocess.run(command).returncode
+
+
+def install(ids: list[str], runner=None, winget: str | None = None) -> int:
+    """Install the named tools that are missing. Returns 0 only when every one is present afterwards."""
+    rows = {row["id"]: row for row in collect()}
+    wanted = list(CORE) if ids == ["core"] else list(dict.fromkeys(ids))
+    unknown = [key for key in wanted if key not in rows]
+    if unknown:
+        print("unknown tool id(s): " + ", ".join(unknown) + ". Known: " + ", ".join(rows) + ", or `core`.")
+        return 2
+    winget = winget if winget is not None else (shutil.which("winget") or "")
+    failed, installed = 0, []
+    for key in wanted:
+        row = rows[key]
+        if row["installed"]:
+            print(f"OK   {key}: already installed at {row['path']}")
+            continue
+        package = WINGET.get(key)
+        if not package or not winget:
+            why = "this tool has no package here" if not package else "winget is not available on this system"
+            print(f"--   {key}: not installed ({why}). Official download: {row['free_url']}")
+            failed += 1
+            continue
+        code = (runner or _winget)([winget, "install", "--id", package, "--exact", "--source", "winget", "--silent",
+                                    "--accept-package-agreements", "--accept-source-agreements", "--disable-interactivity"])
+        if code == 0:
+            print(f"OK   {key}: installed from winget package {package}")
+            installed.append(key)
+        else:
+            print(f"FAIL {key}: winget exited {code} for {package}. Official download: {row['free_url']}")
+            failed += 1
+    module = _app_paths() if installed and runner is None else None
+    if module:
+        # Make the new names work; a failure here is reported by the next doctor run.
+        subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)), "app_paths.py"),
+                        "--fix", "--no-version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        print("Names repaired. Restart AI apps and terminals opened before this install; they keep the PATH they started with.")
+    return 1 if failed else 0
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(description="Report the free game/app tools on this machine; install one on request")
+    ap.add_argument("--json", action="store_true")
+    ap.add_argument("--install", nargs="+", metavar="ID",
+                    help="install these missing tools from their publisher's winget package; `core` means " + ", ".join(CORE))
+    args = ap.parse_args(argv)
+    if args.install:
+        return install(args.install)
     rows = collect()
-    if "--json" in sys.argv:
+    if args.json:
         print(json.dumps(rows, indent=2))
         return 0
     print("FREE GAME/APP TOOL DISCOVERY (no paid key, no install)")
@@ -165,11 +267,15 @@ def main() -> int:
             print(f"      {row['path']}")
         else:
             print(f"      free: {row['free_url']}")
+            if row["install"]:
+                print(f"      install: {row['install']}")
+        if row["use"]:
+            print(f"      for: {row['use']}")
     missing = [r["label"] for r in rows if not r["installed"]]
     print("=" * 72)
     print(f"{len(rows) - len(missing)}/{len(rows)} present" +
           ("; missing: " + ", ".join(missing) if missing else ""))
-    print("Missing tools are optional. Install only the ones the chosen stack needs.")
+    print("Missing tools are optional. Install only the ones the chosen stack needs, and ask the user first.")
     return 0
 
 

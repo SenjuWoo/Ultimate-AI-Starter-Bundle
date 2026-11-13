@@ -1,5 +1,5 @@
-<!-- Ultimate AI Starter Bundle v8.40.3 -->
-# Ultimate AI Starter Bundle v8.40.3
+<!-- Ultimate AI Starter Bundle v8.41.0 -->
+# Ultimate AI Starter Bundle v8.41.0
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
@@ -216,5 +216,6 @@ SBOM and attestation, is on the
 Original code and docs are [MIT](LICENSE); third-party payloads keep their own
 terms — see the [notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md).
 
-Resuming after a break or a usage limit? Copy one of the
+Starting a chat, resuming after a break or a usage limit, or handing a project
+to a newer model for a full audit? Copy one of the three
 [short cross-provider prompts](PROMPTS/START-AND-RESUME.md) and add your task.
