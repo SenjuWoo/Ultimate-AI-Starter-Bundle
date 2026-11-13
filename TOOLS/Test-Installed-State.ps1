@@ -1009,13 +1009,26 @@ if ($Providers -contains 'Hermes') {
         if (Test-Path -LiteralPath $profileCfg -PathType Leaf) { $pinFiles += $profileCfg }
       }
     }
+    # The installer deliberately leaves Hermes profiles alone while Hermes or its
+    # gateway is running. A pin that is stale for that reason is the expected
+    # result of a deferral, not a broken install: report it with the step that
+    # finishes it instead of failing the whole install.
+    $hermesDeferred = $false
+    if ($state -and $state.components) {
+      $hermesProfilesState = $state.components.PSObject.Properties['hermes-native-profiles']
+      if ($hermesProfilesState -and [string]$hermesProfilesState.Value.status -eq 'deferred-live-gateway') { $hermesDeferred = $true }
+    }
     foreach ($pinFile in $pinFiles) {
       $pinText = [IO.File]::ReadAllText($pinFile)
       $seen = @([regex]::Matches($pinText, '@upstash/context7-mcp@[0-9]+\.[0-9]+\.[0-9]+') | ForEach-Object { $_.Value } | Select-Object -Unique)
       foreach ($foundPin in $seen) {
         if ($foundPin -ne $context7Pin) {
           $rel = $pinFile.Substring($hermesHomeRoot.Length).TrimStart('\')
-          Err ("Hermes $rel pins $foundPin; catalog pins $context7Pin")
+          if ($hermesDeferred -and $rel -like 'profiles\*') {
+            Warn ("Hermes $rel still pins $foundPin (catalog: $context7Pin) because the profile update was deferred while Hermes was running; close Hermes and its gateway, then run the installer again")
+          } else {
+            Err ("Hermes $rel pins $foundPin; catalog pins $context7Pin")
+          }
         }
       }
     }

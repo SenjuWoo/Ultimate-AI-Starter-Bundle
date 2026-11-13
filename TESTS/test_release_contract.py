@@ -3267,6 +3267,7 @@ def main() -> int:
         test_task_recipes_resolve_only_shipped_capabilities,
         test_compression_retirement_preserves_custom_preferences,
         test_current_documentation_links_and_upstream_coverage,
+        test_deferred_hermes_profile_pins_warn_instead_of_failing,
         # v7.9.8 -- the starter template is not a place to register MCP servers,
         # and the routing decision has to be measurable.
         test_starter_templates_declare_no_mcp_servers,
@@ -6819,6 +6820,19 @@ def test_release_workflow_publishes_only_a_green_untagged_main_sha() -> None:
     for line in wf.splitlines():
         if "uses:" in line:
             assert re.search(r"@[0-9a-f]{40}\b", line), f"unpinned action: {line.strip()}"
+
+
+def test_deferred_hermes_profile_pins_warn_instead_of_failing() -> None:
+    """2026-11-13: Hermes was running, the installer deferred the profile update on
+    purpose, and the doctor then failed the whole install on the Context7 pin that
+    deferral left behind. The deferral is recorded; the doctor must turn it into a
+    warning that names the step which finishes it."""
+    doctor = read(ROOT / "TOOLS" / "Test-Installed-State.ps1")
+    assert "'deferred-live-gateway'" in doctor, "the doctor does not read the recorded deferral"
+    assert 'Warn ("Hermes $rel still pins' in doctor, "a deferred profile pin is still an error"
+    assert "close Hermes and its gateway, then run the installer again" in doctor
+    assert 'Err ("Hermes $rel pins $foundPin; catalog pins $context7Pin")' in doctor, (
+        "a stale pin without a recorded deferral must still fail")
 
 
 if __name__ == "__main__":
