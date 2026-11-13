@@ -201,8 +201,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 5434,
-  "sha256": "0def2b6dcc6a6400fb4e2eaaa65ffc3334fdc99762670df0e8d7468a865b06b4"
+  "size": 5870,
+  "sha256": "c2a4988a5febf0adce533d6a00421fe449b1419b3c19818982eaf81cfbcdb7e6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -3201,8 +3201,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 5434,
-  "sha256": "0def2b6dcc6a6400fb4e2eaaa65ffc3334fdc99762670df0e8d7468a865b06b4"
+  "size": 5870,
+  "sha256": "c2a4988a5febf0adce533d6a00421fe449b1419b3c19818982eaf81cfbcdb7e6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -6261,8 +6261,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 5434,
-  "sha256": "0def2b6dcc6a6400fb4e2eaaa65ffc3334fdc99762670df0e8d7468a865b06b4"
+  "size": 5870,
+  "sha256": "c2a4988a5febf0adce533d6a00421fe449b1419b3c19818982eaf81cfbcdb7e6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -9311,8 +9311,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 5434,
-  "sha256": "0def2b6dcc6a6400fb4e2eaaa65ffc3334fdc99762670df0e8d7468a865b06b4"
+  "size": 5870,
+  "sha256": "c2a4988a5febf0adce533d6a00421fe449b1419b3c19818982eaf81cfbcdb7e6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -12361,8 +12361,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 5434,
-  "sha256": "0def2b6dcc6a6400fb4e2eaaa65ffc3334fdc99762670df0e8d7468a865b06b4"
+  "size": 5870,
+  "sha256": "c2a4988a5febf0adce533d6a00421fe449b1419b3c19818982eaf81cfbcdb7e6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -15486,8 +15486,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 5434,
-  "sha256": "0def2b6dcc6a6400fb4e2eaaa65ffc3334fdc99762670df0e8d7468a865b06b4"
+  "size": 5870,
+  "sha256": "c2a4988a5febf0adce533d6a00421fe449b1419b3c19818982eaf81cfbcdb7e6"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -18757,17 +18757,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 64159,
-  "sha256": "9f914c84c7854c48157ff2a8805afbf86e837d22fa40c5bdc783b2743fe4d3e8"
+  "sha256": "52acfaf4ad539722d762346ad4b24e738ce11f875ab9f52d61d34ef3375c3f51"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
-  "size": 15637,
-  "sha256": "4e2c63e0199bddbac406a1be1e8a839954314fa97b9a5cec3d59fa0b940d5334"
+  "size": 15741,
+  "sha256": "1291c3ada65688a175d031ccedd589281ada4691daa6cf3c107fad0d300f65bb"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "f5156fec6b8261760479cfd6d0e61436cd9ba9c99ab71aea260a69944212fcf5"
+  "sha256": "f99c3ea543717c0618c95171f9cb58f597276d8a3c96608e5c971df1014b86c8"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18777,7 +18777,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 40569,
-  "sha256": "7a72b36a94a20be84ef30ef6b035f680937e19b9a185035e27e84570895fd52b"
+  "sha256": "1cb4791d867e020a9f234674be349a01a4a1fea8d2826baf62f8d23f4f9704c9"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -22831,8 +22831,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 337625,
-  "sha256": "caf55efc0a697f5199f41fa990469053625078d1e87cbe45d07f0e8f12e5c315"
+  "size": 338713,
+  "sha256": "dab3a3cc018c3790f7432ad7cf4691036db3f9c5a103a6b3acb32333aa0336b5"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -22977,7 +22977,7 @@
  {
   "path": "README.md",
   "size": 16380,
-  "sha256": "982a5699f328a8f89c3c3843c32e4119db93601f48487c5d142a280848956ffc"
+  "sha256": "fb3f78ff9d1b99d598130cc0b9c7b1ca066c5482cc294532cac9c374374ba15b"
  },
  {
   "path": "SECURITY.md",
@@ -22987,12 +22987,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "cc24625a91861949511c625eb876a3c78ab69c672a315be1c3f872a7bd1c1ed3"
+  "sha256": "2ca4f1bd092c673e346c40dd6f6e9c81ee9124558513e6e21c63e698ccb52194"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "792cbcbf7edb2b52077952497c508afd6aff7e9d7155d3cf4629ac7ead6be7ce"
+  "sha256": "f5fafeb52180f2df3a4d8806229606db70fbb10e006157a8d2b38175cb135239"
  },
  {
   "path": "STATE.md",
@@ -23386,8 +23386,8 @@
  },
  {
   "path": "TESTS/test_audit_regressions.py",
-  "size": 23920,
-  "sha256": "981107fa3350a4e9fc10687820d06582a93184c3e4971cc89d623ec20609d6f1"
+  "size": 27591,
+  "sha256": "97ed18a3d055e3a792a3e605a9fe1dd52592860f232027ed87f0afb3116f09c9"
  },
  {
   "path": "TESTS/test_awkward_paths.py",
@@ -23891,8 +23891,8 @@
  },
  {
   "path": "TOOLS/hooks/completeness_gate.py",
-  "size": 18709,
-  "sha256": "330f8bd461d2de7a721cdffd95bc7be3810e8ae7c11147e590b0a2a0611c2016"
+  "size": 20457,
+  "sha256": "afe61ee4d7d5241c54aef1971890c53e4291a5c52905916ff043fd79f74804bf"
  },
  {
   "path": "TOOLS/hooks/hermes_gateway_guard.py",
@@ -24062,7 +24062,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2781,
-  "sha256": "6ae492dbe1e514a78e0cc3de21ca7df4ca600e15998a262701907f9f75c7c217"
+  "sha256": "d99a8d916aef858ddf0dfa41d8a71db9c230309aeb80f80a59e63b330db79ddc"
  },
  {
   "path": "VALIDATION.md",
@@ -24072,7 +24072,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "dec15c9e088df53f36455fc632f7bcb7e78c18cc34423c9c360f461a956f62b7"
+  "sha256": "1f362afe6c6b161e774b865a412097c5e7c23f76ea14f4496246a303cdc70dd2"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24101,8 +24101,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/SKILL.md",
-  "size": 5434,
-  "sha256": "0def2b6dcc6a6400fb4e2eaaa65ffc3334fdc99762670df0e8d7468a865b06b4"
+  "size": 5870,
+  "sha256": "c2a4988a5febf0adce533d6a00421fe449b1419b3c19818982eaf81cfbcdb7e6"
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/references/forge-standard.md",

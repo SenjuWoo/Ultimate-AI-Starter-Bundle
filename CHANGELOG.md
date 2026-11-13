@@ -1,3 +1,23 @@
+## 8.40.1 (2026-11-12)
+
+Corrections found while exercising the owner forges against 8.40.0.
+
+- **The release gate judged the wrong repository.** A command such as
+  `cd other-repo && git push` was checked against the folder the session sat in,
+  so an unfinished change there blocked a push of a finished one elsewhere. The
+  gate now follows a leading `cd`, `pushd` or `Set-Location` and `git -C`.
+- **An address is not a version.** A README that mentions `127.0.0.1`, or the
+  version of a dependency, was reported as a stale README after a version bump.
+  The gate now reports a README only when it still carries the version the
+  commit replaced.
+- **Two owner doctors could not run.** The registry's doctor commands for
+  comfy-forge and Reverse THIS! started PowerShell without an execution policy
+  and failed on a default machine. Both now pass `-ExecutionPolicy Bypass`.
+- **Routing names the new front doors.** `ai-tooling-stack` points at
+  `assetforge probe`, the comfy-forge dataset commands and `re-triage`.
+
+The bundle still ships 81 canonical skills.
+
 ## 8.40.0 (2026-11-12)
 
 Architecture review: faster hooks, discovery that follows a moved folder, and

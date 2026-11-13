@@ -388,6 +388,81 @@ class HookFastPath(unittest.TestCase):
         self.assertEqual(len(bodies), 1, "the prefilter drifted between hooks")
 
 
+@unittest.skipUnless(shutil.which("git"), "needs git")
+class ReleaseGateScope(unittest.TestCase):
+    """The release gate judges the repository a command publishes, and only calls a
+    README stale when it still carries the version that was just replaced."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="uabs gate ")
+        self.base = Path(self.temp.name).resolve()
+        self.gate = load_tool("scope_completeness_gate", ROOT / "TOOLS" / "hooks" / "completeness_gate.py")
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def repo(self, name, readme, old="1.0.0", new="1.0.1", changelog=True):
+        root = self.base / name
+        root.mkdir()
+
+        def git(*args):
+            subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@example.invalid", *args],
+                           cwd=root, check=True, capture_output=True)
+
+        git("init", "-q")
+        (root / "VERSION").write_text(old + "\n", encoding="utf-8")
+        (root / "README.md").write_text(readme, encoding="utf-8")
+        (root / "CHANGELOG.md").write_text(f"## {old}\n", encoding="utf-8")
+        git("add", "-A")
+        git("commit", "-q", "-m", "first")
+        (root / "VERSION").write_text(new + "\n", encoding="utf-8")
+        if changelog:
+            (root / "CHANGELOG.md").write_text(f"## {new}\n\n## {old}\n", encoding="utf-8")
+        git("add", "-A")
+        git("commit", "-q", "-m", "bump")
+        return root
+
+    def test_an_address_or_a_dependency_version_is_not_a_stale_readme(self):
+        root = self.repo("addr", "Listens on 127.0.0.1:8080. Needs Python 3.11.2 and Blender 5.3.0.\n")
+        self.assertEqual(self.gate.findings(root), [])
+
+    def test_the_replaced_version_left_in_the_readme_is_reported(self):
+        root = self.repo("stale", "# Tool 1.0.0\n\nListens on 127.0.0.1.\n")
+        found = self.gate.findings(root)
+        self.assertEqual(len(found), 1, found)
+        self.assertIn("still says 1.0.0", found[0])
+
+    def test_a_readme_that_names_the_new_version_passes(self):
+        root = self.repo("fresh", "# Tool 1.0.1\n\nUpgrading from 1.0.0 needs no steps.\n")
+        self.assertEqual(self.gate.findings(root), [])
+
+    def test_a_missing_changelog_entry_is_still_reported(self):
+        root = self.repo("nolog", "plain\n", changelog=False)
+        self.assertTrue(any("has no entry for 1.0.1" in item for item in self.gate.findings(root)))
+
+    def test_the_command_decides_which_repository_is_judged(self):
+        clean = self.repo("clean", "plain\n")
+        dirty = self.repo("dirty", "# Tool 1.0.0\n")
+        resolve = self.gate.command_dir
+        self.assertEqual(resolve(f'cd "{clean}" && git push origin main', dirty), clean)
+        self.assertEqual(resolve(f"git -C '{clean}' push", dirty), clean)
+        self.assertEqual(resolve("git push origin main", dirty), dirty)
+        self.assertEqual(resolve('cd "Z:/no such folder here" && git push', dirty), dirty)
+        posix = "/" + clean.as_posix().replace(":", "", 1)
+        if os.name == "nt":
+            self.assertEqual(resolve(f'cd "{posix[0] + posix[1].lower() + posix[2:]}" && git push', dirty), clean)
+
+        def decide(command, cwd):
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                self.gate.mode_pre({"tool_input": {"command": command}}, cwd)
+            return out.getvalue()
+
+        self.assertEqual(decide(f'cd "{clean}" && git push origin main', dirty), "",
+                         "a push of the clean repository was judged by the folder the session sits in")
+        self.assertIn("deny", decide(f'cd "{dirty}" && git push origin main', clean))
+
+
 class GraphRoots(unittest.TestCase):
     """A moved project must be reported, with where it went, and never repaired silently."""
 

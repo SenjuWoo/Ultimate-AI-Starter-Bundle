@@ -198,6 +198,45 @@ def head_touched_version(root: Path) -> bool:
     return any(rel.replace("\\", "/") in names for rel, _ in VERSION_SOURCES)
 
 
+# A version, and not the front of a longer dotted number: "127.0.0" inside the
+# address 127.0.0.1 is not one.
+VERSION_TOKEN = r"(?<![0-9.])([0-9]+\.[0-9]+\.[0-9]+)(?![0-9]|\.[0-9])"
+_CD_PREFIX = re.compile(
+    r"""\s*(?:cd|pushd|Set-Location)\s+(?:/d\s+)?(?:"([^"]+)"|'([^']+)'|([^\s;&|]+))\s*(?:&&|;)""")
+_GIT_C = re.compile(r"""\bgit\s+-C\s+(?:"([^"]+)"|'([^']+)'|(\S+))\s+push\b""")
+
+
+def previous_version(root: Path, source: str) -> str | None:
+    """The version the current commit replaced, read from that commit's own diff."""
+    diff = run(["git", "show", "--unified=0", "--pretty=format:", "HEAD", "--", source], root)
+    for line in diff.splitlines():
+        if line.startswith("-") and not line.startswith("---"):
+            found = re.findall(VERSION_TOKEN, line)
+            if found:
+                return found[0]
+    return None
+
+
+def command_dir(text: str, cwd: Path) -> Path:
+    """Where the command acts. `cd X && git push` and `git -C X push` publish X,
+    not the folder the session happens to be in."""
+    found = _CD_PREFIX.match(text) or _GIT_C.search(text)
+    if not found:
+        return cwd
+    target = next(group for group in found.groups() if group)
+    # Git Bash spells a drive path as /z/folder.
+    drive = re.match(r"^/([A-Za-z])/(.*)$", target)
+    if os.name == "nt" and drive:
+        target = f"{drive.group(1)}:/{drive.group(2)}"
+    try:
+        path = Path(target).expanduser()
+        if not path.is_absolute():
+            path = cwd / path
+        return path if path.is_dir() else cwd
+    except (OSError, ValueError):
+        return cwd
+
+
 def first_existing(root: Path, names: tuple[str, ...]) -> Path | None:
     for name in names:
         candidate = root / name
@@ -211,7 +250,7 @@ def mentions_version(path: Path, version: str) -> bool:
         text = path.read_text(encoding="utf-8-sig", errors="replace")
     except OSError:
         return True  # unreadable: do not invent a finding
-    return re.search(r"(?<![0-9.])" + re.escape(version) + r"(?![0-9])", text) is not None
+    return re.search(r"(?<![0-9.])" + re.escape(version) + r"(?![0-9]|\.[0-9])", text) is not None
 
 
 def uncommitted_code(root: Path) -> list[str]:
@@ -264,12 +303,14 @@ def findings(root: Path) -> list[str]:
             text = readme.read_text(encoding="utf-8-sig", errors="replace")
         except OSError:
             text = ""
-        # Only complain when the README states a version of its own and that
-        # statement is now wrong. A README without a version is not stale.
-        stated = re.findall(r"(?<![0-9.])([0-9]+\.[0-9]+\.[0-9]+)(?![0-9])", text[:4000])
-        if stated and version not in stated:
+        # Only complain when the README still carries the version this commit
+        # replaced. Any other dotted number in it (a dependency, a game build,
+        # an address) says nothing about this release.
+        stated = re.findall(VERSION_TOKEN, text[:4000])
+        previous = previous_version(root, source)
+        if previous and previous != version and previous in stated and version not in stated:
             problems.append(
-                f"{readme.name} still says {stated[0]} while {source} says {version}. "
+                f"{readme.name} still says {previous} while {source} says {version}. "
                 f"Update it or remove the version from it."
             )
 
@@ -304,7 +345,7 @@ def mode_pre(payload: dict, cwd: Path) -> int:
     text = command_text(payload)
     if not text or not any(pattern.search(text) for pattern in PUSH_PATTERNS):
         return 0
-    root = repo_root(cwd)
+    root = repo_root(command_dir(text, cwd))
     if root is None:
         return 0
     problems = findings(root)

@@ -96,6 +96,8 @@
         "entrypoint": [
           "powershell",
           "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
           "-File",
           "Install-Modkit.ps1",
           "-Doctor"
@@ -381,6 +383,8 @@
         "entrypoint": [
           "powershell",
           "-NoProfile",
+          "-ExecutionPolicy",
+          "Bypass",
           "-File",
           "TOOLS/image-stack.ps1",
           "status"
