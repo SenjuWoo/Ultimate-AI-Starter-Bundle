@@ -99,6 +99,8 @@ if ($reverseComponent -and $reverseState -and $reverseState.status -eq 'owner-ma
     if ($LASTEXITCODE -ne 0) { throw ('owner doctor failed: ' + $reverseDoctor.Trim()) }
     $reaVersion=[string]$reverseOwnerState.tools.rea.version
     $ghidraVersion=[string]$reverseOwnerState.tools.ghidra.version
+    # REA 6.9.0 accepts Ghidra 12.x from 12.1 with the JDK that Ghidra declares (its own doctor says
+    # so); only the older 6.8.0 refused 12.2.
     if ($reaVersion -eq '6.8.0' -and $ghidraVersion -match '12\.2') {
       $reverseHealth.compatibility='REA 6.8.0 is not compatible with Ghidra 12.2; use the isolated Ghidra 12.1 line + JDK 21 route.'
       Warn $reverseHealth.compatibility

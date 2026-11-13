@@ -38,7 +38,7 @@ from pathlib import Path
 PACKS = {
     "pocock": {
         "repo": "mattpocock/skills",
-        "pin": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+        "pin": "5863806dd4e15c63174bee4e7515a4256792ecfa",
         "license": "MIT",
         "prefix": "pocock-",
         # Chosen for gaps the bundle does not already own; see

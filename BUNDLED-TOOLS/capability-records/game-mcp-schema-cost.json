@@ -7,20 +7,20 @@
   "servers": [
     {
       "id": "housecarl",
-      "version": "2.1.1",
+      "version": "2.1.2",
       "tools_total": 31,
-      "schema_bytes": 163959,
-      "schema_bytes_note": "Sum of the 31 per-tool byte counts. Measure-McpSchemaCost.ps1 also reports the serialized tools ARRAY at 163,991 -- 32 bytes more, the JSON framing between entries. Subset costs (see CATALOG.json mcp_tool_budget) can only be derived by summing per-tool bytes, so the sum is the basis every figure in this pack uses. Quoting both is how a restated number drifts.",
-      "approx_tokens_per_turn": 40989,
-      "bytes_per_tool_avg": 5289,
+      "schema_bytes": 169573,
+      "schema_bytes_note": "Sum of the 31 per-tool byte counts (houseCARL 2.1.2, measured 2026-11-13). The serialized tools ARRAY adds the JSON framing between entries (169,605 bytes from mcp_handshake.py). Subset costs (see CATALOG.json mcp_tool_budget) can only be derived by summing per-tool bytes, so the sum is the basis every figure in this pack uses. Quoting both is how a restated number drifts.",
+      "approx_tokens_per_turn": 42393,
+      "bytes_per_tool_avg": 5470,
       "largest_tools": [
         { "name": "housecarl_records", "bytes": 21346 },
-        { "name": "housecarl_create", "bytes": 19198 },
+        { "name": "housecarl_create", "bytes": 19486 },
         { "name": "housecarl_apply", "bytes": 18647 },
-        { "name": "housecarl_check", "bytes": 15091 },
-        { "name": "housecarl_nif_set", "bytes": 9285 }
+        { "name": "housecarl_check", "bytes": 15165 },
+        { "name": "housecarl_asset_status", "bytes": 11331 }
       ],
-      "note": "The largest recorded schema in this comparison. No actual context occupancy or billing was measured. Three dedicated creation/NIF/placement tools (housecarl_create, housecarl_nif_set, housecarl_place) are 35,458 bytes, 22% of the total and more than the whole of Skyrim Forge. Its capability is genuinely irreplaceable (live MO2 load-order truth, conflict trees, keyless Nexus), which is exactly why it belongs in a scoped profile rather than the always-on core.",
+      "note": "The largest recorded schema in this comparison. No actual context occupancy or billing was measured. Three dedicated creation/NIF/placement tools (housecarl_create, housecarl_nif_set, housecarl_place) are 35,746 bytes, 21% of the total and more than the whole of Skyrim Forge. Its capability is genuinely irreplaceable (live MO2 load-order truth, conflict trees, keyless Nexus), which is exactly why it belongs in a scoped profile rather than the always-on core.",
       "scope": "Hermes 'skyrim' profile and per-project capability profiles only. Never always-on."
     },
     {

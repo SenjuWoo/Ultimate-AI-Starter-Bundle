@@ -615,7 +615,7 @@
     "awesome-gamedev-agent-skills": {
       "title": "awesome-gamedev-agent-skills",
       "repo": "https://github.com/gamedev-skills/awesome-gamedev-agent-skills",
-      "pin": "19d93f97c9c1ea0f8b306e77aa81e0d3e352d3e9",
+      "pin": "c6ca6c41c839b68319ffc08430b99ab768debc32",
       "license": "Apache-2.0",
       "engines": [
         "godot",
@@ -637,7 +637,7 @@
     "mattpocock-skills": {
       "title": "mattpocock/skills",
       "repo": "https://github.com/mattpocock/skills",
-      "pin": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "pin": "5863806dd4e15c63174bee4e7515a4256792ecfa",
       "license": "MIT",
       "skills": 6,
       "markers": [

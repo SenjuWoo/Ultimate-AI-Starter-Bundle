@@ -29,11 +29,11 @@
 param(
   [switch]$Apply,
   [switch]$WithForgeCompatibility,
-  # How much of houseCARL to register in the skyrim profile. Measured, 2.1.1:
+  # How much of houseCARL to register in the skyrim profile. Measured, 2.1.2:
   # Historical schema estimates (bytes/4), not measured prompt usage or billing:
-  #   Full      31 tools  163,959 bytes  ~40,989 schema tokens
-  #   Lean      28 tools  128,501 bytes  ~32,125 schema tokens   -22%  (default)
-  #   ReadOnly  17 tools   75,075 bytes  ~18,768 schema tokens   -54%
+  #   Full      31 tools  169,573 bytes  ~42,393 schema tokens
+  #   Lean      28 tools  133,827 bytes  ~33,456 schema tokens   -21%  (default)
+  #   ReadOnly  17 tools   80,401 bytes  ~20,100 schema tokens   -53%
   # Hermes enforces mcp_servers.<name>.tools.include/exclude at REGISTRATION,
   # so a filtered tool's schema never reaches the model. The sets live in
   # BUNDLED-TOOLS/CATALOG.json, not here.
@@ -1109,7 +1109,7 @@ try {
   }
   $unitySpec = @{
     command = 'uvx'
-    args = @(Resolve-UabsUvPythonArgs -Command 'uvx' -Arguments @('--python', '3.14', '--from', 'mcpforunityserver@10.2.0', 'mcp-for-unity', '--transport', 'stdio'))
+    args = @(Resolve-UabsUvPythonArgs -Command 'uvx' -Arguments @('--python', '3.14', '--from', 'mcpforunityserver@10.3.0', 'mcp-for-unity', '--transport', 'stdio'))
     enabled = $true; connect_timeout = 90
     env = @{ UNITY_MCP_DISABLE_TELEMETRY = 'true' }
   }

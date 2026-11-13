@@ -4,17 +4,19 @@ An optional, third-party catalogue of engine-specific agent skills. The bundle
 **points at it and detects it**; it never installs, updates or executes it, and it
 vendors none of its skills.
 
-Reviewed 2026-11-07.
+Reviewed 2026-11-07; re-reviewed 2026-11-13 at the revision below (66 commits: two new skills,
+`unity-build-size` and `game-docs`, sharper triggers and runnable checks across the engines; the
+new skill scripts are standard-library checkers with no network, process or delete calls).
 
 | Field | Value |
 |---|---|
 | Upstream | [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) |
-| Pinned revision | `19d93f97c9c1ea0f8b306e77aa81e0d3e352d3e9` (2026-10-28) |
+| Pinned revision | `c6ca6c41c839b68319ffc08430b99ab768debc32` (2026-11-12) |
 | License | Apache-2.0, with attribution and trademark notes in `NOTICE` |
-| Size | 78 `SKILL.md` files (77 skills plus the router), about 4.4 MB |
-| Layout | `skills/<category>/<skill>/SKILL.md`, categories `godot` (16), `unity` (8), `unreal` (6), `web-engines` (6), `other-engines` (12), `genres` (9), `disciplines` (15), `workflows` (4), `ebitengine` (1), plus `router/` |
+| Size | 80 `SKILL.md` files (79 skills plus the router), about 4.7 MB |
+| Layout | `skills/<category>/<skill>/SKILL.md`, categories `godot` (16), `unity` (9), `unreal` (6), `web-engines` (6), `other-engines` (12), `genres` (9), `disciplines` (15), `workflows` (5), `ebitengine` (1), plus `router/` |
 | Tooling | `scripts/validate-skills.py`, `scripts/generate-site.py`, a `tests/` suite and GitHub Actions; no installer, no dependency outside the Python standard library |
-| Status | Active (234 commits, pushed 2026-10-28), Apache-2.0, not archived |
+| Status | Active (about 300 commits, pushed 2026-11-12), Apache-2.0, not archived |
 
 ## What it is for
 
@@ -39,7 +41,7 @@ that ships updates every week.
 ```sh
 git clone https://github.com/gamedev-skills/awesome-gamedev-agent-skills.git
 cd awesome-gamedev-agent-skills
-git checkout 19d93f97c9c1ea0f8b306e77aa81e0d3e352d3e9   # the reviewed revision
+git checkout c6ca6c41c839b68319ffc08430b99ab768debc32   # the reviewed revision
 python scripts/validate-skills.py                        # the project's own gate
 ```
 

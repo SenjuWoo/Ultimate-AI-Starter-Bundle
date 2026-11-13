@@ -85,7 +85,7 @@ never returns a skill that does not exist.
 
 | Pack | Licence | Pin |
 | --- | --- | --- |
-| `mattpocock/skills` | MIT | `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d` |
+| `mattpocock/skills` | MIT | `5863806dd4e15c63174bee4e7515a4256792ecfa` |
 | `addyosmani/agent-skills` | MIT | `301b02b12bff98e4688e6984af6556802322bbde` |
 
 Both require their copyright and permission notice when redistributed. The pinned

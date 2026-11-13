@@ -30,6 +30,7 @@ import argparse
 import hashlib
 import io
 import os
+import re
 import shutil
 import sys
 import urllib.request
@@ -199,6 +200,29 @@ def write(path: str, text: str) -> None:
     io.open(path, "w", encoding="utf-8", newline="").write(text)
 
 
+# Contributors write field notes on their own machines, so a note can name the
+# drive their Steam library happens to be on. That layout is theirs, not the
+# reader's, and the pack's privacy gate refuses it. The bundle's convention is
+# the <Steam library> placeholder; the rest of the path is kept as written.
+MACHINE_STEAM_LIBRARY = re.compile(r"\b[A-Za-z]:(\\\\|\\|/)SteamLibrary\b", re.I)
+
+
+def scrub_machine_paths(knowledge: str) -> list[str]:
+    """Replace a drive-letter Steam library with <Steam library> in every note."""
+    changed = []
+    for folder, _dirs, files in os.walk(knowledge):
+        for name in files:
+            if not name.endswith((".md", ".json")):
+                continue
+            path = os.path.join(folder, name)
+            text = read(path)
+            new = MACHINE_STEAM_LIBRARY.sub("<Steam library>", text)
+            if new != text:
+                write(path, new)
+                changed.append(os.path.relpath(path, os.path.dirname(knowledge)).replace(os.sep, "/") + " (Steam library path)")
+    return changed
+
+
 def apply_patches(src: str, dest: str, sha7: str) -> tuple[list[str], list[str]]:
     """Copy the subset, then apply every UABS patch. Returns (applied, missing)."""
     if os.path.isdir(dest):
@@ -228,6 +252,7 @@ def apply_patches(src: str, dest: str, sha7: str) -> tuple[list[str], list[str]]
         if "\r\n" in text:
             write(path, text.replace("\r\n", "\n"))
             applied.append(rel + " (LF)")
+    applied += scrub_machine_paths(os.path.join(dest, "knowledge"))
     for dirty in ("um/__pycache__", "tests/__pycache__", ".pytest_cache"):
         shutil.rmtree(os.path.join(dest, dirty), ignore_errors=True)
     return applied, missing

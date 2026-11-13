@@ -1,5 +1,5 @@
-<!-- Ultimate AI Starter Bundle v8.41.0 -->
-# Ultimate AI Starter Bundle v8.41.0
+<!-- Ultimate AI Starter Bundle v8.42.0 -->
+# Ultimate AI Starter Bundle v8.42.0
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
@@ -168,7 +168,7 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | `godot-mcp` | [Godot MCP](https://github.com/Coding-Solo/godot-mcp) | Editor profile; Godot prerequisite |
 | `unity-mcp` | [Unity MCP](https://github.com/IvanMurzak/Unity-MCP) | Project package/generated executable prerequisite |
 | `rtk` | [RTK](https://github.com/rtk-ai/rtk) | Default CLI; narrow routing |
-| `omni` | [OMNI](https://github.com/fajarhide/omni) | Catalog/evaluation only; not installed |
+| `omni` | [OMNI, now Contexere](https://github.com/fajarhide/contexere) | Catalog/evaluation only; not installed |
 | `windows-mcp` | [Windows MCP](https://github.com/CursorTouch/Windows-MCP) | Manual opt-in; OFF by default |
 | `super-mcp-router` | [Super MCP Router](https://github.com/mindstone/Super-MCP) | Evaluated catalog entry; no default router wiring |
 | `playwright-cli` | [Playwright CLI](https://github.com/microsoft/playwright-cli) | Default CLI; browser installation separate |
@@ -190,7 +190,7 @@ Additional canonical payloads without separate tool-catalog entries:
 | AssetForge | [SenjuWoo/AssetForge](https://github.com/SenjuWoo/AssetForge) | Owns 2D/3D asset production, validation and engine export (MIT). Detected by the companion registry; optional providers (Blender, glTF-Transform, comfy-forge) are discovered, never installed by the bundle |
 | Ponytail | off by default through its own `defaultMode`; `python TOOLS/ponytail_mode.py lite|full|ultra|auto|off --apply` | no minimalism imposed on creative work; plugin and `/ponytail` stay available |
 | `mattpocock/skills`, `addyosmani/agent-skills` | curated, namespaced subset installed on request: `python TOOLS/recommended_skills.py install pocock|addy --provider <name> --apply` | no 64 always-on descriptions; MIT, pinned, removable |
-| `awesome-gamedev-agent-skills` | [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) | Optional engine pack (Apache-2.0, pinned `19d93f9`, 2026-10-28). Not vendored and never installed by the bundle: the detector reports it, routing picks the engine, and [the review](docs/RECOMMENDED-GAME-DEV-SKILLS.md) covers install, precedence and removal |
+| `awesome-gamedev-agent-skills` | [gamedev-skills/awesome-gamedev-agent-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) | Optional engine pack (Apache-2.0, pinned `c6ca6c4`, 2026-11-12). Not vendored and never installed by the bundle: the detector reports it, routing picks the engine, and [the review](docs/RECOMMENDED-GAME-DEV-SKILLS.md) covers install, precedence and removal |
 | `skill-creator`, `build-mcp-server`, `build-mcpb`, `build-mcp-app` | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official) | Selected cross-provider skills, not the entire marketplace |
 | Hermes native Unity bridge | [CoplayDev/unity-mcp](https://github.com/CoplayDev/unity-mcp) | Existing Coplay editor backend, isolated in `unity`/`creative`; distinct from the IvanMurzak project route |
 

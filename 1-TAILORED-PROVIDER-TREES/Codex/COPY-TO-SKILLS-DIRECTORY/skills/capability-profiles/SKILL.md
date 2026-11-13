@@ -109,13 +109,13 @@ Its bytes/4 figure is a schema-token estimate, not actual tokenization, prompt
 usage, cached tokens or billing. Tool results and discovery metadata have their
 own costs. Compare the same serialization and use provider usage for real cost.
 
-Measured houseCARL 2.1.1 schema sizes (sum of per-tool bytes, not array framing; historical 1.9.0 Full was 45 tools / 167,072 bytes / 41,768 est):
+Measured houseCARL 2.1.2 schema sizes (sum of per-tool bytes, not array framing; historical 1.9.0 Full was 45 tools / 167,072 bytes / 41,768 est):
 
 | set | tools | schema bytes | bytes/4 estimate |
 |---|---:|---:|---:|
-| Full | 31 | 163,959 | 40,989 |
-| Lean | 28 | 128,501 | 32,125 |
-| ReadOnly | 17 | 75,075 | 18,768 |
+| Full | 31 | 169,573 | 42,393 |
+| Lean | 28 | 133,827 | 33,456 |
+| ReadOnly | 17 | 80,401 | 20,100 |
 
 Three tools (`housecarl_create`, `housecarl_nif_set`, `housecarl_place`) account for 35,458 bytes: tool count is not a reliable size proxy.
 Never average a full server's bytes to price a subset. Measure the selected set

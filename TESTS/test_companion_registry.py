@@ -338,6 +338,25 @@ def test_print_doctor_handles_an_owner_that_declares_none():
             assert ("no doctor declared" in out.getvalue()) or ('"argv": null' in out.getvalue()), out.getvalue()
 
 
+
+def test_a_github_download_zip_folder_is_still_the_owner():
+    """`Download ZIP` names the folder <repo>-main; that must not hide an installed pack."""
+    assert reg._folder_key("awesome-gamedev-agent-skills-main") == reg._norm("awesome-gamedev-agent-skills")
+    assert reg._folder_key("Roblox-Forge-master") == reg._norm("Roblox-Forge")
+    assert reg._folder_key("mainframe") == "mainframe", "only a trailing -main suffix is dropped"
+    data = _data()
+    data["recommended"] = {"pack": {"title": "Pack", "repo": "https://github.com/gamedev-skills/awesome-pack",
+                                    "pin": "c6ca6c41c839b68319ffc08430b99ab768debc32", "license": "Apache-2.0",
+                                    "markers": ["router/SKILL.md"], "docs": "docs/X.md"}}
+    reg.validate(data)
+    with tempfile.TemporaryDirectory() as tmp:
+        root = os.path.join(tmp, "awesome-pack-main")
+        os.makedirs(os.path.join(root, "router"))
+        open(os.path.join(root, "router", "SKILL.md"), "w").close()
+        found = reg.recommended_status([tmp], data)
+        assert found["pack"]["state"] == "MARKERS_FOUND", found
+
+
 if __name__ == "__main__":
     failures = 0
     for name, fn in sorted(globals().items()):

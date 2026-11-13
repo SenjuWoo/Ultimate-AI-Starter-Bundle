@@ -775,6 +775,29 @@ $serenaDef = @($cat.profiles | Where-Object { $_.id -eq 'code-intel' }).servers[
 Is (Test-UabsServerIsProjectBound -Server (ConvertTo-UabsTestHashtable $unity)) $true 'a {project} command is project-bound'
 Is (Test-UabsServerIsProjectBound -Server (ConvertTo-UabsTestHashtable $serenaDef)) $false 'Serena is not project-bound by its command'
 
+# Unity-MCP 1.x: the stdio server must listen on the port the plugin stored for
+# this project, and a project left on the vendor's cloud relay is not local.
+# Measured live 2026-11-13: client-transport=stdio alone advertised 0 tools.
+$unityDef = ConvertTo-UabsTestHashtable $unity
+Is (@($unityDef['args']) -contains 'port={unity_port}') $true 'the Unity entry passes the project port'
+Is ([bool]$unityDef['requires']['unity_local_stdio']) $true 'the Unity entry requires local Custom/stdio settings'
+$uproj = Join-Path $sandbox 'unity-settings'
+New-Item -ItemType Directory -Force -Path (Join-Path $uproj 'UserSettings') | Out-Null
+$ucfg = Join-Path $uproj 'UserSettings\AI-Game-Developer-Config.json'
+$ureq = @{ id = 'unity'; requires = @{ unity_local_stdio = $true } }
+$r = Test-UabsServerRequirement -Server $ureq -ProjectPath $uproj
+Is $r.Ok $false 'no plugin settings yet is not registrable'
+if ($r.Reason -match 'open the project in Unity') { Good 'and the reason says to open the project once' } else { Bad ("unhelpful reason: " + $r.Reason) }
+Is (Expand-UabsTemplate -Text 'port={unity_port}' -ProjectPath $uproj) '' 'an unknown port expands to nothing, not to port='
+Set-Utf8NoBom -Path $ucfg -Text '{"host":"http://localhost:21130","timeoutMs":10000,"connectionMode":"Cloud","transportMethod":"streamableHttp"}'
+$r = Test-UabsServerRequirement -Server $ureq -ProjectPath $uproj
+Is $r.Ok $false 'a project on the cloud relay is not registered as local'
+if ($r.Reason -match 'Window > AI Game Dev') { Good 'and the reason names the setting to change' } else { Bad ("unhelpful reason: " + $r.Reason) }
+Set-Utf8NoBom -Path $ucfg -Text '{"host":"http://localhost:21130","timeoutMs":12000,"connectionMode":"Custom","transportMethod":"stdio"}'
+Is (Test-UabsServerRequirement -Server $ureq -ProjectPath $uproj).Ok $true 'Custom + stdio is registrable'
+Is (Expand-UabsTemplate -Text 'port={unity_port}' -ProjectPath $uproj) 'port=21130' 'the port comes from the project settings'
+Is (Expand-UabsTemplate -Text 'plugin-timeout={unity_timeout_ms}' -ProjectPath $uproj) 'plugin-timeout=12000' 'the timeout comes from the project settings'
+
 # ---- migrating a 7.9.5 machine ----------------------------------------------
 # The upgrade has to MOVE those entries, not just rename them in a state file.
 $mbox = New-UabsTestBox

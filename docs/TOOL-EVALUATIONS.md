@@ -1043,3 +1043,71 @@ manifests, catalogs and generated configs against their real schemas instead of
 by eye. Adopted from the Skyrim Forge handoff: the validator is general tooling,
 so it belongs in the shared runtime while schemas stay project data. Callers use
 `python -m jsonschema -i <doc> <schema>` or import it; nothing is vendored.
+
+## 2026-11-13 — upstream refresh and eleven supplied repositories
+
+Every pinned component was compared with its latest upstream release
+(`TOOLS/audit_catalog_versions.py`, `TOOLS/check_upstream_drift.py`). A newer
+release was adopted only after its own evidence: release notes read, npm/PyPI
+metadata checked for install scripts and licence changes, the MCP tool surface
+diffed old pin against new (`TOOLS/mcp_handshake.py`), and a live call where a
+host application is needed.
+
+### TAKEN — updates that passed
+
+| Component | From -> to | Evidence |
+|---|---|---|
+| Context7 | 4.5.0 -> 4.7.0 | same 2 tools, 5,221 schema bytes; keyless sweep unchanged (resolve-library-id keyless, query-docs needs a key) |
+| Chrome DevTools MCP | 1.12.0 -> 1.13.0 | +1 tool (`set_logpoints`), 29,661 -> 32,302 bytes; fixes only otherwise |
+| Playwright MCP | 0.0.83 -> 0.0.85 | same 25 tools, 20,286 -> 21,177 bytes |
+| shadcn MCP | 4.22.1 -> 4.23.0 | same 7 tools, 4,495 -> 4,327 bytes |
+| Firecrawl MCP | 3.34.1 -> 3.40.0 | 28 tools, 96,715 bytes; keyless sweep now finds no keyless tool (still not registered without a key) |
+| Windows MCP | 0.8.8 -> 0.8.9 | same 21 tools, descriptions grew 23,545 -> 27,432 bytes (desktop gate policies) |
+| Headroom | 0.41.0 -> 0.44.0 | wheel matches GitHub and PyPI SHA-256; same 3 tools and 1,250 bytes after the MCP SDK 2.x port; compress/retrieve/stats identical on one 8,006-token input |
+| rtk | 1.1.0 -> 1.2.0 | asset matches checksums.txt; `TESTS/test_rtk_candidate.py` status fixture line-identical, corpus bytes equal to 1.1.0; same `rtk rewrite` answers for every command the safe hook allows |
+| CodeBurn | 0.9.27 -> 0.9.28 | no install scripts; CLI only, run with `--ignore-scripts` |
+| Super-MCP router | 2.9.2 -> 2.9.3 | same 12 meta-tools, 12,588 bytes; still not installed by the bundle |
+| Playwright CLI | 0.1.22 -> 0.1.24 | open/eval/close pass with `--browser=msedge`; the old hold was a missing Chrome, not a CLI fault |
+| comfy-cli | 1.23.0 -> 1.26.0 | same commands plus `workflow check`; the old `--python 3.13` instruction failed on machines without 3.13 and now uses the shared runtime |
+| REA | 6.8.0 -> 6.9.0 | installed through reverse-this; `rea doctor` accepts Ghidra 12.2 with JDK 25, so the standing 6.8.0/Ghidra 12.2 warning is gone |
+| Blender MCP | 2.2.4 -> 2.2.9 | +1 tool (10, 18,751 bytes in safe mode); live in Blender 5.3 against its add-on 2.0 and against the older add-on 1.8 |
+| Unity MCP (IvanMurzak) | 0.91.0 -> 1.11.1 | live in a throwaway Unity 6000.6.8f1 project; see below |
+| MCP for Unity (CoplayDev, Hermes backend) | 10.2.0 -> 10.3.0 | +1 tool (48); its Unity package compiles on 6000.6.8f1 and carries the 6000.6 `InstanceIDToObjectCompat` fix |
+| houseCARL | 2.1.1 -> 2.1.2 | follows the Skyrim Forge pin; zip SHA-256 matches; 31 tools, 169,573 bytes |
+| Universal Modder source | c1dff21 -> 3c4ac6c | re-vendored by `TOOLS/refresh_universal_modder.py` (20 patches re-applied); new code reads and writes local files only; wheel byte-identical twice; upstream suite 227 passed |
+| awesome-gamedev-agent-skills | 19d93f9 -> c6ca6c4 | 66 commits, two new skills; new skill scripts are standard-library checkers |
+| mattpocock/skills | 4ae2317 -> 5863806 | two commits, both in an in-progress skill the bundle does not install |
+
+**Unity MCP 1.x needs a different entry.** The plugin now gives each project a
+port derived from its path and stores it in
+`UserSettings/AI-Game-Developer-Config.json`. Started with only
+`client-transport=stdio` (the 0.91 entry), the server advertised **0** tools; with
+`port`, `plugin-timeout` and `authorization=none` it advertised **13** tools
+(38,627 bytes). A new 1.x project also defaults to connection **Cloud**, where the
+editor talks to the vendor's relay. The `engine-unity` profile now reads
+`{unity_port}` and `{unity_timeout_ms}` from that file and is written only when
+the project is set to Custom and stdio (`Window > AI Game Dev`).
+
+### HELD — re-checked, not adopted
+
+- **Impeccable CLI 4.9.0 / engine 0.1.23**: `TOOLS/audit-impeccable-engine.py`
+  still finds the malformed `</script ...>` and `</style ...>` bodies leaking into
+  text analysis. CLI 3.6.1 / skill 4.1.3 stay.
+- **OMNI**: renamed Contexere at 0.8.0 upstream; not installed by the bundle, so
+  the measured 0.7.8 numbers stay. The catalog now points at the new repository.
+
+### Supplied repositories
+
+| Folder | Decision | Why |
+|---|---|---|
+| `CLI-Anything-main` | already documented | cli-hub 0.4.1 is still current; detected, not vendored (see the 2026-11-05 entry) |
+| `rea-main` | covered | source of the REA 6.9.0 now installed through reverse-this |
+| `OBS-MCP-main` | WATCH, not bundled | Rust rewrite (`Tom-R-Main/OBS-MCP`, 1.1.1) with no published Windows build (cargo or MCPB only), a 165-tool production profile and a four-star single-maintainer repository; npm `obs-mcp` 1.1.0 is an older, different project. OBS Studio is installed here, so it is worth re-checking when a signed Windows release exists. Showcase capture keeps FFmpeg |
+| `awesome-opus5-5-videos-main` | reference, not integrated | a gallery of 703 prompts for animations written as code (MIT); no tool to wire |
+| `awesome-gamedev-agent-skills-main` | recommended pack | pin moved to c6ca6c4 (above); still discovered, never loaded by default |
+| `blender` | redundant | a portable Blender 5.2.3 downloaded while the Steam Blender was not on PATH; `blender` now resolves to Steam 5.3 and the bundle never selects this copy |
+| `Unity-MCP-2` | covered | IvanMurzak Unity-MCP source at 1.6.2, older than the adopted 1.11.1 |
+| `Unity-MCP-1` | covered | CoplayDev MCP for Unity source; Hermes' backend moved to 10.3.0 |
+| `zIDK` | already documented | Nx 24.0.6, Turborepo 2.11.11, Vite 8.3.8, webpack 5.112.2 sources, all current; `tool-discovery/references/build-tools.md` covers them and pins none |
+| `CLibDT (Windows)` | owned by Skyrim Forge | ClibDT 6.0.0, a GPL-3.0 Skyrim mod development toolkit; Forge's discovery owns it (`docs/COMPANION-ARCHITECTURE.md`) |
+| `context-mode-main` | DOCUMENTED, NOT BUNDLED | 2.1.10, Elastic License 2.0. Its install adds a `PreToolUse` hook to each agent that denies large reads and web fetches and sends them to its own sandbox, which overlaps Headroom and the narrow rtk hook and conflicts with the bundle's single-writer hook policy. Use it per agent if wanted; the bundle does not register it |

@@ -59,7 +59,7 @@ an already-running Hermes chat or invent an editor plugin. Use CLI fallbacks
 now and restart in a required native profile only for the remaining live phase.
 
 Hermes' retained Unity backend is [CoplayDev MCP for Unity](https://github.com/CoplayDev/unity-mcp),
-`mcpforunityserver@10.2.0`; the project-scoped catalog route uses IvanMurzak's
+`mcpforunityserver@10.3.0` (it carries the fix for Unity 6000.6); the project-scoped catalog route uses IvanMurzak's
 Unity MCP. These are different editor packages, not interchangeable launchers.
 Use the matching companion package and actual discovered tool definitions.
 

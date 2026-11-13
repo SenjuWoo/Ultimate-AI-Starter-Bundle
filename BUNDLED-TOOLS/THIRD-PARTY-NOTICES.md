@@ -36,7 +36,7 @@ of every dependency. Preserve all included licences and attribution.
 | `unity-mcp` | [Unity MCP](https://github.com/IvanMurzak/Unity-MCP) | Apache-2.0 |
 | Hermes native Unity bridge | [MCP for Unity](https://github.com/CoplayDev/unity-mcp) | MIT |
 | `rtk` | [RTK (Rust Token Killer)](https://github.com/rtk-ai/rtk) | Apache-2.0 |
-| `omni` | [OMNI (context distillation)](https://github.com/fajarhide/omni) | Apache-2.0 |
+| `omni` | [OMNI, now Contexere (context distillation)](https://github.com/fajarhide/contexere) | Apache-2.0 |
 | `windows-mcp` | [Windows MCP](https://github.com/CursorTouch/Windows-MCP) | MIT |
 | `super-mcp-router` | [Super MCP Router](https://github.com/mindstone/Super-MCP) | Apache-2.0 |
 | `playwright-cli` | [Playwright CLI](https://github.com/microsoft/playwright-cli) | Apache-2.0 |

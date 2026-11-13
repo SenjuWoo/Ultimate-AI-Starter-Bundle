@@ -377,7 +377,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16133,
-  "sha256": "b4a01e34356a8d09f2404a6840c509ceb275e53809562e400d6d5f719210be35"
+  "sha256": "1ef93b9a1966b6e5802a882391882c76173f0701d001699b31b9e78531efd237"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -2661,8 +2661,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
-  "size": 1580,
-  "sha256": "a6d3629394edca314425b93cd8cbd0033602197685b886517c10d9aec0893ef3"
+  "size": 1856,
+  "sha256": "c8e25f54aa449b4403250e7648ec6a88d96ad6aa2ca9e2645828a9439f8bca78"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/build-tools.md",
@@ -2671,8 +2671,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2344,
-  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
+  "size": 2532,
+  "sha256": "f688c5e3b433735141bd4dbfcd72e0d565f3bd56633285111a19002a53797cb9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/creative-cli.md",
@@ -2751,8 +2751,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
-  "size": 7712,
-  "sha256": "96b54603b63d704c5c83814f0d8e928f6712842083f153aaf03d0c092494112d"
+  "size": 7819,
+  "sha256": "c1bcacbb0f74cbe10b765848d1d871a2b74942cc30dd0325e42bfc06075c1148"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
@@ -2771,8 +2771,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/GUIDE.md",
-  "size": 13801,
-  "sha256": "e2c2842bcad788068f3c964913f5b3dfe5a84efcfb656d4b6cfa116a2c4fb7b2"
+  "size": 13928,
+  "sha256": "3fd6849c24434f60d4a9b45344c43ff5103debdff951cf023c605fd8b0085ba9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/references/mashup-cases.md",
@@ -2781,8 +2781,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12335,
-  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
+  "size": 12416,
+  "sha256": "6917f5983b8c99950f41012a2c225d2f8d3617664a6c79a914677c631afe0eaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -2823,6 +2823,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/isaac.md",
   "size": 13308,
   "sha256": "abe166df99160a2306fe45ddb76ef45328e3bee95ec17db64ae37af00b10bd36"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/iw-engine.md",
+  "size": 15459,
+  "sha256": "a76061e0cc8d2561948ac649f2411ff98baeaa02651c8c1d4b3b45fe9fbe11a3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/minecraft.md",
@@ -2866,8 +2871,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 5447,
-  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
+  "size": 5750,
+  "sha256": "7efff1c779d63488f588e9595d8bc59f3621fc6022c8d109c9c34c7e654abb4a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -2886,8 +2891,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/GUIDE.md",
-  "size": 6501,
-  "sha256": "84fcca4f8b9d8f5216f891400c93afb19fdb1091eb058203d65afbed07ab95fb"
+  "size": 7114,
+  "sha256": "fcab92c4d05a804abe74fdff5bc73f2daffbeecf0ee764db01bfb3d565d66135"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/references/ue3-packages/README.md",
@@ -3382,7 +3387,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16133,
-  "sha256": "b4a01e34356a8d09f2404a6840c509ceb275e53809562e400d6d5f719210be35"
+  "sha256": "1ef93b9a1966b6e5802a882391882c76173f0701d001699b31b9e78531efd237"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -5666,8 +5671,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
-  "size": 1580,
-  "sha256": "a6d3629394edca314425b93cd8cbd0033602197685b886517c10d9aec0893ef3"
+  "size": 1856,
+  "sha256": "c8e25f54aa449b4403250e7648ec6a88d96ad6aa2ca9e2645828a9439f8bca78"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/build-tools.md",
@@ -5676,8 +5681,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2344,
-  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
+  "size": 2532,
+  "sha256": "f688c5e3b433735141bd4dbfcd72e0d565f3bd56633285111a19002a53797cb9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/creative-cli.md",
@@ -5756,8 +5761,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
-  "size": 7712,
-  "sha256": "96b54603b63d704c5c83814f0d8e928f6712842083f153aaf03d0c092494112d"
+  "size": 7819,
+  "sha256": "c1bcacbb0f74cbe10b765848d1d871a2b74942cc30dd0325e42bfc06075c1148"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
@@ -5776,8 +5781,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/GUIDE.md",
-  "size": 13801,
-  "sha256": "e2c2842bcad788068f3c964913f5b3dfe5a84efcfb656d4b6cfa116a2c4fb7b2"
+  "size": 13928,
+  "sha256": "3fd6849c24434f60d4a9b45344c43ff5103debdff951cf023c605fd8b0085ba9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/references/mashup-cases.md",
@@ -5786,8 +5791,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12335,
-  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
+  "size": 12416,
+  "sha256": "6917f5983b8c99950f41012a2c225d2f8d3617664a6c79a914677c631afe0eaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -5828,6 +5833,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/isaac.md",
   "size": 13308,
   "sha256": "abe166df99160a2306fe45ddb76ef45328e3bee95ec17db64ae37af00b10bd36"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/iw-engine.md",
+  "size": 15459,
+  "sha256": "a76061e0cc8d2561948ac649f2411ff98baeaa02651c8c1d4b3b45fe9fbe11a3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/minecraft.md",
@@ -5871,8 +5881,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 5447,
-  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
+  "size": 5750,
+  "sha256": "7efff1c779d63488f588e9595d8bc59f3621fc6022c8d109c9c34c7e654abb4a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -5891,8 +5901,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/GUIDE.md",
-  "size": 6501,
-  "sha256": "84fcca4f8b9d8f5216f891400c93afb19fdb1091eb058203d65afbed07ab95fb"
+  "size": 7114,
+  "sha256": "fcab92c4d05a804abe74fdff5bc73f2daffbeecf0ee764db01bfb3d565d66135"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/references/ue3-packages/README.md",
@@ -6447,7 +6457,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16133,
-  "sha256": "b4a01e34356a8d09f2404a6840c509ceb275e53809562e400d6d5f719210be35"
+  "sha256": "1ef93b9a1966b6e5802a882391882c76173f0701d001699b31b9e78531efd237"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -8731,8 +8741,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
-  "size": 1580,
-  "sha256": "a6d3629394edca314425b93cd8cbd0033602197685b886517c10d9aec0893ef3"
+  "size": 1856,
+  "sha256": "c8e25f54aa449b4403250e7648ec6a88d96ad6aa2ca9e2645828a9439f8bca78"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/build-tools.md",
@@ -8741,8 +8751,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2344,
-  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
+  "size": 2532,
+  "sha256": "f688c5e3b433735141bd4dbfcd72e0d565f3bd56633285111a19002a53797cb9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/creative-cli.md",
@@ -8821,8 +8831,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
-  "size": 7712,
-  "sha256": "96b54603b63d704c5c83814f0d8e928f6712842083f153aaf03d0c092494112d"
+  "size": 7819,
+  "sha256": "c1bcacbb0f74cbe10b765848d1d871a2b74942cc30dd0325e42bfc06075c1148"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
@@ -8841,8 +8851,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/GUIDE.md",
-  "size": 13801,
-  "sha256": "e2c2842bcad788068f3c964913f5b3dfe5a84efcfb656d4b6cfa116a2c4fb7b2"
+  "size": 13928,
+  "sha256": "3fd6849c24434f60d4a9b45344c43ff5103debdff951cf023c605fd8b0085ba9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/references/mashup-cases.md",
@@ -8851,8 +8861,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12335,
-  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
+  "size": 12416,
+  "sha256": "6917f5983b8c99950f41012a2c225d2f8d3617664a6c79a914677c631afe0eaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -8893,6 +8903,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/isaac.md",
   "size": 13308,
   "sha256": "abe166df99160a2306fe45ddb76ef45328e3bee95ec17db64ae37af00b10bd36"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/iw-engine.md",
+  "size": 15459,
+  "sha256": "a76061e0cc8d2561948ac649f2411ff98baeaa02651c8c1d4b3b45fe9fbe11a3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/minecraft.md",
@@ -8936,8 +8951,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 5447,
-  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
+  "size": 5750,
+  "sha256": "7efff1c779d63488f588e9595d8bc59f3621fc6022c8d109c9c34c7e654abb4a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -8956,8 +8971,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/GUIDE.md",
-  "size": 6501,
-  "sha256": "84fcca4f8b9d8f5216f891400c93afb19fdb1091eb058203d65afbed07ab95fb"
+  "size": 7114,
+  "sha256": "fcab92c4d05a804abe74fdff5bc73f2daffbeecf0ee764db01bfb3d565d66135"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/references/ue3-packages/README.md",
@@ -9502,7 +9517,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16133,
-  "sha256": "b4a01e34356a8d09f2404a6840c509ceb275e53809562e400d6d5f719210be35"
+  "sha256": "1ef93b9a1966b6e5802a882391882c76173f0701d001699b31b9e78531efd237"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -11786,8 +11801,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
-  "size": 1580,
-  "sha256": "a6d3629394edca314425b93cd8cbd0033602197685b886517c10d9aec0893ef3"
+  "size": 1856,
+  "sha256": "c8e25f54aa449b4403250e7648ec6a88d96ad6aa2ca9e2645828a9439f8bca78"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/build-tools.md",
@@ -11796,8 +11811,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2344,
-  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
+  "size": 2532,
+  "sha256": "f688c5e3b433735141bd4dbfcd72e0d565f3bd56633285111a19002a53797cb9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/creative-cli.md",
@@ -11876,8 +11891,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
-  "size": 7712,
-  "sha256": "96b54603b63d704c5c83814f0d8e928f6712842083f153aaf03d0c092494112d"
+  "size": 7819,
+  "sha256": "c1bcacbb0f74cbe10b765848d1d871a2b74942cc30dd0325e42bfc06075c1148"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
@@ -11896,8 +11911,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/GUIDE.md",
-  "size": 13801,
-  "sha256": "e2c2842bcad788068f3c964913f5b3dfe5a84efcfb656d4b6cfa116a2c4fb7b2"
+  "size": 13928,
+  "sha256": "3fd6849c24434f60d4a9b45344c43ff5103debdff951cf023c605fd8b0085ba9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/references/mashup-cases.md",
@@ -11906,8 +11921,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12335,
-  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
+  "size": 12416,
+  "sha256": "6917f5983b8c99950f41012a2c225d2f8d3617664a6c79a914677c631afe0eaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -11948,6 +11963,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/isaac.md",
   "size": 13308,
   "sha256": "abe166df99160a2306fe45ddb76ef45328e3bee95ec17db64ae37af00b10bd36"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/iw-engine.md",
+  "size": 15459,
+  "sha256": "a76061e0cc8d2561948ac649f2411ff98baeaa02651c8c1d4b3b45fe9fbe11a3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/minecraft.md",
@@ -11991,8 +12011,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 5447,
-  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
+  "size": 5750,
+  "sha256": "7efff1c779d63488f588e9595d8bc59f3621fc6022c8d109c9c34c7e654abb4a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -12011,8 +12031,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/GUIDE.md",
-  "size": 6501,
-  "sha256": "84fcca4f8b9d8f5216f891400c93afb19fdb1091eb058203d65afbed07ab95fb"
+  "size": 7114,
+  "sha256": "fcab92c4d05a804abe74fdff5bc73f2daffbeecf0ee764db01bfb3d565d66135"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/references/ue3-packages/README.md",
@@ -12557,7 +12577,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16133,
-  "sha256": "b4a01e34356a8d09f2404a6840c509ceb275e53809562e400d6d5f719210be35"
+  "sha256": "1ef93b9a1966b6e5802a882391882c76173f0701d001699b31b9e78531efd237"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -14841,8 +14861,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
-  "size": 1580,
-  "sha256": "a6d3629394edca314425b93cd8cbd0033602197685b886517c10d9aec0893ef3"
+  "size": 1856,
+  "sha256": "c8e25f54aa449b4403250e7648ec6a88d96ad6aa2ca9e2645828a9439f8bca78"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/build-tools.md",
@@ -14851,8 +14871,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2344,
-  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
+  "size": 2532,
+  "sha256": "f688c5e3b433735141bd4dbfcd72e0d565f3bd56633285111a19002a53797cb9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/creative-cli.md",
@@ -14931,8 +14951,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
-  "size": 7712,
-  "sha256": "96b54603b63d704c5c83814f0d8e928f6712842083f153aaf03d0c092494112d"
+  "size": 7819,
+  "sha256": "c1bcacbb0f74cbe10b765848d1d871a2b74942cc30dd0325e42bfc06075c1148"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
@@ -14951,8 +14971,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/GUIDE.md",
-  "size": 13801,
-  "sha256": "e2c2842bcad788068f3c964913f5b3dfe5a84efcfb656d4b6cfa116a2c4fb7b2"
+  "size": 13928,
+  "sha256": "3fd6849c24434f60d4a9b45344c43ff5103debdff951cf023c605fd8b0085ba9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/references/mashup-cases.md",
@@ -14961,8 +14981,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12335,
-  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
+  "size": 12416,
+  "sha256": "6917f5983b8c99950f41012a2c225d2f8d3617664a6c79a914677c631afe0eaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -15003,6 +15023,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/isaac.md",
   "size": 13308,
   "sha256": "abe166df99160a2306fe45ddb76ef45328e3bee95ec17db64ae37af00b10bd36"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/iw-engine.md",
+  "size": 15459,
+  "sha256": "a76061e0cc8d2561948ac649f2411ff98baeaa02651c8c1d4b3b45fe9fbe11a3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/minecraft.md",
@@ -15046,8 +15071,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 5447,
-  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
+  "size": 5750,
+  "sha256": "7efff1c779d63488f588e9595d8bc59f3621fc6022c8d109c9c34c7e654abb4a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -15066,8 +15091,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/GUIDE.md",
-  "size": 6501,
-  "sha256": "84fcca4f8b9d8f5216f891400c93afb19fdb1091eb058203d65afbed07ab95fb"
+  "size": 7114,
+  "sha256": "fcab92c4d05a804abe74fdff5bc73f2daffbeecf0ee764db01bfb3d565d66135"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/references/ue3-packages/README.md",
@@ -15687,7 +15712,7 @@
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/SKILL.md",
   "size": 16133,
-  "sha256": "b4a01e34356a8d09f2404a6840c509ceb275e53809562e400d6d5f719210be35"
+  "sha256": "1ef93b9a1966b6e5802a882391882c76173f0701d001699b31b9e78531efd237"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/capability-profiles/references/task-recipes.json",
@@ -17971,8 +17996,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/browser-cli.md",
-  "size": 1580,
-  "sha256": "a6d3629394edca314425b93cd8cbd0033602197685b886517c10d9aec0893ef3"
+  "size": 1856,
+  "sha256": "c8e25f54aa449b4403250e7648ec6a88d96ad6aa2ca9e2645828a9439f8bca78"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/build-tools.md",
@@ -17981,8 +18006,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/comfy-cli.md",
-  "size": 2344,
-  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
+  "size": 2532,
+  "sha256": "f688c5e3b433735141bd4dbfcd72e0d565f3bd56633285111a19002a53797cb9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/tool-discovery/references/creative-cli.md",
@@ -18061,8 +18086,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-automation/GUIDE.md",
-  "size": 7712,
-  "sha256": "96b54603b63d704c5c83814f0d8e928f6712842083f153aaf03d0c092494112d"
+  "size": 7819,
+  "sha256": "c1bcacbb0f74cbe10b765848d1d871a2b74942cc30dd0325e42bfc06075c1148"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/game-recon/GUIDE.md",
@@ -18081,8 +18106,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/GUIDE.md",
-  "size": 13801,
-  "sha256": "e2c2842bcad788068f3c964913f5b3dfe5a84efcfb656d4b6cfa116a2c4fb7b2"
+  "size": 13928,
+  "sha256": "3fd6849c24434f60d4a9b45344c43ff5103debdff951cf023c605fd8b0085ba9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mashup-mods/references/mashup-cases.md",
@@ -18091,8 +18116,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12335,
-  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
+  "size": 12416,
+  "sha256": "6917f5983b8c99950f41012a2c225d2f8d3617664a6c79a914677c631afe0eaa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -18133,6 +18158,11 @@
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/isaac.md",
   "size": 13308,
   "sha256": "abe166df99160a2306fe45ddb76ef45328e3bee95ec17db64ae37af00b10bd36"
+ },
+ {
+  "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/iw-engine.md",
+  "size": 15459,
+  "sha256": "a76061e0cc8d2561948ac649f2411ff98baeaa02651c8c1d4b3b45fe9fbe11a3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/engines/minecraft.md",
@@ -18176,8 +18206,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 5447,
-  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
+  "size": 5750,
+  "sha256": "7efff1c779d63488f588e9595d8bc59f3621fc6022c8d109c9c34c7e654abb4a"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -18196,8 +18226,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/GUIDE.md",
-  "size": 6501,
-  "sha256": "84fcca4f8b9d8f5216f891400c93afb19fdb1091eb058203d65afbed07ab95fb"
+  "size": 7114,
+  "sha256": "fcab92c4d05a804abe74fdff5bc73f2daffbeecf0ee764db01bfb3d565d66135"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder/references/upstream/reverse-engineering/references/ue3-packages/README.md",
@@ -18786,18 +18816,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 64159,
-  "sha256": "5602c04607f20f0e48ed7374b150aeb55b73ca7bc6a51d4ed7fd18fff4040b32"
+  "size": 66534,
+  "sha256": "4f8e55bd03b97721e18017032b8a59ab94b04a181dd10b3c95b835d6cc95de35"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
   "size": 18692,
-  "sha256": "1b020fb98858664941c3a7065957e09f4eb3bdc717a02351efd29c6ff6877270"
+  "sha256": "8d0417b7766b9a05897293af066730944cb74813762d3465d985b6d7d4a5489c"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "92eda9ffc02d5d0b10dc56c4c578c89c44f43e4c9052c9527a42efab009cb361"
+  "sha256": "98db0ff0746105f20692e3fc52359d3a29e67ee14fa2f340aa44f9e6ed6ea0e4"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18806,8 +18836,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
-  "size": 40569,
-  "sha256": "aca2c71713f85dfb38f1f5a18efbb5e34183aeb36d1520ce5417e86d004efc3e"
+  "size": 41335,
+  "sha256": "488e0cf99209192034356d2f4bacdd114db84643020d039c6564c9d51b6ba51d"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -18826,8 +18856,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md",
-  "size": 4448,
-  "sha256": "025cc6c5858484d9b6e72c31f6c0dcd2d4f5cdbf35b580cbd80b5f6bf77b4f8e"
+  "size": 4468,
+  "sha256": "da226716f144984ce7ce24e9138b2e89e14a0870cc527114aa45133b6ff16f24"
  },
  {
   "path": "BUNDLED-TOOLS/capability-records/codebase-memory.json",
@@ -18837,17 +18867,17 @@
  {
   "path": "BUNDLED-TOOLS/capability-records/context7.json",
   "size": 838,
-  "sha256": "c8751d873839e036dd75e62d660433b1c169e74415af54dc5b261f803bbdd824"
+  "sha256": "3154a6189113bd5e277003fa0b6496cb70ef4c130e20f4c4da9ee09082ed6c64"
  },
  {
   "path": "BUNDLED-TOOLS/capability-records/firecrawl-mcp.json",
-  "size": 1943,
-  "sha256": "4d5aa3fdbf71103adfb0fcaeb7227760b95675a9a7b4e78ab77b108dccc3db88"
+  "size": 2144,
+  "sha256": "de050cf7784c0849c728d1b93d5bb3d23bbde41b53e073405b2bd1bcb39ed588"
  },
  {
   "path": "BUNDLED-TOOLS/capability-records/game-mcp-schema-cost.json",
-  "size": 3566,
-  "sha256": "d86367b04ebdd70b164ad3dd07a397653d16a47387735a199d13c99bb5e4d64f"
+  "size": 3586,
+  "sha256": "2e32a51c4d864e06f3d10d52d795ff91fbe96fa894a643d1e1f9c1bd445e0baf"
  },
  {
   "path": "BUNDLED-TOOLS/lm-studio/Get-KvBudget.ps1",
@@ -18900,19 +18930,19 @@
   "sha256": "ddce274916ebf31346dee71a0ed3345e80cd36b060a0bfb8160db0afc411e9d3"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/headroom_ai-0.41.0-cp310-abi3-win_amd64.whl",
-  "size": 15589221,
-  "sha256": "18b43230c4dbbe9889fdb0863a7943059f4509fdf49ad20b19be394f2725db18"
+  "path": "BUNDLED-TOOLS/offline/headroom_ai-0.44.0-cp310-abi3-win_amd64.whl",
+  "size": 15845810,
+  "sha256": "a7853a0d81f1e3f6d4b00de6114791732ff458c09b8af05a06c4ae2d8c492d68"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/houseCARL-2.1.1.zip",
-  "size": 12671828,
-  "sha256": "1cb9fda834590d367e9907c35e5053624be050c316424d1f917f74e004c4816c"
+  "path": "BUNDLED-TOOLS/offline/houseCARL-2.1.2.zip",
+  "size": 12731918,
+  "sha256": "4e69494cc4cadd1e040a0762318d6e0ad0ac7082f68c413ffa96e8fbd879be96"
  },
  {
   "path": "BUNDLED-TOOLS/offline/rtk-oss-x86_64-pc-windows-msvc.zip",
-  "size": 5781191,
-  "sha256": "9b076379be9d86011ca3f3a0264d0be4851da5535453a47f67fa46b4e893fbb2"
+  "size": 5824818,
+  "sha256": "d105aaaa55822252f04ac28989e9069c1ea61755ca561940d887cb0b89c785fc"
  },
  {
   "path": "BUNDLED-TOOLS/offline/uabs_toolbox-1.0.3-py3-none-any.whl",
@@ -18920,9 +18950,9 @@
   "sha256": "ad48cea7318ef1c79b33a7d2a208cdb02d45c27a1d0f3ee92ef4049caed20083"
  },
  {
-  "path": "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.c1dff21-py3-none-any.whl",
-  "size": 3618451,
-  "sha256": "031e240d15ee6222507ca9a855988cb5faa29200d9ffbe6b02b242ccde6fbac1"
+  "path": "BUNDLED-TOOLS/offline/universal_modder-0.2.0+uabs.3c4ac6c-py3-none-any.whl",
+  "size": 4326573,
+  "sha256": "9f1c89dc88619b131e40f33f73f45f081a6a8eb9889496ca2a85d2ec86280378"
  },
  {
   "path": "BUNDLED-TOOLS/optional-profiles/autonomous-builder.md",
@@ -21206,13 +21236,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/README.md",
-  "size": 23056,
-  "sha256": "d181ee3234df9ea98dde002aa44265945928cde50e639924456cc76c61687bca"
+  "size": 24239,
+  "sha256": "94cbc1b6c21621c9cd3bc4876eb30206c5a31dddd7ca5ca3cfe5f4deb852e07a"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/INDEX.md",
-  "size": 78764,
-  "sha256": "2a11261e91a7b1c24c56c7a8146616f33d3267914bc415f091a53ea910cb93fd"
+  "size": 100784,
+  "sha256": "f50f3e40cde7dfe8888cefa9ba8d03075ccfd63798453ffcb35fb75d6ce6e204"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/README.md",
@@ -21326,8 +21356,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/batman-arkham-city/split-screen-co-op-fixes-for-arkham-city-bmsdk-c-scripts-cam.md",
-  "size": 15490,
-  "sha256": "7af80efc4192d6e3e0501b00468b175e5ba0dd0f0236065f0395f931a82dade5"
+  "size": 22389,
+  "sha256": "3c2f94750df03a7121a6d834daadc47f18565ce81c8b470dc291abd2562ba5b6"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/batman-arkham-knight/scraping-the-batmobile-umodel-pskx-wwise.md",
+  "size": 42318,
+  "sha256": "a7ab0cd8167e81ac66ac2f04125b78028bd1266dc00b34aa2a904dc5c4db6425"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/batman-arkham-knight/splitscreen-one-view-composited-twice.md",
@@ -21345,9 +21380,19 @@
   "sha256": "5f42506d44e97205e2b3b7fa7f63e87cdb5b88cb0ddcc08c6a394739eafcf0cd"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/beamng-drive/unpack-mod-before-editing.md",
+  "size": 11371,
+  "sha256": "a7b1ba4e208185373a5b440750435c78a2965a8f346e7fa488257812e81994ca"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/black-myth-wukong/reshade-depth-dead-end.md",
   "size": 13146,
   "sha256": "211cc74d1a75884ba6f002cf71ae8f7704513d7301fbaf4e994f83debaf681b3"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/blur/blur-ds-exact-size-zip-splicing.md",
+  "size": 9791,
+  "sha256": "7544804ccc696ace92ae864b0444923a98803f76d7fd10a7e001f2257e960086"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/borderlands-2/adding-a-radiation-element-to-borderlands-2-guns-gear-and-effects.md",
@@ -21360,14 +21405,44 @@
   "sha256": "9b131ff77c63980cc469c6283b7e2921d2bfdbe4a0a893fd0dd86561f826d007"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/brutalistick-vr/custom-music-player-with-its-own-music-plate-in-the-vr-setti.md",
+  "size": 16338,
+  "sha256": "b4becda4f222b4a3180556645fd14a92311f528b5b274f63e683b4d722fe9047"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/call-of-duty-4-modern-warfare/cod4-iw3-vs-waw-t4-engine-architecture-and-modding.md",
+  "size": 8152,
+  "sha256": "1fa78c7564a19dd8fe7b5f33e8191830b6247d7c98cb845ed7689784ac6ecc7e"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/call-of-duty-black-ops/t5-zombies-script-animation-and-audio-recovery.md",
   "size": 10617,
   "sha256": "0ae70acdb9c63488018672d871da318f3ba370208eb825b2eda8d94c453671fb"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/call-of-duty-world-at-war/prototype-107-fastfile-deswizzling-and-asset-recovery.md",
+  "size": 7592,
+  "sha256": "935b23b44c46bf286366b0dc70e909b744e6dfce0b39aa3c29ddf98545565cc4"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/call-of-duty-world-at-war/prototype-107-to-pc-map-conversion-pipeline.md",
+  "size": 12796,
+  "sha256": "e27cfe3ab87bf001d5a7262620cfe97aab0b7e6b1eac95d79c1ee4262fbb4982"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/call-of-duty-world-at-war/waw-mod-tools-fastfiles-iwds-and-zombies.md",
+  "size": 27905,
+  "sha256": "a151637f4ca345d88a6d05b8e492c58634d76e4aa10b15a79c38b7821b85a3f7"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/caves-of-qud/external-game-master-bridge-save-identity-and-native-effects.md",
   "size": 11337,
   "sha256": "0c12fb204b60f32abb443df5b7a84ce8fd79a4fae7d18bfab547d9a17f0353c5"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/cities-skylines-ii/president-mod-government-portal-real-ecs-levers.md",
+  "size": 27707,
+  "sha256": "b1cbb90637e6bdac49796042024b629388353e0adf56a29672258b92cd2cb08a"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/cities-skylines/cities-skylines-modding-api-and-container-formats.md",
@@ -21388,6 +21463,16 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/civilization-vi/total-conversion-middle-earth-trees-civs-2d-leaders-custom-3.md",
   "size": 21158,
   "sha256": "ea40690cd6d27f47a54d141c818ffd77d4adc8d8243f0b549a6bb3f32dab5767"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/collapse/collapse-2008-formats-memory-timing-and-8876086c.md",
+  "size": 32838,
+  "sha256": "37fa529510b955cff21a5c8531934465af32b54c966a1acff5f0233707e3f51b"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/convrgence/ingame-mods-tab-and-vr-performance.md",
+  "size": 16129,
+  "sha256": "a12f6905dc7f7754e52a4bc980c6ff657dfd3071b8ab1bc822fc5da722c7ee35"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/crash-bandicoot-n-sane-trilogy/croc-inside-crash-n-sane-live-two-engine-mashup.md",
@@ -21411,8 +21496,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/cult-of-the-lamb/cult-of-the-lamb.md",
-  "size": 6564,
-  "sha256": "e7c57679d869d50599667405b54760ab39c5ca6ccf91eb0163ccb9427133b37b"
+  "size": 7443,
+  "sha256": "aef8064b41c3e617bafec3e118fede1ec546ff165370c6294a4e6fb0559697f4"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/cult-of-the-lamb/custom-motion-vectors-and-an-ngx-dlss-host-for-cult-of-the-l.md",
+  "size": 12096,
+  "sha256": "d9ad56ad7e45cab95ffa10727b213ce47253b90bdb16b221a131cda8c867a827"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/cyberpunk-2077/akimbo-pistols-on-the-2-5-native-dual-wield.md",
+  "size": 27372,
+  "sha256": "d41782faafe09fda02f9e5e49d57c1907633773f3acaed2e95a2213f0256214e"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/cyberpunk-2077/cyberpunk-2077-native-modding-address-hashes.md",
@@ -21420,9 +21515,24 @@
   "sha256": "f2d1b2b3716b61415d2ef72a9dfd2b29c4711f66cb6494cc1dbd00ad2914b4d9"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/cyberpunk-2077/katana-that-fires-a-custom-projectile-wave-sword-qi.md",
+  "size": 17286,
+  "sha256": "f77bfdd8ebdfb01dad7777747726fa71ecc5f0b7fb2e8a96700744a7ab21132e"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/daggerfall-unity/arena-in-daggerfall-dfu-mod-builds-tests-and-arena-reference.md",
+  "size": 10838,
+  "sha256": "c47a5c9563054e53d040031eb521694da243ccab07c7ddedede5bb6a7f3a4899"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dark-souls-ii/visible-arsenal-six-slot-cosmetics.md",
   "size": 14453,
   "sha256": "354621dca353349b33bcf4a61f7af11f7b7367be1693150351bd77bdaae92301"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dark-souls-remastered/craft-souls-minecraft-drives-dark-souls-passthrough.md",
+  "size": 20204,
+  "sha256": "1e1cbb224aa55c4ab5bdcebd95ea9738b6aa9543b31feb32936c55e0b12ca798"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dark-souls-remastered/portal-gun-prototype-via-dinput8-proxy-dll-player-camera-and.md",
@@ -21440,9 +21550,19 @@
   "sha256": "d593b189d2c5e2ed5fa94ac091869450df298164d7e4dfe76b6292db92e70478"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dead-cells/decoupled-timed-door-scaling-environmental-rally-immunity-an.md",
+  "size": 12676,
+  "sha256": "8419d41b90ca76f709e821685f30f16e08364b38ecc828ac0f5e9243a2397582"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dead-cells/libgdx-rebuild-from-res-pak.md",
   "size": 8772,
   "sha256": "bcb15802ca4611f7b14e162eb7a9189a76078e3062726040eb8a6b472f68185b"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/deltarune/creator-driven-reskin-and-russian-chapter-1.md",
+  "size": 11795,
+  "sha256": "4a19ba2c6b266e4d5de6475961572b69fb0d519468f3a49b7ac95bd8c055f697"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/deltarune/jevil-practice-mod.md",
@@ -21470,6 +21590,11 @@
   "sha256": "737bded5406563b4f0c2a8b55a09c8750bcb03b0ca2a1db10a319d3170944f78"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/don-t-starve-together/lua-weapon-item.md",
+  "size": 10782,
+  "sha256": "ec98fa2f52016917ca6ac1844314e5c5eb4f4e5badda8738f677d1f3f9643e5b"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dragon-s-dogma-2/blink-strike-teleports-behind-the-target-reframework-lua-ski.md",
   "size": 12307,
   "sha256": "df55d34bdc70406e86c79c8b6191b689ee10b35c34b42ac7eefb5e1c0f924b20"
@@ -21478,6 +21603,16 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dragon-s-dogma-2/dimension-door-aimed-teleport-spell-with-a-scripted-arrival-.md",
   "size": 17510,
   "sha256": "9e961c757330531a332ab8b8a9117af795878da557dc924750c010dc530a76f0"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dragon-s-dogma-2/martyr-s-bolt-max-hp-sacrifice-recovers-over-time-ordinary-l.md",
+  "size": 10697,
+  "sha256": "98ef2ef19a88f0955b344fe8ecbf8414a7e4d572072beef6a359ca15678f5afa"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dragon-s-dogma-2/pactblade-a-custom-vocation-on-vsb-recoloured-effects-own-so.md",
+  "size": 16149,
+  "sha256": "067132bb578a9d7c1aef4ce2de3ea4a3e68735da83962923f91d7f7085ff72ed"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/dwarf-fortress/replace-the-dwarf-map-sprite-with-a-custom-32x32-sprite-stea.md",
@@ -21493,6 +21628,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/elden-ring/elden-ball-z-xenoverse-2-fighters-and-skills.md",
   "size": 12414,
   "sha256": "9e2e46ea23cd6320ce67534bf87494dde0f318aab6459097e6a21f7c9a26279b"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/elden-ring/khvostov-7g-0x-from-destiny-2-export-and-offline-loader-smok.md",
+  "size": 13649,
+  "sha256": "9a04b10be1f7d2b6c15f31dc5299b506ca7802710d17185ce6ac707f8c5a4186"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/elden-ring/porting-dark-souls-remastered-enemies-into-elden-ring.md",
@@ -21520,6 +21660,11 @@
   "sha256": "58ffaf046411d5d987dc9c0d457c919ff3c2b10265f2b7cef4e09a0d276676b3"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/fallout-3/fallout-3-steam-1-7-0-4-crashes-at-startup-stale-sd3ddevice-.md",
+  "size": 9296,
+  "sha256": "b1323eb192db1b584301527a8a2cb182f0985da2ab8bc9f835f9c594e773c4d3"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/fallout-4/fallout-4.md",
   "size": 7292,
   "sha256": "7e7207831f9d61a38240eb5fbcd8bf7618cdb9eab9cb50fb100f04f960143ac4"
@@ -21538,6 +21683,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/fart-together/server-side-thrust-braking-and-physics-modes-via-bepinex.md",
   "size": 13407,
   "sha256": "bc9aecf9d96b4676c8e4b018c3b9081b0d23998ab7c7ec1009598c7e071ae48a"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/final-fantasy-resonance/reward-multiplier-for-exp-gil-and-mrp-via-the-difficulty-dat.md",
+  "size": 11527,
+  "sha256": "7189c8984f4ccf2177cb6a07d314085a2d099b2c742ff453b44ea6c01a3f4edd"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/forza-horizon-5/forzatech-carbin-modelbin-and-gamedb.md",
@@ -21563,6 +21713,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/gothic-ii/union-gd3d11-host-stack-minecraft-passthrough.md",
   "size": 10708,
   "sha256": "2e47bbb00a4e22533928168433f51ad06dd60e4366c453dd5100e570498597d9"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/grand-theft-auto-iv/complete-edition-after-a-steam-re-update-1-0-8-0-mod-stack-s.md",
+  "size": 7543,
+  "sha256": "5cdaa7e7e68a3915e4985c0ac6e22dcc733b3327aee93394c9391d523e9021bb"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/gta-v/minecraft-passthrough.md",
@@ -21611,8 +21766,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/hitman-world-of-assassination/new-suit-and-replacement-pistol-smf-prim-rebuild.md",
-  "size": 12518,
-  "sha256": "6c54ccb8709d7928a1965da8647611de100f8b63e2ab25a82461303eaa0e133e"
+  "size": 32132,
+  "sha256": "aac93de77b37c8e9d805d012cea0d2a7e62f76b1f846466ae9854bf29a1175c5"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/hitman-world-of-assassination/telekinesis-powers-zhmmodsdk-plugin.md",
@@ -21630,14 +21785,29 @@
   "sha256": "d262e561c6772b1f9d6388893f700f6ff586be2221931a6b7ad1aa39a5d0fd84"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/indigo-park/mollie-macaw-s-chase-as-a-minecraft-1-20-1-fabric-mob.md",
+  "size": 16105,
+  "sha256": "fc5125affc548d1df0a56523187633c21e7210966af641596f519eb77d05037f"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/insaniquarium-deluxe/an-android-port-of-insaniquarium-deluxe-from-the-winfish-decompilation.md",
   "size": 24205,
   "sha256": "bc65b6b69ef6f4b1759de3794105ede5a85215ac4c8aeec6c524d1e0fdfd8983"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/just-cause-3/reading-the-vehicle-fleet-archives-rtpc-havok.md",
+  "size": 31860,
+  "sha256": "48d192ce8386194451df489f42f2fba95f3cc50ba8e5a6eae3f0274fc8eadc38"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/just-cause-3/translating-the-batmobile-row-ledger.md",
+  "size": 14301,
+  "sha256": "31cc72069d9701f87810dd593c2ad1d82bb5ec072dce855ba329b8a8bd3ba3fa"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/just-cause-3/vehicle-mesh-editing-added-geometry-loads-with-matching-toc.md",
-  "size": 44794,
-  "sha256": "3f02962a05a5ab9e13e6feb896aa927c4e7c09d9858fb6f53c0272c6b23f7131"
+  "size": 45776,
+  "sha256": "1fafdca44f2214bcf0934cfe2f0bbe7c7cb8a5251e1a1d48ab329e9e08dfa8ed"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/kenshi/first-person-camera-and-wasd-on-vanilla-kenshi-1-0-68-an-ogr.md",
@@ -21670,6 +21840,11 @@
   "sha256": "d4644f0987d5ca2f00d5f157182b1a1eb23f747445cd1870b52956b65aa6b778"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/lobotomy-corporation/lobotomy-corporation-lmm-recon.md",
+  "size": 16033,
+  "sha256": "b940b8c7429922bf9dc6d124f9f23aa800ddd5532c9207cda03d3aa413351c81"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/meccha-chameleon/meccha-chameleon-mod-kit-maps-local-manifest-loading-via-ste.md",
   "size": 9068,
   "sha256": "882280442a7191d5ab2acff25c65d8efd17576cd194ea930aaca186111312553"
@@ -21683,6 +21858,16 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/melon-sandbox/android-38-2-package-recon-and-a-lua-chip-ability-idea.md",
   "size": 7212,
   "sha256": "1440ed6555da11403caa2e1c49b627758e741a5f561de54ff820fb496cb1c4f9"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/melvor-idle-2-demo/timewarp-fast-forward.md",
+  "size": 8288,
+  "sha256": "afd578008175208fe560e9bea3ed8ac208f37712bca36d42437fd7007e6c7075"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/metro-2033/original-metro-2033-steamstub-exe-vfi-upk-archives-quicklz-a.md",
+  "size": 30189,
+  "sha256": "fd06451cfeb33939222b371de22acedcd1709b32410c87533c1f0e8b942cbd80"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/mewgenics/combat-roster-panel.md",
@@ -21705,6 +21890,16 @@
   "sha256": "e10793b7783cadcfe58d0c5a41f8750172e134d3a98004b146adf5c767689c22"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/middle-earth-shadow-of-war/map-import-shadow-of-mordor-udun-as-a-new-region.md",
+  "size": 47214,
+  "sha256": "6468744d622a67a0baa25ba8a2b8c01485de313148577ea928e7b1610d287d0d"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/middle-earth-shadow-of-war/map-import-toolkit-formats-and-tools.md",
+  "size": 44475,
+  "sha256": "5c0766b0de0b639299ebc1877208962e8563e22b8cdf018982dededd4ff037d6"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/middle-earth-shadow-of-war/offline-mode-and-local-garrison.md",
   "size": 20469,
   "sha256": "b323e35de59dc750bf4e8e67d72cb8e3f0150d87f94dd39d0176f2be564af225"
@@ -21720,6 +21915,11 @@
   "sha256": "93904bf80ce39d92c35c0620fe2e925404e1cbf64545cfe947c2417747188995"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/middle-earth-shadow-of-war/small-mods-new-orc-bodies-talion-armour-and-mesh-draw-counts.md",
+  "size": 16784,
+  "sha256": "5bdea1f18955b10918b9f8f2c269cd9e530aa90f6fce243591e724e7b680d91d"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/might-and-magic-6/matching-decomp-vc6-byte-identical-text.md",
   "size": 10134,
   "sha256": "6166741ca3217cfb429e8e5ad66ac7dbc8fc21fc0150cd9b6f3256acf2215eda"
@@ -21733,6 +21933,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/minecraft/bloons-td-6-in-minecraft.md",
   "size": 25168,
   "sha256": "8f59527337091330b929d4aa268fadf6ac057095d9526db81302486b396fcacf"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/minecraft/factorio-style-belts-power-and-ore-patches-as-horizon-rust-m.md",
+  "size": 20809,
+  "sha256": "fe772f1826b7f989267a50c119955c1cef818fe0e39e95e68307faad54a6db4c"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/minecraft/half-life-2-guns-in-minecraft-passthrough-hl2-demo-under-win.md",
@@ -21820,9 +22025,19 @@
   "sha256": "e3bd5f6733a7673bd7eaca4fe66832e1c9f4618ad4f745e16f16f6bfa7b33634"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/padre-got-a-gun/fusion-2-5-build-296-decode-and-event-patch.md",
+  "size": 20661,
+  "sha256": "5188e937c9608034ccb17d226f4e159948c92a90de209fa8bf57aa5b6d0b05d4"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/pathfinder-wrath-of-the-righteous/mass-effect-biotics-kinetic-barriers-and-rifles-as-a-wotr-cl.md",
   "size": 11006,
   "sha256": "5b622b786e579d94c5fd743ae0e56278e6a49b1125db0808de116e77ff1537e1"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/phantom-blade-zero/hold-start-hud-toggle-and-per-group-combat-vfx-switches-ue4s.md",
+  "size": 12963,
+  "sha256": "65824c0297c47382be42561d3c5e740ac4744e03a149259358e885a4f2fcbcf5"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/portal-2/portal-2-portal-gun-viewmodel-converted-for-another-engine-v.md",
@@ -21833,6 +22048,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/portal-2/portalcraft-minecraft-inside-portal-2.md",
   "size": 20018,
   "sha256": "9b22a6a74e02d6835d250e93f50799a72b484eec7aa107904eaaf647c9393636"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/project-zomboid/a-viewpoint-companion-hud-end-to-end-sonar-ring-mod-isui-dra.md",
+  "size": 19683,
+  "sha256": "6ec453869dda049435703c7d3ce3d0a96533cd428c2c5fa6e0514af75a681087"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/project-zomboid/b41-modpack-fix-mods-and-linux-dedicated-server.md",
@@ -21885,6 +22105,16 @@
   "sha256": "097641ff85b523849dd28fef0f85609af7e611f468af3a357ea0c0b9c73add0f"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/red-faction-guerrilla/control-resonant-dylan-takeover-retargeted-animations.md",
+  "size": 26507,
+  "sha256": "c6a5d4a97bca79fec57463868b139169b1170e9eff543507080f20786e365a01"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/red-faction-guerrilla/rf-gmod-gravity-gun-sandbox-and-armageddon-port.md",
+  "size": 19455,
+  "sha256": "4b5599a2b9776023802c5ce93386918199ffa8a32701779866b70cf87d9ce5c3"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/resident-evil-2-2019/dlss5-neural-rendering-dlss-frame-generation-in-a-custom-ref.md",
   "size": 18208,
   "sha256": "6217f9e4d1047f00e0b85fc3bab327550011375bec983265affee1d760e45976"
@@ -21935,9 +22165,24 @@
   "sha256": "3b02dba699355459231275347777123f531e4d13ad0546471e06c69063961a68"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/skyrim-special-edition/cbbe-mesh-osd-tri-isolated-bodyslide-validation.md",
+  "size": 17701,
+  "sha256": "b4f4fd901b972abdcbea639873c835dace0513e8a45dc44dda8098f1f6567923"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/skyrim-special-edition/loot-detection-spell-papyrus-call-costs-and-lights.md",
+  "size": 21659,
+  "sha256": "654a49bc472694fe8b96764df878c8242566fe55301b11aafe2f74557dcafa17"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/skyrim-special-edition/posed-corpses-with-gear-on-them-and-a-script-placed-museum-d.md",
+  "size": 18262,
+  "sha256": "63110cba357cd3c3bc440a348f34c2d056e13eefee40dbb9ac07778f580326f7"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/skyrim-special-edition/rebuilding-a-cut-gatekeeper-with-generated-plugin-records-di.md",
-  "size": 12551,
-  "sha256": "2aebdfc4ce2699f5e784e01d65f3c8fc82118f5230432e16bc7196264362e1d5"
+  "size": 20531,
+  "sha256": "de72765400efe5690f2279d9cb5dade7f72bab47d5e9845c5df3516d6f9f74d3"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/smalland-survive-the-wilds/reading-the-taming-system-live-with-ue4ss-trap-tiers-creatur.md",
@@ -21948,6 +22193,16 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/star-wars-battlefront-ii-2005/porting-a-skinned-starcraft-ii-character-onto-the-swbf2-2005.md",
   "size": 14779,
   "sha256": "79a2ca250069d8daea446c638da239fd65a620db6dfd88c0a0fcc5ffda0beca3"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/star-wars-the-force-unleashed/black-scenery-lighting-groups.md",
+  "size": 11401,
+  "sha256": "3f9e750b98759fe825d8a6834f2d0e00d8fc17e5b39e33435e203d814e12480b"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/star-wars-the-force-unleashed/ronin-engine-modding-surface.md",
+  "size": 10413,
+  "sha256": "7317d6d6add8caad98748f6576108ecea1590ec5b400b8c9919dbea9c418c157"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/starfield/starfield-animation-af-rig-and-havok-physics.md",
@@ -21965,6 +22220,26 @@
   "sha256": "9fafe4af4ac7e7d79e6bd748d42a01f8198757db638e733a82e5ba0f23fe3afd"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/teardown/physics-accelerator-native-solver-physx.md",
+  "size": 34892,
+  "sha256": "bff1ac61757704ae50b3a4afc5bfa24561c83deddedcc345cc758f6dd5249472"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/terminator-dark-fate-defiance/defianceloader-plugins-data-mods-and-engine-facts.md",
+  "size": 22249,
+  "sha256": "6fa86e60ad7a52903502533e7fe5d7e9ce5717502872f54593719aaab4083544"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/terminator-dark-fate-defiance/porting-mechanics-and-vehicles-from-gostomelskie-bogatyri.md",
+  "size": 13048,
+  "sha256": "30d830d0ebd65e0911927f03f16669f4c36dffac0be8f7a22a17d7523532c3fc"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/terminator-dark-fate-defiance/porting-syrian-warfare-maps-triggers-and-effects.md",
+  "size": 11259,
+  "sha256": "986e4dcadc3af9476671bc2f8c2b5515d4cb62e8d8b5951059db4e7ae51ffbbb"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/terraria/eye-of-cthulhu-rl-agent.md",
   "size": 4746,
   "sha256": "d5275dc05cd444f27e1994f534936970c0b8377929aa7a002deb65e29fbf307d"
@@ -21980,19 +22255,14 @@
   "sha256": "d4024295b598e7827c8a8d26925dd6f72b571a421dae0000a1c29ed50d25c8d8"
  },
  {
-  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/test-drive-unlimited-2/playing-tdu2-online-with-project-paradise-2.md",
-  "size": 14338,
-  "sha256": "a5c0dc477b80fa51f48fb06b47421a3071747f9c100823ac6077ee6fa01466f7"
- },
- {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/test-drive-unlimited-2/reading-tdu2-vehicle-physics-havok-packfiles.md",
   "size": 10413,
   "sha256": "3f8a175165b9bea62acc91564eda3365d26f5575baf6131dc4c1aa10f8de78cf"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/test-drive-unlimited-2/running-tdu2-on-modern-linux.md",
-  "size": 7269,
-  "sha256": "0b9ad1a6a9177fd26c7a12950e4b93aaaf25dbcc6f8294d2908b639cfe71f72f"
+  "size": 7233,
+  "sha256": "2c6e0c71f27cc49c33ae5a43e7b27f9423ca7b10f59786e68d38f87a046dac62"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/test-drive-unlimited-2/tdu2-archive-and-container-formats.md",
@@ -22045,14 +22315,49 @@
   "sha256": "162a2b2a50dff7ae3f5b8e007265ca1ccc2f0c4d2ac2542c15dc855ec842d427"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/the-precinct/four-shifts-a-permadeath-roster-game-mode-with-melonloader-o.md",
+  "size": 14131,
+  "sha256": "8ad09ffa26d0af2dc2d14a225b9e9f441ef61478f946f6c78b2474b68ec1c042"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/the-witcher-3/the-witcher-3-remastered-bundle-container-and-cr2w-decoded.md",
   "size": 14554,
   "sha256": "1423702c44cfcc7cf0dbdab0380c1ae9f04d67e32fa0c2f9f20ae8d24a68ca2a"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/tomb-raider-legend/film-outfit-pack-drm-rebuild-idles-release.md",
+  "size": 15305,
+  "sha256": "fff173f73599ce6e52edc88c31b7cc5e50e1b15a55638352ff50d1b593bc9ae8"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/tomb-raider-legend/film-reloads-qa-bridge-physics-mags-asi.md",
-  "size": 14747,
-  "sha256": "7d88e4746e5dffcabc4e5d792369410d8bc5653ebfebc5cdd798ea01543b5033"
+  "size": 15880,
+  "sha256": "fb5c3ab6928e90b23a5d5ffff178fc43e4553594a817cd477a1a9fedb37c2c8d"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/tomb-raider-legend/physics-strand-hair-appended-bones.md",
+  "size": 18294,
+  "sha256": "ca000a4eab0eb8f681a17c3b481e54e93bb470164813a1fe0b5007c5fca09e80"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/total-war-shogun-2/shogun-2-napoleon-france-faction-port.md",
+  "size": 14131,
+  "sha256": "a212c6a208c58ff6048854837b4c50c259fbfd4172b0a0fbd3c5b24ca74094b9"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/total-war-shogun-2/shogun-2-ship-mortars-rockets-mount-names.md",
+  "size": 10804,
+  "sha256": "b4399629c3f42c40e096e49346e6911ae2829e37eff10a5ed64cef91de4929df"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/total-war-shogun-2/shogun-2-sound-bank-row-numbers.md",
+  "size": 7182,
+  "sha256": "213d24fc832e4f5c065688a0dcad3e334d8bced8d86f9a0205456372284f518a"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/total-war-warhammer-iii/bigger-units-scale-every-model-including-workshop-mods.md",
+  "size": 13457,
+  "sha256": "c792d03390c66268d3919fd86f1187e60c23ab6d1d55496424d826ee8ea9fd1b"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/total-war-warhammer-iii/valkia-khorne-subjugation-reusing-archaon-dilemmas.md",
@@ -22120,34 +22425,69 @@
   "sha256": "1b1b5c10f8c4abd8082a047aee6e61e421ef930b88e10cd6ca9fc1fa80e8af2b"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/vampire-the-masquerade-bloodlines/longhair-outfit-proportions-from-skyrim-cbbe-3ba-source-data.md",
+  "size": 24381,
+  "sha256": "f81cd41ba4920fc36b926d4bd4bae8e07bc6defcb6d1f52929bd1ee2050652f0"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/victoria-2/south-central-gang-total-conversion.md",
   "size": 14330,
   "sha256": "681300768976382c67d00fcd079ef579cf5aee538172f931487a13da99899fdc"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-darktide/darktide-unit-extraction-and-beast-of-nurgle-clean-rig.md",
+  "size": 13123,
+  "sha256": "d1ccda141dda672393a74c0c341b24dac0cfbc674944422ddf6b30108733dbe9"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-active-reload-and-cloned-abilities.md",
+  "size": 21643,
+  "sha256": "c1de6a56d6bbfcae24c4e9ad57b22731fb8e212fcbaa50046e8a229549f67b37"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-building-a-new-map-with-the-map-converter.md",
+  "size": 40722,
+  "sha256": "170e2c94f7b8dd4fa6166333bc54d396f349d5b7b9b59f662b6c9e5c8220392f"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-hub-battle-barge-thunderhawk-and-usables.md",
+  "size": 34662,
+  "sha256": "c7052655c4bf698d8d6ceed480cc7aabcf6aceb65ea6f0286d863f370e02f1bf"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-missions-scenarios-faction-swaps-and-esd-spawning.md",
-  "size": 20283,
-  "sha256": "fec6b73a671159462ae2117513c94a677b7717a39377826330e6316f2d3822c7"
+  "size": 24180,
+  "sha256": "4f0484af07a904a625d79fbcd5539c90b2165ec24065ae615a0eb59edf77372e"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-modding-foundations-paks-tools-and-crash-triage.md",
-  "size": 18603,
-  "sha256": "3bd4dede27bc7311dae149278810a4c7bec0dcfad22097728eb36fad0bc27af7"
+  "size": 31095,
+  "sha256": "b12e602675d6db3b8b0f3e74e9972b49ae5f690af37baabc60cb2de41bcb5e52"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-models-tpl-format-modelconverter-and-textures.md",
-  "size": 45178,
-  "sha256": "c916c836f260867dfad02574087ae743d3c446488cc7e481decfd6dd6ecf9f35"
+  "size": 62832,
+  "sha256": "8d4e34f6fcf7a9f38afba91b0818ac6ba57b46274271dd2bc850d834c520f884"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-new-enemies-npc-classes-and-morpheme-animation.md",
-  "size": 26192,
-  "sha256": "0584ed81dd3110f4e86bac7244e70d0e67fda0aff62d711f0eb5ad534fb47e82"
+  "size": 49095,
+  "sha256": "c65da6eeed92ef5ab39f7824bddf35625b8d75d79878aa399cbe4ad600b9fa1a"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-new-playable-class-on-character-mod-slot.md",
   "size": 12111,
   "sha256": "7b899fedc9cc027867ea5aa3f643ecc65e8ca7cd645ab2d0b61798a42272019b"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-one-constructor-for-every-class-and-fast-usf-builds.md",
+  "size": 31500,
+  "sha256": "e2aded4e281a390a8e6e81b4bc08479073e917cc039461a2d2df32197a1e8a02"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-porting-assets-from-other-games.md",
+  "size": 35244,
+  "sha256": "37c2324a70fa8ad9eef1bc33986e246e48040d533b9e6588fd76d3eea126de3f"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-voices-talkers-and-wwise-audio.md",
@@ -22156,8 +22496,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/warhammer-40-000-space-marine-2/sm2-weapons-skins-reloads-perks-vfx-and-sounds.md",
-  "size": 37098,
-  "sha256": "7e48040cd4edcc446d7a96da9ee838822a9f1ecfd892a0efc25b8f29d119fa11"
+  "size": 52596,
+  "sha256": "988af4f322b6f2879eb63cc7e94400d69e5b15dfbc1c151d2ddc477650cfc6f9"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/watch-dogs/editing-feu-gfx-ui-and-entitylibrary-fcb.md",
@@ -22190,9 +22530,19 @@
   "sha256": "4f0f06d6c8ff04a301f8229750d7a6de641a9f280630ce9354b34a4a899c320c"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/with-your-coworker/linux-kde-plasma-6-wayland-click-through-and-argb-transparen.md",
+  "size": 14197,
+  "sha256": "9ab87166b6da7d257797d021c0c9c02a160935438182805a49079d4841083f90"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/wolfenstein-the-new-order/wolfenstein-the-new-order-id-tech-5-resources-bmodel-bmd6mod.md",
   "size": 9048,
   "sha256": "a59c9a979c4e0c86166ba821a2c8a1fb311d4d70a62e0e8b8b78910dddb67ac1"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/wolfenstein-the-old-blood/wolfenstein-the-old-blood-id-tech-5-datamining-dmodel-bmvtr-.md",
+  "size": 8076,
+  "sha256": "b97ff89957ee64805ce84fc43809b277e077820d1a5772da76ec1529c8696f30"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/games/world-of-warcraft/addon-development-335a.md",
@@ -22256,8 +22606,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/index.json",
-  "size": 299863,
-  "sha256": "cbe858184db82fc05b5ac0e3884668ba7ee08663c279439f3fdfa8a8ea7607bd"
+  "size": 397901,
+  "sha256": "803db0781e9bf80874fbfacb0302f3c1dcdb4b79041e7159fa203873bcb81195"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/a-force-quit-pc-game-relaunch-wedges-as-an-unkillable-zombie.md",
@@ -22268,6 +22618,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/a-scenario-harness-in-a-minecraft-fabric-dev-client-real-cli.md",
   "size": 9406,
   "sha256": "5b6b8edcd7614074004c9bc7827215ef2ec9d2d6888f6ff67420c93820172721"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/an-in-game-settings-menu-in-an-il2cpp-unity-game-clone-the-g.md",
+  "size": 11773,
+  "sha256": "47cbf156016843e83924d410756858385832ac24bb1635e2a2e8eaa10cc44524"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/asus-aura-usb-protocol.md",
@@ -22336,8 +22691,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/crysis-remastered-data-paks-cryengine-2-chr-0x745-nanosuit-s.md",
-  "size": 19590,
-  "sha256": "d59f9af8e7dfc80098004936e6ffbecb678569910fe9e084f51ad47c8ed88544"
+  "size": 26934,
+  "sha256": "0741f6a69dfb45968156caae7af80344580503aa437fcf61f813c669a53fecb5"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/d3d12-frame-readback-buffers-only.md",
@@ -22395,6 +22750,11 @@
   "sha256": "31b7c21c2c88d2325d8b74ac93f36640d2eabfcf12137f5cb768e9355459927c"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/driving-dosbox-games-from-tests-background-input-parallel-sa.md",
+  "size": 34512,
+  "sha256": "6337eedda635a43a02d30ee462db384e448ce5dff9efba3185d6b7a282e56e9d"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/driving-real-games-safely.md",
   "size": 6792,
   "sha256": "d3540c98b7d44aaf195ecd5c4a33d93d2a50f8fab110832dba58708572df7ff3"
@@ -22445,6 +22805,11 @@
   "sha256": "abb233f697fa3aaa18ad4cdd24df39e9c8d42c61dddedf20a74344b0aadb6711"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/feather-pass-for-game-birds-in-headless-blender-conforming-c.md",
+  "size": 10742,
+  "sha256": "b7a54246a4e85a9bfe35372bf43ee0730261804051e9591fd96d2d3105ac70af"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/finding-a-single-player-game-s-writable-player-position-from-outside.md",
   "size": 8248,
   "sha256": "93e028e1f61494529c2fd46930e85ed5daebf37c93e948fcf8b672f382835db1"
@@ -22473,6 +22838,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/geometry-transfer-host-draws-guest-meshes.md",
   "size": 6202,
   "sha256": "359ea39cad5617ac11759b8d5c0250eb6343618b71529077c715be9396ca2800"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/harmonyx-transpiler-branch-detection-opcode-equality.md",
+  "size": 11425,
+  "sha256": "4cf67ddd891e622d0a063dcd16f6039e483e55dacec864984806cd6aced31b30"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/havok-hkx-chunked-packfile-family.md",
@@ -22520,6 +22890,11 @@
   "sha256": "fd745a1ff16ae188bd69f19e428492e45c812a754bf5864295109a30a8522acf"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/motion-vectors-for-a-neural-upscaler-in-a-game-that-has-none.md",
+  "size": 11604,
+  "sha256": "a838ed6f7f1593a729c401625c40c1864ed52ffa62dc94b555f738d07725915a"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/mwcc-register-allocation-vreg-index-colouring-rule-and-the-l.md",
   "size": 12804,
   "sha256": "db84fa14a1e9b825c9e061338e875dc7c81c50bc5d4acb7a5b95ea0a6773f573"
@@ -22538,6 +22913,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/oracles-how-agents-know-a-mod-works.md",
   "size": 10794,
   "sha256": "601611fb3a360dfb0c794104e8faae8e1c1ee03471a73cc7837d504bc24c41e2"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/patching-rtlink-plus-overlaid-dos-executables-growing-the-im.md",
+  "size": 25883,
+  "sha256": "5b9cac942c1651c2ea891db5dfa46cc17fc9f03dbb54f1c8edbaec4fa64c0a27"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/porting-1-7-10-gl11-render-states-and-iitemrenderer-frames-t.md",
@@ -22636,8 +23016,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/tdu-tdu2-community-data-tooling.md",
-  "size": 8786,
-  "sha256": "9589b67f58ea3bcb7bc37266b515aed0ee99f3f6d467056d83c73dbb6d027d4c"
+  "size": 8685,
+  "sha256": "e882b8f42e70442301d6a7a556feb6a5bee6f749487c9ceb7adf77e71b0e501f"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/tdu2-runtime-patching-version-dll-proxy.md",
@@ -22665,6 +23045,11 @@
   "sha256": "41ca7fe374afdf1d6dff371d7d37ec34e0c23db7a98a03edfa6608d3ba14c8d4"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/upper-memory-for-patched-dos-games-in-dosbox-code-in-a-umb-e.md",
+  "size": 22434,
+  "sha256": "2869bf4ad4d522db08853c22a3156e60198e5b51a981a1fbc01ebda37619eed2"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/knowledge/techniques/when-the-first-real-run-fails-suspect-the-oracle-re-deriving.md",
   "size": 6520,
   "sha256": "2074d13d4ddd942a33df083d4dd9bf1335dface02448cfb70762b0272170c33d"
@@ -22687,7 +23072,7 @@
  {
   "path": "BUNDLED-TOOLS/universal-modder/pyproject.toml",
   "size": 682,
-  "sha256": "229cffd4e98c1cd895aae7e164d399a96248df3b17ceed79c8c32e2868ebf590"
+  "sha256": "0a39568dd26a06f984ea49700b10e3f5e1d403ea2fefd85a838e505e477002c6"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_encoding.py",
@@ -22700,6 +23085,11 @@
   "sha256": "c69b28a49d378417a00155692e78db910442e8e3212e838da53b626a25d50216"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/tests/test_iw.py",
+  "size": 10786,
+  "sha256": "9f82e9133678de8c057460c7319ec99fd392a3c61c8ebf4013f5220e2da91ae6"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_kb_search_hits.py",
   "size": 773,
   "sha256": "638eb473a3aab266b376e739bf81101c9a22d2aebcafc8969faab17f20b808c4"
@@ -22708,6 +23098,11 @@
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_kb_search_quoted.py",
   "size": 1207,
   "sha256": "5efe4ca6d37bffd74eebd1b2c21b23cf0a9ee4d5ab3e45790c938a51d6fe9243"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/tests/test_kb_sync.py",
+  "size": 7597,
+  "sha256": "b7c9fa768aaa138cf90e226d62bbe688b7e78186517347fe0aca8790569f45c0"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_opencode_plugin.py",
@@ -22721,8 +23116,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_um.py",
-  "size": 71636,
-  "sha256": "b3d7d695ed13f4fb7cabfed024e2088e262e4381167fc3af015219fabfaba667"
+  "size": 92375,
+  "sha256": "0456e2a1109dde84ec73eace6b551b269a4f6fc7f55d4221015f5399b58f261a"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/tests/test_voidless.py",
@@ -22741,8 +23136,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/__init__.py",
-  "size": 1146,
-  "sha256": "02b534e5fb83f27dfc7c74674f58db418603fac46df54b68c0ee9aacffd267b6"
+  "size": 1426,
+  "sha256": "533e75f69759f61a09a2dabca16f0f4f0df5d05aab2c59e4b92fd94371b46aa8"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/__main__.py",
@@ -22751,8 +23146,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/backup.py",
-  "size": 7191,
-  "sha256": "cf6840664d4de32a303973602e3072e44312baf7821e0e1c1c3bd8a2c3273ab5"
+  "size": 11068,
+  "sha256": "a8dd3f682fb6e0780d0bf01944c321224eb2be4c9763d2645ef3b93290918fd4"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/blender/render_sprites.py",
@@ -22761,8 +23156,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/cli.py",
-  "size": 1305,
-  "sha256": "f27f9ef71176e58eadc12d34042eff88072d878481a94e29cf747e10116dc9bd"
+  "size": 1334,
+  "sha256": "7ab2febe35b7d850969cfeae2bc5d53b87a00bda5cc4bc80858daaa5630e31e1"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/comfy.py",
@@ -22771,13 +23166,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/common.py",
-  "size": 5223,
-  "sha256": "c4cd84f002cffa97187e0162720d467416835511cea55c21c7258d8d1dfa5e88"
+  "size": 7274,
+  "sha256": "bbdc9e3a1b82c226cbf29847d2306abc70111894461c48f64b4b9118657cefbe"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/fal.py",
   "size": 34341,
   "sha256": "f9577d2b021746be81a054acfcd16326a63885cbe9dfd01eefc1d5953ef4e120"
+ },
+ {
+  "path": "BUNDLED-TOOLS/universal-modder/um/fastfile.py",
+  "size": 6610,
+  "sha256": "4268a95bd689f8322ed4f74d0cb3b33e5b26edc23eaa5379aa0cc20185787f03"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/fonts/JetBrainsMono-Bold.ttf",
@@ -22805,9 +23205,14 @@
   "sha256": "3183b7eb0b4241476360e2cd8e527868616cc16d3ce332c4376505989b772b44"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/um/iwi.py",
+  "size": 11620,
+  "sha256": "79e1a2f382e053a7a6977d01a414a4ecc1626beadc5529097b942638a991eaaf"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/um/kb.py",
-  "size": 28839,
-  "sha256": "15fe652e7a06fe2f4d1631463d0a3e1557e68f95e5adf03166e2c67084a4b4cb"
+  "size": 31374,
+  "sha256": "3d7b69c35f3e3da549b3e54fd00592c18e3741a24d4242925231c2fdaef48719"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/ps1/ProcLoopback.ps1",
@@ -22831,8 +23236,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/scan.py",
-  "size": 52813,
-  "sha256": "4e5d2223a721a8a2c1c5461b13064e7b09a0db62d34e0852a2d3a2c595e6f31a"
+  "size": 54313,
+  "sha256": "db5d331dfb113a1d47c6bcedb2638989cf0a78e2fe869f52c3a992cf39f26368"
  },
  {
   "path": "BUNDLED-TOOLS/universal-modder/um/sprite.py",
@@ -22855,14 +23260,19 @@
   "sha256": "74310262d194a8ab18ebdc644198e65024a4131c8d53bfff833703bd9e4557dc"
  },
  {
+  "path": "BUNDLED-TOOLS/universal-modder/um/weapon.py",
+  "size": 8104,
+  "sha256": "572566e73be9c55ff6038c94220dfa78de4da37adf9abadb1ca310f6fba0c3a3"
+ },
+ {
   "path": "BUNDLED-TOOLS/universal-modder/um/win.py",
   "size": 27168,
   "sha256": "9b0e04e0c92cbca009e7ceb7587ab1fbc0929589dea65f79d49b8f02477c582e"
  },
  {
   "path": "CHANGELOG.md",
-  "size": 344522,
-  "sha256": "055e48a30b61d9f1f4c882927a5fc1fc82f0574c2f5ef65c903395ae0148e625"
+  "size": 347917,
+  "sha256": "eb0d9985c8a1565356545e91b3cef592aa1c91b46b9cb8c9148660000ed08dfe"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23006,8 +23416,8 @@
  },
  {
   "path": "README.md",
-  "size": 16460,
-  "sha256": "78a8d47fb64cee85bc34b12721771b0412e23a491759058bd05ae4f480fa33fd"
+  "size": 16480,
+  "sha256": "f19158a6e97197d528cad91fb81fc6308ab8551392d0de3d7c1c653083b7bb16"
  },
  {
   "path": "SECURITY.md",
@@ -23017,12 +23427,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "f303ba198a684d674ab707891579d17a3512f563b047e86575682dd5fd66ed78"
+  "sha256": "78de9ac87c409702a57f474b185d8526a185495b2855aac3338b36d78edcd632"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "ed50198c32fe966d4f4f5b6839bf2e60e83c32146e4849fe899f0462f0526e53"
+  "sha256": "1a1e004fb6e45681e88a38355381299616d7ccb8e215a5040b6380e5bba1a57b"
  },
  {
   "path": "STATE.md",
@@ -23142,12 +23552,12 @@
  {
   "path": "TESTS/Test-McpPark.ps1",
   "size": 11701,
-  "sha256": "df04cfad937a0bed06af3e76fa930869e7579e6f3124185085ce6073b95202d3"
+  "sha256": "2a806a7e1ffb8a20dc3d7d59374423f86a2f88a19927368500613b62d8ac5f3d"
  },
  {
   "path": "TESTS/Test-McpProfiles.ps1",
-  "size": 78390,
-  "sha256": "fca151f5885e3798b74a0c2f3e26a6d6e415d73e905f6e4ede92b029150edc06"
+  "size": 80528,
+  "sha256": "a58de4f73cf54147ec8ced94310ca48989f38b818e806e57a0e95b3ea6e9cf15"
  },
  {
   "path": "TESTS/Test-NpmDuplicate.ps1",
@@ -23436,8 +23846,8 @@
  },
  {
   "path": "TESTS/test_companion_registry.py",
-  "size": 15227,
-  "sha256": "f2af6736080a88ef08492d2ad2070d83404275eb1f86417365d246f713a2cd37"
+  "size": 16378,
+  "sha256": "74b7b2e12aabe64010ba0c5fc11189009df1710e4b93e6eca96a878603e22e9b"
  },
  {
   "path": "TESTS/test_free_game_tools.py",
@@ -23582,7 +23992,7 @@
  {
   "path": "TESTS/test_universal_modder.py",
   "size": 5379,
-  "sha256": "1a449a08232ab71607c145c716e33f4b60f0562e419f56ad6eb949855e914a76"
+  "sha256": "f13e34025c1a27bfc26a104c071407e3e609f9aa7431bbd3607c80599af5cba0"
  },
  {
   "path": "TESTS/test_upstream_drift.py",
@@ -23732,7 +24142,7 @@
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
   "size": 82481,
-  "sha256": "8ad7f9c3377e8830161b321fee9de8ed61fbf4e709978b53207c7055b15113ca"
+  "sha256": "c5d951a68223b222e82445d9e9e0f85825b6d34fa24c6b68065736eec2232717"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -23791,8 +24201,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 77995,
-  "sha256": "4f6bc20b1affd4cc3b6a75a334a61dd95e0bec7abf7458bd3f8a9ca5304eb44c"
+  "size": 78142,
+  "sha256": "99fb75cdd4668ce1abb66d0e54f0ec4253cd62d65020d5dd0d3cdaf44f8a0f50"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -23816,8 +24226,8 @@
  },
  {
   "path": "TOOLS/UABS-Mcp-Write.ps1",
-  "size": 49997,
-  "sha256": "8237d849399fde02c65287a9c93306b4bb4497e5a9af5813b43679b96c434a04"
+  "size": 52596,
+  "sha256": "3d0c4a3b4120397c39a387aa50d44d3fd732a316b23b153129be9969818f0236"
  },
  {
   "path": "TOOLS/Update-From-GitHub.ps1",
@@ -23891,8 +24301,8 @@
  },
  {
   "path": "TOOLS/companion_registry.py",
-  "size": 21346,
-  "sha256": "350124565bd84f50cd03e743af89da5201d465a4138448a986dd5c4d2dcf7705"
+  "size": 21770,
+  "sha256": "3d6c82c65a7301abad35d2a2e011ed7317c44b17436c8a71127f93382b33b988"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -23962,7 +24372,7 @@
  {
   "path": "TOOLS/hooks/rtk_safe_hook.py",
   "size": 8976,
-  "sha256": "1abe64f70a154c8b238ddf3cf8d4e9c59c10e1321197156419e62164a27c4986"
+  "sha256": "4488de37287a0adce952fd82dcf43ae4b47b573fc9b8727a21781f65006cb7af"
  },
  {
   "path": "TOOLS/hooks/task_router_hook.py",
@@ -24022,7 +24432,7 @@
  {
   "path": "TOOLS/recommended_skills.py",
   "size": 17086,
-  "sha256": "d6479333a4c5de2727c2906b53fb6fa18a2b4d4384074abce160950aa34b4864"
+  "sha256": "278a9db33ac9cf7aaa46668b31f7edc47da3de5b335a69f813a9912484bc3623"
  },
  {
   "path": "TOOLS/refresh-provider-routing.py",
@@ -24031,8 +24441,8 @@
  },
  {
   "path": "TOOLS/refresh_universal_modder.py",
-  "size": 18182,
-  "sha256": "7eaafa38fef7db0c53d0c956f7c6a98ddac1f4fc3fdb94102bf047e4e1837739"
+  "size": 19321,
+  "sha256": "3a80e78bb7bbb01d462736be95c4273ce777e722278587f3468807bdb4b47517"
  },
  {
   "path": "TOOLS/release_gate.py",
@@ -24117,7 +24527,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2781,
-  "sha256": "68399b4cc0da9e77a8e722a000f35387a12d27f1f85f2c309574335b7169ef03"
+  "sha256": "b38829b500d8faa69ce8a3a56bb12f1e3387dd8f6814e569a67bcf343112fdfb"
  },
  {
   "path": "VALIDATION.md",
@@ -24127,7 +24537,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "108cb4472f43efd021854f8546b7be126195f362620849600c0c947997843d4a"
+  "sha256": "3ae58300075893b0880d4df1e1a5f4e4b9da2738156df8e915098b0b2ed77a0a"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24332,7 +24742,7 @@
  {
   "path": "_CANONICAL-SKILLS/capability-profiles/SKILL.md",
   "size": 16133,
-  "sha256": "b4a01e34356a8d09f2404a6840c509ceb275e53809562e400d6d5f719210be35"
+  "sha256": "1ef93b9a1966b6e5802a882391882c76173f0701d001699b31b9e78531efd237"
  },
  {
   "path": "_CANONICAL-SKILLS/capability-profiles/references/task-recipes.json",
@@ -26616,8 +27026,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/browser-cli.md",
-  "size": 1580,
-  "sha256": "a6d3629394edca314425b93cd8cbd0033602197685b886517c10d9aec0893ef3"
+  "size": 1856,
+  "sha256": "c8e25f54aa449b4403250e7648ec6a88d96ad6aa2ca9e2645828a9439f8bca78"
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/build-tools.md",
@@ -26626,8 +27036,13 @@
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/comfy-cli.md",
-  "size": 2344,
-  "sha256": "b1604fcbedae5fa40f5395b578b1f6a8f45f9598fa36d870074e3c19a6668524"
+  "size": 2532,
+  "sha256": "f688c5e3b433735141bd4dbfcd72e0d565f3bd56633285111a19002a53797cb9"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/tool-discovery/references/creative-cli.md",
+  "size": 3418,
+  "sha256": "c6eb6180c000cdb31473a1391192a10f00dd2eda73110faf4c878c2bf10f11be"
  },
  {
   "path": "_CANONICAL-SKILLS/tool-discovery/references/modding-bench.md",
@@ -26701,8 +27116,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/game-automation/GUIDE.md",
-  "size": 7712,
-  "sha256": "96b54603b63d704c5c83814f0d8e928f6712842083f153aaf03d0c092494112d"
+  "size": 7819,
+  "sha256": "c1bcacbb0f74cbe10b765848d1d871a2b74942cc30dd0325e42bfc06075c1148"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/game-recon/GUIDE.md",
@@ -26721,8 +27136,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mashup-mods/GUIDE.md",
-  "size": 13801,
-  "sha256": "e2c2842bcad788068f3c964913f5b3dfe5a84efcfb656d4b6cfa116a2c4fb7b2"
+  "size": 13928,
+  "sha256": "3fd6849c24434f60d4a9b45344c43ff5103debdff951cf023c605fd8b0085ba9"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mashup-mods/references/mashup-cases.md",
@@ -26731,8 +27146,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/GUIDE.md",
-  "size": 12335,
-  "sha256": "c6e366de93f8011d24e5fe7ff46c7ad50a42bad67c46d0956beb310927639a2f"
+  "size": 12416,
+  "sha256": "6917f5983b8c99950f41012a2c225d2f8d3617664a6c79a914677c631afe0eaa"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/references/case-studies.md",
@@ -26773,6 +27188,11 @@
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/references/engines/isaac.md",
   "size": 13308,
   "sha256": "abe166df99160a2306fe45ddb76ef45328e3bee95ec17db64ae37af00b10bd36"
+ },
+ {
+  "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/references/engines/iw-engine.md",
+  "size": 15459,
+  "sha256": "a76061e0cc8d2561948ac649f2411ff98baeaa02651c8c1d4b3b45fe9fbe11a3"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/references/engines/minecraft.md",
@@ -26816,8 +27236,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/mod-any-game/references/safety.md",
-  "size": 5447,
-  "sha256": "a027c399b8eea68b7aa1f33301246943a96530efbd579137e67baa4597477524"
+  "size": 5750,
+  "sha256": "7efff1c779d63488f588e9595d8bc59f3621fc6022c8d109c9c34c7e654abb4a"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/port-a-mod/GUIDE.md",
@@ -26836,8 +27256,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/reverse-engineering/GUIDE.md",
-  "size": 6501,
-  "sha256": "84fcca4f8b9d8f5216f891400c93afb19fdb1091eb058203d65afbed07ab95fb"
+  "size": 7114,
+  "sha256": "fcab92c4d05a804abe74fdff5bc73f2daffbeecf0ee764db01bfb3d565d66135"
  },
  {
   "path": "_CANONICAL-SKILLS/universal-modder/references/upstream/reverse-engineering/references/ue3-packages/README.md",
@@ -27151,8 +27571,8 @@
  },
  {
   "path": "docs/GUIDE.md",
-  "size": 83928,
-  "sha256": "808f836cc3bb6e6722fceb4ee706d634d6e3d973b8f8cc392dd90fe0cd40c066"
+  "size": 84072,
+  "sha256": "dd2b9719b1da10f15ccdc103fe14e2d66d6d6789d49cbe2b4a5e35d5f7931fba"
  },
  {
   "path": "docs/HERMES-FILE-GUARD-BUG.md",
@@ -27186,23 +27606,23 @@
  },
  {
   "path": "docs/RECOMMENDED-GAME-DEV-SKILLS.md",
-  "size": 7438,
-  "sha256": "bbe1d1b94f5cbe35f40c9c945b2870256bbdbbd7683a62f88a200980761c76ec"
+  "size": 7706,
+  "sha256": "267d11c5711a6d0cab6d4d5ec823d79b0ada47b7ccb2e56da472f7fe234af911"
  },
  {
   "path": "docs/RECOMMENDED-SKILLS-PACKS.md",
   "size": 7236,
-  "sha256": "d9a98861e9eb39603ec53e9c102b0bcf2428860b62314a711481b59cac581cf6"
+  "sha256": "c1fe591c0d0fa50ae5ed9a599102e9edac5463b101584abd7c35c2c15ae45264"
  },
  {
   "path": "docs/TASK-ROUTING.md",
-  "size": 4464,
-  "sha256": "67086657c696fbb1914350ce903a09e5923bb8d60b6e0c50918eb127b68a9966"
+  "size": 4502,
+  "sha256": "fbe6b40ca00368de7c4ac8e55568463e3332464bf3bbceca122ffe203a728b59"
  },
  {
   "path": "docs/TOOL-EVALUATIONS.md",
-  "size": 61949,
-  "sha256": "49c74381108f12d9fef95e34d31c5b7a45c5138c03af90134e2ae557e92d4e0e"
+  "size": 68434,
+  "sha256": "77ec623445df678a3b11d46672fee1c9213c196957cee6ea83fea96fdd247c3d"
  },
  {
   "path": "docs/TOOLING-MATRIX.md",
@@ -28278,6 +28698,16 @@
   "path": "docs/history/V8.40.3-CHANGELOG.md",
   "size": 909,
   "sha256": "ddff41ba9924cfc11aa5bc5d4cf5bc5a643fc3d06680a6b79fbd84ada8692bec"
+ },
+ {
+  "path": "docs/history/V8.41.0-CHANGELOG.md",
+  "size": 1811,
+  "sha256": "b917ce393070614e4026c8addad6cb73696b9d6db04d0715eafd377bb4d4c519"
+ },
+ {
+  "path": "docs/history/V8.42.0-CHANGELOG.md",
+  "size": 3344,
+  "sha256": "ff41cd342cc3fe06224ed5074313f10929d2ec13a94cef84af8451722024dd43"
  },
  {
   "path": "docs/history/V8.5.0-CHANGELOG.md",

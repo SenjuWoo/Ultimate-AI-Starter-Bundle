@@ -569,11 +569,11 @@ OpenRouter fallback, vision and compression settings are not local-only.
 Installed by default with a **bundle-owned narrow hook**; RTK's broad upstream
 hook remains disabled. [RTK](https://github.com/rtk-ai/rtk) (Apache-2.0, single
 Rust binary) filters noisy dev commands. Measured here
-**at rtk 1.1.0** (Apache-2.0 OSS edition) against **pinned tag ranges**, so the corpus cannot drift:
+**at rtk 1.2.0** (Apache-2.0 OSS edition) against **pinned tag ranges**, so the corpus cannot drift:
 
 | Command | Raw | Through rtk | Saved |
 |---|---|---|---|
-| `git log v8.6.1..v8.6.5` | 14,250 B | 1,660 B | **88%** |
+| `git log v8.6.1..v8.6.5` | 14,250 B | 1,662 B | **88%** |
 | `git diff v8.6.1..v8.6.5` | 430,285 B | 55,870 B | **87%** |
 | `git diff v8.6.4..v8.6.5` | 33,453 B | 26,820 B | **20%** |
 | `git log --stat -20 v8.6.5` | 102,301 B | 102,301 B | **0%** |
@@ -585,7 +585,7 @@ this tool is not honest -- an earlier version of this table quoted 97% from
 **Pin the tool version too, not just the corpus.** That last row used to read
 **95%**, measured at rtk 0.45.0. Upgrading to 0.46.0 dropped it to zero, and
 1.0.0 still passes `--stat` straight through. All four rows were remeasured
-on 2026-10-13; these are output bytes, not billed token savings. The old `git log --stat -20`
+on 2026-10-13 and again on 2026-11-13 at 1.2.0 (1.1.0 gives the same bytes); these are output bytes, not billed token savings. The old `git log --stat -20`
 row also moved with HEAD despite the rest of the table being pinned; it now
 ends at `v8.6.5`. Pinning only the corpus or only the tool is insufficient.
 
@@ -944,7 +944,7 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | `godot-mcp` | [Godot MCP](https://github.com/Coding-Solo/godot-mcp) | Editor profile; Godot prerequisite |
 | `unity-mcp` | [Unity MCP](https://github.com/IvanMurzak/Unity-MCP) | Project package/generated executable prerequisite |
 | `rtk` | [RTK](https://github.com/rtk-ai/rtk) | Default CLI; narrow routing |
-| `omni` | [OMNI](https://github.com/fajarhide/omni) | Catalog/evaluation only; not installed |
+| `omni` | [OMNI, now Contexere](https://github.com/fajarhide/contexere) | Catalog/evaluation only; not installed |
 | `windows-mcp` | [Windows MCP](https://github.com/CursorTouch/Windows-MCP) | Manual opt-in; OFF by default |
 | `super-mcp-router` | [Super MCP Router](https://github.com/mindstone/Super-MCP) | Evaluated catalog entry; no default router wiring |
 | `playwright-cli` | [Playwright CLI](https://github.com/microsoft/playwright-cli) | Default CLI; browser installation separate |
@@ -1205,11 +1205,11 @@ are covered in `local-model-ops/references/sillytavern.md`.
 Installed by default with a **bundle-owned narrow hook**; RTK's broad upstream
 hook remains disabled. [RTK](https://github.com/rtk-ai/rtk) (Apache-2.0, single
 Rust binary) filters noisy dev commands. Measured here
-**at rtk 1.1.0** (Apache-2.0 OSS edition) against **pinned tag ranges**, so the corpus cannot drift:
+**at rtk 1.2.0** (Apache-2.0 OSS edition) against **pinned tag ranges**, so the corpus cannot drift:
 
 | Command | Raw | Through rtk | Saved |
 |---|---|---|---|
-| `git log v8.6.1..v8.6.5` | 14,250 B | 1,660 B | **88%** |
+| `git log v8.6.1..v8.6.5` | 14,250 B | 1,662 B | **88%** |
 | `git diff v8.6.1..v8.6.5` | 430,285 B | 55,870 B | **87%** |
 | `git diff v8.6.4..v8.6.5` | 33,453 B | 26,820 B | **20%** |
 | `git log --stat -20 v8.6.5` | 102,301 B | 102,301 B | **0%** |
@@ -1221,7 +1221,7 @@ this tool is not honest -- an earlier version of this table quoted 97% from
 **Pin the tool version too, not just the corpus.** That last row used to read
 **95%**, measured at rtk 0.45.0. Upgrading to 0.46.0 dropped it to zero, and
 1.0.0 still passes `--stat` straight through. All four rows were remeasured
-on 2026-10-13; these are output bytes, not billed token savings. The old `git log --stat -20`
+on 2026-10-13 and again on 2026-11-13 at 1.2.0 (1.1.0 gives the same bytes); these are output bytes, not billed token savings. The old `git log --stat -20`
 row also moved with HEAD despite the rest of the table being pinned; it now
 ends at `v8.6.5`. Pinning only the corpus or only the tool is insufficient.
 

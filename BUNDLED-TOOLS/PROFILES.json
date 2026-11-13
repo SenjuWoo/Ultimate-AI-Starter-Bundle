@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "catalog_version": "8.41.0",
-  "pack_version": "8.41.0",
+  "catalog_version": "8.42.0",
+  "pack_version": "8.42.0",
   "updated_utc": "2026-10-18",
   "why": "Keep the optional MCP surface scoped to task evidence. Claude and Grok support project scope; Codex reads trusted-project .codex/config.toml (native 0.152.0 verified). Hermes uses native named profiles; Kimi needs explicit global opt-in. Schema bytes are not per-turn bills: native filtering, deferred discovery, caching and actual calls affect usage.",
   "reads": "TOOLS/Set-McpProfile.ps1",
@@ -343,7 +343,7 @@
           "command": "npx",
           "args": [
             "-y",
-            "@playwright/mcp@0.0.83"
+            "@playwright/mcp@0.0.85"
           ],
           "providers": [
             "Codex",
@@ -376,7 +376,7 @@
           "command": "npx",
           "args": [
             "-y",
-            "chrome-devtools-mcp@1.12.0",
+            "chrome-devtools-mcp@1.13.0",
             "--no-usage-statistics"
           ],
           "note": "console, network, performance traces and DOM from a live Chrome",
@@ -399,7 +399,7 @@
           "command": "npx",
           "args": [
             "-y",
-            "shadcn@4.22.1",
+            "shadcn@4.23.0",
             "mcp"
           ],
           "note": "search, inspect and add components from configured shadcn registries (~1,124 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
@@ -623,7 +623,7 @@
           "catalog_component": "blender-mcp",
           "command": "uvx",
           "args": [
-            "mcp-for-blender@2.2.4"
+            "mcp-for-blender@2.2.9"
           ],
           "env_static": {
             "BLENDER_MCP_DISABLE_TELEMETRY": "true",
@@ -640,10 +640,10 @@
               "%LOCALAPPDATA%\\Programs\\Blender Foundation\\*\\blender.exe"
             ]
           },
-          "editor_side": "uvx mcp-for-blender@2.2.4 install-addon",
+          "editor_side": "uvx mcp-for-blender@2.2.9 install-addon --addons-dir <Blender user folder>\\<version>\\scripts\\addons",
           "editor_side_note": "The server talks to an addon inside Blender. `install-addon` copies it into the user addons folder, but ENABLING it is inside the editor process and cannot be done from outside -- so Set-McpProfile prints the command rather than pretending it ran it. 'The MCP executable starts' and 'the addon is connected' are different claims: the server answers initialize with no Blender running at all. Only a tool call that reaches the scene proves the second.",
           "requires_note": "Discovered, never hardcoded. 7.9.6 listed a Steam path on this maintainer's own drive letter, which could not match on anybody else's machine -- the exact class of path this pack forbids elsewhere. The first two entries are what `uvx mcp-for-blender@2.0.0 addon-paths` reports: Blender creates that user directory on first run whatever the install source, Steam included.",
-          "telemetry_note": "Measured 2026-09-17: 2.0.0 answers initialize/tools-list with 31 tools and 35,646 schema bytes (~8,912 tokens) while BLENDER_MCP_DISABLE_TELEMETRY=true logs the supported opt-out and BLENDER_MCP_SAFE_MODE=true validates generated Python before it reaches Blender. Safe mode preserves normal scene/render/save/import-export work and blocks interpreter, process, network and persistence escape paths."
+          "telemetry_note": "Measured 2026-11-13: 2.2.9 with BLENDER_MCP_SAFE_MODE=true answers initialize/tools-list with 10 tools and 18,751 schema bytes; BLENDER_MCP_DISABLE_TELEMETRY=true is the supported opt-out. Safe mode validates generated Python before it reaches Blender and blocks interpreter, process, network and persistence escape paths while normal scene/render/save/import-export work stays available."
         }
       ]
     },
@@ -709,15 +709,20 @@
           "catalog_component": "unity-mcp",
           "command": "{project}\\Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe",
           "args": [
-            "client-transport=stdio"
+            "port={unity_port}",
+            "plugin-timeout={unity_timeout_ms}",
+            "client-transport=stdio",
+            "authorization=none"
           ],
           "note": "live Unity editor control (per-project server binary)",
           "key": null,
           "requires": {
-            "project_rel": "Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe"
+            "project_rel": "Library\\mcp-server\\win-x64\\gamedev-mcp-server.exe",
+            "unity_local_stdio": true
           },
-          "editor_side": "npx -y unity-mcp-cli@0.91.0 install-plugin \"{project}\"",
-          "requires_note": "Unity-MCP does not ship a machine-wide server. The executable is generated inside the project's Library folder by the Unity package, so there is no global registration to write -- the entry is project-scoped by construction, and the command is the resolved absolute path for that one project. Until the package is installed the exe does not exist, and the profile refuses rather than writing a path that is not there."
+          "editor_side": "npx -y unity-mcp-cli@1.11.1 install-plugin \"{project}\" --plugin-version 1.11.1, open the project in Unity once, then Window > AI Game Dev: Connection Custom, Transport stdio",
+          "requires_note": "Unity-MCP does not ship a machine-wide server. The executable is generated inside the project's Library folder by the Unity package, so there is no global registration to write -- the entry is project-scoped by construction, and the command is the resolved absolute path for that one project. Until the package is installed the exe does not exist, and the profile refuses rather than writing a path that is not there.",
+          "port_note": "Unity-MCP 1.x gives each project a port derived from its path and stores it in UserSettings/AI-Game-Developer-Config.json; the agent-started server must listen on it, or it advertises no tools. {unity_port} and {unity_timeout_ms} are read from that file when the entry is written. A new 1.x project defaults to the vendor's cloud relay; the entry is written only once the project is set to Custom and stdio."
         }
       ]
     },
@@ -786,7 +791,7 @@
           "args": [
             "--python",
             "3.14",
-            "windows-mcp@0.8.8",
+            "windows-mcp@0.8.9",
             "serve"
           ],
           "note": "desktop control: click, type, shortcuts, PowerShell, registry, filesystem, windows, processes (~5,522 schema tokens at bytes/4; actual loaded/cached/billed tokens are host-dependent)",
@@ -826,7 +831,7 @@
           "command": "npx",
           "args": [
             "-y",
-            "firecrawl-mcp@3.34.1"
+            "firecrawl-mcp@3.40.0"
           ],
           "requires": {
             "command": "npx",

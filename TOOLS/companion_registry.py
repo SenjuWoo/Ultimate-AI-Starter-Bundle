@@ -194,6 +194,17 @@ def _norm(name):
     return "".join(ch for ch in name.lower() if ch.isalnum())
 
 
+def _folder_key(name):
+    """The owner key of a folder name. GitHub's Download ZIP names the folder `<repo>-main` or
+    `<repo>-master`; that suffix says how it was fetched, not what it is."""
+    name = name.rstrip("/\\")
+    for suffix in ("-main", "-master"):
+        if name.lower().endswith(suffix):
+            name = name[:-len(suffix)]
+            break
+    return _norm(name)
+
+
 def owner_names(entry):
     """Folder names this owner legitimately installs under (repo name, and title without spaces)."""
     repo = entry["repo"].rstrip("/").split("/")[-1]
@@ -291,7 +302,7 @@ def checkouts(entry, directories):
     """Git checkouts named after this owner: where its source lives, wherever it was moved."""
     wanted = owner_names(entry)
     return [path for path in directories
-            if _norm(os.path.basename(path.rstrip("/" + os.sep))) in wanted and _is_checkout(path)]
+            if _folder_key(os.path.basename(path.rstrip("/" + os.sep))) in wanted and _is_checkout(path)]
 
 
 def doctor_command(entry, owner_root):
@@ -330,7 +341,7 @@ def discover(entry, search_roots, directories=None):
         return pointer, [pointer], "owner-pointer"
     wanted = owner_names(entry)
     directories = directory_index(search_roots) if directories is None else directories
-    candidates = [p for p in directories if _norm(os.path.basename(p.rstrip("\\/"))) in wanted
+    candidates = [p for p in directories if _folder_key(os.path.basename(p.rstrip("\\/"))) in wanted
                   and all(_marker_present(p, m) for m in markers)]
     return _pick(candidates), candidates, "bounded-discovery"
 
@@ -349,7 +360,7 @@ def find_partial(entry, search_roots):
             continue
         for name in children:
             candidate = os.path.join(root, name)
-            if os.path.isdir(candidate) and _norm(name) in wanted:
+            if os.path.isdir(candidate) and _folder_key(name) in wanted:
                 return candidate
     return None
 
@@ -368,7 +379,7 @@ def status(search_roots, data=None, directories=None):
             # Only an exact owner-named folder counts as a half-install; the game folder must never
             # be mistaken for its Forge.
             wanted = owner_names(entry)
-            path = next((p for p in directories if _norm(os.path.basename(p)) in wanted), None)
+            path = next((p for p in directories if _folder_key(os.path.basename(p)) in wanted), None)
             state = "DISCOVERED" if path else "NOT_FOUND"
         sources = checkouts(entry, directories)
         report[cid] = {"state": state, "path": path, "title": entry["title"],

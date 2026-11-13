@@ -488,15 +488,45 @@ function Get-UabsClaudeProjectKeys {
   return $keys
 }
 
+function Get-UabsUnityMcpSettings {
+  <# The Unity-MCP plugin (1.x) keeps its connection in the project's
+     UserSettings\AI-Game-Developer-Config.json: the port it listens for the
+     agent-started server on (deterministic per project path), the timeout, and
+     whether it connects to the vendor's cloud relay or to a local server. The
+     stdio server must be started with that same port, or it advertises no
+     tools. Returns $null when the project has no readable settings yet. #>
+  param([string]$ProjectPath)
+  if ([string]::IsNullOrEmpty($ProjectPath)) { return $null }
+  $file = Join-UabsPath $ProjectPath.TrimEnd('\', '/') 'UserSettings\AI-Game-Developer-Config.json'
+  if (-not (Test-UabsPath -LiteralPath $file -PathType Leaf)) { return $null }
+  try { $doc = [IO.File]::ReadAllText($file) | ConvertFrom-Json } catch { return $null }
+  $port = $null
+  if ($doc.host -and ([string]$doc.host) -match ':(\d{2,5})(/|$)') { $port = [int]$Matches[1] }
+  if (-not $port) { return $null }
+  $timeout = 10000
+  if ($doc.timeoutMs -and ([string]$doc.timeoutMs) -match '^\d+$') { $timeout = [int]$doc.timeoutMs }
+  return [pscustomobject]@{
+    Port = $port; TimeoutMs = $timeout
+    ConnectionMode = [string]$doc.connectionMode; Transport = [string]$doc.transportMethod; File = $file
+  }
+}
+
 function Expand-UabsTemplate {
-  <# Expand %ENVVAR% and the {project} placeholder. Returns '' for empty input
-     so callers can test the result rather than guarding every call. #>
+  <# Expand %ENVVAR%, the {project} placeholder and the Unity-MCP placeholders
+     {unity_port} / {unity_timeout_ms} read from that project's settings.
+     Returns '' for empty input, or when a placeholder cannot be resolved, so
+     callers can test the result rather than guarding every call. #>
   param([string]$Text, [string]$ProjectPath)
   if ([string]::IsNullOrEmpty($Text)) { return '' }
   $out = [Environment]::ExpandEnvironmentVariables($Text)
   if ($out -like '*{project}*') {
     if ([string]::IsNullOrEmpty($ProjectPath)) { return '' }
     $out = $out.Replace('{project}', $ProjectPath.TrimEnd('\', '/'))
+  }
+  if ($out -like '*{unity_port}*' -or $out -like '*{unity_timeout_ms}*') {
+    $unity = Get-UabsUnityMcpSettings -ProjectPath $ProjectPath
+    if (-not $unity) { return '' }
+    $out = $out.Replace('{unity_port}', [string]$unity.Port).Replace('{unity_timeout_ms}', [string]$unity.TimeoutMs)
   }
   # Fresh Windows installs can own a real Python through py, Hermes, Forge, or
   # WindowsApps without exposing a working bare `python` command on this PATH.
@@ -559,6 +589,18 @@ function Test-UabsServerRequirement {
     $full = Join-UabsPath $ProjectPath $req['project_rel']
     if (-not (Test-UabsPath -LiteralPath $full)) {
       return @{ Ok = $false; Reason = ("not present in this project: {0}" -f $req['project_rel']) }
+    }
+  }
+  if ($req.Contains('unity_local_stdio') -and $req['unity_local_stdio']) {
+    # A new 1.x project connects to the vendor's cloud relay by default. A
+    # local stdio entry would then start a server the editor never reaches,
+    # and the agent sees no tools without being told why.
+    $unity = Get-UabsUnityMcpSettings -ProjectPath $ProjectPath
+    if (-not $unity) {
+      return @{ Ok = $false; Reason = 'Unity-MCP has not written UserSettings\AI-Game-Developer-Config.json yet: open the project in Unity once after installing the plugin' }
+    }
+    if ($unity.ConnectionMode -ine 'Custom' -or $unity.Transport -ine 'stdio') {
+      return @{ Ok = $false; Reason = ("Unity-MCP is set to connection '{0}', transport '{1}'; a local entry needs Custom and stdio (in Unity: Window > AI Game Dev)" -f $unity.ConnectionMode, $unity.Transport) }
     }
   }
   return @{ Ok = $true; Reason = '' }
