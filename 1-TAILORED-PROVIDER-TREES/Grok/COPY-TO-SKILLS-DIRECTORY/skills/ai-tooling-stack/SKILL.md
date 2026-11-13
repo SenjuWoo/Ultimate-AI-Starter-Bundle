@@ -1,8 +1,8 @@
 ---
 name: ai-tooling-stack
-description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, VRChat avatars, reverse engineering, asset production (AssetForge), ComfyUI images (comfy-forge) and Koikatsu/Honey Select 2 cards (illusion-forge), and the standard a new or upgraded forge must meet. Discover installs before installing.
+description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, ReSkate, VRChat avatars, reverse engineering, asset production (AssetForge), ComfyUI images (comfy-forge) and Koikatsu/Honey Select 2 cards (illusion-forge), and the standard a new or upgraded forge must meet. Discover installs before installing.
 metadata:
-  version: 7.3.0
+  version: 7.5.0
 ---
 
 # AI tooling stack
@@ -43,12 +43,17 @@ the bundle keeps no second copy. If the forge is absent, say which repository ow
 | 2D/3D asset production, validation, game-ready meshes, engine export | `AssetForge` | start with `assetforge probe <file-or-folder>`: it reports triangles, textures, rig and budgets and prints the recipe to run; `mesh-convert` turns FBX/OBJ/USD/.blend into GLB; release ZIP, `Install.ps1`; `assetforge doctor` | `UABS_TOOL_ROOTS` |
 | Anima images on ComfyUI/SwarmUI, checkpoint merges, tagged image folder to training archive, image-to-3D | `comfy-forge` | `TOOLS\image-stack.ps1 status`, then `install` / `generate`; datasets: `python TOOLS/anima_dataset.py inspect --images <folder>`, then build and `validate` (existing tags are kept); finished `.glb` goes to AssetForge via `TOOLS\game-ready.ps1` | `UABS_TOOL_ROOTS` |
 | Koikatsu / Honey Select 2 character cards from a prompt | `illusion-forge` | `Install.ps1`, `forge.cmd doctor`; skill `illusion-forge`; MCP `illusionforge mcp` scoped to the task | `UABS_TOOL_ROOTS`; games via `ILLUSION_KK_ROOT` / `ILLUSION_HS2_ROOT` |
+| ReSkate (skate.) plugins, parks, maps, cosmetics | `reskate-forge` | `Forge.cmd doctor`, then `Forge.cmd plan "<task>"`; needs your own ReSkate Studio copy for compile steps | `UABS_TOOL_ROOTS` |
 
 Building a forge, or bringing an older one up to date: `references/forge-standard.md` is the bar (doctor,
 routing, evidence tiers, reproducible release). Read it before designing the forge's CLI.
 
 Minecraft Fabric/Quilt and other loaders have no forge: use their official docs (docs.fabricmc.net,
 quiltmc.org) and `game-modding`'s laws. A game with no forge uses `game-modding`.
+
+An installed forge answers by name from any folder (`assetforge`, `skyrim-forge`, `ror2-forge`, `re-triage`,
+`comfy-dataset`, ...): the `Owner forge commands` line of `MACHINE-MAP.md` lists the ones on this PC, and
+`python TOOLS\app_paths.py --fix` in the bundle rewrites them after a forge is installed or moved.
 
 ## Rules
 

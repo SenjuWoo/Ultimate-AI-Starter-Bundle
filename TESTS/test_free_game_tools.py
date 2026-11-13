@@ -55,8 +55,43 @@ def test_windows_fallback_does_not_credit_a_different_tool() -> None:
 
     mod.find_tool = no_path
     mod.find_windows_file = only_blender
+    mod.find_installed_app = lambda _key: None
     rows = {row["id"]: row for row in mod.collect()}
     assert rows["blender"]["installed"] is True
     assert rows["blender"]["path"] == blender
     assert rows["godot"]["installed"] is False
     assert rows["godot"]["path"] == ""
+
+
+def test_an_install_that_is_not_on_path_still_counts_and_is_keyed_by_tool() -> None:
+    """A Steam or portable Blender is installed; it must not make Godot installed."""
+    import os
+    spec = importlib.util.spec_from_file_location("free_game_tools", TOOL)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    steam = os.path.join("steam-library", "steamapps", "common", "Blender", "blender.exe")
+    mod.find_tool = lambda _names: None
+    mod.find_windows_file = lambda _folder, _exe: None
+    mod.find_installed_app = lambda key: steam if key == "blender" else None
+    rows = {row["id"]: row for row in mod.collect()}
+    assert rows["blender"]["installed"] is True and rows["blender"]["path"] == steam
+    assert rows["godot"]["installed"] is False
+
+
+def test_a_profile_wrapper_named_like_a_tool_is_not_the_tool() -> None:
+    import os
+    import tempfile
+    spec = importlib.util.spec_from_file_location("free_game_tools", TOOL)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    with tempfile.TemporaryDirectory() as folder:
+        wrapper = os.path.join(folder, "blender.bat")
+        with open(wrapper, "w", encoding="utf-8") as handle:
+            handle.write("@echo off\nhermes -p blender %*\n")
+        real = os.path.join(folder, "godot.bat")
+        with open(real, "w", encoding="utf-8") as handle:
+            handle.write("@echo off\necho a real launcher\n")
+        mod.shutil.which = lambda name: {"blender": wrapper, "godot": real}.get(name)
+        assert mod.find_tool(("blender",)) is None
+        assert mod.find_tool(("godot",)) == real
+

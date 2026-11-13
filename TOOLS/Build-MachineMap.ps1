@@ -122,6 +122,28 @@ if ($python) {
   Add 'Python' @('Shared user runtime: ' + (Short $python) + '; use `python` on PATH or `UABS_PYTHON`. Reuse it; isolate tool dependencies with venv/uv, and do not download a second base interpreter. Embedded app runtimes stay app-owned.')
 }
 
+# Apps and owner forges that answer by name. Read-only here: the installer runs
+# `app_paths.py --fix` before this script; this only records the result.
+$appScript = Join-Path $PackRoot 'TOOLS\app_paths.py'
+if ($python -and (Test-Path -LiteralPath $appScript -PathType Leaf)) {
+  $prevApp = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  try { $appJson = @(& $python $appScript '--json' 2>$null) -join "`n" } finally { $ErrorActionPreference = $prevApp }
+  try { $appReport = $appJson | ConvertFrom-Json } catch { $appReport = $null }
+  if ($appReport) {
+    $byName = @(); $byPath = @()
+    foreach ($app in @($appReport.apps | Where-Object { $_.path })) {
+      # This text rides on every request: a name that works needs no path.
+      $label = $app.command + $(if ($app.version) { ' ' + $app.version } else { '' })
+      if ($app.status -eq 'ok') { $byName += $label } else { $byPath += ($label + ' = ' + (Short $app.path)) }
+    }
+    Add 'Apps on PATH (run by name in any shell; never download a second copy)' $byName
+    Add 'Apps not on PATH (run by path)' $byPath
+    $forgeNames = @($appReport.forges | Where-Object { $_.status -eq 'ok' -or $_.status -eq 'provided' } | ForEach-Object { $_.name })
+    if ($forgeNames.Count) { Add 'Owner forge commands on PATH (`<name> --help` first)' $forgeNames }
+    Add 'Repair a name or PATH' @('python ' + (Short $appScript) + ' --fix')
+  }
+}
+
 $text = "## Machine map (generated " + (Get-Date -Format 'yyyy-MM-dd') + " by the bundle installer; your own folders go in " + (Short (Join-Path $ProfileRoot 'PROFILE.md')) + ")`n" + ($lines -join "`n") + "`n"
 if ($Print) { Write-Output $text; return }
 New-Item -ItemType Directory -Force -Path $ProfileRoot | Out-Null

@@ -95,6 +95,7 @@ def validate(data):
     companions = data.get("companions")
     if not isinstance(companions, dict) or not companions:
         raise RegistryError("no companions")
+    launch_names = set()
     for cid, entry in companions.items():
         if not isinstance(entry, dict):
             raise RegistryError("%s: not an object" % cid)
@@ -130,6 +131,22 @@ def validate(data):
                 raise RegistryError("%s: doctor must name one script or a module" % cid)
             for script in scripts:
                 _check_relative(cid, script, "doctor script")
+        # Optional by-name launchers: the file inside the owner that TOOLS/app_paths.py
+        # exposes as a command. A name is one word; the file stays inside the owner.
+        launch = entry.get("launch", [])
+        if not isinstance(launch, list):
+            raise RegistryError("%s: launch must be a list" % cid)
+        for item in launch:
+            if not isinstance(item, dict) or set(item) != {"name", "launcher"}:
+                raise RegistryError("%s: a launch entry is {name, launcher}" % cid)
+            if not re.fullmatch(r"[a-z0-9][a-z0-9-]{1,39}", str(item["name"])):
+                raise RegistryError("%s: launch name %r is not a plain command name" % (cid, item["name"]))
+            if item["name"] in launch_names:
+                raise RegistryError("%s: launch name %r is declared twice" % (cid, item["name"]))
+            launch_names.add(item["name"])
+            _check_relative(cid, item["launcher"], "launcher")
+            if not str(item["launcher"]).lower().endswith((".cmd", ".bat", ".ps1", ".py", ".exe")):
+                raise RegistryError("%s: launcher %r is not a script or program" % (cid, item["launcher"]))
     recommended = data.get("recommended") or {}
     if not isinstance(recommended, dict):
         raise RegistryError("recommended must be an object")

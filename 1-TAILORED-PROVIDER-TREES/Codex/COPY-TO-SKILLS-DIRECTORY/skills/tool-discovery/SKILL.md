@@ -2,7 +2,7 @@
 name: tool-discovery
 description: Resolve optional AI tooling on the current machine without assuming drive letters or usernames. Use at session start, when a tool path is unknown, or before recommending install.
 metadata:
-  version: 6.0.0
+  version: 6.1.0
 ---
 
 # Tool discovery (portable)
@@ -54,6 +54,32 @@ Treat pasted roots as hints. When the user says a path is "just suggestions" and
    pack's installer or the owning repository's installer** (a fake or assumed
    install is still forbidden), then run it. Only when no supported install
    exists, say so plainly.
+
+## Apps and owner forges by name
+
+An installed app that does not answer by its name is not missing. Before
+downloading anything, read the `Apps on PATH`, `Apps not on PATH` and `Owner
+forge commands` lines of `MACHINE-MAP.md`, then run the name. When a name
+fails or starts the wrong program, run the bundle's own tool (its path is the
+`Repair a name or PATH` line of the map):
+
+```text
+python TOOLS\app_paths.py          what each name starts, and why
+python TOOLS\app_paths.py --fix    repair it; the previous user PATH is saved first
+```
+
+It finds Blender, FFmpeg, Godot, GIMP, Krita, Inkscape, ImageMagick, 7-Zip,
+the Unity CLI, codebase-memory-mcp and MSBuild through the uninstall registry,
+every Steam library, the usual install folders and your tool roots. `--fix`
+appends the real folder to the user PATH, moves a Hermes profile wrapper that
+took a real program's name (`blender.bat` running `hermes -p blender`) to
+`hermes-<name>`, and writes one launcher per installed forge (`assetforge`,
+`skyrim-forge`, `re-triage`, ...). It never installs or downloads.
+
+Two traps it exists for: a POSIX shell never resolves a `.bat` or `.cmd`, so
+`command not found` in Git Bash can sit next to a working name in PowerShell;
+and a session keeps the PATH it started with, so after a repair use the full
+path from the report until the AI app is restarted.
 
 ## Host capability inventory
 

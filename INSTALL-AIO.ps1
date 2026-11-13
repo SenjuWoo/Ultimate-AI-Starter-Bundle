@@ -181,7 +181,14 @@ param(
   # BUNDLED-TOOLS\optional-profiles when the user has none yet.
   [string]$ProfileRoot = '',
   [string]$ProfileTemplate = '',
-  [switch]$SkipProfile
+  [switch]$SkipProfile,
+  # Installed apps (Blender, the Unity CLI, ...) and owner forges answer by
+  # name: TOOLS\app_paths.py appends a found app's folder to the user PATH,
+  # moves a Hermes profile wrapper off a real program's name and writes the
+  # forge launchers. -SkipAppPaths leaves PATH alone; -PrunePath also drops
+  # user PATH folders that no longer exist. The previous PATH is saved first.
+  [switch]$SkipAppPaths,
+  [switch]$PrunePath
 )
 
 # Match -Providers: powershell -File forwards comma-separated names as one string.
@@ -1715,6 +1722,29 @@ if (-not $ToolsOnly -and ($Providers -contains 'Codex')) {
   }
 }
 
+# ---------- Apps and owner forges by name ----------
+# Before the machine map, so the map records what a bare name starts. Its own
+# block: TESTS\Test-UserProfile.ps1 executes the instruction section below for
+# real, and that test must never reach a step that edits PATH.
+if (-not $ToolsOnly -and -not $SkipAppPaths) {
+  try {
+    $appPython = Get-UabsPythonExecutable
+    $appScript = Join-Path $PackRoot 'TOOLS\app_paths.py'
+    if ($appPython -and (Test-Path -LiteralPath $appScript -PathType Leaf)) {
+      $appArgs = @($appScript, '--fix', '--no-version')
+      if ($PrunePath) { $appArgs += '--prune-dead' }
+      $prevEapApp = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+      try { $appLines = @(& $appPython @appArgs 2>&1 | ForEach-Object { [string]$_ }) } finally { $ErrorActionPreference = $prevEapApp }
+      $appExit = $LASTEXITCODE
+      Add-UabsDetails -Title 'Apps and forges by name' -Lines $appLines
+      $appDone = @($appLines | Where-Object { $_ -match '^\s{2}\S' })
+      foreach ($line in $appDone) { Write-UabsOk $line.Trim() }
+      if ($appExit -ne 0) { Write-UabsWarn ('apps by name: app_paths.py exited ' + $appExit + ' (details log)') }
+      elseif (-not $appDone.Count) { Write-UabsOk 'installed apps and owner forges already answer by name' }
+    }
+  } catch { Write-UabsWarn ('apps by name: ' + $_.Exception.Message) }
+}
+
 # ---------- Pack instruction blocks ----------
 # Each enabled pack adds one short marked block to every provider instruction
 # file; a disabled pack's block is removed. An exact copy of an older bundle's
@@ -2886,6 +2916,22 @@ if (-not $ToolsOnly) {
     } catch {
       Write-UabsWarn ('Antigravity plugins: ' + $_.Exception.Message)
     }
+  }
+
+  # A machine map that Hermes imported into its memory is frozen on the day of
+  # the import and repeated to every profile; point it at the live file.
+  if (-not $SkillsOnly -and -not $SkipHermesConfig -and ($Providers -contains 'Hermes')) {
+    try {
+      $memPython = Get-UabsPythonExecutable
+      $memHome = Get-UabsProviderHome -Provider 'Hermes' -Catalog $catalog
+      if ($memPython -and $memHome -and (Test-Path -LiteralPath $memHome)) {
+        $prevEapMem = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+        try { $memLines = @(& $memPython (Join-Path $PackRoot 'TOOLS\hermes_memory.py') '--home' $memHome '--fix' 2>&1 | ForEach-Object { [string]$_ }) } finally { $ErrorActionPreference = $prevEapMem }
+        Add-UabsDetails -Title 'Hermes memory' -Lines $memLines
+        $memFixed = @($memLines | Where-Object { $_ -match 'cleaned, backup' }).Count
+        if ($memFixed) { Write-UabsOk ('Hermes: replaced a frozen machine map in ' + $memFixed + ' memory file(s) with a pointer to the live one (backups beside them)') }
+      }
+    } catch { Write-UabsWarn ('Hermes memory: ' + $_.Exception.Message) }
   }
 
   if (-not $SkillsOnly -and -not $SkipMcpWire -and ($Providers -contains 'Hermes') -and (Test-Path -LiteralPath $hermesProfiles)) {

@@ -97,6 +97,28 @@ Nothing there is ever part of a repository. Start from the shipped template with
 where your own usage goes, run `python TOOLS\usage_report.py`
 ([what it found here](docs/USAGE-ECONOMY.md)).
 
+### Apps and forges by name
+
+An agent types `blender` or `assetforge` and expects a program. Steam, portable
+and per-user installs do not add themselves to PATH, a Hermes profile named
+`blender` creates a `blender.bat` that starts Hermes instead, and a forge is a
+checkout with a launcher inside it. Each install therefore runs
+`TOOLS\app_paths.py --fix`: it finds the installed apps (Blender, FFmpeg, Godot,
+GIMP, Krita, Inkscape, ImageMagick, 7-Zip, the Unity CLI, codebase-memory-mcp),
+appends the real folder to your user PATH, renames a profile wrapper that took
+a real program's name to `hermes-<name>`, and writes a launcher for every
+installed forge into the bundle's command folder. The previous PATH is saved
+under the bundle's `backups` folder before any change, nothing is downloaded,
+and the result is listed in `MACHINE-MAP.md`. `-SkipAppPaths` turns the step
+off; `-PrunePath` also removes user PATH folders that no longer exist. Run
+`python TOOLS\app_paths.py` yourself to see what each name starts. Restart AI
+apps and terminals afterwards: a running program keeps the PATH it started with.
+
+If Hermes imported an instruction file this bundle wrote, its memory holds a
+frozen copy of the machine map that every profile repeats. The install replaces
+that block with a pointer to the live file (`TOOLS\hermes_memory.py --fix`, a
+backup beside each file) and leaves every other memory entry alone.
+
 See [private preferences versus public defaults](docs/OPERATOR-PROFILES.md)
 for evidence-based tuning without leaking machine paths or bloating context.
 

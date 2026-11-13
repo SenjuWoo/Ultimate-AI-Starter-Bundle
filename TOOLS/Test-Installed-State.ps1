@@ -1244,7 +1244,8 @@ if (Test-Path -LiteralPath $ponyScriptPath -PathType Leaf) {
 # ---------------------------------------------------------- dead PATH entries ---
 # A PATH entry whose folder is gone is probed on every command lookup and hides
 # which runtime is the live one. Moved tool folders and removed SDKs leave them
-# behind. Reported only: the pack did not add most of them and removes none.
+# behind. Reported with the one command that removes them; the installer does
+# it only when asked (-PrunePath).
 $deadPathEntries = @()
 foreach ($pathScope in 'User', 'Machine') {
   $pathRaw = [Environment]::GetEnvironmentVariable('Path', $pathScope)
@@ -1259,7 +1260,46 @@ foreach ($pathScope in 'User', 'Machine') {
 if ($deadPathEntries.Count) {
   $deadShown = @($deadPathEntries | Select-Object -First 6 | ForEach-Object { $_.entry }) -join '; '
   $deadMore = if ($deadPathEntries.Count -gt 6) { ' (+{0} more in the report)' -f ($deadPathEntries.Count - 6) } else { '' }
-  Warn ('{0} PATH entr{1} name a folder that no longer exists: {2}{3}. Remove them under Environment Variables; the pack leaves PATH as it found it.' -f $deadPathEntries.Count, $(if ($deadPathEntries.Count -eq 1) { 'y' } else { 'ies' }), $deadShown, $deadMore)
+  Warn ('{0} PATH entr{1} name a folder that no longer exists: {2}{3}. Run `python TOOLS\app_paths.py --fix --prune-dead` in the bundle (the old PATH is saved first), or the installer with -PrunePath; machine-wide entries need Environment Variables as an administrator.' -f $deadPathEntries.Count, $(if ($deadPathEntries.Count -eq 1) { 'y' } else { 'ies' }), $deadShown, $deadMore)
+}
+
+# An installed app or owner forge that does not answer by its name sends an
+# agent off to download a second copy. app_paths.py reports it; --fix repairs it.
+$appNameIssues = @()
+$appNameScript = Join-Path $PSScriptRoot 'app_paths.py'
+$appNamePython = Get-UabsPythonExecutable
+if ($appNamePython -and (Test-Path -LiteralPath $appNameScript -PathType Leaf)) {
+  $prevEapA = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  $appNameJson = @(& $appNamePython $appNameScript '--json' '--no-version' 2>$null) -join "`n"
+  $ErrorActionPreference = $prevEapA
+  try { $appNameReport = $appNameJson | ConvertFrom-Json } catch { $appNameReport = $null }
+  if ($appNameReport) {
+    foreach ($row in @($appNameReport.apps | Where-Object { $_.status -eq 'shadowed' -or $_.status -eq 'not-on-path' })) {
+      $why = if ($row.status -eq 'shadowed') { 'another file answers first (' + $row.shadow.path + ')' } else { 'its folder is not on PATH' }
+      Warn ("'{0}' is installed at {1} but typing its name does not start it: {2}. Run `python TOOLS\app_paths.py --fix` in the bundle." -f $row.command, $row.path, $why)
+      $appNameIssues += [ordered]@{ command = $row.command; path = $row.path; status = $row.status }
+    }
+    $noLauncher = @($appNameReport.forges | Where-Object { $_.status -eq 'needs-launcher' } | ForEach-Object { $_.name })
+    if ($noLauncher.Count) {
+      Warn ('owner forge command(s) without a launcher: ' + ($noLauncher -join ', ') + '. Run `python TOOLS\app_paths.py --fix` in the bundle.')
+      $appNameIssues += [ordered]@{ command = ($noLauncher -join ','); path = $appNameReport.shim_dir; status = 'needs-launcher' }
+    }
+  }
+}
+
+# A machine map imported into Hermes memory is frozen and repeated to every profile.
+$hermesMemoryIssues = @()
+$hermesMemoryScript = Join-Path $PSScriptRoot 'hermes_memory.py'
+$hermesMemoryHome = Join-Path $env:LOCALAPPDATA 'hermes'
+if ($appNamePython -and (Test-Path -LiteralPath $hermesMemoryScript -PathType Leaf) -and (Test-Path -LiteralPath $hermesMemoryHome)) {
+  $prevEapM = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  $hermesMemoryJson = @(& $appNamePython $hermesMemoryScript '--home' $hermesMemoryHome '--json' 2>$null) -join "`n"
+  $ErrorActionPreference = $prevEapM
+  try { $hermesMemoryReport = $hermesMemoryJson | ConvertFrom-Json } catch { $hermesMemoryReport = $null }
+  if ($hermesMemoryReport -and $hermesMemoryReport.affected) {
+    $hermesMemoryIssues = @($hermesMemoryReport.files | Where-Object { $_.imported } | ForEach-Object { $_.path })
+    Warn ('{0} Hermes memory file(s) hold a frozen copy of the machine map (old paths repeated to every session). Run `python TOOLS\hermes_memory.py --fix` in the bundle; a backup is written beside each file.' -f $hermesMemoryIssues.Count)
+  }
 }
 
 # A code graph keeps answering after its project folder is moved or renamed, and
@@ -1288,6 +1328,8 @@ $report['codex_hook_issues'] = @($codexHookIssues)
 $report['mcp_launch_path_issues'] = @($mcpPathIssues)
 $report['stale_graph_roots'] = @($staleGraphRoots)
 $report['dead_path_entries'] = @($deadPathEntries)
+$report['app_name_issues'] = @($appNameIssues)
+$report['hermes_memory_issues'] = @($hermesMemoryIssues)
 $enc=New-Object System.Text.UTF8Encoding($false); [IO.File]::WriteAllText($reportPath,($report|ConvertTo-Json -Depth 8),$enc)
 if($errors.Count){Write-UabsBad ("Installed-state doctor FAIL ($($errors.Count) error(s)). Report: $reportPath");exit 1}
 Write-UabsOk ("Installed-state doctor PASS. Report: $reportPath")

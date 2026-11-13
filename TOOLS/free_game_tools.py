@@ -80,9 +80,40 @@ def expand(path: str) -> str:
 def find_tool(names: tuple[str, ...]) -> str | None:
     for name in names:
         hit = shutil.which(name)
-        if hit:
+        if hit and not _is_profile_wrapper(hit):
             return hit
     return None
+
+
+def _app_paths():
+    """The bundle's shared app discovery; absent when this file is run on its own."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    if here not in sys.path:
+        sys.path.insert(0, here)
+    try:
+        import app_paths
+    except Exception:  # noqa: BLE001 - the plain PATH probe above still works
+        return None
+    return app_paths
+
+
+def _is_profile_wrapper(path: str) -> bool:
+    """`blender.bat` that starts a Hermes profile is not Blender."""
+    module = _app_paths()
+    return bool(module and module.hermes_wrapper(path))
+
+
+def find_installed_app(key: str) -> str | None:
+    """An install that is not on PATH: Steam libraries, the uninstall registry, tool roots."""
+    module = _app_paths()
+    app = next((row for row in module.APPS if row["id"] == key), None) if module else None
+    if not app:
+        return None
+    try:
+        found = module.candidates(app, module.open_store(), module.Machine())
+    except Exception:  # noqa: BLE001 - a probe never fails the report
+        return None
+    return found[0][0] if found else None
 
 
 def find_windows_file(folder: str, exe: str) -> str | None:
@@ -108,6 +139,8 @@ def collect() -> list[dict]:
                 path = find_windows_file(folder, exe)
                 if path:
                     break
+        if not path:
+            path = find_installed_app(key)
         rows.append({
             "id": key,
             "label": label,

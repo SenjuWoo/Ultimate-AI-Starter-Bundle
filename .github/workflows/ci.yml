@@ -124,6 +124,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_companion_registry.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_app_paths.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_hermes_memory.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_upstream_drift.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_recommended_skills.py

@@ -39,7 +39,13 @@
         "linux",
         "macos"
       ],
-      "notes": "Owns the Roblox skill catalog and knowledge/vendor; the bundle never copies it. Studio work needs the separate official Roblox Studio MCP."
+      "notes": "Owns the Roblox skill catalog and knowledge/vendor; the bundle never copies it. Studio work needs the separate official Roblox Studio MCP.",
+      "launch": [
+        {
+          "name": "rbforge",
+          "launcher": "src/rbforge_cli.py"
+        }
+      ]
     },
     "skyrim-forge": {
       "root_env": "SKYRIM_FORGE_ROOT",
@@ -79,7 +85,13 @@
       "platforms": [
         "windows"
       ],
-      "notes": "Delegated from TOOLS/Install-SkyrimForge.ps1; the owner doctor is the health gate."
+      "notes": "Delegated from TOOLS/Install-SkyrimForge.ps1; the owner doctor is the health gate.",
+      "launch": [
+        {
+          "name": "skyrim-forge",
+          "launcher": "forge.cmd"
+        }
+      ]
     },
     "reverse-this": {
       "title": "Reverse THIS!",
@@ -121,7 +133,13 @@
       "platforms": [
         "windows"
       ],
-      "notes": "Installs to %LOCALAPPDATA%\\ReverseThis; kit.json is the owner pointer other tools read. The release ZIP and entrypoints are Install-Modkit.ps1 / Update-ReverseThis.ps1 / Install-Modkit.ps1 -Doctor."
+      "notes": "Installs to %LOCALAPPDATA%\\ReverseThis; kit.json is the owner pointer other tools read. The release ZIP and entrypoints are Install-Modkit.ps1 / Update-ReverseThis.ps1 / Install-Modkit.ps1 -Doctor.",
+      "launch": [
+        {
+          "name": "re-triage",
+          "launcher": "sandbox/bin/re-triage.cmd"
+        }
+      ]
     },
     "ror2-forge": {
       "root_env": "ROR2_FORGE_ROOT",
@@ -136,7 +154,13 @@
         "entrypoint": null,
         "note": "forge.cmd updates only checks for a newer Forge; it does not install one"
       },
-      "doctor": {"entrypoint": ["python", "forge.py", "doctor"]},
+      "doctor": {
+        "entrypoint": [
+          "python",
+          "forge.py",
+          "doctor"
+        ]
+      },
       "markers": [
         "forge.cmd",
         "ror2forge"
@@ -155,7 +179,13 @@
       "platforms": [
         "windows"
       ],
-      "notes": "MCP is opt-in and must stay scoped; game discovery is a separate check from CLI health."
+      "notes": "MCP is opt-in and must stay scoped; game discovery is a separate check from CLI health.",
+      "launch": [
+        {
+          "name": "ror2-forge",
+          "launcher": "forge.cmd"
+        }
+      ]
     },
     "minecraft-forge": {
       "title": "Minecraft Forge",
@@ -169,7 +199,14 @@
         "entrypoint": null,
         "note": "source-first project; update from its own source tree"
       },
-      "doctor": {"entrypoint": ["python", "-m", "mcforge", "doctor"]},
+      "doctor": {
+        "entrypoint": [
+          "python",
+          "-m",
+          "mcforge",
+          "doctor"
+        ]
+      },
       "markers": [
         "Minecraft-Forge.ps1"
       ],
@@ -188,7 +225,13 @@
         "windows",
         "linux"
       ],
-      "notes": "Source-first NeoForge workbench. No application release exists; never present it as a downloadable ZIP."
+      "notes": "Source-first NeoForge workbench. No application release exists; never present it as a downloadable ZIP.",
+      "launch": [
+        {
+          "name": "minecraft-forge",
+          "launcher": "Minecraft-Forge.ps1"
+        }
+      ]
     },
     "rimworld-forge": {
       "title": "RimWorldForge",
@@ -266,7 +309,13 @@
       "platforms": [
         "windows"
       ],
-      "notes": "v0.2.3 stages the code, keeps the previous version and rolls back when the doctor fails; the packs-v1 content release is marked prerelease, so /releases/latest resolves to the application."
+      "notes": "v0.2.3 stages the code, keeps the previous version and rolls back when the doctor fails; the packs-v1 content release is marked prerelease, so /releases/latest resolves to the application.",
+      "launch": [
+        {
+          "name": "srforge",
+          "launcher": "src/srforge_cli.py"
+        }
+      ]
     },
     "avatar-forge": {
       "title": "AvatarForge",
@@ -407,7 +456,17 @@
       "platforms": [
         "windows"
       ],
-      "notes": "Renamed from comfy-kit in v0.6.0. Anima image presets, checkpoint merges, LoRA captioning and image-to-3D templates; game-ready.ps1 hands a finished .glb to AssetForge. Releases carry no application assets; use the tagged source checkout."
+      "notes": "Renamed from comfy-kit in v0.6.0. Anima image presets, checkpoint merges, LoRA captioning and image-to-3D templates; game-ready.ps1 hands a finished .glb to AssetForge. Releases carry no application assets; use the tagged source checkout.",
+      "launch": [
+        {
+          "name": "comfy-forge",
+          "launcher": "TOOLS/image-stack.ps1"
+        },
+        {
+          "name": "comfy-dataset",
+          "launcher": "TOOLS/dataset.ps1"
+        }
+      ]
     },
     "asset-forge": {
       "title": "AssetForge",
@@ -445,7 +504,13 @@
         "linux",
         "macos"
       ],
-      "notes": "Owns asset production, validation and export. Optional providers are detected, never installed by the bundle."
+      "notes": "Owns asset production, validation and export. Optional providers are detected, never installed by the bundle.",
+      "launch": [
+        {
+          "name": "assetforge",
+          "launcher": "assetforge.cmd"
+        }
+      ]
     },
     "illusion-forge": {
       "title": "Illusion Forge",
@@ -488,7 +553,62 @@
         "linux",
         "macos"
       ],
-      "notes": "Edits Koikatsu and Honey Select 2 character cards from a prompt; the maker plugin is Windows-only and installs only with --approve. Install.ps1 creates .venv with kkloader; forge.cmd doctor runs the doctor in it (the bare python form needs those dependencies). MCP over stdio (illusionforge mcp, working directory = the forge); keep it scoped to that task, never global."
+      "notes": "Edits Koikatsu and Honey Select 2 character cards from a prompt; the maker plugin is Windows-only and installs only with --approve. Install.ps1 creates .venv with kkloader; forge.cmd doctor runs the doctor in it (the bare python form needs those dependencies). MCP over stdio (illusionforge mcp, working directory = the forge); keep it scoped to that task, never global.",
+      "launch": [
+        {
+          "name": "illusion-forge",
+          "launcher": "forge.cmd"
+        }
+      ]
+    },
+    "reskate-forge": {
+      "title": "ReSkateForge",
+      "repo": "https://github.com/SenjuWoo/ReSkate-Forge",
+      "install": {
+        "kind": "source_only",
+        "asset": null,
+        "entrypoint": "Setup-Forge.ps1"
+      },
+      "update": {
+        "entrypoint": null,
+        "note": "update from its own source tree with git"
+      },
+      "doctor": {
+        "entrypoint": [
+          "python",
+          "-m",
+          "reskateforge",
+          "doctor"
+        ],
+        "cwd": "."
+      },
+      "markers": [
+        "Forge.cmd",
+        "reskateforge/__init__.py"
+      ],
+      "capabilities": {
+        "cli": "reskateforge",
+        "mcp": true,
+        "skills": [],
+        "gui": false
+      },
+      "requires": [
+        "python 3.10+",
+        "your own copy of ReSkate Studio in its 'ReSkate Studio' folder for the compiler and Blender bridges",
+        "Blender for map and character preparation"
+      ],
+      "platforms": [
+        "windows",
+        "linux",
+        "macos"
+      ],
+      "notes": "Scaffolds, inspects, validates and packages ReSkate (skate.) plugins, parks, maps and cosmetics. Studio binaries are not shipped and are never fetched by the bundle. Run Forge.cmd from the forge folder: relative workspace paths resolve there. MCP over stdio (Forge-MCP.cmd); keep it scoped to that task, never global. Nothing built with it has been verified in game.",
+      "launch": [
+        {
+          "name": "reskate-forge",
+          "launcher": "Forge.cmd"
+        }
+      ]
     }
   },
   "recommended": {
