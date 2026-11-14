@@ -5,6 +5,7 @@ Excludes the manifest itself so the file cannot try to hash its own output.
     python generate_manifest.py <pack-root>
 """
 import hashlib
+from pathlib import Path
 import io
 import json
 import os
@@ -77,8 +78,13 @@ def main():
                          'sha256': hashlib.sha256(data).hexdigest()})
     rows.sort(key=lambda r: r['path'])
     out = os.path.join(root, 'MANIFEST.json')
-    io.open(out, 'w', encoding='utf-8', newline='\n').write(
-        json.dumps(rows, indent=1) + '\n')
+    # The repo stores MANIFEST.json with CRLF (all normalisation is off), and
+    # verify_manifest hashes the bytes on disk - so writing LF here made every
+    # regenerated manifest disagree with the tracked file.
+    _manifest_path = Path(root) / 'MANIFEST.json'
+    _manifest_eol = "\r\n" if _manifest_path.is_file() and b"\r\n" in _manifest_path.read_bytes() else "\n"
+    io.open(out, 'w', encoding='utf-8', newline='').write(
+        (json.dumps(rows, indent=1) + '\n').replace('\n', _manifest_eol))
     print('%d files, %.1f MB -> %s' % (len(rows), total / 1048576, out))
 
 

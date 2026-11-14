@@ -23286,8 +23286,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 351577,
-  "sha256": "a355f84d102716dab81911a53076e567c9d60c299069fbc694b6c3b13300ffaf"
+  "size": 356460,
+  "sha256": "628ed9bd57b8177ad3d37badc1d8e8e9178d057117492daf245705ed70018fe1"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -24341,8 +24341,8 @@
  },
  {
   "path": "TOOLS/generate_manifest.py",
-  "size": 4171,
-  "sha256": "29047dc757457134e6c98d0ef4699e67f0a11165f6ef94373108ab587f12700e"
+  "size": 4599,
+  "sha256": "1f4eaf17afd0bbe8725aeefb19ed7336b9d8f28c2975d85c7c1d53192735c220"
  },
  {
   "path": "TOOLS/generate_manual_paste.py",
@@ -24556,8 +24556,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2579,
-  "sha256": "4b78796c8cb14d6bae2af58866eaab0a993d44a8908fe5c2fd1f72275e24be5f"
+  "size": 2637,
+  "sha256": "2cf180ab0aee3aa1f5a670e98f573637cc864bd7fcc96ccda4ab09cda6ebd047"
  },
  {
   "path": "VALIDATION.md",
