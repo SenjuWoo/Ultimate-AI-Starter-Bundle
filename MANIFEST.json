@@ -121,8 +121,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Tags.txt",
-  "size": 2886,
-  "sha256": "d392da5496faa8179cf74bd0e09b86b37094eac49b063aa4308f08abc6e721bb"
+  "size": 2872,
+  "sha256": "a335d5afe8867f3a99afd3dc6e781b64197bd3ffc8928b14799b3e0bc2842bb7"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Tools.txt",
@@ -146,8 +146,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/README.md",
-  "size": 10762,
-  "sha256": "6b4ed6767724349dac9460159018c4c6f7f7912107e1aed5e84c702a916ddb01"
+  "size": 10756,
+  "sha256": "652a0c0adce5067f73ee07652363bf42fa50a35994ad601908856c03ebde1900"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/Character Creation.txt",
@@ -18822,7 +18822,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66534,
-  "sha256": "bd100c44ffb7a79c7126dbdca23b0cc2df5251bc2329892587d0fc43acc7110b"
+  "sha256": "e70865f78c10b37ed291a6dbd81850be2d1c0260e6f6c6f05badf1e5508a5992"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18832,7 +18832,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "bbf8521559c303776a84bbe1d4ae88e0e02c6acbe83674bcfda1417dda01b0a6"
+  "sha256": "cc25f29483aa596a716d565d30d76267c76561731ca213d731f185a527eb12b0"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18842,7 +18842,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "674f90dafdf3bdaae98fc2eefd51d86d5695c3dbdf78b2a1bc31216ae395c700"
+  "sha256": "9e0f3dc9ab246beeb9bd493235a09fa2fe88bff3ed17c5c344cac6aacba18e79"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -23286,8 +23286,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 355590,
-  "sha256": "90f2cf5d3b27d1c4fe06bdd0978182df5b16edf6df029d065e9e7fad8727b8a8"
+  "size": 351291,
+  "sha256": "7aa6dbef9bc09df600316ed17199b2ae000cbc738d4f44d637f7977d91cae7c7"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23432,7 +23432,7 @@
  {
   "path": "README.md",
   "size": 16480,
-  "sha256": "d567253d0358e5b0cbb0a5a879d7440bc1e6d24887b762204259f2831db138f1"
+  "sha256": "978142cb553362a1505b597cc3adff74d010fc224a1810040315f994e91531fd"
  },
  {
   "path": "SECURITY.md",
@@ -23442,12 +23442,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "08bf11822aba9f9c1f4134e29b9ee6576eb5fbaebdeadd8bce8bd6af3fd9dc05"
+  "sha256": "7112bbdf33a5870f5feb5d1f74659ea5562b7a366ea2d8f7f77bbc27e756cc98"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "3ccd3d9153f985c20e3b7ae75d42fa2470b0e95a584fac4e5dc64915b1a7af58"
+  "sha256": "5c7b6d69cb09483e3bfd31b6e40bf47775b12592d0e4cc1957d551185801f808"
  },
  {
   "path": "STATE.md",
@@ -24556,8 +24556,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2637,
-  "sha256": "28cc04a948384e5fcdca23bd22841df82d0b46f674dfdb249b089fd523ec0463"
+  "size": 2579,
+  "sha256": "8695ba790b057edaa58f8a62d39c49a21a2dfc4682c3605260c20b693eee34b8"
  },
  {
   "path": "VALIDATION.md",
@@ -24567,7 +24567,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "f77c99734e6c13f7c2b3353bc989d372c62bac4fee4c6ecf76405a10c52fa2d2"
+  "sha256": "0938d2a01cc09de1aa4ca69243a9091def2de08045612541e5558f082921555b"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -28778,6 +28778,11 @@
   "path": "docs/history/V8.44.2-CHANGELOG.md",
   "size": 981,
   "sha256": "702916259eca53bcd70b3beed261941b01f656f87e970de0bcd8535f3c395bc8"
+ },
+ {
+  "path": "docs/history/V8.44.3-CHANGELOG.md",
+  "size": 562,
+  "sha256": "f6f03531bda23f3c698ee93dd9034f81254afb1e902c3ccdc5b5d5268cbe0fa4"
  },
  {
   "path": "docs/history/V8.5.0-CHANGELOG.md",
