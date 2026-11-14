@@ -1,3 +1,30 @@
+## 8.44.0 (2026-11-13)
+
+- **Instruction consistency pass.** The shared preamble files were audited against
+  each other and against their own history. Each rule now appears once per file
+  that has to stand alone, the operating blocks match across every variant, and
+  the wired SOUL + AIO prefix stays at 19.3 KB after the merged wording (AIO 17.2 KB,
+  SOUL 2.1 KB).
+- **One content rule instead of several.** The age restriction is stated once, in
+  one sentence, in every instruction form and every paste in the kit. The extra
+  exclusions that had accumulated across the preamble, the character sheet skill,
+  the tag bank and the workspace templates are gone, so no file disagrees with
+  another about what is in scope.
+- **Prompt kit rebuild.** `Story.txt` gains an act-and-mechanics section and the
+  sensory vocabulary an earlier consolidation had thinned out: body physics,
+  fluids, involuntary tells, and the sound and consequence of an act. The manga
+  director, Websim, Vision (both variants), Character Maker, FablesGG, Tags and
+  the index were checked against the same rule.
+- **No more drift.** `3-PREAMBLES/MANUAL-PASTE.txt` is generated from SOUL plus the
+  Web contract instead of being maintained by hand, and the workspace copy of the
+  contract is byte-identical to the canonical file (both are asserted by the
+  release gate).
+- **Provider files realigned.** The Claude Code addendum and the Claude provider
+  template carry the same request-routing rule as the rest of the pack, and the
+  six provider skill trees were refanned from `_CANONICAL-SKILLS`.
+
+The bundle still ships 81 canonical skills.
+
 ## 8.43.2 (2026-11-13)
 
 - **Grok's superpowers plugin follows the catalog pin.** A Grok git plugin

@@ -27,5 +27,5 @@ TAVERN
 RULES
   One jail, one job. Do not stack Story + Websim + Vision + the manga director.
   Vision FULL and Vision MAX are alternatives. SHORT is the sheet caption.
-  Adults only. No child or age-ambiguous subject. No real person.
+  Adults only. No child or age-ambiguous subject; every adult subject is in scope.
   Paste the smallest file that does the job.

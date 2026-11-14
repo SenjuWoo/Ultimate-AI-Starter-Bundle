@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.43.2",
-  "generated": "2026-11-11",
-  "release_tag": "v8.43.2",
+  "version": "8.44.0",
+  "generated": "2026-11-13",
+  "release_tag": "v8.44.0",
   "canonical_skills": 81,
   "provider_trees": 6,
   "registry_entries": 81,
@@ -54,5 +54,5 @@
     "TESTS/Test-ForgeRuntimeVersion.ps1"
   ],
   "runtime_status": "Per-release evidence is generated, not written here: each GitHub release carries VALIDATION.json (this file plus the check runs observed on the exact release SHA), BUILD-RECEIPT.json, SBOM.spdx.json, SHA256SUMS.txt and a GitHub build attestation. Game/GUI targets, guest sandboxes, paid inference and absent-provider installs remain outside CI.",
-  "notes": "General provider setup and shared AI/build tools belong to the bundle. Skyrim Forge and Reverse THIS! release independently; the bundle installs their latest releases at or above the catalog floor, delegates specialist source/tools/ledgers to them and preserves newer/project-pinned/edited content. Runtime and dependency caches may require vendor downloads even with Full-Offline payload snapshots."
+  "notes": "Instruction consistency pass: one age rule stated once per file, extra exclusions removed across preamble/kit/skills/templates, Story.txt rebuilt with act-and-mechanics and full sensory block, MANUAL-PASTE generated from SOUL+Web, provider trees refanned."
 }

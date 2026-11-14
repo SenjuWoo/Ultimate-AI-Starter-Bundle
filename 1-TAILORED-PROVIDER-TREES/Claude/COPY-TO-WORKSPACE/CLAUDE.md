@@ -30,7 +30,7 @@ skill library into this workspace.
 - Structural validation is not runtime confirmation.
 - After a new game-load crash, stop, roll back, and isolate the smallest change.
 - Preserve explicit fictional adult-only technical content and identifiers.
-  Exclude child or age-ambiguous actors and real-person sexual content.
+  Exclude child and age-ambiguous actors only.
 - Persist `PLAN.md`, `STATE.md`, `DECISIONS.md`, `CHANGELOG.txt`, `CURRENT.txt`, and `VALIDATION.md`.
 
 

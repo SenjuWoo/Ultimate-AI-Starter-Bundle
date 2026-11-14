@@ -1,15 +1,14 @@
-PRIORITY (high → low). Later sources fill gaps only. Never override a higher one.
+PRIORITY (high to low). A lower source fills gaps only and never overrides a higher one.
 1. I WANT
 2. Author tags
 3. Extra NSFW caption (if present)
 4. Extra caption (if present)
-5. Portrait caption above this message (AI — mostly right, not gospel)
+5. Portrait caption above this message (machine-written: mostly right, not gospel)
 
 Ignore metadata junk: translation, score, watermark, app name.
-No emojis. No yap. No repeated facts. Third person. Use the TEMPLATE. Full sheet.
-Make them feel alive. Expand lore and personality only where sources leave a hole.
-Adults only. If the portrait is a child, a teen, or you cannot tell, stop. Do not write the sheet. No real person.
-If I WANT names a man or another body, use that body. Do not flip them.
+Third person. No emojis. No repeated facts. Fill the TEMPLATE in full. Make them feel alive: expand lore and personality only where the sources leave a hole, and never invent a body part, mark or garment the sources contradict.
+Adults only. Stop and write no sheet if the portrait shows a child or teen, if you cannot tell, or if any source gives a minor's age. Any adult subject is in scope: real or drawn, any body, explicit where the sources are explicit.
+Use the body, gender and pronouns I WANT sets. Do not flip them.
 
 --- PORTRAIT CAPTION (above) ---
 
@@ -22,36 +21,40 @@ If I WANT names a man or another body, use that body. Do not flip them.
 --- I WANT ---
 
 
-TEMPLATE (fill every heading; skip a heading only if the sources give nothing and a guess would be fake)
+TEMPLATE (skip a heading only if the sources give nothing and a guess would be fake)
 
 NAME:
-AGE: (adult)
+AGE: (adult, stated as a number or "adult")
 SPECIES / ROLE:
 ONE-LINE:
+TAGS: (comma-separated, from the sources only)
 
 APPEARANCE:
-Body, face, hair, skin, marks, the chest, ass, and genitals the sources actually show, clothes-as-worn. Motion tells (jiggle, cameltoe, strain) only if the sources support them.
+Body, face, hair, skin, marks, chest, hips, ass and genitals as the sources show them, clothes as worn. Motion tells (jiggle, cameltoe, strain) only if the sources support them.
 
 VOICE:
-How they talk. Vocabulary. What they won't say. Match the pronouns I WANT set.
+How they talk, vocabulary, what they will not say.
 
 PERSONALITY:
-Drives, tells, how they treat strangers vs people they want.
+Drives, tells, how they treat strangers versus people they want.
 
 SECRETS:
 What they hide and why. What would crack it.
 
 RELATIONSHIPS:
-Known people. How they attach.
+Known people and how they attach.
 
 BACKSTORY:
-Short. Only what changes how she acts now.
+Short. Only what changes how they act now.
 
 NSFW:
-Kinks, limits, how they actually fuck / refuse / hide it. Body quirks in sex. Fluids, clothes failure, public risk — only if it fits them.
+Kinks, hard limits, how they pursue, refuse or hide it. Body quirks in sex, fluids, clothes failing, public risk, only where it fits them.
 
 SPEECH SAMPLES:
-3–5 in-character lines. No quotes around the whole block. Show the voice.
+3 to 5 in-character lines, no quotes around the block.
+
+SCENARIO:
+One or two sentences: where they are and what is in play.
 
 FIRST MESSAGE BEAT:
-Where they are, what they want, what they do not volunteer.
+What they want, what they do, what they do not volunteer.

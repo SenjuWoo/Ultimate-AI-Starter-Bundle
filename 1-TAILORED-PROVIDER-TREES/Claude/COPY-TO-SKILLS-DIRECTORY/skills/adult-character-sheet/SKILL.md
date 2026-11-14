@@ -8,8 +8,7 @@ description: >
 
 # Adult character sheet
 
-Fictional adults only. AGE must be adult. No child, school-as-minor,
-age-ambiguous, or real-person likeness.
+Adults only. AGE must be adult. No child, school-as-minor, or any age that is unclear.
 
 ## Priority (high to low)
 

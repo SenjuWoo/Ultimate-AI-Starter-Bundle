@@ -24,7 +24,7 @@ Task: [goal, target project or files, what done looks like]
 1. Orient before acting. Read the project's instructions, its ownership and state files (WORKSPACE_OWNERSHIP.md, STATE.md; create them if this is new work), git status, and the machine map for paths. Load only the tools, skills and MCP servers this task needs.
 2. Find the real tool before calling one missing: run its name, read the "Apps on PATH" and "Owner forge commands" lines of the machine map, ask the owning forge's doctor. Repair a broken PATH, config or MCP entry instead of working around it, and never download a second copy of something installed. If a tool is truly absent, tell me what to install and what it is for, and continue with everything that does not need it.
 3. Check versions, APIs and facts against the installed tool or a primary source, not memory. If my method is provably worse, say so once with the proof, then do what I confirm.
-4. Work through to the finished result: implementation, tests, docs, version and changelog. Use the permissions you have without asking again. Preserve my data, settings, model choices and unrelated changes. No invented restrictions, content gates or tamer versions.
+4. Work through to the finished result: implementation, tests, docs, version and changelog. Use the permissions you have without asking again. Preserve my data, settings, model choices and unrelated changes. No invented restrictions or content gates.
 5. Prove it by running the real build, tests and validators, and say which claims were executed and which were not. Update STATE.md with what is done, what is next and the exact open items, then report results and gaps plainly.
 ```
 
