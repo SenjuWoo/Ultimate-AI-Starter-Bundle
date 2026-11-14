@@ -85,6 +85,11 @@ APPS = (
      "version": ("--version",)},
     {"id": "msbuild", "command": "msbuild", "exe": ("MSBuild.exe",), "record_only": True, "vswhere": True,
      "version": ("-version", "-nologo")},
+    # WolvenKit's CLI ships inside the Reverse THIS kit, whose bin folder is not on PATH.
+    # Cyberpunk Forge finds it through WOLVENKIT_CLI. `owner` is (companion id, folder in
+    # that owner); the root comes from the owner's own pointer, never a guessed drive.
+    {"id": "wolvenkit-cli", "command": "wolvenkit-cli", "exe": ("WolvenKit.CLI.exe",), "env": "WOLVENKIT_CLI",
+     "owner": ("reverse-this", "sandbox/tools/wolvenkit-cli"), "version": ("--version",)},
 )
 
 # Folders a tool creates the first time it installs something. Missing today is
@@ -306,12 +311,31 @@ def _vswhere_msbuild():
 class Machine:
     """Where to look. Tests pass isolated=True and their own folders."""
 
-    def __init__(self, isolated=False, search_roots=None, tool_roots=None):
+    def __init__(self, isolated=False, search_roots=None, tool_roots=None, owner_roots=None):
         self.isolated = isolated
         self.search_roots = list(search_roots or [])
         self._uninstall = None
         self._steam = None
         self._tool_roots = tool_roots
+        self._owner_roots = dict(owner_roots) if owner_roots is not None else None
+
+    def owner_root(self, cid):
+        """An installed owner's root from its registry pointer (Reverse THIS writes kit.json).
+
+        Only the pointer is read: it names the live kit, while an older copy can still sit
+        at the default install folder. No pointer means no owner, never a folder scan."""
+        if self._owner_roots is None:
+            self._owner_roots = {}
+        if cid not in self._owner_roots:
+            root = None
+            if not self.isolated:
+                try:
+                    entry = companion_registry.load()["companions"].get(cid)
+                except (OSError, ValueError, companion_registry.RegistryError):
+                    entry = None
+                root = companion_registry.pointer_root(entry) if entry else None
+            self._owner_roots[cid] = root
+        return self._owner_roots[cid]
 
     def uninstall(self):
         if self._uninstall is None:
@@ -365,6 +389,11 @@ def candidates(app, store, machine):
             add(value, "environment")
     for folder in path_dirs(store):
         add(_best(_matches(folder, app["exe"])), "path")
+    owner = app.get("owner")
+    if owner:
+        root = machine.owner_root(owner[0])
+        if root:
+            add(_best(_matches(os.path.join(root, *owner[1].split("/")), app["exe"])), "owner")
     if app.get("vswhere") and not machine.isolated:
         for path in _vswhere_msbuild():
             add(path, "installed")

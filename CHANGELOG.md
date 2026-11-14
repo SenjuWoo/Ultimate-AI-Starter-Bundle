@@ -1,3 +1,20 @@
+## 8.44.11 (2026-11-14)
+
+- **Cyberpunk Forge finds the WolvenKit CLI.** `cpforge build` packs `.archive`
+  mods through the WolvenKit CLI and looks for it in `WOLVENKIT_CLI` or on PATH.
+  The CLI ships inside the Reverse THIS kit, whose bin folder is not on PATH, so
+  `cpforge doctor` reported it missing and every vehicle, clothing or other archive
+  mod stopped at the pack step. `TOOLS/app_paths.py` now resolves it from the
+  Reverse THIS kit pointer (the live kit, not an older copy left in the default
+  install folder), sets `WOLVENKIT_CLI`, adds a `wolvenkit-cli` command and lists
+  it in the machine map. A missing pointer leaves it missing; nothing is guessed
+  or downloaded. `ai-tooling-stack`'s Cyberpunk row and `tool-discovery` say where
+  it comes from.
+- The owner's updated operator-rights and security-work wording ships in the AIO
+  instruction variants, the Claude Code addendum and the manual paste.
+
+The bundle still ships 81 canonical skills.
+
 ## 8.44.10 (2026-11-14)
 
 - **The machine map stays under its cap on a busy host.** The map is built partly

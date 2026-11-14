@@ -47,6 +47,7 @@ class Box:
         os.makedirs(self.tools)
         os.makedirs(self.bin)
         self.store_file = os.path.join(self.root, "path.json")
+        self.owner_roots = None
         self.write_store(self.bin)
 
     def write_store(self, user, env=None):
@@ -57,7 +58,7 @@ class Box:
         return app_paths.FileStore(self.store_file)
 
     def machine(self):
-        return app_paths.Machine(isolated=True, search_roots=[self.tools])
+        return app_paths.Machine(isolated=True, search_roots=[self.tools], owner_roots=self.owner_roots)
 
     def survey(self, apps=BLENDER, registry=None, statuses=None):
         return app_paths.survey(self.store(), self.machine(), self.shims, versions=False, apps=apps,
@@ -156,6 +157,37 @@ class VersionedProgramName(unittest.TestCase):
         self.assertNotIn(os.path.dirname(console), app_paths.split_path(box.store().user))
         self.assertEqual(after["apps"][0]["status"], "ok")
         self.assertEqual(after["pending"], 0)
+
+
+class ProgramInsideAnOwner(unittest.TestCase):
+    """WolvenKit's CLI lives in the Reverse THIS kit; Cyberpunk Forge reads WOLVENKIT_CLI."""
+
+    def shipped(self):
+        return tuple(app for app in app_paths.APPS if app["id"] == "wolvenkit-cli")
+
+    def test_the_owner_copy_gets_its_variable_and_a_name(self):
+        box = Box(self)
+        kit = os.path.join(box.root, "reverse this kit")
+        exe = touch(os.path.join(kit, "sandbox", "tools", "wolvenkit-cli", "WolvenKit.CLI.exe"))
+        box.owner_roots = {"reverse-this": kit}
+        apps = self.shipped()
+        self.assertEqual(len(apps), 1, "the shipped table declares the WolvenKit CLI")
+        before = box.survey(apps)
+        self.assertEqual(before["apps"][0]["source"], "owner")
+        self.assertTrue(any(a["kind"] == "env-set" and a["name"] == "WOLVENKIT_CLI" for a in before["actions"]))
+        _, _, after = box.fix(apps)
+        self.assertTrue(app_paths.same(box.store().env("WOLVENKIT_CLI"), exe))
+        self.assertTrue(app_paths.same(uabs_launch.load(box.shims)[1]["wolvenkit-cli"]["path"], exe))
+        self.assertEqual(after["apps"][0]["status"], "ok")
+        self.assertEqual(after["pending"], 0)
+
+    def test_no_owner_pointer_means_missing_not_a_guess(self):
+        box = Box(self)
+        touch(os.path.join(box.root, "elsewhere", "sandbox", "tools", "wolvenkit-cli", "WolvenKit.CLI.exe"))
+        box.owner_roots = {}
+        report = box.survey(self.shipped())
+        self.assertEqual(report["apps"][0]["status"], "missing")
+        self.assertEqual(report["pending"], 0)
 
 
 def _registry(launcher="forge.cmd", name="demo-forge"):

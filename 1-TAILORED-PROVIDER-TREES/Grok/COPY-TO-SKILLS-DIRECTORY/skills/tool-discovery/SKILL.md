@@ -70,7 +70,9 @@ python TOOLS\app_paths.py --fix    repair it; the previous user PATH is saved fi
 
 It finds Blender, FFmpeg, Godot, GIMP, Krita, Inkscape, ImageMagick, 7-Zip,
 the Unity CLI, codebase-memory-mcp and MSBuild through the uninstall registry,
-every Steam library, the usual install folders and your tool roots. `--fix`
+every Steam library, the usual install folders and your tool roots, plus the
+WolvenKit CLI inside the Reverse THIS kit (`wolvenkit-cli`, and `WOLVENKIT_CLI`
+for Cyberpunk Forge). `--fix`
 appends the real folder to the user PATH, moves a Hermes profile wrapper that
 took a real program's name (`blender.bat` running `hermes -p blender`) to
 `hermes-<name>`, and writes one launcher per installed forge (`assetforge`,
