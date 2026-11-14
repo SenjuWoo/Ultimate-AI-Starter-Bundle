@@ -201,8 +201,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7735,
-  "sha256": "44f943c9860acddf5b6cb01a6bef2b043d7a9964ce0435a13a09f726777a6246"
+  "size": 7835,
+  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -3211,8 +3211,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7735,
-  "sha256": "44f943c9860acddf5b6cb01a6bef2b043d7a9964ce0435a13a09f726777a6246"
+  "size": 7835,
+  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -6281,8 +6281,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7735,
-  "sha256": "44f943c9860acddf5b6cb01a6bef2b043d7a9964ce0435a13a09f726777a6246"
+  "size": 7835,
+  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -9341,8 +9341,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7735,
-  "sha256": "44f943c9860acddf5b6cb01a6bef2b043d7a9964ce0435a13a09f726777a6246"
+  "size": 7835,
+  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -12401,8 +12401,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7735,
-  "sha256": "44f943c9860acddf5b6cb01a6bef2b043d7a9964ce0435a13a09f726777a6246"
+  "size": 7835,
+  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -15536,8 +15536,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7735,
-  "sha256": "44f943c9860acddf5b6cb01a6bef2b043d7a9964ce0435a13a09f726777a6246"
+  "size": 7835,
+  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -18851,18 +18851,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 66536,
-  "sha256": "f288f24e5d95e38042c6ed1b39a59c756c8bb9ff65459fe905cb49b2b600f879"
+  "size": 66534,
+  "sha256": "bb3be62605437757026255607fe311b416f9306292fa981cd3863ac9cb547575"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
-  "size": 22049,
-  "sha256": "dbfe497d5f98a63aebc9b16ec578b062cfb025becc8f3a6958f651cc922d62cc"
+  "size": 22381,
+  "sha256": "57494bc22d432113dca105ef980a9ffa3d7508bb397b2d40d03e08788704170d"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
-  "size": 1370,
-  "sha256": "b2fe2d1213c3df33ce43b760091973dcd8fd60f8ba88efd7b73823514770c701"
+  "size": 1369,
+  "sha256": "22810af8f8acedfe2a1b223c9ee950822cc61c6c66bec1d77d38aa4e97cff495"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18871,8 +18871,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
-  "size": 41337,
-  "sha256": "315ac3f6082ef501efbc992db934af551eeac21b64c0008c2ee6bbeefb598cf3"
+  "size": 41335,
+  "sha256": "0858a6f0de8eaf3ac3756adb681e5b49b9cd1e782eaf372c7cb8decdee068889"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -23316,8 +23316,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 366562,
-  "sha256": "f03ad8ab4e0bae49b25a6fb8ef40c2fe45a5231f6157741e9c18fa3ad7411d59"
+  "size": 367566,
+  "sha256": "207c42b22c893b3c276b580b388fff59a590a3c19b50ab0e328678d4f509da92"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23436,8 +23436,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 64440,
-  "sha256": "4cf26e8652f3b587af79fdd8a4b71da1fa81ad4b1b7da73028b6eb67e897d9dc"
+  "size": 64772,
+  "sha256": "f73207c39bf89d94eaa769e85fe00779d1cda2c5605a3695213bd6ef005d3d1b"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -23461,8 +23461,8 @@
  },
  {
   "path": "README.md",
-  "size": 16482,
-  "sha256": "c437ec587c519c0b1e1d28eb626344bd7f81aad5d7fcaa9ff2f3bce37a5dc33d"
+  "size": 16480,
+  "sha256": "157b2185634e0f20f7e9cc263b21400589f9a9f34f95564e0515ffbefe140b97"
  },
  {
   "path": "SECURITY.md",
@@ -23471,13 +23471,13 @@
  },
  {
   "path": "START-HERE.bat",
-  "size": 1244,
-  "sha256": "a0071ce8f92296e7d2ad27623b4af80992db9fb3aeaf8d3df4fb1b6d317f9c40"
+  "size": 1243,
+  "sha256": "657e54f4e130e1f48337665076005801dc25b60844afbf0e38bfa951d85146a6"
  },
  {
   "path": "START-HERE.txt",
-  "size": 4105,
-  "sha256": "c41e8e6dd1e4fcf4d50d4d90ab3d9f874e8d3a7ecdf1ce45cf32abfbac4429aa"
+  "size": 4104,
+  "sha256": "0e9d012c55cca53f96f6208cfbda2d210c8c52f389e308f41c21f3ddfe1e9d3b"
  },
  {
   "path": "STATE.md",
@@ -24591,8 +24591,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2639,
-  "sha256": "479a85b2e6d8b646424e423d129bccc42c888369e141e4d4cae852a406274574"
+  "size": 2637,
+  "sha256": "775753182f1d254fb5512fda2998ad62c641ed6eea075932e00b3e6cb1abe33c"
  },
  {
   "path": "VALIDATION.md",
@@ -24601,8 +24601,8 @@
  },
  {
   "path": "VERSION.txt",
-  "size": 10,
-  "sha256": "aa9aace5b089f7fdea8865c28753fe55ddceb01efe8212b61566478047fe78ab"
+  "size": 9,
+  "sha256": "48bfe0f01785d9482a37e6566564e9395bde4b7b92ef4beb8e8a004db334e350"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24631,8 +24631,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/SKILL.md",
-  "size": 7735,
-  "sha256": "44f943c9860acddf5b6cb01a6bef2b043d7a9964ce0435a13a09f726777a6246"
+  "size": 7835,
+  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/references/forge-standard.md",
@@ -28863,6 +28863,11 @@
   "path": "docs/history/V8.5.0-CHANGELOG.md",
   "size": 6208,
   "sha256": "cf20b4bde7583a006863671936b5c0b91ee333d38c16680686cf8e33a782aa14"
+ },
+ {
+  "path": "docs/history/V8.50.0-CHANGELOG.md",
+  "size": 986,
+  "sha256": "a9f6dd2f2ffd6da0e62113493ef61fd86f2a24592d6840ce0ce46aa964715240"
  },
  {
   "path": "docs/history/V8.6.0-CHANGELOG.md",

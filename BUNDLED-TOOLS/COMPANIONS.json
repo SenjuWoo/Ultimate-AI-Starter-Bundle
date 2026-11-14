@@ -227,7 +227,7 @@
       "platforms": [
         "windows"
       ],
-      "notes": "Makes, checks, fixes, packages and publishes Cyberpunk 2077 mods: redscript, Cyber Engine Tweaks Lua, TweakXL, ArchiveXL, RED4ext C++, Input Loader, Mod Settings, Audioware, REDmod and WolvenKit archives. Facts come from the installed game; it writes to the game folder only through cpforge deploy. Install.ps1 creates .venv in the checkout, writes %LOCALAPPDATA%\\CyberpunkForge\\bin\\cpforge.cmd onto the user PATH and installs the cyberpunk-forge skill.",
+      "notes": "Makes, checks, fixes, packages and publishes Cyberpunk 2077 mods: redscript, Cyber Engine Tweaks Lua, TweakXL, ArchiveXL, RED4ext C++, Input Loader, Mod Settings, Audioware, REDmod and WolvenKit archives, plus new drivable cars and bikes (cpforge knowledge vehicles: copy a vanilla car of the same layout). Facts come from the installed game; it writes to the game folder only through cpforge deploy. It reads WOLVENKIT_CLI first, which the bundle's app_paths.py points at the live Reverse THIS kit; its own fallback folder can hold an older kit copy. Re-run Install.ps1 after updating the checkout so the installed skill matches. Install.ps1 creates .venv in the checkout, writes %LOCALAPPDATA%\\CyberpunkForge\\bin\\cpforge.cmd onto the user PATH and installs the cyberpunk-forge skill.",
       "launch": [
         {
           "name": "cpforge",
