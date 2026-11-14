@@ -272,7 +272,13 @@
       "platforms": [
         "windows"
       ],
-      "notes": "Uses a dedicated Hermes profile; its MCP must not be enabled globally."
+      "notes": "Uses a dedicated Hermes profile; its MCP must not be enabled globally.",
+      "launch": [
+        {
+          "name": "rwforge",
+          "launcher": ".venv/Scripts/rwforge.exe"
+        }
+      ]
     },
     "saintsrow-forge": {
       "title": "SaintsRowForge",

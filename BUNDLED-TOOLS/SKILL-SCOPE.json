@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "note": "Domain skill families that only matter for one kind of work. Claude lists them by name only (skillOverrides name-only: still callable, no description in every request). Hermes named profiles disable the families that are not theirs (skills.disabled). The default Hermes profile and every other provider are left as they are. TOOLS/skill_scope.py applies this; --undo removes only what it added.",
+  "protected": "(?i)adult|nsfw|unrestrain|sexlab|ostim|lewd|erotic|sillytavern",
+  "families": {
+    "roblox": {
+      "owner": "roblox-forge",
+      "prefixes": ["roblox-"],
+      "keep_described": ["roblox-game-development"]
+    },
+    "skyrim": {
+      "owner": "skyrim-forge",
+      "prefixes": ["skyrim-"],
+      "names_from_pack": "skyrim",
+      "keep_described": []
+    },
+    "unity-official": {
+      "owner": "Unity's published agent skills (installed outside the bundle)",
+      "names": [
+        "2d-pixel-perfect", "asset-transformer-toolkit", "audio-setup-mixers", "build-gtk", "build-live-game",
+        "craft-game-floors", "create-2d-physics", "create-tile-palette-or-rule-tiles", "generate-editor-search-query",
+        "implement-in-app-purchases", "initialize-ai-navigation", "levelplay-unity-integration", "localization",
+        "manage-sprite-atlas", "migrate-birp-to-urp", "new-unity-project", "optimize-audio", "optimize-text-mesh-pro",
+        "optimize-web", "physics-3d-collision", "project-auditor-fixes", "setup-multiplayer-services",
+        "setup-vivox-voice-chat", "shader-graph-create-custom-node", "sprite-editor", "sprite-segment-3x3grid", "ui",
+        "ui-imgui", "ui-ugui", "ui-uitk", "unity-cli", "unity-package-management", "unity-pipeline",
+        "urp-postprocessing", "validate-urp-render-graph-renderer-feature"
+      ],
+      "keep_described": ["unity-cli", "new-unity-project", "ui"]
+    },
+    "replica": {
+      "owner": "Replica skills (Reverse THIS! catalog, copied by hand)",
+      "prefixes": ["replica-"],
+      "keep_described": ["replica-recon"]
+    },
+    "claude-built-in-duplicates": {
+      "owner": "bundle copies of skills Claude already ships (anthropic-skills:skill-creator)",
+      "names": ["skill-creator"],
+      "keep_described": []
+    }
+  },
+  "claude": {
+    "name_only": ["roblox", "unity-official", "replica", "claude-built-in-duplicates"]
+  },
+  "hermes": {
+    "families": ["roblox", "skyrim", "unity-official", "replica"],
+    "profiles": {
+      "roblox": ["roblox"],
+      "skyrim": ["skyrim"],
+      "unity": ["unity-official"]
+    }
+  }
+}

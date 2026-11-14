@@ -42,7 +42,12 @@ Use `reverse-api-engineer.cmd` only when the task is to discover a website's
 private HTTP API and produce a usable client, and no official API or maintained
 SDK already covers it. Resolve the shim from the installed manifest; do not
 assume it is installed and do not install a second copy. Read
-`<kit_root>\docs\web-api.md` for the verified workflow. Keep the browser capture,
+`<kit_root>\docs\web-api.md`, then the upstream agent skill the kit ships for the
+same pin (`<kit_root>\skills\reverse-api-engineer\SKILL.md`, Reverse THIS!
+1.17.0+): reuse a capture, preflight with `agent --dry-run`, capture in the
+background, verify the client, iterate with `engineer`. New configs default to
+the user's own Chrome (`chrome-mcp`, no HAR); use `--headless` for public data or
+`agent_provider: auto` for a reusable HAR. Keep the browser capture,
 HAR, generated client and credentials under an ignored work directory; the tool
 does not register an MCP server or start a browser at install time. It is a
 different capability from REA and from game-binary analysis; do not force it

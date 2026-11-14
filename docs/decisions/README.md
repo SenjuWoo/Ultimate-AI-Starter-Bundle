@@ -13,6 +13,7 @@ Format: context, options, decision, evidence, consequences, revisit trigger.
 | [0006](0006-verification-tiers.md) | FAST/FULL/RELEASE tiers, optional linters only |
 | [0007](0007-advisory-discovery.md) | Discovery supplies evidence; workflow suggestions preserve user intent |
 | [0008](0008-cheap-hooks-and-truthful-roots.md) | Hooks leave before their imports; discovery follows a moved folder |
+| [0009](0009-scoped-skill-listings.md) | Domain skill families list by name only outside their work |
 
 New record: copy the shape below, number it next, and add a row above.
 

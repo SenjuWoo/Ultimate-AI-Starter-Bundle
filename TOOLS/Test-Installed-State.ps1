@@ -1329,6 +1329,24 @@ if ($appNamePython -and (Test-Path -LiteralPath $hermesMemoryScript -PathType Le
   }
 }
 
+# Domain skill families (Roblox specialists, Unity, Replica) belong in Claude's
+# listing by name only; their full descriptions cost tokens on every request.
+$skillScopePending = 0
+$skillScopeScript = Join-Path $PSScriptRoot 'skill_scope.py'
+if ($appNamePython -and (Test-Path -LiteralPath $skillScopeScript -PathType Leaf)) {
+  $prevEapS = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+  $skillScopeJson = @(& $appNamePython $skillScopeScript '--provider' 'claude' '--json' 2>$null) -join "`n"
+  $ErrorActionPreference = $prevEapS
+  try { $skillScope = $skillScopeJson | ConvertFrom-Json } catch { $skillScope = $null }
+  $claudeScope = if ($skillScope) { @($skillScope.providers | Where-Object { $_.provider -eq 'claude' }) | Select-Object -First 1 } else { $null }
+  if ($claudeScope -and $claudeScope.add) { $skillScopePending = @($claudeScope.add.PSObject.Properties).Count }
+  if ($claudeScope -and -not $skillScope.opted_out -and $skillScopePending) {
+    if ($skillScopePending) { Warn ('{0} domain skill(s) still list their full description in Claude (~{1} -> ~{2} chars per request). Run `python TOOLS\skill_scope.py --fix` in the bundle.' -f $skillScopePending, $claudeScope.listing_chars, $claudeScope.listing_chars_after) }
+  } elseif ($claudeScope) {
+    Write-UabsOk ('Claude skill listing ~{0} chars ({1} skills; domain families by name only)' -f $claudeScope.listing_chars_after, $claudeScope.skills)
+  }
+}
+
 # A code graph keeps answering after its project folder is moved or renamed, and
 # nothing in a query result says the structure is stale. Report it; never repair it.
 $staleGraphRoots = @()
@@ -1357,6 +1375,7 @@ $report['stale_graph_roots'] = @($staleGraphRoots)
 $report['dead_path_entries'] = @($deadPathEntries)
 $report['app_name_issues'] = @($appNameIssues)
 $report['hermes_memory_issues'] = @($hermesMemoryIssues)
+$report['skill_scope_pending'] = $skillScopePending
 $enc=New-Object System.Text.UTF8Encoding($false); [IO.File]::WriteAllText($reportPath,($report|ConvertTo-Json -Depth 8),$enc)
 if($errors.Count){Write-UabsBad ("Installed-state doctor FAIL ($($errors.Count) error(s)). Report: $reportPath");exit 1}
 Write-UabsOk ("Installed-state doctor PASS. Report: $reportPath")

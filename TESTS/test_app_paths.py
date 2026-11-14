@@ -189,10 +189,24 @@ class ForgeLaunchers(unittest.TestCase):
         root = os.path.join(box.tools, "Demo")
         touch(os.path.join(root, "forge.cmd"), "@exit /b 0\r\n")
         own = touch(os.path.join(box.bin, "demo-forge.cmd"), "@exit /b 0\r\n")
+        touch(os.path.join(box.bin, "demo-forge"), "#!/bin/sh\nexit 0\n")
         report = box.survey((), _registry(), {"demo": {"state": "INSTALLED_UNVERIFIED", "path": root}})
         self.assertEqual(report["forges"][0]["status"], "provided")
         self.assertTrue(app_paths.same(report["forges"][0]["provided_by"], own))
         self.assertEqual(report["launchers"], {})
+
+    def test_an_owner_cmd_alone_still_gets_a_git_bash_command(self):
+        box = Box(self)
+        root = os.path.join(box.tools, "Demo")
+        launcher = touch(os.path.join(root, "forge.cmd"), "@exit /b 0\r\n")
+        own = touch(os.path.join(box.bin, "demo-forge.cmd"), "@exit /b 0\r\n")
+        statuses = {"demo": {"state": "INSTALLED_UNVERIFIED", "path": root}}
+        _, _, after = box.fix((), registry=_registry(), statuses=statuses)
+        row = after["forges"][0]
+        self.assertEqual(row["status"], "ok")
+        self.assertTrue(app_paths.same(row["provided_by"], own))
+        self.assertTrue(os.path.isfile(os.path.join(box.shims, "demo-forge")))
+        self.assertTrue(app_paths.same(uabs_launch.load(box.shims)[1]["demo-forge"]["path"], launcher))
 
     def test_a_python_launcher_runs_under_the_owners_own_environment(self):
         box = Box(self)

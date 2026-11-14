@@ -69,6 +69,11 @@ requests just to keep an otherwise unused cache warm.
 ## Load relevant capabilities
 
 - Keep skill names/descriptions compact; load bodies only when relevant.
+- Domain families that matter for one kind of work list by name only in Claude
+  (`skillOverrides: name-only`) and are disabled in Hermes profiles that are not
+  theirs; `python TOOLS/skill_scope.py` reports the listing size, `--fix`
+  applies `BUNDLED-TOOLS/SKILL-SCOPE.json`, `--undo` turns it off. A name-only
+  skill is still callable by name: when a task matches one, load it.
 - Prefer a sufficient native tool or CLI already available. A dormant CLI adds
   no MCP schema; its instructions, commands and output still consume context.
 - Scope optional MCP servers. Claude Code supports deferred Tool Search;

@@ -566,8 +566,14 @@ def survey(store, machine, shim_dir, versions=True, apps=APPS, registry=None, st
             continue
         hit = resolve(forge["name"], dirs)
         if hit and not same(os.path.dirname(hit), shim_dir):
-            row["status"], row["provided_by"] = "provided", hit
-            continue
+            row["provided_by"] = hit
+            posix = resolve_posix(forge["name"], dirs)
+            if posix and not same(os.path.dirname(posix), shim_dir):
+                row["status"] = "provided"
+                continue
+            # The owner's own launcher is a .cmd that Git Bash cannot start by
+            # name, so the bundle adds the shell-side command next to it.
+            row["posix_launcher"] = "bundle"
         entry = {"path": forge["path"], "owner": forge["id"]}
         if forge.get("python"):
             entry["python"] = forge["python"]

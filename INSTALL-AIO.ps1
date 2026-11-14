@@ -2964,6 +2964,25 @@ if (-not $ToolsOnly) {
     } catch { Write-UabsWarn ('Hermes memory: ' + $_.Exception.Message) }
   }
 
+  # Domain skill families (Roblox specialists, Unity, Replica) stay installed and
+  # callable but list by name only in Claude, and Hermes named profiles disable
+  # the families that are not theirs. `TOOLS\skill_scope.py --undo` turns it off.
+  if (($Providers -contains 'Claude') -or ($Providers -contains 'Hermes')) {
+    try {
+      $scopePython = Get-UabsPythonExecutable
+      $scopeScript = Join-Path $PackRoot 'TOOLS\skill_scope.py'
+      if ($scopePython -and (Test-Path -LiteralPath $scopeScript -PathType Leaf)) {
+        $scopeArgs = @($scopeScript, '--fix')
+        if (-not ($Providers -contains 'Hermes') -or $SkipHermesConfig) { $scopeArgs += @('--provider', 'claude') }
+        elseif (-not ($Providers -contains 'Claude')) { $scopeArgs += @('--provider', 'hermes') }
+        $prevEapScope = $ErrorActionPreference; $ErrorActionPreference = 'Continue'
+        try { $scopeLines = @(& $scopePython @scopeArgs 2>&1 | ForEach-Object { [string]$_ }) } finally { $ErrorActionPreference = $prevEapScope }
+        Add-UabsDetails -Title 'Skill listing scope' -Lines $scopeLines
+        foreach ($line in @($scopeLines | Where-Object { $_ -match '^(claude:|hermes: )' })) { Write-UabsOk $line.Trim() }
+      }
+    } catch { Write-UabsWarn ('skill listing scope: ' + $_.Exception.Message) }
+  }
+
   if (-not $SkillsOnly -and -not $SkipMcpWire -and ($Providers -contains 'Hermes') -and (Test-Path -LiteralPath $hermesProfiles)) {
     try {
       # The migrator's defer guard protects a live desktop/gateway without ending sessions.

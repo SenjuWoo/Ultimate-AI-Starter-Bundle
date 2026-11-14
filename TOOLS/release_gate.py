@@ -39,6 +39,7 @@ def steps(root):
         ("companion registry", [py, "TESTS/test_companion_registry.py"]),
         ("apps and forges by name", [py, "TESTS/test_app_paths.py"]),
         ("Hermes memory", [py, "TESTS/test_hermes_memory.py"]),
+        ("skill listing scope", [py, "TESTS/test_skill_scope.py"]),
         ("upstream drift report", [py, "TESTS/test_upstream_drift.py"]),
         ("recommended skill packs", [py, "TESTS/test_recommended_skills.py"]),
         ("skill routing", [py, "TESTS/test_skill_routing.py"]),

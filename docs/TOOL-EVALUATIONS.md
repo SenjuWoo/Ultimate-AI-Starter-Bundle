@@ -1105,9 +1105,19 @@ the project is set to Custom and stdio (`Window > AI Game Dev`).
 | `OBS-MCP-main` | WATCH, not bundled | Rust rewrite (`Tom-R-Main/OBS-MCP`, 1.1.1) with no published Windows build (cargo or MCPB only), a 165-tool production profile and a four-star single-maintainer repository; npm `obs-mcp` 1.1.0 is an older, different project. OBS Studio is installed here, so it is worth re-checking when a signed Windows release exists. Showcase capture keeps FFmpeg |
 | `awesome-opus5-5-videos-main` | reference, not integrated | a gallery of 703 prompts for animations written as code (MIT); no tool to wire |
 | `awesome-gamedev-agent-skills-main` | recommended pack | pin moved to c6ca6c4 (above); still discovered, never loaded by default |
-| `blender` | redundant | a portable Blender 5.2.3 downloaded while the Steam Blender was not on PATH; `blender` now resolves to Steam 5.3 and the bundle never selects this copy |
-| `Unity-MCP-2` | covered | IvanMurzak Unity-MCP source at 1.6.2, older than the adopted 1.11.1 |
+| `blender` | redundant, removed | a portable Blender 5.2.3 downloaded while the Steam Blender was not on PATH; `blender` resolves to Steam 5.3, so the copy was deleted in the 2026-11-13 cleanup |
+| `Unity-MCP-2` | covered | IvanMurzak Unity-MCP source, refreshed to the adopted 1.11.1 |
 | `Unity-MCP-1` | covered | CoplayDev MCP for Unity source; Hermes' backend moved to 10.3.0 |
 | `zIDK` | already documented | Nx 24.0.6, Turborepo 2.11.11, Vite 8.3.8, webpack 5.112.2 sources, all current; `tool-discovery/references/build-tools.md` covers them and pins none |
 | `CLibDT (Windows)` | owned by Skyrim Forge | ClibDT 6.0.0, a GPL-3.0 Skyrim mod development toolkit; Forge's discovery owns it (`docs/COMPANION-ARCHITECTURE.md`) |
 | `context-mode-main` | DOCUMENTED, NOT BUNDLED | 2.1.10, Elastic License 2.0. Its install adds a `PreToolUse` hook to each agent that denies large reads and web fetches and sends them to its own sandbox, which overlaps Headroom and the narrow rtk hook and conflicts with the bundle's single-writer hook policy. Use it per agent if wanted; the bundle does not register it |
+
+### Later the same day
+
+| Folder or tool | Decision | Why |
+|---|---|---|
+| `teardown` | owned by AssetForge | MIT Claude skill that builds interactive machine simulators and films them; AssetForge 0.7 runs it through its `teardown-build` and `teardown-film` recipes. Checkout at upstream head `a91262a` |
+| `blender-skills` | owned by AssetForge | v1.3.1 (`b1b21df`) adopted by AssetForge 0.7.1 after 72/72 upstream headless tests and AssetForge's real-Blender runner tests on Blender 5.3 |
+| `img2threejs` | owned by AssetForge | v2.0.1 (`0c0c49b`), upstream head; the bundle's `img2threejs` skill is a pointer to it |
+| reverse-api-engineer | owned by Reverse THIS! | 0.15.0 adopted by Reverse THIS! 1.17.0 with the upstream agent skill for the same tag; new configs default to the user's Chrome (no HAR), Claude runs no longer load Claude Code settings |
+| Claude `skillOverrides` / Hermes `skills.disabled` | TAKEN | host listing controls behind `TOOLS/skill_scope.py` (ADR-0009): Claude's listing on this machine drops from ~42,700 to ~21,900 description characters per request |
