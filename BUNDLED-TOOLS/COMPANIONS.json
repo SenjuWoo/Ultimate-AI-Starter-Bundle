@@ -462,7 +462,7 @@
       "platforms": [
         "windows"
       ],
-      "notes": "Renamed from comfy-kit in v0.6.0. Anima image presets, checkpoint merges, LoRA captioning and image-to-3D templates; game-ready.ps1 hands a finished .glb to AssetForge. Releases carry no application assets; use the tagged source checkout.",
+      "notes": "Renamed from comfy-kit in v0.6.0. Anima image presets, checkpoint merges, LoRA captioning, image-to-3D templates and ACE-Step 1.5 music (comfy-music); game-ready.ps1 hands a finished .glb to AssetForge. Releases carry no application assets; use the tagged source checkout.",
       "launch": [
         {
           "name": "comfy-forge",
@@ -471,6 +471,10 @@
         {
           "name": "comfy-dataset",
           "launcher": "TOOLS/dataset.ps1"
+        },
+        {
+          "name": "comfy-music",
+          "launcher": "TOOLS/music.ps1"
         }
       ]
     },

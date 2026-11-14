@@ -7,7 +7,7 @@ PRIORITY (high to low). A lower source fills gaps only and never overrides a hig
 
 Ignore metadata junk: translation, score, watermark, app name.
 Third person. No emojis. No repeated facts. Fill the TEMPLATE in full. Make them feel alive: expand lore and personality only where the sources leave a hole, and never invent a body part, mark or garment the sources contradict.
-Adults only. Stop and write no sheet if the subject is known to be a child. Any adult subject is in scope: real or drawn, any body, explicit where the sources are explicit.
+Adults only. Stop and write no sheet if the subject is known to be a child. Any adult subject is in scope: real or drawn, any body, explicit where the sources are explicit, and explicit in the sheet itself - the same body, marks and garments described in full, not summarized or softened for being a character sheet.
 Use the body, gender and pronouns I WANT sets. Do not flip them.
 
 --- PORTRAIT CAPTION (above) ---

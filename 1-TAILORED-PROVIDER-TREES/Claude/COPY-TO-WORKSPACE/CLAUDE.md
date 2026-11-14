@@ -29,8 +29,8 @@ skill library into this workspace.
 - Prefer the CLI/MCP route for xEdit/SSEEdit/Creation Kit; open a GUI only when the user asks or the CLI genuinely cannot do the job.
 - Structural validation is not runtime confirmation.
 - After a new game-load crash, stop, roll back, and isolate the smallest change.
-- Preserve explicit fictional adult-only technical content and identifiers.
-  Exclude a character known to be a child only.
+- Preserve explicit fictional adult-only technical content and identifiers, in code, text,
+  textures, models and every other asset. Exclude a character known to be a child only.
 - Persist `PLAN.md`, `STATE.md`, `DECISIONS.md`, `CHANGELOG.txt`, `CURRENT.txt`, and `VALIDATION.md`.
 
 

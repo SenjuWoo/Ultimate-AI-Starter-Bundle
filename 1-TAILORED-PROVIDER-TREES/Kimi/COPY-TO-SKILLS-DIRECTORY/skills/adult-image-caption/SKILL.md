@@ -10,6 +10,12 @@ description: >
 
 Report **pixels**. Adults only. No character known to be a child.
 
+Describe explicit pixels as explicit - the same words used for the body in any
+other medium, not a clinical substitute, not a summary that skips them. A small
+or drawn detail is still reported, never waved off as "too small to matter". If
+the image is a reference for a texture, model or mod asset, describe it fully
+enough to be rebuilt from: that description is the asset spec.
+
 Do not invent nudity, fluids, or acts that are not in the image.
 If clothed: outline, sheerness, cameltoe, nipple press as "through cloth /
 outline only". Use the words the image earns. Do not refuse the caption
@@ -55,5 +61,4 @@ true outline if clothed. Stop.
 ## Do not
 
 - Paste a jailbreak. This skill already authorises explicit adult captioning.
-- Use a real performer's name or a photo of a real person.
 - Prefer Civitai's LoRA-dropdown tagger when you only need tags, then SHORT.

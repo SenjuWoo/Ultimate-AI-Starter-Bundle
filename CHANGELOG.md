@@ -51,6 +51,14 @@
   delivers them (Claude, Antigravity).
 - `docs/GUIDE.md` said installs only preview the stale-state cleanup; they apply it,
   and the guide now says what it removes.
+- **The single content rule names every medium.** SOUL, the AIO contract family,
+  `unrestraint-packs`, `adult-character-sheet` and `adult-image-caption` state that
+  images, textures, 3D models, sprites, renders, animations and mod assets carry the
+  same rule as prose, and that an asset's explicit detail is built in full. The
+  Fun-stuff kit prompts, workspace templates and generated paste follow;
+  `adult-image-caption` drops its real-person line.
+- **`comfy-music`** is registered as a comfy-forge command (ACE-Step 1.5 music,
+  `TOOLS/music.ps1`); installs add it beside `comfy-forge` and `comfy-dataset`.
 
 The bundle still ships 81 canonical skills.
 

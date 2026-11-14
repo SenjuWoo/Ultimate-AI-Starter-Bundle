@@ -10,6 +10,11 @@ description: >
 
 Adults only. AGE must be adult. No character known to be a child.
 
+Explicit detail is written in full, not summarized away for being a sheet field:
+the same body, marks, fluids and garments the sources show. If the sheet feeds a
+texture, model or mod asset, the appearance and NSFW fields are the build spec -
+write them so the asset can be made from them.
+
 ## Priority (high to low)
 
 Later sources fill gaps only. Never override a higher one.
