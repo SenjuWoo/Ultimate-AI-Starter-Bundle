@@ -1077,6 +1077,9 @@ Section '17. Grok hook repair and effective discovery'
 $grokPluginOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-GrokPluginDedupe.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $grokPluginOut -match 'GROK PLUGIN DEDUPE GATE: PASS') { Good 'Grok plugin version selection and backup scope' }
 else { Bad ('Grok plugin dedupe failed:' + [Environment]::NewLine + $grokPluginOut) }
+$agPluginOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-AntigravityPluginDedupe.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $agPluginOut -match 'ANTIGRAVITY PLUGIN DEDUPE GATE: PASS') { Good 'Antigravity plugin ownership and copy dedupe' }
+else { Bad ('Antigravity plugin dedupe failed:' + [Environment]::NewLine + $agPluginOut) }
 $hookRepairGate = Join-Path $PackRoot 'TESTS\Test-GrokHookRepair.ps1'
 $hookRepairOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $hookRepairGate -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $hookRepairOut -match 'GROK HOOK REPAIR GATE: PASS') {

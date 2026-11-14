@@ -2881,6 +2881,37 @@ function Remove-UabsPluginOwnedSkillCopies {
   return $result
 }
 
+function Get-UabsAntigravityNativePluginIds {
+  <#
+  Bundled plugins Antigravity delivers itself, from what is on disk now.
+
+  Antigravity loads every skill of an enabled plugin under <home>\plugins\<id>
+  (its embedded agy-customizations "Plugins" guide: all skills, rules, hooks
+  and MCP servers in the plugin directory are loaded automatically). A plugin
+  counts as delivered when it is staged with a manifest AND config.json has an
+  entry for it. For ponytail the entry's enabled flag is its mode switch
+  (TOOLS\ponytail_mode.py), not the delivery path, so any entry counts; for the
+  others the entry must be enabled. Read-only.
+  #>
+  param([string]$AgHome, [string[]]$PluginIds = @('superpowers', 'ponytail'))
+  $cfgPath = Join-Path $AgHome 'config.json'
+  if (-not (Test-Path -LiteralPath $cfgPath -PathType Leaf)) { return @() }
+  try { $cfg = [IO.File]::ReadAllText($cfgPath) | ConvertFrom-Json } catch { return @() }
+  if (-not $cfg -or -not $cfg.plugins) { return @() }
+  $ids = @()
+  foreach ($id in $PluginIds) {
+    $dir = Join-Path (Join-Path $AgHome 'plugins') $id
+    $staged = (Test-Path -LiteralPath (Join-Path $dir 'plugin.json') -PathType Leaf) -or
+              (Test-Path -LiteralPath (Join-Path $dir '.antigravity-plugin\plugin.json') -PathType Leaf)
+    if (-not $staged) { continue }
+    $entry = $cfg.plugins.PSObject.Properties[$id]
+    if (-not $entry) { continue }
+    $enabled = ($entry.Value -is [pscustomobject]) -and ($entry.Value.enabled -eq $true)
+    if ($id -eq 'ponytail' -or $enabled) { $ids += $id }
+  }
+  return $ids
+}
+
 function Test-UabsTomlPluginEnabled {
   <#
   True when TOML content has a section whose header starts with

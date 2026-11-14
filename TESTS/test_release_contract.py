@@ -3101,6 +3101,29 @@ def test_catalog_freshness_auditor_self_checks() -> None:
     assert "self-test PASS" in result.stdout
 
 
+def test_antigravity_plugin_skills_are_not_also_copied() -> None:
+    """Antigravity loads an enabled plugin's skills; the copies listed each twice.
+
+    The native-plugin step must decide Antigravity ownership (so the restore step
+    and the next install's copy-skip see it) and dedupe through the shared helper,
+    and the read-only -SkipNativePlugins path must reconcile it too.
+    """
+    installer = read(ROOT / "INSTALL-AIO.ps1")
+    common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
+    native = installer[installer.index('Write-UabsStep "Native plugins (superpowers + ponytail)"'):]
+    native = native[:native.index("if (-not $ToolsOnly -and $SkipNativePlugins)")]
+    case = native[native.index("'Antigravity' {"):]
+    assert "Get-UabsAntigravityNativePluginIds" in case and "Invoke-UabsSkillDedupe -Provider 'Antigravity'" in case
+    restore = installer.index("# Restore the copies skipped above")
+    assert installer.index("'Antigravity' {") < restore, "ownership is decided after the copy-restore step"
+    skip = installer[installer.index("if (-not $ToolsOnly -and $SkipNativePlugins)"):restore]
+    assert "'Antigravity'" in skip and "Get-UabsAntigravityNativePluginIds" in skip
+    helper = common[common.index("function Get-UabsAntigravityNativePluginIds"):]
+    helper = helper[:helper.index("\nfunction ")]
+    assert "$id -eq 'ponytail'" in helper, "ponytail's enabled flag is its mode switch, not its delivery"
+    assert "Test-AntigravityPluginDedupe.ps1" in read(ROOT / "TESTS" / "Test-Pack.ps1")
+
+
 def test_catalog_install_specs_pin_the_declared_version() -> None:
     """A bump must reach the launch argument, not only the `version` field.
 
@@ -3538,6 +3561,7 @@ def main() -> int:
         test_local_security_boundaries_stay_hardened,
         test_catalog_freshness_auditor_self_checks,
         test_catalog_install_specs_pin_the_declared_version,
+        test_antigravity_plugin_skills_are_not_also_copied,
         test_release_assets_are_digest_checked_before_cache_reuse,
         test_installed_state_doctor_keeps_provider_probes_local,
         test_public_skyrim_workflow_requires_product_and_presentation_quality,

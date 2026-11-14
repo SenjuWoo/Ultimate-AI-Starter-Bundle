@@ -23301,8 +23301,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 360873,
-  "sha256": "22465db271809433175dee284fb30c53b6172ba99209a22ef3afe99a2bc9125c"
+  "size": 361777,
+  "sha256": "549d3576e7c9d5b1f7afc79dc095fa756d888fba1f5993bf8059af0bd63d1f50"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23401,8 +23401,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 194352,
-  "sha256": "f9d9e777b085c21b78e941e6cd5f922b027312e12e521e77277906fa9afa6ed8"
+  "size": 195930,
+  "sha256": "347eaa7de94e70f1f5148da760d9b5efcc1f344ecf42890e63374f2d83b2829d"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -23473,6 +23473,11 @@
   "path": "TESTS/Test-AiHistoryBackup.ps1",
   "size": 5093,
   "sha256": "9434c59971cd2501d02882b8655393dd714419d2c74d834c9ca3b71e56377074"
+ },
+ {
+  "path": "TESTS/Test-AntigravityPluginDedupe.ps1",
+  "size": 3009,
+  "sha256": "1b5098d249f2ce542d3e7e03e2f96a6b67dbf03934b3c52b9ad480b165cb2208"
  },
  {
   "path": "TESTS/Test-BuildTools.ps1",
@@ -23601,8 +23606,8 @@
  },
  {
   "path": "TESTS/Test-Pack.ps1",
-  "size": 74915,
-  "sha256": "df09ffcc5663f5c8680e96a705c78df08ad4b25b438d6f6ff2bbbb1a66d1a81a"
+  "size": 75367,
+  "sha256": "ab7fc183a5cb193114ab66c3e237e71e11be22494ae2f263691e631990d870e9"
  },
  {
   "path": "TESTS/Test-Packs.ps1",
@@ -23941,8 +23946,8 @@
  },
  {
   "path": "TESTS/test_ponytail_mode.py",
-  "size": 15476,
-  "sha256": "3590ab4aea821c6e729d85ce51bef48eba5ef28869398fa67d1cf0b86804cfca"
+  "size": 16073,
+  "sha256": "115d809b73eb5137dc09ea5d8b919e0725da88ea50b9061981d039b9cd7bb908"
  },
  {
   "path": "TESTS/test_privacy_boundary.py",
@@ -23966,8 +23971,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 384243,
-  "sha256": "323cae64dd0e281d1e31dd7e56ec6bad2bfc75e874f9d15c21a9bf277706e835"
+  "size": 385855,
+  "sha256": "0168b98caa33d344cf4f20f2bce6d9fca3f43ed1186fd71859cbc9a92b11ccf0"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -24251,8 +24256,8 @@
  },
  {
   "path": "TOOLS/UABS-Common.ps1",
-  "size": 170946,
-  "sha256": "48fa7e8771e25a49cee77de0717b3269977b1da493755aa6e06586ba6509af19"
+  "size": 172513,
+  "sha256": "0746e1575bbc69626f41f489feeef270678e494ff817b495af64548cd36c5c0d"
  },
  {
   "path": "TOOLS/UABS-Mcp-Park.ps1",
@@ -24461,8 +24466,8 @@
  },
  {
   "path": "TOOLS/ponytail_mode.py",
-  "size": 21327,
-  "sha256": "cee3a291e1a5fdde550eaab1e371faa45a012317d41e9c9118452a3099a714d9"
+  "size": 21574,
+  "sha256": "1b0d8507a51534850f3eddb104f72e281e48bb4aa3c2fbea636c3bca4c2a1f26"
  },
  {
   "path": "TOOLS/presentation_check.py",
@@ -27616,8 +27621,8 @@
  },
  {
   "path": "docs/GUIDE.md",
-  "size": 84467,
-  "sha256": "e4c39d8e17aa4107f1cac30e8d5e5a6c8a9f0293b5132b033099b15a56f851b9"
+  "size": 84932,
+  "sha256": "3b3e79ce476980e04fc4b470abf8c578109e320a1a876bf3cbc5fb0f2ef717c4"
  },
  {
   "path": "docs/HERMES-FILE-GUARD-BUG.md",
@@ -28816,8 +28821,8 @@
  },
  {
   "path": "docs/history/V8.44.7-CHANGELOG.md",
-  "size": 2986,
-  "sha256": "fdd6248a44dbf2137f9945106d243232867cb3280c331b2886f9ff9af0023275"
+  "size": 3878,
+  "sha256": "8b78c5c9a8e2dd7a95a1e85ffbe95f425951d0759a5d79bb523da9315da5ca4b"
  },
  {
   "path": "docs/history/V8.5.0-CHANGELOG.md",

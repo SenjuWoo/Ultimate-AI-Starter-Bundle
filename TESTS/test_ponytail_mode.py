@@ -239,6 +239,14 @@ class PonytailModeTests(unittest.TestCase):
         pm.execute(pm.plan("lite", home=self.home, source_tree=None))
         self.assertIs(self._claude_settings()["enabledPlugins"]["ponytail@ponytail"], True)
 
+    def test_manual_level_restores_no_copy_beside_an_enabled_plugin(self):
+        pm.execute(pm.plan("off", home=self.home))
+        tree = ROOT / "1-TAILORED-PROVIDER-TREES" / "Claude" / "COPY-TO-SKILLS-DIRECTORY" / "skills"
+        pm.execute(pm.plan("full", home=self.home, source_tree=tree))
+        self.assertFalse(pm.installed_skill_dirs(self.home / ".claude"),
+                         "the plugin delivers the skills; a copy would list each twice")
+        self.assertTrue(pm.installed_skill_dirs(self.home / ".grok"), "a provider without a plugin switch gets its copies back")
+
     def test_enabled_plugin_at_off_is_a_leak(self):
         cfg = Path(os.environ["APPDATA"]) / "ponytail"
         cfg.mkdir(parents=True)

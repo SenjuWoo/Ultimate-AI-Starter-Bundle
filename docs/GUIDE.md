@@ -329,9 +329,11 @@ prints the explicit selection command. For Claude and Codex:
 route rather than depending on the standalone script URL.
 
 Workspace templates fill only missing files. Existing project instructions,
-templates and settings are preserved. Successful installs preview stale-state
-cleanup without deleting backups or skills. Review the standalone cleanup plan
-before deliberately applying it. See [Windows recovery](docs/WINDOWS-RECOVERY.md)
+templates and settings are preserved. A successful install applies the stale-state
+cleanup: retired skills whose ownership receipt still matches, older-version
+leftovers, retired or dead marketplace entries, and backups past the retention limit
+(newest three per family). `-SkipCleanup` keeps everything; run
+`TOOLS\Clean-StaleState.ps1` without `-Apply` to preview. See [Windows recovery](docs/WINDOWS-RECOVERY.md)
 for diagnostics, validation scope and persistent GitHub setup.
 
 ### Google Antigravity (Gemini 4 Argon)
@@ -346,6 +348,7 @@ and `antigravity.google/docs/rules|skills|mcp`, not recalled:
 | Global rules | `~/.gemini/config/AGENTS.md` | also read: `~/.gemini/AGENTS.md`; 24,000-byte cap per file, 20,000-token shared budget, so the bundle stays near 14 KB and leaves detail in skills |
 | Workspace rules | — | `AGENTS.md`, `GEMINI.md`, `.agents/AGENTS.md`, `.agents/rules/*.md` in your projects; the installer never writes there |
 | Global skills | `~/.gemini/config/skills/<name>/SKILL.md` | 81 general skills (plus Forge's Skyrim pack when on), one level deep, exactly the layout its scanner expects |
+| Plugins | `~/.gemini/config/plugins/<id>/` plus `config.json` `plugins.<id>` | superpowers and ponytail. Antigravity loads an enabled plugin's skills itself, so once a plugin is staged the installer removes its copied skill folders (backed up). Ponytail's entry is its mode switch |
 | MCP servers | `~/.gemini/config/mcp_config.json` | `mcpServers`, stdio or Streamable HTTP; legacy SSE is unsupported — plus per-project `.agents/mcp_config.json`, untouched |
 
 ```powershell

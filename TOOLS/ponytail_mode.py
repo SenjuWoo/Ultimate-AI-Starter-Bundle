@@ -252,6 +252,10 @@ def plan(mode, home=None, source_tree=None):
                                 "dest": str(PARKED / name.replace("/", "-") / _park_name(src))})
     else:
         for name, home_dir in homes.items():
+            # Where the bundle owns the plugin switch, the plugin (switched on
+            # above) delivers the skills; a restored copy would list each twice.
+            if plugin_switch(name, home_dir) is not None:
+                continue
             present = {p.name for p in installed_skill_dirs(home_dir)}
             archive = PARKED / name.replace("/", "-")
             if archive.is_dir():

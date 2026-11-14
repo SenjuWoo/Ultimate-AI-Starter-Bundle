@@ -1643,6 +1643,30 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
           }
         }
       }
+
+      'Antigravity' {
+        # Antigravity loads every skill of an enabled plugin under
+        # <home>\plugins\<id>, and the Antigravity step further down stages and
+        # enables both bundled plugins there. Without this case the copied skill
+        # folders stayed too, so every superpowers and ponytail skill was listed
+        # twice. Ownership is decided here, before the copy-restore step below,
+        # so a native plugin's copies are not re-copied and removed every run.
+        # A plugin the later step has not staged yet keeps its copies this run.
+        $agNative = @(Get-UabsAntigravityNativePluginIds -AgHome $providerHome)
+        foreach ($pluginId in @('superpowers', 'ponytail')) {
+          $aEntry = New-UabsPluginStateEntry
+          $pstate.plugins[$pluginId] = $aEntry
+          if ($agNative -notcontains $pluginId) {
+            $aEntry.reason = 'not staged and listed in config.json yet; copied skills stay until the plugin is'
+            continue
+          }
+          $aEntry.native = $true
+          $aEntry.status = 'staged'
+          $aEntry.root = Join-Path (Join-Path $providerHome 'plugins') $pluginId
+          Write-UabsOk ('Antigravity: ' + $pluginId + ' delivered by its plugin - deduping its copied skills')
+          Invoke-UabsSkillDedupe -Provider 'Antigravity' -PluginId $pluginId -SkillsDir $skillsDir -StateEntry $aEntry
+        }
+      }
     }
   }
 }
@@ -1654,11 +1678,13 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
 if (-not $ToolsOnly -and $SkipNativePlugins) {
   $backupRoot = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\backups'
   New-Item -ItemType Directory -Force -Path $backupRoot | Out-Null
-  foreach ($prov in @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Kimi') })) {
+  foreach ($prov in @($Providers | Where-Object { $_ -in @('Claude', 'Codex', 'Kimi', 'Antigravity') })) {
     $providerHome = Get-UabsProviderHome -Provider $prov -Catalog $catalog
     $skillsDir = Get-UabsProviderSkillsDir -Provider $prov -Catalog $catalog
     $enabledIds = @()
-    if ($prov -eq 'Codex') {
+    if ($prov -eq 'Antigravity') {
+      $enabledIds = @(Get-UabsAntigravityNativePluginIds -AgHome $providerHome)
+    } elseif ($prov -eq 'Codex') {
       $enabledIds = @(Get-UabsCodexEnabledPluginIds -CodexHome $providerHome)
     } elseif ($prov -eq 'Kimi') {
       $enabledIds = @(Get-UabsKimiEnabledPluginIds -KimiHome $providerHome)
@@ -1679,7 +1705,7 @@ if (-not $ToolsOnly -and $SkipNativePlugins) {
     foreach ($pluginId in @('superpowers', 'ponytail')) {
       $srcRoot = Join-Path $plugins $pluginId
       $marketName = Get-UabsClaudeMarketplaceName -PluginRoot $srcRoot
-      $nativeId = if ($prov -eq 'Kimi') { $pluginId } elseif ($marketName) { $pluginId + '@' + $marketName } else { '' }
+      $nativeId = if ($prov -in @('Kimi', 'Antigravity')) { $pluginId } elseif ($marketName) { $pluginId + '@' + $marketName } else { '' }
       $isNative = $nativeId -and ($enabledIds -contains $nativeId)
       if ($isNative -and $prov -eq 'Claude') {
         $isNative = Test-Path -LiteralPath (Join-Path $providerHome ('plugins\cache\' + $marketName + '\' + $pluginId)) -PathType Container
