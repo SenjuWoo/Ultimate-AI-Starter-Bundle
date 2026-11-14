@@ -1,8 +1,8 @@
 ---
 name: ai-tooling-stack
-description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, ReSkate, VRChat avatars, reverse engineering, asset production (AssetForge), ComfyUI images (comfy-forge) and Koikatsu/Honey Select 2 cards (illusion-forge), and the standard a new or upgraded forge must meet. Discover installs before installing.
+description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, ReSkate, VRChat avatars, reverse engineering, asset production and voice/sound effects (AssetForge), ComfyUI images and music (comfy-forge) and Koikatsu/Honey Select 2 cards (illusion-forge), and the standard a new or upgraded forge must meet. Discover installs before installing.
 metadata:
-  version: 7.6.0
+  version: 7.7.0
 ---
 
 # AI tooling stack
@@ -40,8 +40,8 @@ the bundle keeps no second copy. If the forge is absent, say which repository ow
 | Saints Row: The Third / IV | `SaintsRowForge` | `START-HERE.bat`; `srforge doctor`; `AI-INTEGRATION.md`, `knowledge/` | `%LOCALAPPDATA%\SaintsRowForge` |
 | VRChat avatar from Blender/XPS/MMD/VRM/Source | `AvatarForge` | release ZIP, `INSTALL-TOOLS.bat`; skill `avatarforge` | the user's install |
 | Binary/app reverse engineering, game hooks, website API reconstruction | `reverse-this` (Reverse THIS!) | start with `sandbox/bin/re-triage.cmd <file-or-folder>`: it names the format and the installed analyzers to run; `Install-Modkit.ps1 -Doctor`; skill `reverse-engineering`; `reverse-api-engineer.cmd` for private web APIs | installed kit manifest |
-| 2D/3D asset production, validation, game-ready meshes, engine export | `AssetForge` | start with `assetforge probe <file-or-folder>`: it reports triangles, textures, rig and budgets and prints the recipe to run; `mesh-convert` turns FBX/OBJ/USD/.blend into GLB; `assetforge engine-check <file.glb>` imports it into Godot headless; release ZIP, `Install.ps1`; `assetforge doctor` | `UABS_TOOL_ROOTS` |
-| Anima images on ComfyUI/SwarmUI, checkpoint merges, tagged image folder to training archive, image-to-3D | `comfy-forge` | `TOOLS\image-stack.ps1 status`, then `install` / `generate`; datasets: `python TOOLS/anima_dataset.py inspect --images <folder>`, then build and `validate` (existing tags are kept); finished `.glb` goes to AssetForge via `TOOLS\game-ready.ps1` | `UABS_TOOL_ROOTS` |
+| 2D/3D asset production, validation, game-ready meshes, voice lines and sound effects, engine export | `AssetForge` | start with `assetforge probe <file-or-folder>`: it reports triangles, textures, rig and budgets and prints the recipe to run; `mesh-convert` turns FBX/OBJ/USD/.blend into GLB; `assetforge engine-check <file.glb>` imports it into Godot headless; voice lines and sound effects: `run audio-voice` / `run audio-sfx` (after `audio-setup`), finish any audio with `run audio-process`, `export --target minecraft|godot|roblox`; release ZIP, `Install.ps1`; `assetforge doctor` | `UABS_TOOL_ROOTS` |
+| Anima images on ComfyUI/SwarmUI, music (ACE-Step 1.5), checkpoint merges, tagged image folder to training archive, image-to-3D | `comfy-forge` | `TOOLS\image-stack.ps1 status`, then `install` / `generate`; datasets: `python TOOLS/anima_dataset.py inspect --images <folder>`, then build and `validate` (existing tags are kept); finished `.glb` goes to AssetForge via `TOOLS\game-ready.ps1`; songs and instrumentals: `TOOLS\music.ps1 check`, then `generate` (ACE-Step 1.5; weights via `TOOLS\Install-MusicModels.ps1`), finished in AssetForge with `audio-process` | `UABS_TOOL_ROOTS` |
 | Koikatsu / Honey Select 2 character cards from a prompt | `illusion-forge` | `Install.ps1`, `forge.cmd doctor`; skill `illusion-forge`; MCP `illusionforge mcp` scoped to the task | `UABS_TOOL_ROOTS`; games via `ILLUSION_KK_ROOT` / `ILLUSION_HS2_ROOT` |
 | ReSkate (skate.) plugins, parks, maps, cosmetics | `reskate-forge` | `Forge.cmd doctor`, then `Forge.cmd plan "<task>"`; needs your own ReSkate Studio copy for compile steps | `UABS_TOOL_ROOTS` |
 

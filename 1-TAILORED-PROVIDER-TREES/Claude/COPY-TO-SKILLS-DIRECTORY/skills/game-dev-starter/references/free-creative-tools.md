@@ -35,11 +35,13 @@ accept; never accept on their behalf.
 | Music by code | music21 (BSD-3, PyPI `music21`), MIDI -> audio with FluidSynth (`FluidSynth/fluidsynth`, LGPL-2.1) + a free SoundFont | permissive | fully deterministic; the AI can compose, render and listen-check by analysis |
 | Music by live code | Sonic Pi (`sonic-pi-net/sonic-pi`), SuperCollider (GPL-3.0) | see repo | Strudel moved off GitHub (archived there) |
 | Music, DAW | LMMS (`LMMS/lmms`, GPL-2.0), MuseScore (`musescore/MuseScore`) | free apps; see each repo licence | |
-| Music (AI) | ACE-Step 1.5 (`ace-step/ACE-Step-1.5`) | MIT / MIT | songs with lyrics, local |
+| Music (AI) | ACE-Step 1.5 (`ace-step/ACE-Step-1.5`) | MIT / MIT | songs with lyrics, local; comfy-forge runs it through ComfyUI (`TOOLS\music.ps1`) when installed |
 | Music (AI), non-commercial | MusicGen via `facebookresearch/audiocraft` | MIT / CC-BY-NC-4.0 | not for a commercial release |
 | Sound effects | jsfxr (`chr15m/jsfxr`, Unlicense), FFmpeg filters | permissive | retro SFX from parameters; store the parameter string |
 | Sound (AI), restricted | Stable Audio Open 1.0 | Stability community license, gated | read it |
-| Voice / TTS | Kokoro-82M (`hexgrad/kokoro`) | Apache-2.0 / Apache-2.0 | small, CPU-capable |
+| Voice / TTS, designed voices | Qwen3-TTS 1.7B VoiceDesign + Base, Dia 1.6B (nonverbals) | Apache-2.0 / Apache-2.0 | AssetForge `audio-voice` designs one voice and keeps it across a line set, with a Whisper check per take |
+| Sound effects (AI) | MOSS-SoundEffect v2 | Apache-2.0 / Apache-2.0 | AssetForge `audio-sfx`, 48 kHz, CLAP-scored takes |
+| Voice / TTS | Kokoro-82M (`hexgrad/kokoro`) | Apache-2.0 / Apache-2.0 | small, CPU-capable; also an AssetForge `audio-voice` engine |
 | Voice / TTS, cloning | Chatterbox (`resemble-ai/chatterbox`) | MIT / MIT | clone only voices the user has rights to |
 | Voice / TTS | Piper (`OHF-Voice/piper1-gpl`; the old `rhasspy/piper` is archived) | GPL-3.0 | voices carry their own licenses |
 | Voice (AI), non-commercial | F5-TTS (`SWivid/F5-TTS`) | MIT / CC-BY-NC-4.0 | |
