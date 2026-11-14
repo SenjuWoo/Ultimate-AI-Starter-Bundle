@@ -619,6 +619,44 @@
           "launcher": "Forge.cmd"
         }
       ]
+    },
+    "pbp-studio": {
+      "title": "Castle Crasher PBP Studio",
+      "repo": "https://github.com/SenjuWoo/pbp-studio",
+      "install": {
+        "kind": "source_only",
+        "asset": null,
+        "entrypoint": "START.bat"
+      },
+      "update": {
+        "entrypoint": null,
+        "note": "update from its own source tree with git"
+      },
+      "markers": [
+        "START.bat",
+        "app/server.py"
+      ],
+      "capabilities": {
+        "cli": null,
+        "mcp": false,
+        "skills": [],
+        "gui": true
+      },
+      "requires": [
+        "python 3.10+",
+        "Castle Crashers with the Painter Boss Paradise DLC",
+        "SwarmUI with an Anima model and Flux.2 Klein 4B fp8 (about 8 GB VRAM)"
+      ],
+      "platforms": [
+        "windows"
+      ],
+      "notes": "Turns a text idea into a Castle Crashers custom character for the Painter Boss Paradise DLC: one master design, every template box redrawn consistently through SwarmUI. START.bat creates .venv on first run and opens the local web app on 127.0.0.1:8777; nothing is installed system-wide. The template comes from the user's own game install (or the official download) and is never redistributed. Offline tests: python -m pytest in its folder.",
+      "launch": [
+        {
+          "name": "pbp-studio",
+          "launcher": "START.bat"
+        }
+      ]
     }
   },
   "recommended": {

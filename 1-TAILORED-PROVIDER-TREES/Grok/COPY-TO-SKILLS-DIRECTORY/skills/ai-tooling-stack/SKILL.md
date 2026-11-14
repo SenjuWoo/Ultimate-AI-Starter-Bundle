@@ -1,6 +1,6 @@
 ---
 name: ai-tooling-stack
-description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, ReSkate, VRChat avatars, reverse engineering, asset production and voice/sound effects (AssetForge), ComfyUI images and music (comfy-forge) and Koikatsu/Honey Select 2 cards (illusion-forge), and the standard a new or upgraded forge must meet. Discover installs before installing.
+description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, ReSkate, VRChat avatars, reverse engineering, asset production and voice/sound effects (AssetForge), ComfyUI images and music (comfy-forge), Koikatsu/Honey Select 2 cards (illusion-forge) and Castle Crashers characters (PBP Studio), and the standard a new or upgraded forge must meet. Discover installs before installing.
 metadata:
   version: 7.7.0
 ---
@@ -44,6 +44,7 @@ the bundle keeps no second copy. If the forge is absent, say which repository ow
 | Anima images on ComfyUI/SwarmUI, music (ACE-Step 1.5), checkpoint merges, tagged image folder to training archive, image-to-3D | `comfy-forge` | `TOOLS\image-stack.ps1 status`, then `install` / `generate`; datasets: `python TOOLS/anima_dataset.py inspect --images <folder>`, then build and `validate` (existing tags are kept); finished `.glb` goes to AssetForge via `TOOLS\game-ready.ps1`; songs and instrumentals: `TOOLS\music.ps1 check`, then `generate` (ACE-Step 1.5; weights via `TOOLS\Install-MusicModels.ps1`), finished in AssetForge with `audio-process` | `UABS_TOOL_ROOTS` |
 | Koikatsu / Honey Select 2 character cards from a prompt | `illusion-forge` | `Install.ps1`, `forge.cmd doctor`; skill `illusion-forge`; MCP `illusionforge mcp` scoped to the task | `UABS_TOOL_ROOTS`; games via `ILLUSION_KK_ROOT` / `ILLUSION_HS2_ROOT` |
 | ReSkate (skate.) plugins, parks, maps, cosmetics | `reskate-forge` | `Forge.cmd doctor`, then `Forge.cmd plan "<task>"`; needs your own ReSkate Studio copy for compile steps | `UABS_TOOL_ROOTS` |
+| Castle Crashers custom character (Painter Boss Paradise DLC) from a text idea | `pbp-studio` (PBP Studio) | `pbp-studio` (its `START.bat`) opens the local web app; needs SwarmUI with an Anima model and Flux.2 Klein; offline tests `python -m pytest` in its folder | `UABS_TOOL_ROOTS` |
 
 Building a forge, or bringing an older one up to date: `references/forge-standard.md` is the bar (doctor,
 routing, evidence tiers, reproducible release). Read it before designing the forge's CLI.
