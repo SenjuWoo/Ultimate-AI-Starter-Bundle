@@ -8,6 +8,14 @@
   its `START.bat`, and the routing row names its requirements. The row lives in the
   skill body, loaded only when a task needs it; the always-listed description gains
   one short phrase.
+- **Installs stop copying ponytail's skills just to park them again.** With
+  ponytail off or auto (the default), every install copied its six skills into Grok
+  and every Hermes folder, then the mode parked each identical copy into
+  `ponytail-mode\parked\<provider>\_duplicates`: about 1,800 folders on one
+  machine. The skill step now leaves them out while ponytail is parked (lite, full
+  and ultra copy as before), and the stale-state cleanup removes duplicates
+  byte-identical to the archived copy. The archived copy and any duplicate that
+  differs are kept.
 - Every owner repository was checked against its GitHub `main` and latest release;
   all local checkouts are current. `unity-mcp` stays at 1.11.1: 1.11.2 shipped today,
   raises its Node floor to 22.14, and the catalog adopts a Unity MCP release only

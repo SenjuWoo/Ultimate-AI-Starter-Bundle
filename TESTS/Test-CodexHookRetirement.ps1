@@ -99,6 +99,13 @@ try {
   New-Item -ItemType Directory -Force -Path (Join-Path $stateRoot 'ponytail-mode') | Out-Null
   [IO.File]::WriteAllText((Join-Path $stateRoot 'ponytail-mode.json'), '{"mode":"off"}', $utf8)
   [IO.File]::WriteAllText((Join-Path $stateRoot 'ponytail-mode\state.json'), '{"mode":"off"}', $utf8)
+  $park = Join-Path $stateRoot 'ponytail-mode\parked\Grok'
+  foreach ($d in @('ponytail__abc1234567', '_duplicates\ponytail__20260101T000000Z', '_duplicates\ponytail__20260102T000000Z')) {
+    New-Item -ItemType Directory -Force -Path (Join-Path $park $d) | Out-Null
+  }
+  [IO.File]::WriteAllText((Join-Path $park 'ponytail__abc1234567\SKILL.md'), 'same', $utf8)
+  [IO.File]::WriteAllText((Join-Path $park '_duplicates\ponytail__20260101T000000Z\SKILL.md'), 'same', $utf8)
+  [IO.File]::WriteAllText((Join-Path $park '_duplicates\ponytail__20260102T000000Z\SKILL.md'), 'edited', $utf8)
   $claudeDir = Join-Path $fixture '.claude'; New-Item -ItemType Directory -Force -Path $claudeDir | Out-Null
   $deadPlugin = Join-Path $fixture 'gone-pack-v1\BUNDLED-TOOLS\plugins\ponytail'
   $deadOther = Join-Path $fixture 'gone-elsewhere\my-market'
@@ -122,6 +129,8 @@ try {
     Assert ($after.extraKnownMarketplaces.ponytail.source.path -eq (Join-Path $PackRoot 'BUNDLED-TOOLS\plugins\ponytail')) 'A dead bundled marketplace path was not repointed.'
     Assert ($after.extraKnownMarketplaces.mine.source.path -eq $deadOther -and $after.theme -eq 'dark') 'An unrelated marketplace or setting was changed.'
     Assert (@(Get-ChildItem -LiteralPath $claudeDir -Filter 'settings.json.bak-retired-*').Count -eq 1) 'settings.json was edited without a backup.'
+    Assert (-not (Test-Path -LiteralPath (Join-Path $park '_duplicates\ponytail__20260101T000000Z'))) 'An identical parked duplicate survived.'
+    Assert ((Test-Path -LiteralPath (Join-Path $park 'ponytail__abc1234567\SKILL.md')) -and (Test-Path -LiteralPath (Join-Path $park '_duplicates\ponytail__20260102T000000Z'))) 'The archived copy or a differing duplicate was removed.'
   } finally { $env:USERPROFILE = $savedProfile }
 
   # Obsolete global Impeccable commands must not survive upgrades. Modern

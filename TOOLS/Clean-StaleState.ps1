@@ -22,8 +22,9 @@
 
   3. LEFTOVERS OF OLDER VERSIONS in the pack's own state folder: companion
      archives superseded by the one downloads\companions.json records, Go
-     archives under the pre-8.24 name, and state files a named newer file
-     replaced. Plus one registration fix: a Claude extraKnownMarketplaces entry
+     archives under the pre-8.24 name, state files a named newer file
+     replaced, and parked ponytail duplicates byte-identical to the archived
+     copy (which stays). Plus one registration fix: a Claude extraKnownMarketplaces entry
      for a bundled plugin that still points into a pack folder that no longer
      exists (an older install ran from ...-v8.21.0) is repointed to this pack.
 
@@ -370,6 +371,33 @@ if (Test-Path -LiteralPath $downloadRecord -PathType Leaf) {
       if ($currentBases -notcontains $base) { continue }   # only an older version of a recorded companion
       $kept = @($currentAssets | Where-Object { $_ -like ($base + '-*') }) -join ', '
       Add-CleanTarget -Kind 'stale-download' -Path $zip.FullName -Why ('superseded by ' + $kept)
+    }
+  }
+}
+
+# Ponytail's parking quarantine. Before 8.44.8 every install re-copied the parked
+# ponytail skills and parking moved each identical copy into
+# ponytail-mode\parked\<provider>\_duplicates: about 1,800 folders on one machine.
+# A duplicate whose bytes equal the archived copy beside it adds nothing; that
+# archived copy (the backup) always stays, and a duplicate that differs is kept.
+$parkRoot = Join-Path $uabsRoot 'ponytail-mode\parked'
+if (Test-Path -LiteralPath $parkRoot -PathType Container) {
+  foreach ($parkProv in @(Get-ChildItem -LiteralPath $parkRoot -Directory -ErrorAction SilentlyContinue)) {
+    $dupDir = Join-Path $parkProv.FullName '_duplicates'
+    if (-not (Test-Path -LiteralPath $dupDir -PathType Container)) { continue }
+    $archived = @{}
+    foreach ($arch in @(Get-ChildItem -LiteralPath $parkProv.FullName -Directory -ErrorAction SilentlyContinue |
+                        Where-Object { $_.Name -ne '_duplicates' })) {
+      $skillName = ($arch.Name -split '__')[0]
+      if (-not $archived.ContainsKey($skillName)) { $archived[$skillName] = @() }
+      $archived[$skillName] += (Get-UabsTreeDigest $arch.FullName)
+    }
+    foreach ($dup in @(Get-ChildItem -LiteralPath $dupDir -Directory -ErrorAction SilentlyContinue)) {
+      $skillName = ($dup.Name -split '__')[0]
+      if (-not $archived.ContainsKey($skillName)) { continue }
+      if ($archived[$skillName] -contains (Get-UabsTreeDigest $dup.FullName)) {
+        Add-CleanTarget -Kind 'parked-duplicate' -Path $dup.FullName -Why ('identical to the archived ' + $skillName + ' copy, which is kept')
+      }
     }
   }
 }

@@ -790,6 +790,21 @@ if (-not $ToolsOnly) {
       }
     } catch { $script:UabsOwnedSkip = @{} }   # unreadable: copy everything and dedupe as before
   }
+  # Ponytail off/auto parks every copied ponytail skill at the end of the install
+  # (TOOLS\ponytail_mode.py init), and a machine that never chose gets off.
+  # Copying them first, only for the mode to park them again, left one identical
+  # duplicate per skill, provider and install in ponytail-mode\parked\*\_duplicates
+  # (about 1,800 folders measured on one machine). Lite/full/ultra copy as before;
+  # an unreadable mode file copies as before too.
+  $ponyParked = @()
+  $ponyModeFile = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\ponytail-mode\state.json'
+  $ponyMode = 'off'
+  if (Test-Path -LiteralPath $ponyModeFile -PathType Leaf) {
+    try { $ponyMode = [string](([IO.File]::ReadAllText($ponyModeFile) | ConvertFrom-Json).mode) } catch { $ponyMode = '' }
+  }
+  if ($ponyMode -in @('off', 'auto')) {
+    $ponyParked = @(Get-ChildItem -LiteralPath (Join-Path $tailored 'Claude\COPY-TO-SKILLS-DIRECTORY\skills') -Directory -Filter 'ponytail*' -ErrorAction SilentlyContinue | ForEach-Object Name)
+  }
   foreach ($prov in $Providers) {
     $srcSkills = Join-Path $tailored "$prov\COPY-TO-SKILLS-DIRECTORY\skills"
     if (-not (Test-Path $srcSkills)) { Write-UabsBad "Missing $srcSkills"; continue }
@@ -823,7 +838,7 @@ if (-not $ToolsOnly) {
 
     # Skills of a disabled pack are left out; the managed-skill ledger then
     # retires the unmodified copies an earlier install put here.
-    $baseExclude = @($codexBuiltins) + @($packSel.ExcludedSkills)
+    $baseExclude = @($codexBuiltins) + @($packSel.ExcludedSkills) + @($ponyParked)
     $externalNames = @(@($packSel.Catalog.packs.skyrim.skills) + @(Get-UabsForgePackSkillNames) | Select-Object -Unique)
     $script:UabsSkillSyncArgs[$prov] = @{ From = $srcSkills; To = $destSkills; Exclude = $baseExclude; External = $externalNames }
     $ownedSkip = @()
@@ -841,7 +856,7 @@ if (-not $ToolsOnly) {
         $profileSkills = Join-Path $pf.FullName 'skills'
         $notHere = if ($pf.Name -eq 'skyrim') { @($packSel.ExcludedSkills) } else { $allPackSkills }
         try {
-          Sync-UabsProviderSkills -From $srcSkills -To $profileSkills -Provider ('Hermes.' + $pf.Name) -ExternalNames $externalNames -ExcludeNames (@($notHere) + $hermesOverrides)
+          Sync-UabsProviderSkills -From $srcSkills -To $profileSkills -Provider ('Hermes.' + $pf.Name) -ExternalNames $externalNames -ExcludeNames (@($notHere) + $hermesOverrides + @($ponyParked))
           $aside = Move-UabsSkillsAside -SkillsDir $profileSkills -Names @($notHere | Where-Object { $externalNames -notcontains $_ }) -Label ('hermes-profile-' + $pf.Name + '-pack-skills')
           if ($aside.Moved.Count) { Write-UabsOk ("Hermes profile {0}: {1} pack skill(s) moved out of its index -> {2}" -f $pf.Name, $aside.Moved.Count, $aside.Backup) }
           Write-UabsOk ("Hermes profile {0}: skills refreshed" -f $pf.Name)

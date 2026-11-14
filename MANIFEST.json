@@ -23311,8 +23311,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 363368,
-  "sha256": "867fd99f291b521df78a2118a20d909ed5ef5b8df622fc6d1c613638e308bdd2"
+  "size": 363944,
+  "sha256": "d4bc5310c89d4928a1c6b0954e32b4e01e9e6ee5e17ed354cbe79a6ae7455d40"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23411,8 +23411,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 195930,
-  "sha256": "347eaa7de94e70f1f5148da760d9b5efcc1f344ecf42890e63374f2d83b2829d"
+  "size": 197001,
+  "sha256": "f51c1ea7786bba698db84b0788fb2f56391de8aeebc6b3d977d4c91cda5bc2ab"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -23501,8 +23501,8 @@
  },
  {
   "path": "TESTS/Test-CodexHookRetirement.ps1",
-  "size": 20283,
-  "sha256": "3c4e03dc1079ce3689180509354193e867cba8784c3dd4d7720b8fc7ff8a7fa2"
+  "size": 21247,
+  "sha256": "3b2e91dc51c9563a5435a86a1edc0ecf48929b77dafbdb057b0920248fc0ea03"
  },
  {
   "path": "TESTS/Test-CodexPluginDedupe.ps1",
@@ -23981,8 +23981,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 385855,
-  "sha256": "c3538561afe45ebe49e6309b0dfd5d7c26f376c551aea955f6ea7c19227f7402"
+  "size": 386893,
+  "sha256": "0ddcd43552b74e437020d0f898c6cce7d1ae10e7905c724298b5758dd4e38952"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -24096,8 +24096,8 @@
  },
  {
   "path": "TOOLS/Clean-StaleState.ps1",
-  "size": 35359,
-  "sha256": "3add94c0463142cc304989b2667e2475ba8f994aeb33331c4051a35d59923be1"
+  "size": 37078,
+  "sha256": "d891d2b72f6a8d778002691b38ad828cbe7a4c861d639b3f9590f809f247c13e"
  },
  {
   "path": "TOOLS/Ensure-CodebaseMemoryHermes.ps1",
@@ -28836,8 +28836,8 @@
  },
  {
   "path": "docs/history/V8.44.8-CHANGELOG.md",
-  "size": 950,
-  "sha256": "bd1478333645808fdfa2ff9906f748e8e8592a154e3767424758db3d910647d4"
+  "size": 1518,
+  "sha256": "9dacde013fb42d8faf15283d9c86df5ddc6d77bc96f93b2fde93475df64e5923"
  },
  {
   "path": "docs/history/V8.5.0-CHANGELOG.md",

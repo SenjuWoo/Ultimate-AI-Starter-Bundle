@@ -3124,6 +3124,23 @@ def test_antigravity_plugin_skills_are_not_also_copied() -> None:
     assert "Test-AntigravityPluginDedupe.ps1" in read(ROOT / "TESTS" / "Test-Pack.ps1")
 
 
+def test_parked_ponytail_is_not_copied_only_to_be_parked_again() -> None:
+    """Off/auto park ponytail's copies; the install must not lay them down first.
+
+    Each install re-copied them and parking quarantined every identical copy:
+    about 1,800 duplicate folders on one machine. The skill step excludes them
+    (default and Hermes profiles), and the cleaner removes identical duplicates.
+    """
+    installer = read(ROOT / "INSTALL-AIO.ps1")
+    step = installer[installer.index('Write-UabsStep "Installing provider skills"'):]
+    step = step[:step.index('Write-UabsStep "Native plugins (superpowers + ponytail)"')]
+    assert "$ponyMode -in @('off', 'auto')" in step
+    assert "@($packSel.ExcludedSkills) + @($ponyParked)" in step
+    assert "$hermesOverrides + @($ponyParked)" in step
+    cleaner = read(ROOT / "TOOLS" / "Clean-StaleState.ps1")
+    assert "'parked-duplicate'" in cleaner and "Get-UabsTreeDigest $dup.FullName" in cleaner
+
+
 def test_catalog_install_specs_pin_the_declared_version() -> None:
     """A bump must reach the launch argument, not only the `version` field.
 
@@ -3562,6 +3579,7 @@ def main() -> int:
         test_catalog_freshness_auditor_self_checks,
         test_catalog_install_specs_pin_the_declared_version,
         test_antigravity_plugin_skills_are_not_also_copied,
+        test_parked_ponytail_is_not_copied_only_to_be_parked_again,
         test_release_assets_are_digest_checked_before_cache_reuse,
         test_installed_state_doctor_keeps_provider_probes_local,
         test_public_skyrim_workflow_requires_product_and_presentation_quality,
