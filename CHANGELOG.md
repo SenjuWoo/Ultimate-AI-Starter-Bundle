@@ -1,3 +1,17 @@
+## 8.44.6 (2026-11-14)
+
+- **The age rule reached the last files that still adjudicated it.** Five
+  `COPY-TO-WORKSPACE` instruction templates, `adult-image-caption`,
+  `game-mashup-passthrough` and its `project-intel` reference still asked a model
+  to judge whether a character looked under age. All now state the same rule as
+  the rest of the pack: no character known to be a child.
+- **New contract.** `test_no_age_adjudication_wording_ships_anywhere_live` walks
+  every live instruction surface, so a file added later cannot reintroduce
+  age-guessing wording. It caught one more occurrence while it was being written.
+- No change to what the pack does.
+
+The bundle still ships 81 canonical skills.
+
 ## 8.44.5 (2026-11-14)
 
 - **Keep the manifest's byte ending through regeneration.**

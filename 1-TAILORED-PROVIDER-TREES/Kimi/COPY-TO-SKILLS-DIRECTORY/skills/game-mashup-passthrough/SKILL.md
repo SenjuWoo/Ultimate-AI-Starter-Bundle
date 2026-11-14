@@ -25,7 +25,7 @@ any publishing platform (publishing is a separate, explicit request).
    not a candidate for a protected online title. A purely client-side cosmetic
    route may be tolerated; verify the publisher's current policy and warn about
    the account risk. Never bypass or disable anti-cheat or DRM.
-4. Exclude censored variants and any child-like or age-ambiguous character by
+4. Exclude censored variants and any character known to be a child by
    name before extraction, not after.
 
 ## Order of work

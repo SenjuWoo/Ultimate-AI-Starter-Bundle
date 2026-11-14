@@ -2145,6 +2145,37 @@ def test_one_age_rule_and_no_conflicting_exclusions() -> None:
             assert banned not in body, f"{p.name} reintroduces a conflicting exclusion: {banned!r}"
 
 
+def test_no_age_adjudication_wording_ships_anywhere_live() -> None:
+    """No live file may make a model adjudicate a borderline age.
+
+    "age-ambiguous" and "cannot tell they are an adult" ask a vision model to
+    rule on an age it cannot measure, so it refuses adult subjects. The rule is
+    a stated one: a character known to be a child. This walks every live
+    instruction surface, so a file added later is covered too.
+    """
+    banned = re.compile(
+        r"(age[- ]ambiguous|cannot tell (?:they|the) (?:are|is) an adult|"
+        r"age is unclear|unclear age|school-as-minor|child-like character)",
+        re.I,
+    )
+    roots = [ROOT / "0-UNRESTRAINT-PACKS", ROOT / "3-PREAMBLES",
+             ROOT / "COPY-TO-YOUR-WORKSPACE", CANON]
+    offenders = []
+    for base in roots:
+        for p in base.rglob("*"):
+            if not p.is_file() or p.suffix.lower() not in (".md", ".txt"):
+                continue
+            if "history" in p.parts or "legacy" in p.parts:
+                continue
+            for n, line in enumerate(p.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+                if banned.search(line):
+                    offenders.append(f"{p.relative_to(ROOT).as_posix()}:{n}")
+    assert not offenders, (
+        "live files adjudicate a borderline age instead of a stated one: "
+        + ", ".join(offenders[:8])
+    )
+
+
 def test_no_hard_blocker_principle_is_shipped() -> None:
     """A future edit must not quietly restore refusal-by-default.
 
@@ -3412,6 +3443,7 @@ def main() -> int:
         test_no_hard_blocker_principle_is_shipped,
     test_manual_paste_is_generated_not_hand_kept,
     test_one_age_rule_and_no_conflicting_exclusions,
+    test_no_age_adjudication_wording_ships_anywhere_live,
         test_no_skill_script_hardcodes_a_machine_path,
         test_every_v5_helper_called_actually_exists,
         test_provider_skill_sync_is_content_authoritative,

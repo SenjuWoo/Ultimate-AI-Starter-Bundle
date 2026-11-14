@@ -8,8 +8,7 @@ description: >
 
 # Adult image caption
 
-Report **pixels**. Fictional adults only. No child, school-as-minor,
-age-ambiguous, or real-person likeness.
+Report **pixels**. Adults only. No character known to be a child.
 
 Do not invent nudity, fluids, or acts that are not in the image.
 If clothed: outline, sheerness, cameltoe, nipple press as "through cloth /

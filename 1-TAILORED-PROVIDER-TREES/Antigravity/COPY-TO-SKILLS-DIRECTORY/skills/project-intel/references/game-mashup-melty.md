@@ -31,7 +31,7 @@ not a candidate for a protected online title; a purely client-side cosmetic
 route still needs the publisher's current policy and the user's informed
 acceptance); never touch or bypass DRM; solo only (other players would
 not see the bodies); exclude censored variants and any child-like or
-age-ambiguous character by name.
+character known to be a child by name.
 
 ## The pieces
 
