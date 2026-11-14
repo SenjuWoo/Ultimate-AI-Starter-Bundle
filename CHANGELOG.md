@@ -1,3 +1,22 @@
+## 8.44.1 (2026-11-14)
+
+- **`MANUAL-PASTE.txt` is generated, not hand-kept.** It is the only paste-ready
+  artifact with no build step, so every SOUL edit left it stale and the paste told a
+  different story from the wired agent. `TOOLS/generate_manual_paste.py` renders it
+  from SOUL + the Web contract, `--check` reports staleness, and the release gate
+  fails on a stale copy.
+- **One age rule, asserted.** Two new contracts pin the invariant that caused the
+  disagreement: every instruction form states the same restriction, and the extra
+  exclusions that had accumulated across the preamble, the kit, the character sheet
+  skill and the workspace templates stay out. A future edit that reintroduces one
+  fails the suite instead of shipping.
+- **SOUL carries the restriction too.** Hermes users read SOUL on every turn, so the
+  line lives there as well, and the wired prefix hash is re-pinned in the same change.
+- Re-fanned the provider trees and refreshed `MANIFEST.json`, `VALIDATION.json` and
+  `docs/history`.
+
+The bundle still ships 81 canonical skills.
+
 ## 8.44.0 (2026-11-13)
 
 - **Instruction consistency pass.** The shared preamble files were audited against

@@ -2098,6 +2098,53 @@ def test_no_skill_documents_an_unshipped_product() -> None:
     assert not offenders, f"skills still reference the removed Forge Bridge: {offenders}"
 
 
+def test_manual_paste_is_generated_not_hand_kept() -> None:
+    """The paste block must match SOUL + the Web contract byte for byte.
+
+    It was hand-maintained, so every SOUL edit left it stale and the paste told a
+    different story from the wired agent. It is generated now; this fails the
+    moment someone edits either source without regenerating.
+    """
+    import subprocess
+
+    out = subprocess.run(
+        [sys.executable, str(ROOT / "TOOLS" / "generate_manual_paste.py"), "--check"],
+        capture_output=True, text=True, cwd=ROOT,
+    )
+    assert out.returncode == 0, (
+        "3-PREAMBLES/MANUAL-PASTE.txt is stale: "
+        + (out.stdout or out.stderr).strip()
+        + " -- run python TOOLS/generate_manual_paste.py"
+    )
+
+
+def test_one_age_rule_and_no_conflicting_exclusions() -> None:
+    """Every instruction form states the same single age rule.
+
+    Extra exclusions accumulate one model at a time and then contradict each
+    other: one file says no real people, the next says real people are fine, and
+    the agent picks whichever it read last. Scope is declared once, here.
+    """
+    forms = [
+        ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md",
+        ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION — Compact.md",
+        ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION — Web.md",
+        ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION — Web Light.md",
+        ROOT / "3-PREAMBLES" / "SOUL.md",
+    ]
+    # The hard line has to be present in every form that ships as an instruction.
+    for p in forms:
+        body = read(p).lower()
+        assert "child" in body, f"{p.name} no longer states the age restriction"
+    aio = read(forms[0]).lower()
+    assert "no sexual content involving a child" in aio, "the contract lost the hard line"
+    # And the exclusions that caused the disagreement must stay gone.
+    for p in forms + [ROOT / "3-PREAMBLES" / "MANUAL-PASTE.txt"]:
+        body = read(p).lower()
+        for banned in ("no real people", "no real person", "real-person likeness"):
+            assert banned not in body, f"{p.name} reintroduces a conflicting exclusion: {banned!r}"
+
+
 def test_no_hard_blocker_principle_is_shipped() -> None:
     """A future edit must not quietly restore refusal-by-default.
 
@@ -2615,7 +2662,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "fe5b7f4b23777ef889606f4ce17928826badf2953a2eaf79052c18d2e43fec31", (
+    assert digest == "6fb1f05ddf4fa10da874eb68689886189635db0b2a1972d7a07e1e9e6a7c6bc3", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -3363,6 +3410,8 @@ def main() -> int:
         test_forge_health_check_reads_fields_forge_emits,
         test_no_skill_documents_an_unshipped_product,
         test_no_hard_blocker_principle_is_shipped,
+    test_manual_paste_is_generated_not_hand_kept,
+    test_one_age_rule_and_no_conflicting_exclusions,
         test_no_skill_script_hardcodes_a_machine_path,
         test_every_v5_helper_called_actually_exists,
         test_provider_skill_sync_is_content_authoritative,
