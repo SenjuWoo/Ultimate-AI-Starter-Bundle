@@ -8,7 +8,7 @@ description: >
 
 # Adult character sheet
 
-Adults only. AGE must be adult. No child, school-as-minor, or any age that is unclear.
+Adults only. AGE must be adult. No character known to be a child.
 
 ## Priority (high to low)
 

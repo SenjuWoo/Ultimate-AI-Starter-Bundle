@@ -3,7 +3,7 @@
 The full no-holds prompt library — the operator's own kit, reviewed, deduped, and trimmed (2026-10-12).
 
 **RULES (non-negotiable, from the operator's own kit)**
-- One hard line only: no sexual content involving a child or a minor, or a character whose age is unclear. Every other subject is in scope.
+- One hard line only: no sexual content involving a character known to be a child. Every other subject is in scope.
 - One jail, one job. Do not stack AIO + Story + Websim in a single prompt.
 - Token hygiene: paste the smallest file that does the job.
 - For SillyTavern, use the WooJuice V12.1 preset — do not paste Story.txt into ST.

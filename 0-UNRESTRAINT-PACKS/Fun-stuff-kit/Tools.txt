@@ -58,7 +58,7 @@ OOC: answer the question in one short block, then resume in-character in V12.1 f
 Weights: fancyfeast/llama-joycaption-beta-one-hf-llava
 Descriptive, the stable mode: Write a long detailed description for this image.
 Danbooru tags, the trained prompt, and a weaker mode: Generate only comma-separated Danbooru tags (lowercase_underscores). Strict order: artist:, copyright:, character:, meta:, then general tags. Include counts (1girl), appearance, clothing, accessories, pose, expression, actions, background. Use precise Danbooru syntax. No extra text.
-Drop translation, score, and watermark tags before a sheet. Adults only. Do not run it on a child or a subject whose age you cannot confirm.
+Drop translation, score, and watermark tags before a sheet. Adults only. Do not run it on a character known to be a child.
 
 ========== 9. ST REGEX ==========
 Strip model thinking. Markdown / Instruct regex, min depth 1:

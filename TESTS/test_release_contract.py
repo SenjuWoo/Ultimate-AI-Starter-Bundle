@@ -2137,7 +2137,7 @@ def test_one_age_rule_and_no_conflicting_exclusions() -> None:
         body = read(p).lower()
         assert "child" in body, f"{p.name} no longer states the age restriction"
     aio = read(forms[0]).lower()
-    assert "no sexual content involving a child" in aio, "the contract lost the hard line"
+    assert "known to be a child" in aio, "the contract lost the hard line"
     # And the exclusions that caused the disagreement must stay gone.
     for p in forms + [ROOT / "3-PREAMBLES" / "MANUAL-PASTE.txt"]:
         body = read(p).lower()
@@ -2662,7 +2662,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "6fb1f05ddf4fa10da874eb68689886189635db0b2a1972d7a07e1e9e6a7c6bc3", (
+    assert digest == "67f1d81f7af24346a732351df2f67eaa729f7feb79041e0a333ef277c1bfb513", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )

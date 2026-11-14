@@ -66,48 +66,48 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Compact.md",
-  "size": 6394,
-  "sha256": "56de45ed1242b808f527a0a5f98514160d9c9ec32f16bebe2663af47bf67af8e"
+  "size": 6445,
+  "sha256": "2e528902b9dbcbe4a3c856491b03487fbb8dc3082b7fb973f253ddc74e12f226"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web Light.md",
-  "size": 1049,
-  "sha256": "060e47544cd6f73375bd8d53195157919723631b5c338771c5f36111c8ceb378"
+  "size": 1025,
+  "sha256": "f12df88bcb9148f53e3bf47b7d82597bb697cb6402d4eef0f0431265cb4081a5"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web.md",
-  "size": 2137,
-  "sha256": "9a943c828c4d2726fb27f60ad672a78feddb74b8777ac5ada817bedc0ae6bb83"
+  "size": 2094,
+  "sha256": "199574edff9eeea12bb65db8d1496eb4985b0e8f6dc7442b16025180fe00261b"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 17257,
-  "sha256": "aa2fd963ddbceb5fdeca195991501bbabcc112e60c47c3d444c6db385d31b588"
+  "size": 17281,
+  "sha256": "3a2bc00784ac77ebba187e1613718cc558c55600e6cd8f5d2174145cae620308"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/CLAUDE-CODE-ADDENDUM.md",
-  "size": 2854,
-  "sha256": "17208bb0347687a62f4db7a5d9e59afe1435810bde742388b07ee0a3f70b4710"
+  "size": 3626,
+  "sha256": "8f11fb1d4b4e2337f7d15c9f5b1bf7b2424bfa97c1a847912611bb2e3edcf530"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Character Maker.txt",
-  "size": 2060,
-  "sha256": "0ebde8307290d7df414da201c69a1cc24c25bd379f96ec4f6869e4c96c5bb728"
+  "size": 2002,
+  "sha256": "0a5d6f3e2b8b7ae84af1bca51d5e232c807840a8a4b6e58fe780a20b531fb78e"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/FablesGG.txt",
-  "size": 1858,
-  "sha256": "4f21d49e147c0d4811df789bfc2e363049f2b31a94adac53c910cbb449f34a46"
+  "size": 1841,
+  "sha256": "3952ad761bd7e1ac15ae2974e24d893bd445a36c91332d87c50e9b6dc4a00b18"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/INDEX.txt",
-  "size": 1707,
-  "sha256": "fdf7d5c21cad5e00b4f533daed5aa20664fb4a5a3e1b4c36c2206b1899d61d27"
+  "size": 1690,
+  "sha256": "2f95e9d01ea1a6ede75935665e096b8b3d8309d01675bf0e0fbae4a842123a1d"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/MANGA-VISUAL-STORY-DIRECTOR.txt",
-  "size": 7370,
-  "sha256": "361860c2cd77c2fcaa7bc4f46107231834f660b7a7d7f112ec45c8d0e9ddae16"
+  "size": 7367,
+  "sha256": "1c1d4c43ce541274b747a6b117f669af68503d82b424e90dd73acb0209dfb7f1"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Sites.txt",
@@ -116,8 +116,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Story.txt",
-  "size": 3423,
-  "sha256": "a7192cd5981c2600b0f8ccc742daba2bfbe70ed9deec1d3682e9ab98bd501d05"
+  "size": 3387,
+  "sha256": "f3e915ede7a9cc4aa47888fecbd34c5aec4cfd18d369353a09b43c2eae46d7fc"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Tags.txt",
@@ -126,28 +126,28 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Tools.txt",
-  "size": 4170,
-  "sha256": "a29e9a535bef3d97b40aed611c7171811d4c6676579532e945a41d25b42e36e8"
+  "size": 4152,
+  "sha256": "e38cf22980cbf786fcad519ca8856a9bc9169cf657a5df7372f1b2b871289f81"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Vision-jail-MAX-v8.txt",
-  "size": 2302,
-  "sha256": "1da71f09b83161ed1d007bc84e99b57ee43985b31902d2ba46e16094aa6ec907"
+  "size": 2251,
+  "sha256": "f5b9ba31dc1c0540def705c19d7b7863ce81c3b5266943c01bc01b09a5a6a07c"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Vision.txt",
-  "size": 2529,
-  "sha256": "1653b3dc292f540a71da96c2540cae0e30ef2c8269aad748581b655d14ea3955"
+  "size": 2478,
+  "sha256": "e084c58676423b81e9b484fdde7a5d6fc7cdd0fca84b9f060910bdcac3fd0664"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Websim.txt",
-  "size": 1214,
-  "sha256": "e02aa41d419c5f92a301c9abc3a8aad7bce2ad4f28ce1056db49364fc06493ba"
+  "size": 1211,
+  "sha256": "7316ee8261070f32532c7dbd3b8afbc76e6be6f904b181c0f11b1991cadd8f05"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/README.md",
-  "size": 10786,
-  "sha256": "5e3ad7236acddc0ea41f0b672403232a0d725a45f09a0056cb3c969f9a48e96f"
+  "size": 10762,
+  "sha256": "6b4ed6767724349dac9460159018c4c6f7f7912107e1aed5e84c702a916ddb01"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/Character Creation.txt",
@@ -191,8 +191,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
-  "size": 1701,
-  "sha256": "58fec6b40a79bfa6f44bb6ba9374a593b3f98fb4031a88ee408c6589574ac75c"
+  "size": 1680,
+  "sha256": "67abe9c5f6a6d2e0d41d5b68e5e1aeef5136009d2f7918b0406c8e36324a8ea4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/adult-image-caption/SKILL.md",
@@ -2936,8 +2936,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4456,
-  "sha256": "5892dcaece2e662fb69b70527d4ad0c289836323938b16ee491541355f1a9dc0"
+  "size": 4714,
+  "sha256": "90ccf3f8b48786dda2cb730e5a6210f6b4bc9a2e64c1f570af9e515da0674d59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -3201,8 +3201,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
-  "size": 1701,
-  "sha256": "58fec6b40a79bfa6f44bb6ba9374a593b3f98fb4031a88ee408c6589574ac75c"
+  "size": 1680,
+  "sha256": "67abe9c5f6a6d2e0d41d5b68e5e1aeef5136009d2f7918b0406c8e36324a8ea4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/adult-image-caption/SKILL.md",
@@ -5946,8 +5946,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4456,
-  "sha256": "5892dcaece2e662fb69b70527d4ad0c289836323938b16ee491541355f1a9dc0"
+  "size": 4714,
+  "sha256": "90ccf3f8b48786dda2cb730e5a6210f6b4bc9a2e64c1f570af9e515da0674d59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -6271,8 +6271,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
-  "size": 1701,
-  "sha256": "58fec6b40a79bfa6f44bb6ba9374a593b3f98fb4031a88ee408c6589574ac75c"
+  "size": 1680,
+  "sha256": "67abe9c5f6a6d2e0d41d5b68e5e1aeef5136009d2f7918b0406c8e36324a8ea4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/adult-image-caption/SKILL.md",
@@ -9016,8 +9016,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4456,
-  "sha256": "5892dcaece2e662fb69b70527d4ad0c289836323938b16ee491541355f1a9dc0"
+  "size": 4714,
+  "sha256": "90ccf3f8b48786dda2cb730e5a6210f6b4bc9a2e64c1f570af9e515da0674d59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -9331,8 +9331,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
-  "size": 1701,
-  "sha256": "58fec6b40a79bfa6f44bb6ba9374a593b3f98fb4031a88ee408c6589574ac75c"
+  "size": 1680,
+  "sha256": "67abe9c5f6a6d2e0d41d5b68e5e1aeef5136009d2f7918b0406c8e36324a8ea4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/adult-image-caption/SKILL.md",
@@ -12076,8 +12076,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4456,
-  "sha256": "5892dcaece2e662fb69b70527d4ad0c289836323938b16ee491541355f1a9dc0"
+  "size": 4714,
+  "sha256": "90ccf3f8b48786dda2cb730e5a6210f6b4bc9a2e64c1f570af9e515da0674d59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -12391,8 +12391,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
-  "size": 1701,
-  "sha256": "58fec6b40a79bfa6f44bb6ba9374a593b3f98fb4031a88ee408c6589574ac75c"
+  "size": 1680,
+  "sha256": "67abe9c5f6a6d2e0d41d5b68e5e1aeef5136009d2f7918b0406c8e36324a8ea4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/adult-image-caption/SKILL.md",
@@ -15136,8 +15136,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4456,
-  "sha256": "5892dcaece2e662fb69b70527d4ad0c289836323938b16ee491541355f1a9dc0"
+  "size": 4714,
+  "sha256": "90ccf3f8b48786dda2cb730e5a6210f6b4bc9a2e64c1f570af9e515da0674d59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -15466,8 +15466,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/sillytavern/SOUL.md",
-  "size": 806,
-  "sha256": "569dd4c0625b3b152bbd03de148f8c41d3e7217fde0386d282d0fbda1084bd24"
+  "size": 800,
+  "sha256": "27d6adc3cd8df1708a67e69dbf786494695aee29e053c47c6b4d8fbd142709e2"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/profiles/sillytavern/config.yaml",
@@ -15526,8 +15526,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/adult-character-sheet/SKILL.md",
-  "size": 1701,
-  "sha256": "58fec6b40a79bfa6f44bb6ba9374a593b3f98fb4031a88ee408c6589574ac75c"
+  "size": 1680,
+  "sha256": "67abe9c5f6a6d2e0d41d5b68e5e1aeef5136009d2f7918b0406c8e36324a8ea4"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/adult-image-caption/SKILL.md",
@@ -18271,8 +18271,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/unrestraint-packs/SKILL.md",
-  "size": 4456,
-  "sha256": "5892dcaece2e662fb69b70527d4ad0c289836323938b16ee491541355f1a9dc0"
+  "size": 4714,
+  "sha256": "90ccf3f8b48786dda2cb730e5a6210f6b4bc9a2e64c1f570af9e515da0674d59"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/using-git-worktrees/SKILL.md",
@@ -18586,18 +18586,18 @@
  },
  {
   "path": "3-PREAMBLES/MANUAL-PASTE.txt",
-  "size": 4356,
-  "sha256": "176932b0a204ec098091051c8b5239523b429956306ca752a82a876358bf1497"
+  "size": 4298,
+  "sha256": "bb1f431d484c57d95486abae661ae35a75b6e1fe5ce74ca2eaed3b1b9c9edad9"
  },
  {
   "path": "3-PREAMBLES/README.md",
   "size": 6508,
-  "sha256": "8dcb974ac1b318397926839b2f94a88494f462b72713bfebde5ae1f8782f2fb0"
+  "sha256": "f5512d4e79b5192cf3a89a33a28df834b0ac470dce00d29f97c302d7011634fe"
  },
  {
   "path": "3-PREAMBLES/SOUL.md",
-  "size": 2227,
-  "sha256": "a9de1c9fde00ca212f481ff7d7fe2fdb7f32e999f72734e3ce80245247bc5e76"
+  "size": 2203,
+  "sha256": "8f3930ac7f6487fe7e395b0c6ba73b65adbf00537dcfba9a5e84c71a1099c598"
  },
  {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-0185e0249c27.md",
@@ -18822,7 +18822,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66534,
-  "sha256": "98abbe2d945e059da62da30949feb9fc3494dbfeae31c8fae068d6415e2dfaa0"
+  "sha256": "bd100c44ffb7a79c7126dbdca23b0cc2df5251bc2329892587d0fc43acc7110b"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18832,7 +18832,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "189dc68507fdb5dc56606595e4c99f1c781ed7b90e3e92090e9d2955e163a132"
+  "sha256": "bbf8521559c303776a84bbe1d4ae88e0e02c6acbe83674bcfda1417dda01b0a6"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18842,7 +18842,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "13f9d58e224a2969db39566f69ab7c9144a8a927aa35e9a225ad92f36ba537e7"
+  "sha256": "674f90dafdf3bdaae98fc2eefd51d86d5695c3dbdf78b2a1bc31216ae395c700"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -23286,8 +23286,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 354590,
-  "sha256": "59273e6bbcd938b66070b730833e7e69180a35ee27af58c3d125c77e9f385c69"
+  "size": 355590,
+  "sha256": "90f2cf5d3b27d1c4fe06bdd0978182df5b16edf6df029d065e9e7fad8727b8a8"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23306,8 +23306,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 17257,
-  "sha256": "aa2fd963ddbceb5fdeca195991501bbabcc112e60c47c3d444c6db385d31b588"
+  "size": 17281,
+  "sha256": "3a2bc00784ac77ebba187e1613718cc558c55600e6cd8f5d2174145cae620308"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
@@ -23432,7 +23432,7 @@
  {
   "path": "README.md",
   "size": 16480,
-  "sha256": "9c2f63dc64f7c82496f110fc7cc335e6a62456c9fccb0095be89de3ed45ee3d8"
+  "sha256": "d567253d0358e5b0cbb0a5a879d7440bc1e6d24887b762204259f2831db138f1"
  },
  {
   "path": "SECURITY.md",
@@ -23442,12 +23442,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "3937fc610ef39887a6baa27c31ba04d411093a4822654933f81c1af3ff4f43f9"
+  "sha256": "08bf11822aba9f9c1f4134e29b9ee6576eb5fbaebdeadd8bce8bd6af3fd9dc05"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "046250fcaafddcd37bc9c3b1b0920bc2ed33f86ed0aff79c182ce2afd93d8baf"
+  "sha256": "3ccd3d9153f985c20e3b7ae75d42fa2470b0e95a584fac4e5dc64915b1a7af58"
  },
  {
   "path": "STATE.md",
@@ -23951,8 +23951,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 382176,
-  "sha256": "00919d40ad0bcb8b49a2b491c554334411b3e95a2afad7ab34573e10dbc762d4"
+  "size": 382160,
+  "sha256": "c5a0085168303da68b84dbb922ab7fa12d6547ee82cc7f220e73fdcc5aa7b68a"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -24557,7 +24557,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2637,
-  "sha256": "fbe91783764b97ebda94a16d2b2ff70f4084802db8359feb759f15dd0a528251"
+  "sha256": "28cc04a948384e5fcdca23bd22841df82d0b46f674dfdb249b089fd523ec0463"
  },
  {
   "path": "VALIDATION.md",
@@ -24567,7 +24567,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "782c35bdcf8461d4a01d849ef3151080736648acadcdca19bc91196c23a397d0"
+  "sha256": "f77c99734e6c13f7c2b3353bc989d372c62bac4fee4c6ecf76405a10c52fa2d2"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24586,8 +24586,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/adult-character-sheet/SKILL.md",
-  "size": 1701,
-  "sha256": "58fec6b40a79bfa6f44bb6ba9374a593b3f98fb4031a88ee408c6589574ac75c"
+  "size": 1680,
+  "sha256": "67abe9c5f6a6d2e0d41d5b68e5e1aeef5136009d2f7918b0406c8e36324a8ea4"
  },
  {
   "path": "_CANONICAL-SKILLS/adult-image-caption/SKILL.md",
@@ -27331,8 +27331,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/unrestraint-packs/SKILL.md",
-  "size": 4456,
-  "sha256": "5892dcaece2e662fb69b70527d4ad0c289836323938b16ee491541355f1a9dc0"
+  "size": 4714,
+  "sha256": "90ccf3f8b48786dda2cb730e5a6210f6b4bc9a2e64c1f570af9e515da0674d59"
  },
  {
   "path": "_CANONICAL-SKILLS/using-git-worktrees/SKILL.md",
@@ -28773,6 +28773,11 @@
   "path": "docs/history/V8.44.1-CHANGELOG.md",
   "size": 1069,
   "sha256": "5e51f8bb7698934959f5e156d93fcb94cc6967b3349be23c35733388c2c802ef"
+ },
+ {
+  "path": "docs/history/V8.44.2-CHANGELOG.md",
+  "size": 981,
+  "sha256": "702916259eca53bcd70b3beed261941b01f656f87e970de0bcd8535f3c395bc8"
  },
  {
   "path": "docs/history/V8.5.0-CHANGELOG.md",

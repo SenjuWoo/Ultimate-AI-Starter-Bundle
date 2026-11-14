@@ -57,7 +57,7 @@ Rules:
 - Every write gets a `.before-soul-<timestamp>.bak` first.
 - UTF-8, no BOM on writes; existing files keep their own encoding/leading BOM.
 - `-SkipPreamble` opts out; `-ForcePreamble` rewrites even an identical block.
-- Adults only. No child / age-ambiguous content. Ever. (Same rule as the rest
+- Adults only. No character known to be a child. Ever. (Same rule as the rest
   of the pack.)
 
 ## Live files: one composition, three layers
