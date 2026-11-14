@@ -25,8 +25,9 @@ git clone --branch v1.5.1 --depth 1 https://github.com/img2threejs/img2threejs
 
 Copy the clone into the harness skills directory as `img2threejs`, or point the
 agent at it. Then follow its `SKILL.md`: `forge/next.py` drives the pipeline,
-`forge/state.py` records evidence, `grimoire/` holds the contracts. Windows users
-run `forge/...` through `scripts/uabs-python.ps1` for UTF-8.
+`forge/state.py` records evidence, `grimoire/` holds the contracts. On Windows the
+bundle sets `PYTHONUTF8=1` for the shared Python (`TOOLS\Set-SharedPython.ps1`); if
+`forge/...` output is garbled, set it in that shell.
 
 When the repository is unavailable and the task needs it, say so and continue with
 a plain Three.js factory or a GLB; never fake a reconstruction.

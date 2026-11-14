@@ -3101,6 +3101,19 @@ def test_catalog_freshness_auditor_self_checks() -> None:
     assert "self-test PASS" in result.stdout
 
 
+def test_catalog_install_specs_pin_the_declared_version() -> None:
+    """A bump must reach the launch argument, not only the `version` field.
+
+    super-mcp-router said 2.9.3 for a release cycle while npx still ran 2.9.2,
+    and the freshness audit reported it CURRENT because it read only `version`.
+    """
+    sys.path.insert(0, str(ROOT / "TOOLS"))
+    import audit_catalog_versions as catalog_audit
+
+    catalog = json.loads(read(ROOT / "BUNDLED-TOOLS" / "CATALOG.json"))
+    assert catalog_audit.pin_mismatches(catalog) == []
+
+
 def test_game_mashup_passthrough_knowledge_is_wired_and_private() -> None:
     """The mashup lessons ship as a skill plus a card, without machine detail.
 
@@ -3524,6 +3537,7 @@ def main() -> int:
         test_claude_starter_keeps_skill_descriptions_listed,
         test_local_security_boundaries_stay_hardened,
         test_catalog_freshness_auditor_self_checks,
+        test_catalog_install_specs_pin_the_declared_version,
         test_release_assets_are_digest_checked_before_cache_reuse,
         test_installed_state_doctor_keeps_provider_probes_local,
         test_public_skyrim_workflow_requires_product_and_presentation_quality,

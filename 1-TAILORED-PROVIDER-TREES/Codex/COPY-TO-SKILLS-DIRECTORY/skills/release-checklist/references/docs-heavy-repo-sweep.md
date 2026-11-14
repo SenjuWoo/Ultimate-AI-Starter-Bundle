@@ -29,12 +29,12 @@
 
 ## Pitfalls (user-corrected)
 
-- **Pushing commits does NOT create a Release.** GitHub's Releases section ranks by tag. The user will check and come back angry — always tag + `gh release create`.
-- If docs fixes land AFTER the tag, **force-move the tag** (`git tag -f` + push) so the release tarball contains the final docs — otherwise downloaders get the pre-docs commit.
+- **Pushing commits does not create a Release** unless the repository's release workflow publishes on a version bump (this bundle's `release.yml` does). Otherwise tag and run `gh release create` from the green SHA.
+- If docs fixes land after the tag, ship them as the next patch release. Never move a published tag: the release asset, its checksum and the CI verdict all name the original SHA.
 - Historical references to old versions inside dated changelogs are CORRECT — don't purge them; only the public-facing surfaces change.
 - `git -C` with MSYS-style `/z/...` paths fails on this machine — pass native `Z:/...` forward-slash paths to git/robocopy.
 - Windows encoding rules: `.ps1`/`.bat` keep BOM or stay pure ASCII; `SKILL.md` = UTF-8 no BOM. Verify with `head -c 3 file | xxd`.
 
 ## References
 
-- Full per-file checklist for the Ultimate-AI-Starter-Bundle: `references/ultimate-bundle-release.md`.
+- Releasing the Ultimate-AI-Starter-Bundle: the `bundle-release-metadata` skill.

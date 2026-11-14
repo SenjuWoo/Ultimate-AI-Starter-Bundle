@@ -135,7 +135,7 @@ class PonytailModeTests(unittest.TestCase):
         cfg = Path(os.environ["APPDATA"]) / "ponytail"
         cfg.mkdir(parents=True)
         (cfg / "config.json").write_text('{"defaultMode": "full"}', encoding="utf-8")
-        self.assertEqual(pm.main(["status"]), 1, "requested off but native full must fail")
+        self.assertEqual(pm.main(["status"], home=self.home), 1, "requested off but native full must fail")
 
     def test_environment_override_is_reported_and_fails(self):
         pm.STATE.mkdir(parents=True, exist_ok=True)
@@ -155,7 +155,7 @@ class PonytailModeTests(unittest.TestCase):
     def test_init_keeps_an_explicit_choice_and_re_asserts_it(self):
         pm.STATE.mkdir(parents=True, exist_ok=True)
         (pm.STATE / "state.json").write_text(json.dumps({"mode": "ultra"}), encoding="utf-8")
-        self.assertEqual(pm.main(["init", "--apply"]), 0)
+        self.assertEqual(pm.main(["init", "--apply"], home=self.home), 0)
         self.assertEqual(json.loads((pm.STATE / "state.json").read_text())["mode"], "ultra")
         # An installer re-copies skills, so init must also re-assert the native value
         # instead of only recording the choice.
@@ -220,6 +220,66 @@ class PonytailModeTests(unittest.TestCase):
         self.assertFalse((custom / "skills" / "ponytail").exists())
         self.assertTrue((self.home / ".claude" / "skills" / "ponytail").exists(),
                         "CLAUDE_CONFIG_DIR replaces ~/.claude; the other folder is out of scope")
+
+    def _claude_settings(self):
+        return json.loads((self.home / ".claude" / "settings.json").read_text(encoding="utf-8"))
+
+    def test_off_disables_the_claude_plugin_and_keeps_other_keys(self):
+        # skillOverrides cannot hide plugin skills, so an enabled plugin keeps its
+        # descriptions in every Claude session; off must switch it off.
+        pm.execute(pm.plan("off", home=self.home))
+        data = self._claude_settings()
+        self.assertIs(data["enabledPlugins"]["ponytail@ponytail"], False)
+        self.assertEqual(data["theme"], "dark")
+        backups = list((self.home / ".claude").glob("settings.json.bak-ponytail-*"))
+        self.assertEqual(len(backups), 1, "the original settings are backed up first")
+
+    def test_manual_level_re_enables_the_claude_plugin(self):
+        pm.execute(pm.plan("off", home=self.home))
+        pm.execute(pm.plan("lite", home=self.home, source_tree=None))
+        self.assertIs(self._claude_settings()["enabledPlugins"]["ponytail@ponytail"], True)
+
+    def test_enabled_plugin_at_off_is_a_leak(self):
+        cfg = Path(os.environ["APPDATA"]) / "ponytail"
+        cfg.mkdir(parents=True)
+        (cfg / "config.json").write_text('{"defaultMode": "off"}', encoding="utf-8")
+        for name in (".claude", ".grok", ".kimi-code", ".agents"):
+            for skill in pm.installed_skill_dirs(self.home / name):
+                for f in sorted(skill.rglob("*"), reverse=True):
+                    f.unlink() if f.is_file() else f.rmdir()
+                skill.rmdir()
+        report = pm.status(home=self.home)
+        self.assertTrue(any("plugin" in leak for leak in report["leaks"]))
+
+    def test_no_plugin_entry_means_no_settings_write(self):
+        (self.home / ".claude" / "settings.json").write_text('{"theme": "dark"}', encoding="utf-8")
+        actions = pm.plan("off", home=self.home)
+        self.assertFalse([a for a in actions if a["kind"] == "plugin_enable"])
+
+    def test_off_disables_the_antigravity_plugin_and_parks_its_copies(self):
+        ag = self.home / ".gemini" / "config"
+        (ag / "skills" / "ponytail").mkdir(parents=True)
+        (ag / "skills" / "ponytail" / "SKILL.md").write_text("x", encoding="utf-8")
+        (ag / "config.json").write_text(json.dumps(
+            {"plugins": {"ponytail": {"enabled": True}, "superpowers": {"enabled": True}}}), encoding="utf-8")
+        pm.execute(pm.plan("off", home=self.home))
+        data = json.loads((ag / "config.json").read_text(encoding="utf-8"))
+        self.assertIs(data["plugins"]["ponytail"]["enabled"], False)
+        self.assertIs(data["plugins"]["superpowers"]["enabled"], True)
+        self.assertFalse(pm.installed_skill_dirs(ag))
+
+    def test_explicit_home_never_reaches_the_real_provider_folders(self):
+        homes = pm.provider_homes(self.home)
+        for name, path in homes.items():
+            self.assertTrue(str(path).startswith(str(self.home)), "%s escaped the sandbox: %s" % (name, path))
+
+    def test_hermes_deleted_folder_is_not_a_profile(self):
+        hermes = self.home / "AppData" / "Local" / "hermes" / "profiles"
+        (hermes / ".deleted" / "skills").mkdir(parents=True)
+        (hermes / "code" / "skills").mkdir(parents=True)
+        homes = pm.provider_homes(self.home)
+        self.assertIn("Hermes/code", homes)
+        self.assertNotIn("Hermes/.deleted", homes)
 
     def test_unknown_mode_is_refused(self):
         with self.assertRaises(SystemExit):

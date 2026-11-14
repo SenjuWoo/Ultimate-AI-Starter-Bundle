@@ -120,6 +120,13 @@ class Hermes(unittest.TestCase):
                 self.assertNotIn("fictional-adult-modding", row["add"])
                 self.assertNotIn("web-dev", row["add"])
 
+    def test_hermes_trash_folder_is_not_a_profile(self):
+        with tempfile.TemporaryDirectory() as root:
+            for profile in (".deleted", "web"):
+                skill(os.path.join(root, "profiles", profile, "skills"), "roblox-ui")
+            plan = ss.hermes_plan(json.loads(json.dumps(POLICY)), {"hermes": {}}, root, lambda home: set())
+            self.assertEqual([row["profile"] for row in plan["profiles"]], ["web"])
+
     def test_profile_scoped_home_resolves_to_the_root(self):
         with mock.patch.dict(os.environ, {"HERMES_HOME": os.path.join("C:\\", "h", "profiles", "skyrim")}):
             self.assertEqual(os.path.normcase(ss.hermes_root()), os.path.normcase(os.path.join("C:\\", "h")))

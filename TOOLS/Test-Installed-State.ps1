@@ -1248,8 +1248,8 @@ if (Test-Path -LiteralPath $ponyScriptPath -PathType Leaf) {
   $ErrorActionPreference = $prevEapP
   try { $ponyReport = $ponyJson | ConvertFrom-Json } catch { $ponyReport = $null }
   if ($ponyReport) {
-    # The tool already decides what counts as a leak: an enabled plugin at mode
-    # off emits nothing (upstream skips activation), only loaded skill copies do.
+    # The tool decides what counts as a leak: at mode off, loaded skill copies and
+    # an enabled Claude/Antigravity plugin both list descriptions that trigger alone.
     if (@($ponyReport.leaks).Count -gt 0) {
       [void]$errors.Add("ponytail mode is off but instructions can still reach the model: " + (@($ponyReport.leaks) -join '; '))
     }

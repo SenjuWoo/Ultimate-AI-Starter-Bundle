@@ -1,10 +1,13 @@
-"""Compare canonical skills with the legacy provider homes; never write them.
+"""Compare canonical skills with the provider homes; never write them.
 
     python install_live_skills.py <canonical-dir> --check
 
-Counts describe byte differences, not an ownership-aware installation plan.
-For writes, use INSTALL-AIO.ps1 with explicit -Providers and the skills-only
-flags shown when a write request is refused. This helper never runs it.
+Counts describe byte differences. Skills a native plugin delivers to a provider
+(install-state.json), ponytail copies parked by its off/auto mode, and Python
+bytecode are not expected in a skills folder, so they are not counted as drift.
+The ownership-aware verdict is TOOLS/Test-Installed-State.ps1. For writes, use
+INSTALL-AIO.ps1 with explicit -Providers and the skills-only flags shown when a
+write request is refused. This helper never runs it.
 """
 import argparse
 import io
@@ -49,6 +52,44 @@ def preserved_skills(provider):
     return set((doc.get('providers') or {}).get(provider) or {})
 
 
+PACK_PLUGINS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                            'BUNDLED-TOOLS', 'plugins')
+
+
+def _state_json(*parts):
+    path = os.path.join(os.path.expandvars(r'%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle'), *parts)
+    try:
+        with io.open(path, encoding='utf-8-sig') as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return {}
+
+
+def plugin_owned_skills(provider):
+    """Skills a native plugin delivers to this provider; no copy is expected.
+
+    Without this, every plugin-delivered skill read as "+new" drift (Claude +95
+    files on a healthy install), which buried any real difference.
+    """
+    owned = set()
+    plugins = ((_state_json('install-state.json').get('native_plugins') or {})
+               .get(provider) or {}).get('plugins') or {}
+    for plugin_id, entry in plugins.items():
+        if not isinstance(entry, dict) or not entry.get('native'):
+            continue
+        owned |= set(entry.get('owned') or []) | set(entry.get('deduped') or [])
+        skills_dir = os.path.join(PACK_PLUGINS, plugin_id, 'skills')
+        if os.path.isdir(skills_dir):
+            owned |= {d for d in os.listdir(skills_dir)
+                      if os.path.isfile(os.path.join(skills_dir, d, 'SKILL.md'))}
+    return owned
+
+
+def ponytail_parked():
+    """off and auto park ponytail's copied skills on purpose (TOOLS/ponytail_mode.py)."""
+    return _state_json('ponytail-mode', 'state.json').get('mode') in ('off', 'auto')
+
+
 def same(a, b):
     try:
         with open(a, 'rb') as fa, open(b, 'rb') as fb:
@@ -77,12 +118,23 @@ def install(canon, dest, provider, check, notes):
     added = changed = kept = withheld = 0
     codex_sys = os.path.expandvars(r'%USERPROFILE%\.codex\skills\.system')
     keep = preserved_skills(provider)
+    by_plugin = plugin_owned_skills(provider)
+    parked = ponytail_parked()
+    from_plugin = parked_count = 0
     skills = [d for d in sorted(os.listdir(canon))
               if os.path.isdir(os.path.join(canon, d))
               and os.path.exists(os.path.join(canon, d, 'SKILL.md'))]
     for sk in skills:
         if sk in SCOPED and provider not in SCOPED[sk]:
             withheld += 1
+            continue
+        if sk in by_plugin:
+            withheld += 1
+            from_plugin += 1
+            continue
+        if parked and sk.startswith('ponytail'):
+            withheld += 1
+            parked_count += 1
             continue
         if sk in keep:
             notes.append('preserved local override (skill-overrides.json): %s' % sk)
@@ -96,8 +148,12 @@ def install(canon, dest, provider, check, notes):
         if is_reparse(dst_dir):
             notes.append('%s junction: %s' % (
                 'DANGLING' if not os.path.isdir(dst_dir) else 'live', sk))
-        for dp, _, fs in os.walk(src_dir):
+        for dp, dirs, fs in os.walk(src_dir):
+            # Local bytecode is gitignored and never installed: not drift.
+            dirs[:] = [d for d in dirs if d != '__pycache__']
             for f in fs:
+                if f.endswith('.pyc'):
+                    continue
                 sp = os.path.join(dp, f)
                 op = os.path.join(dst_dir, os.path.relpath(sp, src_dir))
                 if not os.path.exists(op):
@@ -108,6 +164,10 @@ def install(canon, dest, provider, check, notes):
                 else:
                     changed += 1
 
+    if from_plugin:
+        notes.append('delivered by a native plugin, no copy expected: %d skill(s)' % from_plugin)
+    if parked_count:
+        notes.append('ponytail parked by its off/auto mode: %d skill(s)' % parked_count)
     return added, changed, kept, len(skills) - withheld, withheld
 
 

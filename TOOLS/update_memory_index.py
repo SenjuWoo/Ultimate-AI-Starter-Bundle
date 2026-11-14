@@ -112,7 +112,10 @@ def main() -> int:
             if not path.exists() or path.read_text(encoding="utf-8") != content:
                 raise ValueError("MEMORY.md stale; run TOOLS/Update-MemoryIndex.ps1")
         else:
-            path.write_text(content, encoding="utf-8", newline="\n")
+            # Keep the tracked ending (`* -text` stores bytes as-is): writing LF
+            # over the CRLF file turned every regeneration into a whole-file diff.
+            ending = "\r\n" if path.exists() and b"\r\n" in path.read_bytes() else "\n"
+            path.write_text(content, encoding="utf-8", newline=ending)
         print("MEMORY INDEX: PASS")
         return 0
     except (ValueError, OSError, KeyError, SyntaxError) as exc:

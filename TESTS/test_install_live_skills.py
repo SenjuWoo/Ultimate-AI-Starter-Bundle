@@ -144,6 +144,37 @@ class ReadOnlySkills(unittest.TestCase):
         self.assertEqual(list(self.dest.iterdir()), [])
         self.assertEqual(list(self.root.glob("skills.bak-*")), [])
 
+    def test_bytecode_is_not_drift(self):
+        (self.dest / "example").mkdir()
+        (self.dest / "example/SKILL.md").write_bytes(b"canonical\n")
+        (self.canon / "example/__pycache__").mkdir()
+        (self.canon / "example/__pycache__/x.cpython-314.pyc").write_bytes(b"\x00")
+        (self.canon / "example/stray.pyc").write_bytes(b"\x00")
+        self.assertEqual(live.install(str(self.canon), str(self.dest), "Hermes", True, []), (0, 0, 1, 1, 0))
+
+    def _state(self, *parts, doc):
+        path = self.root.joinpath("Ultimate-AI-Starter-Bundle", *parts)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(doc), encoding="utf-8")
+
+    def test_native_plugin_skills_are_not_expected_as_copies(self):
+        self._state("install-state.json", doc={"native_plugins": {"Hermes": {"plugins": {
+            "someplugin": {"native": True, "owned": ["example"]}}}}})
+        notes = []
+        self.assertEqual(live.install(str(self.canon), str(self.dest), "Hermes", True, notes), (0, 0, 0, 0, 1))
+        self.assertTrue(any("native plugin" in n for n in notes), notes)
+
+    def test_a_failed_native_install_still_expects_the_copy(self):
+        self._state("install-state.json", doc={"native_plugins": {"Hermes": {"plugins": {
+            "someplugin": {"native": False, "owned": ["example"]}}}}})
+        self.assertEqual(live.install(str(self.canon), str(self.dest), "Hermes", True, []), (1, 0, 0, 1, 0))
+
+    def test_parked_ponytail_is_not_drift(self):
+        (self.canon / "ponytail-help").mkdir()
+        (self.canon / "ponytail-help/SKILL.md").write_bytes(b"x\n")
+        self._state("ponytail-mode", "state.json", doc={"mode": "off"})
+        self.assertEqual(live.install(str(self.canon), str(self.dest), "Hermes", True, []), (1, 0, 0, 1, 1))
+
     def test_real_cli_rejects_default_and_apply_without_inspecting_homes(self):
         for flags in ([], ["--apply"], ["--check", "--apply"]):
             with self.subTest(flags=flags):

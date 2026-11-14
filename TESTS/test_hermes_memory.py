@@ -78,6 +78,12 @@ class Fix(unittest.TestCase):
             self.assertEqual(read(os.path.join(os.path.dirname(default), backups[0])), original)
             self.assertEqual(hm.main(["--home", home]), 0)
 
+    def test_hermes_trash_folder_is_never_read_or_fixed(self):
+        with tempfile.TemporaryDirectory() as home:
+            trashed = write(os.path.join(home, "profiles", ".deleted", "memories", "MEMORY.md"),
+                            SEP.join(FROZEN + OWN) + "\n")
+            self.assertNotIn(trashed, hm.memory_files(home))
+
     def test_a_missing_home_is_not_an_error(self):
         self.assertEqual(hm.main(["--home", os.path.join(tempfile.gettempdir(), "no-hermes-here-uabs")]), 0)
 

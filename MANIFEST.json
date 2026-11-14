@@ -1086,8 +1086,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1922,
-  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
+  "size": 2000,
+  "sha256": "340fd2b8461d92da0c83baa27381a8c01766765666fb9d5243c1056574d5b6f3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -1991,8 +1991,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/provider-cli-ops.md",
-  "size": 6157,
-  "sha256": "c044186310bdb1b62602d207a1472c8d6fcdf486faffe3e54d1f5a78114932f9"
+  "size": 6048,
+  "sha256": "ac694bd09347ae31dd82ef02ee334bde2b7dc070443a229143dd54306e08658b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/providers-windows.md",
@@ -2246,8 +2246,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
-  "size": 2726,
-  "sha256": "b2437913a9a5ccbdd42bd3cbe410446701f679222f301995797cce43ef6e16af"
+  "size": 2752,
+  "sha256": "e232d1fc97af9635b7e2e40e12582eff1ec880d4039e9a8c301059ea111bd4b0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/reliability-engineering/SKILL.md",
@@ -4096,8 +4096,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1922,
-  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
+  "size": 2000,
+  "sha256": "340fd2b8461d92da0c83baa27381a8c01766765666fb9d5243c1056574d5b6f3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -5001,8 +5001,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/provider-cli-ops.md",
-  "size": 6157,
-  "sha256": "c044186310bdb1b62602d207a1472c8d6fcdf486faffe3e54d1f5a78114932f9"
+  "size": 6048,
+  "sha256": "ac694bd09347ae31dd82ef02ee334bde2b7dc070443a229143dd54306e08658b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/providers-windows.md",
@@ -5256,8 +5256,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
-  "size": 2726,
-  "sha256": "b2437913a9a5ccbdd42bd3cbe410446701f679222f301995797cce43ef6e16af"
+  "size": 2752,
+  "sha256": "e232d1fc97af9635b7e2e40e12582eff1ec880d4039e9a8c301059ea111bd4b0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/reliability-engineering/SKILL.md",
@@ -6251,8 +6251,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-MAP.md",
-  "size": 1422,
-  "sha256": "b853dfd88aaa81b2a08d8e50be30c442e529d7419cf604fb0d7eeee74802cc7e"
+  "size": 1428,
+  "sha256": "cfc0a76d73cb4f5eebfe6c4a5f67009dda4c7ae8571f89ea2f8213894bb6f36b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-PROVIDER-HOME/AGENTS.md",
@@ -7166,8 +7166,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1922,
-  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
+  "size": 2000,
+  "sha256": "340fd2b8461d92da0c83baa27381a8c01766765666fb9d5243c1056574d5b6f3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -8071,8 +8071,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/provider-cli-ops.md",
-  "size": 6157,
-  "sha256": "c044186310bdb1b62602d207a1472c8d6fcdf486faffe3e54d1f5a78114932f9"
+  "size": 6048,
+  "sha256": "ac694bd09347ae31dd82ef02ee334bde2b7dc070443a229143dd54306e08658b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/providers-windows.md",
@@ -8326,8 +8326,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
-  "size": 2726,
-  "sha256": "b2437913a9a5ccbdd42bd3cbe410446701f679222f301995797cce43ef6e16af"
+  "size": 2752,
+  "sha256": "e232d1fc97af9635b7e2e40e12582eff1ec880d4039e9a8c301059ea111bd4b0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/reliability-engineering/SKILL.md",
@@ -10226,8 +10226,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1922,
-  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
+  "size": 2000,
+  "sha256": "340fd2b8461d92da0c83baa27381a8c01766765666fb9d5243c1056574d5b6f3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -11131,8 +11131,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/provider-cli-ops.md",
-  "size": 6157,
-  "sha256": "c044186310bdb1b62602d207a1472c8d6fcdf486faffe3e54d1f5a78114932f9"
+  "size": 6048,
+  "sha256": "ac694bd09347ae31dd82ef02ee334bde2b7dc070443a229143dd54306e08658b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/providers-windows.md",
@@ -11386,8 +11386,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
-  "size": 2726,
-  "sha256": "b2437913a9a5ccbdd42bd3cbe410446701f679222f301995797cce43ef6e16af"
+  "size": 2752,
+  "sha256": "e232d1fc97af9635b7e2e40e12582eff1ec880d4039e9a8c301059ea111bd4b0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/reliability-engineering/SKILL.md",
@@ -13286,8 +13286,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1922,
-  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
+  "size": 2000,
+  "sha256": "340fd2b8461d92da0c83baa27381a8c01766765666fb9d5243c1056574d5b6f3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -14191,8 +14191,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/provider-cli-ops.md",
-  "size": 6157,
-  "sha256": "c044186310bdb1b62602d207a1472c8d6fcdf486faffe3e54d1f5a78114932f9"
+  "size": 6048,
+  "sha256": "ac694bd09347ae31dd82ef02ee334bde2b7dc070443a229143dd54306e08658b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/providers-windows.md",
@@ -14446,8 +14446,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
-  "size": 2726,
-  "sha256": "b2437913a9a5ccbdd42bd3cbe410446701f679222f301995797cce43ef6e16af"
+  "size": 2752,
+  "sha256": "e232d1fc97af9635b7e2e40e12582eff1ec880d4039e9a8c301059ea111bd4b0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/reliability-engineering/SKILL.md",
@@ -16421,8 +16421,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/img2threejs/SKILL.md",
-  "size": 1922,
-  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
+  "size": 2000,
+  "sha256": "340fd2b8461d92da0c83baa27381a8c01766765666fb9d5243c1056574d5b6f3"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/impeccable/LICENSE",
@@ -17326,8 +17326,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/provider-cli-ops.md",
-  "size": 6157,
-  "sha256": "c044186310bdb1b62602d207a1472c8d6fcdf486faffe3e54d1f5a78114932f9"
+  "size": 6048,
+  "sha256": "ac694bd09347ae31dd82ef02ee334bde2b7dc070443a229143dd54306e08658b"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/mcp-server-diagnostics/references/providers-windows.md",
@@ -17581,8 +17581,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/release-checklist/references/docs-heavy-repo-sweep.md",
-  "size": 2726,
-  "sha256": "b2437913a9a5ccbdd42bd3cbe410446701f679222f301995797cce43ef6e16af"
+  "size": 2752,
+  "sha256": "e232d1fc97af9635b7e2e40e12582eff1ec880d4039e9a8c301059ea111bd4b0"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/reliability-engineering/SKILL.md",
@@ -18680,6 +18680,11 @@
   "sha256": "26164b90b7b67c56aa23e363dc06dfabdf0b5ca42526f0812fdffadb194ccefb"
  },
  {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-98b2ff124a41.md",
+  "size": 17257,
+  "sha256": "aa2fd963ddbceb5fdeca195991501bbabcc112e60c47c3d444c6db385d31b588"
+ },
+ {
   "path": "3-PREAMBLES/history/AIO-INSTRUCTION-992154f29409.md",
   "size": 10332,
   "sha256": "5e9b4c195aafc842aba7fff387055f8068b30c3733020e68a45470423b4bfae0"
@@ -18760,6 +18765,11 @@
   "sha256": "603e7e252e217ef27872af04cb83aa971e9ca363dffa7f1a16a4404b12ccffef"
  },
  {
+  "path": "3-PREAMBLES/history/SOUL-004c33852184.md",
+  "size": 2227,
+  "sha256": "a9de1c9fde00ca212f481ff7d7fe2fdb7f32e999f72734e3ce80245247bc5e76"
+ },
+ {
   "path": "3-PREAMBLES/history/SOUL-03540478edbe.md",
   "size": 1095,
   "sha256": "b367c9517a8ac3a5df57b7bd1e5ee03614f8249204b9908e98e922c442b6875d"
@@ -18773,6 +18783,11 @@
   "path": "3-PREAMBLES/history/SOUL-34a5484e0691.md",
   "size": 735,
   "sha256": "cbb03e767d90bff537795da3fc7caf8c4d44d42da3d94dd1d971e071324c5046"
+ },
+ {
+  "path": "3-PREAMBLES/history/SOUL-52da981cd410.md",
+  "size": 2089,
+  "sha256": "2e02f09ba3e2681a455093a8b1d1d9958c4e37327fc22ff621b1ff97dd1e82b0"
  },
  {
   "path": "3-PREAMBLES/history/SOUL-8195833736f4.md",
@@ -18822,7 +18837,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66534,
-  "sha256": "279614b25435fb903c66c2eef7aa03b71b3bedcb9a5fd22721b3375048bb3995"
+  "sha256": "0a7472fa57a1f6c8a7cff27302a9f1fb8debd97eb8865e924e0478ce9e5a3c4c"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18832,7 +18847,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "f864be0c1561e4e2cd8a41e812dd9b889171946190b898cc867f04785e82e1f1"
+  "sha256": "70a514f34c8813a6778f5c2810119c37b401006d4bd636dd16e9ce23b7e63635"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18842,7 +18857,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "b4cf4ddabcb8543b1088d133d64f194f15bc2ccb1a87bc599774dad188c636d8"
+  "sha256": "70477377087a10c8d0243811ea17cf95d326c02abd0fcf90a195f2ea50500a4a"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -18861,8 +18876,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/SKILL-SCOPE.json",
-  "size": 2549,
-  "sha256": "400e7a5defd8496b538200cce7990aea1d15fcb0f78d8e933d7f7e5b429defec"
+  "size": 2596,
+  "sha256": "44b62e05af90c361d1f857d4758d774625eeb1d3e08884e72b43c898fad2c535"
  },
  {
   "path": "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md",
@@ -23286,8 +23301,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 357842,
-  "sha256": "2334f437b886b75c98073ce869937a57bc2c7a9dc811eedd04e7ddbe597a68db"
+  "size": 360873,
+  "sha256": "22465db271809433175dee284fb30c53b6172ba99209a22ef3afe99a2bc9125c"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23386,8 +23401,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 194089,
-  "sha256": "b4cf878a43f52e501c5109ab3d0628c8d6679bb4ea357431e2246d4b58e6dda4"
+  "size": 194352,
+  "sha256": "f9d9e777b085c21b78e941e6cd5f922b027312e12e521e77277906fa9afa6ed8"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -23406,8 +23421,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 63173,
-  "sha256": "611bba9fa2f6ba6951ebc56e2e33bf9bc1b297cc43fae79bd43a96a34615d54a"
+  "size": 63166,
+  "sha256": "74b7d5c107998729a15bbf2ae9c17f1575ba7b37d01d4087c1465d3cb2b92625"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -23432,7 +23447,7 @@
  {
   "path": "README.md",
   "size": 16480,
-  "sha256": "858b8499d71f9556638ddff8b6cf6ee41f101683b2138c7c01c93e67ce7d049d"
+  "sha256": "ecc7d7d54448b6118b62c68e0c442a3ea684cedcba12f2c0789459d06aadbd87"
  },
  {
   "path": "SECURITY.md",
@@ -23442,17 +23457,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "772efabb3045d6b3c4224a683c14bcf7de24e1a1ee5a5f12fa2ef655b91ef3e6"
+  "sha256": "d95ad90e9a69e087c5fb831dc7d46b056a1630fab96766990f86ecd7e2a54310"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "7550cb1a8c125dcc2a22480279d91961f7a269e68b3da2df9893804c2a59198e"
+  "sha256": "b805d9bd0c82d8b37dd95046de08d9febd1e35c64b52e267e561c4c183a3d5e1"
  },
  {
   "path": "STATE.md",
-  "size": 3396,
-  "sha256": "09c46ea87e2cb3bf3dbdb0bba8dc574f67db13db1fbfc8e7bd88ad0879285005"
+  "size": 3622,
+  "sha256": "59df1f00ddebfb953cdcfcc47c79a12df2448f81244d6b0005caeef54a41836c"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -23471,8 +23486,8 @@
  },
  {
   "path": "TESTS/Test-CodexHookRetirement.ps1",
-  "size": 17135,
-  "sha256": "66b189a709ac4f9dd639f08f20dda42f4572aea59f56c6dccb5648b524afeb52"
+  "size": 20283,
+  "sha256": "3c4e03dc1079ce3689180509354193e867cba8784c3dd4d7720b8fc7ff8a7fa2"
  },
  {
   "path": "TESTS/Test-CodexPluginDedupe.ps1",
@@ -23881,13 +23896,13 @@
  },
  {
   "path": "TESTS/test_hermes_memory.py",
-  "size": 4100,
-  "sha256": "473f6118a268a7d56d27c3b59f4059b012dc73f8386713aa29777e0b78d3848a"
+  "size": 4433,
+  "sha256": "463587369ce245bf5b2ece6d9b94beb8370f7933e42590842faef8936203aa81"
  },
  {
   "path": "TESTS/test_install_live_skills.py",
-  "size": 7965,
-  "sha256": "4a58535f4e224c87cf26793734fe778c456f7ab7e11ebc29e260ef485a0a18a0"
+  "size": 9766,
+  "sha256": "70bf62fd087f6982e1d161776c06cb5f979c3d6239eb6f625484b7310aed01cf"
  },
  {
   "path": "TESTS/test_knowledge_contract.py",
@@ -23906,8 +23921,8 @@
  },
  {
   "path": "TESTS/test_maintainer_contract.py",
-  "size": 18894,
-  "sha256": "a12f25c11cd34fea023677fcc7f3a4b96c619b79623849eb5206f181923c4f40"
+  "size": 19840,
+  "sha256": "3c2c7bc8b342a158c87262c1495fcb16b79306cabeac2b5b92f69284bb8e1930"
  },
  {
   "path": "TESTS/test_mcp_protocol.py",
@@ -23921,13 +23936,13 @@
  },
  {
   "path": "TESTS/test_ponytail_integration.py",
-  "size": 6119,
-  "sha256": "db6384bb1c87f511c726bc4fc0080ab0d6a1f4643da902c87027e34d42c71d5d"
+  "size": 6139,
+  "sha256": "38258e501dc4142ec9ae196046c71caa3ba82c68b395d325518da8db8a450b72"
  },
  {
   "path": "TESTS/test_ponytail_mode.py",
-  "size": 12031,
-  "sha256": "3f63519e725a70eeccd543f74dc22ceddaa4c27d3732fc9381c9d848d241a34c"
+  "size": 15476,
+  "sha256": "3590ab4aea821c6e729d85ce51bef48eba5ef28869398fa67d1cf0b86804cfca"
  },
  {
   "path": "TESTS/test_privacy_boundary.py",
@@ -23951,8 +23966,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 383599,
-  "sha256": "7facb619727ed1a85a078cbee5724e719df2501c8e0cfd756d8837e0b4f80d56"
+  "size": 384243,
+  "sha256": "323cae64dd0e281d1e31dd7e56ec6bad2bfc75e874f9d15c21a9bf277706e835"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -23981,8 +23996,8 @@
  },
  {
   "path": "TESTS/test_skill_scope.py",
-  "size": 6697,
-  "sha256": "9f4a505ca0bab6fe651a11c3830b37d312ed8ae5d37b3dbf7444ade6413c29ab"
+  "size": 7133,
+  "sha256": "5ca7ef21700709baeb8740c588686ddcf204fe616df32e9e86a266e0abcdfa04"
  },
  {
   "path": "TESTS/test_skill_trigger_parser.py",
@@ -24066,8 +24081,8 @@
  },
  {
   "path": "TOOLS/Clean-StaleState.ps1",
-  "size": 29045,
-  "sha256": "aa26a2cb20feb301a5c55ce9d4a9aacf37db8f48c5520b55e163e062f741d3f7"
+  "size": 35359,
+  "sha256": "3add94c0463142cc304989b2667e2475ba8f994aeb33331c4051a35d59923be1"
  },
  {
   "path": "TOOLS/Ensure-CodebaseMemoryHermes.ps1",
@@ -24221,8 +24236,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 80530,
-  "sha256": "6580a748a65a1692d5b8fc557f7cded2ad749da61be717b096a259a50afa6cd8"
+  "size": 80537,
+  "sha256": "8d63c0f4f2f673dcb0222b1ad147ca9297c3ab9f9edf230964d9b7f99455995f"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -24286,8 +24301,8 @@
  },
  {
   "path": "TOOLS/audit_catalog_versions.py",
-  "size": 10132,
-  "sha256": "863ad432e17d5b14f4ef190eccac9dffcf95fbf81942197a84444567b477007b"
+  "size": 12400,
+  "sha256": "b7a72d3c3043339af70f16b72a52fb3ab463e5e7230b2b6718b6a807e5852f35"
  },
  {
   "path": "TOOLS/audit_maintainability.py",
@@ -24366,8 +24381,8 @@
  },
  {
   "path": "TOOLS/hermes_memory.py",
-  "size": 5636,
-  "sha256": "112660e8f1e609efc3ef42eb87dd0d3bdf8ba1aab02ca5cf6f7d59ae865b438c"
+  "size": 5770,
+  "sha256": "3587f5c400ae9c5acba5a9a8dee68a2b0c7b2603f855ecb11af2d76d0812914f"
  },
  {
   "path": "TOOLS/hooks/assumption_gate.py",
@@ -24421,8 +24436,8 @@
  },
  {
   "path": "TOOLS/install_live_skills.py",
-  "size": 5755,
-  "sha256": "c860b57ea184787cbb0edec2b6caf977271b963299677cba7d2a2cd9f9732b52"
+  "size": 8275,
+  "sha256": "b7bb907f3bb84bbdcf30fbe222385d7be7ea4fa9e0bd335bfabba5082792d72a"
  },
  {
   "path": "TOOLS/mcp_handshake.py",
@@ -24446,8 +24461,8 @@
  },
  {
   "path": "TOOLS/ponytail_mode.py",
-  "size": 17599,
-  "sha256": "38d674af135570a0133f556001b107eb7e144890b8cb94c2c1fe956e4a8e2f3a"
+  "size": 21327,
+  "sha256": "cee3a291e1a5fdde550eaab1e371faa45a012317d41e9c9118452a3099a714d9"
  },
  {
   "path": "TOOLS/presentation_check.py",
@@ -24486,8 +24501,8 @@
  },
  {
   "path": "TOOLS/skill_scope.py",
-  "size": 17204,
-  "sha256": "c9ccd8f74054c84eefcd717a4dcf2c71fc6881149510b6875b58052114c6966f"
+  "size": 17339,
+  "sha256": "2658b219d0e320175e15d17058ac65e19c01bde4573dcf67b90ceb23b7c38c3d"
  },
  {
   "path": "TOOLS/task_route.py",
@@ -24516,8 +24531,8 @@
  },
  {
   "path": "TOOLS/update_memory_index.py",
-  "size": 6854,
-  "sha256": "0e6ab766c61e1d81894d78bb03dafeaa51952e5c3fd03c9c090d880228bed7cd"
+  "size": 7108,
+  "sha256": "66da32a04c744af0af9513915f5d8a29f6e419b019f14d5512627b54e2d87d57"
  },
  {
   "path": "TOOLS/usage_report.py",
@@ -24557,7 +24572,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2637,
-  "sha256": "4c7b7d594ec7956dcce411c071fa9c1dcf4498018e7951d44dd20c668db58b66"
+  "sha256": "7dc2a211db9c4d433aa52a3962a2dd305e952fb0c9c24ff7c8fc3212a8423f5c"
  },
  {
   "path": "VALIDATION.md",
@@ -24567,7 +24582,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "78dff731a49acd55aa9a9248f550d7b41e29d485582caa8dcff86bb01b04a9d2"
+  "sha256": "0bf727ac3865569b92ced890a255a84653d08ebbd0782b44b13c4ffdc4d3363f"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24741,8 +24756,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/build-mcpb/SKILL.md",
-  "size": 7785,
-  "sha256": "e86ea1fb1f5eda60f9484486ae34e6ce120b6fdd8f30205275d463ee7ea95f45"
+  "size": 7786,
+  "sha256": "684ff26a779c84291ce9f3f8b18af5037bbeb92e3257c949089c3a2babbbafe5"
  },
  {
   "path": "_CANONICAL-SKILLS/build-mcpb/references/local-security.md",
@@ -25481,8 +25496,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/img2threejs/SKILL.md",
-  "size": 1922,
-  "sha256": "8c5aeadfeee7a7453c3064bd51043bd8bc0b667e867cfbd334fe0f3726a62501"
+  "size": 2000,
+  "sha256": "340fd2b8461d92da0c83baa27381a8c01766765666fb9d5243c1056574d5b6f3"
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/LICENSE",
@@ -26386,8 +26401,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/mcp-server-diagnostics/references/provider-cli-ops.md",
-  "size": 6157,
-  "sha256": "c044186310bdb1b62602d207a1472c8d6fcdf486faffe3e54d1f5a78114932f9"
+  "size": 6048,
+  "sha256": "ac694bd09347ae31dd82ef02ee334bde2b7dc070443a229143dd54306e08658b"
  },
  {
   "path": "_CANONICAL-SKILLS/mcp-server-diagnostics/references/providers-windows.md",
@@ -26641,8 +26656,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/release-checklist/references/docs-heavy-repo-sweep.md",
-  "size": 2726,
-  "sha256": "b2437913a9a5ccbdd42bd3cbe410446701f679222f301995797cce43ef6e16af"
+  "size": 2752,
+  "sha256": "e232d1fc97af9635b7e2e40e12582eff1ec880d4039e9a8c301059ea111bd4b0"
  },
  {
   "path": "_CANONICAL-SKILLS/reliability-engineering/SKILL.md",
@@ -27601,8 +27616,8 @@
  },
  {
   "path": "docs/GUIDE.md",
-  "size": 84072,
-  "sha256": "dd2b9719b1da10f15ccdc103fe14e2d66d6d6789d49cbe2b4a5e35d5f7931fba"
+  "size": 84467,
+  "sha256": "e4c39d8e17aa4107f1cac30e8d5e5a6c8a9f0293b5132b033099b15a56f851b9"
  },
  {
   "path": "docs/HERMES-FILE-GUARD-BUG.md",
@@ -27711,8 +27726,8 @@
  },
  {
   "path": "docs/decisions/0009-scoped-skill-listings.md",
-  "size": 3541,
-  "sha256": "6dfe3f12c1c93d9a581495b5016bdb92628612ccf40f45e53bcddc0100f4b9cb"
+  "size": 3936,
+  "sha256": "ee3a1799b4332304aa87ef0f029d1f9e62fcb63adb901b672c03eb58ae439cdc"
  },
  {
   "path": "docs/decisions/README.md",
@@ -28798,6 +28813,11 @@
   "path": "docs/history/V8.44.6-CHANGELOG.md",
   "size": 704,
   "sha256": "7807d08acfacdc79cd0183b3cc684bf9363028f857843d623d0bf509b4387ce3"
+ },
+ {
+  "path": "docs/history/V8.44.7-CHANGELOG.md",
+  "size": 2986,
+  "sha256": "fdd6248a44dbf2137f9945106d243232867cb3280c331b2886f9ff9af0023275"
  },
  {
   "path": "docs/history/V8.5.0-CHANGELOG.md",

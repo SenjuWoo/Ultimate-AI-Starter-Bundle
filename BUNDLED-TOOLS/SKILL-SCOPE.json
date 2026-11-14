@@ -12,7 +12,7 @@
       "owner": "skyrim-forge",
       "prefixes": ["skyrim-"],
       "names_from_pack": "skyrim",
-      "keep_described": []
+      "keep_described": ["skyrim-tool-router", "skyrim-memory"]
     },
     "unity-official": {
       "owner": "Unity's published agent skills (installed outside the bundle)",
@@ -40,7 +40,7 @@
     }
   },
   "claude": {
-    "name_only": ["roblox", "unity-official", "replica", "claude-built-in-duplicates"]
+    "name_only": ["roblox", "skyrim", "unity-official", "replica", "claude-built-in-duplicates"]
   },
   "hermes": {
     "families": ["roblox", "skyrim", "unity-official", "replica"],

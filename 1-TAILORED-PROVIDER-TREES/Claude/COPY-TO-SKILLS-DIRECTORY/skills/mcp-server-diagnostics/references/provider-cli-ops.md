@@ -40,7 +40,7 @@ entries cold-resolve on first spawn and can blow past a 30s startup timeout.
 
 For any "server unavailable" report, spawn each configured server standalone
 and time `initialize` + `tools/list` — use the bundle's
-`TOOLS\Test-McpHandshake.ps1` or this skill's `scripts/probe_mcp_servers.py`.
+`TOOLS\Test-McpHandshake.ps1`.
 A server that dies instantly (0-byte stderr log) or hangs is the culprit;
 "unavailable" can also be collateral of one wedged server blocking the
 client's tool enumeration.
@@ -68,7 +68,7 @@ tool prep stall, NOT a model problem (model inference itself is ~2s).
    before diagnosing, and never kill a provider's live children while it runs.
 4. **codebase-memory daemon death** — MCP sessions log
    `version_cohort.claimed_unheld` and hang; the daemon re-claims on next
-   spawn (port 9749). See `references/codebase-memory-mcp.md`.
+   spawn (port 9749). See `references/codebase-memory-ops.md`.
 5. **Renaming a tool install folder breaks its venv** — a venv's
    `site-packages/*_local.pth` records the OLD absolute path; after renaming
    (e.g. `Skyrim-Forge-5.1.6` → `Skyrim-Forge`) the module import fails
@@ -87,11 +87,8 @@ tool prep stall, NOT a model problem (model inference itself is ~2s).
 
 ## References
 
-- `references/windows-mcp-spawn-pitfalls.md` — PYTHONPATH, venv traps, npx pinning, shell quirks (MSYS taskkill/`$_`/Popen)
-- `references/grok-cli.md` — config-manager rewrites, compat import, logs, `/mcps`, `-p` quirks, tool-prep stalls
-- `references/codebase-memory-mcp.md` — daemon/cohort, UI RPC lockdown (issue #1663), `/api/index` slots, re-registration
-- `references/bundle-release-protocol.md` — bumping + releasing Ultimate-AI-Starter-Bundle (6 version-string spots, MANIFEST-last ordering, tag/release recreate, fresh-install invariants)
-
-## Scripts
-
-- `scripts/probe_mcp_servers.py` — timed standalone initialize+tools/list probe for any server list
+- `references/providers-windows.md` — per-provider MCP config files, test commands, stderr logs, the provider-runtime venv trap
+- `references/grok-mcp.md` — Grok's server cliff, the disabled list, config.toml behaviour
+- `references/codebase-memory-ops.md` and `references/codebase-memory-mcp-upgrade.md` — UI RPC lockdown (issue #1663), `/api/index` slots, re-registration, upgrades
+- Releasing the bundle itself: the `bundle-release-metadata` skill (`check_versions.py --set`, manifest last, `release.yml` publishes)
+- Timed standalone `initialize` + `tools/list` probe: `TOOLS\Test-McpHandshake.ps1`

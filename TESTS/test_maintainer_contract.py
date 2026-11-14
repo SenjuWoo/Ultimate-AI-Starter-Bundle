@@ -79,6 +79,25 @@ class MaintainerTests(unittest.TestCase):
             (root / "MEMORY.md").write_text(memory.generate(root), encoding="utf-8")
             self.assertEqual(verify_docs.verify(root), [])
 
+    def test_index_regeneration_keeps_the_tracked_line_ending(self):
+        # The repo stores bytes as-is; an LF rewrite of the CRLF index was a
+        # whole-file diff on every regeneration.
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self.fixture(root)
+            index = root / "MEMORY.md"
+            index.write_bytes(memory.generate(root).replace("\n", "\r\n").encode("utf-8"))
+            (root / "TOOLS/newer.py").write_text('"""Newer command."""\n', encoding="utf-8")
+            argv = sys.argv
+            try:
+                sys.argv = ["update_memory_index.py", "--root", str(root)]
+                self.assertEqual(memory.main(), 0)
+            finally:
+                sys.argv = argv
+            data = index.read_bytes()
+            self.assertIn(b"newer.py", data)
+            self.assertEqual(data.count(b"\n"), data.count(b"\r\n"), "the CRLF index came back with LF lines")
+
     def test_real_git_cleanup_keeps_unmerged_and_checked_out_branches(self):
         shells = [shutil.which(x) for x in ("powershell.exe", "pwsh.exe")]
         self.assertTrue(any(shells), "Windows PowerShell required")

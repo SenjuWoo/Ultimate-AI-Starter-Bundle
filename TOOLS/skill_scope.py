@@ -265,7 +265,9 @@ def hermes_plan(policy, receipt, root=None, read_disabled=None):
     owned = conf.get("profiles") or {}
     rows = []
     try:
-        names = sorted(n for n in os.listdir(profiles_dir) if os.path.isdir(os.path.join(profiles_dir, n)))
+        # Dot folders (Hermes keeps removed profiles in `.deleted`) are not profiles.
+        names = sorted(n for n in os.listdir(profiles_dir)
+                       if not n.startswith(".") and os.path.isdir(os.path.join(profiles_dir, n)))
     except OSError:
         names = []
     for profile in names:

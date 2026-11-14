@@ -20,6 +20,16 @@
      is still a defect, and it buries the one backup someone might actually
      want to restore.
 
+  3. LEFTOVERS OF OLDER VERSIONS in the pack's own state folder: companion
+     archives superseded by the one downloads\companions.json records, Go
+     archives under the pre-8.24 name, and state files a named newer file
+     replaced. Plus one registration fix: a Claude extraKnownMarketplaces entry
+     for a bundled plugin that still points into a pack folder that no longer
+     exists (an older install ran from ...-v8.21.0) is repointed to this pack.
+
+  A backup is never one of these. Backups are only pruned by the retention
+  limit below; a live toolchain directory and its backups are never touched.
+
   It also REPORTS, without touching, boot-time autostarts for AI tooling whose
   target no longer exists -- the pack has never written an autostart, so those
   are not its to remove, but a launcher that fails at every boot is worth
@@ -97,6 +107,11 @@ function Remove-UabsRetiredRegistration {
     if (-not $obj.extraKnownMarketplaces) { return $false }
     if (-not ($obj.extraKnownMarketplaces.PSObject.Properties.Name -contains $Edit.Key)) { return $false }
     $obj.extraKnownMarketplaces.PSObject.Properties.Remove($Edit.Key)
+  } elseif ($Edit.Format -eq 'json-extra-marketplace-path') {
+    if (-not $obj.extraKnownMarketplaces) { return $false }
+    $mp = $obj.extraKnownMarketplaces.PSObject.Properties[[string]$Edit.Key]
+    if (-not $mp -or -not $mp.Value.source) { return $false }
+    $mp.Value.source.path = [string]$Edit.NewPath
   } else {
     return $false
   }
@@ -150,6 +165,8 @@ if (Test-Path -LiteralPath $retiredPath -PathType Leaf) {
   Write-UabsWarn "RETIRED-SKILLS.json not found - skipping retired-skill cleanup"
 }
 
+$script:OwnerStamped = @{}
+$script:OwnerStampedCount = 0
 if (-not $SkipSkills -and $retired.Count) {
   # Ownership receipts written by Sync-UabsProviderSkills: provider -> name -> tree digest.
   $skillLedger = @{}
@@ -196,9 +213,11 @@ if (-not $SkipSkills -and $retired.Count) {
         continue
       }
       # A forge reinstalls some retired names itself (RobloxForge stamps .rbforge-version); that copy is its, not ours.
+      # Counted, then reported once: one line per provider and profile was 20 lines of noise per install.
       $stamp = @(Get-ChildItem -LiteralPath $target -File -Force -Filter '.*-version' -ErrorAction SilentlyContinue | Select-Object -First 1)
       if ($stamp.Count) {
-        [void]$script:Reported.Add("$provider/$name carries an owner stamp ($($stamp[0].Name)) - another tool's copy, left alone")
+        $script:OwnerStamped[$name] = $stamp[0].Name
+        $script:OwnerStampedCount++
         continue
       }
       $successor = if ($entry.superseded_by) { "superseded by $($entry.superseded_by)" } else { 'retired, no successor' }
@@ -218,6 +237,10 @@ if (-not $SkipSkills -and $retired.Count) {
       }
       Add-CleanTarget -Kind "skill/$provider" -Path $target -Why $successor
     }
+  }
+  if ($script:OwnerStampedCount) {
+    $named = @($script:OwnerStamped.Keys | Sort-Object | ForEach-Object { "$_ ($($script:OwnerStamped[$_]))" }) -join ', '
+    [void]$script:Reported.Add(("{0} copies of retired names each carries an owner stamp - another tool's copy, left alone: {1}" -f $script:OwnerStampedCount, $named))
   }
 }
 
@@ -308,6 +331,57 @@ if (Test-Path -LiteralPath $npmRollback -PathType Container) {
     foreach ($old in $ordered[$KeepBackups..($ordered.Count - 1)]) {
       Add-CleanTarget -Kind 'backup' -Path $old.FullName -Why "older than the $KeepBackups most recent $($group.Name) npm recovery copies"
     }
+  }
+}
+
+# ------------------------------------------- older-version leftovers ------
+# Files an older version of this pack wrote under its own state folder that no
+# current code reads. Each is named with what replaced it, none is a backup, and
+# a file is only removed when its replacement is present.
+$supersededState = @(
+  @{ Name = 'ponytail-mode.json'; ReplacedBy = 'ponytail-mode\state.json'; Since = '8.37.21' }
+)
+foreach ($s in $supersededState) {
+  $oldFile = Join-Path $uabsRoot $s.Name
+  if ((Test-Path -LiteralPath $oldFile -PathType Leaf) -and
+      (Test-Path -LiteralPath (Join-Path $uabsRoot $s.ReplacedBy) -PathType Leaf)) {
+    Add-CleanTarget -Kind 'superseded' -Path $oldFile -Why ("replaced by {0} in {1}" -f $s.ReplacedBy, $s.Since)
+  }
+}
+
+# Companion archives of versions that are no longer current. downloads\companions.json
+# records the archive each companion was last installed from; an older
+# <Name>-<version>.zip of the same companion is never read again. With no
+# readable record there is no evidence, so nothing is planned.
+$downloadsDir = Join-Path $uabsRoot 'downloads'
+$downloadRecord = Join-Path $downloadsDir 'companions.json'
+if (Test-Path -LiteralPath $downloadRecord -PathType Leaf) {
+  $currentAssets = $null
+  try {
+    $currentAssets = @(([IO.File]::ReadAllText($downloadRecord) | ConvertFrom-Json).companions |
+                       ForEach-Object { [string]$_.asset } | Where-Object { $_ })
+  } catch { $currentAssets = $null }
+  if ($currentAssets -and $currentAssets.Count) {
+    $currentBases = @($currentAssets | ForEach-Object { $_ -replace '-\d+(\.\d+)+\.zip$', '' })
+    foreach ($zip in @(Get-ChildItem -LiteralPath $downloadsDir -File -Filter '*.zip' -ErrorAction SilentlyContinue)) {
+      if ($currentAssets -contains $zip.Name) { continue }
+      if ($zip.Name -notmatch '^(.+)-\d+(\.\d+)+\.zip$') { continue }
+      $base = $Matches[1]
+      if ($currentBases -notcontains $base) { continue }   # only an older version of a recorded companion
+      $kept = @($currentAssets | Where-Object { $_ -like ($base + '-*') }) -join ', '
+      Add-CleanTarget -Kind 'stale-download' -Path $zip.FullName -Why ('superseded by ' + $kept)
+    }
+  }
+}
+
+# Go archives under the pre-8.24 name (go<version>.zip). Since 8.24 the download
+# cache is toolchains\go-current.zip, so the old archive is never read. Only
+# files are considered: directories hold the live SDK and its backups.
+$toolchainsDir = Join-Path $uabsRoot 'toolchains'
+if (Test-Path -LiteralPath $toolchainsDir -PathType Container) {
+  foreach ($zip in @(Get-ChildItem -LiteralPath $toolchainsDir -File -ErrorAction SilentlyContinue |
+                     Where-Object { $_.Name -match '^go\d+(\.\d+)+\.zip$' })) {
+    Add-CleanTarget -Kind 'stale-toolchain' -Path $zip.FullName -Why 'pre-8.24 Go archive name; the cache is go-current.zip'
   }
 }
 
@@ -505,6 +579,36 @@ if ($retiredMarkets.Count) {
   }
 }
 
+# ------------------------------------ bundled marketplaces at a dead path ---
+# An older version registered the bundled plugins (superpowers-dev, ponytail) in
+# Claude's extraKnownMarketplaces as a directory inside the pack folder it ran
+# from. Renaming that folder (...-v8.21.0 -> ...) left the path dead, and the
+# starter-settings merge only adds missing keys, so nothing ever corrected it.
+# Only a directory source that no longer exists AND ends in
+# BUNDLED-TOOLS\plugins\<id> AND has a copy in this pack is repointed; anything
+# else is left alone. The file is backed up first like every other edit here.
+$claudeSettingsPath = Join-Path $env:USERPROFILE '.claude\settings.json'
+if (Test-Path -LiteralPath $claudeSettingsPath -PathType Leaf) {
+  try {
+    $csObj = [IO.File]::ReadAllText($claudeSettingsPath) | ConvertFrom-Json
+    if ($csObj.extraKnownMarketplaces) {
+      foreach ($mp in $csObj.extraKnownMarketplaces.PSObject.Properties) {
+        $mpSource = $mp.Value.source
+        if (-not $mpSource -or [string]$mpSource.source -ne 'directory') { continue }
+        $deadPath = [string]$mpSource.path
+        if (-not $deadPath -or (Test-Path -LiteralPath $deadPath)) { continue }
+        if ($deadPath -notmatch '[\\/]BUNDLED-TOOLS[\\/]plugins[\\/]([^\\/]+)[\\/]?$') { continue }
+        $freshPath = Join-Path $PackRoot ('BUNDLED-TOOLS\plugins\' + $Matches[1])
+        if (-not (Test-Path -LiteralPath $freshPath -PathType Container)) { continue }
+        [void]$script:RetiredRegistrationEdits.Add([pscustomobject]@{
+          File = $claudeSettingsPath; Format = 'json-extra-marketplace-path'; Key = $mp.Name; NewPath = $freshPath
+          Why = ('pack folder is gone (' + $deadPath + '); repointed to this pack')
+        })
+      }
+    }
+  } catch { Write-UabsWarn ('Claude settings.json unreadable; marketplace paths not checked: ' + $_.Exception.Message) }
+}
+
 $autostarts = @()
 try { $autostarts = @(Get-UabsAiAutostartEntries) } catch { }
 foreach ($a in $autostarts) {
@@ -520,7 +624,7 @@ Write-Host ''
 Write-UabsStep $(if ($Apply) { 'Cleaning pack-created leftovers' } else { 'Leftover plan (nothing removed)' })
 
 if (-not $script:Planned.Count -and -not $script:RetiredRegistrationEdits.Count) {
-  Write-UabsOk 'Nothing to clean; no retired skills, no retired marketplaces, and no backups past the retention limit.'
+  Write-UabsOk 'Nothing to clean; no retired skills or marketplaces, no older-version leftovers, and no backups past the retention limit.'
 } else {
   foreach ($group in ($script:Planned | Group-Object Kind | Sort-Object Name)) {
     $bytes = ($group.Group | Measure-Object -Property Bytes -Sum).Sum
@@ -534,7 +638,7 @@ if (-not $script:Planned.Count -and -not $script:RetiredRegistrationEdits.Count)
 }
 
 if ($script:RetiredRegistrationEdits.Count) {
-  Write-Host ("  {0,-16} {1,3} registration(s) in provider config" -f 'retired-market', $script:RetiredRegistrationEdits.Count)
+  Write-Host ("  {0,-16} {1,3} registration(s) in provider config" -f 'marketplace', $script:RetiredRegistrationEdits.Count)
   foreach ($e in $script:RetiredRegistrationEdits) {
     Write-Host ("      " + $e.Key + "  in " + (Split-Path -Leaf $e.File) + "  -- " + $e.Why) -ForegroundColor DarkGray
   }
@@ -567,7 +671,8 @@ foreach ($e in $script:RetiredRegistrationEdits) {
   try {
     if (Remove-UabsRetiredRegistration -Edit $e) {
       $edited++
-      Write-UabsOk ("unregistered '" + $e.Key + "' from " + (Split-Path -Leaf $e.File))
+      $verb = if ($e.Format -eq 'json-extra-marketplace-path') { 'repointed' } else { 'unregistered' }
+      Write-UabsOk ($verb + " '" + $e.Key + "' in " + (Split-Path -Leaf $e.File))
     }
   } catch {
     $failed++
@@ -576,7 +681,7 @@ foreach ($e in $script:RetiredRegistrationEdits) {
 }
 Write-UabsOk ("removed $removed item(s), freed ~{0:N1} KB" -f ($script:FreedBytes / 1KB))
 if ($edited) {
-  Write-UabsOk "unregistered $edited retired marketplace registration(s)"
+  Write-UabsOk "edited $edited marketplace registration(s)"
   Write-UabsWarn 'Close every AI app before trusting this: a running session holds its config in memory and writes it back on exit, which is how an earlier removal was undone.'
 }
 if ($failed) {

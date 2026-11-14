@@ -2947,6 +2947,9 @@ if (-not $ToolsOnly) {
               } elseif ($entry.Value -isnot [pscustomobject]) {
                 $entry.Value = [pscustomobject]@{ enabled = $true }
                 $cfgChanged = $true
+              } elseif ($pluginId -eq 'ponytail' -and $entry.Value.PSObject.Properties['enabled']) {
+                # TOOLS\ponytail_mode.py owns this switch (off/auto disable it), so an
+                # existing entry is left as the operator's mode set it.
               } elseif ($entry.Value.PSObject.Properties['enabled']) {
                 if ($entry.Value.enabled -ne $true) { $entry.Value.enabled = $true; $cfgChanged = $true }
               } else {

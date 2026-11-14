@@ -31,8 +31,9 @@ profiles carried 47 Skyrim skills.
 
 Use the host controls. `BUNDLED-TOOLS/SKILL-SCOPE.json` names the families,
 their owners and the entry points that keep their description (the Roblox
-router, `unity-cli`, `new-unity-project`, Unity's ambiguous `ui`,
-`replica-recon`). `TOOLS/skill_scope.py --fix`, run by the installer:
+router, `skyrim-tool-router` and `skyrim-memory`, `unity-cli`,
+`new-unity-project`, Unity's ambiguous `ui`, `replica-recon`).
+`TOOLS/skill_scope.py --fix`, run by the installer:
 
 - writes `name-only` for the other family members into Claude's
   `skillOverrides`;
@@ -54,6 +55,11 @@ needs one by name.
 
 - Claude listing on this machine: ~42,690 -> ~21,887 description characters
   (66 skills name-only), measured by `skill_scope.py`.
+- 8.44.7 added the Skyrim family to Claude's name-only list: its 50 specialists
+  carried ~8,400 description characters into every session, Skyrim or not, while
+  the always-loaded Skyrim block already names the router and memory skills.
+  Planned listing: ~21,600 -> ~14,150 characters. Hermes already disabled the
+  family outside the skyrim profile.
 - Hermes: 8 profiles changed; `hermes -p skyrim skills list` reports
   `roblox-ui` as `disabled`.
 - `TESTS/test_skill_scope.py`: router kept, protected names untouched, user value

@@ -88,6 +88,24 @@ try {
   [IO.File]::SetLastWriteTimeUtc($oldBackup, [DateTime]'2000-01-01')
   $personalBackup = Join-Path $env:CODEX_HOME 'hooks.json.personal.bak'
   [IO.File]::WriteAllText($personalBackup, 'keep', $utf8)
+  # Older-version leftovers in the (sandboxed) state folder: only superseded
+  # copies go; the record, unrecorded files, live toolchains and backups stay.
+  $stateRoot = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle'
+  $dl = Join-Path $stateRoot 'downloads'; New-Item -ItemType Directory -Force -Path $dl | Out-Null
+  [IO.File]::WriteAllText((Join-Path $dl 'companions.json'), '{"schema":1,"companions":[{"id":"skyrim-forge","asset":"Skyrim-Forge-1.0.1.zip"}]}', $utf8)
+  foreach ($n in @('Skyrim-Forge-1.0.0.zip','Skyrim-Forge-1.0.1.zip','Other-Tool-2.0.0.zip')) { [IO.File]::WriteAllText((Join-Path $dl $n), 'zip', $utf8) }
+  $tc = Join-Path $stateRoot 'toolchains'; New-Item -ItemType Directory -Force -Path (Join-Path $tc 'go1.2.3\go.backup-x') | Out-Null
+  foreach ($n in @('go1.2.3.zip','go-current.zip')) { [IO.File]::WriteAllText((Join-Path $tc $n), 'zip', $utf8) }
+  New-Item -ItemType Directory -Force -Path (Join-Path $stateRoot 'ponytail-mode') | Out-Null
+  [IO.File]::WriteAllText((Join-Path $stateRoot 'ponytail-mode.json'), '{"mode":"off"}', $utf8)
+  [IO.File]::WriteAllText((Join-Path $stateRoot 'ponytail-mode\state.json'), '{"mode":"off"}', $utf8)
+  $claudeDir = Join-Path $fixture '.claude'; New-Item -ItemType Directory -Force -Path $claudeDir | Out-Null
+  $deadPlugin = Join-Path $fixture 'gone-pack-v1\BUNDLED-TOOLS\plugins\ponytail'
+  $deadOther = Join-Path $fixture 'gone-elsewhere\my-market'
+  $settingsDoc = [ordered]@{ theme = 'dark'; extraKnownMarketplaces = [ordered]@{
+    ponytail = [ordered]@{ source = [ordered]@{ source = 'directory'; path = $deadPlugin } }
+    mine = [ordered]@{ source = [ordered]@{ source = 'directory'; path = $deadOther } } } }
+  [IO.File]::WriteAllText((Join-Path $claudeDir 'settings.json'), ($settingsDoc | ConvertTo-Json -Depth 8), $utf8)
   $savedProfile = $env:USERPROFILE
   try {
     $env:USERPROFILE = $fixture
@@ -95,6 +113,15 @@ try {
     Assert ($LASTEXITCODE -eq 0) ('Isolated backup pruning failed: ' + $output)
     Assert (@(Get-ChildItem -LiteralPath $env:CODEX_HOME -Filter 'hooks.json.before-retired-*.bak').Count -eq 3) 'Native hook backups exceeded the retention limit.'
     Assert ([IO.File]::ReadAllText($personalBackup) -ceq 'keep') 'Backup pruning removed an unrelated file.'
+    Assert (-not (Test-Path -LiteralPath (Join-Path $dl 'Skyrim-Forge-1.0.0.zip'))) 'A superseded companion archive survived.'
+    Assert ((Test-Path -LiteralPath (Join-Path $dl 'Skyrim-Forge-1.0.1.zip')) -and (Test-Path -LiteralPath (Join-Path $dl 'Other-Tool-2.0.0.zip'))) 'The recorded or an unrecorded archive was removed.'
+    Assert (-not (Test-Path -LiteralPath (Join-Path $tc 'go1.2.3.zip'))) 'The pre-8.24 Go archive survived.'
+    Assert ((Test-Path -LiteralPath (Join-Path $tc 'go-current.zip')) -and (Test-Path -LiteralPath (Join-Path $tc 'go1.2.3\go.backup-x'))) 'The Go cache, SDK folder or its backup was removed.'
+    Assert (-not (Test-Path -LiteralPath (Join-Path $stateRoot 'ponytail-mode.json'))) 'The superseded ponytail-mode.json survived.'
+    $after = [IO.File]::ReadAllText((Join-Path $claudeDir 'settings.json')) | ConvertFrom-Json
+    Assert ($after.extraKnownMarketplaces.ponytail.source.path -eq (Join-Path $PackRoot 'BUNDLED-TOOLS\plugins\ponytail')) 'A dead bundled marketplace path was not repointed.'
+    Assert ($after.extraKnownMarketplaces.mine.source.path -eq $deadOther -and $after.theme -eq 'dark') 'An unrelated marketplace or setting was changed.'
+    Assert (@(Get-ChildItem -LiteralPath $claudeDir -Filter 'settings.json.bak-retired-*').Count -eq 1) 'settings.json was edited without a backup.'
   } finally { $env:USERPROFILE = $savedProfile }
 
   # Obsolete global Impeccable commands must not survive upgrades. Modern

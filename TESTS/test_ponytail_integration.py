@@ -114,7 +114,7 @@ class ModeAndHookAgreeTests(unittest.TestCase):
         pm.execute(pm.plan("off", home=self.home))
         pm.STATE.mkdir(parents=True, exist_ok=True)
         (pm.STATE / "state.json").write_text(json.dumps({"mode": "off"}), encoding="utf-8")
-        pm.main(["init", "--apply"])          # installer re-runs
+        pm.main(["init", "--apply"], home=self.home)   # installer re-runs, sandboxed
         self.assertEqual(json.loads((pm.STATE / "state.json").read_text())["mode"], "off")
         self.assertEqual(hook.selected_mode(), "off")
 

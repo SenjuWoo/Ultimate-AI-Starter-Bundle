@@ -47,7 +47,9 @@ def memory_files(home):
     folders = [os.path.join(home, "memories")]
     profiles = os.path.join(home, "profiles")
     try:
-        folders += [os.path.join(profiles, name, "memories") for name in sorted(os.listdir(profiles))]
+        # Dot folders (Hermes keeps removed profiles in `.deleted`) are not profiles.
+        folders += [os.path.join(profiles, name, "memories") for name in sorted(os.listdir(profiles))
+                    if not name.startswith(".")]
     except OSError:
         pass
     return [os.path.join(folder, name) for folder in folders for name in NAMES

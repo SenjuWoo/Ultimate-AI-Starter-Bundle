@@ -68,6 +68,33 @@ def version_source(component: dict) -> tuple[str, str] | None:
     return None
 
 
+PIN_RE = re.compile(r"(?:^|\s)((?:@[\w.-]+/)?[\w.-]+?)(?:@|==)(\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?)(?=\s|$)")
+
+
+def pin_mismatches(catalog: dict) -> list[str]:
+    """Offline: install specs that pin a different version than `version` says.
+
+    The freshness check compares only `version` with upstream, so a bump that
+    forgot the launch argument (super-mcp-router 2.9.3 still running 2.9.2)
+    reported CURRENT while the old release was the one that ran.
+    """
+    problems = []
+    for component in catalog.get("components", []):
+        version = component.get("version")
+        source = version_source(component)
+        # Only the package that `version` describes; a companion CLI (unity-mcp's
+        # unity-mcp-cli) has its own release line.
+        if not version or not source or source[0] not in ("npm", "pypi"):
+            continue
+        specs = [component.get("npm_spec"), component.get("pip_spec"), component.get("install_command")]
+        specs += list(component.get("npx_args") or [])
+        for spec in (str(s) for s in specs if s):
+            for package, pinned in PIN_RE.findall(spec):
+                if package == source[1] and pinned != version:
+                    problems.append(f"{component.get('id')}: version {version} but {package} pinned at {pinned}")
+    return problems
+
+
 def get_json(url: str, timeout: int) -> dict:
     request = urllib.request.Request(
         url,
@@ -182,6 +209,15 @@ def self_test() -> None:
         result = audit({"components": [{"id": "held", "version": "1.0.0", "github": {
             "owner": "o", "repo": "r"}, "compatibility_hold": "API migration pending"}]}, 1)
         assert result[0]["status"] == "held" and result[0]["hold"] == "API migration pending"
+    assert pin_mismatches({"components": [{"id": "r", "install": "mcp-npx", "version": "2.9.3",
+                                           "npx_args": ["-y", "super-mcp-router@2.9.2"]}]}) == [
+        "r: version 2.9.3 but super-mcp-router pinned at 2.9.2"]
+    assert pin_mismatches({"components": [{"id": "s", "install": "uv-tool", "version": "2.1.0",
+                                           "install_command": "uv tool install -p 3.13 serena-agent==2.1.0"}]}) == []
+    # A companion CLI on its own release line is not the pinned package.
+    assert pin_mismatches({"components": [{"id": "u", "install": "unity-package", "version": "1.11.1",
+                                           "github": {"owner": "o", "repo": "r"},
+                                           "npx_args": ["-y", "unity-mcp-cli@0.91.0"]}]}) == []
     print("catalog freshness self-test PASS")
 
 
@@ -199,6 +235,9 @@ def main() -> int:
         return 0
 
     catalog = json.loads(args.catalog.read_text(encoding="utf-8-sig"))
+    mismatches = pin_mismatches(catalog)
+    for problem in mismatches:
+        print("MISMATCH " + problem)
     results = audit(catalog, args.timeout)
     if args.json:
         print(json.dumps(results, indent=2))
@@ -211,7 +250,7 @@ def main() -> int:
                   for status in ("current", "held", "stale", "skipped", "error")}
         print("summary: " + ", ".join(f"{key}={value}" for key, value in counts.items()))
 
-    if any(x["status"] == "error" for x in results):
+    if mismatches or any(x["status"] == "error" for x in results):
         return 2
     if args.fail_on_stale and any(x["status"] == "stale" for x in results):
         return 1

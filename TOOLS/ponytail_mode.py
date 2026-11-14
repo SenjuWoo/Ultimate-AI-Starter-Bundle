@@ -3,18 +3,27 @@
 Upstream ponytail 5.x resolves its mode as: `PONYTAIL_DEFAULT_MODE` env var, then
 `%APPDATA%\\ponytail\\config.json` -> {"defaultMode": ...}, then "full". Its hooks
 skip activation entirely at "off" - no rules, no flag, no banner - so the bundle
-sets that native value instead of inventing a parallel mode system, and the plugin
-(with its /ponytail commands and statusline) stays installed and usable.
+sets that native value instead of inventing a parallel mode system. The plugin
+stays installed everywhere.
 
 Copied skill folders are a second injection path, because skill descriptions
 auto-trigger. They are parked on "off" and restored on demand. Parking never
 deletes or overwrites anything: each archive carries a hash of its original path,
 and a collision is reported instead of resolved by destruction.
 
+An enabled plugin is the same path in another form: it lists its skills,
+descriptions included, in every session, and Claude Code's skillOverrides does
+not apply to plugin skills. So "off" and "auto" also switch the plugin off where
+the bundle owns the switch - Claude's settings.json enabledPlugins[ponytail@...]
+and Antigravity's config.json plugins.ponytail.enabled - each file backed up
+first with every other key kept; lite/full/ultra switch it back on. While off,
+/ponytail is not available there; `ponytail_mode.py lite --apply` brings it back.
+
 `auto` is the third state: a deterministic classifier in TOOLS/hooks/ponytail_auto.py
 reads each prompt and decides off/lite/full (never ultra; creative work stays off).
-Here it means "native default off, copied activation skills parked, hook decides
-per turn". Native plugin commands remain available for explicit use.
+Here it means "native default off, copied activation skills parked, plugin
+switched off, hook decides per turn". The hook carries its own rules, so it does not
+need the plugin.
 
     python TOOLS/ponytail_mode.py status            # read-only
     python TOOLS/ponytail_mode.py off               # dry-run: prints the plan
@@ -62,27 +71,32 @@ def claude_home(home=None):
 
 
 def provider_homes(home=None):
+    # An explicit home is a sandbox: every provider resolves inside it, so a test
+    # can never reach the real LOCALAPPDATA (Hermes) or ANTIGRAVITY_HOME.
+    explicit = home is not None
     home = Path(home or Path.home())
-    local = Path(os.environ.get("LOCALAPPDATA", home / "AppData" / "Local"))
+    if explicit:
+        local, antigravity = home / "AppData" / "Local", home / ".gemini" / "config"
+    else:
+        local = Path(os.environ.get("LOCALAPPDATA", home / "AppData" / "Local"))
+        # The catalog's Antigravity home: skills and plugins live under config\.
+        antigravity = Path(os.environ.get("ANTIGRAVITY_HOME") or home / ".gemini" / "config")
     homes = {
         "Claude": claude_home(home),
         "Codex": home / ".agents",
         "Grok": home / ".grok",
         "Kimi": home / ".kimi-code",
-        "Antigravity": home / ".gemini" ,
+        "Antigravity": antigravity,
         "Hermes": local / "hermes",
     }
     # Hermes loads skills from the shared root *and* from every profile root.
     profiles = homes["Hermes"] / "profiles"
     if profiles.is_dir():
         for profile in sorted(profiles.iterdir()):
-            if (profile / "skills").is_dir():
+            # Dot folders (Hermes keeps removed profiles in `.deleted`) are not profiles.
+            if not profile.name.startswith(".") and (profile / "skills").is_dir():
                 homes["Hermes/%s" % profile.name] = profile
     return homes
-
-
-def _skills_dir(home_dir):
-    return (home_dir / "skills") if home_dir.name != "config" else (home_dir / "skills")
 
 
 def installed_skill_dirs(home_dir):
@@ -96,18 +110,33 @@ def installed_skill_dirs(home_dir):
     return found
 
 
-def claude_enabled(home_dir):
-    settings = home_dir / "settings.json"
-    if not settings.exists():
+# Where each provider records whether the ponytail plugin is enabled. Only these
+# two have a plugin switch the bundle writes; elsewhere the plugin is left alone.
+PLUGIN_SWITCHES = {"Claude": "settings.json", "Antigravity": "config.json"}
+
+
+def plugin_switch(provider, home_dir):
+    """(path, key, enabled) for the provider's ponytail plugin entry, or None if absent."""
+    if provider not in PLUGIN_SWITCHES:
         return None
-    try:
-        data = json.loads(settings.read_text(encoding="utf-8-sig"))
-    except (OSError, ValueError):
+    path = home_dir / PLUGIN_SWITCHES[provider]
+    data, err = read_json(path)
+    if err or not isinstance(data, dict):
         return None
-    for key, value in (data.get("enabledPlugins") or {}).items():
-        if SKILL_PREFIX in key.lower():
-            return bool(value)
+    if provider == "Claude":
+        for key, value in (data.get("enabledPlugins") or {}).items():
+            if key.lower().split("@")[0] == SKILL_PREFIX:
+                return path, key, bool(value)
+        return None
+    entry = (data.get("plugins") or {}).get(SKILL_PREFIX)
+    if isinstance(entry, dict) and "enabled" in entry:
+        return path, SKILL_PREFIX, bool(entry["enabled"])
     return None
+
+
+def claude_enabled(home_dir):
+    found = plugin_switch("Claude", home_dir)
+    return None if found is None else found[2]
 
 
 def read_state():
@@ -127,15 +156,18 @@ def status(home=None):
     rows, leaks, mismatches = {}, [], []
     for name, home_dir in homes.items():
         dirs = installed_skill_dirs(home_dir)
+        switch = plugin_switch(name, home_dir)
         rows[name] = {
             "home": str(home_dir),
             "skills": [p.name for p in dirs],
-            "plugin_enabled": claude_enabled(home_dir) if name == "Claude" else None,
+            "plugin_enabled": None if switch is None else switch[2],
         }
-        # An enabled plugin emits nothing at off (upstream skips activation), so
-        # only loaded skill copies can leak behaviour into a prompt.
+        # The plugin's hook emits nothing at off, but loaded skill copies and an
+        # enabled plugin both list skill descriptions that trigger on their own.
         if native == "off" and dirs:
             leaks.append("%s still loads %d ponytail skill(s)" % (name, len(dirs)))
+        if native == "off" and rows[name]["plugin_enabled"]:
+            leaks.append("%s still has the ponytail plugin enabled, so its skills are listed" % name)
     if err:
         mismatches.append("config.json is not valid JSON: %s" % err)
     if env_mode:
@@ -207,6 +239,12 @@ def plan(mode, home=None, source_tree=None):
                         "from": (data or {}).get("defaultMode"), "to": native_mode})
 
     homes = provider_homes(home)
+    # Only an existing entry is flipped: a machine without the plugin gets none.
+    for provider in PLUGIN_SWITCHES:
+        switch = plugin_switch(provider, homes[provider])
+        if switch is not None and switch[2] != want_skills:
+            actions.append({"kind": "plugin_enable", "provider": provider, "path": str(switch[0]),
+                            "key": switch[1], "from": switch[2], "to": want_skills})
     if not want_skills:
         for name, home_dir in homes.items():
             for src in installed_skill_dirs(home_dir):
@@ -258,6 +296,22 @@ def execute(actions, stamp=None):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
             results.append(dict(action, ok=True))
+        elif kind == "plugin_enable":
+            path = Path(action["path"])
+            data, err = read_json(path)
+            table = "enabledPlugins" if action["provider"] == "Claude" else "plugins"
+            if err or not isinstance(data, dict) or not isinstance(data.get(table), dict):
+                results.append(dict(action, ok=False, message="%s unreadable; left untouched" % path.name))
+                continue
+            shutil.copy2(path, path.with_suffix(".json.bak-ponytail-%s" % stamp))
+            if action["provider"] == "Claude":
+                data[table][action["key"]] = action["to"]
+            else:
+                data[table][action["key"]]["enabled"] = action["to"]
+            temp = path.with_suffix(".json.ponytail.tmp")
+            temp.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            os.replace(temp, path)
+            results.append(dict(action, ok=True))
         elif kind == "park":
             src, dest = Path(action["src"]), Path(action["dest"])
             if dest.exists():
@@ -297,7 +351,9 @@ def execute(actions, stamp=None):
     return results
 
 
-def main(argv=None):
+def main(argv=None, home=None):
+    # `home` exists for tests: a test that calls main() without it acts on the
+    # real provider folders, which is how one once flipped a live plugin setting.
     ap = argparse.ArgumentParser(description="Ponytail mode through Ponytail's native config (default: off)")
     ap.add_argument("mode", nargs="?", default="status", choices=("status", "init") + LEVELS)
     ap.add_argument("--apply", action="store_true", help="execute the plan; without it nothing changes")
@@ -306,7 +362,7 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     if args.mode == "status":
-        report = status()
+        report = status(home=home)
         if args.json:
             print(json.dumps(report, indent=1))
             return 0 if not (report["leaks"] or report["mismatches"]) else 1
@@ -341,12 +397,15 @@ def main(argv=None):
         else:
             mode = "off"
 
-    actions = plan(mode, source_tree=_tree(args))
+    actions = plan(mode, home=home, source_tree=_tree(args))
     if args.json:
         print(json.dumps(actions, indent=1))
     else:
         for action in actions:
-            print("  %-15s %s" % (action["kind"], action.get("src") or action.get("path")))
+            detail = action.get("src") or action.get("path")
+            if action["kind"] == "plugin_enable":
+                detail = "%s %s -> %s (%s)" % (action["provider"], action["key"], action["to"], action["path"])
+            print("  %-15s %s" % (action["kind"], detail))
     if not args.apply:
         print("dry-run: nothing changed (add --apply)")
         return 0

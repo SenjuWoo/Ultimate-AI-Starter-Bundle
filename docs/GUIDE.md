@@ -1055,6 +1055,11 @@ python TOOLS/ponytail_mode.py init   --apply       # install time: off only if n
   `%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\ponytail-mode\parked`, because a skill
   description can trigger by itself. Parking never deletes: each archive carries a
   hash of its original path, and a collision is reported rather than resolved.
+- For the same reason `off` and `auto` switch the ponytail plugin off where the bundle
+  owns the switch: Claude's `enabledPlugins` (Claude Code's `skillOverrides` does not
+  apply to plugin skills) and Antigravity's `config.json` `plugins.ponytail.enabled`.
+  Each file is backed up first. `lite`/`full`/`ultra` switch it back on, which is also
+  how `/ponytail` comes back in those apps.
 - `lite`/`full`/`ultra` restore the parked copies (original bytes first) and set the
   native default, so the level is stable across restarts without typing a command.
 - `auto` parks the same skill copies and keeps the native default at `off`, so the

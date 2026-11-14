@@ -49,5 +49,8 @@ Final audit: the local gate stages and release contracts passed, including
 Windows-path, awkward-path launch and MCP parsing regressions. Installed-state
 diagnostics passed.
 Exact-commit CI and downloadable build receipts remain the release evidence.
+8.44.7 audit: install-time cleanup now also removes older-version leftovers
+(backups only by retention), and ponytail "off" switches its Claude/Antigravity
+plugin off; sandboxed tests no longer reach real provider folders.
 
 Release notes before this trim: `docs/history/STATE-ARCHIVE-2026-11-07.md`. Older releases: `docs/history/V<version>-CHANGELOG.md`.
