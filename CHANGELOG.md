@@ -1,3 +1,17 @@
+## 8.44.5 (2026-11-14)
+
+- **Keep the manifest's byte ending through regeneration.**
+  `TOOLS/generate_manifest.py` wrote `MANIFEST.json` with LF while the repo tracks
+  it as CRLF. The manifest hashes the bytes on disk, so every regeneration recorded
+  two files against LF bytes and `verify_manifest` failed on them. The writer now
+  preserves the tracked ending.
+- **Version declarations caught up.** 8.44.5 shipped its tool fix without bumping
+  `VERSION.txt`, the changelog or the catalog, so the tree declared 8.44.4 while the
+  commit said 8.44.5. All declarations now agree.
+- No content change.
+
+The bundle still ships 81 canonical skills.
+
 ## 8.44.4 (2026-11-14)
 
 - **Docs gate fixed.** `TOOLS/generate_manual_paste.py` shipped in 8.44.1 without a
