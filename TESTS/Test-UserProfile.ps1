@@ -80,6 +80,16 @@ try {
   Assert ($LASTEXITCODE -eq 0 -and $map -match '(?m)^## Machine map') 'Machine map did not render.'
   Assert ($map -notmatch '(?i)(token|secret|password|api_key)=') 'Machine map exposed a secret-named variable.'
   Assert ($map.Length -lt 3000) ('Machine map is too long for every request: ' + $map.Length)
+  # A host that exports extra *_ROOT/_HOME vars must not push the map over the
+  # cap: over budget, tool roots collapse to names only.
+  $hostVars = @{}
+  foreach ($n in 1..6) { $hostVars[('UABS_TEST_HOST' + $n + '_ROOT')] = $PackRoot }
+  try {
+    foreach ($k in $hostVars.Keys) { [Environment]::SetEnvironmentVariable($k, $hostVars[$k], 'Process') }
+    $busy = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TOOLS\Build-MachineMap.ps1') -PackRoot $PackRoot -ProfileRoot $root -Print | Out-String
+  } finally { foreach ($k in $hostVars.Keys) { [Environment]::SetEnvironmentVariable($k, $null, 'Process') } }
+  Assert ($busy.Length -lt 3000) ('Machine map grew past the cap with extra host env roots: ' + $busy.Length)
+  Assert ($busy -match 'UABS_TEST_HOST1_ROOT') 'Collapsed tool roots dropped a variable name.'
   & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TOOLS\Build-MachineMap.ps1') -PackRoot $PackRoot -ProfileRoot $root | Out-Null
   $first = [IO.File]::ReadAllText((Join-Path $root 'MACHINE-MAP.md'))
   $second = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TOOLS\Build-MachineMap.ps1') -PackRoot $PackRoot -ProfileRoot $root | Out-String

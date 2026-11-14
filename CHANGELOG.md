@@ -1,3 +1,14 @@
+## 8.44.10 (2026-11-14)
+
+- **The machine map stays under its cap on a busy host.** The map is built partly
+  from whatever `*_ROOT`, `*_HOME`, `*_INSTANCE` and `*_MCP` variables the
+  launching host exports, so one more forge root (`CYBERPUNK_FORGE_ROOT`) or an
+  agent's own env pushed it to 3030 characters and failed the 3000-character
+  profile gate. The Python line is shorter, and when the map would pass 2900
+  characters the tool-roots line keeps the variable names only (the value is one
+  env read away). `Test-UserProfile` now builds the map with six extra host roots
+  and holds it under the cap.
+
 ## 8.44.9 (2026-11-14)
 
 - **Cyberpunk Forge joins the companion registry.** The owner's Cyberpunk 2077

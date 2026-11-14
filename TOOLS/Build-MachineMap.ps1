@@ -119,7 +119,7 @@ if ($gh) {
 # Run Python: modern WindowsApps aliases may be the install manager, not a Store stub.
 $python = Get-UabsPythonExecutable
 if ($python) {
-  Add 'Python' @('Shared user runtime: ' + (Short $python) + '; use `python` on PATH or `UABS_PYTHON`. Reuse it; isolate tool dependencies with venv/uv, and do not download a second base interpreter. Embedded app runtimes stay app-owned.')
+  Add 'Python' @('shared runtime ' + (Short $python) + ' (`python` or `UABS_PYTHON`); venv/uv per tool, never a second base interpreter; embedded app runtimes stay app-owned')
 }
 
 # Apps and owner forges that answer by name. Read-only here: the installer runs
@@ -157,7 +157,19 @@ if ($python -and (Test-Path -LiteralPath $creativeScript -PathType Leaf)) {
   }
 }
 
-$text = "## Machine map (generated " + (Get-Date -Format 'yyyy-MM-dd') + " by the bundle installer; your own folders go in " + (Short (Join-Path $ProfileRoot 'PROFILE.md')) + ")`n" + ($lines -join "`n") + "`n"
+$header = "## Machine map (generated " + (Get-Date -Format 'yyyy-MM-dd') + " by the bundle installer; your own folders go in " + (Short (Join-Path $ProfileRoot 'PROFILE.md')) + ")`n"
+$text = $header + ($lines -join "`n") + "`n"
+# This text rides on every request, and the env-var section grows with whatever
+# host launched the installer. Over budget, tool roots keep their names only;
+# the value is one env read away, so nothing becomes unfindable.
+$budget = 2900
+$rootsAt = -1
+for ($i = 0; $i -lt $lines.Count; $i++) { if ($lines[$i].StartsWith('- Tool roots: ')) { $rootsAt = $i; break } }
+if ($text.Length -gt $budget -and $rootsAt -ge 0 -and $roots.Count) {
+  $rootNames = @($roots | ForEach-Object { ($_ -split '=', 2)[0] } | Sort-Object -Unique)
+  $lines[$rootsAt] = '- Tool roots (env vars; read the value): ' + ($rootNames -join '; ')
+  $text = $header + ($lines -join "`n") + "`n"
+}
 if ($Print) { Write-Output $text; return }
 New-Item -ItemType Directory -Force -Path $ProfileRoot | Out-Null
 if ($games.Count) {

@@ -18846,8 +18846,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 66534,
-  "sha256": "9d46a24ddeee147ec8d39808a04465eaa3335adca557116cd78bcaea88d37010"
+  "size": 66536,
+  "sha256": "785a4bdb8f7deaf8ec86ed5a393a639ce65178bac574c66dac5cf51a62eea91e"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18856,8 +18856,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
-  "size": 1369,
-  "sha256": "fb5953ca4196bdadacd27d57928a145696261ac8d5c9d6a8e45b818ede7c8271"
+  "size": 1370,
+  "sha256": "9478e5763ce5d730d6de927ce3a1362f8f84bea23d1de49f95970ece491874aa"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18866,8 +18866,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
-  "size": 41335,
-  "sha256": "fa76f6f29d66dcac69795c077f055d92ae694784f7fbf7be6defda836601a1b9"
+  "size": 41337,
+  "sha256": "fa33db0c448e3c50640de23bcc61c69e11b3eefa8f6353378852580bc55c1d95"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -23311,8 +23311,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 364954,
-  "sha256": "b27746cfdcc52d58bc905da3a6982a88cf80d4a256875b90d8041f2dd58611bc"
+  "size": 365575,
+  "sha256": "77f51781afc4a34d5ee7acc8baa623bb2aacc44c7d2771b8ab7e04f914aff547"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23456,8 +23456,8 @@
  },
  {
   "path": "README.md",
-  "size": 16480,
-  "sha256": "5f3af807a2bf5ba07aa10836b569be5ac4b845c614ffc59770605bea8bbadb0a"
+  "size": 16482,
+  "sha256": "2c1cca9ceb31f67498b8dff4e17f1ae67f1fc03b8d82d06e1a9599c96719aa60"
  },
  {
   "path": "SECURITY.md",
@@ -23466,13 +23466,13 @@
  },
  {
   "path": "START-HERE.bat",
-  "size": 1243,
-  "sha256": "a34b14933d294b93b83cb1f0380045702f4b48558a905dd4666371388472495f"
+  "size": 1244,
+  "sha256": "b547e9ad718e50ab6012cc2f11809688eb14f90589f546af34c6ae27ee6e92ba"
  },
  {
   "path": "START-HERE.txt",
-  "size": 4104,
-  "sha256": "c763bc5b22b236148193cda2ef1326957d084f587b242036cbe5198f4ecee848"
+  "size": 4105,
+  "sha256": "33a9bbcf1872818559d2795e5b6870c588ace8522976e403c8dd1f9f5a9568ce"
  },
  {
   "path": "STATE.md",
@@ -23686,8 +23686,8 @@
  },
  {
   "path": "TESTS/Test-UserProfile.ps1",
-  "size": 10807,
-  "sha256": "becc8ea8a13cc1e033d56bace68dd6b3d9081255f9fa308f3e68f643d40b423c"
+  "size": 11656,
+  "sha256": "47f1a7ee1bba040a0563e150ab157e985394b17de18b4db87936a6e762704e91"
  },
  {
   "path": "TESTS/Test-VersionProbes.ps1",
@@ -24076,8 +24076,8 @@
  },
  {
   "path": "TOOLS/Build-MachineMap.ps1",
-  "size": 10265,
-  "sha256": "11d076690856b7a6e54863da185f003afc5f9909d5a27bbcf1d3e966eb26dfb1"
+  "size": 10897,
+  "sha256": "943bc81f0812bd7904f55dccd75704424675bfde2bdd9dcde08f7de2bfe9e77a"
  },
  {
   "path": "TOOLS/Build-Release.ps1",
@@ -24586,8 +24586,8 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2637,
-  "sha256": "c1aa9a09b8d5ce29bec9303caae102147964829b3d36eee990cd5057cc36f362"
+  "size": 2639,
+  "sha256": "9d810dceabeabd7335e18244acff55312efa584c39df4701c7781c8ac5de0fe4"
  },
  {
   "path": "VALIDATION.md",
@@ -24596,8 +24596,8 @@
  },
  {
   "path": "VERSION.txt",
-  "size": 9,
-  "sha256": "1eda31422d2cf72b62cf212ea365bdf76cef48b91f47f5368bfd869177e3853c"
+  "size": 10,
+  "sha256": "2c33005369a2543868388a85e5dff351d48d6374278aeed997e045a4e5d28951"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
