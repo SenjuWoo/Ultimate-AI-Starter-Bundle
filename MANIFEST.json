@@ -18822,7 +18822,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66534,
-  "sha256": "e70865f78c10b37ed291a6dbd81850be2d1c0260e6f6c6f05badf1e5508a5992"
+  "sha256": "412c5de2a4345c68dcc109395d250f7dbf2419eeb5204aab7a70df46e18d6e2d"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -18832,7 +18832,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "cc25f29483aa596a716d565d30d76267c76561731ca213d731f185a527eb12b0"
+  "sha256": "aa403f64f610289b952ad6657ce1a57d59d26cd722d75720c7928d7b02fd5b2b"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18842,7 +18842,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "9e0f3dc9ab246beeb9bd493235a09fa2fe88bff3ed17c5c344cac6aacba18e79"
+  "sha256": "0120e6cccf213dbe1dd4c68046a04af3e81bca443a9ee725b5dd35fe6b746058"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -23286,8 +23286,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 351291,
-  "sha256": "7aa6dbef9bc09df600316ed17199b2ae000cbc738d4f44d637f7977d91cae7c7"
+  "size": 351577,
+  "sha256": "a355f84d102716dab81911a53076e567c9d60c299069fbc694b6c3b13300ffaf"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23406,8 +23406,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 62690,
-  "sha256": "b22714b6b85a3a46b1d6c7ae6a5350ba255f560242ba449730dbc65f7471abcc"
+  "size": 63173,
+  "sha256": "611bba9fa2f6ba6951ebc56e2e33bf9bc1b297cc43fae79bd43a96a34615d54a"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -23432,7 +23432,7 @@
  {
   "path": "README.md",
   "size": 16480,
-  "sha256": "978142cb553362a1505b597cc3adff74d010fc224a1810040315f994e91531fd"
+  "sha256": "137067e961710b2f859dd81b629f94759ae6d46d5b4e643e5a86afe26a20a32e"
  },
  {
   "path": "SECURITY.md",
@@ -23442,12 +23442,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "7112bbdf33a5870f5feb5d1f74659ea5562b7a366ea2d8f7f77bbc27e756cc98"
+  "sha256": "484ea237f7914217bf79cda61bd28c3bb1ede180c3c7e900de3d5de88f7e8dbb"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "5c7b6d69cb09483e3bfd31b6e40bf47775b12592d0e4cc1957d551185801f808"
+  "sha256": "0b7cbbc847bc1dfdd888613b808982565fde4215461c41d3ca1583cd37ed3ddc"
  },
  {
   "path": "STATE.md",
@@ -24557,7 +24557,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2579,
-  "sha256": "8695ba790b057edaa58f8a62d39c49a21a2dfc4682c3605260c20b693eee34b8"
+  "sha256": "4b78796c8cb14d6bae2af58866eaab0a993d44a8908fe5c2fd1f72275e24be5f"
  },
  {
   "path": "VALIDATION.md",
@@ -24567,7 +24567,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "0938d2a01cc09de1aa4ca69243a9091def2de08045612541e5558f082921555b"
+  "sha256": "d3c5072591610125235f6b65008fbf9431f0a057cec41e4cecf52bac5340cc3c"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -28783,6 +28783,11 @@
   "path": "docs/history/V8.44.3-CHANGELOG.md",
   "size": 562,
   "sha256": "f6f03531bda23f3c698ee93dd9034f81254afb1e902c3ccdc5b5d5268cbe0fa4"
+ },
+ {
+  "path": "docs/history/V8.44.4-CHANGELOG.md",
+  "size": 285,
+  "sha256": "994529afb6992e3545409fd28ff6b6640f2206fb0bd43586a457e3c198c24a6f"
  },
  {
   "path": "docs/history/V8.5.0-CHANGELOG.md",
