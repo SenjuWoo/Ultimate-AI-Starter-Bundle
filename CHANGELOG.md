@@ -1,3 +1,20 @@
+## 8.44.9 (2026-11-14)
+
+- **Cyberpunk Forge joins the companion registry.** The owner's Cyberpunk 2077
+  toolkit (`SenjuWoo/Cyberpunk-Forge`, CLI `cpforge`, skill `cyberpunk-forge`) is
+  now detected like the other forges: `CYBERPUNK_FORGE_ROOT` when set, otherwise the
+  bounded tool-root search. Folder matching ignores spaces and dashes, so a checkout
+  named `Cyberpunk Forge` is recognised as the `Cyberpunk-Forge` repository; a test
+  now holds that. Installs add a `cpforge` shell command next to the forge's own
+  Windows launcher, so Git Bash can call it by name too.
+- **Cyberpunk requests route to the forge.** `ai-tooling-stack`'s forge table gains a
+  Cyberpunk 2077 row (`cpforge doctor`, then `cpforge plan "<task>"`). `game-modding`
+  no longer lists Cyberpunk among the games without a forge; its Cyberpunk row and
+  `references/cyberpunk2077.md` now point at the forge and serve as the fallback only
+  while it is not installed.
+
+The bundle still ships 81 canonical skills.
+
 ## 8.44.8 (2026-11-14)
 
 - **PBP Studio joins the companion registry.** The owner's Castle Crashers custom

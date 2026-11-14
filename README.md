@@ -1,5 +1,5 @@
-<!-- Ultimate AI Starter Bundle v8.44.8 -->
-# Ultimate AI Starter Bundle v8.44.8
+<!-- Ultimate AI Starter Bundle v8.44.9 -->
+# Ultimate AI Starter Bundle v8.44.9
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your

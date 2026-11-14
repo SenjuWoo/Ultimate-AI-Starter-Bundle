@@ -1,6 +1,6 @@
 ---
 name: ai-tooling-stack
-description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, ReSkate, VRChat avatars, reverse engineering, asset production and voice/sound effects (AssetForge), ComfyUI images and music (comfy-forge), Koikatsu/Honey Select 2 cards (illusion-forge) and Castle Crashers characters (PBP Studio), and the standard a new or upgraded forge must meet. Discover installs before installing.
+description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Cyberpunk 2077, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, ReSkate, VRChat avatars, reverse engineering, asset production and voice/sound effects (AssetForge), ComfyUI images and music (comfy-forge), Koikatsu/Honey Select 2 cards (illusion-forge) and Castle Crashers characters (PBP Studio), and the standard a new or upgraded forge must meet. Discover installs before installing.
 metadata:
   version: 7.7.0
 ---
@@ -34,6 +34,7 @@ the bundle keeps no second copy. If the forge is absent, say which repository ow
 | Skyrim SE/AE records, Papyrus, assets, load order | `SkyrimForge` (+ houseCARL) | bundle `START-HERE.bat -Packs skyrim`, or the Forge's `START-HERE.bat`; then skills `skyrim-memory`, `skyrim-tooling-stack` (Forge vs houseCARL vs MCP), `skyrim-tool-router` | `SKYRIM_FORGE_ROOT`, `HOUSECARL_MCP` |
 | Skyrim RaceMenu face from a photo / follower without the Creation Kit | `FaceForge` / `FollowerForge` | release download | the user's install |
 | Risk of Rain 2 survivors, items, Thunderstore packages | `Risk-Of-Rain-2-Forge` | `forge.cmd doctor`, `forge guide`; skill `ror2-forge` | `ROR2_FORGE_ROOT` if set, else `UABS_TOOL_ROOTS` |
+| Cyberpunk 2077 mods: redscript, CET Lua, TweakXL, ArchiveXL, RED4ext, Input Loader, Mod Settings, Audioware, REDmod, WolvenKit archives, conflicts, Nexus releases | `Cyberpunk-Forge` | `cpforge doctor`, then `cpforge plan "<task>"`; skill `cyberpunk-forge`; needs your Cyberpunk 2077 install (REDmod DLC recommended) | `CYBERPUNK_FORGE_ROOT` if set, else `UABS_TOOL_ROOTS` |
 | Roblox games, Luau, Studio | `RobloxForge` | `Install.ps1` (installs `roblox-game-development` and `roblox-docs` into your agents), `rbforge doctor`, `rbforge docs search` | `ROBLOX_FORGE_ROOT` |
 | Minecraft Java on NeoForge | `Minecraft-Forge` | `Minecraft-Forge.ps1 doctor` (or `python -m mcforge doctor` in its folder); read its `AGENTS.md`, no global install | `UABS_TOOL_ROOTS` |
 | RimWorld 1.6 | `RimWorldForge` | `START-HERE.bat`, `rwforge doctor`, `rwforge capabilities`; skill `rimworld-forge` | `UABS_TOOL_ROOTS` |

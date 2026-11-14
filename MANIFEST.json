@@ -201,8 +201,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7223,
-  "sha256": "19f605d03809267bb25d61dcddff8462225c67988d54c103caaeffe6740eae49"
+  "size": 7616,
+  "sha256": "764f99ba1562736d9d88b7325e04a0f06862c7055cb07afa08cd3a650e5750dd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -821,8 +821,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5720,
-  "sha256": "6b168a12017f7e014a082ecb05acee2045eee5280ec9c031cb9e75c2fc1f128b"
+  "size": 5860,
+  "sha256": "38711ce8e5da033f708487f93391d0f5aa630f437598103e858703f1a58942df"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -881,8 +881,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/cyberpunk2077.md",
-  "size": 912,
-  "sha256": "d7b2df2c15b6e0641c857c1df842e852aa11bec5c2d549cf387b6db3ee1c0632"
+  "size": 1212,
+  "sha256": "af4c4ac1a85ee721866c7154e26b4600e00daa4bb66266b225b0bca8d3662117"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/dayz.md",
@@ -3211,8 +3211,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7223,
-  "sha256": "19f605d03809267bb25d61dcddff8462225c67988d54c103caaeffe6740eae49"
+  "size": 7616,
+  "sha256": "764f99ba1562736d9d88b7325e04a0f06862c7055cb07afa08cd3a650e5750dd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -3831,8 +3831,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5720,
-  "sha256": "6b168a12017f7e014a082ecb05acee2045eee5280ec9c031cb9e75c2fc1f128b"
+  "size": 5860,
+  "sha256": "38711ce8e5da033f708487f93391d0f5aa630f437598103e858703f1a58942df"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -3891,8 +3891,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/cyberpunk2077.md",
-  "size": 912,
-  "sha256": "d7b2df2c15b6e0641c857c1df842e852aa11bec5c2d549cf387b6db3ee1c0632"
+  "size": 1212,
+  "sha256": "af4c4ac1a85ee721866c7154e26b4600e00daa4bb66266b225b0bca8d3662117"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/dayz.md",
@@ -6281,8 +6281,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7223,
-  "sha256": "19f605d03809267bb25d61dcddff8462225c67988d54c103caaeffe6740eae49"
+  "size": 7616,
+  "sha256": "764f99ba1562736d9d88b7325e04a0f06862c7055cb07afa08cd3a650e5750dd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -6901,8 +6901,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5720,
-  "sha256": "6b168a12017f7e014a082ecb05acee2045eee5280ec9c031cb9e75c2fc1f128b"
+  "size": 5860,
+  "sha256": "38711ce8e5da033f708487f93391d0f5aa630f437598103e858703f1a58942df"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -6961,8 +6961,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/cyberpunk2077.md",
-  "size": 912,
-  "sha256": "d7b2df2c15b6e0641c857c1df842e852aa11bec5c2d549cf387b6db3ee1c0632"
+  "size": 1212,
+  "sha256": "af4c4ac1a85ee721866c7154e26b4600e00daa4bb66266b225b0bca8d3662117"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/dayz.md",
@@ -9341,8 +9341,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7223,
-  "sha256": "19f605d03809267bb25d61dcddff8462225c67988d54c103caaeffe6740eae49"
+  "size": 7616,
+  "sha256": "764f99ba1562736d9d88b7325e04a0f06862c7055cb07afa08cd3a650e5750dd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -9961,8 +9961,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5720,
-  "sha256": "6b168a12017f7e014a082ecb05acee2045eee5280ec9c031cb9e75c2fc1f128b"
+  "size": 5860,
+  "sha256": "38711ce8e5da033f708487f93391d0f5aa630f437598103e858703f1a58942df"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -10021,8 +10021,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/cyberpunk2077.md",
-  "size": 912,
-  "sha256": "d7b2df2c15b6e0641c857c1df842e852aa11bec5c2d549cf387b6db3ee1c0632"
+  "size": 1212,
+  "sha256": "af4c4ac1a85ee721866c7154e26b4600e00daa4bb66266b225b0bca8d3662117"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/dayz.md",
@@ -12401,8 +12401,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7223,
-  "sha256": "19f605d03809267bb25d61dcddff8462225c67988d54c103caaeffe6740eae49"
+  "size": 7616,
+  "sha256": "764f99ba1562736d9d88b7325e04a0f06862c7055cb07afa08cd3a650e5750dd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -13021,8 +13021,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5720,
-  "sha256": "6b168a12017f7e014a082ecb05acee2045eee5280ec9c031cb9e75c2fc1f128b"
+  "size": 5860,
+  "sha256": "38711ce8e5da033f708487f93391d0f5aa630f437598103e858703f1a58942df"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -13081,8 +13081,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/cyberpunk2077.md",
-  "size": 912,
-  "sha256": "d7b2df2c15b6e0641c857c1df842e852aa11bec5c2d549cf387b6db3ee1c0632"
+  "size": 1212,
+  "sha256": "af4c4ac1a85ee721866c7154e26b4600e00daa4bb66266b225b0bca8d3662117"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/dayz.md",
@@ -15536,8 +15536,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7223,
-  "sha256": "19f605d03809267bb25d61dcddff8462225c67988d54c103caaeffe6740eae49"
+  "size": 7616,
+  "sha256": "764f99ba1562736d9d88b7325e04a0f06862c7055cb07afa08cd3a650e5750dd"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
@@ -16156,8 +16156,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/SKILL.md",
-  "size": 5720,
-  "sha256": "6b168a12017f7e014a082ecb05acee2045eee5280ec9c031cb9e75c2fc1f128b"
+  "size": 5860,
+  "sha256": "38711ce8e5da033f708487f93391d0f5aa630f437598103e858703f1a58942df"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/ERROR-REGISTRY.json",
@@ -16216,8 +16216,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/cyberpunk2077.md",
-  "size": 912,
-  "sha256": "d7b2df2c15b6e0641c857c1df842e852aa11bec5c2d549cf387b6db3ee1c0632"
+  "size": 1212,
+  "sha256": "af4c4ac1a85ee721866c7154e26b4600e00daa4bb66266b225b0bca8d3662117"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/game-modding/references/dayz.md",
@@ -18847,17 +18847,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66534,
-  "sha256": "902c1cc73ad1f7e6d84adc04e6a0105d3c94c74922b4de28d0df70a1bd9e2dea"
+  "sha256": "9d46a24ddeee147ec8d39808a04465eaa3335adca557116cd78bcaea88d37010"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
-  "size": 20356,
-  "sha256": "eb300c42d3fe99d0137f0090ab5142aad0a135b6756f41dbc403b9d7c552c2e4"
+  "size": 22049,
+  "sha256": "dbfe497d5f98a63aebc9b16ec578b062cfb025becc8f3a6958f651cc922d62cc"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "3cf1781c79681ea99e7c4b2c23a2e3e30c4e1b92ad938c615c1828a57e3373d7"
+  "sha256": "fb5953ca4196bdadacd27d57928a145696261ac8d5c9d6a8e45b818ede7c8271"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18867,7 +18867,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "9173478df0e965634ae6f1472ec6c1788b1675d8858694163abe38a38eb63c9d"
+  "sha256": "fa76f6f29d66dcac69795c077f055d92ae694784f7fbf7be6defda836601a1b9"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -23311,8 +23311,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 363944,
-  "sha256": "d4bc5310c89d4928a1c6b0954e32b4e01e9e6ee5e17ed354cbe79a6ae7455d40"
+  "size": 364954,
+  "sha256": "b27746cfdcc52d58bc905da3a6982a88cf80d4a256875b90d8041f2dd58611bc"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23431,8 +23431,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 63829,
-  "sha256": "8e69533c1630e2c4838cc05f834d755ed7752666cdcfbc6e7607b4f76867a88e"
+  "size": 64440,
+  "sha256": "4cf26e8652f3b587af79fdd8a4b71da1fa81ad4b1b7da73028b6eb67e897d9dc"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -23457,7 +23457,7 @@
  {
   "path": "README.md",
   "size": 16480,
-  "sha256": "16ebeb8acc261a9e0be72891a68d2446c5dad1cd04a9acc0ce76162323937d89"
+  "sha256": "5f3af807a2bf5ba07aa10836b569be5ac4b845c614ffc59770605bea8bbadb0a"
  },
  {
   "path": "SECURITY.md",
@@ -23467,12 +23467,12 @@
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "d236b9ad09e1a43ae732152e989bfb63117e289395f9c3e6e90d3c11533cc3dc"
+  "sha256": "a34b14933d294b93b83cb1f0380045702f4b48558a905dd4666371388472495f"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "6b26b8878fb7eaf33d331989946e4ac0a88778c6d00e5872d1240234f3096ce4"
+  "sha256": "c763bc5b22b236148193cda2ef1326957d084f587b242036cbe5198f4ecee848"
  },
  {
   "path": "STATE.md",
@@ -23891,8 +23891,8 @@
  },
  {
   "path": "TESTS/test_companion_registry.py",
-  "size": 16378,
-  "sha256": "74b7b2e12aabe64010ba0c5fc11189009df1710e4b93e6eca96a878603e22e9b"
+  "size": 16587,
+  "sha256": "4714f496eec85fbe634b2cf34721efa9c65b2933857df0073209d84c7c26164e"
  },
  {
   "path": "TESTS/test_free_game_tools.py",
@@ -24587,7 +24587,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2637,
-  "sha256": "48d54301c46a7370724fddbdfc10345b85517ca6f2c6a98239e6c9ccec446f61"
+  "sha256": "c1aa9a09b8d5ce29bec9303caae102147964829b3d36eee990cd5057cc36f362"
  },
  {
   "path": "VALIDATION.md",
@@ -24597,7 +24597,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "174f6376c9492fe0709f78a767c816214efa246680889a76c5e821f85a309a22"
+  "sha256": "1eda31422d2cf72b62cf212ea365bdf76cef48b91f47f5368bfd869177e3853c"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24626,8 +24626,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/SKILL.md",
-  "size": 7223,
-  "sha256": "19f605d03809267bb25d61dcddff8462225c67988d54c103caaeffe6740eae49"
+  "size": 7616,
+  "sha256": "764f99ba1562736d9d88b7325e04a0f06862c7055cb07afa08cd3a650e5750dd"
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/references/forge-standard.md",
@@ -25246,8 +25246,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/SKILL.md",
-  "size": 5720,
-  "sha256": "6b168a12017f7e014a082ecb05acee2045eee5280ec9c031cb9e75c2fc1f128b"
+  "size": 5860,
+  "sha256": "38711ce8e5da033f708487f93391d0f5aa630f437598103e858703f1a58942df"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/ERROR-REGISTRY.json",
@@ -25306,8 +25306,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/cyberpunk2077.md",
-  "size": 912,
-  "sha256": "d7b2df2c15b6e0641c857c1df842e852aa11bec5c2d549cf387b6db3ee1c0632"
+  "size": 1212,
+  "sha256": "af4c4ac1a85ee721866c7154e26b4600e00daa4bb66266b225b0bca8d3662117"
  },
  {
   "path": "_CANONICAL-SKILLS/game-modding/references/dayz.md",
@@ -28838,6 +28838,11 @@
   "path": "docs/history/V8.44.8-CHANGELOG.md",
   "size": 1518,
   "sha256": "9dacde013fb42d8faf15283d9c86df5ddc6d77bc96f93b2fde93475df64e5923"
+ },
+ {
+  "path": "docs/history/V8.44.9-CHANGELOG.md",
+  "size": 992,
+  "sha256": "567783b1d679413492f4bcf62671ff6ce0d9d5d12f92694621f753d21d931e8d"
  },
  {
   "path": "docs/history/V8.5.0-CHANGELOG.md",

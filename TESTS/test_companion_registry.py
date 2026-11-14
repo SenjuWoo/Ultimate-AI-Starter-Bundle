@@ -344,6 +344,8 @@ def test_a_github_download_zip_folder_is_still_the_owner():
     assert reg._folder_key("awesome-gamedev-agent-skills-main") == reg._norm("awesome-gamedev-agent-skills")
     assert reg._folder_key("Roblox-Forge-master") == reg._norm("Roblox-Forge")
     assert reg._folder_key("mainframe") == "mainframe", "only a trailing -main suffix is dropped"
+    # A checkout cloned into a folder with a space instead of the repo's dash is the same owner.
+    assert reg._folder_key("Cyberpunk Forge") in reg.owner_names(reg.load()["companions"]["cyberpunk-forge"])
     data = _data()
     data["recommended"] = {"pack": {"title": "Pack", "repo": "https://github.com/gamedev-skills/awesome-pack",
                                     "pin": "c6ca6c41c839b68319ffc08430b99ab768debc32", "license": "Apache-2.0",

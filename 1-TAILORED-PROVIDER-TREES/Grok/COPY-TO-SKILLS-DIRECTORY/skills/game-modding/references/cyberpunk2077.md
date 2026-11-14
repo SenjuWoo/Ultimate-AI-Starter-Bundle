@@ -1,5 +1,10 @@
 # Cyberpunk 2077
 
+Cyberpunk Forge owns this game: run `cpforge doctor`, then `cpforge plan "<task>"`,
+and load its `cyberpunk-forge` skill. It reads classes, TweakDB records and
+framework versions from the installed game. Use this page only while the forge
+is not installed (`ai-tooling-stack` names its repository).
+
 Treat Cyberpunk as an ecosystem:
 
 - redscript

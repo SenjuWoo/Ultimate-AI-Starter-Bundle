@@ -1,6 +1,6 @@
 ---
 name: game-modding
-description: Modding games without an owner forge - Cyberpunk 2077, Baldur's Gate 3, Factorio, Terraria, Arma 3, DayZ, Project Zomboid, Garry's Mod, No Man's Sky, Witcher 3, Bannerlord, Space Engineers, and 20 more, plus the cross-game workflow, packaging, crash, and release rules.
+description: Modding games without an owner forge - Baldur's Gate 3, Factorio, Terraria, Arma 3, DayZ, Project Zomboid, Garry's Mod, No Man's Sky, Witcher 3, Bannerlord, Space Engineers, and 20 more, plus the cross-game workflow, packaging, crash, and release rules.
 ---
 
 # Modding any game other than Skyrim
@@ -46,13 +46,13 @@ the three-agent split and the post-mortem encyclopedia sync.
 | Unity / BepInEx / Harmony | `unity-mod-frameworks` |
 | Unreal Engine / UE4SS | `unreal-mod-frameworks` |
 | Fallout 4, Starfield | `bethesda-creation-modding` |
-| Has an owner forge (Skyrim, Risk of Rain 2, Roblox, Minecraft NeoForge, RimWorld, Saints Row 3/4, VRChat avatars) | the forge registry in `ai-tooling-stack`; use the forge's own skill and CLI |
+| Has an owner forge (Skyrim, Cyberpunk 2077, Risk of Rain 2, Roblox, Minecraft NeoForge, RimWorld, Saints Row 3/4, VRChat avatars) | the forge registry in `ai-tooling-stack`; use the forge's own skill and CLI |
 
 ## Games covered here
 
 | Game | Reference |
 |---|---|
-| Cyberpunk 2077 | `references/cyberpunk2077.md` |
+| Cyberpunk 2077 | owner forge Cyberpunk Forge: `cpforge doctor`, then `cpforge plan "<task>"`, skill `cyberpunk-forge`; `references/cyberpunk2077.md` only while the forge is not installed |
 | The Witcher 3 | `references/witcher3-redkit.md` |
 | Baldur's Gate 3 | `references/baldurs-gate3.md` |
 | Divinity: Original Sin 2 | `references/divinity-original-sin2.md` |
