@@ -330,7 +330,10 @@ def main(argv=None):
         plan = hermes_plan(policy, receipt, root, reader)
         report["providers"].append(plan)
         wants_change = args.undo or (args.fix and not opted_out)
-        if runtime and wants_change:
+        pending = any(row["add"] or row["remove"] or (args.undo and row["managed"]) for row in plan["profiles"])
+        if runtime and wants_change and not pending:
+            plan["applied"] = "nothing to change"
+        elif runtime and wants_change:
             if gateway_running(exe) and not args.hermes_live:
                 plan["applied"] = "deferred: the Hermes gateway is running (rerun with --hermes-live, or after it stops)"
             else:

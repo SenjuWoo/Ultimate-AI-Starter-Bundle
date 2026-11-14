@@ -1079,11 +1079,33 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
           $currentHits = @($hits | Where-Object { try { [version]$_.version -ge [version]$spCatalog.version } catch { $false } })
           if (-not $currentHits.Count) {
             [void](Invoke-UabsNative $grokExe @('plugin','install',$pinnedGrokSource,'--trust'))
+            $hits = @(Get-UabsGrokPluginList -GrokExe $grokExe | Where-Object { $_.name -eq 'superpowers' })
+            $currentHits = @($hits | Where-Object { try { [version]$_.version -ge [version]$spCatalog.version } catch { $false } })
+          }
+          if (-not $currentHits.Count -and $hits.Count) {
+            # A git plugin installed at an older tag stays on that tag: `update`
+            # skips it ("pinned to v7.0.1") and `install` refuses the same repo
+            # key ("already installed"). Replace it with the catalog pin; the
+            # copied skills under ~/.grok/skills cover the moment in between.
+            [void](Invoke-UabsNative $grokExe @('plugin','uninstall','superpowers'))
+            [void](Invoke-UabsNative $grokExe @('plugin','install',$pinnedGrokSource,'--trust'))
           }
           $hits = @(Repair-UabsGrokDuplicatePlugins -GrokExe $grokExe -PluginName 'superpowers')
-          $spEntry.native = $true
-          $spEntry.status = 'updated-official-cli'
-          Write-UabsOk ('Grok: superpowers installed/updated (' + $hits[0].repo_key + ')')
+          $listed = @(Get-UabsGrokPluginList -GrokExe $grokExe | Where-Object { $_.name -eq 'superpowers' })
+          $grokSpVersion = if ($listed.Count) { [string]$listed[0].version } else { '' }
+          $spEntry.native = [bool]$listed.Count
+          if ($listed.Count -and $grokSpVersion -and $(try { [version]$grokSpVersion -ge [version]$spCatalog.version } catch { $false })) {
+            $spEntry.status = 'updated-official-cli'
+            Write-UabsOk ('Grok: superpowers ' + $grokSpVersion + ' (' + $listed[0].repo_key + ')')
+          } elseif ($listed.Count) {
+            $spEntry.status = 'stale-native'
+            $spEntry.reason = ('Grok kept superpowers ' + $grokSpVersion + '; catalog pin is ' + $spCatalog.version)
+            Write-UabsWarn ('Grok: superpowers stayed at ' + $grokSpVersion + ' (catalog ' + $spCatalog.version + '); run `grok plugin uninstall superpowers` then rerun the installer')
+          } else {
+            $spEntry.status = 'fallback-skills'
+            $spEntry.reason = 'grok plugin reinstall did not take; copied skills stay'
+            Write-UabsWarn 'Grok: superpowers native reinstall failed - copied skills stay'
+          }
         } else {
           Write-Host ('  grok plugin install ' + $pinnedGrokSource + ' --trust')
           [void](Invoke-UabsNative $grokExe @('plugin', 'install', $pinnedGrokSource, '--trust'))

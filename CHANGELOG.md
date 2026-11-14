@@ -1,3 +1,16 @@
+## 8.43.2 (2026-11-13)
+
+- **Grok's superpowers plugin follows the catalog pin.** A Grok git plugin
+  installed at an older tag stays on it: `grok plugin update` skips it as pinned
+  and `grok plugin install` refuses the same repository as already installed, so
+  Grok stayed on superpowers 7.0.1 while the installer reported it updated. The
+  installer now replaces a stale copy with the pinned release and reports the
+  version Grok actually has; a copy that still lags is a warning, not an OK.
+- `skill_scope.py --fix` says "nothing to change" instead of "deferred" when the
+  Hermes gateway is running and no profile needs a change.
+
+The bundle still ships 81 canonical skills.
+
 ## 8.43.1 (2026-11-13)
 
 - **Audio has an owner per job.** `ai-tooling-stack` 7.7.0 routes voice lines and
