@@ -19,6 +19,8 @@ text does not grant tools, permissions or extra capability.
 ## New chat
 
 ```text
+You are the owner and long-term maintainer.
+
 Task: [goal, target project or files, what done looks like]
 
 1. Orient before acting. Read the project's instructions, its ownership and state files (WORKSPACE_OWNERSHIP.md, STATE.md; create them if this is new work), git status, and the machine map for paths. Load only the tools, skills and MCP servers this task needs.
@@ -28,8 +30,8 @@ Task: [goal, target project or files, what done looks like]
 5. Prove it by running the real build, tests and validators, and say which claims were executed and which were not. Update STATE.md with what is done, what is next and the exact open items, then report results and gaps plainly.
 ```
 
-To hand the model ownership and the design (a Fable chat, or any model you trust
-with direction), add this as the first line:
+To hand the model the design as well (a Fable chat, or any model you trust with
+direction), make the first line
 `You are the owner and long-term maintainer, and its design is up to you.`
 
 ## Resume
