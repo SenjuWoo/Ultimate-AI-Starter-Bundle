@@ -45,6 +45,9 @@
 
 ## History
 
+8.51.1 (2026-11-15): catalog Unity install command matches 1.11.1; freshness check
+recorded (22 current, 3 held, Blender 2.3.0 / Unity 1.11.3 under a day old, not
+adopted); installed hooks, settings and six provider skill homes verified live.
 8.51.0 (2026-11-15): stop gates honour stop_hook_active (no repeated blocks);
 prompts merged into PROMPTS/START-RESUME-UPGRADE.md; docs gate checks Markdown
 links per page (41 dead GUIDE links fixed); workspace template states each rule

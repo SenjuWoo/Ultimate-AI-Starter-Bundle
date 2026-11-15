@@ -1121,3 +1121,14 @@ the project is set to Custom and stdio (`Window > AI Game Dev`).
 | `img2threejs` | owned by AssetForge | v2.0.1 (`0c0c49b`), upstream head; the bundle's `img2threejs` skill is a pointer to it |
 | reverse-api-engineer | owned by Reverse THIS! | 0.15.0 adopted by Reverse THIS! 1.17.0 with the upstream agent skill for the same tag; new configs default to the user's Chrome (no HAR), Claude runs no longer load Claude Code settings |
 | Claude `skillOverrides` / Hermes `skills.disabled` | TAKEN | host listing controls behind `TOOLS/skill_scope.py` (ADR-0009): Claude's listing on this machine drops from ~42,700 to ~21,900 description characters per request |
+
+## 2026-11-15 freshness check
+
+`python TOOLS/audit_catalog_versions.py`: 22 current, 3 held (Impeccable CLI and skill on the recorded malformed-tag leak, OMNI/Contexere evaluation-only), 2 behind. `python TOOLS/check_upstream_drift.py`: only the optional Addy pack moved (opt-in, installed on request).
+
+| Tool | Pinned | Upstream | Decision |
+|---|---|---|---|
+| Blender MCP | 2.2.9 | 2.3.0 (PyPI, 2026-11-15 13:56 UTC) | not adopted yet: released the same day; adoption is a safe-mode tools-list measurement plus a live Blender call, as for 2.2.9. Opt-in editor profile |
+| Unity MCP (IvanMurzak) | 1.11.1 | 1.11.3 (2026-11-14) | not adopted yet: 1.11.3 is docs only; 1.11.2 adds multi-statement RQL and requires Node.js 22.14+. Adoption is a live editor check, as for 1.11.1. Opt-in project profile |
+
+The catalog's Unity `install_command` still named `unity-mcp-cli@0.91.0` after the 1.11.1 adoption; it now matches the profile (`unity-mcp-cli@1.11.1 ... --plugin-version 1.11.1`).
