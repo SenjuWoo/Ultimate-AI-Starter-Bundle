@@ -45,6 +45,10 @@
 
 ## History
 
+8.51.0 (2026-11-15): stop gates honour stop_hook_active (no repeated blocks);
+prompts merged into PROMPTS/START-RESUME-UPGRADE.md; docs gate checks Markdown
+links per page (41 dead GUIDE links fixed); workspace template states each rule
+once; codebase-memory skill split (indexing/install in a reference).
 8.50.1 owner audit (2026-11-15): baseline green (gate 23/23, CI, doctor). Fixed:
 Claude routing ignored native-plugin skills (Superpowers never suggested); leftover
 cleanup exited 0 on failed removals and could edit a provider config whose backup

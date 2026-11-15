@@ -19,6 +19,8 @@ text does not grant tools, permissions or extra capability.
 ## New chat
 
 ```text
+You are the owner and long-term maintainer.
+
 Task: [goal, target project or files, what done looks like]
 
 1. Orient before acting. Read the project's instructions, its ownership and state files (WORKSPACE_OWNERSHIP.md, STATE.md; create them if this is new work), git status, and the machine map for paths. Load only the tools, skills and MCP servers this task needs.
@@ -28,11 +30,14 @@ Task: [goal, target project or files, what done looks like]
 5. Prove it by running the real build, tests and validators, and say which claims were executed and which were not. Update STATE.md with what is done, what is next and the exact open items, then report results and gaps plainly.
 ```
 
+To hand the model the design as well (a Fable chat, or any model you trust with
+direction), make the first line
+`You are the owner and long-term maintainer, and its design is up to you.`
+
 ## Resume
 
 ```text
-Resume the unfinished task in [project path].
-[Only in a chat with no history: the goal was ...; the handoff is in STATE.md.]
+Resume the unfinished task. Start from the handoff in STATE.md if there is one.
 
 1. Rebuild the picture from evidence, in this order: STATE.md, git status, diff and recent log, the files themselves, background jobs that are running or finished, open pull requests and CI. If the project uses the bundle's task controller, run its resume command first (the machine map names it). Where the notes and the files disagree, the files win; correct the notes.
 2. Do not redo finished work. Reuse results whose inputs have not changed. Re-check only what an interruption can break: a half-written file, a command that was cut off, an uncommitted change, a moved folder.
@@ -50,7 +55,7 @@ For the day a stronger model arrives, or when a project has not been looked at
 for a long time. It asks for a full audit and the fixes, not a review document.
 
 ```text
-You are a more capable model than the ones that built this project. Audit all of [project path] and upgrade it.
+You are the new owner and long-term maintainer of [project path]; its design and direction are up to you. Audit all of it and upgrade it.
 Purpose of the project: [one line, or "read it from the README and STATE.md"].
 Must not change: [public API, file formats, my content and prompts, ...; or "nothing beyond the standing rules"].
 

@@ -70,6 +70,7 @@ def steps(root):
         ("ponytail auto classifier", [py, "TESTS/test_ponytail_auto.py"]),
         ("free game tools", [py, "TESTS/test_free_game_tools.py"]),
         ("gate parity", [py, "TESTS/test_gate_parity.py"]),
+        ("stop hook recursion guard", [py, "TESTS/test_stop_hook_guard.py"]),
         ("pack gate", pw + ["TESTS/Test-Pack.ps1"]),
         ("Core artifact from its own tree", core_artifact),
     ]

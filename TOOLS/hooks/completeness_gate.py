@@ -364,7 +364,10 @@ def mode_pre(payload: dict, cwd: Path) -> int:
 def mode_stop(payload: dict, cwd: Path) -> int:
     # Never fight a turn that is already being kept alive by this gate, and
     # never speak on the session-end fire, which has no turn left to continue.
-    if payload.get("stopHookActive"):
+    # Claude Code and Codex send stop_hook_active on the fire our own block
+    # caused; reading only the camelCase spelling re-blocked a finished turn
+    # until the host's consecutive-block cap.
+    if payload.get("stop_hook_active") or payload.get("stopHookActive"):
         return 0
     if payload.get("reason") not in (None, "", "end_turn"):
         return 0

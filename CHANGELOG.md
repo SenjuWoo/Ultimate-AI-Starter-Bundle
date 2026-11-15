@@ -1,3 +1,39 @@
+## 8.51.0 (2026-11-15)
+
+- **A stop gate blocks a finished turn once, not eight times.** Claude Code and
+  Codex mark the Stop fire that a hook's own block caused with `stop_hook_active`.
+  The completeness and assumption gates only read `stopHookActive`, so a turn that
+  ended with a finding (a version bump without a changelog entry, or a script
+  naming a drive that does not exist) was blocked again on every retry until
+  Claude's eight-block cap ended it, which wasted turns and tokens. Both spellings
+  now count. `TESTS/test_stop_hook_guard.py` runs both gates against real
+  repositories.
+- **The prompts are one file, renamed to `PROMPTS/START-RESUME-UPGRADE.md`.** The
+  near-copy "New FABLE chat" prompt is now one line under "New chat": the first
+  line that hands the model the design as well. The upgrade audit opens with the
+  ownership line ("the new owner and long-term maintainer … its design and
+  direction are up to you") instead of telling the model it is more capable. The
+  resume prompt opens with one plain sentence. Links in the README, the guide and
+  `PROMPTS/README.md` follow the rename.
+- **The reference guide's links work.** `docs/GUIDE.md` carried 41 links written
+  from the repository root, so each one was dead on GitHub and in the extracted
+  pack. They now resolve from `docs/`. The docs gate checks every Markdown link in
+  the README, `AIO-GUIDE.md`, `docs/`, `docs/decisions/`, `PROMPTS/` and
+  `3-PREAMBLES/README.md` from the page's own folder.
+- **The workspace instructions state each rule once.** The `AGENTS.md`/`CLAUDE.md`
+  seeded into a new project said the publication rule twice and added a
+  rights-and-terms clause the installed contract does not have. It is one
+  paragraph now, worded like the contract, and about 300 bytes shorter in every
+  project session.
+- **`codebase-memory` loads half the text.** Querying stays in the skill (167
+  lines). Indexing discipline, install, provider wiring and the dashboard moved to
+  `references/indexing-and-install.md`, which the skill names before any
+  `index_repository`, `delete_project` or registration.
+- `codeburn` and `headroom` lost a "Not a Skyrim …" clause from the description
+  every provider lists in every session.
+
+The bundle still ships 81 canonical skills.
+
 ## 8.50.1 (2026-11-15)
 
 - **Claude's workflow hint names Superpowers skills again.** Claude gets

@@ -26,6 +26,29 @@ EXAMPLES = {
 }
 
 
+# Pages whose Markdown links a reader follows on GitHub or in the extracted pack.
+# A link resolves from the page's own folder: docs/GUIDE.md carried 41 links
+# written from the repository root after it took over the README's sections,
+# and the root-relative check above could not see that every one was dead.
+LINKED_PAGES = ("README.md", "AIO-GUIDE.md", "docs/*.md", "docs/decisions/*.md",
+                "PROMPTS/*.md", "3-PREAMBLES/README.md")
+
+
+def relative_link_errors(root: Path) -> list[str]:
+    errors = []
+    pages = sorted({p for pattern in LINKED_PAGES for p in root.glob(pattern) if p.is_file()})
+    for page in pages:
+        text = re.sub(r"```.*?```", "", page.read_text(encoding="utf-8-sig"), flags=re.S)
+        for match in re.finditer(r"\]\(([^)\s]+)\)", text):
+            value = unquote(match.group(1)).split("#", 1)[0]
+            if not value or re.match(r"[a-zA-Z][\w+.-]*:|^/", value):
+                continue
+            if not (page.parent / value).exists():
+                errors.append(f"{page.relative_to(root).as_posix()}: dead link {value} "
+                              f"(links resolve from the page's own folder)")
+    return errors
+
+
 def verify(root: Path) -> list[str]:
     errors = []
     for name in DOCS:
@@ -63,6 +86,7 @@ def verify(root: Path) -> list[str]:
                 errors.append(f"{name}: target escapes repository {target}")
             elif not path.exists():
                 errors.append(f"{name}: missing local target {target}")
+    errors.extend(relative_link_errors(root))
     try:
         if (root / "MEMORY.md").read_text(encoding="utf-8") != generate(root):
             errors.append("MEMORY.md stale; run TOOLS/Update-MemoryIndex.ps1")

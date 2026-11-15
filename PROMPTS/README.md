@@ -3,7 +3,7 @@
 Standalone prompts, not installed automatically. Skyrim prompt packs live in Skyrim Forge (`docs/prompts`).
 
 For ordinary work, use the short cross-provider prompts in
-[START-AND-RESUME.md](START-AND-RESUME.md): one for a new chat, one to resume
+[START-RESUME-UPGRADE.md](START-RESUME-UPGRADE.md): one for a new chat, one to resume
 unfinished work, and one for a newer model that takes over a project and audits
 all of it. Add the actual task instead of repeating the entire installed
 operating contract.

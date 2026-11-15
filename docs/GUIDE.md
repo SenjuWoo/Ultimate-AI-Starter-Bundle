@@ -4,7 +4,7 @@
 
 Everything the front page only summarises: every install switch, how each app is
 wired, what the installer writes, the third-party inventory, and the fixes for
-known problems. The [README](README.md) is the front page; this file is the
+known problems. The [README](../README.md) is the front page; this file is the
 manual. Nothing here is repeated there on purpose.
 
 Sections
@@ -95,7 +95,7 @@ both to every provider as one capped block, so agents stop rediscovering paths.
 Nothing there is ever part of a repository. Start from the shipped template with
 `-ProfileTemplate autonomous-builder`; turn it off with `-SkipProfile`. To see
 where your own usage goes, run `python TOOLS\usage_report.py`
-([what it found here](docs/USAGE-ECONOMY.md)).
+([what it found here](USAGE-ECONOMY.md)).
 
 ### Apps and forges by name
 
@@ -126,7 +126,7 @@ frozen copy of the machine map that every profile repeats. The install replaces
 that block with a pointer to the live file (`TOOLS\hermes_memory.py --fix`, a
 backup beside each file) and leaves every other memory entry alone.
 
-See [private preferences versus public defaults](docs/OPERATOR-PROFILES.md)
+See [private preferences versus public defaults](OPERATOR-PROFILES.md)
 for evidence-based tuning without leaking machine paths or bloating context.
 
 | Mode | Behavior |
@@ -220,8 +220,8 @@ hermes -p default    # return to the small core
 
 Claude, Grok and trusted Codex projects use project-scoped registrations.
 Hermes uses named profiles; Kimi needs explicit global opt-in for optional
-servers. The [profile catalog](BUNDLED-TOOLS/PROFILES.json) and
-[Hermes policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md) describe
+servers. The [profile catalog](../BUNDLED-TOOLS/PROFILES.json) and
+[Hermes policy](../1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md) describe
 requirements. The agent must explain missing prerequisites and restart/trust
 requirements instead of pretending an installed server is callable.
 
@@ -333,7 +333,7 @@ templates and settings are preserved. A successful install applies the stale-sta
 cleanup: retired skills whose ownership receipt still matches, older-version
 leftovers, retired or dead marketplace entries, and backups past the retention limit
 (newest three per family). `-SkipCleanup` keeps everything; run
-`TOOLS\Clean-StaleState.ps1` without `-Apply` to preview. See [Windows recovery](docs/WINDOWS-RECOVERY.md)
+`TOOLS\Clean-StaleState.ps1` without `-Apply` to preview. See [Windows recovery](WINDOWS-RECOVERY.md)
 for diagnostics, validation scope and persistent GitHub setup.
 
 ### Google Antigravity (Gemini 4 Argon)
@@ -396,7 +396,7 @@ MCP; Unreal uses discovered editor/CLI tooling, with no audited MCP shipped.
 policies. Hermes has narrow `blender`, `unity`, `godot` and `web` native profiles
 when prerequisites exist; `creative` remains available for joint engine work.
 An existing chat may require reload/restart; unavailable live tools have CLI
-fallbacks. Windows desktop remains opt-in. See [task routing](docs/TASK-ROUTING.md)
+fallbacks. Windows desktop remains opt-in. See [task routing](TASK-ROUTING.md)
 for execution, ownership and runtime boundaries. No one-shot quality guarantee.
 
 ### Hermes: trim a server to the tools you use
@@ -485,7 +485,7 @@ background review are off, and `prompt_caching.cache_ttl` is 1h with
 price-first provider routing. Nothing automatic reaches GPT, Claude, Gemini
 or Grok. Compression fires at a 320,000-token
 cap on the default window, prunes oversized tool results from 80,000 tokens,
-and aborts rather than replacing context when a summary fails. [Model guidance](docs/HERMES-MODELS.md) · [Profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md). · [Architecture decisions](docs/decisions/README.md).
+and aborts rather than replacing context when a summary fails. [Model guidance](HERMES-MODELS.md) · [Profile policy](../1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md). · [Architecture decisions](decisions/README.md).
 
 ### Hermes: native web search and keyless options
 
@@ -494,7 +494,7 @@ web-search plugin. A local model can drive them, but search/extraction still
 contacts the selected external backend; model tokens and paid backends can bill.
 
 The bundle's historical keyless-ring measurements and quotas are recorded in
-the [Hermes notes](1-TAILORED-PROVIDER-TREES/Hermes/README.txt); they are not a
+the [Hermes notes](../1-TAILORED-PROVIDER-TREES/Hermes/README.txt); they are not a
 current service guarantee. Backend availability depends on installed Hermes,
 configuration and upstream quotas. Do not add a duplicate always-on web MCP
 merely because a native search call failed.
@@ -528,12 +528,12 @@ authenticate to. Never write a real secret into an `lmstudio` block.
 **Use 65,536 for the bundle's tested LM Studio setup**, then verify the saved
 model-load settings and the context actually loaded. Hermes' normal local
 floor is 64,000; a one-off load flag does not prove the saved default.
-Weights, KV cache and desktop VRAM must fit: use [the budget/settings tools](BUNDLED-TOOLS/lm-studio/README.md)
+Weights, KV cache and desktop VRAM must fit: use [the budget/settings tools](../BUNDLED-TOOLS/lm-studio/README.md)
 instead of assuming a 16 GB card can run any model at that context.
 
 Local inference stays on the selected server. Hosted auxiliary models, web
 backends or fallbacks can still send data elsewhere; a local main model alone
-does not make the entire harness local-only. [Local-model operations](_CANONICAL-SKILLS/local-model-ops/SKILL.md)
+does not make the entire harness local-only. [Local-model operations](../_CANONICAL-SKILLS/local-model-ops/SKILL.md)
 covers dynamic model IDs, load verification and performance diagnosis.
 
 **Feeding a chat front-end from the same server?** SillyTavern is happy at 32K,
@@ -718,7 +718,7 @@ tools appear -- three surprises for one double-click, so it moved behind a flag:
 
 **Current source:** one-click setup, 81 general skills plus Forge's auto-detected
 Skyrim skill pack, a small MCP core and project-specific tools. See [published packages](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest),
-[the changelog](CHANGELOG.md) and [evaluated component pins](BUNDLED-TOOLS/CATALOG.json).
+[the changelog](../CHANGELOG.md) and [evaluated component pins](../BUNDLED-TOOLS/CATALOG.json).
 
 The current candidate separates general tooling, Skyrim tooling and reverse
 engineering into independent owners. Install the recommended stack with
@@ -727,11 +727,11 @@ engineering into independent owners. Install the recommended stack with
 registered companions are detected and reused; the owner updates its existing
 tool selection. No specialist MCP is enabled globally by this selection.
 
-See the [architecture analysis](docs/COMPANION-ARCHITECTURE.md) for why the
+See the [architecture analysis](COMPANION-ARCHITECTURE.md) for why the
 repositories remain separate, the tool ownership boundaries and update policy.
 `-NoToolUpdates` preserves installed compiler/companion versions;
 `-Mode BundledOnly` blocks uncached prerequisite downloads. Project pins,
-personal source edits and settings remain protected. See [validation](VALIDATION.md)
+personal source edits and settings remain protected. See [validation](../VALIDATION.md)
 for measured coverage and remaining runtime gaps.
 
 Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tools and its specialist skill pack; use [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) for reverse-engineering tools and REA. All three release independently: the bundle installs each companion's latest release, so a companion release never needs a bundle release. See [who owns what](#ownership). Disabling bundle integration leaves independently owned specialist content intact.
@@ -759,24 +759,24 @@ The bundle installs the common compiler suite by default: Go, Rust/Cargo, GCC, C
 ### Universal Modder without extra background servers
 
 Optional reverse-engineering analysis uses the
-[REA / Reverse THIS! guide](_CANONICAL-SKILLS/tool-discovery/references/reverse-engineering.md)
+[REA / Reverse THIS! guide](../_CANONICAL-SKILLS/tool-discovery/references/reverse-engineering.md)
 and the `reverse-engineering` task recipe. REA is CLI-first, not another global
 170-tool MCP or duplicate tool-suite installer. Existing modding specialists
 and your discovered Reverse THIS! shims remain the implementation tools.
 
-Use the [start, resume and upgrade-audit prompts](PROMPTS/START-AND-RESUME.md) once per chat.
-[CodeBurn recommendations](_CANONICAL-SKILLS/codeburn/references/recommendations.md)
+Use the [start, resume and upgrade-audit prompts](../PROMPTS/START-RESUME-UPGRADE.md) once per chat.
+[CodeBurn recommendations](../_CANONICAL-SKILLS/codeburn/references/recommendations.md)
 are evidence candidates, not automatic deletion or guaranteed usage savings.
 
 The default installer provides `um` plus the same `universal-modder` skill to all six providers. Its twelve upstream guides are on-demand references, not twelve additional skill-index entries. `um comfy` adds key-free local ComfyUI image generation. Use `um --version`, `um scan "<verified game folder>" --json`, or the relevant subcommand's `--help`. The packaged knowledge base works offline; its examples must be rechecked against your actual game. Existing engine/Skyrim skills remain the implementation specialists.
 
 The bundle does not install the upstream fal MCP or its session hooks. Paid fal generation is optional and needs the user's own setup. Video requires an installed FFmpeg; 3D-to-sprite rendering requires Blender. Core carries vendored source; Full-Offline also carries the wheel. Python/runtime and dependency setup can still need network access when they are not already cached.
 
-See [shared build tools and project dependencies](_CANONICAL-SKILLS/tool-discovery/references/build-tools.md) for Xmake and the supplied Nx/Turbo/Vite/webpack routes. The bundle provisions shared tools; project package managers retain dependency pins. CLibDT and CommonLib development guidance belong to Forge.
+See [shared build tools and project dependencies](../_CANONICAL-SKILLS/tool-discovery/references/build-tools.md) for Xmake and the supplied Nx/Turbo/Vite/webpack routes. The bundle provisions shared tools; project package managers retain dependency pins. CLibDT and CommonLib development guidance belong to Forge.
 
 ### Creating a complete GitHub project
 
-"Make a repo" now routes the existing `coding-discipline` and `one-shot-completion` skills to the [repository completion contract](_CANONICAL-SKILLS/github-fleet-maintenance/references/repository-completion.md). It covers real CI, applicable CodeQL/code scanning, Dependabot alerts/security updates/version updates, secret scanning/push protection, vulnerability reporting, a useful README, and usable release assets. The AI must verify server-side settings separately from files and verify published downloads against its build. Public release approval is reused when already given; otherwise the release is prepared before asking. Explicit empty-repo requests stay empty. This adds no MCP server or skill-index entry.
+"Make a repo" now routes the existing `coding-discipline` and `one-shot-completion` skills to the [repository completion contract](../_CANONICAL-SKILLS/github-fleet-maintenance/references/repository-completion.md). It covers real CI, applicable CodeQL/code scanning, Dependabot alerts/security updates/version updates, secret scanning/push protection, vulnerability reporting, a useful README, and usable release assets. The AI must verify server-side settings separately from files and verify published downloads against its build. Public release approval is reused when already given; otherwise the release is prepared before asking. Explicit empty-repo requests stay empty. This adds no MCP server or skill-index entry.
 
 ### Skyrim Forge
 
@@ -802,7 +802,7 @@ Skyrim-specific third-party tools are discovered, imported or documented by
 Forge according to their actual capabilities and distribution rights. A tool
 catalog does not imply every GUI tool can run headlessly or be redistributed.
 See Forge's local-tool coverage and standalone setup guides. The
-[architecture analysis](docs/COMPANION-ARCHITECTURE.md) explains how Forge,
+[architecture analysis](COMPANION-ARCHITECTURE.md) explains how Forge,
 Reverse THIS! and the bundle remain independent while sharing installed tools.
 
 ## Update tools later
@@ -899,13 +899,13 @@ START-HERE.txt                     short human guide
 
 ## Docs
 
-- [Quick start](START-HERE.txt) and [AIO guide](AIO-GUIDE.md)
-- [Component catalog](BUNDLED-TOOLS/CATALOG.json), [capability profiles](BUNDLED-TOOLS/PROFILES.json) and [tool evaluations](docs/TOOL-EVALUATIONS.md)
-- [Hermes model review](docs/HERMES-MODELS.md) and [native profile policy](1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md)
-- [LM Studio settings and VRAM budgeting](BUNDLED-TOOLS/lm-studio/README.md)
+- [Quick start](../START-HERE.txt) and [AIO guide](../AIO-GUIDE.md)
+- [Component catalog](../BUNDLED-TOOLS/CATALOG.json), [capability profiles](../BUNDLED-TOOLS/PROFILES.json) and [tool evaluations](TOOL-EVALUATIONS.md)
+- [Hermes model review](HERMES-MODELS.md) and [native profile policy](../1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md)
+- [LM Studio settings and VRAM budgeting](../BUNDLED-TOOLS/lm-studio/README.md)
 - Skyrim assistant/task selection and prompt packs: [Skyrim Forge docs](https://github.com/SenjuWoo/SkyrimForge/tree/main/docs)
-- [Tool notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) and [skill notices](_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md)
-- [Changelog](CHANGELOG.md), [historical notes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/) and [latest published package](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest)
+- [Tool notices](../BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) and [skill notices](../_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md)
+- [Changelog](../CHANGELOG.md), [historical notes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/) and [latest published package](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest)
 
 Historical notes describe their release, not the current installation policy.
 
@@ -919,7 +919,7 @@ If a tool is missing, the AI should recommend `INSTALL-AIO.ps1`, `TOOLS/Ensure-T
 
 This list includes redistributed code, fetched packages and catalog-only candidates.
 **A listing does not mean installed or connected.** Evaluated versions, source
-commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.json).
+commits and compatibility holds belong in [CATALOG.json](../BUNDLED-TOOLS/CATALOG.json).
 
 | Catalog ID | Upstream project | Integration |
 |---|---|---|
@@ -958,7 +958,7 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | CLI-Anything | [HKUDS/CLI-Anything](https://github.com/HKUDS/CLI-Anything) | Companion hub of per-app agent CLIs (Blender, FreeCAD, GIMP, Audacity, Godot, ComfyUI, browsers...). `pip install cli-anything-hub`, install the harnesses you need. Apache-2.0; v0.4.0 checked 2026-10-16. Not redistributed or installed by the pack. |
 | anti-slop | [miqdadbadjuber/anti-slop](https://github.com/miqdadbadjuber/anti-slop) | MIT rules filter against generic AI UI, filler copy and AI-shaped code (`rules/antislop.md` plus a CLI). Overlaps the bundled `impeccable` and `humanizer` skills; use it as an extra filter. v3.2.21 checked 2026-10-16. |
 | jevgrep | [dzhng/jevgrep](https://github.com/dzhng/jevgrep) | Hosted code-search CLI (`jg`) that answers repo questions through Jev and returns files plus verbatim excerpts; needs its own account. The bundled `codebase-memory-mcp` already answers that class of question locally. 0.8.0 checked 2026-10-16. |
-| Caveman | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | Voice/input compression with its own multi-agent installer and an optional routing layer. **Conflicts with this bundle's wiring**: its installer writes the same `SOUL.md` / `AGENTS.md` / skills / hooks / `settings.json` files this pack owns, and its routing layers repoint `ANTHROPIC_BASE_URL`. Evaluated 4.0.1 (Apache-2.0) 2026-10-16 — documented, not installed; see [evaluations](docs/TOOL-EVALUATIONS.md). |
+| Caveman | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | Voice/input compression with its own multi-agent installer and an optional routing layer. **Conflicts with this bundle's wiring**: its installer writes the same `SOUL.md` / `AGENTS.md` / skills / hooks / `settings.json` files this pack owns, and its routing layers repoint `ANTHROPIC_BASE_URL`. Evaluated 4.0.1 (Apache-2.0) 2026-10-16 — documented, not installed; see [evaluations](TOOL-EVALUATIONS.md). |
 | OmniRoute | [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute) | Local free-tier gateway for CLI agents (`localhost:20128/v1`, 13 `setup-*` commands, RTK + Caveman compression inside). **Conflicts with this bundle's invariants**: it takes over provider endpoints and depends on stacked third-party free tiers, which the bundled `token-efficiency` skill rules out as a default. Evaluated 3.8.51 (MIT) 2026-10-16 — documented, not installed. |
 
 Additional canonical payloads without separate tool-catalog entries:
@@ -971,8 +971,8 @@ Additional canonical payloads without separate tool-catalog entries:
 
 Skyrim Forge is the bundle author's product, released from
 [SenjuWoo/SkyrimForge](https://github.com/SenjuWoo/SkyrimForge); the installer takes its latest release, verified by digest.
-[Tool notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) and
-[skill notices](_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md) retain licenses,
+[Tool notices](../BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) and
+[skill notices](../_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md) retain licenses,
 credits and adaptation notes. The pack's MIT license does not relicense these
 projects. Preserve upstream attribution when redistributing.
 
@@ -987,7 +987,7 @@ same commit (`python TOOLS/generate_manifest.py`), or the repository gate fails.
 `.gitattributes` sets `* -text`, so git stores bytes exactly as built: pushed
 bytes are the bytes that were hashed. Do not normalise line endings on the way in.
 
-[ci-convergence](_CANONICAL-SKILLS/ci-convergence/SKILL.md) owns the lifecycle.
+[ci-convergence](../_CANONICAL-SKILLS/ci-convergence/SKILL.md) owns the lifecycle.
 The maintainer pushes to `main` after the local gate (`TESTS/Test-Pack.ps1`); CI
 runs on that exact SHA, and `release.yml` publishes when `VERSION.txt` names a
 version with no tag yet: it waits for every other check, builds twice, requires
@@ -1012,10 +1012,10 @@ tools require a supported LTS release, with 22.12 as the minimum where required;
 the local audit used Node 24.22.1. New upstream runtimes are not certified merely
 because an installer can discover them. See the [Node release schedule](https://nodejs.org/en/about/previous-releases).
 
-[CHANGELOG.md](CHANGELOG.md) is the release history. Detailed measurements and
+[CHANGELOG.md](../CHANGELOG.md) is the release history. Detailed measurements and
 old decisions live in [docs/history/](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/), not a second README changelog.
 
-Workflow audit of 2026-10-22: [findings, fixes and evidence](docs/AUDIT-2026-10-22.md).
+Workflow audit of 2026-10-22: [findings, fixes and evidence](AUDIT-2026-10-22.md).
 
 ### One workflow per task
 
