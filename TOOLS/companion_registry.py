@@ -49,11 +49,73 @@ class RegistryError(ValueError):
     pass
 
 
-def load(path=REGISTRY):
+# A forge describes itself: this file in its root carries its own registry entry
+# ({"schema": 1, "id": "<id>", "entry": {...}}), so a new forge, or a new doctor or
+# launcher in an existing one, needs no bundle release. `--print-manifest ID`
+# prints the bundled row in this shape for an owner to adopt.
+MANIFEST = "uabs-companion.json"
+
+
+def load(path=REGISTRY, local=None):
+    """The bundled registry, plus the manifests of forges found on this machine.
+
+    `local` defaults to on for the shipped registry and off for any other file.
+    UABS_NO_LOCAL_COMPANIONS=1 turns it off.
+    """
     with open(path, encoding="utf-8") as fh:
         data = json.load(fh)
     validate(data)
-    return data
+    if local is None:
+        local = (os.path.abspath(path) == os.path.abspath(REGISTRY)
+                 and os.environ.get("UABS_NO_LOCAL_COMPANIONS") != "1")
+    return merge_local(data) if local else data
+
+
+def merge_local(data, search_roots=None, directories=None):
+    """A copy of `data` with every valid self-registered forge merged in.
+
+    The same trust rules as a bundled row apply, and three more: the manifest sits
+    in a folder named after its own repository, it cannot claim an id that the
+    bundle gives to another repository, and it cannot reuse a command name. A
+    manifest that fails is listed in `local_skipped` and nothing else changes.
+    """
+    merged = json.loads(json.dumps(data))
+    merged["self_registered"], merged["local_skipped"] = {}, []
+    if directories is None:
+        directories = directory_index(roots() if search_roots is None else search_roots)
+    found = {}
+    for folder in directories:
+        path = os.path.join(folder, MANIFEST)
+        if not os.path.isfile(path):
+            continue
+        try:
+            with open(path, encoding="utf-8-sig") as fh:
+                doc = json.load(fh)
+            cid, entry = doc.get("id"), doc.get("entry")
+            if doc.get("schema") != 1 or not isinstance(entry, dict):
+                raise RegistryError("needs schema 1 and an entry object")
+            if not isinstance(cid, str) or not re.fullmatch(r"[a-z0-9][a-z0-9-]{1,39}", cid):
+                raise RegistryError("id %r is not a plain lower-case name" % (cid,))
+            trial = json.loads(json.dumps(merged))
+            trial.pop("self_registered"), trial.pop("local_skipped")
+            bundled = trial["companions"].get(cid)
+            trial["companions"][cid] = entry
+            validate(trial)
+            if bundled and bundled["repo"].rstrip("/").lower() != entry["repo"].rstrip("/").lower():
+                raise RegistryError("id %r belongs to %s" % (cid, bundled["repo"]))
+            if _folder_key(os.path.basename(folder.rstrip("\\/"))) not in owner_names(entry):
+                raise RegistryError("the folder is not named after %s" % entry["repo"])
+        except (OSError, ValueError, AttributeError, TypeError) as exc:
+            merged["local_skipped"].append("%s: %s" % (path, exc))
+            continue
+        found.setdefault(cid, []).append((folder, entry))
+    for cid, rows in sorted(found.items()):
+        # A checkout and the runtime it installed can both carry the manifest;
+        # the runtime is the copy in use (the same choice discover() makes).
+        folder = _pick([row[0] for row in rows]) or rows[0][0]
+        merged["companions"][cid] = next(entry for path, entry in rows if path == folder)
+        merged["self_registered"][cid] = folder
+    return merged
 
 
 def _repo_parts(repo):
@@ -259,8 +321,19 @@ def _subdirs(root, depth=3):
         level = nxt
 
 
+_INDEX_CACHE = {}
+
+
 def directory_index(search_roots):
     """One bounded inventory per report, shared by every companion lookup."""
+    # load() and status() ask for the same roots within one process; walk once.
+    key = tuple(os.path.normcase(os.path.abspath(root)) for root in search_roots)
+    if key not in _INDEX_CACHE:
+        _INDEX_CACHE[key] = _directory_index(search_roots)
+    return list(_INDEX_CACHE[key])
+
+
+def _directory_index(search_roots):
     seen, result = set(), []
     for root in search_roots:
         for candidate in _with_root(root):
@@ -413,6 +486,8 @@ def main(argv=None):
     ap.add_argument("--json", action="store_true", help="machine-readable output")
     ap.add_argument("--roots", action="append", default=[], help="extra directory to search")
     ap.add_argument("--print-doctor", metavar="ID", help="show the owner's own doctor command")
+    ap.add_argument("--print-manifest", metavar="ID",
+                    help="print this owner's entry as a %s for its own repository" % MANIFEST)
     args = ap.parse_args(argv)
 
     try:
@@ -420,6 +495,14 @@ def main(argv=None):
     except (OSError, RegistryError) as exc:
         print("registry invalid: %s" % exc)
         return 2
+
+    if args.print_manifest:
+        entry = data["companions"].get(args.print_manifest)
+        if not entry:
+            print("unknown companion %r" % args.print_manifest)
+            return 2
+        print(json.dumps({"schema": 1, "id": args.print_manifest, "entry": entry}, indent=1))
+        return 0
 
     if args.print_doctor:
         entry = data["companions"].get(args.print_doctor)
@@ -444,10 +527,15 @@ def main(argv=None):
         print(json.dumps({"companions": report,
                           "recommended": rec}, indent=1))
         return 0
+    own = data.get("self_registered") or {}
     for cid, row in report.items():
         print("%-16s %-10s %s" % (cid, row["state"], row["path"] or row["repo"]))
         if row["source_path"] and row["source_path"] != row["path"]:
             print("%-16s %-10s %s" % ("", "source", row["source_path"]))
+        if cid in own:
+            print("%-16s %-10s %s" % ("", "manifest", os.path.join(own[cid], MANIFEST)))
+    for line in data.get("local_skipped") or []:
+        print("%-16s %-10s %s" % ("", "skipped", line))
     if rec:
         print()
         for rid, row in rec.items():

@@ -1,6 +1,6 @@
 ---
 name: ai-tooling-stack
-description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Cyberpunk 2077, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, ReSkate, VRChat avatars, reverse engineering, asset production and voice/sound effects (AssetForge), ComfyUI images and music (comfy-forge), Koikatsu/Honey Select 2 cards (illusion-forge) and Castle Crashers characters (PBP Studio), and the standard a new or upgraded forge must meet. Discover installs before installing.
+description: Which tool or owner forge to use for a task - general AI, compiler and workspace tools, plus the forges for Skyrim, Cyberpunk 2077, Marvel Rivals, Risk of Rain 2, Roblox, Minecraft, RimWorld, Saints Row, ReSkate, VRChat avatars, reverse engineering, asset production and voice/sound effects (AssetForge), ComfyUI images and music (comfy-forge), Koikatsu/Honey Select 2 cards (illusion-forge) and Castle Crashers characters (PBP Studio), and the standard a new or upgraded forge must meet. Discover installs before installing.
 metadata:
   version: 7.7.0
 ---
@@ -35,6 +35,7 @@ the bundle keeps no second copy. If the forge is absent, say which repository ow
 | Skyrim RaceMenu face from a photo / follower without the Creation Kit | `FaceForge` / `FollowerForge` | release download | the user's install |
 | Risk of Rain 2 survivors, items, Thunderstore packages | `Risk-Of-Rain-2-Forge` | `forge.cmd doctor`, `forge guide`; skill `ror2-forge` | `ROR2_FORGE_ROOT` if set, else `UABS_TOOL_ROOTS` |
 | Cyberpunk 2077 mods: redscript, CET Lua, TweakXL, ArchiveXL, RED4ext, Input Loader, Mod Settings, Audioware, REDmod, WolvenKit archives, new drivable cars and bikes, conflicts, patch API diffs, Nexus releases | `Cyberpunk-Forge` | `cpforge doctor`, then `cpforge plan "<task>"`; cars and bikes start at `cpforge knowledge vehicles`; skill `cyberpunk-forge`; needs your Cyberpunk 2077 install (REDmod DLC recommended); archive builds use the WolvenKit CLI from the Reverse THIS kit through `WOLVENKIT_CLI` (`app_paths.py --fix` sets it) | `CYBERPUNK_FORGE_ROOT` if set, else `UABS_TOOL_ROOTS` |
+| Marvel Rivals skin mods: recolors, retextures, material tints and glow, mesh edits (Blender + UE 5.3.2) | `MarvelRivals-Forge` | `mrforge doctor`, then `mrforge plan "<task>"`; skill `marvelrivals-forge` (`Install.ps1 -Skills`); needs your Marvel Rivals install with the ASI loader | `UABS_TOOL_ROOTS` |
 | Roblox games, Luau, Studio | `RobloxForge` | `Install.ps1` (installs `roblox-game-development` and `roblox-docs` into your agents), `rbforge doctor`, `rbforge docs search` | `ROBLOX_FORGE_ROOT` |
 | Minecraft Java on NeoForge | `Minecraft-Forge` | `Minecraft-Forge.ps1 doctor` (or `python -m mcforge doctor` in its folder); read its `AGENTS.md`, no global install | `UABS_TOOL_ROOTS` |
 | RimWorld 1.6 | `RimWorldForge` | `START-HERE.bat`, `rwforge doctor`, `rwforge capabilities`; skill `rimworld-forge` | `UABS_TOOL_ROOTS` |
@@ -52,6 +53,15 @@ routing, evidence tiers, reproducible release). Read it before designing the for
 
 Minecraft Fabric/Quilt and other loaders have no forge: use their official docs (docs.fabricmc.net,
 quiltmc.org) and `game-modding`'s laws. A game with no forge uses `game-modding`.
+
+A row can lag its forge. The installed forge is current: its own skill, `doctor`, `capabilities` and `guide`
+win over this table, and a forge that ships `uabs-companion.json` is detected, launchable and doctored with no
+row here at all (`python TOOLS\companion_registry.py --verify` lists every owner on this PC).
+
+A defect in a forge you are only using is its owner's to fix. Record it and carry on with a workaround:
+`python TOOLS\field_report.py <owner-id> --title "<what failed>" --command "<cmd>" --expected ... --actual ...`
+writes `FIELD-REPORTS.md` in that forge's source folder. Working as the forge's own maintainer, read that file
+first and delete each entry you fix.
 
 An installed forge answers by name from any folder (`assetforge`, `skyrim-forge`, `ror2-forge`, `re-triage`,
 `comfy-dataset`, ...): the `Owner forge commands` line of `MACHINE-MAP.md` lists the ones on this PC, and

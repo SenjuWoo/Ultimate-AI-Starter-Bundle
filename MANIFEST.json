@@ -41,8 +41,8 @@
  },
  {
   "path": ".github/workflows/ci.yml",
-  "size": 14906,
-  "sha256": "ff4d4b851c78fd35b54fd824c4e53075a0f799d7c7d894a9afd4e1dc58269e83"
+  "size": 15010,
+  "sha256": "2a7eb26da97e5bd1f7ed7838331f17661cd156475dc1aa4d30c8d7ffa6d56b62"
  },
  {
   "path": ".github/workflows/dependabot-auto-merge.yml",
@@ -66,8 +66,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Compact.md",
-  "size": 7055,
-  "sha256": "9e3ad45ce986323834fff7e5139b4eb80ed3f6e22cacbe65f2c63d779c0e7d59"
+  "size": 7228,
+  "sha256": "5c13a41dc9eb9482e499251271c219305ca90dfffe0865e427767a2185210ab5"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web Light.md",
@@ -81,8 +81,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 19404,
-  "sha256": "3ee20340302cf08f63a2e95cc2c5f3bd25192ce93d6170e60eb3e5d7504d3a43"
+  "size": 19725,
+  "sha256": "7c403bf6fad0cca682f4dc2fe9326564a142f951f97beabb7b7bf9024aa85d32"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/CLAUDE-CODE-ADDENDUM.md",
@@ -201,13 +201,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7835,
-  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
+  "size": 8836,
+  "sha256": "370354ed1fc20fff4d900e3082d42a389a08b1e2e9745e4c0925aa2177d1ade9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
-  "size": 6481,
-  "sha256": "016fb513a8ef6c81226adb236ee5deb9d460d69d0c01dd0b75e62dab22d35205"
+  "size": 7318,
+  "sha256": "fde6e7a962296036ad51568fd6599d6d8abae4b585655ea3c570058512b455aa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -3216,13 +3216,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7835,
-  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
+  "size": 8836,
+  "sha256": "370354ed1fc20fff4d900e3082d42a389a08b1e2e9745e4c0925aa2177d1ade9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
-  "size": 6481,
-  "sha256": "016fb513a8ef6c81226adb236ee5deb9d460d69d0c01dd0b75e62dab22d35205"
+  "size": 7318,
+  "sha256": "fde6e7a962296036ad51568fd6599d6d8abae4b585655ea3c570058512b455aa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -6291,13 +6291,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7835,
-  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
+  "size": 8836,
+  "sha256": "370354ed1fc20fff4d900e3082d42a389a08b1e2e9745e4c0925aa2177d1ade9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
-  "size": 6481,
-  "sha256": "016fb513a8ef6c81226adb236ee5deb9d460d69d0c01dd0b75e62dab22d35205"
+  "size": 7318,
+  "sha256": "fde6e7a962296036ad51568fd6599d6d8abae4b585655ea3c570058512b455aa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -9356,13 +9356,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7835,
-  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
+  "size": 8836,
+  "sha256": "370354ed1fc20fff4d900e3082d42a389a08b1e2e9745e4c0925aa2177d1ade9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
-  "size": 6481,
-  "sha256": "016fb513a8ef6c81226adb236ee5deb9d460d69d0c01dd0b75e62dab22d35205"
+  "size": 7318,
+  "sha256": "fde6e7a962296036ad51568fd6599d6d8abae4b585655ea3c570058512b455aa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -12421,13 +12421,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7835,
-  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
+  "size": 8836,
+  "sha256": "370354ed1fc20fff4d900e3082d42a389a08b1e2e9745e4c0925aa2177d1ade9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
-  "size": 6481,
-  "sha256": "016fb513a8ef6c81226adb236ee5deb9d460d69d0c01dd0b75e62dab22d35205"
+  "size": 7318,
+  "sha256": "fde6e7a962296036ad51568fd6599d6d8abae4b585655ea3c570058512b455aa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -15561,13 +15561,13 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/SKILL.md",
-  "size": 7835,
-  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
+  "size": 8836,
+  "sha256": "370354ed1fc20fff4d900e3082d42a389a08b1e2e9745e4c0925aa2177d1ade9"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/ai-tooling-stack/references/forge-standard.md",
-  "size": 6481,
-  "sha256": "016fb513a8ef6c81226adb236ee5deb9d460d69d0c01dd0b75e62dab22d35205"
+  "size": 7318,
+  "sha256": "fde6e7a962296036ad51568fd6599d6d8abae4b585655ea3c570058512b455aa"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-SKILLS-DIRECTORY/skills/bethesda-creation-modding/SKILL.md",
@@ -18805,6 +18805,11 @@
   "sha256": "603e7e252e217ef27872af04cb83aa971e9ca363dffa7f1a16a4404b12ccffef"
  },
  {
+  "path": "3-PREAMBLES/history/AIO-INSTRUCTION-f951da9e5409.md",
+  "size": 19404,
+  "sha256": "3ee20340302cf08f63a2e95cc2c5f3bd25192ce93d6170e60eb3e5d7504d3a43"
+ },
+ {
   "path": "3-PREAMBLES/history/SOUL-004c33852184.md",
   "size": 2227,
   "sha256": "a9de1c9fde00ca212f481ff7d7fe2fdb7f32e999f72734e3ce80245247bc5e76"
@@ -18882,17 +18887,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66558,
-  "sha256": "ee25a81050ed0d8ce22f1c369c9b138fae0ae1b93dbfb3b27830c7f02f8f7f50"
+  "sha256": "70e4cf70871763095ada17a85fdf60a89b989e0334ed3582a3c6fd4d33529d58"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
-  "size": 22381,
-  "sha256": "57494bc22d432113dca105ef980a9ffa3d7508bb397b2d40d03e08788704170d"
+  "size": 24191,
+  "sha256": "597e7cfe64cacd44e8ceae2ccbc87bb1ef8c0202a322e0c66ff89a550b186655"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "49b1ee6a4d439cb0c474015fadbf815c35f293a9d246250d47dad2a8e54a60b9"
+  "sha256": "6508ea5a6955adbefbcf56c3772a3a916bf38bff2cd1275e8035c1fcc93717d0"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -18902,7 +18907,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "06ab4e3395ae9e127db685bda205865f08841ea26a49b2518b08ca8fb9710a0a"
+  "sha256": "c42f819bbe9cc93edfde096d848dd89233f9ce4fb25a830dda4b7195bb693f9f"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -23346,8 +23351,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 374162,
-  "sha256": "278e6f0dea93a15e4bcfb47362635a59a5dadfc6a9fe0523219aefe9229034ba"
+  "size": 376472,
+  "sha256": "eed0f29e81e105774d6ae4aecce2e5e82a5e56df444e31e15bda7ec31d974e3e"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23366,8 +23371,8 @@
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt",
-  "size": 19404,
-  "sha256": "3ee20340302cf08f63a2e95cc2c5f3bd25192ce93d6170e60eb3e5d7504d3a43"
+  "size": 19725,
+  "sha256": "7c403bf6fad0cca682f4dc2fe9326564a142f951f97beabb7b7bf9024aa85d32"
  },
  {
   "path": "COPY-TO-YOUR-WORKSPACE/CLAUDE.md",
@@ -23466,8 +23471,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 64721,
-  "sha256": "6fed46c90999586333a621671b7df62a38231d1ef3d1a29dbbd3c76d9931328f"
+  "size": 65669,
+  "sha256": "feb423a8c180a843b7617dacf76b41357fd1d6bb64eedb69ad0e2a7500d552e9"
  },
  {
   "path": "OFFICIAL-PATH-AUDIT.txt",
@@ -23491,8 +23496,8 @@
  },
  {
   "path": "README.md",
-  "size": 16410,
-  "sha256": "c78c3b390f6fc7f253d5fa0a5645a577202175288445c30bdbd5cba521f17721"
+  "size": 16907,
+  "sha256": "10e4f80d9083f1af73061ec5dfb5a72db4506e6b82a6300618b823de4b5a7509"
  },
  {
   "path": "SECURITY.md",
@@ -23502,17 +23507,17 @@
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "d658d636ebfe1818910d424d28bdd1775ed9f16338ddc67308339dffed181d33"
+  "sha256": "2f54c8ce682615628f5ab5917d7827d109f8c24ea6a837379468842028f2ed26"
  },
  {
   "path": "START-HERE.txt",
   "size": 4104,
-  "sha256": "3db3ebc1b203c0601893fc997242c0fe170b59d2288b31e77057f57ac778ed8e"
+  "sha256": "db291b487442bc1431cdbc9f841fac27cf3a0c15715c84daa4b215cc3fad13a8"
  },
  {
   "path": "STATE.md",
-  "size": 4670,
-  "sha256": "886152d5035f1086482321f3474f3180d254c269d9a4c93265a396f547aeb9a3"
+  "size": 4958,
+  "sha256": "a572447af146ef4921f20d1aae3e5a44d3385c4811d02c2f94db17b295ec3857"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -23931,8 +23936,13 @@
  },
  {
   "path": "TESTS/test_companion_registry.py",
-  "size": 16587,
-  "sha256": "4714f496eec85fbe634b2cf34721efa9c65b2933857df0073209d84c7c26164e"
+  "size": 21844,
+  "sha256": "6269f28d61b2c591bebee33f999e8810396f86f50d041a0e092ce95a36a9e894"
+ },
+ {
+  "path": "TESTS/test_field_report.py",
+  "size": 5045,
+  "sha256": "95445130213ddeff3bc58ba2e37fe8dd0fb5db1529ff2410b8c3947b4ab5c120"
  },
  {
   "path": "TESTS/test_free_game_tools.py",
@@ -24027,7 +24037,7 @@
  {
   "path": "TESTS/test_release_contract.py",
   "size": 386893,
-  "sha256": "519e3269fc9eda00e88c1356f123dc6d4d1589fb6a2f8948f789267d28da29fc"
+  "sha256": "e32cc1be8a71ad529cb82f70855016b43bc52ba9f00b3418b83329eecb967764"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -24401,8 +24411,8 @@
  },
  {
   "path": "TOOLS/companion_registry.py",
-  "size": 21770,
-  "sha256": "3d6c82c65a7301abad35d2a2e011ed7317c44b17436c8a71127f93382b33b988"
+  "size": 26253,
+  "sha256": "fe66e18aea2da23fb1a18bddb3f4bdad4899ca8f0a16eddfcff667da55bba671"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -24413,6 +24423,11 @@
   "path": "TOOLS/fanout_providers.py",
   "size": 6756,
   "sha256": "97578ffbe6070bd8c92434a517975f0007ab396522aecf97559e373b74818c74"
+ },
+ {
+  "path": "TOOLS/field_report.py",
+  "size": 8079,
+  "sha256": "8ca6367c29e2fcac57ab509963fc8ba3960146ca1c865efcdf7b2cfda873c0fe"
  },
  {
   "path": "TOOLS/free_game_tools.py",
@@ -24551,8 +24566,8 @@
  },
  {
   "path": "TOOLS/release_gate.py",
-  "size": 7832,
-  "sha256": "b0c7ea98674f527a5874c36940f2601106020364fbf5d8020376e881ff913569"
+  "size": 7896,
+  "sha256": "1ffb873d75f4b8bf2638943969b46d91e7478096b4b8d44642afbddfb32c4db1"
  },
  {
   "path": "TOOLS/release_provenance.py",
@@ -24637,7 +24652,7 @@
  {
   "path": "VALIDATION.json",
   "size": 2637,
-  "sha256": "09e13c579aba4dc3122c2899a10c5a451b9cfdb324af012758b3d01ff6c1417f"
+  "sha256": "306c459e1ebf521e90e15a0081f92b56a7503a1cb83c94468d7ca00f09e1677f"
  },
  {
   "path": "VALIDATION.md",
@@ -24647,7 +24662,7 @@
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "b3ecb6c61de3d916bf46f8625af1faabf5befc7738a85f0a7615518d06624a94"
+  "sha256": "ce0a2fd98438c68f867e6c4aad12afbad76c987b6285f3554e2dd77451bf0403"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -24676,13 +24691,13 @@
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/SKILL.md",
-  "size": 7835,
-  "sha256": "4c574ed374739f8055e7c81f9e84c1098eb60f9e65e03ccbe6da225d3292cb35"
+  "size": 8836,
+  "sha256": "370354ed1fc20fff4d900e3082d42a389a08b1e2e9745e4c0925aa2177d1ade9"
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/references/forge-standard.md",
-  "size": 6481,
-  "sha256": "016fb513a8ef6c81226adb236ee5deb9d460d69d0c01dd0b75e62dab22d35205"
+  "size": 7318,
+  "sha256": "fde6e7a962296036ad51568fd6599d6d8abae4b585655ea3c570058512b455aa"
  },
  {
   "path": "_CANONICAL-SKILLS/bethesda-creation-modding/SKILL.md",
@@ -28933,6 +28948,11 @@
   "path": "docs/history/V8.51.1-CHANGELOG.md",
   "size": 1929,
   "sha256": "9224e1837273c55d8edc87e8100bc7df682d2090a68e8fe1ce3e7c5333eddbc7"
+ },
+ {
+  "path": "docs/history/V8.52.0-CHANGELOG.md",
+  "size": 2275,
+  "sha256": "2dcd7606b719f973d6c5711e044554ec70895be1b8ad37c636bfab47a110c407"
  },
  {
   "path": "docs/history/V8.6.0-CHANGELOG.md",

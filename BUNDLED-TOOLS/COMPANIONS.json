@@ -235,6 +235,54 @@
         }
       ]
     },
+    "marvelrivals-forge": {
+      "title": "MarvelRivals-Forge",
+      "repo": "https://github.com/SenjuWoo/MarvelRivals-Forge",
+      "install": {
+        "kind": "release_zip",
+        "asset": "MarvelRivals-Forge-*.zip",
+        "entrypoint": "START-HERE.bat"
+      },
+      "update": {
+        "entrypoint": null,
+        "note": "update the checkout (git pull or a newer release ZIP), then run Install.ps1 again; .mrforge and projects are kept"
+      },
+      "doctor": {
+        "entrypoint": [
+          "python",
+          "-m",
+          "mrforge",
+          "doctor"
+        ]
+      },
+      "markers": [
+        "mrforge.cmd",
+        "src/mrforge"
+      ],
+      "capabilities": {
+        "cli": "mrforge",
+        "mcp": false,
+        "skills": [
+          "marvelrivals-forge"
+        ],
+        "gui": false
+      },
+      "requires": [
+        "python 3.10+",
+        "Marvel Rivals (Steam) with the ASI loader and UTOC signature bypass",
+        "Blender 4.2+ and Unreal Engine 5.3.2 for the mesh route only"
+      ],
+      "platforms": [
+        "windows"
+      ],
+      "notes": "Makes, checks, packages and deploys Marvel Rivals skin mods: texture recolors and retextures, material tints and glow, and mesh edits through Blender and Unreal Engine 5.3.2. Every command prints one JSON object. Facts come from the installed game build; it writes to the game folder only through mrforge deploy, into its own ZZZ-mrforge-<id> folder. Install.ps1 creates .venv in the checkout and puts mrforge on the user PATH; Install.ps1 -Skills copies the marvelrivals-forge skill. Start with mrforge doctor, then mrforge plan \"<task>\".",
+      "launch": [
+        {
+          "name": "mrforge",
+          "launcher": "mrforge.cmd"
+        }
+      ]
+    },
     "minecraft-forge": {
       "title": "Minecraft Forge",
       "repo": "https://github.com/SenjuWoo/Minecraft-Forge",

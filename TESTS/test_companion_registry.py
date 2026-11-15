@@ -359,6 +359,109 @@ def test_a_github_download_zip_folder_is_still_the_owner():
         assert found["pack"]["state"] == "MARKERS_FOUND", found
 
 
+def _forge(tmp, folder="Demo-Forge", manifest=None, git=False):
+    root = os.path.join(tmp, folder)
+    os.makedirs(os.path.join(root, "src"))
+    open(os.path.join(root, "demo.cmd"), "w").close()
+    if git:
+        os.makedirs(os.path.join(root, ".git"))
+    if manifest is not None:
+        with open(os.path.join(root, reg.MANIFEST), "w", encoding="utf-8") as fh:
+            json.dump(manifest, fh)
+    return root
+
+
+def _manifest(**over):
+    entry = {"title": "Demo Forge", "repo": "https://github.com/SenjuWoo/Demo-Forge",
+             "install": {"kind": "source_only", "asset": None, "entrypoint": "Install.ps1"},
+             "markers": ["demo.cmd", "src"], "platforms": ["windows"],
+             "doctor": {"entrypoint": ["python", "-m", "demoforge", "doctor"]},
+             "launch": [{"name": "demoforge", "launcher": "demo.cmd"}]}
+    entry.update(over)
+    return {"schema": 1, "id": "demo-forge", "entry": entry}
+
+
+def test_a_forge_registers_itself_without_a_bundle_release():
+    """A forge that ships uabs-companion.json is detected, launchable and doctored
+    with no row in the bundle's own registry."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _forge(tmp, manifest=_manifest())
+        data = reg.merge_local(_data(), [tmp])
+        assert "demo-forge" in data["companions"], data.get("local_skipped")
+        assert data["self_registered"]["demo-forge"] == root
+        report = reg.status([tmp], data)
+        assert report["demo-forge"]["state"] == "INSTALLED_UNVERIFIED", report["demo-forge"]
+        assert reg.doctor_command(data["companions"]["demo-forge"], root)["argv"][1:] == ["-m", "demoforge", "doctor"]
+
+
+def test_a_self_registered_forge_must_be_an_allowlisted_owner_in_its_own_folder():
+    with tempfile.TemporaryDirectory() as tmp:
+        _forge(tmp, manifest=_manifest(repo="https://github.com/evil/Demo-Forge"))
+        data = reg.merge_local(_data(), [tmp])
+        assert "demo-forge" not in data["companions"]
+        assert any("allowlist" in line for line in data["local_skipped"]), data["local_skipped"]
+    with tempfile.TemporaryDirectory() as tmp:
+        # The manifest copied into a folder that is not this owner's: a backup, another tool.
+        _forge(tmp, folder="Some-Backup", manifest=_manifest())
+        data = reg.merge_local(_data(), [tmp])
+        assert "demo-forge" not in data["companions"]
+        assert any("folder" in line for line in data["local_skipped"]), data["local_skipped"]
+
+
+def test_a_manifest_cannot_take_an_id_or_a_command_from_another_owner():
+    base = _data()
+    base["companions"]["demo"]["launch"] = [{"name": "demoforge", "launcher": "demo.exe"}]
+    with tempfile.TemporaryDirectory() as tmp:
+        _forge(tmp, manifest=_manifest())
+        data = reg.merge_local(base, [tmp])
+        assert "demo-forge" not in data["companions"], "a taken launch name was accepted"
+        assert any("demoforge" in line for line in data["local_skipped"]), data["local_skipped"]
+    with tempfile.TemporaryDirectory() as tmp:
+        hijack = _manifest()
+        hijack["id"] = "demo"                      # the built-in id, but another repository
+        _forge(tmp, manifest=hijack)
+        data = reg.merge_local(_data(), [tmp])
+        assert data["companions"]["demo"]["repo"].endswith("/demo"), "a manifest replaced another repository's entry"
+        assert data["local_skipped"], "the refused takeover was not reported"
+
+
+def test_the_owner_manifest_is_fresher_than_the_bundled_row():
+    """Same id, same repository: the forge's own description wins, so a forge
+    release does not need a bundle release to change its doctor or launchers."""
+    base = _data()
+    base["companions"]["demo-forge"] = dict(_manifest()["entry"], notes="old notes",
+                                            launch=[{"name": "demoforge", "launcher": "old.cmd"}])
+    with tempfile.TemporaryDirectory() as tmp:
+        _forge(tmp, manifest=_manifest(notes="new notes"))
+        data = reg.merge_local(base, [tmp])
+        assert data["companions"]["demo-forge"]["notes"] == "new notes"
+        assert data["companions"]["demo-forge"]["launch"][0]["launcher"] == "demo.cmd"
+    # Nothing is written back into the caller's registry.
+    assert base["companions"]["demo-forge"]["notes"] == "old notes"
+
+
+def test_a_broken_manifest_is_reported_not_fatal():
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _forge(tmp)
+        with open(os.path.join(root, reg.MANIFEST), "w", encoding="utf-8") as fh:
+            fh.write("{not json")
+        data = reg.merge_local(_data(), [tmp])
+        assert list(data["companions"]) == ["demo"]
+        assert any(reg.MANIFEST in line for line in data["local_skipped"]), data["local_skipped"]
+
+
+def test_print_manifest_round_trips():
+    import contextlib
+    import io
+    data = reg.load(local=False)
+    out = io.StringIO()
+    with contextlib.redirect_stdout(out):
+        assert reg.main(["--print-manifest", "roblox-forge"]) == 0
+    doc = json.loads(out.getvalue())
+    assert doc["schema"] == 1 and doc["id"] == "roblox-forge"
+    assert doc["entry"]["repo"] == data["companions"]["roblox-forge"]["repo"]
+
+
 if __name__ == "__main__":
     failures = 0
     for name, fn in sorted(globals().items()):

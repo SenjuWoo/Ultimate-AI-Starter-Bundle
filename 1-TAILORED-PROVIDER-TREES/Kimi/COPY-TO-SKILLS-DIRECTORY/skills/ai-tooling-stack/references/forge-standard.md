@@ -101,11 +101,24 @@ CRLF; other text is LF.
 
 ## Registering it with the bundle
 
-Add the forge to the bundle's companion registry with its repository, install
-kind, real markers, doctor entrypoint, capabilities and platforms, and add one
-row to the forge table in `ai-tooling-stack`. The bundle detects and routes; the
-forge installs, updates and heals itself. No forge skill or tool is copied into
-the bundle.
+Ship `uabs-companion.json` in the forge's root: `{"schema": 1, "id": "<id>",
+"entry": {...}}` with the repository, install kind, real markers, doctor
+entrypoint, launchers, capabilities and platforms. The bundle reads it wherever
+the forge is installed, so a new forge, or a new doctor or launcher in an old one,
+needs no bundle release, and the forge's copy wins over the bundle's row for the
+same repository. `python TOOLS/companion_registry.py --print-manifest <id>` in the
+bundle prints an existing row in that shape. A row in the bundle's registry and in
+the `ai-tooling-stack` table is still worth adding: it is how an agent learns the
+forge exists on a machine where it is not installed yet. The bundle detects and
+routes; the forge installs, updates and heals itself. No forge skill or tool is
+copied into the bundle.
+
+## Field reports
+
+Agents using the forge from another project record defects in `FIELD-REPORTS.md`
+at the forge's root (the bundle's `TOOLS/field_report.py` writes it and keeps it
+out of commits). A maintainer session reads it before anything else: reproduce,
+fix with a failing test first, note the fix in the changelog, delete the entry.
 
 ## Quick audit
 

@@ -1,5 +1,5 @@
-<!-- Ultimate AI Starter Bundle v8.51.1 -->
-# Ultimate AI Starter Bundle v8.51.1
+<!-- Ultimate AI Starter Bundle v8.52.0 -->
+# Ultimate AI Starter Bundle v8.52.0
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
@@ -65,7 +65,14 @@ installed runtime as one owner:
 python TOOLS/companion_registry.py --verify     # NOT_FOUND / DISCOVERED / INSTALLED_UNVERIFIED
 python TOOLS/companion_registry.py --print-doctor skyrim-forge --json   # its doctor as argv + working directory
 python TOOLS/graph_roots.py                     # code-graph projects whose folder has moved
+python TOOLS/field_report.py <owner-id> --title "<what failed>"   # record a forge defect in that forge's folder
 ```
+
+A forge that ships `uabs-companion.json` in its root registers itself: it is detected,
+launchable by name and doctored with no bundle release, and its own description wins over
+the bundle's row. An agent that hits a defect in a forge it is only using records it in
+that forge's `FIELD-REPORTS.md` and works around it; the forge's own maintainer session
+reads that file first.
 
 The base packs are `automatic when Skyrim or Forge is found` and
 `automatic when its kit is found`; a missing owner is skipped. Nothing is installed twice,

@@ -45,6 +45,10 @@
 
 ## History
 
+8.52.0 (2026-11-15): forges self-register through uabs-companion.json (no bundle
+release for a new forge or launcher); TOOLS/field_report.py records a forge defect in
+the owner folder (rule in the contract, ai-tooling-stack, forge standard);
+MarvelRivals-Forge registered and routed.
 8.51.1 (2026-11-15): catalog Unity install command matches 1.11.1; freshness check
 recorded (22 current, 3 held, Blender 2.3.0 / Unity 1.11.3 under a day old, not
 adopted); installed hooks, settings and six provider skill homes verified live.
