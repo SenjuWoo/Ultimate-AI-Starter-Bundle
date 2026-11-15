@@ -1092,6 +1092,10 @@ $codexHookOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfi
 if ($LASTEXITCODE -eq 0 -and $codexHookOut -match 'CODEX HOOK RETIREMENT GATE: PASS') {
     Good 'native legacy gates retired; exact backups, custom hooks/trust, fresh/custom homes and reruns verified'
 } else { Bad ('Codex hook retirement failed:' + [Environment]::NewLine + $codexHookOut) }
+$cleanupTruthOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-CleanupTruth.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $cleanupTruthOut -match 'CLEANUP TRUTH GATE: PASS') {
+    Good 'leftover cleanup exits non-zero on a failed removal, counts only freed bytes, never edits a config it could not back up'
+} else { Bad ('Leftover cleanup truth failed:' + [Environment]::NewLine + $cleanupTruthOut) }
 
 Section '19. Ponytail Cursor and Impeccable security regressions'
 $nodeForCursor = Get-Command node -ErrorAction SilentlyContinue

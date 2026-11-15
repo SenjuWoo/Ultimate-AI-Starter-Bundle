@@ -45,6 +45,12 @@
 
 ## History
 
+8.50.1 owner audit (2026-11-15): baseline green (gate 23/23, CI, doctor). Fixed:
+Claude routing ignored native-plugin skills (Superpowers never suggested); leftover
+cleanup exited 0 on failed removals and could edit a provider config whose backup
+failed; the local gate lacked ten CI contracts, the Core artifact check and four
+orphaned tests (now held by `TESTS/test_gate_parity.py`); duplicated GUIDE/README
+markup; six dead PowerShell helpers. Open gap: no uninstaller (documented).
 Final audit: the local gate stages and release contracts passed, including
 Windows-path, awkward-path launch and MCP parsing regressions. Installed-state
 diagnostics passed.

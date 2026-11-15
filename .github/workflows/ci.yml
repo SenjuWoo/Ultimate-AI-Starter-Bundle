@@ -163,6 +163,16 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TESTS/test_privacy_boundary.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_ai_attribution.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_mcp_protocol.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_ponytail_auto.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_free_game_tools.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python TESTS/test_gate_parity.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Deterministic Core artifact and extracted pack gate
         shell: powershell

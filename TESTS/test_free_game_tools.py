@@ -173,3 +173,12 @@ def test_reporting_never_installs() -> None:
         assert mod.main([]) == 0
         assert mod.main(["--json"]) == 0
 
+
+
+if __name__ == "__main__":
+    # Plain-script runner (CI and the release gate call this file directly; pytest
+    # is not a dependency). Before this block the file ran no test at all.
+    names = [n for n, f in sorted(globals().items()) if n.startswith("test_") and callable(f)]
+    for name in names:
+        globals()[name]()
+    print("free game tools: %d tests OK" % len(names))

@@ -27,12 +27,6 @@ function Test-Has {
   return $null
 }
 
-function Read-JsonFile {
-  param([string]$Path)
-  if (-not (Test-Path -LiteralPath $Path)) { return $null }
-  try { return ([IO.File]::ReadAllText($Path) | ConvertFrom-Json) } catch { return $null }
-}
-
 function Get-TomlMcpIds {
   param([string]$Path)
   if (-not (Test-Path -LiteralPath $Path)) { return @() }

@@ -1,5 +1,5 @@
-<!-- Ultimate AI Starter Bundle v8.50.0 -->
-# Ultimate AI Starter Bundle v8.50.0
+<!-- Ultimate AI Starter Bundle v8.50.1 -->
+# Ultimate AI Starter Bundle v8.50.1
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
@@ -174,8 +174,7 @@ commits and compatibility holds belong in [CATALOG.json](BUNDLED-TOOLS/CATALOG.j
 | `playwright-cli` | [Playwright CLI](https://github.com/microsoft/playwright-cli) | Default CLI; browser installation separate |
 | `comfy-cli` | [ComfyUI CLI](https://github.com/Comfy-Org/comfy-cli) | Optional user-managed tool; not installed by default |
 | `rea` | [REA](https://github.com/morluto/rea) | Optional pinned CLI; no global MCP or setup writes |
-| `reverse-this` | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | Optional standalone analysis workbench; source MIT, individual payload licenses apply |
-| Reverse THIS! | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | Reuses an existing discovered tool bench; no duplicate installation |
+| `reverse-this` | [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) | Optional standalone analysis workbench; reuses an existing discovered tool bench, no duplicate installation; source MIT, individual payload licenses apply |
 | CLI-Anything | [HKUDS/CLI-Anything](https://github.com/HKUDS/CLI-Anything) | Companion hub of per-app agent CLIs (Blender, FreeCAD, GIMP, Audacity, Godot, ComfyUI, browsers...). `pip install cli-anything-hub`, install the harnesses you need. Apache-2.0; v0.4.0 checked 2026-10-16. Not redistributed or installed by the pack. |
 | anti-slop | [miqdadbadjuber/anti-slop](https://github.com/miqdadbadjuber/anti-slop) | MIT rules filter against generic AI UI, filler copy and AI-shaped code (`rules/antislop.md` plus a CLI). Overlaps the bundled `impeccable` and `humanizer` skills; use it as an extra filter. v3.2.21 checked 2026-10-16. |
 | jevgrep | [dzhng/jevgrep](https://github.com/dzhng/jevgrep) | Hosted code-search CLI (`jg`) that answers repo questions through Jev and returns files plus verbatim excerpts; needs its own account. The bundled `codebase-memory-mcp` already answers that class of question locally. 0.8.0 checked 2026-10-16. |
@@ -200,10 +199,6 @@ Skyrim Forge is the bundle author's product, released from
 [skill notices](_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md) retain licenses,
 credits and adaptation notes. The pack's MIT license does not relicense these
 projects. Preserve upstream attribution when redistributing.
-
-<a id="ownership"></a>
-
-</details>
 
 ## Version
 

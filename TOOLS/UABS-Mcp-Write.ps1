@@ -310,16 +310,6 @@ function Write-UabsJsonDocument {
   Set-Utf8NoBom -Path $Path -Text ($text + $trailing)
 }
 
-function Write-JsonFile {
-  param([string]$Path, $Object)
-  $dir = Split-Path -Parent $Path
-  if ($dir -and -not (Test-UabsPath -LiteralPath $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
-  if (Test-UabsPath -LiteralPath $Path) {
-    Copy-Item -LiteralPath $Path -Destination "$Path.bak-mcp-$(Get-Date -Format yyyyMMdd-HHmmss)" -Force
-  }
-  Set-Utf8NoBom -Path $Path -Text ($Object | ConvertTo-Json -Depth 20)
-}
-
 function Get-UabsAppDataRoot {
   <# %APPDATA% / %LOCALAPPDATA% first: every other path in this pack comes from
      an environment variable, and GetFolderPath returns an EMPTY STRING when the

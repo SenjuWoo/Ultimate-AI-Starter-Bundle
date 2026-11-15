@@ -157,6 +157,54 @@ class RoutingTests(unittest.TestCase):
         self.assertEqual(resolved[0]["via"], "bundle")
         self.assertEqual(resolved[0]["origin"], "source")
 
+    def _claude_home(self, root, enabled=None):
+        """A Claude home whose only Superpowers copy is its native plugin."""
+        import json
+        claude = Path(root) / ".claude"
+        install = claude / "plugins" / "cache" / "superpowers-dev" / "superpowers" / "7.0.2"
+        for name in ("systematic-debugging", "brainstorming"):
+            (install / "skills" / name).mkdir(parents=True)
+            (install / "skills" / name / "SKILL.md").write_text("---\nname: %s\n---\n" % name, encoding="utf-8")
+        (claude / "skills" / "capability-routing").mkdir(parents=True)
+        (claude / "skills" / "capability-routing" / "SKILL.md").write_text("x", encoding="utf-8")
+        registry = {"version": 2, "plugins": {"superpowers@superpowers-dev": [
+            {"scope": "user", "installPath": str(install), "version": "7.0.2"}]}}
+        (claude / "plugins" / "installed_plugins.json").write_text(json.dumps(registry), encoding="utf-8")
+        if enabled is not None:
+            settings = {"enabledPlugins": {"superpowers@superpowers-dev": enabled}}
+            (claude / "settings.json").write_text(json.dumps(settings), encoding="utf-8")
+        return root
+
+    def test_claude_native_plugin_skills_are_available(self):
+        # Claude gets Superpowers as a native plugin, not as copies in ~/.claude/skills.
+        # Reading only the skills folder made the Claude prompt hook drop every
+        # Superpowers specialist as "unavailable".
+        import tempfile
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict("os.environ", {}, clear=False) as env:
+            env.pop("CLAUDE_CONFIG_DIR", None)
+            home = self._claude_home(td)
+            r = tr.route("fix the crash in parser.py", provider="claude", home=home)
+            debug = [x for x in r["resolved"] if x["want"] == "systematic-debugging"][0]
+            self.assertEqual(debug["use"], "superpowers:systematic-debugging", debug)
+            self.assertEqual(debug["via"], "installed")
+            self.assertEqual(debug["origin"], "plugin")
+
+    def test_a_disabled_claude_plugin_offers_nothing(self):
+        import tempfile
+        from unittest import mock
+        with tempfile.TemporaryDirectory() as td, mock.patch.dict("os.environ", {}, clear=False) as env:
+            env.pop("CLAUDE_CONFIG_DIR", None)
+            home = self._claude_home(td, enabled=False)
+            r = tr.route("fix the crash in parser.py", provider="claude", home=home)
+            debug = [x for x in r["resolved"] if x["want"] == "systematic-debugging"][0]
+            self.assertIsNone(debug["use"], "a disabled plugin's skills are not loadable")
+
+    def test_a_plain_skill_wins_over_a_plugin_copy(self):
+        pool = {"systematic-debugging": "provider", "superpowers:systematic-debugging": "plugin"}
+        resolved = tr.resolve(["systematic-debugging"], available=pool)
+        self.assertEqual(resolved[0]["use"], "systematic-debugging")
+
     def test_no_specialist_resolves_to_a_missing_skill(self):
         pool = {p.name for p in (ROOT / "_CANONICAL-SKILLS").iterdir()
                 if (p / "SKILL.md").is_file()}

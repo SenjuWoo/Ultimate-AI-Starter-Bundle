@@ -12,6 +12,7 @@ import argparse
 import os
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -52,8 +53,46 @@ def steps(root):
         ("working-tree line endings", [py, "TOOLS/check_line_endings.py"]),
         ("staged line endings", [py, "TOOLS/check_line_endings.py", "--staged"]),
         ("privacy boundary", [py, "TESTS/test_privacy_boundary.py"]),
+        # CI's release contracts. The trunk flow pushes after this gate, so a
+        # contract that only CI ran turned main red after a local PASS.
+        ("workspace ownership", [py, "TESTS/test_workspace_ownership.py"]),
+        ("product delivery", [py, "TESTS/test_product_delivery.py"]),
+        ("release provenance", [py, "TESTS/test_release_provenance.py"]),
+        ("gateway guard lifecycle", [py, "TESTS/test_gateway_guard_lifecycle.py"]),
+        ("version bump", [py, "TESTS/test_version_bump.py"]),
+        ("skill-creator eval", [py, "TESTS/test_skill_creator_eval.py"]),
+        ("skill trigger parser", [py, "TESTS/test_skill_trigger_parser.py"]),
+        ("knowledge contract", [py, "TESTS/test_knowledge_contract.py"]),
+        ("shared shell config", [py, "TESTS/test_shared_shell.py"]),
+        ("Hermes bootstrap", [py, "TESTS/test_hermes_bootstrap.py"]),
+        ("AI attribution stripping", [py, "TESTS/test_ai_attribution.py"]),
+        ("MCP protocol framing", [py, "TESTS/test_mcp_protocol.py"]),
+        ("ponytail auto classifier", [py, "TESTS/test_ponytail_auto.py"]),
+        ("free game tools", [py, "TESTS/test_free_game_tools.py"]),
+        ("gate parity", [py, "TESTS/test_gate_parity.py"]),
         ("pack gate", pw + ["TESTS/Test-Pack.ps1"]),
+        ("Core artifact from its own tree", core_artifact),
     ]
+
+
+def core_artifact(root=ROOT):
+    """CI's last pack-gate step: build Core, extract it, verify it from inside."""
+    py = sys.executable
+    with tempfile.TemporaryDirectory(prefix="uabs-core-gate ") as td:
+        out = Path(td)
+        build = subprocess.run([py, "TOOLS/build_release.py", "--root", ".", "--outdir", str(out), "--core-only"],
+                               cwd=str(root), capture_output=True, text=True, errors="replace")
+        if build.returncode != 0:
+            return build
+        prefix = "Ultimate-AI-Starter-Bundle-" + (root / "VERSION.txt").read_text(encoding="utf-8-sig").strip()
+        extract = out / "extracted-core"
+        unzip = subprocess.run([py, "-m", "zipfile", "-e", str(out / (prefix + "-Core.zip")), str(extract)],
+                               capture_output=True, text=True, errors="replace")
+        if unzip.returncode != 0:
+            return unzip
+        top = extract / prefix
+        return subprocess.run([py, str(top / "TOOLS" / "verify_product.py")], cwd=str(top),
+                              capture_output=True, text=True, errors="replace")
 
 
 def main():
@@ -66,11 +105,21 @@ def main():
     plan = steps(ROOT)
     if args.list:
         for name, cmd in plan:
-            print("%-32s %s" % (name, " ".join(cmd)))
+            print("%-32s %s" % (name, cmd.__name__ if callable(cmd) else " ".join(cmd)))
         return 0
 
     for name, cmd in plan:
         print("==> %s" % name, flush=True)
+        if callable(cmd):
+            result = cmd()
+            tail = [l for l in (result.stdout + result.stderr).splitlines() if l.strip()]
+            if result.returncode != 0:
+                print(chr(10).join(tail[-40:]))
+                print("RELEASE GATE: FAIL at '%s' (exit %d)" % (name, result.returncode))
+                return result.returncode
+            if tail:
+                print("    %s" % tail[-1])
+            continue
         # Capture so a failure prints its own reason instead of vanishing above
         # the next step's output; a passing step keeps only its last line.
         env = os.environ.copy()

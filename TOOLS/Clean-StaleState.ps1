@@ -73,9 +73,11 @@ function Remove-UabsRetiredRegistration {
   if (-not (Test-Path -LiteralPath $file -PathType Leaf)) { return $false }
   if ($WhatIfOnly) { return $true }
 
-  # Back up before editing anyone's config, every time.
+  # Back up before editing anyone's config, every time. A backup that cannot be
+  # written stops this edit (the caller counts it as failed); it used to be
+  # swallowed, and the config was rewritten with no copy to restore.
   $stamp = (Get-Date).ToString('yyyyMMdd-HHmmss')
-  try { Copy-Item -LiteralPath $file -Destination ($file + '.bak-retired-' + $stamp) -Force } catch { }
+  Copy-Item -LiteralPath $file -Destination ($file + '.bak-retired-' + $stamp) -Force -ErrorAction Stop
 
   if ($Edit.Format -eq 'toml-table') {
     $lines = [IO.File]::ReadAllLines($file)
@@ -685,10 +687,12 @@ if (-not $Apply) {
 
 $removed = 0
 $failed = 0
+$freed = 0
 foreach ($item in $script:Planned) {
   try {
     Remove-Item -LiteralPath $item.Path -Recurse -Force -ErrorAction Stop
     $removed++
+    $freed += [long]$item.Bytes
   } catch {
     $failed++
     Write-UabsWarn ("could not remove " + $item.Path + ": " + $_.Exception.Message)
@@ -707,12 +711,16 @@ foreach ($e in $script:RetiredRegistrationEdits) {
     Write-UabsWarn ("could not unregister " + $e.Key + " from " + $e.File + ": " + $_.Exception.Message)
   }
 }
-Write-UabsOk ("removed $removed item(s), freed ~{0:N1} KB" -f ($script:FreedBytes / 1KB))
+# Report what was removed, not what was planned: a locked item frees nothing.
+Write-UabsOk ("removed $removed item(s), freed ~{0:N1} KB" -f ($freed / 1KB))
 if ($edited) {
   Write-UabsOk "edited $edited marketplace registration(s)"
   Write-UabsWarn 'Close every AI app before trusting this: a running session holds its config in memory and writes it back on exit, which is how an earlier removal was undone.'
 }
 if ($failed) {
   Write-UabsWarn "$failed item(s) could not be removed (in use, or permission denied). Re-run after closing the AI apps."
+  # Non-zero so a caller cannot record a partial cleanup as applied. The
+  # installer treats this as a warning, never as a failed install.
+  exit 1
 }
 exit 0

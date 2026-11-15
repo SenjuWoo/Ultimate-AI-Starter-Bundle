@@ -211,12 +211,56 @@ def available_skills(provider=None, home=None):
                         item = Path(path)
                         if item.is_dir() and (item / "SKILL.md").is_file() and item.parent == root:
                             found[item.name] = "optional"
+            if provider == "claude":
+                found.update(claude_plugin_skills(root.parent))
         except Exception:
             pass  # an unreadable receipt must not break routing
         return found
     if BUNDLE_SKILLS.is_dir():
         found = {p.name: "source" for p in BUNDLE_SKILLS.iterdir() if (p / "SKILL.md").is_file()}
     return found
+
+
+def claude_plugin_skills(claude_root):
+    """Skills Claude loads from its native plugins, under their `plugin:skill` names.
+
+    Claude gets Superpowers and Ponytail as native plugins; the bundle removes the
+    copies from ~/.claude/skills, so the skills folder alone said they were missing.
+    Only user-scope plugins are counted (a project-scope one loads in its project
+    only), and a plugin switched off in settings.json offers nothing.
+    """
+    found = {}
+    claude_root = Path(claude_root)
+    registry = claude_root / "plugins" / "installed_plugins.json"
+    if not registry.is_file():
+        return found
+    data = json.loads(registry.read_text(encoding="utf-8-sig"))
+    enabled = {}
+    settings = claude_root / "settings.json"
+    if settings.is_file():
+        try:
+            enabled = json.loads(settings.read_text(encoding="utf-8-sig")).get("enabledPlugins") or {}
+        except ValueError:
+            enabled = {}
+    for key, entries in (data.get("plugins") or {}).items():
+        if enabled.get(key) is False:
+            continue
+        name = key.split("@", 1)[0]
+        for entry in entries if isinstance(entries, list) else []:
+            if not isinstance(entry, dict) or entry.get("scope", "user") != "user":
+                continue
+            skills = Path(str(entry.get("installPath") or "")) / "skills"
+            if entry.get("installPath") and skills.is_dir():
+                found.update({"%s:%s" % (name, p.name): "plugin"
+                              for p in skills.iterdir() if (p / "SKILL.md").is_file()})
+    return found
+
+
+def _in_pool(candidate, pool):
+    """The pool key for a candidate: its plain name first, else a `plugin:` copy."""
+    if candidate in pool:
+        return candidate
+    return next((key for key in sorted(pool) if key.endswith(":" + candidate)), None)
 
 
 def resolve(specialists, available=None):
@@ -226,8 +270,9 @@ def resolve(specialists, available=None):
     for want in specialists:
         candidates = ["addy-" + want, "pocock-" + want, want] + FALLBACKS.get(want, [])
         for candidate in candidates:
-            if candidate in pool:
-                origin = pool[candidate]
+            key = _in_pool(candidate, pool)
+            if key:
+                origin = pool[key]
                 if candidate == want:
                     via = "bundle" if origin == "source" else "installed"
                 elif origin == "source":
@@ -236,7 +281,7 @@ def resolve(specialists, available=None):
                     via = "installed"
                 else:
                     via = "fallback"
-                resolved.append({"want": want, "use": candidate, "via": via, "origin": origin})
+                resolved.append({"want": want, "use": key, "via": via, "origin": origin})
                 break
         else:
             resolved.append({"want": want, "use": None, "via": "unavailable", "origin": None})

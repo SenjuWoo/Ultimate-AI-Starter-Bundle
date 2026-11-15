@@ -907,13 +907,6 @@ function Test-UabsDotNetRuntime([string]$Pattern) {
   } catch { return $false }
 }
 
-function Test-UabsDotNetSdk([string]$Pattern) {
-  try {
-    $r = & dotnet --list-sdks 2>$null
-    return [bool]($r | Where-Object { $_ -match $Pattern })
-  } catch { return $false }
-}
-
 function Install-UabsWinget([string[]]$Ids) {
   $winget = Get-Command winget -ErrorAction SilentlyContinue
   if (-not $winget) { Write-UabsWarn 'winget not available'; return $false }
@@ -997,56 +990,6 @@ function Remove-UabsRetiredUserEnv {
     }
   }
   return $cleared
-}
-
-function Find-UabsHouseCarlMcp([string]$ExcludeRoot = '') {
-  <# Locate the best external housecarl-mcp.exe outside $ExcludeRoot,
-     picking the highest binary version when multiple copies exist. #>
-  $candidates = New-Object System.Collections.Generic.List[string]
-  $addCand = {
-    param([string]$p)
-    if ([string]::IsNullOrWhiteSpace($p)) { return }
-    try {
-      if (Test-Path -LiteralPath $p -PathType Leaf) {
-        $rp = (Resolve-Path -LiteralPath $p).Path
-        if ($ExcludeRoot -and (Test-UabsPathWithin -Path $rp -Root $ExcludeRoot)) { return }
-        if (-not $candidates.Contains($rp)) { [void]$candidates.Add($rp) }
-      }
-    } catch {}
-  }
-  foreach ($direct in @(
-    $env:HOUSECARL_MCP,
-    [Environment]::GetEnvironmentVariable('HOUSECARL_MCP', 'User')
-  )) { & $addCand $direct }
-  $roots = New-Object System.Collections.Generic.List[string]
-  foreach ($r in @(
-    $env:HOUSECARL_ROOT,
-    [Environment]::GetEnvironmentVariable('HOUSECARL_ROOT', 'User')
-  )) {
-    if ($r -and (Test-Path -LiteralPath $r -PathType Container)) { [void]$roots.Add($r) }
-  }
-  foreach ($toolDir in @(Get-UabsSkyrimToolDirectories)) {
-    $hcSub = Join-Path $toolDir 'houseCARL'
-    if (Test-Path -LiteralPath $hcSub -PathType Container) { [void]$roots.Add($hcSub) }
-    else { [void]$roots.Add($toolDir) }
-  }
-  foreach ($r in ($roots | Select-Object -Unique)) {
-    if ($ExcludeRoot -and (Test-UabsPathWithin -Path $r -Root $ExcludeRoot)) { continue }
-    $hit = Find-UabsFileUnder -Root $r -Name 'housecarl-mcp.exe' -Depth 6
-    if ($hit) { & $addCand $hit }
-  }
-  if ($candidates.Count -eq 0) { return $null }
-  $best = $null
-  $bestVer = $null
-  foreach ($c in $candidates) {
-    $v = Get-UabsBinaryVersion $c
-    if (-not $best) { $best = $c; $bestVer = $v; continue }
-    if ($v -and -not $bestVer) { $best = $c; $bestVer = $v; continue }
-    if ($v -and $bestVer -and ((Compare-UabsDottedVersion $v $bestVer) -gt 0)) {
-      $best = $c; $bestVer = $v
-    }
-  }
-  return $best
 }
 
 function Update-UabsGrokMcpBlock {
@@ -2912,27 +2855,6 @@ function Get-UabsAntigravityNativePluginIds {
   return $ids
 }
 
-function Test-UabsTomlPluginEnabled {
-  <#
-  True when TOML content has a section whose header starts with
-  [<HeaderPrefix> and whose body contains enabled = true. Line-based on
-  purpose: regex-over-sections is how config.toml readers have been burned
-  before (see the [compat.claude] comment in Set-UabsGrokCompatCells).
-  #>
-  param([string]$Content, [string]$HeaderPrefix)
-  if ([string]::IsNullOrEmpty($Content)) { return $false }
-  $inSection = $false
-  foreach ($ln in ($Content -split "\r?\n")) {
-    $t = $ln.Trim()
-    if ($t.StartsWith('[')) {
-      $inSection = $t.StartsWith('[' + $HeaderPrefix)
-      continue
-    }
-    if ($inSection -and $t -match '^enabled\s*=\s*true\s*$') { return $true }
-  }
-  return $false
-}
-
 function Set-UabsHermesPluginScanOff {
   <#
   Ensure plugins.scan_on_install: false in the Hermes config.yaml.
@@ -3211,74 +3133,6 @@ function Restore-UabsHermesPluginScan {
     Write-UabsWarn ('Hermes scan_on_install restore failed: ' + $_.Exception.Message)
     return 'failed'
   }
-}
-
-function Add-UabsMarketplacePluginEntry {
-  <#
-  Idempotently add a plugin entry to a marketplace.json, preserving the
-  file's own style: existing newline convention, 2-space indentation (entry
-  object at 4, fields at 6, matching the canonical ultimate-bundle manifest),
-  UTF-8 no BOM. This is a TEXT insertion because PS 5.1's ConvertTo-Json
-  emits CRLF with 4-space indents and would reformat the whole file.
-
-  The edit is validated (re-parse + entry present) BEFORE anything is
-  written; the original is backed up to marketplace.json.bak-<ts>.
-  Returns $true when the entry is present at the end (already or added).
-  #>
-  param(
-    [string]$ManifestPath,
-    [string]$EntryName,
-    [string]$EntryDescription,
-    [string]$EntrySource,
-    [string]$EntryCategory
-  )
-  if (-not (Test-Path -LiteralPath $ManifestPath -PathType Leaf)) { return $false }
-  $text = [IO.File]::ReadAllText($ManifestPath)
-  if ($text -match ('"name"\s*:\s*"' + [regex]::Escape($EntryName) + '"')) { return $true }
-  try { $parsed = $text | ConvertFrom-Json } catch {
-    Write-UabsWarn ('marketplace manifest is not valid JSON - left untouched: ' + $ManifestPath)
-    return $false
-  }
-  if (-not $parsed -or -not $parsed.plugins) {
-    Write-UabsWarn ('marketplace manifest has no plugins array - left untouched: ' + $ManifestPath)
-    return $false
-  }
-  $nl = "`n"
-  if ($text -match "`r`n") { $nl = "`r`n" }
-  $entry = '    {' + $nl +
-           '      "name": "' + $EntryName + '",' + $nl +
-           '      "description": "' + $EntryDescription + '",' + $nl +
-           '      "source": "' + $EntrySource + '",' + $nl +
-           '      "category": "' + $EntryCategory + '"' + $nl +
-           '    },'
-  $new = $null
-  $m = [regex]::Match($text, '"plugins"\s*:\s*\[\s*\r?\n')
-  if ($m.Success) {
-    # insert as the first element of the non-empty array
-    $idx = $m.Index + $m.Length
-    $new = $text.Substring(0, $idx) + $entry + $nl + $text.Substring($idx)
-  } else {
-    $m2 = [regex]::Match($text, '"plugins"\s*:\s*\[\s*\]')
-    if (-not $m2.Success) {
-      Write-UabsWarn ('could not locate the plugins array in ' + $ManifestPath)
-      return $false
-    }
-    $replacement = '"plugins": [' + $nl + $entry.TrimEnd(',') + $nl + '  ]'
-    $new = $text.Substring(0, $m2.Index) + $replacement + $text.Substring($m2.Index + $m2.Length)
-  }
-  try {
-    $check = $new | ConvertFrom-Json
-    $found = $false
-    foreach ($pl in @($check.plugins)) { if ($pl.name -eq $EntryName) { $found = $true } }
-    if (-not $found) { throw 'entry missing after edit' }
-  } catch {
-    Write-UabsWarn ('marketplace edit failed validation - file left untouched: ' + $_.Exception.Message)
-    return $false
-  }
-  Copy-Item -LiteralPath $ManifestPath -Destination ($ManifestPath + '.bak-' + (Get-Date -Format 'yyyyMMdd-HHmmss')) -Force
-  $enc = New-Object System.Text.UTF8Encoding($false)
-  [IO.File]::WriteAllText($ManifestPath, $new, $enc)
-  return $true
 }
 
 function Get-UabsProviderPathDirectories {
