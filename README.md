@@ -211,6 +211,6 @@ SBOM and attestation, is on the
 Original code and docs are [MIT](LICENSE); third-party payloads keep their own
 terms — see the [notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md).
 
-Starting a chat, resuming after a break or a usage limit, or handing a project
-to a newer model for a full audit? Copy one of the three
+Starting a chat, planning a big job for another model to build, resuming after a
+break or a usage limit, or handing a project to a newer model for a full audit? Copy one of the four
 [short cross-provider prompts](PROMPTS/START-RESUME-UPGRADE.md) and add your task.

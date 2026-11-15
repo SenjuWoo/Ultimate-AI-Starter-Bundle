@@ -23346,8 +23346,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 373597,
-  "sha256": "b01adffa84a66623642361cbc6e54628c83d68ee02f945117f8931f2b44384b5"
+  "size": 374162,
+  "sha256": "278e6f0dea93a15e4bcfb47362635a59a5dadfc6a9fe0523219aefe9229034ba"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -23476,13 +23476,13 @@
  },
  {
   "path": "PROMPTS/README.md",
-  "size": 732,
-  "sha256": "c5b2bd700d600237c81446cd615a49367dc926bb374ed6ef3f2abe4d902235ee"
+  "size": 814,
+  "sha256": "fc388e080f1746c2b48a18326206488168ee85667bc3c17ec54880feff08ae35"
  },
  {
   "path": "PROMPTS/START-RESUME-UPGRADE.md",
-  "size": 6639,
-  "sha256": "2b58cd3eb5f8b1948094fb405ba21c3b45d39805d793912f628a8bc341a804f5"
+  "size": 8552,
+  "sha256": "895c93c6f3fdfc837a25c52ad092b989a3115626c6788e07e7f27684a3663f1e"
  },
  {
   "path": "README-CORE.txt",
@@ -23491,8 +23491,8 @@
  },
  {
   "path": "README.md",
-  "size": 16364,
-  "sha256": "f448c77247e156a2a3ac43463056829710ec6437cd2700697c2892cecc797e33"
+  "size": 16410,
+  "sha256": "c78c3b390f6fc7f253d5fa0a5645a577202175288445c30bdbd5cba521f17721"
  },
  {
   "path": "SECURITY.md",
@@ -28931,8 +28931,8 @@
  },
  {
   "path": "docs/history/V8.51.1-CHANGELOG.md",
-  "size": 1371,
-  "sha256": "33570851ce0a7fdfa34f9d651a75a267e77f8f4a538572439b682926b4832185"
+  "size": 1929,
+  "sha256": "9224e1837273c55d8edc87e8100bc7df682d2090a68e8fe1ce3e7c5333eddbc7"
  },
  {
   "path": "docs/history/V8.6.0-CHANGELOG.md",

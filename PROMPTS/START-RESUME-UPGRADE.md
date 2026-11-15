@@ -1,12 +1,13 @@
 # Start, resume or upgrade a project
 
-Three prompts, one per situation. Paste one at the start of a chat and fill in
+Four prompts, one per situation. Paste one at the start of a chat and fill in
 the bracketed parts; do not repeat it in later messages.
 
 | Situation | Prompt |
 |---|---|
 | A new chat with a new task | [New chat](#new-chat) |
-| Continuing unfinished work: after a usage limit, a break, or in a new chat | [Resume](#resume) |
+| A large or unfamiliar job: one model plans, another builds | [Plan](#plan) |
+| Continuing unfinished work, or building a finished plan | [Resume](#resume) |
 | A newer, more capable model takes over an existing project | [Upgrade audit](#upgrade-audit) |
 
 They are short on purpose. The installed instructions already carry the detailed
@@ -33,6 +34,31 @@ Task: [goal, target project or files, what done looks like]
 To hand the model the design as well (a Fable chat, or any model you trust with
 direction), make the first line
 `You are the owner and long-term maintainer, and its design is up to you.`
+
+## Plan
+
+For a new project, an unfamiliar codebase or several connected systems. Spend the
+strongest model on the decisions once, then build with a cheaper one: for
+example Fable High plans and Opus High builds (Medium for routine, well-specified
+tasks). The plan lives in the project's `PLAN.md`, which the task controller reads.
+
+```text
+You are the owner and long-term maintainer, and its design is up to you. This chat plans; a later chat builds from the plan alone.
+
+Task: [goal, target project or files, what done looks like]
+Must not change: [requirements, interfaces, assets; or "nothing beyond the standing rules"]
+
+1. Orient before deciding. Read the project's instructions, its ownership and state files (create them if this is new work), git status and the machine map; inspect the real code, tools and tests.
+2. Research what is uncertain and decide the architecture and the order of work. Check versions and APIs against the installed tool or a primary source. Prefer decisions to options.
+3. Write PLAN.md: one row per task (ID, Task, Status pending, Depends on, Verify: the command or check that proves it, Evidence -), each small enough to verify on its own, in dependency order. Under the table add Decisions (what was chosen, what was rejected and why), Assumptions (each with its fastest check) and Risks. Set NEXT ACTION in STATE.md to the first task.
+4. Do not implement. Stop when a builder can start from PLAN.md without this conversation, and list the open questions.
+```
+
+Build it in a fresh chat with the [Resume](#resume) prompt: it starts at the first
+unfinished task, verifies each one and records the evidence in `PLAN.md`. When the
+builder meets a design question the plan does not answer, it writes that question
+under Decisions and carries on with independent tasks; take only that question back
+to the planning model.
 
 ## Resume
 

@@ -12,6 +12,13 @@
   adoption is a live editor measurement, so they wait for the next check.
   `docs/TOOL-EVALUATIONS.md` has the table. Only the optional Addy skill pack
   moved upstream.
+- **A Plan prompt for "one model plans, another builds".** For a new project or an
+  unfamiliar codebase, the planning chat (for example Fable High) inspects the real
+  project, decides the architecture and writes `PLAN.md` in the format the task
+  controller already reads: one verifiable task per row, plus Decisions,
+  Assumptions and Risks under the table. It stops before implementing. A fresh
+  chat builds it with the existing Resume prompt (for example Opus High, or Medium
+  for routine tasks), so no second plan format or builder prompt was added.
 - Verified on the installed machine after 8.51.0: every live hook is
   byte-identical to the source, every hook command in Claude's settings resolves,
   and the canonical skills match all six provider homes. A smoke run of the
