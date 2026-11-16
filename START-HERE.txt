@@ -76,7 +76,7 @@ this PC's game, mod and tool folders, to every AI app. Start from a template:
     START-HERE.bat -ProfileTemplate autonomous-builder
 
 Web chats with no instruction file (ChatGPT, Gemini): paste
-3-PREAMBLES\MANUAL-PASTE.txt into the custom-instructions box.
+2-PREAMBLES\MANUAL-PASTE.txt into the custom-instructions box.
 
 Nothing here yet? INSTALL-REMOTE.bat downloads the latest release, then
 installs it.
@@ -87,6 +87,5 @@ WHAT IS IN THIS FOLDER
     START-HERE.bat        the installer - the only thing you need to run
     INSTALL-REMOTE.bat    downloads the latest release first, then installs
     README.md             full guide and reference
-    BOOTSTRAP.txt         a prompt that lets an AI agent install this for you
     0-UNRESTRAINT-PACKS\  no-holds prompt library, adults only (start at its README.md)
     TOOLS\                the scripts the installer uses

@@ -153,7 +153,7 @@ $providerSkillDirs = [ordered]@{
 }
 # Hermes named profiles keep their own cloned skills folder; the managed ones
 # carried ~72 retired skills each that the default folder had long shed.
-$soulSource = Join-Path $PackRoot '3-PREAMBLES\SOUL.md'
+$soulSource = Join-Path $PackRoot '2-PREAMBLES\SOUL.md'
 if (Test-Path -LiteralPath $soulSource -PathType Leaf) {
   foreach ($pf in @(Get-UabsHermesManagedProfiles -HermesHome (Join-Path $env:LOCALAPPDATA 'hermes') -SoulFile $soulSource -RequireSkills)) {
     $providerSkillDirs[('Hermes.' + $pf.Name)] = Join-Path $pf.FullName 'skills'

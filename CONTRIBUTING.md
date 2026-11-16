@@ -24,6 +24,20 @@ Thanks for taking the time to contribute! This is a personal, hobby-maintained p
 
 ## Security issues
 
-Do **not** report security problems in a public issue. See `SECURITY.md` for how to report privately.
+Do **not** report security problems in a public issue. Report them privately through
+[GitHub private vulnerability reporting](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/security/advisories/new), and never put a live
+credential in an issue, pull request or commit. The default branch and the latest
+release are supported; older releases are not patched in place. A Dependabot,
+code-scanning or secret-scanning finding is fixed at the cause, never dismissed; a
+leaked secret is rotated.
+
+## Personal data boundary
+
+This repository is public. Never commit AI chat exports or history, account
+records, anything under `LOCAL-ONLY/` or named `*.local.md` / `*.local.json`, real
+names, personal e-mail addresses, credentials, or a home path with a real account
+name. `.gitignore` blocks these classes and `TESTS/test_privacy_boundary.py`
+enforces it in CI. If something personal lands: remove it, purge it from history
+and rotate anything secret.
 
 By contributing, you agree that your contributions are licensed under the same license as this project.

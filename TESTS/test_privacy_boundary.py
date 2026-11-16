@@ -6,7 +6,7 @@ real names, personal e-mail addresses, machine home paths and local-only
 notes must never be committed. This test scans every tracked file and fails
 listing what it found, so a leak is caught before a push.
 
-Policy lives in SECURITY.md ("Personal data boundary"). Run:
+Policy lives in CONTRIBUTING.md ("Personal data boundary"). Run:
 
     python TESTS/test_privacy_boundary.py
 """

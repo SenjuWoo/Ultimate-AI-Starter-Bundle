@@ -32,10 +32,9 @@ post-release receipt-only commit: it needlessly triggers the full CI again.
 
 ## 0. Prove the public surface
 
-- Edited the pack's own preamble or provider instruction templates (`3-PREAMBLES/SOUL.md`,
-  `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, `1-TAILORED-PROVIDER-TREES/*/COPY-TO-PROVIDER-HOME/*.md`)? After
-  committing the edit, run `python TOOLS/generate_preamble_history.py`: it archives every shipped version so
-  installed machines strip the old text exactly instead of stacking a second block.
+- Edited the pack's own preamble or provider instruction templates (`2-PREAMBLES/SOUL.md`,
+  `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, `1-TAILORED-PROVIDER-TREES/*/COPY-TO-PROVIDER-HOME/*.md`)? Update the preamble hash in
+  `TESTS/test_release_contract.py` in the same change; installs replace the marked block.
 
 For new repositories, also apply `github-fleet-maintenance`'s repository completion contract: real CI, applicable security settings, CodeQL/scanning and Dependabot must be verified separately from files merely existing. Resolve publication authorization from the current request and earlier approvals; prepare the release fully before asking if approval is still missing.
 

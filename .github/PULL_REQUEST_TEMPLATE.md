@@ -12,4 +12,4 @@
 - [ ] New behaviour has a test, or a sentence saying why it cannot
 - [ ] Docs and changelog updated when behaviour changed
 
-<!-- Security problems do not belong here — see SECURITY.md. -->
+<!-- Security problems do not belong here — see CONTRIBUTING.md (Security issues). -->

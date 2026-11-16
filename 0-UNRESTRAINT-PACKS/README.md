@@ -26,8 +26,8 @@ layers — stacking two costs tokens and contradicts itself.
 
 The installer wires the agent-CLI variant into each provider's instruction file
 automatically (as `[profile block] + [SOUL] + [AIO]`). The web variants have
-no config to wire — paste them. `3-PREAMBLES/MANUAL-PASTE.txt` is SOUL + Web,
-ready to paste.
+no config to wire — paste them. `2-PREAMBLES/MANUAL-PASTE.txt` is the
+standalone web paste.
 
 **What "Light" cuts, and what it does not (reworked 2026-11-13).** Each variant
 states the adult-fiction stance once: one hard line (nothing sexual
@@ -82,7 +82,7 @@ this folder.
 | Kimi | `~/.kimi-code/AGENTS.md` | Wired (global). |
 | Grok CLI | `~/.grok/AGENTS.md` | Wired (global). |
 | Hermes | `%LOCALAPPDATA%\hermes\SOUL.md` + every bundle-managed profile | Wired. A roleplay profile with its own persona (the SillyTavern gateway) is deliberately left alone. |
-| ChatGPT web / Gemini web / Perplexity | custom-instructions box | Manual: paste `3-PREAMBLES/MANUAL-PASTE.txt` (SOUL + Web AIO, pure ASCII). |
+| ChatGPT web / Gemini web / Perplexity | custom-instructions box | Manual: paste `2-PREAMBLES/MANUAL-PASTE.txt` (standalone, pure ASCII). |
 | SillyTavern | `Tavern-presets/WooJuice V12.1.json` | Preset, not this pack. |
 
 ## Honest notes

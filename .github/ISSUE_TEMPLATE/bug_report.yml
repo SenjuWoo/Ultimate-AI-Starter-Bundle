@@ -7,8 +7,8 @@ body:
       value: |
         Check the README's troubleshooting section and search existing issues first.
 
-        For a security problem, do not open an issue — use the private advisory
-        link in SECURITY.md.
+        For a security problem, do not open an issue — report it privately:
+        https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/security/advisories/new
   - type: textarea
     id: what-happened
     attributes:

@@ -38,7 +38,6 @@
     "TESTS/Test-JsonCaseKeys.ps1",
     "TESTS/Test-Packs.ps1",
     "TESTS/Test-UserProfile.ps1",
-    "TOOLS/generate_preamble_history.py --check",
     "TESTS/Test-McpPark.ps1",
     "TESTS/Test-NpmDuplicate.ps1",
     "TESTS/Test-AiHistoryBackup.ps1",

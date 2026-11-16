@@ -56,7 +56,7 @@ function Nap([string]$Provider, [string]$Check, [string]$Why) {
 
 $catalogPath = Join-Path $PackRoot 'BUNDLED-TOOLS\CATALOG.json'
 $catalog = ([IO.File]::ReadAllText($catalogPath)) | ConvertFrom-Json
-$soulFile = Join-Path $PackRoot '3-PREAMBLES\SOUL.md'
+$soulFile = Join-Path $PackRoot '2-PREAMBLES\SOUL.md'
 $soulText = ([IO.File]::ReadAllText($soulFile)).Trim()
 $pluginsRoot = Join-Path $PackRoot 'BUNDLED-TOOLS\plugins'
 

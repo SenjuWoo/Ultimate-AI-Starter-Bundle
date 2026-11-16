@@ -90,8 +90,6 @@ jobs:
       - name: Refresh generated release metadata
         shell: powershell
         run: |
-          python TOOLS/generate_preamble_history.py
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python TOOLS/generate_manifest.py .
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           python .github/scripts/verify_manifest.py

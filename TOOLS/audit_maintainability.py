@@ -17,7 +17,6 @@ from pathlib import Path
 
 # Archived texts are kept on purpose so installs can recognise old pack text.
 GENERATED = (
-    "3-PREAMBLES/history/",
     "BUNDLED-TOOLS/packs/skyrim/legacy/",
 )
 # Vendored plugin sources are upstream files the bundle does not own.

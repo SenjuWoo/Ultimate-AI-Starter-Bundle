@@ -59,7 +59,7 @@ TESTS/evidence-scenarios/*/app.log
 # them; default search skips them. A brand-new skill path is untracked AND
 # ignored, so stage it with git add -f. Modifications to already tracked
 # skill files still show up in git status.
-# Personal-data boundary (see SECURITY.md). Chat exports, account records,
+# Personal-data boundary (see CONTRIBUTING.md). Chat exports, account records,
 # memories and machine-local notes must never reach a public pack. The CI
 # guard is TESTS/test_privacy_boundary.py; these patterns cover the classes
 # even when nobody runs it.

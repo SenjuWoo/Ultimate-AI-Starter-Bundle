@@ -191,12 +191,11 @@ if ($risk -eq 0) { Good 'no at-risk scripts' }
 # exactly that file). These are deployed artifacts, round-tripped by tools whose
 # default encoding is the system codepage, so they must stay pure ASCII.
 $deployed = @(
-    '3-PREAMBLES\MANUAL-PASTE.txt'
+    '2-PREAMBLES\MANUAL-PASTE.txt'
     '1-TAILORED-PROVIDER-TREES\Hermes\COPY-TO-PROVIDER-HOME\config.yaml'
     'START-HERE.txt'
     'START-HERE.bat'
     'INSTALL-REMOTE.bat'
-    'BOOTSTRAP.txt'
     'VERSION.txt'
 )
 $deployRisk = 0
@@ -308,7 +307,7 @@ if (-not $py -or -not (Test-Path -LiteralPath $mcpProbe -PathType Leaf)) {
 }
 
 Section '7. Preamble sources are clean UTF-8 and provider-neutral'
-$soulF = Join-Path $PackRoot '3-PREAMBLES\SOUL.md'
+$soulF = Join-Path $PackRoot '2-PREAMBLES\SOUL.md'
 $aioF  = Join-Path $PackRoot '0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md'
 foreach ($f in @($soulF, $aioF)) {
     if (-not (Test-Path -LiteralPath $f)) { Bad "missing $(Split-Path $f -Leaf)"; continue }
@@ -429,13 +428,13 @@ if ($offenders.Count) {
 
 # Same trap, but in documentation we ship as copy-paste instructions. Prose that
 # *discusses* the bug is fine, and every changelog does; a ```powershell fence is
-# not prose, it is code the reader will run. 3-PREAMBLES/README.md shipped a
+# not prose, it is code the reader will run. 2-PREAMBLES/README.md shipped a
 # manual-install snippet doing exactly this until v7.6.3. Old changelog text is skipped
 # on purpose: those records quote the broken form as a before/after.
 $docOffenders = @()
 $docFiles = @()
 $docFiles += Get-ChildItem -LiteralPath $PackRoot -Filter *.md -File -ErrorAction SilentlyContinue
-foreach ($sub in @('3-PREAMBLES', 'PROMPTS', 'TOOLS', 'TESTS', 'docs')) {
+foreach ($sub in @('2-PREAMBLES', 'PROMPTS', 'TOOLS', 'TESTS', 'docs')) {
     $d = Join-Path $PackRoot $sub
     if (Test-Path -LiteralPath $d) {
         $docFiles += Get-ChildItem -LiteralPath $d -Filter *.md -File -ErrorAction SilentlyContinue
@@ -468,8 +467,8 @@ if ($docOffenders.Count) {
 # One soul source, not two. v7.6.0 genericised SOUL.md; SOUL-UNIVERSAL.md then
 # existed only as a byte-identical duplicate whose README still described it as
 # the de-Hermesed copy -- an invitation to put the provider identity back.
-$soulSrc = Join-Path (Join-Path $PackRoot '3-PREAMBLES') 'SOUL.md'
-$soulDup = Join-Path (Join-Path $PackRoot '3-PREAMBLES') 'SOUL-UNIVERSAL.md'
+$soulSrc = Join-Path (Join-Path $PackRoot '2-PREAMBLES') 'SOUL.md'
+$soulDup = Join-Path (Join-Path $PackRoot '2-PREAMBLES') 'SOUL-UNIVERSAL.md'
 if (Test-Path -LiteralPath $soulDup) {
     Bad 'SOUL-UNIVERSAL.md is back; there must be exactly one soul source'
 } else {

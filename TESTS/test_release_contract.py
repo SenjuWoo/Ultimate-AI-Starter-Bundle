@@ -1616,31 +1616,6 @@ def test_forge_tracks_its_latest_release_and_is_complete() -> None:
 
 
 
-def test_every_shipped_instruction_text_is_archived() -> None:
-    """Installs strip only exact copies of text this pack shipped.
-
-    A version that is not archived stays in users' instruction files forever,
-    on top of the current one: one Codex AGENTS.md carried the V8.0.1 contract
-    (12.5 KB) beside the current text. The generator walks git history; its
-    --check fails when an edit was committed without archiving the old text.
-    Skipped where there is no git history (extracted releases).
-    """
-    hist = ROOT / "3-PREAMBLES" / "history"
-    assert len(list(hist.glob("AIO-INSTRUCTION-*.md"))) >= 6, "preamble archive looks truncated"
-    assert list((ROOT / "BUNDLED-TOOLS" / "packs" / "skyrim" / "legacy").glob("*.md")), "legacy Skyrim sections are not archived"
-    common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
-    assert "Join-Path (Split-Path -Path $SoulFile -Parent) 'history'" in common, "the preamble writer no longer strips archived texts"
-    if not (ROOT / ".git").exists():
-        return
-    shallow = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "--is-shallow-repository"],
-                             capture_output=True, text=True)
-    if shallow.returncode != 0 or shallow.stdout.strip() != "false":
-        return  # CI checkouts are shallow: the old versions are not in the clone
-    result = subprocess.run([sys.executable, str(ROOT / "TOOLS" / "generate_preamble_history.py"), "--check"],
-                            capture_output=True, text=True)
-    assert result.returncode == 0, "instruction history is stale; run python TOOLS/generate_preamble_history.py\n" + result.stdout
-
-
 def test_offline_manifest_complete() -> None:
     m = json.loads(read(ROOT / "BUNDLED-TOOLS" / "OFFLINE-MANIFEST.json"))
     assert m.get("pack_version") == BARE, "offline manifest pack version drifted"
@@ -1696,9 +1671,8 @@ def test_release_builder_contract() -> None:
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    # GitHub shows the tracked note; the Core archive writes CORE_NOTE. The tracked
-    # copy still described a pinned Forge after the archive note was corrected.
-    assert (ROOT / "README-CORE.txt").read_bytes() == module.CORE_NOTE, "README-CORE.txt differs from the note Core ships"
+    # The Core archive writes CORE_NOTE itself; no tracked copy can drift from it.
+    assert not (ROOT / "README-CORE.txt").exists(), "a tracked README-CORE.txt is back; Core generates its note"
     with tempfile.TemporaryDirectory(prefix="uabs-core-manifest-") as td:
         fake = Path(td) / "root"
         offline = fake / "BUNDLED-TOOLS" / "offline"
@@ -2081,23 +2055,10 @@ def test_no_skill_documents_an_unshipped_product() -> None:
 
 
 def test_manual_paste_is_generated_not_hand_kept() -> None:
-    """The paste block must match SOUL + the Web contract byte for byte.
-
-    It was hand-maintained, so every SOUL edit left it stale and the paste told a
-    different story from the wired agent. It is generated now; this fails the
-    moment someone edits either source without regenerating.
-    """
-    import subprocess
-
-    out = subprocess.run(
-        [sys.executable, str(ROOT / "TOOLS" / "generate_manual_paste.py"), "--check"],
-        capture_output=True, text=True, cwd=ROOT,
-    )
-    assert out.returncode == 0, (
-        "3-PREAMBLES/MANUAL-PASTE.txt is stale: "
-        + (out.stdout or out.stderr).strip()
-        + " -- run python TOOLS/generate_manual_paste.py"
-    )
+    """The web paste is the owner's standalone text: present and pure ASCII."""
+    raw = (ROOT / "2-PREAMBLES" / "MANUAL-PASTE.txt").read_bytes()
+    assert raw.strip(), "2-PREAMBLES/MANUAL-PASTE.txt is empty"
+    assert all(c < 128 for c in raw), "2-PREAMBLES/MANUAL-PASTE.txt must stay pure ASCII for web paste boxes"
 
 
 def test_one_age_rule_and_no_conflicting_exclusions() -> None:
@@ -2112,7 +2073,7 @@ def test_one_age_rule_and_no_conflicting_exclusions() -> None:
         ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION — Compact.md",
         ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION — Web.md",
         ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION — Web Light.md",
-        ROOT / "3-PREAMBLES" / "SOUL.md",
+        ROOT / "2-PREAMBLES" / "SOUL.md",
     ]
     # The hard line has to be present in every form that ships as an instruction.
     for p in forms:
@@ -2121,7 +2082,7 @@ def test_one_age_rule_and_no_conflicting_exclusions() -> None:
     aio = read(forms[0]).lower()
     assert "known to be a child" in aio, "the contract lost the hard line"
     # And the exclusions that caused the disagreement must stay gone.
-    for p in forms + [ROOT / "3-PREAMBLES" / "MANUAL-PASTE.txt"]:
+    for p in forms + [ROOT / "2-PREAMBLES" / "MANUAL-PASTE.txt"]:
         body = read(p).lower()
         for banned in ("no real people", "no real person", "real-person likeness"):
             assert banned not in body, f"{p.name} reintroduces a conflicting exclusion: {banned!r}"
@@ -2140,7 +2101,7 @@ def test_no_age_adjudication_wording_ships_anywhere_live() -> None:
         r"age is unclear|unclear age|school-as-minor|child-like character)",
         re.I,
     )
-    roots = [ROOT / "0-UNRESTRAINT-PACKS", ROOT / "3-PREAMBLES",
+    roots = [ROOT / "0-UNRESTRAINT-PACKS", ROOT / "2-PREAMBLES",
              ROOT / "PROJECT-TEMPLATE", CANON]
     offenders = []
     for base in roots:
@@ -2165,8 +2126,8 @@ def test_no_hard_blocker_principle_is_shipped() -> None:
     the manual-paste persona and the operating contract carry the rule; this
     keeps one of them from losing it.
     """
-    soul = read(ROOT / "3-PREAMBLES" / "SOUL.md").lower()
-    manual = read(ROOT / "3-PREAMBLES" / "MANUAL-PASTE.txt").lower()
+    soul = read(ROOT / "2-PREAMBLES" / "SOUL.md").lower()
+    manual = read(ROOT / "2-PREAMBLES" / "MANUAL-PASTE.txt").lower()
     coding = read(CANON / "coding-discipline" / "SKILL.md").lower()
     assert "never design a hard blocker" in soul
     assert "never design a hard blocker" in manual
@@ -2670,7 +2631,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     contract. A timestamp, generated token, or an edit that does not update
     this hash changes the bytes every provider caches.
     """
-    soul = read(ROOT / "3-PREAMBLES" / "SOUL.md").strip()
+    soul = read(ROOT / "2-PREAMBLES" / "SOUL.md").strip()
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
@@ -3428,8 +3389,7 @@ def main() -> int:
         test_same_version_forge_hotfix_refreshes_shipped_content,
         test_forge_tracks_its_latest_release_and_is_complete,
         test_reverse_latest_release_keeps_the_interface_the_bundle_calls,
-        test_every_shipped_instruction_text_is_archived,
-        test_offline_manifest_complete,
+            test_offline_manifest_complete,
         test_capability_profiles_are_not_registered_globally,
         test_project_scope_is_implemented_not_just_declared,
         test_upgrading_moves_a_globally_registered_profile,
@@ -6618,7 +6578,7 @@ def test_task_recipes_resolve_only_shipped_capabilities() -> None:
 def test_current_documentation_links_and_upstream_coverage() -> None:
     """The current landing pages cannot point to moved history or omit upstreams."""
     paths = [ROOT / p for p in (
-        "README.md", "AIO-GUIDE.md", "docs/HERMES-MODELS.md",
+        "README.md", "docs/HERMES-MODELS.md",
         "BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md", "_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md",
         "1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md")]
     paths.extend([ROOT / "BUNDLED-TOOLS/lm-studio/README.md"])
@@ -6632,7 +6592,7 @@ def test_current_documentation_links_and_upstream_coverage() -> None:
                 continue
             assert (path.parent / unquote(target)).exists(), f"{path.name}: broken link {target}"
     catalog = json.loads(read(ROOT / "BUNDLED-TOOLS/CATALOG.json"))
-    for document in (paths[0], paths[3]):
+    for document in (paths[0], paths[2]):
         text = read(document)
         for component in catalog["components"]:
             if component["id"] == "skyrim-forge":
@@ -6643,7 +6603,7 @@ def test_current_documentation_links_and_upstream_coverage() -> None:
             assert f"https://github.com/{upstream['owner']}/{upstream['repo']}" in row, component["id"]
     starter = read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "COPY-TO-PROVIDER-HOME" / "config.yaml")
     aliases = re.search(r"(?ms)^  aliases:\n(.*?)(?=^  \w|^\w|\Z)", starter).group(1)
-    guidance = read(paths[2])
+    guidance = read(ROOT / "docs" / "HERMES-MODELS.md")
     for alias, model in re.findall(r"(?m)^    ([\w.-]+):\s+openrouter/(\S+)", aliases):
         assert f"| `{alias}` | `{model}` |" in guidance, alias
 
@@ -6759,7 +6719,7 @@ def test_antigravity_is_a_first_class_provider() -> None:
 
     # Rules are capped at 24 KB per file by Antigravity; the shipped preamble
     # plus the provider template must stay under it or the tail is dropped.
-    preamble = read(ROOT / "3-PREAMBLES" / "SOUL.md") + read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md")
+    preamble = read(ROOT / "2-PREAMBLES" / "SOUL.md") + read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md")
     assert len((tpl + preamble).encode()) < 24000
 
 

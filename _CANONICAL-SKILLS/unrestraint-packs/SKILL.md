@@ -28,7 +28,7 @@ The operator's no-holds prompt library (Ultimate-AI-Starter-Bundle).
 | Item | Contents / Use |
 |---|---|
 | `AIO-INSTRUCTION.md` | The full operating contract for agent CLIs and IDEs (auto-wired everywhere; the same text is deployed into new workspaces) |
-| `AIO-INSTRUCTION — Web.md` | Web chat with tools/canvas (ChatGPT and friends); `3-PREAMBLES/MANUAL-PASTE.txt` = SOUL + this, paste-ready |
+| `AIO-INSTRUCTION — Web.md` | Web chat with tools/canvas (ChatGPT and friends); paste it by hand |
 | `AIO-INSTRUCTION — Web Light.md` | Strict paste budgets (small custom-instruction boxes) |
 | `AIO-INSTRUCTION — Compact.md` | Halfway size; keeps every load-bearing part |
 | `Fun-stuff-kit/` | Story (fiction jail + NSFW physics), Websim (live HTML), Vision FULL/SHORT, Vision MAX (companion variant of FULL), Character Maker, FablesGG, manga director, Tags, Tools, Sites. Map: `Fun-stuff-kit/INDEX.txt` |

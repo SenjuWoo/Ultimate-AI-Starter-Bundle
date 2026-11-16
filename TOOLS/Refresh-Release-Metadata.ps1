@@ -28,7 +28,6 @@ try {
 
   # Archives first: a generator or install run writes them, and the manifest
   # must hash the tree that exists after that run.
-  Invoke-MetadataStep 'Preamble archive' @('TOOLS\generate_preamble_history.py')
   Invoke-MetadataStep 'MANIFEST' @('TOOLS\generate_manifest.py', '.')
   Invoke-MetadataStep 'MANIFEST verify' @('.github\scripts\verify_manifest.py')
   Invoke-MetadataStep 'Version strings' @('.github\scripts\check_versions.py')

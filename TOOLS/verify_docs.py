@@ -12,10 +12,10 @@ from urllib.parse import unquote
 from update_memory_index import generate
 
 ROOT = Path(__file__).resolve().parent.parent
-DOCS = ("README.md", "START-HERE.txt", "AIO-GUIDE.md")
+DOCS = ("README.md", "START-HERE.txt")
 # Repo-root references are unambiguous. Provider-home examples and generated
 # output paths (dist/artifacts/configs) are runtime inputs, not shipped files.
-PATH = re.compile(r"(?<![\w/\\:])(?:\.?[/\\])?((?:TOOLS|TESTS|BUNDLED-TOOLS|_CANONICAL-SKILLS|\.github|docs|0-UNRESTRAINT-PACKS|1-TAILORED-PROVIDER-TREES|3-PREAMBLES)[/\\][^\s`\"'<>|;,()]+)")
+PATH = re.compile(r"(?<![\w/\\:])(?:\.?[/\\])?((?:TOOLS|TESTS|BUNDLED-TOOLS|_CANONICAL-SKILLS|\.github|docs|0-UNRESTRAINT-PACKS|1-TAILORED-PROVIDER-TREES|2-PREAMBLES)[/\\][^\s`\"'<>|;,()]+)")
 SCRIPT = re.compile(r"(?<![\w./\\:$%~-])(?:\.[/\\])?((?:[A-Za-z0-9_.-]+[/\\])*[A-Za-z0-9_][A-Za-z0-9_.-]*\.(?:ps1|psm1|py|bat|cmd|sh))\b", re.I)
 # These are explicitly labelled external/placeholder/non-invocation examples,
 # not a blanket exception for unknown filenames or companion repositories.
@@ -30,8 +30,8 @@ EXAMPLES = {
 # A link resolves from the page's own folder: docs/GUIDE.md carried 41 links
 # written from the repository root after it took over the README's sections,
 # and the root-relative check above could not see that every one was dead.
-LINKED_PAGES = ("README.md", "AIO-GUIDE.md", "docs/*.md", "docs/decisions/*.md",
-                "PROMPTS/*.md", "3-PREAMBLES/README.md")
+LINKED_PAGES = ("README.md", "docs/*.md", "docs/decisions/*.md",
+                "PROMPTS/*.md", "2-PREAMBLES/README.md")
 
 
 def relative_link_errors(root: Path) -> list[str]:
@@ -63,7 +63,7 @@ def verify(root: Path) -> list[str]:
                 targets.add(value)
                 command_text = command_text.replace(match.group(0), "")
         for value in re.findall(r"`([^`\n]+)`", text):
-            if re.match(r"^(?:TOOLS|TESTS|BUNDLED-TOOLS|_CANONICAL-SKILLS|\.github|docs|0-UNRESTRAINT-PACKS|1-TAILORED-PROVIDER-TREES|3-PREAMBLES)[/\\]", value) and not re.search(r"\.(?:py|ps1|bat|cmd|psm1)\s+\S", value, re.I):
+            if re.match(r"^(?:TOOLS|TESTS|BUNDLED-TOOLS|_CANONICAL-SKILLS|\.github|docs|0-UNRESTRAINT-PACKS|1-TAILORED-PROVIDER-TREES|2-PREAMBLES)[/\\]", value) and not re.search(r"\.(?:py|ps1|bat|cmd|psm1)\s+\S", value, re.I):
                 targets.add(value)
                 command_text = command_text.replace("`" + value + "`", "")
         targets.update(SCRIPT.findall(command_text))

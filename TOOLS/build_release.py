@@ -40,11 +40,11 @@ def companions(root:Path)->list[tuple[Path,Path]]:
 
 # Product ZIPs are not repository exports. Templates/references are intentional product inputs.
 PRODUCT_ROOT_FILES={'START-HERE.bat','START-HERE.txt','INSTALL-AIO.ps1','INSTALL-REMOTE.ps1',
-    'INSTALL-REMOTE.bat','BOOTSTRAP.txt','AIO-GUIDE.md','README.md','README-CORE.txt','LICENSE',
+    'INSTALL-REMOTE.bat','README.md','LICENSE',
     'VERSION.txt','MANIFEST.json','.cbmignore','.ignore','GROK-MCP-TROUBLESHOOTING.md',
     'WINDOWS-PATH-MAP.md'}
 PRODUCT_DIRS={'_CANONICAL-SKILLS','1-TAILORED-PROVIDER-TREES','0-UNRESTRAINT-PACKS',
-    '3-PREAMBLES','PROJECT-TEMPLATE','BUNDLED-TOOLS','TOOLS','docs','PROMPTS','assets'}
+    '2-PREAMBLES','PROJECT-TEMPLATE','BUNDLED-TOOLS','TOOLS','docs','PROMPTS','assets'}
 
 def product_path(rel:Path)->bool:
     if len(rel.parts)==1:

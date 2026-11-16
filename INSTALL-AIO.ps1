@@ -855,7 +855,7 @@ if (-not $ToolsOnly) {
       # this bundle manages; Skyrim pack skills belong only in `skyrim`.
       $allPackSkills = @(@($packSel.Catalog.packs.PSObject.Properties | ForEach-Object { @($_.Value.skills) }) + @($externalNames) | Select-Object -Unique)
       $hermesOverrides = @(Get-UabsPreservedSkillNames -Provider 'Hermes' -SkillsDir $destSkills)
-      foreach ($pf in @(Get-UabsHermesManagedProfiles -HermesHome $providerHome -SoulFile (Join-Path $PackRoot '3-PREAMBLES\SOUL.md') -RequireSkills)) {
+      foreach ($pf in @(Get-UabsHermesManagedProfiles -HermesHome $providerHome -SoulFile (Join-Path $PackRoot '2-PREAMBLES\SOUL.md') -RequireSkills)) {
         $profileSkills = Join-Path $pf.FullName 'skills'
         $notHere = if ($pf.Name -eq 'skyrim') { @($packSel.ExcludedSkills) } else { $allPackSkills }
         try {
@@ -1839,7 +1839,7 @@ if (-not $ToolsOnly -and -not $SkipAppPaths) {
 # long unmarked Skyrim section is replaced by the provider's general template.
 if (-not $ToolsOnly) {
   $tailoredHome = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES'
-  $soulMark = (([IO.File]::ReadAllText((Join-Path $PackRoot '3-PREAMBLES\SOUL.md'))).Trim() -split '\r?\n')[0]
+  $soulMark = (([IO.File]::ReadAllText((Join-Path $PackRoot '2-PREAMBLES\SOUL.md'))).Trim() -split '\r?\n')[0]
   $profileText = ''
   $profileReady = $false
   if (-not $SkipProfile) {
@@ -1903,7 +1903,7 @@ if (-not $ToolsOnly) {
 # marked block instead of stacking copies; every write gets a .bak first.
 if (-not $ToolsOnly -and -not $SkipPreamble) {
   Write-UabsStep "SOUL + AIO preamble wiring"
-  $preDir = Join-Path $PackRoot '3-PREAMBLES'
+  $preDir = Join-Path $PackRoot '2-PREAMBLES'
   # One soul source for every provider. Until v7.6.2 there were two files -
   # SOUL.md opened with 'You are Hermes Agent' and SOUL-UNIVERSAL.md was the
   # de-branded copy. v7.6.0 genericised SOUL.md itself (a provider identity
@@ -1938,7 +1938,7 @@ if (-not $ToolsOnly -and -not $SkipPreamble) {
     if (-not $instName) { $instName = 'AGENTS.md' }
     $target = Join-Path (Get-UabsProviderHome -Provider $prov -Catalog $catalog) $instName
     if (-not (Test-Path -LiteralPath $soulF) -or -not (Test-Path -LiteralPath $aioF)) {
-      Write-UabsWarn ("$prov preamble skipped: 3-PREAMBLES or 0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md missing")
+      Write-UabsWarn ("$prov preamble skipped: 2-PREAMBLES or 0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md missing")
       continue
     }
     try {

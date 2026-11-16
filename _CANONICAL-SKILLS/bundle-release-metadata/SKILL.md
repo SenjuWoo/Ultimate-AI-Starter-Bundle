@@ -27,7 +27,6 @@ missing file in the release, not a cosmetic diff.
 | Generated | Producer |
 |---|---|
 | `MANIFEST.json` | `python TOOLS/generate_manifest.py .` |
-| `3-PREAMBLES/history/*` | `python TOOLS/generate_preamble_history.py` |
 | `BUNDLED-TOOLS/packs/*/legacy/*` | installer archive step |
 | `BUNDLED-TOOLS/{CATALOG,PROFILES,OFFLINE-MANIFEST}.json`, `VALIDATION.json` | release stamps |
 | `VERSION.txt` | single source for the installer banner and `install-state.json` |
@@ -35,8 +34,7 @@ missing file in the release, not a cosmetic diff.
 ## Order of operations
 
 1. Edit content. Skills are edited only in `_CANONICAL-SKILLS`; every provider installs from it.
-2. Archive preambles: `python TOOLS/generate_preamble_history.py`
-3. Regenerate `MANIFEST.json` **last** — a local install or a test run can create
+2. Regenerate `MANIFEST.json` **last** — a local install or a test run can create
    a new archive after you generated it.
 4. Run `TOOLS\Refresh-Release-Metadata.ps1`, then `TESTS\Test-Pack.ps1`.
 

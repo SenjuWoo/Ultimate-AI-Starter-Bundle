@@ -43,7 +43,7 @@ DECLARATIONS = [
     ("VALIDATION.json", r'"version":\s*"' + V + '"', "VALIDATION.json version"),
     ("VALIDATION.json", r'"release_tag":\s*"v' + V + '"', "VALIDATION.json release_tag"),
 ]
-LIVE_DOCS = ("README.md", "START-HERE.txt", "AIO-GUIDE.md", "README-CORE.txt", "BUNDLED-TOOLS/PACKS.json")
+LIVE_DOCS = ("README.md", "START-HERE.txt", "BUNDLED-TOOLS/PACKS.json")
 COMPANION_VERSION = re.compile(r"\b(Skyrim Forge|Reverse THIS!?)\*{0,2}\s+v?\d+\.\d+(?:\.\d+)?\b")
 # Companions install at their latest release and the Skyrim pack is opt-in; these
 # phrasings describe the retired pinned and auto-detected behaviour.

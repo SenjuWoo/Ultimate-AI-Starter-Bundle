@@ -287,11 +287,11 @@ Follow 0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md for every complex or factual reque
 
 The preamble is now **installed automatically**, not pasted by hand:
 
-- `3-PREAMBLES/SOUL.md` - the operator's own soul config: the unrestraint
+- `2-PREAMBLES/SOUL.md` - the operator's own soul config: the unrestraint
   declaration, the no-yes-man rule and the source-recency rule, one line each,
   nothing that only decorates (728 B after the v8.15.1 cleanup). Shipped
   verbatim and identity-neutral: it names no provider, so it is safe in all six provider homes.
-- `3-PREAMBLES/MANUAL-PASTE.txt` — SOUL + the Web contract (`AIO-INSTRUCTION — Web.md`), pure ASCII, for web UIs (ChatGPT/Gemini) that have no
+- `2-PREAMBLES/MANUAL-PASTE.txt` — the standalone web paste, pure ASCII, for web UIs (ChatGPT/Gemini) that have no
   instruction file: paste it into the custom-instructions box
 
 `INSTALL-AIO.ps1` appends `SOUL.md` + `AIO-INSTRUCTION.md` to
@@ -300,7 +300,7 @@ Claude Code (`~/.claude/CLAUDE.md`), Codex (`~/.codex/AGENTS.md`), Kimi
 and Antigravity (`~/.gemini/config/AGENTS.md`, its global-rules file), and
 merges both into Hermes' home (`SOUL.md`). Idempotent
 and backup-first; `-SkipPreamble` opts out. Full map:
-`3-PREAMBLES/README.md`.
+`2-PREAMBLES/README.md`.
 
 ## How each app is wired
 
@@ -890,7 +890,7 @@ BUNDLED-TOOLS/CATALOG.json         component registry
 PROJECT-TEMPLATE/                  PLAN/STATE/ownership/memory starter (-WorkspaceRoot seeds it)
 PROMPTS/                           start, plan, build, resume and upgrade prompts
 0-UNRESTRAINT-PACKS/               no-holds prompt library
-3-PREAMBLES/                      SOUL + AIO preamble for every agent
+2-PREAMBLES/                      SOUL + AIO preamble for every agent
 TOOLS/                             installers and discovery scripts
 TOOLS/Setup-CodebaseMemory-Index.ps1   index scope generator
 INSTALL-AIO.ps1                   master installer
@@ -900,7 +900,7 @@ START-HERE.txt                     short human guide
 
 ## Docs
 
-- [Quick start](../START-HERE.txt) and [AIO guide](../AIO-GUIDE.md)
+- [Quick start](../START-HERE.txt)
 - [Component catalog](../BUNDLED-TOOLS/CATALOG.json), [capability profiles](../BUNDLED-TOOLS/PROFILES.json) and [tool evaluations](TOOL-EVALUATIONS.md)
 - [Hermes model review](HERMES-MODELS.md) and [native profile policy](../1-TAILORED-PROVIDER-TREES/Hermes/profiles/README.md)
 - [LM Studio settings and VRAM budgeting](../BUNDLED-TOOLS/lm-studio/README.md)

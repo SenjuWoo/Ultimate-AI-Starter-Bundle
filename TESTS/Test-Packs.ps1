@@ -133,7 +133,7 @@ try {
 
   # ---- Hermes named profiles: managed ones only; pack skills moved aside ----
   $hh = Join-Path $fx 'hermes'
-  $soulSrc = Join-Path $PackRoot '3-PREAMBLES\SOUL.md'
+  $soulSrc = Join-Path $PackRoot '2-PREAMBLES\SOUL.md'
   $soulText = [IO.File]::ReadAllText($soulSrc)
   foreach ($p in 'code', 'skyrim', 'rp') {
     New-Item -ItemType Directory -Force -Path (Join-Path $hh "profiles\$p\skills\skyrim-memory") | Out-Null

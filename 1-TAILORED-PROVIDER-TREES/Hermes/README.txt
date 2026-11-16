@@ -91,4 +91,4 @@ Do not paste a live config.yaml from one PC into this folder. The pack gate
 fails any starter file that contains C:\Users\<name> or S:\Apps.
 
 Unrestraint / SOUL prose is not in config.yaml. It is wired into SOUL.md by
-the AIO preamble pass from 3-PREAMBLES and 0-UNRESTRAINT-PACKS.
+the AIO preamble pass from 2-PREAMBLES and 0-UNRESTRAINT-PACKS.

@@ -28,6 +28,13 @@
 - **Prompts.** The four paste-ready prompts live in `PROMPTS/GENERAL-1..4-*.txt`
   (start and finish, plan, build or resume, resume after a usage limit);
   `START-RESUME-UPGRADE.md` explains when to use each and keeps the upgrade audit.
+- **Preambles and root docs.** `3-PREAMBLES` is now `2-PREAMBLES`. The archive of
+  old preamble texts and its generator are retired: installs replace the marked
+  bundle block, so old text no longer needs an archive. `MANUAL-PASTE.txt` is the
+  owner's standalone web paste, no longer generated. `AIO-GUIDE.md`,
+  `BOOTSTRAP.txt`, `README-CORE.txt` (Core writes its own note) and `SECURITY.md`
+  are removed; the private reporting link and the personal-data policy now live
+  in `CONTRIBUTING.md`.
 - Skill metadata cleanup: `coding-discipline`, `check-work` and `release-checklist`
   lose stale Skyrim-era fields.
 
