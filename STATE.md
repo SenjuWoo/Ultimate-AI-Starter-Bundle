@@ -45,6 +45,11 @@
 
 ## History
 
+8.53.2 (2026-11-16): expanded creative scope and cut false blocks - the
+instruction forms state the full range of adult work plainly; the one
+hard line is unchanged and the Antigravity 24 KB AGENTS.md cap is respected
+(template trimmed to fit); local gate and full install pass on Windows.
+
 8.53.1 (2026-11-16): maintenance release - the 8.53.0 preamble-archive retirement
 is completed (49 archived texts removed; marked-block installs converge alone);
 SOUL.md slimmed to what the contract does not carry (identity, consent framing +

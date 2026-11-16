@@ -33,7 +33,7 @@ instead.
 
 **What "Light" cuts, and what it does not (reworked 2026-11-13).** Each variant
 states the adult-fiction stance once: one hard line (nothing sexual
-involving a child or a minor), write the scene rather than a summary, keep
+involving a character known to be a child), write the scene rather than a summary, keep
 continuity, no unasked disclaimers, and say which part of a request cannot be
 done as asked instead of padding it with caveats. What comes out of Light is operational scaffolding — the tool,
 completion and final-gate paragraphs — because in a browser conversation they

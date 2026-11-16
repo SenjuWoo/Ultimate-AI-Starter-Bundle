@@ -66,28 +66,28 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Compact.md",
-  "size": 7228,
-  "sha256": "5c13a41dc9eb9482e499251271c219305ca90dfffe0865e427767a2185210ab5"
+  "size": 7380,
+  "sha256": "669d39f4eb7ae112ecf3c8a7ba6c136a6501720e0a5c9f89916ee1298af277f7"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web Light.md",
-  "size": 1510,
-  "sha256": "bc2b5f530c27f5b1b9e5ff5f28faceb4f7f412f6b9e1c4b749d859cfa2814c56"
+  "size": 1696,
+  "sha256": "d89991a12278c55932e40b3ed7f910c163722204d7ca475d9823b0d4c2f50b96"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION \u2014 Web.md",
-  "size": 2635,
-  "sha256": "35dc60751d6083c5ed6bc6f281c2854b5299133455073c5728d6855cc083c105"
+  "size": 2846,
+  "sha256": "79ffe57d0380d091f48017e5f32167126b5b50747fb84c845b2aebd23bcee1c6"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 19725,
-  "sha256": "7c403bf6fad0cca682f4dc2fe9326564a142f951f97beabb7b7bf9024aa85d32"
+  "size": 21214,
+  "sha256": "bdfa92a809894d508e614afc84f2fac726a67b432bc4db75bd25d8a88e2be46c"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/CLAUDE-CODE-ADDENDUM.md",
-  "size": 695,
-  "sha256": "cc4482c9fb3521c6fc71f48d912813aee4af8f0201174a2cb63bf545bac746fb"
+  "size": 1025,
+  "sha256": "60f535d365c94c21262e203c17cb0b87cb2719490789c99339f45efc9c5426ed"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Character Maker.txt",
@@ -146,8 +146,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/README.md",
-  "size": 11275,
-  "sha256": "036a5624b50c55c078ddc9ce9a4777212e2422e0c84ec7fc44ee0471587cfdb0"
+  "size": 11288,
+  "sha256": "03a1c60662bea9123257a4961b63a3e287f1bbb77f8868ad64d7302b6e6f7f36"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/Character Creation.txt",
@@ -181,8 +181,8 @@
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-PROVIDER-HOME/AGENTS.md",
-  "size": 1232,
-  "sha256": "ae57190d2a0a6f1fc137bd3eb09db8cf44d9403440a5efd8b1c4013a064712dc"
+  "size": 1208,
+  "sha256": "3bb38360ab474e1e310c6ec2b554f46972fc99c4b9bf2d2642774a85dd9e12dc"
  },
  {
   "path": "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-PROVIDER-HOME/CLAUDE.md",
@@ -301,8 +301,8 @@
  },
  {
   "path": "2-PREAMBLES/MANUAL-PASTE.txt",
-  "size": 3734,
-  "sha256": "8dde6f81779ef8426926bb920d9d1fabc7bef71e8cf1b7fc6fc7625bdf64805f"
+  "size": 4439,
+  "sha256": "15a2ae78811c251b1d84a62eda16577d6221c3ef56ed0719b59e359034499aad"
  },
  {
   "path": "2-PREAMBLES/README.md",
@@ -311,13 +311,13 @@
  },
  {
   "path": "2-PREAMBLES/SOUL.md",
-  "size": 1098,
-  "sha256": "6170bed59bdd6d21a36614f5dc4ef02d8615a5f1674d101b94fd0c9fdb4ead10"
+  "size": 1527,
+  "sha256": "d7f2e10f3aeaa8807bba2163cd58fa4b3a4f2780890479e96c2ad83ce5425b68"
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66558,
-  "sha256": "c5495fe70713580f51bbbdf1f2790e6035c577c0aade291ee60d04609f02bfb4"
+  "sha256": "9c985866e03e4e0faad0b6543c904b58dbcc85f2db06f7f83f58a1fd3ec936e3"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -327,7 +327,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "7d30fb874275eb9f5301e940f5720a2788c51940bdbb590d8ee67b93b573a958"
+  "sha256": "b26cf2940a3e4c05eecfb6cf9101cb2e244e0cd7cfd55a3cb69fa77f867bf2b6"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -337,7 +337,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "43ea16357eea4e977f9e9f911bdfa98c4f766959717bb9c0ce000f22e7cd28ff"
+  "sha256": "940fa4444fea51de56731928c8c455c13d9824d11438cfba9a41c22acf9ea2e2"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -4781,8 +4781,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 382703,
-  "sha256": "a7bac29dd2c8d2ed1f955f9d2e3499a64e3a6c99c22bd40acfff0845b2e766fa"
+  "size": 382995,
+  "sha256": "95f07214984708034aa1c4300af236ba262f0a5b56ef494c0f75082ada4ec1b9"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -4922,22 +4922,22 @@
  {
   "path": "README.md",
   "size": 16879,
-  "sha256": "f69681dd6dc13e077e632961e1384655c0ff2844a1e208063fdc3b65c30caaeb"
+  "sha256": "b7d958a9fe9fbec43704a7627744a3d0b4195efbd905ec1c9931328be68df043"
  },
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "7b520e9fd8253745bf1ef47cb9d6bc6f343197e6f907291279b91dc3629405a9"
+  "sha256": "e122702e67294f8770675ac94979805c1b6836578c44fc25b869f810ec0b4c0c"
  },
  {
   "path": "START-HERE.txt",
   "size": 4025,
-  "sha256": "21ae2efbdd2f30e4b24d9e3a2c255ef54cd4ad76c227e725a930ff4414261c96"
+  "sha256": "2e3d82e03ce70801a3e0d4a8e7a83bd50e461bad3e7d570d57225582f4aa1bf9"
  },
  {
   "path": "STATE.md",
-  "size": 6144,
-  "sha256": "7f903be11a5889ec580c70547e4be4044f0e6a74e15a52021d06927ffa3f2c30"
+  "size": 6440,
+  "sha256": "6f121615892c2dbef462106534e57671a441a352123155622e997930582ccbff"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -5452,7 +5452,7 @@
  {
   "path": "TESTS/test_release_contract.py",
   "size": 378239,
-  "sha256": "d10c6c28d3ca1eff4099b04e3eeca1edcaee495c8dad12de4a164f24ceaeb72d"
+  "sha256": "946a3c3c786dd6e1ff3bf6f92832158d3582d85b00d93c8f1c6b6e009fd5ad25"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -6052,12 +6052,12 @@
  {
   "path": "VALIDATION.json",
   "size": 2548,
-  "sha256": "11c8ad81ac854420f04d42665b49bc342a1ecf8f56fe9ca6851e1b9776195e1f"
+  "sha256": "fddee0c72f791a10aea6dffcd1ddb096a5bf0a97662afd1a2dadd607f4beae25"
  },
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "6b634e65f8b59b65a809da48b63a1d2f4d4d9a0f6b0c25c8f2f881bded78bf0b"
+  "sha256": "1c3bdf977ce4eb1296f684f9070f5ae7d7ef08672bf758a26c220be97cc08c68"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",

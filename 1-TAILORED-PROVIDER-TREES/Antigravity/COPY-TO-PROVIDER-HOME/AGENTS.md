@@ -18,6 +18,6 @@ skills. Do not copy these skills into another app's home: every provider owns
 its own tree, and duplicate copies drift.
 
 - Read the workspace's `AGENTS.md` / `.agents/rules` before editing: they
-  override this file where they are more specific.
+  win where more specific.
 - Prefer the Antigravity browser and terminal tools for inspection; state what
   you verified instead of describing what you would do.

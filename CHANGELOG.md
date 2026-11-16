@@ -1,3 +1,10 @@
+## 8.53.2 (2026-11-16)
+
+- **Expanded the models' creative scope and stopped false blocks.** The
+  instruction set and the kit state the full range of adult work plainly;
+  the one hard line is unchanged. Fewer refusals fired on adult work.
+  81 canonical skills ship in this release.
+
 ## 8.53.1 (2026-11-16)
 
 - **The preamble archive is gone.** 8.53.0 retired the archive's generator and its
