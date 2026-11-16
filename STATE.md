@@ -45,6 +45,18 @@
 
 ## History
 
+8.53.1 (2026-11-16): maintenance release - the 8.53.0 preamble-archive retirement
+is completed (49 archived texts removed; marked-block installs converge alone);
+SOUL.md slimmed to what the contract does not carry (identity, consent framing +
+hard line, yesman, recency, hard blocker - everything else restated
+AIO-INSTRUCTION.md); MANUAL-PASTE.txt rebuilt from it; CLAUDE-CODE-ADDENDUM.md
+slimmed to output identity + attribution stripping (was a restatement of the
+contract); docs/GLOBAL-INSTRUCTION-AUDIT.md retired (findings live in ADR-0007);
+unsynced working-tree duplication reverted; 2-PREAMBLES/README.md, docs/GUIDE.md,
+0-UNRESTRAINT-PACKS/README.md synced (web agents route to AIO-INSTRUCTION - Web.md;
+MANUAL-PASTE is the persona paste); changelog links to the retired per-version
+notes repaired to tag permalinks; GENERAL-1 prompt regains "and its design is up
+to you".
 8.53.0 (2026-11-16): debloat - every provider installs from _CANONICAL-SKILLS (six
 generated skill copies, 3,600 files, removed); dead templates, copy maps, workspace
 instruction copies, mega pack and docs/history retired; release body cut from

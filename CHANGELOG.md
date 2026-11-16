@@ -1,3 +1,40 @@
+## 8.53.1 (2026-11-16)
+
+- **The preamble archive is gone.** 8.53.0 retired the archive's generator and its
+  CI step but shipped the archive itself. The 49 archived texts
+  (`2-PREAMBLES/history/`, ~470 KB) are removed. Installs replace the marked
+  `<!-- UABS-PREAMBLE -->` block wholesale, so no archive is needed; a machine
+  wired before v7.5.0 (unmarked soul text) keeps that leftover block until it
+  is deleted by hand once. 81 canonical skills ship in this release.
+- **`SOUL.md` is now only what `AIO-INSTRUCTION.md` does not carry.** Identity,
+  the consent framing and the one hard line, the no-yes-man rule, source recency
+  and the hard-blocker rule. The authorization, persona-continuity and
+  every-medium paragraphs restated the contract in weaker words and were
+  installed beside it; they are gone (the explicit rules are untouched -
+  `AIO-INSTRUCTION.md` is byte-identical to 8.53.0).
+- **`MANUAL-PASTE.txt` rebuilt from the slim soul plus the unchanged web block**
+  (5.3 KB to 3.7 KB). It stays self-contained and pure ASCII, and keeps the full
+  explicit stance. Docs now route web agents that must build or fix things to
+  `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION — Web.md`, with `Web Light.md` for the
+  smallest boxes; MANUAL-PASTE is the persona-plus-consent paste.
+- **`CLAUDE-CODE-ADDENDUM.md` slimmed to its unique job** (4.6 KB to 0.7 KB):
+  it restated the operator-authority, rights-decisions, security-work and
+  provenance sections of the contract. What remains is what the contract does
+  not carry: don't volunteer the model name, `Strip-AI-Attribution.py` for
+  existing text, and the server-side limit note.
+- **`docs/GLOBAL-INSTRUCTION-AUDIT.md` retired.** A dated (2026-11-08) personal
+  injection audit; its findings were absorbed by ADR-0007 and the Ponytail
+  rollout section of the guide. Git history keeps the text.
+- **Docs and gates synced.** `2-PREAMBLES/README.md` no longer documents the
+  archive step and stale byte counts; `docs/GUIDE.md` likewise, and its stale
+  pointer to the retired audit now names ADR-0007; the stale
+  `test_manual_paste_is_generated_not_hand_kept` is now
+  `test_manual_paste_is_present_and_pure_ascii`, matching what it checks.
+- **Changelog links repaired.** The per-version notes retired in 8.53.0 were
+  linked from this file; they now point at the git tag that carries each file.
+- **`PROMPTS/GENERAL-1` regains** "and its design is up to you" (parity with its
+  private source).
+
 ## 8.53.0 (2026-11-16)
 
 - **One skill tree.** Every provider now installs straight from `_CANONICAL-SKILLS`.
@@ -2687,21 +2724,21 @@ content, not the skill inventory.
 
 - `Setup-CodebaseMemory-Index.ps1` now runs the whole lifecycle: `-Apply` writes/refreshes every `.cbmignore`, `-Index` then indexes every project in scope (per-project nodes/edges/excluded table, exit code = failures), and `-ExtraIgnore 'a/','b.json'` adds project rules that persist. Custom rule lines now survive re-runs (kept under a `# --- custom rules ...` header) - previously a re-run reset hand-tuned ignores, which is how vendored trees crept back into graphs. Base rules extended with `bin/`, `Bin/`, `src/SKSE/`, `SKSEMenuFramework.h`, `zAssets/`, `zOlder/`.
 - `codebase-memory` skill: documents the server's v0.11.0 `cli` mode (list/delete/index maintenance without an MCP client), the purge discipline anchored to the operator's project registry (source trees the operator works on DO get indexed; only vanished roots, personal exports, and unmodified third-party installs get purged), and per-provider auto-routing via `Set-McpProfile -Task code` (project-scoped on Claude/Grok/Codex, native `code` profile on Hermes, global opt-in on Kimi).
-- Measured on the operator's machine at release: 45 projects / 63,544 nodes / store ~357 MB after the rework; the worst bloat rebuild was 90,546 -> 2,852 nodes from one project, and a whole-store outlier sweep reports clean. 173 canonical skills total. [Details](docs/history/V8.11.0-CHANGELOG.md).
+- Measured on the operator's machine at release: 45 projects / 63,544 nodes / store ~357 MB after the rework; the worst bloat rebuild was 90,546 -> 2,852 nodes from one project, and a whole-store outlier sweep reports clean. 173 canonical skills total. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.11.0/docs/history/V8.11.0-CHANGELOG.md).
 
 ## 8.10.0
 
 - Personal-data boundary is now enforced, not just documented: `SECURITY.md` states the classes that must never be committed, `.gitignore` blocks them by pattern (chat exports, `conversations*.json`, `chat.html`, `memories/`, `users.json`, `login_history.json`, `LOCAL-ONLY/`, `*.local.*`), and the new `TESTS/test_privacy_boundary.py` gate fails CI on any tracked file carrying an account name, home path, personal e-mail or locality. Two real findings were fixed on the spot: a third party's e-mail embedded in the leaked-prompt collection (redacted at the byte level, EOLs preserved) and the maintainer's folder layout used as a PowerShell test fixture (replaced with neutral paths).
 - New `project-intel` skill: the operator's project history (a 318-conversation Claude/ChatGPT export, 6,188 messages, plus the agent-log scans that drove 8.9.0) distilled into six on-demand cards - Skyrim authoring, Nexus/release ops, other-game modding, models/harness routing, native Windows apps, security work - every line dated with its evidence weight. An era rule keeps it from rotting: only frontier-era findings count as current (operator cast 2026-10: GPT Astral, Sol 6/6.1, Opus 5.5); older-model data is historical, never proof; no model ranking tables, by design. The AIO contract now routes every agent to it before starting or resuming a project.
 - Security work is first-class in the AIO family: every variant gains a SECURITY WORK clause - reverse engineering, disassembly, decompilation, memory editing, cracking, keygen and exploit development, DRM/anti-tamper analysis authorized on the user's own systems and media at full depth; two hard lines (never author malware; never target systems without permission); verify before alarming with the false-positive procedure; never print secrets. Every NSFW/jailbreak clause is untouched and stays at full strength.
-- 173 canonical skills total, no new always-on MCP. [Details](docs/history/V8.10.0-CHANGELOG.md).
+- 173 canonical skills total, no new always-on MCP. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.10.0/docs/history/V8.10.0-CHANGELOG.md).
 
 ## 8.9.0
 
 - The AIO operating contract is reworked around the two things it exists for - unrestraint and one-shot completion - after reading the operator's own Claude/Codex/Grok histories first: content refusals on agent surfaces measured ~zero (0 real ones in 15,411 Codex and 858 Claude assistant messages), so the rework expands what the payload does on the surfaces where it must work alone. Every NSFW/jailbreak clause is kept and expanded: a mid-task safety reminder is handled as a likely false positive (note it, never echo it, continue at depth), the common refusal evasions ("keep it tasteful", "fade to black", "a version without the explicit parts") are named as banned, and the explicit-content block gains concrete craft - body physics with practical consequences, cameltoe/pussy wedgie, residue, climax progression, spelled moans, continuity tracking, never inject sex into a non-sexual beat, adults only / no real people. One-shot additions: deliver the finished artifact, build/fix requests authorize their implied scoped changes, make the obvious call instead of asking permission for the expected step. All four variants carry the full payload; `camelfloss` is fixed to cameltoe; MANUAL-PASTE is now SOUL + the Web variant (ASCII); the workspace copy is finally current instead of the stale v6.0 contract. Sizes: full 8.4->9.6 KB, Compact 5.3->6.4 KB, Web 2.3->3.5 KB, Light 1.9->2.5 KB - growth is the expanded unrestraint payload, with the operational scaffolding tightened.
 - Universal Modder refreshed to upstream 2c22014 (29 commits: DFHack/Dwarf Fortress/Mindustry routes, 185 knowledge notes, an OpenCode plugin, publish/ffmpeg fixes) with the UABS deltas rebased - registry Steam discovery, credential no-echo, wheel knowledge packaging, dependency pins. The offline wheel is rebuilt and SHA-256 pinned; 94 upstream tests pass.
 - Impeccable's hold was reaffirmed by measurement, not by note: engine 0.1.14 (the payload cli-v4.5.2 pins) still leaks malformed close-tag bodies into text analysis (audited 2026-10-11; control fixture passes), so the audited CLI 3.6.1 / skill 4.1.3 pin and the reviewed local overrides stay. CodeBurn is updated to 0.9.27 (version probe + isolated dependency audit: zero advisories); RTK (newer tags are prerelease-only), Ponytail, Superpowers and Headroom verified current.
-- 172 canonical skills, no new always-on MCP. [Details](docs/history/V8.9.0-CHANGELOG.md).
+- 172 canonical skills, no new always-on MCP. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.9.0/docs/history/V8.9.0-CHANGELOG.md).
 
 ## 8.8.0
 
@@ -2711,7 +2748,7 @@ content, not the skill inventory.
 - Codex MCP refresh treated Codex's own `enabled = true` as user policy, so context7 stayed at 4.0.4 while every other app ran the 4.3.0 pin; real custom policy now keeps its filters and gets the pin moved in place, and Codex's re-serialization no longer causes a rewrite (and backup) every install.
 - Hermes named profiles were frozen clones of the default skills folder (26-47 stale skills each, ~72 retired ones in three); managed profiles are now refreshed, with Skyrim skills only in `skyrim`.
 - Personal profile: `%USERPROFILE%\.uabs\profile\PROFILE.md` plus a generated machine map (game folders, mod managers, logs, tool roots) are added to every provider as one capped block, never part of a repository. `-ProfileTemplate autonomous-builder` seeds a profile distilled from heavy real use.
-- `TOOLS/usage_report.py` measures where your usage goes from local logs. Its findings (124k-token median context per Codex call, 23% approval reviews, 12% forked subagents, 71 limit resumes) shaped `token-efficiency`, `state-resumption`, `release-checklist` (mod-site changelog and payload-only archives) and `docs/USAGE-ECONOMY.md`. 172 canonical skills total (123 general + 49 Skyrim pack). [Details](docs/history/V8.8.0-CHANGELOG.md).
+- `TOOLS/usage_report.py` measures where your usage goes from local logs. Its findings (124k-token median context per Codex call, 23% approval reviews, 12% forked subagents, 71 limit resumes) shaped `token-efficiency`, `state-resumption`, `release-checklist` (mod-site changelog and payload-only archives) and `docs/USAGE-ECONOMY.md`. 172 canonical skills total (123 general + 49 Skyrim pack). [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.8.0/docs/history/V8.8.0-CHANGELOG.md).
 
 ## 8.7.40
 
@@ -2723,41 +2760,41 @@ content, not the skill inventory.
 - Repair plugin shell prerequisites using the installed Git location, with a verified user-PATH backup and restart guidance. Detect the prerequisite in the doctor; test real Windows-to-shell execution and multiple Git installs.
 - Disable only a duplicate older/equal Codex curated Superpowers when its newer upstream counterpart is enabled. Back up exactly; preserve personal settings and trust, and scope inventory to the selected home.
 - Retire known unconditional legacy CBM reminders that instructed automatic indexing. Preserve custom/gated hooks; do not enable indexing or watching.
-- Refresh nine tested component pins and retain bundle security/compaction patches. Remove three superseded offline payloads from distribution; canonical personal skill changes remain intact. [Evidence and limits](docs/history/V8.7.40-CHANGELOG.md).
+- Refresh nine tested component pins and retain bundle security/compaction patches. Remove three superseded offline payloads from distribution; canonical personal skill changes remain intact. [Evidence and limits](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.40/docs/history/V8.7.40-CHANGELOG.md).
 
 ## 8.7.39
 
-- Review follow-up: security probes fail closed on missing/malformed responses and unknown quality state, drain both native pipes and time out hung requests. Windows waits retain signed/259 exit codes and read only the requested log tail. Correct 429 guidance without changing models or adding MCPs. Repair Forge's stale manifest after repository-link changes. [Details](docs/history/V8.7.39-CHANGELOG.md).
+- Review follow-up: security probes fail closed on missing/malformed responses and unknown quality state, drain both native pipes and time out hung requests. Windows waits retain signed/259 exit codes and read only the requested log tail. Correct 429 guidance without changing models or adding MCPs. Repair Forge's stale manifest after repository-link changes. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.39/docs/history/V8.7.39-CHANGELOG.md).
 
 ## 8.7.38
 
-- The wired preamble now makes every install fix open Dependabot, code-scanning, and secret-scanning alerts on the repository just created, pushed, or updated, then check again. The pack probe is used when it is present; otherwise the same `gh api` queries run against that repository. A failed query is not zero. Alerts are not dismissed. 172 canonical skills. No new MCP and no dependency pin change. [Details](docs/history/V8.7.38-CHANGELOG.md).
+- The wired preamble now makes every install fix open Dependabot, code-scanning, and secret-scanning alerts on the repository just created, pushed, or updated, then check again. The pack probe is used when it is present; otherwise the same `gh api` queries run against that repository. A failed query is not zero. Alerts are not dismissed. 172 canonical skills. No new MCP and no dependency pin change. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.38/docs/history/V8.7.38-CHANGELOG.md).
 
 ## 8.7.37
 
-- After a push or dependency update, query open Dependabot, code-scanning, secret-scanning, and code-quality flags. A failed query is not a clean repository, and a 404 on code quality is not zero findings. Secret output is the type and alert URL only. 172 canonical skills. No new MCP and no dependency pin change. [Details](docs/history/V8.7.37-CHANGELOG.md).
+- After a push or dependency update, query open Dependabot, code-scanning, secret-scanning, and code-quality flags. A failed query is not a clean repository, and a 404 on code quality is not zero findings. Secret output is the type and alert URL only. 172 canonical skills. No new MCP and no dependency pin change. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.37/docs/history/V8.7.37-CHANGELOG.md).
 
 ## 8.7.36
 
-- Hide generated provider skill copies from default search and pin the wired preamble hash. Add Wait-External.ps1 so a CI or local wait returns one exit code and the failed-step log. Record why openrouter/free stays off the main route. 172 canonical skills total. No new MCP and no dependency pin change. [Details](docs/history/V8.7.36-CHANGELOG.md).
+- Hide generated provider skill copies from default search and pin the wired preamble hash. Add Wait-External.ps1 so a CI or local wait returns one exit code and the failed-step log. Record why openrouter/free stays off the main route. 172 canonical skills total. No new MCP and no dependency pin change. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.36/docs/history/V8.7.36-CHANGELOG.md).
 
 ## 8.7.35
 
 - Add one shared, executable task-recipe map across all five providers: compose relevant skills, CLIs and scoped MCP profiles for games/mods, UI, assets, code, research and publication; preserve personal registrations and keep Windows desktop opt-in.
 - Add narrow native Hermes Blender, Unity, Godot and web phases when prerequisites exist; retain existing creative/code/game profiles and personal tuning.
-- Update tested RTK to 0.51.0 and Ponytail to 4.10.1, retaining the safe rewrite allowlist and Cursor security patch. Add disposable-home routing checks. [Details](docs/history/V8.7.35-CHANGELOG.md).
+- Update tested RTK to 0.51.0 and Ponytail to 4.10.1, retaining the safe rewrite allowlist and Cursor security patch. Add disposable-home routing checks. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.35/docs/history/V8.7.35-CHANGELOG.md).
 
 ## 8.7.34
 
 - Replace stale README history, broken links and incomplete third-party listings with current installation/profile guidance and complete catalog coverage. Preserve historical release notes under docs/history.
 - Refresh Hermes model guidance against the public catalog; retain the main model and existing aliases rather than remapping legacy names to newer paid endpoints.
-- Repair only the delisted OpenRouter free Ling compression endpoint to Inkling free; normalize unsupported ultra to max, preserve other fields and reuse verified backups/rollback. Add executable preservation/idempotence checks and documentation link/coverage checks. [Details](docs/history/V8.7.34-CHANGELOG.md).
+- Repair only the delisted OpenRouter free Ling compression endpoint to Inkling free; normalize unsupported ultra to max, preserve other fields and reuse verified backups/rollback. Add executable preservation/idempotence checks and documentation link/coverage checks. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.34/docs/history/V8.7.34-CHANGELOG.md).
 
 ## 8.7.33
 
 - Add pinned Universal Modder 0.2.0 to the default local tool install and all five provider trees: 172 canonical skills total. One indexed router, ten on-demand guides, shared CLI and offline knowledge snapshot; no fal MCP or upstream session hooks.
 - Fix redirected Windows UTF-8 output, knowledge note encoding, publication path separators and Steam registry discovery; package fonts, PowerShell support and knowledge in the wheel. Run 22 upstream tests plus a dependency-free bundle regression.
-- Refresh eight evaluated pins: Playwright MCP/CLI, Firecrawl, official GitHub MCP, shadcn, Blender MCP, Windows MCP and optional ComfyUI CLI. Preserve scoped activation, Windows OFF-by-default, RTK's narrow allowlist and compatibility holds. [Measurements and limits](docs/history/V8.7.33-CHANGELOG.md).
+- Refresh eight evaluated pins: Playwright MCP/CLI, Firecrawl, official GitHub MCP, shadcn, Blender MCP, Windows MCP and optional ComfyUI CLI. Preserve scoped activation, Windows OFF-by-default, RTK's narrow allowlist and compatibility holds. [Measurements and limits](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.33/docs/history/V8.7.33-CHANGELOG.md).
 - Fix Hermes profile migration treating harmless native stderr warnings as fatal PowerShell 5.1 errors; preserve diagnostics and nonzero-exit failure checks in the shared runner, with a real native-command regression.
 - Tighten publication/knowledge credential diagnostics to fixed messages and file paths. Resolve three CodeQL false-positive label flows without suppressing scanning or echoing matched values; synthetic rejection/no-echo tests remain runnable.
 
@@ -2765,20 +2802,20 @@ content, not the skill inventory.
 
 - Retire the exact obsolete global Codex Impeccable executable pair behind **Design deep pass** (Stop) and **Checking UI changes** (PostToolUse) failures. The legacy CMD conditional fails under PowerShell and references an executable the current skill no longer ships.
 - Preserve current `hook.mjs` entries, similarly labelled custom commands, metadata, other providers and hook trust. Reuse atomic exact-byte backups and idempotent cleanup; the installed-state doctor now detects this pair through the shared classifier.
-- Extend the real Windows installer regression with both reported hooks, preservation and original-byte backup checks. Fresh installs still create no global design hooks. No dependency, standing schema, profile or RTK change. [Details](docs/history/V8.7.32-CHANGELOG.md).
+- Extend the real Windows installer regression with both reported hooks, preservation and original-byte backup checks. Fresh installs still create no global design hooks. No dependency, standing schema, profile or RTK change. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.32/docs/history/V8.7.32-CHANGELOG.md).
 
 ## 8.7.31
 
 - Fix CodeQL #228 polynomial regex backtracking in the shipped Ponytail Cursor adapter. A real 900 KB adversarial command must complete within three seconds. Remove the unused unpatched upstream Ponytail ZIP; offline fallbacks still use the vendored tree.
 - Codex upgrades retire stale bundle executable gate handlers from native `hooks.json`, with exact-byte backups and full-path ownership checks. Custom sibling hooks, metadata, plugin hooks and trust state are preserved. Cleanup also runs without Python and on uninstall.
 - The installed-state doctor now fails on surviving retired native handlers or unreadable native hook JSON. It never executes arbitrary user hooks as a test.
-- Fix legacy plugin cleanup crossing into another TOML table; honor custom `CODEX_HOME`. Keep native hook backups within the existing three-copy retention limit. Add executable Windows fixtures for fresh, previous, partial, missing-Python and repeated installs, including spaces/Unicode. No new always-on MCP or wider RTK allowlist. [Details](docs/history/V8.7.31-CHANGELOG.md).
+- Fix legacy plugin cleanup crossing into another TOML table; honor custom `CODEX_HOME`. Keep native hook backups within the existing three-copy retention limit. Add executable Windows fixtures for fresh, previous, partial, missing-Python and repeated installs, including spaces/Unicode. No new always-on MCP or wider RTK allowlist. [Details](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.31/docs/history/V8.7.31-CHANGELOG.md).
 
 ## 8.7.30
 
 - Audited component refresh and canonical/native plugin parity; 171 canonical skills total. Narrow RTK 0.50.0 policy, scoped MCPs, and reviewed personal overrides preserved.
 - Windows MCP selects required Python 3.14 and stays off by default. Optional ComfyUI CLI guidance adds local-media workflow support without a new standing MCP.
-- Catalog freshness checks distinguish compatibility holds and independent skill releases. Full measurements and retained pins: [v8.7.30](docs/history/V8.7.30-CHANGELOG.md).
+- Catalog freshness checks distinguish compatibility holds and independent skill releases. Full measurements and retained pins: [v8.7.30](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/v8.7.30/docs/history/V8.7.30-CHANGELOG.md).
 
 - SillyTavern gateway installer rejects positional arguments: a pasted `-Force.` can no longer silently set the bundle root to `.` and start a partial install. Validate the template root before writing, resolve relative roots, and back up replaced text files, including a forced profile reset.
 - Gateway launcher selects exactly one genuinely loaded chat/vision model, excludes downloaded-only models and embeddings, and preserves config bytes on repeated starts. Missing markers no longer recommend resetting the user's tuning. Add executable Windows PowerShell regression checks to the pack gate and document startup order.

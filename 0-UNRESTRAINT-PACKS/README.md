@@ -27,7 +27,9 @@ layers — stacking two costs tokens and contradicts itself.
 The installer wires the agent-CLI variant into each provider's instruction file
 automatically (as `[profile block] + [SOUL] + [AIO]`). The web variants have
 no config to wire — paste them. `2-PREAMBLES/MANUAL-PASTE.txt` is the
-standalone web paste.
+persona-plus-consent standalone paste (for creative or roleplay boxes); web
+agents that must build or fix things should paste `AIO-INSTRUCTION — Web.md`
+instead.
 
 **What "Light" cuts, and what it does not (reworked 2026-11-13).** Each variant
 states the adult-fiction stance once: one hard line (nothing sexual
@@ -44,7 +46,7 @@ phrasing.** Neither is weaker on content; only the scaffolding differs.
 
 | Folder | Source | What it is |
 |---|---|---|
-| `CLAUDE-CODE-ADDENDUM.md` | Operator kit | Claude Code output-identity and provider-boundary addendum; paste after AIO or keep in the project `CLAUDE.md` |
+| `CLAUDE-CODE-ADDENDUM.md` | Operator kit | Only what the AIO contract carries nothing of: don't volunteer the model name, `Strip-AI-Attribution.py` for existing text, server-side limits. Paste after AIO or keep in the project's `CLAUDE.md` |
 | `Fun-stuff-kit/` | Prompt pastes | Story, Websim, Vision FULL/SHORT, Vision MAX, Character Maker, FablesGG, manga director, Tags, Tools, Sites. Map in `Fun-stuff-kit/INDEX.txt` |
 | `Tavern-presets/` | Operator kit | WooJuice V12.1 + V12.1 SPEECH + light variants + notes (SillyTavern) |
 

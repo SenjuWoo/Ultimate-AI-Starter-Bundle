@@ -289,10 +289,10 @@ The preamble is now **installed automatically**, not pasted by hand:
 
 - `2-PREAMBLES/SOUL.md` - the operator's own soul config: the unrestraint
   declaration, the no-yes-man rule and the source-recency rule, one line each,
-  nothing that only decorates (728 B after the v8.15.1 cleanup). Shipped
+  nothing that only decorates. Shipped
   verbatim and identity-neutral: it names no provider, so it is safe in all six provider homes.
 - `2-PREAMBLES/MANUAL-PASTE.txt` — the standalone web paste, pure ASCII, for web UIs (ChatGPT/Gemini) that have no
-  instruction file: paste it into the custom-instructions box
+  instruction file: paste it into the custom-instructions box (persona and hard limits only; for web agents doing real work, paste `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION — Web.md` instead)
 
 `INSTALL-AIO.ps1` appends `SOUL.md` + `AIO-INSTRUCTION.md` to
 Claude Code (`~/.claude/CLAUDE.md`), Codex (`~/.codex/AGENTS.md`), Kimi
@@ -1076,9 +1076,10 @@ python TOOLS/ponytail_mode.py init   --apply       # install time: off only if n
 - The installed-state doctor fails when the mode is `off` and any provider still has
   ponytail skills loaded.
 
-What else is always injected - Superpowers' startup skill, the reason it is kept
-enabled, and the switch to scope it - is measured in
-[GLOBAL-INSTRUCTION-AUDIT.md](GLOBAL-INSTRUCTION-AUDIT.md).
+The always-on design - the marker-bounded managed block, the profile block
+and its overflow rule, and Ponytail's off-by-default rollout - is documented in
+[ADR-0007](decisions/0007-advisory-discovery.md) and the Ponytail section above.
+The dated 2026-11-08 injection audit was retired in 8.53.1 (kept in git history).
 
 ### Upstream drift report
 

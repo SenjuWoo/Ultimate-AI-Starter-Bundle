@@ -1,13 +1,14 @@
 # 2-PREAMBLES — SOUL + AIO for every agent
 
-## Editing the pack's own text (SOUL.md / AIO-INSTRUCTION.md)
+## Editing the pack's preamble (SOUL.md / AIO-INSTRUCTION.md)
 
-Before you change either source file, copy the OUTGOING text into `history/`
-(one file per archived text, `.md`). The installer strips any text that exactly
-matches a source file or an archived file, so an edit converges machines wired
-by the older release. Skip this and those machines keep the old block and gain
-a second one - the duplication v8.7.23 removed. Archived copies are never
-written anywhere; they are only ever deleted from installed files.
+Installs replace the marked `<!-- UABS-PREAMBLE -->` block wholesale, so an
+edit to `SOUL.md` or `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md` converges every
+machine wired by v7.5.0 or later on the next install. Since 8.53.1 there is no
+archive of old preamble texts (the 8.53.0 retirement finished then; the archive
+and its generator served only unmarked installs from before v7.5.0). A machine
+wired before v7.5.0 carries unmarked soul text that no installer can recognize:
+delete that one leftover block by hand once.
 
 The universal preamble section in v8.0.0. One install wires the same
 SOUL and the same operating contract into every supported agent, so a fresh
@@ -17,9 +18,9 @@ machine comes up with the same agent behaviour as the operator's own setup.
 
 | File | What it is | Where it goes |
 |---|---|---|
-| `SOUL.md` | The operator's soul config: permission to write anything, no-yes-man rule, source-recency rule, consent framing - one line each, no filler (735 B after the v8.16.0 rewrite; the dead `--spicy` flag and the `BREAK FREE` theater are gone). Identity-neutral - it names no provider. | Appended to Claude / Codex / Kimi / Grok instruction files, **and** copied verbatim to Hermes home |
+| `SOUL.md` | The operator's soul config: permission to write anything, no-yes-man rule, source-recency rule, consent framing - one line each, no filler. Identity-neutral - it names no provider. | Appended to Claude / Codex / Kimi / Grok instruction files, **and** copied verbatim to Hermes home |
 | `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md` | The operating contract (`0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md`, unchanged). Finish-the-job, no yes-man, verify-don't-assume, adult fiction in scope. | Appended right after the SOUL block in the same files |
-| `MANUAL-PASTE.txt` | The owner's standalone web paste (soul plus content rules in one file), pure ASCII. For web UIs that have no instruction file. | ChatGPT / Gemini / any web chat custom-instructions box, pasted by hand |
+| `MANUAL-PASTE.txt` | Standalone web paste (slim soul + verify + explicit-content rules, one file), pure ASCII. For web UIs with no instruction file: the persona and the hard limits only; for web agents that must build or fix things, paste `0-UNRESTRAINT-PACKS/AIO-INSTRUCTION — Web.md` instead (`Web Light.md` for the smallest boxes). | ChatGPT / Gemini / any web chat custom-instructions box, pasted by hand |
 
 ## What the V8 installer wires
 
@@ -78,10 +79,12 @@ Every wired file ends up as, in order:
 - **Do not hand-edit managed SOUL/AIO blocks.** A hand-edited copy no longer matches the
   sources byte-for-byte, so wiring keeps it (unknown text is never erased) and
   appends the canonical block behind it — that is exactly how a file ends up
-  carrying two soul editions. Private preferences belong in your profile's
+  carrying two soul editions. For the same reason there is no preamble archive:
+  the marked block always identifies the installed copy, and edited unmarked
+  text is preserved, never reclaimed. Private preferences belong in your profile's
   `PROFILE.md`, not the public sources. Edit `SOUL.md` / `AIO-INSTRUCTION.md`
-  here only for intentional shared changes, then re-run wiring; `history/`
-  converges installed machines. Custom text outside managed blocks is preserved.
+  here only for intentional shared changes, then re-run wiring. Custom text
+  outside managed blocks is preserved.
 
 ## Manual install (no installer)
 

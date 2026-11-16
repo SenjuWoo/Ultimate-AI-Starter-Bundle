@@ -2054,7 +2054,7 @@ def test_no_skill_documents_an_unshipped_product() -> None:
     assert not offenders, f"skills still reference the removed Forge Bridge: {offenders}"
 
 
-def test_manual_paste_is_generated_not_hand_kept() -> None:
+def test_manual_paste_is_present_and_pure_ascii() -> None:
     """The web paste is the owner's standalone text: present and pure ASCII."""
     raw = (ROOT / "2-PREAMBLES" / "MANUAL-PASTE.txt").read_bytes()
     assert raw.strip(), "2-PREAMBLES/MANUAL-PASTE.txt is empty"
@@ -2635,7 +2635,7 @@ def test_wired_preamble_prefix_is_stable() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md").strip()
     block = soul + "\r\n\r\n" + aio
     digest = hashlib.sha256(block.encode("utf-8")).hexdigest()
-    assert digest == "1f007b39b4c3dccc18e81fd6cfa7bf4230ec511ddb7503b6a4c65e7cc40d0798", (
+    assert digest == "252e278d9b6ab85d2bde7dc664f404aecc5e1f38d04804dad0ba61f0e0cf9ed4", (
         "wired preamble prefix hash is %s; update this constant only in the "
         "same change as an intentional SOUL or AIO edit" % digest
     )
@@ -3419,9 +3419,9 @@ def main() -> int:
         test_forge_health_check_reads_fields_forge_emits,
         test_no_skill_documents_an_unshipped_product,
         test_no_hard_blocker_principle_is_shipped,
-    test_manual_paste_is_generated_not_hand_kept,
-    test_one_age_rule_and_no_conflicting_exclusions,
-    test_no_age_adjudication_wording_ships_anywhere_live,
+        test_manual_paste_is_present_and_pure_ascii,
+        test_one_age_rule_and_no_conflicting_exclusions,
+        test_no_age_adjudication_wording_ships_anywhere_live,
         test_no_skill_script_hardcodes_a_machine_path,
         test_every_v5_helper_called_actually_exists,
         test_provider_skill_sync_is_content_authoritative,

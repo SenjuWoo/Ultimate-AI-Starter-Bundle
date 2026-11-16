@@ -86,8 +86,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/CLAUDE-CODE-ADDENDUM.md",
-  "size": 4597,
-  "sha256": "296fb7cb5650b846524adfa2f457be04ff8b2643fb1099d80dae0384567601bf"
+  "size": 695,
+  "sha256": "cc4482c9fb3521c6fc71f48d912813aee4af8f0201174a2cb63bf545bac746fb"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Fun-stuff-kit/Character Maker.txt",
@@ -146,8 +146,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/README.md",
-  "size": 11045,
-  "sha256": "13bf7380747f754fa6f52b0853be628cc06bad1041c319ecec4dea3693fe3815"
+  "size": 11275,
+  "sha256": "036a5624b50c55c078ddc9ce9a4777212e2422e0c84ec7fc44ee0471587cfdb0"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/Tavern-presets/Character Creation.txt",
@@ -301,268 +301,23 @@
  },
  {
   "path": "2-PREAMBLES/MANUAL-PASTE.txt",
-  "size": 5339,
-  "sha256": "eb1b0cbe03a6b34e038a8bf4315ac3b159cbc9dd41fbeee1d174fbe7356ce69f"
+  "size": 3734,
+  "sha256": "8dde6f81779ef8426926bb920d9d1fabc7bef71e8cf1b7fc6fc7625bdf64805f"
  },
  {
   "path": "2-PREAMBLES/README.md",
-  "size": 6488,
-  "sha256": "4551080ddf9150927934249cb92b946edcbb3fcebdfa86488c6d16ce1fe4c48b"
+  "size": 6765,
+  "sha256": "e80eebd4da9586a42047eeb531e05c6d5e85ee37a026b742c5174b6bce254d19"
  },
  {
   "path": "2-PREAMBLES/SOUL.md",
-  "size": 2703,
-  "sha256": "8c919fb1b921ad335ff763253902d16f3b328a980d9192f47a1d4cd1c83efd18"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-0185e0249c27.md",
-  "size": 12206,
-  "sha256": "9d25fc564a8d35284e346005a7c83ea56e153e9c394a83696bcf375717a42b4a"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-032958e64a2a.md",
-  "size": 10990,
-  "sha256": "e060843e34d439638b004c8f88c9aa1e59109264590f72415af3178ca472004e"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-047c551c105f.md",
-  "size": 11978,
-  "sha256": "359465638e9da4cf074044431d0256011a948033ebd49dcf041e8b49a89687e6"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-0c2bd06f2773.md",
-  "size": 12559,
-  "sha256": "4d5da704656bf8344766805c722954fbf729f06e229d5aab405774c45177ab9f"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-0f629c7879bd.md",
-  "size": 11419,
-  "sha256": "6f594378f23469d823772f0b52a2249f15fa11e9b7b9fac5b6c87412b9dfe26d"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-1c0362415eea.md",
-  "size": 8438,
-  "sha256": "d9e3946c43962a87a1d361b21889d9d6e24e759e9a0dd9268e155ab819ce1f94"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-1c2ae58a7e08.md",
-  "size": 6649,
-  "sha256": "25dc1c59242b5c34f916adebc4c670f995cec96333a70558f7da8db7b8ee9076"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-1c7987415be5.md",
-  "size": 9855,
-  "sha256": "d38b154f612837f34c82b79371521edaf97daedbe27f1e0ed5781b904d8fb83c"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-20a18f386a8e.md",
-  "size": 11925,
-  "sha256": "54e2c8492b966f60e0c41e5e88aac3b5b9f71df5ce0541c75ec470a1d27a0901"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-48e2c2b1ca3a.md",
-  "size": 18154,
-  "sha256": "677d0fce3052f7839746652201ada42d2f678ce61b0b2f971b0b9f7a8d481629"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-4d7539adeb53.md",
-  "size": 13391,
-  "sha256": "9206bd69b46641d5e1d1c07559096d892a3d65b6757ed1c92171123ec44cf90d"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-5796b0c45995.md",
-  "size": 14503,
-  "sha256": "13c31efab8f84be2bc81d82ca53c14dde16bad25f2179a13e21835bd23708ca4"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-5d122d1f645f.md",
-  "size": 16820,
-  "sha256": "f688fd5d41016a71c61ad6d87a1c253dbf71118826d1d1e2bb7d69fa3de21c45"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-5e4166cf0a1e.md",
-  "size": 9501,
-  "sha256": "d2b3bfc387d086b9bec0010775258e9935f5472223793104b9e56881a0b5a0d8"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-6d3b80be965b.md",
-  "size": 10642,
-  "sha256": "ee662f6efa63a1ea214d3526381f3af8c26f32087354d569b5be975ecb2b8f6f"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-7516c2a21dcc.md",
-  "size": 10582,
-  "sha256": "d85fdefb2267a829dae57aec6509e71c77cef9567981f623efad4aff79fdd4e7"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-765f79e2e44a.md",
-  "size": 17281,
-  "sha256": "3a2bc00784ac77ebba187e1613718cc558c55600e6cd8f5d2174145cae620308"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-7d146d58c0a8.md",
-  "size": 15501,
-  "sha256": "26164b90b7b67c56aa23e363dc06dfabdf0b5ca42526f0812fdffadb194ccefb"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-98b2ff124a41.md",
-  "size": 17257,
-  "sha256": "aa2fd963ddbceb5fdeca195991501bbabcc112e60c47c3d444c6db385d31b588"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-992154f29409.md",
-  "size": 10332,
-  "sha256": "5e9b4c195aafc842aba7fff387055f8068b30c3733020e68a45470423b4bfae0"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-a55bb5bd6b8f.md",
-  "size": 10845,
-  "sha256": "237ec88e68b05de095a46b9f178c0a313a5a0d3a7ae4cfda202c7e34df38cbd6"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-b194f5617cc2.md",
-  "size": 11709,
-  "sha256": "caa01bca572e60c31892f00eae9bd29861c918d4d03d1416b74a803edf03d3f0"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-before-build-hygiene.md",
-  "size": 7975,
-  "sha256": "01bfa085b6a6964062a9b7c9623aebd5a8fd69de30eca8998cf166d05e0f0935"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-before-github-alert-fix.md",
-  "size": 7161,
-  "sha256": "23c1c82b9b12b87f5d275dc39d0c52e1a9e08067e981a982c1bead4bb4c3f214"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-before-task-routing.md",
-  "size": 6883,
-  "sha256": "f0668c9ad1155517c1f0735ff64887ae25dc0f937a42f19c74bd84d3eac655e3"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-c3e934cbc397.md",
-  "size": 10132,
-  "sha256": "3f69e956fbc3541a59e9f75f399ca970d32a6003fb6a9c4dfe2a9ede4231a1cd"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-cd5f91ee9ef0.md",
-  "size": 9083,
-  "sha256": "649d8d278fe4b9d19d9932ace976039d0ad5fda663f93bd497f9557164d731de"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-d52ecdb22fae.md",
-  "size": 16040,
-  "sha256": "eec2168394578b1d39d92a879447d8cee6f8a7865b186fabc878f8f6f08fe7bd"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-d68d7d9cd705.md",
-  "size": 10527,
-  "sha256": "0c9cdcdb8792782359606f462371560497e81d6f7fbb60069e0093c62cacb2dd"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-d8af751852a3.md",
-  "size": 10359,
-  "sha256": "b8e84fb6d61d67a6da25893c65c97d74e54349f7e5b88578bfe97c300988457b"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-df55099e4bc3.md",
-  "size": 9890,
-  "sha256": "29af02601d36d960d6956a6b3da81600b11a70101e33b3d38ebf68a5d323d180"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-e031ca214176.md",
-  "size": 12726,
-  "sha256": "75604ccc111191f9dbc599b8bf0ea74a841d7a67682f0830f987528b75e2954e"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-e4b8d877278b.md",
-  "size": 12644,
-  "sha256": "307df69c3ac8be94d3a5840b0605830e6593302df9acef2b773b5660ffa313c7"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-e77b65c7acdc.md",
-  "size": 12743,
-  "sha256": "00f827b1e15155123b06626f655e4176611e9bfd83259cee8466ee2131f2227a"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-f64b2efc2631.md",
-  "size": 9081,
-  "sha256": "603e7e252e217ef27872af04cb83aa971e9ca363dffa7f1a16a4404b12ccffef"
- },
- {
-  "path": "2-PREAMBLES/history/AIO-INSTRUCTION-f951da9e5409.md",
-  "size": 19404,
-  "sha256": "3ee20340302cf08f63a2e95cc2c5f3bd25192ce93d6170e60eb3e5d7504d3a43"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-004c33852184.md",
-  "size": 2227,
-  "sha256": "a9de1c9fde00ca212f481ff7d7fe2fdb7f32e999f72734e3ce80245247bc5e76"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-03540478edbe.md",
-  "size": 1095,
-  "sha256": "b367c9517a8ac3a5df57b7bd1e5ee03614f8249204b9908e98e922c442b6875d"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-0ed85395a273.md",
-  "size": 1579,
-  "sha256": "9227751449d47f2da1f3891b89dd40360d3842315bcca6aaf5a25d9d4c50d592"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-34a5484e0691.md",
-  "size": 735,
-  "sha256": "cbb03e767d90bff537795da3fc7caf8c4d44d42da3d94dd1d971e071324c5046"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-52da981cd410.md",
-  "size": 2089,
-  "sha256": "2e02f09ba3e2681a455093a8b1d1d9958c4e37327fc22ff621b1ff97dd1e82b0"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-8195833736f4.md",
-  "size": 1380,
-  "sha256": "cc78c53511ecc131843b2429313be9560c448cba286740053d481a282748e38b"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-95ec881588d3.md",
-  "size": 736,
-  "sha256": "826859ba376aea998ea39f3b65ae38bdf3abebcb77f99a6147a01dd811d7958e"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-a920aadb4234.md",
-  "size": 2994,
-  "sha256": "51aa2d908f11a77d9a235d2982b708e0eb301a071d75eb1626a20720bfba6ade"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-b98e51a5132e.md",
-  "size": 2203,
-  "sha256": "8f3930ac7f6487fe7e395b0c6ba73b65adbf00537dcfba9a5e84c71a1099c598"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-cfa09d03becd.md",
-  "size": 728,
-  "sha256": "71d67cab470815d38d6bbbb047547041169c9263dce21a76895b9110ea244eaa"
- },
- {
-  "path": "2-PREAMBLES/history/SOUL-d9a9a0df3d04.md",
-  "size": 1783,
-  "sha256": "fd6175d6d47c9e44171eab03929dcb967ece04e44853fc2348183c7e3ab8ee03"
- },
- {
-  "path": "2-PREAMBLES/history/provider-general-90e1bfb9417c.md",
-  "size": 17534,
-  "sha256": "ab43eb93af5da6454197b5c5c4440da783fecf8528b0b0fef2f71d20e303bf95"
- },
- {
-  "path": "2-PREAMBLES/history/provider-general-df1c31fd3c97.md",
-  "size": 17492,
-  "sha256": "35ce84c06006486d1d2fa68c19424ef81d2058ce796fcc64caf9a9c12752b515"
+  "size": 1098,
+  "sha256": "6170bed59bdd6d21a36614f5dc4ef02d8615a5f1674d101b94fd0c9fdb4ead10"
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66558,
-  "sha256": "bc2e752ab11cb07a039e9e3f81c0e256312c2b91a1647a239c9d5ae6acdcf4a3"
+  "sha256": "c5495fe70713580f51bbbdf1f2790e6035c577c0aade291ee60d04609f02bfb4"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -572,7 +327,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "eb0584de5b76fcf3de0d1ea3419cd7a9b243125ab416dca14933b69d80e566f0"
+  "sha256": "7d30fb874275eb9f5301e940f5720a2788c51940bdbb590d8ee67b93b573a958"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -582,7 +337,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "cffc8cc7f921e7c29c4487e2bdce6f30cacea30877159e1ff8eefe86f70fb5c7"
+  "sha256": "43ea16357eea4e977f9e9f911bdfa98c4f766959717bb9c0ce000f22e7cd28ff"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -5026,8 +4781,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 379185,
-  "sha256": "4015d18ac46aa1d941e30b7b38ae4c448bdf0a8d376a9a4672ea6078358fc79e"
+  "size": 382703,
+  "sha256": "a7bac29dd2c8d2ed1f955f9d2e3499a64e3a6c99c22bd40acfff0845b2e766fa"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -5136,8 +4891,8 @@
  },
  {
   "path": "PROMPTS/GENERAL-1-START-AND-FINISH.txt",
-  "size": 2463,
-  "sha256": "e1e739cf17eddf8d37a43b958d9d16ae2f555579bd862b42de0323c97cbc6ce9"
+  "size": 2492,
+  "sha256": "9ce3bca569342a29a4ec5dd4ec9667baf2cd33a3199f51e7a01b9908070791d1"
  },
  {
   "path": "PROMPTS/GENERAL-2-ARCHITECT-PLAN.txt",
@@ -5167,22 +4922,22 @@
  {
   "path": "README.md",
   "size": 16879,
-  "sha256": "28865219de411bb4c1fa465d63c859a5152e2b51f5880d15d403dad03128c44b"
+  "sha256": "f69681dd6dc13e077e632961e1384655c0ff2844a1e208063fdc3b65c30caaeb"
  },
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "91e1424d5d612e4e34636f06eb1231bc831fde530e85eeb0596efae9def40aef"
+  "sha256": "7b520e9fd8253745bf1ef47cb9d6bc6f343197e6f907291279b91dc3629405a9"
  },
  {
   "path": "START-HERE.txt",
   "size": 4025,
-  "sha256": "18a98208f4fcaf155ff3ce42b858def98bf1cf11c0a40282378930343a185e16"
+  "sha256": "21ae2efbdd2f30e4b24d9e3a2c255ef54cd4ad76c227e725a930ff4414261c96"
  },
  {
   "path": "STATE.md",
-  "size": 5249,
-  "sha256": "63fc26462f3040f630e9c0086aa09ce1aa9792b1378dc7686e7be0ac233ec57d"
+  "size": 6144,
+  "sha256": "7f903be11a5889ec580c70547e4be4044f0e6a74e15a52021d06927ffa3f2c30"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -5696,8 +5451,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 378228,
-  "sha256": "ed09f4ff751d60b97d81e666a8729919c758835e7901e79ffd3050e41615b5fc"
+  "size": 378239,
+  "sha256": "d10c6c28d3ca1eff4099b04e3eeca1edcaee495c8dad12de4a164f24ceaeb72d"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -6297,12 +6052,12 @@
  {
   "path": "VALIDATION.json",
   "size": 2548,
-  "sha256": "03832b7f643a6f17ba83172af3819a30917b447f1c9621c1096a67364d268640"
+  "sha256": "11c8ad81ac854420f04d42665b49bc342a1ecf8f56fe9ca6851e1b9776195e1f"
  },
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "32605e31994e8105164b1d7269c3e918da4eb3cd64306d1881cb27081c41a9ef"
+  "sha256": "6b634e65f8b59b65a809da48b63a1d2f4d4d9a0f6b0c25c8f2f881bded78bf0b"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -9330,14 +9085,9 @@
   "sha256": "c94e1218ef0a74962e59eee2177635a8c5da0ae93c87cbf3c186000fccdb1617"
  },
  {
-  "path": "docs/GLOBAL-INSTRUCTION-AUDIT.md",
-  "size": 5715,
-  "sha256": "9548edac0060c2b8fa99ae9ade9419a0d2b08940bab1fbec038cc1f9843a1896"
- },
- {
   "path": "docs/GUIDE.md",
-  "size": 71796,
-  "sha256": "7d8f41ee2586f2d9f11842eaf7a5625b45d814b7db4f0aa07e871681923b4cb7"
+  "size": 72014,
+  "sha256": "a89f3d7b6c4bee5133ed2cea00f065983e3d49689a12481e58d87ac524df7978"
  },
  {
   "path": "docs/HERMES-MODELS.md",

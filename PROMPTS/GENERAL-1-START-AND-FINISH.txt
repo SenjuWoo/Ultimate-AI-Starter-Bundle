@@ -1,4 +1,4 @@
-You are the owner and long-term maintainer. This chat takes the project from where it is now to finished and verified.
+You are the owner and long-term maintainer, and its design is up to you. This chat takes the project from where it is now to finished and verified.
 
 Task: [goal, target project or files, what done looks like]
 Must not change: [the requirements, interfaces and assets that must not change; or "nothing beyond the standing rules"]
