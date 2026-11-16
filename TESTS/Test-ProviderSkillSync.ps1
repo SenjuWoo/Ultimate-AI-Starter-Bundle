@@ -65,7 +65,13 @@ try {
     $legacy = Join-Path $dstRoot ('.uabs-skill-backup-personal-recovered-' + ('a' * 32))
     New-Item -ItemType Directory -Force -Path $legacy | Out-Null
     [IO.File]::WriteAllText((Join-Path $legacy 'SKILL.md'), 'only surviving personal copy', $utf8)
+    # Bytecode a skill script wrote in the source checkout is machine-local.
+    New-Item -ItemType Directory -Force -Path (Join-Path $srcSkill 'scripts\__pycache__') | Out-Null
+    [IO.File]::WriteAllText((Join-Path $srcSkill 'scripts\__pycache__\tool.cpython-314.pyc'), 'cache', $utf8)
+    [IO.File]::WriteAllText((Join-Path $srcSkill 'scripts\stray.pyc'), 'cache', $utf8)
     Sync-UabsProviderSkills -From $srcRoot -To $dstRoot -Provider Test
+    if (Test-Path -LiteralPath (Join-Path $dstSkill 'scripts\__pycache__')) { throw 'Interpreter cache was copied into a provider skill.' }
+    if (Test-Path -LiteralPath (Join-Path $dstSkill 'scripts\stray.pyc')) { throw 'A .pyc file was copied into a provider skill.' }
     if ([IO.File]::ReadAllText((Join-Path $dstRoot 'personal-recovered/SKILL.md')) -cne 'only surviving personal copy') { throw 'Interrupted skill backup was lost.' }
     $savedLegacy = @(Get-ChildItem -LiteralPath (Join-Path (Split-Path -Parent $dstRoot) '.uabs-skill-work') -Directory -Filter 'recovered-*')
     if ($savedLegacy.Count -ne 1 -or [IO.File]::ReadAllText((Join-Path $savedLegacy[0].FullName 'SKILL.md')) -cne 'only surviving personal copy') { throw 'Legacy recovery copy was not retained.' }
@@ -174,7 +180,6 @@ try {
     if (-not @(Get-ChildItem -LiteralPath (Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\backups') -Directory -Filter 'optional-skill-Test-opt-in-*').Count) { throw 'A changed optional skill was overwritten without a backup.' }
     foreach ($provider in 'Claude','Codex','Grok','Hermes','Kimi') {
       foreach ($opt in @(Get-ChildItem -LiteralPath (Join-Path $PackRoot 'BUNDLED-TOOLS\optional-skills') -Directory)) {
-        if (Test-Path -LiteralPath (Join-Path $PackRoot ("1-TAILORED-PROVIDER-TREES\$provider\COPY-TO-SKILLS-DIRECTORY\skills\" + $opt.Name))) { throw ('Optional skill fanned out by default: ' + $opt.Name) }
         if (Test-Path -LiteralPath (Join-Path $PackRoot ('_CANONICAL-SKILLS\' + $opt.Name))) { throw ('Optional skill is canonical: ' + $opt.Name) }
       }
     }

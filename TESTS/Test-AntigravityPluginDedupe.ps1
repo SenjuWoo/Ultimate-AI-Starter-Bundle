@@ -21,9 +21,9 @@ try {
   Assert (($ids -join ',') -eq 'superpowers,ponytail') ('Wrong delivered plugin set: ' + ($ids -join ','))
   Assert (@(Get-UabsAntigravityNativePluginIds -AgHome (Join-Path $fixture 'absent')).Count -eq 0) 'A missing home reported delivered plugins.'
 
-  # The real dedupe helper against the shipped Antigravity tree: an exact copy
+  # The real dedupe helper against the shipped skill tree: an exact copy
   # moves to a backup, a modified copy stays.
-  $expected = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Antigravity\COPY-TO-SKILLS-DIRECTORY\skills'
+  $expected = Join-Path $PackRoot '_CANONICAL-SKILLS'
   $skills = Join-Path $ag 'skills'
   New-Item -ItemType Directory -Force -Path $skills | Out-Null
   Copy-Item -LiteralPath (Join-Path $expected 'brainstorming') -Destination (Join-Path $skills 'brainstorming') -Recurse

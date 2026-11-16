@@ -44,7 +44,7 @@ four is a page that contradicts itself.
 ## Where the version still goes
 
 - The platform's structured version field and changelog section.
-- Agent-editable release notes (GitHub release body, `docs/history/` entries).
+- Agent-editable release notes (GitHub release body, `CHANGELOG.md` entries).
 - An archive or asset filename when the platform or an installer requires it.
 - A dependency cell (for example "requires SKSE 2.2.6") - that names what the reader must
   install, not this project's own version.

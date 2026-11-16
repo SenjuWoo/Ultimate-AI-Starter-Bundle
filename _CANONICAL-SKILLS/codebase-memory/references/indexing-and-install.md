@@ -32,7 +32,7 @@ Real case: a mod leaked 236 JSON files from a capitalized `Meshes` directory and
 18,067 nodes for 13 source files, until both cases were listed.
 
 **Always write both cases.** Use the shipped template rather than hand-rolling:
-`COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/.cbmignore`, or generate and verify with
+`PROJECT-TEMPLATE/.cbmignore`, or generate and verify with
 `TOOLS/Setup-CodebaseMemory-Index.ps1`.
 
 ## The four bloat sources

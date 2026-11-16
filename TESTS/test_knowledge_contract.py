@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-TEMPLATE = ROOT / "COPY-TO-YOUR-WORKSPACE" / "_PROJECT-TEMPLATE"
+TEMPLATE = ROOT / "PROJECT-TEMPLATE"
 
 
 class ProjectTemplate(unittest.TestCase):

@@ -93,7 +93,7 @@ jobs:
             echo "::error::$tag exists at this SHA but has no release; publishing it is a manual decision"
             exit 1
           fi
-          test -f "docs/history/V$version-CHANGELOG.md"
+          python .github/scripts/check_versions.py --notes "$version" >/dev/null
           { echo "publish=true"; echo "mode=publish"; echo "tag=$tag"; echo "version=$version"; echo "commit_time=$(git show -s --format=%cI HEAD)"; } >> "$GITHUB_OUTPUT"
 
       - name: Wait for every other check on this SHA
@@ -178,7 +178,7 @@ jobs:
           { 
             echo "**Which file?** Most people: \`Ultimate-AI-Starter-Bundle-$TAG-Full-Offline.zip\` (everything in one file). Smaller download: \`Ultimate-AI-Starter-Bundle-$TAG-Core.zip\` (the installer fetches the rest). Unzip it, double-click \`START-HERE.bat\`, then reopen your AI apps. The other files are checksums and build records for verifying the zip."
             echo
-            tail -n +2 "docs/history/V$VERSION-CHANGELOG.md"
+            python .github/scripts/check_versions.py --notes "$VERSION"
           } > "$RUNNER_TEMP/notes.md"
           # Re-running after a failed verification must be possible without ever
           # retargeting a tag. An existing release is reused only when it already

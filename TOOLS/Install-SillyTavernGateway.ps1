@@ -66,7 +66,7 @@ Copy-TextFile (Join-Path $template 'profile.yaml') (Join-Path $profile 'profile.
 Copy-TextFile (Join-Path $template 'SOUL.md') (Join-Path $profile 'SOUL.md')
 Copy-TextFile (Join-Path $template 'skills\sillytavern-gateway\SKILL.md') (Join-Path $profile 'skills\sillytavern-gateway\SKILL.md')
 
-$skillSource = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Hermes\COPY-TO-SKILLS-DIRECTORY\skills'
+$skillSource = Join-Path $PackRoot '_CANONICAL-SKILLS'
 foreach ($name in @('adult-character-sheet', 'adult-image-caption')) {
   $from = Join-Path $skillSource ($name + '\SKILL.md')
   if (-not (Test-Path -LiteralPath $from -PathType Leaf)) { throw ('Missing roleplay skill: ' + $from) }

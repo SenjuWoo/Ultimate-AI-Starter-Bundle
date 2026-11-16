@@ -18,12 +18,9 @@ import sys
 
 sys.dont_write_bytecode = True  # Read-only checks must not create import caches.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from fanout_providers import SCOPED  # noqa: E402  single source of truth
-
-# Keyed by the same provider names fanout_providers.PROVIDERS uses, so SCOPED
-# means the same thing in both tools. Hermes was missing here until v7.2.1,
-# which is why the bundle's most-used provider silently drifted three whole
-# skills behind canonical while the other four reported "up to date".
+# Every provider gets every canonical skill. Hermes was missing here until
+# v7.2.1, which is why the bundle's most-used provider silently drifted three
+# whole skills behind canonical while the other four reported "up to date".
 HOMES = {
     'Claude': r'%USERPROFILE%\.claude\skills',
     'Grok': r'%USERPROFILE%\.grok\skills',
@@ -125,9 +122,6 @@ def install(canon, dest, provider, check, notes):
               if os.path.isdir(os.path.join(canon, d))
               and os.path.exists(os.path.join(canon, d, 'SKILL.md'))]
     for sk in skills:
-        if sk in SCOPED and provider not in SCOPED[sk]:
-            withheld += 1
-            continue
         if sk in by_plugin:
             withheld += 1
             from_plugin += 1
@@ -190,9 +184,6 @@ def main():
                         if os.path.isdir(os.path.join(dest, d))])
         notes = []
         a, c, k, n, w = install(args.canonical_dir, dest, provider, True, notes)
-        held = ', '.join(sorted(s for s, p in SCOPED.items() if provider not in p))
-        if w and held:
-            notes.insert(0, 'withheld (scoped elsewhere): %s' % held)
         print('%-8s %3d skills present -> canonical %d | +%d new, %d updated, %d unchanged  [CHECK ONLY]'
               % (provider, existing, n, a, c, k))
         for msg in notes:

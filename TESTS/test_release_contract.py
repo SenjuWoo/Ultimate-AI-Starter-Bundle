@@ -232,10 +232,6 @@ def test_skills() -> None:
         low = body.lower()
         for token in tokens:
             assert token.lower() in low, f"{name}: missing contract term {token!r}"
-        for provider in PROVIDERS:
-            q = ROOT / "1-TAILORED-PROVIDER-TREES" / provider / "COPY-TO-SKILLS-DIRECTORY" / "skills" / rel
-            assert q.is_file(), f"{provider}: missing {rel}"
-            assert q.read_bytes() == p.read_bytes(), f"{provider}: {rel} drifted from canonical"
     assert not missing, "missing reliability guidance: " + ", ".join(missing)
 
 
@@ -332,7 +328,7 @@ def test_documented_skill_counts() -> None:
     assert actual > 60, f"canonical tree looks truncated: {actual} skills"
     readme = read(ROOT / "README.md")
     changelog = read(ROOT / "CHANGELOG.md")
-    history = read(ROOT / "docs" / "history" / f"V{BARE}-CHANGELOG.md")
+    history = changelog.split(f"## {BARE}", 1)[1].split("\n## ", 1)[0]
     validation = json.loads(read(ROOT / "VALIDATION.json"))
     packs = json.loads(read(ROOT / "BUNDLED-TOOLS" / "PACKS.json"))["packs"]
     pack_skills = {s for p in packs.values() for s in p["skills"]}
@@ -348,16 +344,6 @@ def test_documented_skill_counts() -> None:
     assert validation.get("canonical_skills") == actual, "VALIDATION canonical skill count drift"
     assert validation.get("registry_entries") == actual, "VALIDATION registry count drift"
     assert validation.get("provider_trees") == 6, "VALIDATION provider tree count drift"
-    # Every provider tree must hold exactly what canonical holds. A skill
-    # deleted from canonical but left in five provider trees is still shipped.
-    for provider in PROVIDERS:
-        tree = ROOT / "1-TAILORED-PROVIDER-TREES" / provider / "COPY-TO-SKILLS-DIRECTORY" / "skills"
-        names = {p.parent.name for p in tree.glob("*/SKILL.md")}
-        canon = {p.parent.name for p in CANON.glob("*/SKILL.md")}
-        assert names == canon, (
-            f"{provider} tree drifted from canonical: "
-            f"extra={sorted(names - canon)} missing={sorted(canon - names)}"
-        )
 
 
 def test_bootstrap() -> None:
@@ -539,9 +525,7 @@ def test_gate_and_remote_fail_closed() -> None:
 
 
 def test_hermes_cost_contract() -> None:
-    parent = ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "config.yaml"
-    installed = ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "COPY-TO-PROVIDER-HOME" / "config.yaml"
-    for path in (parent, installed):
+    for path in (ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "COPY-TO-PROVIDER-HOME" / "config.yaml",):
         cfg = read(path)
         # DeepSeek must actually execute/verify and long tasks must not die at an
         # arbitrary turn ceiling. OpenRouter already retries provider backends,
@@ -605,7 +589,6 @@ def test_hermes_cost_contract() -> None:
         # Never globally auto-trust future third-party hooks.
         assert not re.search(r"(?m)^hooks_auto_accept:\s*true\s*$", cfg), path
     # Keep both distributable surfaces identical, not a raw local export.
-    assert parent.read_bytes() == installed.read_bytes(), "Hermes reference config and actual installer source drifted"
 
 
 def test_hermes_native_profile_migration_contract() -> None:
@@ -1324,7 +1307,7 @@ def test_doctor_counts_every_skill_root_and_never_interpolates() -> None:
 # assert the absence instead of silently skipping.
 HERMES_FALLBACK_CHAIN: list[str] = []
 
-HERMES_STARTER = ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "config.yaml"
+HERMES_STARTER = ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "COPY-TO-PROVIDER-HOME" / "config.yaml"
 
 
 def _yaml_list_of_models(text: str, key: str) -> list:
@@ -1434,8 +1417,7 @@ def test_hermes_starter_carries_no_machine_state() -> None:
     LM Studio endpoint, a hook path, or an MCP command with an absolute path
     gets published.
     """
-    for rel in ("1-TAILORED-PROVIDER-TREES/Hermes/config.yaml",
-                "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml"):
+    for rel in ("1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml",):
         text = (ROOT / rel).read_text(encoding="utf-8")
         for pattern, what in (
             (r"[A-Za-z]:[\\/]Users[\\/]", "an absolute user profile path"),
@@ -1909,7 +1891,7 @@ def test_windows_ci_and_ps51_static_contract() -> None:
     assert "System.Collections.Generic.List[string]" in doctor, "doctor uses an ambiguous abbreviated generic type"
     assert "result=if(" not in doctor.replace(" ", ""), "doctor relies on ambiguous inline if syntax in hashtable value"
     assert "System.Text.UTF8Encoding" in doctor, "doctor should use an explicit System.Text encoder type"
-    assert "COPY-TO-SKILLS-DIRECTORY\\skills" in doctor, "doctor still checks only a handpicked skill subset"
+    assert "'_CANONICAL-SKILLS'" in doctor, "doctor still checks only a handpicked skill subset"
     assert "Get-FileHash" in doctor and "SHA256" in doctor, "doctor does not prove installed skills match provider-tailored bytes"
     assert "$critical=@(" not in doctor.replace(" ", ""), "partial critical-skill doctor can still pass an incomplete install"
     assert not re.search(r"(?mi)^\s*\$home\s*=", doctor), "doctor assigns PowerShell read-only $HOME (case-insensitive variable names)"
@@ -1937,7 +1919,7 @@ def test_v8_active_surface_uses_versionless_names() -> None:
         if path.suffix.lower() not in text_exts or path.name == "MANIFEST.json":
             continue
         rel = path.relative_to(ROOT).as_posix()
-        if rel.startswith("docs/history/") or rel == "CHANGELOG.md" or rel in (
+        if rel == "CHANGELOG.md" or rel in (
             "TOOLS/UABS-Common.ps1", "TESTS/test_release_contract.py",
             # Reads this repository's OWN history to derive which skills were
             # retired, so it must name the canonical roots those skills lived
@@ -2159,7 +2141,7 @@ def test_no_age_adjudication_wording_ships_anywhere_live() -> None:
         re.I,
     )
     roots = [ROOT / "0-UNRESTRAINT-PACKS", ROOT / "3-PREAMBLES",
-             ROOT / "COPY-TO-YOUR-WORKSPACE", CANON]
+             ROOT / "PROJECT-TEMPLATE", CANON]
     offenders = []
     for base in roots:
         for p in base.rglob("*"):
@@ -2601,7 +2583,8 @@ def test_preamble_has_stable_ownership_boundaries() -> None:
     for rel in (
         "1-TAILORED-PROVIDER-TREES/Claude/COPY-TO-PROVIDER-HOME/CLAUDE.md",
         "1-TAILORED-PROVIDER-TREES/Codex/COPY-TO-PROVIDER-HOME/AGENTS.md",
-        "1-TAILORED-PROVIDER-TREES/Grok/COPY-TO-WORKSPACE/AGENTS.md",
+        "1-TAILORED-PROVIDER-TREES/Kimi/COPY-TO-PROVIDER-HOME/AGENTS.md",
+        "1-TAILORED-PROVIDER-TREES/Antigravity/COPY-TO-PROVIDER-HOME/AGENTS.md",
     ):
         text = read(ROOT / rel)
         assert not re.search(r"<!--[^>]*ULTIMATE-AI-STARTER-BUNDLE", text), (
@@ -2678,8 +2661,6 @@ def test_write_refusal_rule_ships_to_every_provider() -> None:
     aio = read(ROOT / "0-UNRESTRAINT-PACKS" / "AIO-INSTRUCTION.md")
     assert "WRITE REFUSALS ARE INFORMATION" in aio, "the refusal rule fell out of the shared contract"
     assert "Never route around the refusal" in aio
-    assert read(ROOT / "COPY-TO-YOUR-WORKSPACE" / "AIO-INSTRUCTION.txt").strip() == aio.strip(), (
-        "the workspace copy of the contract drifted from the canonical one")
 
 
 def test_wired_preamble_prefix_is_stable() -> None:
@@ -2699,10 +2680,6 @@ def test_wired_preamble_prefix_is_stable() -> None:
     )
     assert "$targets = @($targets | Where-Object" in read(ROOT / "INSTALL-AIO.ps1"), (
         "the installer can still write the private profile block into a SOUL.md"
-    )
-    # GPT once updated only the canonical contract; the workspace copy users paste drifted.
-    assert read(ROOT / "COPY-TO-YOUR-WORKSPACE" / "AIO-INSTRUCTION.txt").strip() == aio, (
-        "the workspace AIO copy drifted from 0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md"
     )
     assert "MACHINE-MAP.md" in block, (
         "the preamble no longer tells the model where machine paths are recorded"
@@ -3172,10 +3149,6 @@ def test_game_mashup_passthrough_knowledge_is_wired_and_private() -> None:
         assert not re.search(r"[A-Za-z]:[\\/]|%LOCALAPPDATA%|Epic Games|\bkarlo\b|com\.epicgames", text), (
             "machine-specific detail in the shipped mashup knowledge"
         )
-    # Every provider tree carries the skill, byte-identical to canonical.
-    for provider in PROVIDERS:
-        copy = ROOT / "1-TAILORED-PROVIDER-TREES" / provider / "COPY-TO-SKILLS-DIRECTORY" / "skills" / "game-mashup-passthrough" / "SKILL.md"
-        assert copy.is_file(), f"{provider} tree is missing game-mashup-passthrough"
 
 
 def test_game_production_quality_is_universal_and_lean() -> None:
@@ -3205,11 +3178,6 @@ def test_game_production_quality_is_universal_and_lean() -> None:
                        "Runtime verification"):
         assert capability in contract, f"forge contract lacks {capability}"
     assert "discovered by probe" in contract, "forge capabilities are assumed, not probed"
-
-    for provider in PROVIDERS:
-        tree = ROOT / "1-TAILORED-PROVIDER-TREES" / provider / "COPY-TO-SKILLS-DIRECTORY" / "skills"
-        assert (tree / "game-production-quality" / "SKILL.md").is_file(), (
-            f"{provider} does not carry the production skill")
 
 
 def test_verification_tiers_and_tooling_decisions() -> None:
@@ -3276,9 +3244,6 @@ def test_compression_caps_reach_existing_profiles() -> None:
     docs = read(ROOT / "docs" / "HERMES-MODELS.md")
     assert "2026-11-06" in docs and "$0.048" in docs and "$0.00096" in docs, (
         "compression cost illustration is not dated against the shipped model's catalog rates")
-    one = read(ROOT / "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml")
-    two = read(ROOT / "1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml")
-    assert one == two, "the two Hermes starter templates diverged"
 
 
 def test_installed_state_doctor_checks_the_reverse_owner() -> None:
@@ -3405,7 +3370,7 @@ def main() -> int:
         test_no_unpinned_package_in_live_templates,
         test_retired_github_package_cannot_become_live_config,
         test_hermes_readme_matches_the_shipped_starter,
-        test_both_hermes_config_copies_agree,
+        test_hermes_starter_declares_the_catalog_schema,
         test_starter_installer_refuses_the_shape_not_the_symptoms,
         test_capability_routing_owns_tool_selection,
         test_every_version_gate_accepts_the_shipped_version,
@@ -3559,7 +3524,7 @@ def main() -> int:
         test_manifest_covers_every_tracked_file,
         test_a_running_mcp_binary_cannot_fail_the_whole_install,
         test_an_unenabled_profile_is_never_reported_as_a_missing_tool,
-        test_every_canonical_skill_reached_every_provider_tree,
+        test_every_provider_installs_from_the_canonical_tree,
         test_profile_detection_sees_a_workspace_of_projects,
         test_a_machine_controlling_server_is_never_swept_by_calling_its_tools,
         test_desktop_control_can_never_be_switched_on_by_detection,
@@ -4078,11 +4043,9 @@ def test_hermes_readme_matches_the_shipped_starter() -> None:
         )
 
 
-def test_both_hermes_config_copies_agree() -> None:
-    """The tree ships the starter twice; a fix to one is a bug in the other."""
-    a = read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "config.yaml")
-    b = read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "COPY-TO-PROVIDER-HOME" / "config.yaml")
-    assert a == b, "the two shipped Hermes config.yaml copies have diverged"
+def test_hermes_starter_declares_the_catalog_schema() -> None:
+    """The one shipped Hermes starter carries the schema version CATALOG.json pins."""
+    a = read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "COPY-TO-PROVIDER-HOME" / "config.yaml")
     catalog = json.loads(read(ROOT / "BUNDLED-TOOLS" / "CATALOG.json"))
     schema = catalog.get("provider_config_schemas", {}).get("Hermes")
     assert schema and f"_config_version: {schema}" in a, (
@@ -4984,9 +4947,7 @@ def test_codex_builtin_skills_are_discovered_not_hardcoded() -> None:
     # the provider-tailored source. Built-in names are different from ordinary
     # plugin dedupe: a modified copy still shadows Codex's own definition, so
     # move it to backup rather than leaving an unusable duplicate active.
-    tailored = (ROOT / "1-TAILORED-PROVIDER-TREES" / "Codex" /
-                "COPY-TO-SKILLS-DIRECTORY" / "skills" / "skill-creator" / "SKILL.md")
-    assert tailored.is_file(), "Codex's expected provider source is absent"
+    assert (CANON / "skill-creator" / "SKILL.md").is_file(), "Codex's expected skill source is absent"
     codex_dedupe = installer.rsplit("Get-UabsCodexBuiltinSkillNames", 1)[1][:1100]
     assert "Remove-UabsPluginOwnedSkillCopies" in codex_dedupe, (
         "the built-in dedupe deletes directly instead of going through the "
@@ -5788,119 +5749,34 @@ def test_an_unenabled_profile_is_never_reported_as_a_missing_tool() -> None:
         assert typed not in finish, f"the closing text asks the user to type {typed!r}"
 
 
-def test_every_canonical_skill_reached_every_provider_tree() -> None:
-    """Editing a canonical skill and shipping are two different acts.
+def test_every_provider_installs_from_the_canonical_tree() -> None:
+    """One skill tree, read by the installer for every provider.
 
-    ``_CANONICAL-SKILLS`` is the authoring tree. ``INSTALL-AIO`` copies from
-    ``1-TAILORED-PROVIDER-TREES/<Provider>/COPY-TO-SKILLS-DIRECTORY/skills``,
-    which ``TOOLS/fanout_providers.py`` generates. Forget the fanout and the
-    edit exists only where nothing reads it.
-
-    Measured 2026-08-27, on this very repo: two skills were corrected so an
-    agent would stop telling users to *install* an already-installed houseCARL.
-    The full gate ran green -- **104 contracts** -- the installer reported
-    "skills installed" for all five providers, and every provider copy was
-    still yesterday's file. Nothing failed. Nothing shipped.
-
-    Two contracts already touched this and neither would have caught it: one
-    byte-compares only a short list of "v7.8 reliability skills", the other
-    compares only the *set of names* in each tree, never their contents. The
-    two edited skills were in neither list.
-
-    Normalisation, both parts load-bearing:
-
-    * the nested ``provider:`` metadata line is rewritten per target by design
-      and is the only intended per-provider tailoring;
-    * line endings, because ``unrestraint-packs`` carries mixed EOLs in
-      canonical that the fanout writes out as CRLF. That is cosmetic and
-      predates this check; failing on it would train people to ignore the
-      contract.
-
-    Every file under each skill directory must match, not only SKILL.md.
-    A stale reference still ships, and search used to return it five times.
+    Until 8.53.0 the pack shipped six generated copies of ``_CANONICAL-SKILLS``
+    (3,600 files, about 50 MB) that differed only by a ``provider:`` metadata
+    line, plus a fanout step that every skill edit had to remember. Forgetting
+    it shipped nothing while the gate stayed green (measured 2026-08-27). The
+    installer now copies straight from canonical, so an edit is the release.
     """
-    providers = ["Claude", "Codex", "Grok", "Kimi", "Hermes", "Antigravity"]
-    tag = re.compile(r"(?m)^\s*provider:\s*\S+\s*\n?")
-    json_tag = re.compile(r'"provider":\s*"[^"]*"')
-    text_ext = {".md", ".json", ".txt", ".yaml", ".yml", ".py", ".ps1"}
-
-    def norm(raw: bytes, name: str) -> str:
-        text = raw.decode("utf-8").replace("\r\n", "\n")
-        if name.endswith("SKILL.md"):
-            text = tag.sub("", text)
-        if name.upper().endswith("ERROR-REGISTRY.JSON"):
-            text = json_tag.sub('"provider": ""', text, count=1)
-        return text
-
-    canon = sorted(CANON.glob("*/SKILL.md"))
-    assert len(canon) >= 60, "canonical tree looks empty (%d skills)" % len(canon)
-
-    drifted = []
-    missing = []
-    extra = []
-    copies_seen = set()
-    for skill_dir in sorted(p for p in CANON.iterdir() if p.is_dir()):
-        files = [p for p in skill_dir.rglob("*") if p.is_file()
-                 and '__pycache__' not in p.parts and p.suffix not in {'.pyc','.pyo'}]
-        for prov in providers:
-            dest = (ROOT / "1-TAILORED-PROVIDER-TREES" / prov /
-                    "COPY-TO-SKILLS-DIRECTORY" / "skills" / skill_dir.name)
-            seen = set()
-            for src in files:
-                rel = src.relative_to(skill_dir).as_posix()
-                seen.add(rel)
-                copy = dest / rel
-                label = "%s/%s/%s" % (prov, skill_dir.name, rel)
-                if not copy.is_file():
-                    missing.append(label)
-                    continue
-                copies_seen.add(copy.relative_to(ROOT).as_posix())
-                raw = src.read_bytes()
-                got = copy.read_bytes()
-                if src.suffix.lower() in text_ext:
-                    if norm(got, rel) != norm(raw, rel):
-                        drifted.append(label)
-                elif got != raw:
-                    drifted.append(label)
-            if dest.is_dir():
-                for copy in dest.rglob("*"):
-                    if not copy.is_file():
-                        continue
-                    rel = copy.relative_to(dest).as_posix()
-                    if rel not in seen:
-                        extra.append("%s/%s/%s" % (prov, skill_dir.name, rel))
-
-    assert not missing, (
-        "%d canonical skill file(s) never reached a provider tree: %s -- run "
-        "`python TOOLS/fanout_providers.py _CANONICAL-SKILLS .`"
-        % (len(missing), ", ".join(sorted(missing)[:5]))
-    )
-    assert not extra, (
-        "%d provider file(s) are not in canonical: %s -- run "
-        "`python TOOLS/fanout_providers.py _CANONICAL-SKILLS .`"
-        % (len(extra), ", ".join(sorted(extra)[:5]))
-    )
-    # Existence on this machine is not existence in the repository. Provider
-    # trees are gitignored for NEW files, so `git add -A` silently skips a file
-    # the fanout just created: local gate green, fresh clone and CI red.
-    if (ROOT / ".git").exists() and copies_seen:
-        listed = subprocess.run(["git", "-C", str(ROOT), "ls-files", "-z"],
-                                capture_output=True, text=True).stdout
-        tracked = set(listed.split(chr(0)))
-        untracked = sorted(p for p in copies_seen if p not in tracked)
-        assert not untracked, (
-            "%d provider file(s) exist on disk but are not in git: %s -- "
-            "`git add -f` them (the tree is gitignored for new files)"
-            % (len(untracked), ", ".join(untracked[:5]))
-        )
-
-    assert not drifted, (
-        "%d provider copy(ies) differ from canonical in content: %s. Editing "
-        "_CANONICAL-SKILLS does not ship anything on its own -- INSTALL-AIO "
-        "copies from 1-TAILORED-PROVIDER-TREES. Run "
-        "`python TOOLS/fanout_providers.py _CANONICAL-SKILLS .`"
-        % (len(drifted), ", ".join(sorted(drifted)[:5]))
-    )
+    installer = read(ROOT / "INSTALL-AIO.ps1")
+    assert "$canonSkills = Join-Path $PackRoot '_CANONICAL-SKILLS'" in installer
+    assert "$srcSkills = $canonSkills" in installer, "provider skill sync does not read canonical"
+    assert "COPY-TO-SKILLS-DIRECTORY" not in installer, "the installer still reads a provider skill copy"
+    assert not list((ROOT / "1-TAILORED-PROVIDER-TREES").glob("*/COPY-TO-SKILLS-DIRECTORY")), (
+        "a generated provider skill tree is back; the installer reads _CANONICAL-SKILLS")
+    for rel in ("TOOLS/Test-Installed-State.ps1", "TOOLS/Install-SillyTavernGateway.ps1",
+                "TOOLS/ponytail_mode.py", "TOOLS/verify_product.py"):
+        assert "COPY-TO-SKILLS-DIRECTORY" not in read(ROOT / rel), rel
+    # Forge-owned skills are authored only by their forge; a same-named
+    # canonical folder would make the bundle a second owner.
+    packs = json.loads(read(ROOT / "BUNDLED-TOOLS" / "PACKS.json"))["packs"]
+    forge_owned = {s.casefold() for p in packs.values() if p.get("owner") for s in p["skills"]}
+    assert forge_owned, "the Forge-owned skill list is missing"
+    clash = sorted(d.name for d in CANON.iterdir() if d.is_dir() and d.name.casefold() in forge_owned)
+    assert not clash, "Forge-owned skills cannot be authored in the general bundle: %s" % clash
+    for skill in CANON.glob("*/SKILL.md"):
+        fm, _ = frontmatter(read(skill))
+        assert "provider:" not in fm, "%s carries per-provider metadata nothing reads" % skill.parent.name
 
 def test_profile_detection_sees_a_workspace_of_projects() -> None:
     """Detection scanned only the project root, and people do not work that way.
@@ -6765,7 +6641,7 @@ def test_current_documentation_links_and_upstream_coverage() -> None:
             upstream = component.get("github") or {"owner": "SenjuWoo", "repo": "Ultimate-AI-Starter-Bundle"}
             row = next((line for line in text.splitlines() if line.startswith(f"| `{component['id']}` |")), "")
             assert f"https://github.com/{upstream['owner']}/{upstream['repo']}" in row, component["id"]
-    starter = read(ROOT / "1-TAILORED-PROVIDER-TREES/Hermes/config.yaml")
+    starter = read(ROOT / "1-TAILORED-PROVIDER-TREES" / "Hermes" / "COPY-TO-PROVIDER-HOME" / "config.yaml")
     aliases = re.search(r"(?ms)^  aliases:\n(.*?)(?=^  \w|^\w|\Z)", starter).group(1)
     guidance = read(paths[2])
     for alias, model in re.findall(r"(?m)^    ([\w.-]+):\s+openrouter/(\S+)", aliases):
@@ -6869,12 +6745,6 @@ def test_antigravity_is_a_first_class_provider() -> None:
     assert "'Antigravity' = @{ Path" in mcp, "no MCP target for Antigravity"
     assert r".gemini\config\mcp_config.json" in mcp
 
-    fan = read(ROOT / "TOOLS" / "fanout_providers.py")
-    assert "'Antigravity'" in fan
-
-    tree = ROOT / "1-TAILORED-PROVIDER-TREES" / "Antigravity" / "COPY-TO-SKILLS-DIRECTORY" / "skills"
-    skills = [d for d in tree.iterdir() if d.is_dir()]
-    assert len(skills) >= 60, "the Antigravity skill tree is empty"
 
     # Plugins: Antigravity only stages Claude-style trees through its `agy` CLI,
     # so the installer must write a root plugin.json and enable the plugin in

@@ -35,9 +35,13 @@ def main() -> int:
     if catalog.get('pack_version') != version:
         raise ValueError('Product version/catalog mismatch')
     # Skill trees are the product; inspect their metadata using the real shipped audit.
-    trees = [ROOT / '_CANONICAL-SKILLS', *(ROOT / '1-TAILORED-PROVIDER-TREES').glob('*/COPY-TO-SKILLS-DIRECTORY/skills')]
-    if len(trees) != 7:
-        raise ValueError('Product must contain canonical skills and all six provider trees')
+    # Every provider installs this one tree; the provider folders hold only home templates.
+    trees = [ROOT / '_CANONICAL-SKILLS']
+    if not any(trees[0].glob('*/SKILL.md')):
+        raise ValueError('Product must contain the canonical skill tree')
+    homes = [p for p in (ROOT / '1-TAILORED-PROVIDER-TREES').glob('*/COPY-TO-PROVIDER-HOME') if p.is_dir()]
+    if len(homes) != 6:
+        raise ValueError('Product must contain the six provider home templates')
     for tree in trees:
         result = subprocess.run([sys.executable, str(ROOT/'TOOLS/audit_skills.py'), str(tree)], capture_output=True, text=True)
         if result.returncode:

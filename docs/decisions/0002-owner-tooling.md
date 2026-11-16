@@ -18,8 +18,8 @@ The bundle skips a component whose owner is present and current.
 
 ## Evidence
 `INSTALL-AIO.ps1` dispatches houseCARL to Forge and skips with a clear line when Forge is
-absent. Companion downloads follow latest releases declared in `CATALOG.json`. Provider
-skill fanout is one canonical tree, not six hand edits.
+absent. Companion downloads follow latest releases declared in `CATALOG.json`. Every
+provider installs the one canonical skill tree (since 8.53.0 without generated copies).
 
 ## Consequences
 A companion bug is fixed at its owner. The bundle must keep its detection current, and a

@@ -14,38 +14,6 @@ spec.loader.exec_module(builder)
 
 
 class ProductTests(unittest.TestCase):
-    def test_fanout_preserves_external_names_and_refuses_two_source_owners(self):
-        spec = importlib.util.spec_from_file_location('fanout', ROOT/'TOOLS/fanout_providers.py')
-        fanout = importlib.util.module_from_spec(spec); spec.loader.exec_module(fanout)
-        names = fanout.external_skill_names(str(ROOT))
-        self.assertIn('skyrim-forge', names)
-        with tempfile.TemporaryDirectory() as td:
-            source, target = Path(td)/'canonical', Path(td)/'provider'
-            (source/'general').mkdir(parents=True)
-            (source/'general/SKILL.md').write_text('# general')
-            (target/'skyrim-forge').mkdir(parents=True)
-            owner_file = target/'skyrim-forge/SKILL.md'
-            owner_file.write_bytes(b'independently owned')
-            fanout.deploy(str(source), str(target), 'codex', 'Codex', names)
-            self.assertEqual(owner_file.read_bytes(), b'independently owned')
-            (source/'skyrim-forge').mkdir()
-            (source/'skyrim-forge/SKILL.md').write_text('# accidental second owner')
-            with self.assertRaisesRegex(ValueError, 'Forge-owned skills'):
-                fanout.deploy(str(source), str(target), 'codex', 'Codex', names)
-            self.assertEqual(owner_file.read_bytes(), b'independently owned')
-
-    def test_fanout_does_not_copy_interpreter_cache(self):
-        spec = importlib.util.spec_from_file_location('fanout', ROOT/'TOOLS/fanout_providers.py')
-        fanout = importlib.util.module_from_spec(spec); spec.loader.exec_module(fanout)
-        with tempfile.TemporaryDirectory() as td:
-            source=Path(td)/'canonical'; target=Path(td)/'provider'
-            (source/'skill/__pycache__').mkdir(parents=True)
-            (source/'skill/__pycache__/module.pyc').write_bytes(b'private cache')
-            (source/'skill/module.py').write_text('# product')
-            count,_=fanout.deploy(str(source),str(target),'codex','Codex')
-            self.assertEqual(count,1)
-            self.assertFalse((target/'skill/__pycache__').exists())
-
     def test_runtime_inventory_is_reproducible_and_excludes_development_and_unrecorded_files(self):
         with tempfile.TemporaryDirectory(prefix='Product Ω ! ') as td:
             root = Path(td)
@@ -53,7 +21,7 @@ class ProductTests(unittest.TestCase):
                     'TOOLS/example.ps1':b'# runtime', 'LICENSE':b'MIT',
                     'STATE.md':b'private progress', 'CHANGELOG.txt':b'old history',
                     'TESTS/test.py':b'development', '.github/workflows/ci.yml':b'CI',
-                    'COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/CHANGELOG.txt':b'template input',
+                    'PROJECT-TEMPLATE/CHANGELOG.txt':b'template input',
                     'BUNDLED-TOOLS/OFFLINE-MANIFEST.json':b'{"assets":[]}'}
             rows=[]
             for name, content in data.items():
@@ -71,7 +39,7 @@ class ProductTests(unittest.TestCase):
                     names={n.removeprefix(prefix) for n in archive.namelist()}
                     self.assertFalse({'STATE.md','CHANGELOG.txt','TESTS/test.py','.github/workflows/ci.yml','TOOLS/private.txt'} & names)
                     self.assertIn('LICENSE',names)
-                    self.assertIn('COPY-TO-YOUR-WORKSPACE/_PROJECT-TEMPLATE/CHANGELOG.txt',names)
+                    self.assertIn('PROJECT-TEMPLATE/CHANGELOG.txt',names)
                     delivered=json.loads(archive.read(prefix+'MANIFEST.json'))
                     self.assertEqual(names,{row['path'] for row in delivered}|{'MANIFEST.json'})
                     for row in delivered:

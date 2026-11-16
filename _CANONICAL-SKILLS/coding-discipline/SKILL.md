@@ -1,18 +1,9 @@
 ---
 name: coding-discipline
-description: Operating contract for changing code, scripts, configuration, or build files. Use before implementation work;
-  do not use as a domain-specific Skyrim syntax guide.
-compatibility: Windows 10/11; Skyrim Special Edition or Anniversary Edition; PowerShell and Python 3 when bundled scripts
-  are used
+description: Operating contract for changing code, scripts, configuration, or build files. Use before implementation work.
 metadata:
   version: 4.3.0
   updated: '2026-07-22'
-  library: overseer-skyrim-agent-skills
-  provider: claude
-  provider_pack_version: 1.0.0
-  base_library: Skyrim-Agent-Skills-v6
-  error_registry_revision: 4.3.0
-when_to_use: Use for operating contract for changing code, scripts, configuration, or build files.
 ---
 
 # Coding discipline

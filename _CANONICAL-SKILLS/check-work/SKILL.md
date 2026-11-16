@@ -2,13 +2,9 @@
 name: check-work
 description: Post-change verification workflow. Use after implementation to independently inspect diffs, run the real build
   and validators, and decide whether the requested artifact is actually complete.
-compatibility: Windows 10/11; Skyrim Special Edition or Anniversary Edition; PowerShell and Python 3 when bundled scripts
-  are used
 metadata:
   version: 4.3.0
   updated: '2026-07-22'
-  library: overseer-skyrim-agent-skills
-  error_registry_revision: 4.3.0
 ---
 
 # Check work

@@ -1,8 +1,8 @@
 {
   "pack": "Ultimate AI Starter Bundle",
-  "version": "8.52.0",
+  "version": "8.53.0",
   "generated": "2026-11-14",
-  "release_tag": "v8.52.0",
+  "release_tag": "v8.53.0",
   "canonical_skills": 81,
   "provider_trees": 6,
   "registry_entries": 81,
@@ -31,7 +31,6 @@
     "TESTS/Test-TaskRecipes.ps1",
     "TESTS/Test-GitHubFlags.ps1",
     "TESTS/Test-WaitExternal.ps1",
-    "TESTS/Test-SearchCollapse.ps1",
     "TESTS/Test-HookPrerequisites.ps1",
     "TESTS/Test-CodexPluginDedupe.ps1",
     "TESTS/Test-BundleSelfUpdate.ps1",

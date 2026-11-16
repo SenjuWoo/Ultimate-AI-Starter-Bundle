@@ -431,7 +431,7 @@ and left unchanged rather than having their transport rewritten automatically.
 
 The native Codex 0.152.0 test checks trusted/untrusted scope, unrelated-folder
 isolation, actual filtered registration and a harmless tool call without model
-inference. See [the verification notes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/V8.7.17-CHANGELOG.md).
+inference (measured in the 8.7.17 [changelog](../CHANGELOG.md) entry).
 [Codex MCP documentation](https://learn.chatgpt.com/docs/extend/mcp?surface=cli)
 and [Claude Tool Search](https://code.claude.com/docs/en/mcp#scale-with-mcp-tool-search)
 document the native capabilities; a third-party routing daemon is not required.
@@ -731,8 +731,8 @@ See the [architecture analysis](COMPANION-ARCHITECTURE.md) for why the
 repositories remain separate, the tool ownership boundaries and update policy.
 `-NoToolUpdates` preserves installed compiler/companion versions;
 `-Mode BundledOnly` blocks uncached prerequisite downloads. Project pins,
-personal source edits and settings remain protected. See [validation](../VALIDATION.md)
-for measured coverage and remaining runtime gaps.
+personal source edits and settings remain protected. Each release attaches a
+`VALIDATION.json` with the checks observed on its exact commit.
 
 Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tools and its specialist skill pack; use [Reverse THIS!](https://github.com/SenjuWoo/reverse-this) for reverse-engineering tools and REA. All three release independently: the bundle installs each companion's latest release, so a companion release never needs a bundle release. See [who owns what](#ownership). Disabling bundle integration leaves independently owned specialist content intact.
 
@@ -749,7 +749,7 @@ Use [Skyrim Forge](https://github.com/SenjuWoo/SkyrimForge) for Skyrim-only tool
 - **Universal Modder** CLI, offline knowledge and one on-demand guide router
 - **Impeccable** — UI design router plus a pinned executable HTML/CSS detector; no second browser download
 - **img2threejs** — staged image-to-procedural-Three.js reconstruction with resumable evidence gates
-- **Safe skill discovery** — telemetry-free pinned catalog search; candidates still pass provenance and dedupe review before fanout
+- **Safe skill discovery** — telemetry-free pinned catalog search; candidates still pass provenance and dedupe review before they enter `_CANONICAL-SKILLS`
 - Grok MCP wiring + portable tool discovery
 
 ### Compilers and build tools
@@ -882,16 +882,17 @@ mode that works.
 ## Layout
 
 ```text
-1-TAILORED-PROVIDER-TREES/   per-AI tailored skill trees
+_CANONICAL-SKILLS/                 the skills every AI installs
+1-TAILORED-PROVIDER-TREES/         per-AI home templates (settings, short instructions) and Hermes profiles
 BUNDLED-TOOLS/offline/             shipped tool zips/wheels
 BUNDLED-TOOLS/plugins/             Superpowers + Ponytail
 BUNDLED-TOOLS/CATALOG.json         component registry
-COPY-TO-YOUR-WORKSPACE/            workspace files + _PROJECT-TEMPLATE (incl. .cbmignore)
+PROJECT-TEMPLATE/                  PLAN/STATE/ownership/memory starter (-WorkspaceRoot seeds it)
+PROMPTS/                           start, plan, build, resume and upgrade prompts
 0-UNRESTRAINT-PACKS/               no-holds prompt library
 3-PREAMBLES/                      SOUL + AIO preamble for every agent
 TOOLS/                             installers and discovery scripts
 TOOLS/Setup-CodebaseMemory-Index.ps1   index scope generator
-_CANONICAL-SKILLS/              maintainer master skills
 INSTALL-AIO.ps1                   master installer
 START-HERE.bat / INSTALL-REMOTE.bat   local / remote entry points
 START-HERE.txt                     short human guide
@@ -905,9 +906,9 @@ START-HERE.txt                     short human guide
 - [LM Studio settings and VRAM budgeting](../BUNDLED-TOOLS/lm-studio/README.md)
 - Skyrim assistant/task selection and prompt packs: [Skyrim Forge docs](https://github.com/SenjuWoo/SkyrimForge/tree/main/docs)
 - [Tool notices](../BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) and [skill notices](../_CANONICAL-SKILLS/THIRD-PARTY-NOTICES.md)
-- [Changelog](../CHANGELOG.md), [historical notes](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/) and [latest published package](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest)
+- [Changelog](../CHANGELOG.md) and [latest published package](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest)
 
-Historical notes describe their release, not the current installation policy.
+Changelog entries describe their release, not the current installation policy.
 
 ## AI contract
 
@@ -994,8 +995,8 @@ version with no tag yet: it waits for every other check, builds twice, requires
 identical bytes, fetches and verifies the latest companions for Full-Offline,
 attaches checksums, a build receipt, an SPDX SBOM and the observed check results,
 attests the build, then re-downloads and compares. `python .github/scripts/check_versions.py
---set X.Y.Z` bumps every declared version; add the dated `CHANGELOG.md` section
-and the matching release notes under `docs/history/`. A docs-only push publishes nothing.
+--set X.Y.Z` bumps every declared version; add the dated `CHANGELOG.md` section,
+which becomes the release body (`--notes X.Y.Z`). A docs-only push publishes nothing.
 
 `TOOLS/Set-GitHubProtection.ps1` writes two rulesets: `integrity` blocks force-push
 and deletion for everyone, and `checks` makes pull-request merges (Dependabot,
@@ -1012,10 +1013,8 @@ tools require a supported LTS release, with 22.12 as the minimum where required;
 the local audit used Node 24.22.1. New upstream runtimes are not certified merely
 because an installer can discover them. See the [Node release schedule](https://nodejs.org/en/about/previous-releases).
 
-[CHANGELOG.md](../CHANGELOG.md) is the release history. Detailed measurements and
-old decisions live in [docs/history/](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/blob/main/docs/history/), not a second README changelog.
-
-Workflow audit of 2026-10-22: [findings, fixes and evidence](AUDIT-2026-10-22.md).
+[CHANGELOG.md](../CHANGELOG.md) is the release history and the only one; older
+detail lives in git history, not a second changelog.
 
 ### One workflow per task
 

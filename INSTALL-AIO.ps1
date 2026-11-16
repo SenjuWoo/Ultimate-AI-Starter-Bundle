@@ -33,7 +33,7 @@
   comma-separated names through -File.
 
 .PARAMETER WorkspaceRoot
-  Optional workspace to receive AGENTS.md / CLAUDE.md / _PROJECT-TEMPLATE
+  Optional workspace to receive _PROJECT-TEMPLATE (PLAN, STATE, ownership, memory)
 
 .PARAMETER SkipRuntimes
   Do not try winget for .NET/Python/Node
@@ -94,7 +94,7 @@ param(
   [switch]$SkillsOnly,
   [switch]$ToolsOnly,
   # Grok MCP is wired by default again as of v7.4.2 (v7.4.1 disabled it on a
-  # false premise - see docs/history/V7.4.2-CHANGELOG.md). grok-cli 1.0.4
+  # false premise - see CHANGELOG.md 7.4.2). grok-cli 1.0.4
   # wedges at eight RUNNING MCP servers; reserve one slot for a plugin-provided
   # server and keep six configured.
   [switch]$SkipGrokMcp,
@@ -769,6 +769,9 @@ if ($SkillsOnly -and $skyrimPackOn) {
 if (-not $ToolsOnly) {
   Write-UabsStep "Installing provider skills"
   $tailored = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES'
+  # Every provider installs the same skills; the only per-provider files are
+  # the provider-home templates under 1-TAILORED-PROVIDER-TREES.
+  $canonSkills = Join-Path $PackRoot '_CANONICAL-SKILLS'
   # Skills a native plugin provided at the end of the last run are not copied
   # in only for the plugin section below to delete them again: measured
   # 2026-10-18, every install re-copied and re-removed 63 skills across Claude,
@@ -803,10 +806,10 @@ if (-not $ToolsOnly) {
     try { $ponyMode = [string](([IO.File]::ReadAllText($ponyModeFile) | ConvertFrom-Json).mode) } catch { $ponyMode = '' }
   }
   if ($ponyMode -in @('off', 'auto')) {
-    $ponyParked = @(Get-ChildItem -LiteralPath (Join-Path $tailored 'Claude\COPY-TO-SKILLS-DIRECTORY\skills') -Directory -Filter 'ponytail*' -ErrorAction SilentlyContinue | ForEach-Object Name)
+    $ponyParked = @(Get-ChildItem -LiteralPath $canonSkills -Directory -Filter 'ponytail*' -ErrorAction SilentlyContinue | ForEach-Object Name)
   }
   foreach ($prov in $Providers) {
-    $srcSkills = Join-Path $tailored "$prov\COPY-TO-SKILLS-DIRECTORY\skills"
+    $srcSkills = $canonSkills
     if (-not (Test-Path $srcSkills)) { Write-UabsBad "Missing $srcSkills"; continue }
     $providerHome = Get-UabsProviderHome -Provider $prov -Catalog $catalog
     $destSkills = Get-UabsProviderSkillsDir -Provider $prov -Catalog $catalog
@@ -906,14 +909,6 @@ if (-not $ToolsOnly) {
     $pmeta = $catalog.providers.$prov
     if ($pmeta.instructions) {
       $srcInst = Join-Path $tailored "$prov\COPY-TO-PROVIDER-HOME\$($pmeta.instruction_src)"
-      if (-not (Test-Path $srcInst)) {
-        $srcInst = Join-Path $tailored "$prov\COPY-TO-WORKSPACE\$($pmeta.instruction_src)"
-      }
-      # Claude uses CLAUDE.md
-      if ($prov -eq 'Claude') {
-        $srcInst = Join-Path $tailored 'Claude\COPY-TO-PROVIDER-HOME\CLAUDE.md'
-        if (-not (Test-Path $srcInst)) { $srcInst = Join-Path $PackRoot 'COPY-TO-YOUR-WORKSPACE\CLAUDE.md' }
-      }
       if (Test-Path $srcInst) {
         $instructionTarget = Join-Path $providerHome $pmeta.instructions
         if (Test-Path -LiteralPath $instructionTarget -PathType Leaf) {
@@ -1044,7 +1039,7 @@ if (-not $ToolsOnly -and -not $SkipNativePlugins) {
       $StateEntry.skipped_kept = @('bundled plugin tree has no skills dir')
       return
     }
-    $expectedRoot = Join-Path $tailored "$Provider\COPY-TO-SKILLS-DIRECTORY\skills"
+    $expectedRoot = $canonSkills
     $res = Remove-UabsPluginOwnedSkillCopies -Provider $Provider -SkillsDir $SkillsDir -Names $names -ExpectedRoot $expectedRoot -BackupRoot $backupRoot -Log $log
     # owned = every skill the native plugin provides; deduped = copies removed by
     # THIS run. A re-run whose copies were already gone used to record nothing,
@@ -1734,7 +1729,7 @@ if (-not $ToolsOnly -and $SkipNativePlugins) {
       $pstate.plugins[$pluginId] = $entry
       if (-not $isNative) { continue }
       $names = @(Get-UabsPluginOwnedSkillNames -PluginRoot $srcRoot)
-      $expectedRoot = Join-Path $tailored "$prov\COPY-TO-SKILLS-DIRECTORY\skills"
+      $expectedRoot = $canonSkills
       $res = Remove-UabsPluginOwnedSkillCopies -Provider $prov -SkillsDir $skillsDir `
                -Names $names -ExpectedRoot $expectedRoot -BackupRoot $backupRoot -Log $log
       $entry.owned = @($names)
@@ -1772,7 +1767,7 @@ if (-not $ToolsOnly) {
 if (-not $ToolsOnly -and ($Providers -contains 'Codex')) {
   $providerHome = Get-UabsProviderHome -Provider 'Codex' -Catalog $catalog
   $skillsDir = Get-UabsProviderSkillsDir -Provider 'Codex' -Catalog $catalog
-  $expectedSkills = Join-Path $tailored 'Codex\COPY-TO-SKILLS-DIRECTORY\skills'
+  $expectedSkills = Join-Path $PackRoot '_CANONICAL-SKILLS'
   $backupRoot = Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\backups'
   $builtins = @(Get-UabsCodexBuiltinSkillNames -CodexHome $providerHome | Where-Object {
     Test-Path -LiteralPath (Join-Path $expectedSkills $_) -PathType Container

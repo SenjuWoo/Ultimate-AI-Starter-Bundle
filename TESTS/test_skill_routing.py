@@ -30,7 +30,6 @@ OWNERS = {
     "autonomous": ["one-shot-completion", "executing-plans", "state-resumption"],
 }
 
-PROVIDER_TREES = sorted((ROOT / "1-TAILORED-PROVIDER-TREES").glob("*/COPY-TO-SKILLS-DIRECTORY/skills"))
 
 
 def desc(name):
@@ -46,10 +45,9 @@ class RoutingTests(unittest.TestCase):
             self.assertTrue(found, "no owner skill for %s" % scenario)
 
     def test_recommended_packs_are_not_preinstalled(self):
-        for tree in PROVIDER_TREES:
-            names = [p.name for p in tree.iterdir() if p.is_dir()]
-            leaked = [n for n in names if n.startswith(("pocock-", "addy-"))]
-            self.assertEqual(leaked, [], "%s already carries optional packs" % tree)
+        names = [p.name for p in CANONICAL.iterdir() if p.is_dir()]
+        leaked = [n for n in names if n.startswith(("pocock-", "addy-"))]
+        self.assertEqual(leaked, [], "the installed skill tree already carries optional packs")
 
     def test_no_duplicate_skill_names_across_canonical_tree(self):
         names = [p.name.lower() for p in CANONICAL.iterdir() if (p / "SKILL.md").is_file()]

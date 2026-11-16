@@ -54,15 +54,8 @@ Section '1. Skill health (all trees)'
 if (-not $py) {
     Bad 'python not found; skill audit skipped'
 } else {
+    # Every provider installs from this one tree (8.53.0).
     $trees = @(Join-Path $PackRoot '_CANONICAL-SKILLS')
-    # v7.6.6: only the tailored family remains; 2-OPTIONAL-SHARED-GENERIC was
-    # a 97%-identical duplicate the installer never read.
-    foreach ($fam in '1-TAILORED-PROVIDER-TREES') {
-        foreach ($prov in 'Claude', 'Codex', 'Grok', 'Hermes', 'Kimi', 'Antigravity') {
-            $p = Join-Path $PackRoot "$fam\$prov\COPY-TO-SKILLS-DIRECTORY\skills"
-            if (Test-Path $p) { $trees += $p }
-        }
-    }
     foreach ($t in $trees) {
         $out = & $py.Source (Join-Path $PackRoot 'TOOLS\audit_skills.py') $t 2>&1
         $res = ($out | Select-String 'RESULT:').ToString().Trim()
@@ -198,9 +191,7 @@ if ($risk -eq 0) { Good 'no at-risk scripts' }
 # exactly that file). These are deployed artifacts, round-tripped by tools whose
 # default encoding is the system codepage, so they must stay pure ASCII.
 $deployed = @(
-    'COPY-TO-YOUR-WORKSPACE\AIO-INSTRUCTION.txt'
     '3-PREAMBLES\MANUAL-PASTE.txt'
-    '1-TAILORED-PROVIDER-TREES\Hermes\config.yaml'
     '1-TAILORED-PROVIDER-TREES\Hermes\COPY-TO-PROVIDER-HOME\config.yaml'
     'START-HERE.txt'
     'START-HERE.bat'
@@ -387,11 +378,6 @@ if ($soulTxt) {
 
 & (Join-Path $PackRoot 'TESTS/Test-PreamblePreservation.ps1') -PackRoot $PackRoot
 
-$searchCollapse = Join-Path $PackRoot 'TESTS\Test-SearchCollapse.ps1'
-$searchOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $searchCollapse -PackRoot $PackRoot 2>&1 | Out-String
-if ($searchOut -match 'SEARCH COLLAPSE GATE: PASS') { Good 'generated skill copies stay out of default search' }
-else { Bad ('search collapse gate failed:' + [Environment]::NewLine + $searchOut.Trim()) }
-
 $waitExternal = Join-Path $PackRoot 'TESTS\Test-WaitExternal.ps1'
 & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $waitExternal -PackRoot $PackRoot
 if ($LASTEXITCODE -ne 0) { Bad 'external wait gate failed' }
@@ -444,7 +430,7 @@ if ($offenders.Count) {
 # Same trap, but in documentation we ship as copy-paste instructions. Prose that
 # *discusses* the bug is fine, and every changelog does; a ```powershell fence is
 # not prose, it is code the reader will run. 3-PREAMBLES/README.md shipped a
-# manual-install snippet doing exactly this until v7.6.3. docs/history is skipped
+# manual-install snippet doing exactly this until v7.6.3. Old changelog text is skipped
 # on purpose: those records quote the broken form as a before/after.
 $docOffenders = @()
 $docFiles = @()

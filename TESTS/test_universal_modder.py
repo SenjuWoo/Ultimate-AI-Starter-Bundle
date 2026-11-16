@@ -89,11 +89,11 @@ def main():
     assert "k[:6]" not in fal_source and "hashlib.sha256(k" not in fal_source \
         and "<hidden, " in fal_source, (
         "um/fal.py echoes key material again; re-apply the UABS fal patch")
-    for provider in component["providers"]:
-        skill = ROOT / f"1-TAILORED-PROVIDER-TREES/{provider}/COPY-TO-SKILLS-DIRECTORY/skills/universal-modder"
-        assert (skill / "SKILL.md").exists(), provider
-        assert len(list((skill / "references/upstream").glob("*/GUIDE.md"))) == 12
-        assert len(list(skill.rglob("SKILL.md"))) == 1, "reference guides must not enlarge discovery"
+    # Every provider installs this one tree.
+    skill = ROOT / "_CANONICAL-SKILLS/universal-modder"
+    assert component["providers"] and (skill / "SKILL.md").exists()
+    assert len(list((skill / "references/upstream").glob("*/GUIDE.md"))) == 12
+    assert len(list(skill.rglob("SKILL.md"))) == 1, "reference guides must not enlarge discovery"
     print("Universal Modder offline CLI, recon, wheel and all-provider routing PASS")
 
 

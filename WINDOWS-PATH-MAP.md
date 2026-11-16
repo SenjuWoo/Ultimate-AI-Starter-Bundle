@@ -12,8 +12,8 @@ This package does not assume a workspace name, drive letter, or username.
 | Kimi Code | `%KIMI_CODE_HOME%`, default `%USERPROFILE%\.kimi-code` | `%KIMI_CODE_HOME%\skills` | `%KIMI_CODE_HOME%\AGENTS.md` |
 | Hermes Agent | `%HERMES_HOME%`, default `%LOCALAPPDATA%\hermes` | `%HERMES_HOME%\skills` | `%HERMES_HOME%\SOUL.md` (and each profile) |
 
-The package intentionally avoids cross-tool shared skill directories for the
-**tailored** edition. The optional generic edition is still per-provider copy.
+Every provider gets its own copy of `_CANONICAL-SKILLS`; the bundle never uses a
+cross-tool shared skill directory.
 
 Claude may also load plugin skills from Claude's plugin cache; pack skills remain
 the portable baseline.
@@ -56,8 +56,6 @@ be on any drive and can be shared by every supported application.
 Files installed in a selected workspace:
 
 ```text
-<WORKSPACE_ROOT>\AGENTS.md
-<WORKSPACE_ROOT>\CLAUDE.md
 <WORKSPACE_ROOT>\_PROJECT-TEMPLATE\
 ```
 

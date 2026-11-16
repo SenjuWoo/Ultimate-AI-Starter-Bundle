@@ -213,7 +213,7 @@ if(-not $SkipSkills){
     $providerHome=Get-UabsProviderHome -Provider $provider -Catalog $catalog
     if (-not $providerHome) { Err "$provider provider home could not be resolved."; continue }
     $destSkills=Get-UabsProviderSkillsDir -Provider $provider -Catalog $catalog
-    $sourceSkills=Join-Path $PackRoot ("1-TAILORED-PROVIDER-TREES\$provider\COPY-TO-SKILLS-DIRECTORY\skills")
+    $sourceSkills=Join-Path $PackRoot '_CANONICAL-SKILLS'
     if(-not(Test-Path -LiteralPath $sourceSkills -PathType Container)){
       Err "$provider bundled skill source is missing: $sourceSkills"
       continue

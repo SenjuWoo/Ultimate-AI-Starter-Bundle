@@ -87,5 +87,25 @@ class VersionBump(unittest.TestCase):
         self.assertEqual(found, {"4.2.0"})
 
 
+class ReleaseNotes(unittest.TestCase):
+    """The release body is cut from CHANGELOG.md; there is no second copy."""
+
+    LOG = ("## 1.2.0 (2026-11-16)\r\n\r\n- new\r\n  wrapped\r\n\r\n"
+           "## 1.10.0 (2026-01-01)\r\n\r\n- other\r\n\r\n## 1.1.0\r\n\r\n- old\r\n")
+
+    def test_section_is_cut_between_headings_without_crlf(self):
+        self.assertEqual(MOD.release_notes(self.LOG, "1.2.0"), "- new\n  wrapped\n")
+        self.assertEqual(MOD.release_notes(self.LOG, "1.1.0"), "- old\n")
+
+    def test_prefix_version_does_not_match(self):
+        self.assertIsNone(MOD.release_notes(self.LOG, "1.1"))
+        self.assertIsNone(MOD.release_notes(self.LOG, "1.2.1"))
+
+    def test_real_changelog_has_current_version_notes(self):
+        version = (ROOT / "VERSION.txt").read_text(encoding="utf-8-sig").strip().lstrip("vV")
+        log = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+        self.assertTrue(MOD.release_notes(log, version))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

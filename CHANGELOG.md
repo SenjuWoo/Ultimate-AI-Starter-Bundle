@@ -1,3 +1,36 @@
+## 8.53.0 (2026-11-16)
+
+- **One skill tree.** Every provider now installs straight from `_CANONICAL-SKILLS`.
+  The six generated copies under `1-TAILORED-PROVIDER-TREES/*/COPY-TO-SKILLS-DIRECTORY`
+  (3,600 files, about 50 MB, identical apart from one metadata line) and the fanout
+  step every skill edit had to remember are gone, so an edited skill is the shipped
+  skill. The provider folders keep only what differs per app: home templates and
+  the Hermes profiles. Forge-owned skill names still cannot be authored in the
+  bundle (now a release contract). 81 canonical skills.
+- **Python caches never reach a provider.** The skill sync skips `__pycache__` and
+  `.pyc` files a script left in the source tree, and ignores them when deciding a
+  skill is already current.
+- **Dead files removed.** Five unused provider project templates and copy maps,
+  the per-provider workspace instruction files no install read, duplicate
+  provider config copies, the unwired Skyrim workspace hook, the manual
+  other-games mega pack (its Cyberpunk and Fallout 4 skills now belong to their
+  forges, the rest to `game-modding`), a stale path audit, dated one-off reports
+  and the historical `VALIDATION.md` narrative (each release still attaches a
+  generated `VALIDATION.json`).
+- **The workspace seed no longer duplicates instructions.** `-WorkspaceRoot` (and
+  `TOOLS/Initialize-Workspace.ps1`) seeds only `_PROJECT-TEMPLATE`, now shipped as
+  `PROJECT-TEMPLATE/`. The workspace `AGENTS.md`/`CLAUDE.md` copies repeated what
+  every provider home already loads, and the workspace copy of the AIO contract
+  was a second copy nothing read.
+- **One changelog.** `docs/history/` (282 files) is retired: the release body is
+  cut from this file (`check_versions.py --notes X.Y.Z`), so a release no longer
+  writes its notes twice.
+- **Prompts.** The four paste-ready prompts live in `PROMPTS/GENERAL-1..4-*.txt`
+  (start and finish, plan, build or resume, resume after a usage limit);
+  `START-RESUME-UPGRADE.md` explains when to use each and keeps the upgrade audit.
+- Skill metadata cleanup: `coding-discipline`, `check-work` and `release-checklist`
+  lose stale Skyrim-era fields.
+
 ## 8.52.0 (2026-11-15)
 
 - **A forge can register itself.** A forge that ships `uabs-companion.json` in its

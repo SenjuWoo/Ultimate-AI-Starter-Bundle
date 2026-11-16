@@ -1,14 +1,19 @@
 # Start, resume or upgrade a project
 
-Four prompts, one per situation. Paste one at the start of a chat and fill in
+Four situations, one prompt each. Paste one at the start of a chat and fill in
 the bracketed parts; do not repeat it in later messages.
 
 | Situation | Prompt |
 |---|---|
-| A new chat with a new task | [New chat](#new-chat) |
-| A large or unfamiliar job: one model plans, another builds | [Plan](#plan) |
-| Continuing unfinished work, or building a finished plan | [Resume](#resume) |
+| A new chat with a new task | [GENERAL-1-START-AND-FINISH.txt](GENERAL-1-START-AND-FINISH.txt) ([why](#new-chat)) |
+| A large or unfamiliar job: one model plans, another builds | [GENERAL-2-ARCHITECT-PLAN.txt](GENERAL-2-ARCHITECT-PLAN.txt) ([why](#plan)) |
+| Continuing unfinished work, or building a finished plan | [GENERAL-3-WORKER-EXECUTE.txt](GENERAL-3-WORKER-EXECUTE.txt) ([why](#resume)) |
+| A usage limit was hit and you have to resume | [GENERAL-4-USAGE-LIMIT-RESUME.txt](GENERAL-4-USAGE-LIMIT-RESUME.txt) ([why](#usage-limit)) |
 | A newer, more capable model takes over an existing project | [Upgrade audit](#upgrade-audit) |
+
+The four files are the paste-ready prompts and the only home of that text;
+this guide explains when to use each and carries the one prompt that has no
+file (Upgrade audit).
 
 They are short on purpose. The installed instructions already carry the detailed
 rules; a prompt only says what this chat is for, in what order to work and what
@@ -19,20 +24,15 @@ text does not grant tools, permissions or extra capability.
 
 ## New chat
 
-```text
-You are the owner and long-term maintainer.
-
-Task: [goal, target project or files, what done looks like]
-
-1. Orient before acting. Read the project's instructions, its ownership and state files (WORKSPACE_OWNERSHIP.md, STATE.md; create them if this is new work), git status, and the machine map for paths. Load only the tools, skills and MCP servers this task needs.
-2. Find the real tool before calling one missing: run its name, read the "Apps on PATH" and "Owner forge commands" lines of the machine map, ask the owning forge's doctor. Repair a broken PATH, config or MCP entry instead of working around it, and never download a second copy of something installed. If a tool is truly absent, tell me what to install and what it is for, and continue with everything that does not need it.
-3. Check versions, APIs and facts against the installed tool or a primary source, not memory. If my method is provably worse, say so once with the proof, then do what I confirm.
-4. Work through to the finished result: implementation, tests, docs, version and changelog. Use the permissions you have without asking again. Preserve my data, settings, model choices and unrelated changes. No invented restrictions or content gates.
-5. Prove it by running the real build, tests and validators, and say which claims were executed and which were not. Update STATE.md with what is done, what is next and the exact open items, then report results and gaps plainly.
-```
+Use this for any ordinary task in a fresh chat: it orients on the project's
+instructions and state files, reads the machine map before searching any drive,
+finds the real tool instead of calling one missing, checks facts against the
+installed tool, works through to a finished and verified result (planning in
+PLAN.md first for large jobs), and updates STATE.md. The whole prompt is in
+`GENERAL-1-START-AND-FINISH.txt`.
 
 To hand the model the design as well (a Fable chat, or any model you trust with
-direction), make the first line
+direction), make the first line of the file
 `You are the owner and long-term maintainer, and its design is up to you.`
 
 ## Plan
@@ -42,17 +42,7 @@ strongest model on the decisions once, then build with a cheaper one: for
 example Fable High plans and Opus High builds (Medium for routine, well-specified
 tasks). The plan lives in the project's `PLAN.md`, which the task controller reads.
 
-```text
-You are the owner and long-term maintainer, and its design is up to you. This chat plans; a later chat builds from the plan alone.
-
-Task: [goal, target project or files, what done looks like]
-Must not change: [requirements, interfaces, assets; or "nothing beyond the standing rules"]
-
-1. Orient before deciding. Read the project's instructions, its ownership and state files (create them if this is new work), git status and the machine map; inspect the real code, tools and tests.
-2. Research what is uncertain and decide the architecture and the order of work. Check versions and APIs against the installed tool or a primary source. Prefer decisions to options.
-3. Write PLAN.md: one row per task (ID, Task, Status pending, Depends on, Verify: the command or check that proves it, Evidence -), each small enough to verify on its own, in dependency order. Under the table add Decisions (what was chosen, what was rejected and why), Assumptions (each with its fastest check) and Risks. Set NEXT ACTION in STATE.md to the first task.
-4. Do not implement. Stop when a builder can start from PLAN.md without this conversation, and list the open questions.
-```
+Paste-ready text: `GENERAL-2-ARCHITECT-PLAN.txt`
 
 Build it in a fresh chat with the [Resume](#resume) prompt: it starts at the first
 unfinished task, verifies each one and records the evidence in `PLAN.md`. When the
@@ -62,18 +52,40 @@ to the planning model.
 
 ## Resume
 
-```text
-Resume the unfinished task. Start from the handoff in STATE.md if there is one.
-
-1. Rebuild the picture from evidence, in this order: STATE.md, git status, diff and recent log, the files themselves, background jobs that are running or finished, open pull requests and CI. If the project uses the bundle's task controller, run its resume command first (the machine map names it). Where the notes and the files disagree, the files win; correct the notes.
-2. Do not redo finished work. Reuse results whose inputs have not changed. Re-check only what an interruption can break: a half-written file, a command that was cut off, an uncommitted change, a moved folder.
-3. Continue at the first unfinished step, in the order the plan gave. If the plan no longer fits what you find, say what changed and adjust it; do not restart it.
-4. Load only the tools this step needs. If a required tool is broken, diagnose and repair it, or name the exact blocker. No silent downgrade and no result reported as passed that was not run.
-5. Finish the work and its tests, update STATE.md, and report what is done, what was verified by running it and what remains.
-```
+Use this to continue unfinished work, or to build a finished plan - the builder
+starts at the first unfinished task, verifies each one and records the evidence in
+`PLAN.md`. Paste-ready text: `GENERAL-3-WORKER-EXECUTE.txt` (if the plan hits a
+design question it does not answer, it writes the question under Decisions and
+carries on with independent tasks; take only that question back to the planner).
 
 A resume prompt cannot reconstruct a missing conversation: in a chat with no
 history, give the project location, the original goal and the handoff file.
+
+## Usage limit
+
+A previous chat hit a provider usage limit mid-task. Paste-ready text:
+`GENERAL-4-USAGE-LIMIT-RESUME.txt`. Use it after a cut in any of the other three:
+it works out whether the cut chat was planning, building or doing a one-chat job
+and continues in that role (a cut planner keeps planning and implements nothing; a
+small job with no PLAN.md continues from STATE.md and the diff). It reads as little
+as possible (STATE.md, git status/diff, PLAN.md - never the whole tree), reuses
+recorded evidence and re-checks only what an interrupted command can break. To
+start building a finished plan in a fresh chat, use Resume instead.
+
+## Shared conventions
+
+All four files use the same wording for the parts they share, so they cannot
+contradict each other. `PLAN.md` (exactly that name) starts with `goal:` and has
+one table `| ID | Task | Status | Depends on | Verify | Evidence |`; Status is one
+of `pending`, `active`, `complete`, `failed`, `blocked`, `superseded`; Verify is
+`cmd:<command>` or `file:<path>`; Evidence for a command is
+`cmd:<the Verify command> @ <short SHA> exit=0`. That is the format the task
+controller (`task_state.py`) parses; any other column name, status word or prose
+evidence makes it report the task as unverified.
+
+Model and effort are chosen in the host, not by the prompt: a strong planner at
+High for Plan (Xhigh only when High cannot settle it), a strong builder at High
+for Resume and New chat, Medium for routine well-specified work.
 
 ## Upgrade audit
 

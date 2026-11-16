@@ -1,4 +1,4 @@
-# Workspace seeding must never replace project rules or follow directory links.
+# Workspace seeding must never replace user files or follow directory links.
 [CmdletBinding()]
 param([string]$PackRoot)
 $ErrorActionPreference = 'Stop'
@@ -25,24 +25,22 @@ $links = New-Object System.Collections.Generic.List[string]
 try {
     # Literal brackets and Unicode catch accidental wildcard or ANSI handling.
     $source = Join-Path $fixture ('pack [x] ' + [char]0xE9)
-    $tree = Join-Path $source 'COPY-TO-YOUR-WORKSPACE'
-    Put (Join-Path $tree 'AGENTS.md') 'bundle agent rules'
-    Put (Join-Path $tree 'CLAUDE.md') 'bundle Claude rules'
-    Put (Join-Path $tree '_PROJECT-TEMPLATE\nested\keep.txt') 'bundle template'
-    Put (Join-Path $tree '_PROJECT-TEMPLATE\nested\new.txt') 'new template file'
-    Put (Join-Path $tree '_PROJECT-TEMPLATE\blocked\new.txt') 'must not cross a file'
-    Put (Join-Path $tree '_PROJECT-TEMPLATE\linked\new.txt') 'must not follow a link'
-    Put (Join-Path $tree '_PROJECT-TEMPLATE\dangling\new.txt') 'must not replace a dangling link'
+    $tree = Join-Path $source 'PROJECT-TEMPLATE'
+    Put (Join-Path $tree 'nested\keep.txt') 'bundle template'
+    Put (Join-Path $tree 'nested\new.txt') 'new template file'
+    Put (Join-Path $tree 'blocked\new.txt') 'must not cross a file'
+    Put (Join-Path $tree 'linked\new.txt') 'must not follow a link'
+    Put (Join-Path $tree 'dangling\new.txt') 'must not replace a dangling link'
 
     $fresh = Join-Path $fixture 'fresh [workspace]'
     Seed $source $fresh
-    Assert ([IO.File]::ReadAllText((Join-Path $fresh 'AGENTS.md')) -ceq 'bundle agent rules') 'Fresh agent rules were not seeded.'
-    Assert ([IO.File]::ReadAllText((Join-Path $fresh 'CLAUDE.md')) -ceq 'bundle Claude rules') 'Fresh Claude rules were not seeded.'
+    # The provider homes already carry the instructions; a workspace copy would load them twice.
+    Assert (-not (Test-Path -LiteralPath (Join-Path $fresh 'AGENTS.md'))) 'Seeding wrote a duplicate AGENTS.md.'
+    Assert (-not (Test-Path -LiteralPath (Join-Path $fresh 'CLAUDE.md'))) 'Seeding wrote a duplicate CLAUDE.md.'
     Assert ([IO.File]::ReadAllText((Join-Path $fresh '_PROJECT-TEMPLATE\nested\new.txt')) -ceq 'new template file') 'Fresh template descendants were not seeded.'
 
     $existing = Join-Path $fixture 'existing [workspace]'
     Put (Join-Path $existing 'AGENTS.md') 'personal agent rules'
-    Put (Join-Path $existing 'CLAUDE.md') 'personal Claude rules'
     Put (Join-Path $existing '_PROJECT-TEMPLATE\nested\keep.txt') 'personal template'
     Put (Join-Path $existing '_PROJECT-TEMPLATE\blocked') 'a user file, not a directory'
     $outside = Join-Path $fixture 'outside'
@@ -59,7 +57,6 @@ try {
     Seed $source $existing
     Seed $source $existing
     Assert ([IO.File]::ReadAllText((Join-Path $existing 'AGENTS.md')) -ceq 'personal agent rules') 'Existing agent rules were overwritten.'
-    Assert ([IO.File]::ReadAllText((Join-Path $existing 'CLAUDE.md')) -ceq 'personal Claude rules') 'Existing Claude rules were overwritten.'
     Assert ([IO.File]::ReadAllText((Join-Path $existing '_PROJECT-TEMPLATE\nested\keep.txt')) -ceq 'personal template') 'An existing template file was overwritten.'
     Assert ([IO.File]::ReadAllText((Join-Path $existing '_PROJECT-TEMPLATE\nested\new.txt')) -ceq 'new template file') 'Missing file inside an existing template was not seeded.'
     Assert ([IO.File]::ReadAllText((Join-Path $existing '_PROJECT-TEMPLATE\blocked')) -ceq 'a user file, not a directory') 'A conflicting user file was replaced.'
@@ -70,10 +67,8 @@ try {
 
     # Existing objects of the wrong type still belong to the user.
     $conflict = Join-Path $fixture 'type conflicts'
-    [void][IO.Directory]::CreateDirectory((Join-Path $conflict 'AGENTS.md'))
     Put (Join-Path $conflict '_PROJECT-TEMPLATE') 'personal template placeholder'
     Seed $source $conflict
-    Assert (Test-Path -LiteralPath (Join-Path $conflict 'AGENTS.md') -PathType Container) 'An existing instruction directory was replaced.'
     Assert ([IO.File]::ReadAllText((Join-Path $conflict '_PROJECT-TEMPLATE')) -ceq 'personal template placeholder') 'A conflicting template root was replaced.'
 
     # A linked destination root or ancestor must not redirect writes.
@@ -84,13 +79,13 @@ try {
     Assert (-not (Test-Path -LiteralPath (Join-Path $outside 'child'))) 'A linked destination ancestor redirected writes.'
 
     # Validate every required source before creating any destination files.
-    [IO.File]::Delete((Join-Path $tree 'CLAUDE.md'))
-    Assert (-not (Test-Path -LiteralPath (Join-Path $tree 'CLAUDE.md'))) 'Fixture did not remove the source file.'
+    $parked = Join-Path $source 'PROJECT-TEMPLATE.parked'
+    [IO.Directory]::Move($tree, $parked)
     $missing = Join-Path $fixture 'missing-source destination'
     Must-Refuse $source $missing 'A missing required source was accepted.'
     Assert (-not (Test-Path -LiteralPath $missing)) 'A missing required source left a partial workspace.'
-    Put (Join-Path $tree 'CLAUDE.md') 'bundle Claude rules'
-    $sourceLink = Join-Path $tree '_PROJECT-TEMPLATE\source-link'
+    [IO.Directory]::Move($parked, $tree)
+    $sourceLink = Join-Path $tree 'source-link'
     [void](New-Item -ItemType Junction -Path $sourceLink -Target $outside)
     [void]$links.Add($sourceLink)
     $unsafe = Join-Path $fixture 'unsafe-source destination'

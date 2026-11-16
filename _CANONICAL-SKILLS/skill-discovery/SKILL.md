@@ -24,7 +24,7 @@ Discovery is not approval. For a promising result:
 2. Verify the license, exact bytes/hash when an asset exists, runtime requirements, install scripts,
    telemetry/network behavior, writes, hooks, credentials, and overlap with installed capabilities.
 3. Run it in an isolated home or fixture before touching provider state.
-4. For this bundle, promote accepted files through `_CANONICAL-SKILLS` and provider fanout. Never run
+4. For this bundle, promote accepted files through `_CANONICAL-SKILLS`, the tree every provider installs. Never run
    `skills add`, `skills update`, `skills remove`, or `skills experimental_sync` against live homes;
    they create a second writer for the same skill trees.
 5. If the candidate is useful but redundant, risky, unlicensed, mutable-only, or untested, record the

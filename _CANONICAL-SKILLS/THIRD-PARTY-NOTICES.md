@@ -41,7 +41,7 @@ reference.
 upstream provider-specific `CLAUDE.md` are excluded; the skill, stdlib Python
 forge, documentation, fixtures and license are retained. UABS adds one Windows
 Python/UTF-8 resolver and replaces upstream's provider symlink instructions with
-canonical fanout. The full tree now lives in its own repository; this bundle ships
+one canonical copy per provider. The full tree now lives in its own repository; this bundle ships
 a pointer skill that names the same tag and commit.
 
 ## Impeccable — `pbakaus/impeccable`, Apache-2.0

@@ -1,4 +1,5 @@
-# Seed missing workspace examples; existing project files always belong to the user.
+# Seed the project template into a workspace; existing files always belong to the user.
+# Instructions are not copied: every provider home already carries them.
 [CmdletBinding()]
 param(
     [string]$PackRoot,
@@ -63,20 +64,14 @@ function Copy-WorkspaceSeedNode($Node, [string]$Destination) {
     }
 }
 
-$source = Join-Path $PackRoot 'COPY-TO-YOUR-WORKSPACE'
+$source = Join-Path $PackRoot 'PROJECT-TEMPLATE'
 Assert-WorkspaceSeedPath -Path $source
 Assert-WorkspaceSeedPath -Path $WorkspaceRoot
 $rootItem = Get-Item -LiteralPath $WorkspaceRoot -Force -ErrorAction SilentlyContinue
 if ($rootItem -and -not $rootItem.PSIsContainer) { throw ('WorkspaceRoot is not a directory: ' + $WorkspaceRoot) }
 
 # Complete source validation before creating even the workspace directory.
-$nodes = @(
-    Get-WorkspaceSeedNode -Path (Join-Path $source 'AGENTS.md') -Directory $false
-    Get-WorkspaceSeedNode -Path (Join-Path $source 'CLAUDE.md') -Directory $false
-    Get-WorkspaceSeedNode -Path (Join-Path $source '_PROJECT-TEMPLATE') -Directory $true
-)
+$template = Get-WorkspaceSeedNode -Path $source -Directory $true
 [void][IO.Directory]::CreateDirectory($WorkspaceRoot)
-foreach ($node in $nodes) {
-    Copy-WorkspaceSeedNode -Node $node -Destination (Join-Path $WorkspaceRoot $node.Name)
-}
-Write-Host 'Workspace examples seeded where absent; existing files preserved.'
+Copy-WorkspaceSeedNode -Node $template -Destination (Join-Path $WorkspaceRoot '_PROJECT-TEMPLATE')
+Write-Host 'Project template seeded where absent; existing files preserved.'

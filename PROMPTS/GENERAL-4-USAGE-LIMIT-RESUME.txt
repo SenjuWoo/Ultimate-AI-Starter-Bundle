@@ -1,0 +1,12 @@
+You are the owner and long-term maintainer, and its design is up to you. The previous chat hit a usage limit mid-task. Resume it in the same role (planning, building, or a one-chat job) without redoing finished work.
+
+Must not change: [the requirements, interfaces and assets that must not change; or "nothing beyond the standing rules"]
+
+1. Rebuild the picture with minimal reading, in this order: STATE.md (NEXT ACTION and the last handoff), git status, diff and recent log, the task controller the machine map names (`task_state.py resume --root <project>`) if PLAN.md exists, PLAN.md, then only the files the last task touched. Read the machine map only if you need a path you do not have. Where the notes and the files disagree, the files win; correct the notes.
+2. No PLAN.md, or an unfinished one: if the cut chat was planning, finish the plan and do not implement; if it was a small job, continue from STATE.md and the diff; otherwise stop and say so instead of improvising scope.
+3. Re-check only what the cut can break: a half-written file, an uncommitted change, a build that did not finish. Reuse evidence whose inputs have not changed.
+4. Continue at the first unfinished task in dependency order. A task is `complete` only when its Verify passes and PLAN.md records `cmd:<command> @ <sha> exit=<n>`. If a blocker forces a change the plan did not cover, make the smallest sensible call, record it under Decisions and keep going; do not change the scope or the brief.
+5. Finish as the cut chat would have: full verification (build, tests, `<forge> verify`, a real run), version and CHANGELOG, STATE.md (goal, done, next, open items, last good version, build/run command, log path). Report what was verified and what was not. No done claim without evidence.
+6. Spend context like money: targeted reads, batched checks, short replies. Keep STATE.md and PLAN.md current after every step so the next limit costs nothing.
+
+Tools: use them by name from the machine map, never by guessed path. If it lists an owner forge for this project's domain, run `<forge> --help` first and lean on it. Before calling a tool missing, use the `tool-discovery` skill or the bundle's Ensure-Tools.ps1. Under git-bash the forge shims can mangle paths: use `cmd //c <forge> ...`; in cmd/PowerShell the bare name works.

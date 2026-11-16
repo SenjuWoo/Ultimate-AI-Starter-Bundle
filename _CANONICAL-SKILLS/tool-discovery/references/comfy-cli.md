@@ -28,7 +28,7 @@ image/video. Successful JSON validation is not proof of visual quality.
 
 Do not run setup, install, login, cloud commands, custom-node installation or
 model downloads without that task being authorized. Do not install the CLI's
-agent skills into provider folders; the bundle owns canonical skill fanout.
+agent skills into provider folders; the bundle owns skill installation from `_CANONICAL-SKILLS`.
 
 Prior Windows evidence (2026-09-28, CLI 1.21.0): isolated install, version/help, offline graph
 inspection, and malformed-file rejection. GPU inference and live-server

@@ -1440,14 +1440,21 @@ function Update-UabsInstructionProfile {
   return $true
 }
 
-function Get-UabsTreeDigest([string]$Path, [switch]$Ordinal) {
+function Test-UabsInterpreterCache([string]$Path) {
+  # Python bytecode a skill script wrote when it ran. It is machine-local, never
+  # product content, and is neither copied into nor compared between skill trees.
+  return ($Path -match '(?i)[\\/]__pycache__([\\/]|$)' -or $Path -match '(?i)\.py[co]$')
+}
+
+function Get-UabsTreeDigest([string]$Path, [switch]$Ordinal, [switch]$SkipCaches) {
   $root = (Resolve-Path -LiteralPath $Path).Path.TrimEnd('\') + '\'
   # One SHA256 for the whole tree, same bytes and hex as Get-FileHash's .Hash:
   # the cmdlet costs several ms per file in PS 5.1, and an install digests
   # ~2,400 skill trees.
   $fileSha = [Security.Cryptography.SHA256]::Create()
   try {
-    $rows = @(Get-ChildItem -LiteralPath $Path -Recurse -File -Force -ErrorAction Stop | ForEach-Object {
+    $rows = @(Get-ChildItem -LiteralPath $Path -Recurse -File -Force -ErrorAction Stop |
+      Where-Object { -not ($SkipCaches -and (Test-UabsInterpreterCache $_.FullName)) } | ForEach-Object {
       $stream = [IO.File]::OpenRead($_.FullName)
       try { $hex = [BitConverter]::ToString($fileSha.ComputeHash($stream)).Replace('-', '') } finally { $stream.Dispose() }
       $_.FullName.Substring($root.Length).Replace('\','/') + '=' + $hex
@@ -1577,7 +1584,7 @@ function Sync-UabsProviderSkills(
     # and reappear in running apps on each install.
     if ((Test-Path -LiteralPath $destSkill -PathType Container) -and
         -not ((Get-Item -LiteralPath $destSkill -Force).Attributes -band [IO.FileAttributes]::ReparsePoint) -and
-        (Get-UabsTreeDigest $destSkill -Ordinal) -ceq (Get-UabsTreeDigest $skillDir.FullName -Ordinal)) { continue }
+        (Get-UabsTreeDigest $destSkill -Ordinal -SkipCaches) -ceq (Get-UabsTreeDigest $skillDir.FullName -Ordinal -SkipCaches)) { continue }
     $nonce = [Guid]::NewGuid().ToString('N')
     # Stage beside the skills root, not inside it: apps index every folder in
     # the root, so a staging copy showed up as a second skill mid-install.
@@ -1590,12 +1597,14 @@ function Sync-UabsProviderSkills(
       $sourceRoot = $skillDir.FullName.TrimEnd('\') + '\'
       $expected = @{}
 
-      foreach ($sourceDir in @(Get-ChildItem -LiteralPath $skillDir.FullName -Recurse -Directory -Force -ErrorAction Stop)) {
+      foreach ($sourceDir in @(Get-ChildItem -LiteralPath $skillDir.FullName -Recurse -Directory -Force -ErrorAction Stop |
+          Where-Object { -not (Test-UabsInterpreterCache $_.FullName) })) {
         $relDir = $sourceDir.FullName.Substring($sourceRoot.Length)
         if ($relDir) { New-Item -ItemType Directory -Force -Path (Join-Path $stage $relDir) | Out-Null }
       }
 
-      foreach ($srcFile in @(Get-ChildItem -LiteralPath $skillDir.FullName -Recurse -File -Force -ErrorAction Stop)) {
+      foreach ($srcFile in @(Get-ChildItem -LiteralPath $skillDir.FullName -Recurse -File -Force -ErrorAction Stop |
+          Where-Object { -not (Test-UabsInterpreterCache $_.FullName) })) {
         $rel = $srcFile.FullName.Substring($sourceRoot.Length)
         $expected[$rel] = (Get-FileHash -LiteralPath $srcFile.FullName -Algorithm SHA256).Hash
         $stageFile = Join-Path $stage $rel

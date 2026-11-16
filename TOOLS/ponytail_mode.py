@@ -430,7 +430,7 @@ def main(argv=None, home=None):
 def _tree(args):
     if args.source_tree:
         return Path(args.source_tree)
-    return Path(__file__).resolve().parent.parent / "1-TAILORED-PROVIDER-TREES" / "Claude" / "COPY-TO-SKILLS-DIRECTORY" / "skills"
+    return Path(__file__).resolve().parent.parent / "_CANONICAL-SKILLS"
 
 
 if __name__ == "__main__":

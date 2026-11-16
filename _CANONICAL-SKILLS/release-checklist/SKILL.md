@@ -5,8 +5,6 @@ compatibility: Windows 10/11; PowerShell 5.1 and Python 3; gh CLI authenticated.
 metadata:
   version: 1.2.0
   updated: '2026-10-10'
-  library: overseer-skyrim-agent-skills
-  error_registry_revision: 4.3.0
 ---
 
 # Release checklist
@@ -63,8 +61,8 @@ List every job and every command it runs. CI checks things the local gate does
 NOT — treat the workflow as the contract. Common CI-only traps:
 
 - A version-consistency script (`.github/scripts/check_versions.py`) that
-  requires a **dated changelog file** per version (e.g.
-  `docs/history/V7.X.Y-CHANGELOG.md`) in addition to the inline `CHANGELOG.md`.
+  requires a dated `## X.Y.Z` section in `CHANGELOG.md`; that section is also the
+  release body.
 - A manifest verifier (`.github/scripts/verify_manifest.py`) that hashes every
   tracked file — adding/removing/renaming a file without regenerating
   `MANIFEST.json` fails it.

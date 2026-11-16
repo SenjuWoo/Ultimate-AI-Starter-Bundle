@@ -6,7 +6,8 @@ unavoidable; drifting silently is not. v7.5.3 shipped with CATALOG.json still
 declaring 6.8.0 -- seven minor versions behind -- because nothing checked.
 
 `--set X.Y.Z` rewrites every declaration below in place (one command per
-release); the changelog sections stay hand-written and are still checked.
+release); the changelog section stays hand-written and is still checked.
+`--notes X.Y.Z` prints that version's CHANGELOG.md section: the release body.
 
 Companion products (Skyrim Forge, Reverse THIS!) release on their own. The
 bundle declares only a floor for each, so it must never restate their versions
@@ -100,10 +101,38 @@ def set_version(bare):
         pending.append((path, (b"\xef\xbb\xbf" if bom else b"") + text.encode("utf-8")))
     for path, data in pending:
         open(path, "wb").write(data)
-    print("Declared versions set to %s; add '## %s' to CHANGELOG.md and docs/history/V%s-CHANGELOG.md." % (bare, bare, bare))
+    print("Declared versions set to %s; add '## %s' to CHANGELOG.md." % (bare, bare))
+
+
+def release_notes(changelog, bare):
+    """The body of '## <bare>' in CHANGELOG.md (LF), or None when absent.
+
+    The heading must name exactly this version: 1.1 never matches 1.10.0.
+    """
+    lines = changelog.replace("\r\n", "\n").split("\n")
+    head = re.compile(r"^## %s(?:\s|$)" % re.escape(bare))
+    for i, line in enumerate(lines):
+        if head.match(line):
+            body = []
+            for nxt in lines[i + 1:]:
+                if nxt.startswith("## "):
+                    break
+                body.append(nxt)
+            return "\n".join(body).strip("\n") + "\n"
+    return None
 
 
 def main(argv):
+    if len(argv) == 2 and argv[0] == "--notes":
+        notes = release_notes(read("CHANGELOG.md"), argv[1].lstrip("vV"))
+        if not notes:
+            print("CHANGELOG.md has no '## %s' section" % argv[1], file=sys.stderr)
+            return 1
+        # Bytes, not text: a Windows runner's console code page cannot encode
+        # every changelog character, and text mode would add CR to each line.
+        sys.stdout.flush()
+        sys.stdout.buffer.write(notes.encode("utf-8"))
+        return 0
     if len(argv) == 2 and argv[0] == "--set":
         set_version(argv[1].lstrip("vV"))
     version = read("VERSION.txt").strip()          # e.g. "v7.6.2"
@@ -159,16 +188,10 @@ def main(argv):
         text = read(rel)
         problems.extend("%s %s" % (rel, error) for error in validate_skyrim_claims(text) + validate_companion_claims(text))
 
-    changelog = read("CHANGELOG.md")
-    if not re.search(r"^## %s\b" % re.escape(bare), changelog, re.M):
+    if not release_notes(read("CHANGELOG.md"), bare):
         problems.append("CHANGELOG.md has no '## %s' section" % bare)
     else:
         print("  %-8s %-38s ## %s" % ("ok", "CHANGELOG.md", bare))
-    history = os.path.join(ROOT, "docs", "history", "V%s-CHANGELOG.md" % bare)
-    if not os.path.isfile(history):
-        problems.append("docs/history/V%s-CHANGELOG.md is missing" % bare)
-    else:
-        print("  %-8s %-38s present" % ("ok", "docs/history/V%s-CHANGELOG.md" % bare))
 
     if problems:
         print("\nVersion drift:")

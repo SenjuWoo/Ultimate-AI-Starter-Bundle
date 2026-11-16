@@ -1,0 +1,11 @@
+As the worker, execute the architect's plan in PLAN.md - or resume it where it stopped. The plan's decisions are settled: build them, do not re-plan or re-verify them.
+
+Must not change: [the requirements, interfaces and assets that must not change; or "nothing beyond the standing rules"]
+
+1. Rebuild the picture cheaply, in this order: the task controller the machine map names (`task_state.py resume --root <project>`; it names the next ready task), STATE.md and its handoff, git status, diff and recent log, PLAN.md, then only the files the next task touches; running jobs, pull requests and CI only if there are any. Where the notes and the files disagree, the files win; correct the notes. If PLAN.md is missing or incomplete, stop and say so instead of improvising scope.
+2. Do not redo finished work. Re-check only what an interruption can break: a half-written file, a cut-off command, an uncommitted change, a moved folder.
+3. Work through the tasks in dependency order. A task is `complete` only when its Verify passes and PLAN.md records `cmd:<command> @ <sha> exit=<n>`; keep STATE.md current after every task. If the plan does not fit what you find, make the smallest fix, record it under Decisions and continue; do not restart it.
+4. Load only the tools each task needs. If a required tool is broken, repair it (PATH, config, MCP entry, the forge's doctor) or name the exact blocker. No silent downgrade and nothing reported as passed that did not run.
+5. Finish: tests, version and changelog, STATE.md (goal, done, next, open items, last good version, build/run command, log path). Report what is done, what was verified by running it, and what remains. No done claim without evidence.
+
+Tools: use them by name from the machine map (%USERPROFILE%\.uabs\profile\MACHINE-MAP.md), never by guessed path. If it lists an owner forge for this project's domain, run `<forge> --help` first and lean on it. Before calling a tool missing, use the `tool-discovery` skill or the bundle's Ensure-Tools.ps1. Under git-bash the forge shims can mangle paths: use `cmd //c <forge> ...`; in cmd/PowerShell the bare name works.

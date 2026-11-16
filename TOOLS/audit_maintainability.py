@@ -1,6 +1,6 @@
 """Report duplication, oversized skills and orphaned tools without failing a build.
 
-Maintenance drift in this pack is mostly invisible: a provider fanout copies every
+Maintenance drift in this pack is mostly invisible: a copy step duplicates every
 skill by design, but a second copy of a *tool* or a 900-line SKILL.md is not.
 Findings are advisory by default; `--strict` only fails on the rules that have no
 legitimate exception (skill ceiling, duplicate non-generated files, broken ADR).
@@ -15,23 +15,18 @@ import subprocess
 import sys
 from pathlib import Path
 
-# Provider trees and archived texts are generated on purpose; comparing them
-# would report the fanout itself as waste.
+# Archived texts are kept on purpose so installs can recognise old pack text.
 GENERATED = (
-    "1-TAILORED-PROVIDER-TREES/",
     "3-PREAMBLES/history/",
     "BUNDLED-TOOLS/packs/skyrim/legacy/",
 )
 # Vendored plugin sources are upstream files the bundle does not own.
 VENDORED = ("BUNDLED-TOOLS/plugins/",)
 SKILL_LINE_CEILING = 500
-# Known mirrors the pack keeps on purpose: the workspace AIO copy is asserted
-# identical by the release contract, and the LICENSE must ship beside the
+# Known mirrors the pack keeps on purpose: the LICENSE must ship beside the
 # vendored toolbox.
 ALLOWED_DUPLICATES = {
-    ("0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md", "COPY-TO-YOUR-WORKSPACE/AIO-INSTRUCTION.txt"),
     ("BUNDLED-TOOLS/uabs-toolbox/LICENSE", "LICENSE"),
-    ("COPY-TO-YOUR-WORKSPACE/AGENTS.md", "COPY-TO-YOUR-WORKSPACE/CLAUDE.md"),
 }
 
 

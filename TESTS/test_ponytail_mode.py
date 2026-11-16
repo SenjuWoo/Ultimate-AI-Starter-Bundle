@@ -92,7 +92,7 @@ class PonytailModeTests(unittest.TestCase):
     def test_round_trip_restores_the_original_bytes(self):
         original = (self.home / ".grok" / "skills" / "ponytail" / "SKILL.md").read_text(encoding="utf-8")
         pm.execute(pm.plan("off", home=self.home))
-        tree = ROOT / "1-TAILORED-PROVIDER-TREES" / "Claude" / "COPY-TO-SKILLS-DIRECTORY" / "skills"
+        tree = ROOT / "_CANONICAL-SKILLS"
         pm.execute(pm.plan("full", home=self.home, source_tree=tree))
         restored = (self.home / ".grok" / "skills" / "ponytail" / "SKILL.md").read_text(encoding="utf-8")
         self.assertEqual(restored, original, "the parked copy wins over a fresh bundle copy")
@@ -241,7 +241,7 @@ class PonytailModeTests(unittest.TestCase):
 
     def test_manual_level_restores_no_copy_beside_an_enabled_plugin(self):
         pm.execute(pm.plan("off", home=self.home))
-        tree = ROOT / "1-TAILORED-PROVIDER-TREES" / "Claude" / "COPY-TO-SKILLS-DIRECTORY" / "skills"
+        tree = ROOT / "_CANONICAL-SKILLS"
         pm.execute(pm.plan("full", home=self.home, source_tree=tree))
         self.assertFalse(pm.installed_skill_dirs(self.home / ".claude"),
                          "the plugin delivers the skills; a copy would list each twice")

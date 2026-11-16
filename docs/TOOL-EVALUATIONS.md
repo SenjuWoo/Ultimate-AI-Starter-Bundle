@@ -323,7 +323,7 @@ filter tools, so the active surface is usually smaller.
 | Melty 1.0.0 (melty.gg, user-registered) | Melty app | 21 | 41,702 | 10,426 |
 
 Context7, GitHub, shadcn, Blender, Windows and Firecrawl figures are the
-candidate measurements recorded in `docs/history/V8.7.40-CHANGELOG.md`; the
+candidate measurements recorded with release 8.7.40 (git history); the
 rest were taken in this pass. Not remeasured: houseCARL 1.9.0 (needs a real
 MO2/Vortex instance; historical 45 tools / 167,072 bytes), Perplexity (refuses
 initialize without a key), Unity (needs an open editor). GitHub's five-toolset
@@ -864,7 +864,7 @@ SHA-256 `fdcb41a24ddfb613786e3141bc7bb8466a406ffbd437a2e302f4ca70181bed9f`.
 The bundle pins the published npm 3.6.1 package and its registry integrity.
 Skill 4.1.3 adds executable visual contracts, framework-churn hardening, and
 quieter deterministic detection. UABS keeps the license and removes upstream's
-self-writer and generated hook cache before fanout.
+self-writer and generated hook cache before it enters `_CANONICAL-SKILLS`.
 
 Optional Puppeteer is omitted because Playwright already owns browser rendering.
 Upstream self-update and provider-directory pinning are removed so generated

@@ -35,7 +35,6 @@ TOOLBELT.md
 
 # Extracted copies of shipped archives (the .zip/.whl next to them are canonical)
 BUNDLED-TOOLS/offline/*/
-2-OPTIONAL-MANUAL-OTHER-GAMES-MEGA-PACK/Other-Games-Modding-Skills-Mega-Pack-v2.1.0/
 
 # Release artifacts from TOOLS/Build-Release.ps1 and TOOLS/build_release.py.
 # The Python builder defaults to --outdir artifacts, which is also what CI
@@ -60,7 +59,6 @@ TESTS/evidence-scenarios/*/app.log
 # them; default search skips them. A brand-new skill path is untracked AND
 # ignored, so stage it with git add -f. Modifications to already tracked
 # skill files still show up in git status.
-1-TAILORED-PROVIDER-TREES/*/COPY-TO-SKILLS-DIRECTORY/skills/
 # Personal-data boundary (see SECURITY.md). Chat exports, account records,
 # memories and machine-local notes must never reach a public pack. The CI
 # guard is TESTS/test_privacy_boundary.py; these patterns cover the classes

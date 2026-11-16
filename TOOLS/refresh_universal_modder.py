@@ -21,8 +21,7 @@ BUNDLED-TOOLS/universal-modder from the subset, re-applies every patch below
 upstream references, including the pack's own deltas inside that mirror
 (SKILL_DROP / SKILL_OVERRIDES / SKILL_PATCHES: the unbounded `unpack_upk.py`
 fallback is not redistributed). It does NOT build the wheel, update
-CATALOG.json / OFFLINE-MANIFEST.json, fan the skill out to the provider trees
-or run the gates - the checklist it prints at the end lists those steps.
+CATALOG.json / OFFLINE-MANIFEST.json or run the gates - the checklist it prints at the end lists those steps.
 """
 from __future__ import annotations
 

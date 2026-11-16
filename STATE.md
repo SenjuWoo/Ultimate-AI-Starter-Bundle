@@ -45,6 +45,10 @@
 
 ## History
 
+8.53.0 (2026-11-16): debloat - every provider installs from _CANONICAL-SKILLS (six
+generated skill copies, 3,600 files, removed); dead templates, copy maps, workspace
+instruction copies, mega pack and docs/history retired; release body cut from
+CHANGELOG.md; owner's four GENERAL prompt files added.
 8.52.0 (2026-11-15): forges self-register through uabs-companion.json (no bundle
 release for a new forge or launcher); TOOLS/field_report.py records a forge defect in
 the owner folder (rule in the contract, ai-tooling-stack, forge standard);
@@ -70,4 +74,4 @@ Exact-commit CI and downloadable build receipts remain the release evidence.
 (backups only by retention), and ponytail "off" switches its Claude/Antigravity
 plugin off; sandboxed tests no longer reach real provider folders.
 
-Release notes before this trim: `docs/history/STATE-ARCHIVE-2026-11-07.md`. Older releases: `docs/history/V<version>-CHANGELOG.md`.
+Older release notes: `CHANGELOG.md` and git history.

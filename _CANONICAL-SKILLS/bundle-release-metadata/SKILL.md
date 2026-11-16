@@ -34,7 +34,7 @@ missing file in the release, not a cosmetic diff.
 
 ## Order of operations
 
-1. Edit content, then fan out skills: `python TOOLS/fanout_providers.py _CANONICAL-SKILLS .`
+1. Edit content. Skills are edited only in `_CANONICAL-SKILLS`; every provider installs from it.
 2. Archive preambles: `python TOOLS/generate_preamble_history.py`
 3. Regenerate `MANIFEST.json` **last** — a local install or a test run can create
    a new archive after you generated it.

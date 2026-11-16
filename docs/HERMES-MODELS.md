@@ -12,8 +12,8 @@ evidence, not a quality benchmark or guaranteed availability.
 its cache and refetches catalogs; `/model` switches inside a chat. Compare task
 accuracy, latency, modalities and budget, not release date alone. The starter
 default is `deepseek/deepseek-v4.1-flash-1017` with
-`agent.reasoning_effort: high`; `VERSION.txt`-adjacent starter config and
-`1-TAILORED-PROVIDER-TREES/Hermes/config.yaml` are the source of truth for that
+`agent.reasoning_effort: high`; the starter config
+`1-TAILORED-PROVIDER-TREES/Hermes/COPY-TO-PROVIDER-HOME/config.yaml` is the source of truth for that
 ID, and `TESTS/test_release_contract.py` fails if this page disagrees. Verify the
 current context, price and modality listing on OpenRouter before quoting a
 number. Upgrades do not replace an existing main or auxiliary choice with a
@@ -45,8 +45,8 @@ Catalog check: **2026-11-06**. The starter runs one model end to end:
 - **MoA:** the `deepseek_particle` preset is kept but disabled
   (`moa.enabled: false`, `default_preset: ''`). Its Particle-1 aggregator was the
   unreliable part; enabling it is a deliberate user choice, never a default.
-- Dated comparisons of other models live in
-  `docs/history/V8.37.8-CHANGELOG.md` and the release notes, not on this page;
+- Dated comparisons of other models live in the 8.37.8 `CHANGELOG.md` entry
+  and the release notes, not on this page;
   prices move weekly and a landing page should not carry them.
 - `prompt_caching.cache_ttl` is `1h`; `provider_routing` sorts by price and
   requires parameters; `openrouter.response_cache` stays off (that's response

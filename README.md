@@ -1,5 +1,5 @@
-<!-- Ultimate AI Starter Bundle v8.52.0 -->
-# Ultimate AI Starter Bundle v8.52.0
+<!-- Ultimate AI Starter Bundle v8.53.0 -->
+# Ultimate AI Starter Bundle v8.53.0
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
@@ -128,7 +128,7 @@ evidence — `PLAN.md` evidence has to name a command, a revision and an exit co
 | [Hermes models](docs/HERMES-MODELS.md) | dated prices, aliases, compression, caching |
 | [Tool evaluations](docs/TOOL-EVALUATIONS.md) | what was evaluated, what was rejected, why |
 | [Decisions](docs/decisions/) | the architecture rules this repository is held to |
-| [Changelog](CHANGELOG.md) · [history](docs/history/) | release notes |
+| [Changelog](CHANGELOG.md) | release notes |
 | [Notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md) | licences and attribution |
 
 ## Known limitations

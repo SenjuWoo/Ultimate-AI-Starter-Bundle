@@ -44,15 +44,14 @@ PRODUCT_ROOT_FILES={'START-HERE.bat','START-HERE.txt','INSTALL-AIO.ps1','INSTALL
     'VERSION.txt','MANIFEST.json','.cbmignore','.ignore','GROK-MCP-TROUBLESHOOTING.md',
     'WINDOWS-PATH-MAP.md'}
 PRODUCT_DIRS={'_CANONICAL-SKILLS','1-TAILORED-PROVIDER-TREES','0-UNRESTRAINT-PACKS',
-    '2-OPTIONAL-MANUAL-OTHER-GAMES-MEGA-PACK','3-PREAMBLES','COPY-TO-YOUR-WORKSPACE',
-    'BUNDLED-TOOLS','TOOLS','docs','PROMPTS','assets'}
+    '3-PREAMBLES','PROJECT-TEMPLATE','BUNDLED-TOOLS','TOOLS','docs','PROMPTS','assets'}
 
 def product_path(rel:Path)->bool:
     if len(rel.parts)==1:
         return rel.name in PRODUCT_ROOT_FILES
     if rel.parts[0] not in PRODUCT_DIRS:
         return False
-    template=any(part.casefold() in {'templates','_project-template'} for part in rel.parts)
+    template=any(part.casefold() in {'templates','project-template','_project-template'} for part in rel.parts)
     development=rel.stem.casefold() in {'state','plan','decisions','current','validation','workspace_ownership','project_ownership','ownership'}
     return template or not ((development or 'changelog' in rel.stem.casefold()) and rel.suffix.casefold() in {'.md','.txt','.rst'})
 
