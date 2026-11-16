@@ -7781,8 +7781,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/live-browser-dom.js",
-  "size": 4917,
-  "sha256": "de1b7404f4cdfd7b515196afb17b74b1980f0bc88cb8681ae93a76ca48ec7bdb"
+  "size": 5043,
+  "sha256": "a95f8d538cc2624137238fef170740ac99afca35d76b120f076e9cbbdd921a2a"
  },
  {
   "path": "_CANONICAL-SKILLS/impeccable/scripts/live-browser-ignores.js",
