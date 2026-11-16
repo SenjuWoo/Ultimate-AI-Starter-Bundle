@@ -6056,8 +6056,8 @@
  },
  {
   "path": "TOOLS/build_release.py",
-  "size": 14130,
-  "sha256": "fdddb99df3cfc54d6d3c1f1eb68d0a45c896bc40b9a691fe7a005a8bf601bd9f"
+  "size": 14225,
+  "sha256": "28d305be276605f7082b585276e1f01928a86fb33e197a64882690aaf5a46338"
  },
  {
   "path": "TOOLS/check_line_endings.py",

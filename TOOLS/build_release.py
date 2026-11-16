@@ -39,8 +39,9 @@ def companions(root:Path)->list[tuple[Path,Path]]:
     return out
 
 # Product ZIPs are not repository exports. Templates/references are intentional product inputs.
+# README-CORE.txt is not tracked: the Core archive writes it from CORE_NOTE.
 PRODUCT_ROOT_FILES={'START-HERE.bat','START-HERE.txt','INSTALL-AIO.ps1','INSTALL-REMOTE.ps1',
-    'INSTALL-REMOTE.bat','README.md','LICENSE',
+    'INSTALL-REMOTE.bat','README.md','LICENSE','README-CORE.txt',
     'VERSION.txt','MANIFEST.json','.cbmignore','.ignore','GROK-MCP-TROUBLESHOOTING.md',
     'WINDOWS-PATH-MAP.md'}
 PRODUCT_DIRS={'_CANONICAL-SKILLS','1-TAILORED-PROVIDER-TREES','0-UNRESTRAINT-PACKS',
