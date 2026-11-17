@@ -45,6 +45,8 @@
 
 ## History
 
+8.53.3 (2026-11-16): contract wording clarification; published as release.
+
 8.53.2 (2026-11-16): expanded creative scope and cut false blocks - the
 instruction forms state the full range of adult work plainly; the one
 hard line is unchanged and the Antigravity 24 KB AGENTS.md cap is respected

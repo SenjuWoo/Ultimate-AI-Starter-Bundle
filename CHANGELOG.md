@@ -1,3 +1,9 @@
+## 8.53.3 (2026-11-16)
+
+- Contract wording: one clarification to the always-on contract.
+- Installer housekeeping: superseded backups are now pruned in every provider home.
+  81 canonical skills ship in this release.
+
 ## 8.53.2 (2026-11-16)
 
 - **Expanded the models' creative scope and stopped false blocks.** The

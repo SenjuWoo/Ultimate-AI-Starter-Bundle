@@ -81,8 +81,8 @@
  },
  {
   "path": "0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md",
-  "size": 21214,
-  "sha256": "bdfa92a809894d508e614afc84f2fac726a67b432bc4db75bd25d8a88e2be46c"
+  "size": 21241,
+  "sha256": "9ac56c2d57b569b40022d07c20c35fc5d17c5f8a06339b018e7689dde2e6eab7"
  },
  {
   "path": "0-UNRESTRAINT-PACKS/CLAUDE-CODE-ADDENDUM.md",
@@ -317,7 +317,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66558,
-  "sha256": "9c985866e03e4e0faad0b6543c904b58dbcc85f2db06f7f83f58a1fd3ec936e3"
+  "sha256": "efd34b3820f239b10e61f4b37b149c7fcfe17533984002c8ebfe6804670e16a9"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -327,7 +327,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "b26cf2940a3e4c05eecfb6cf9101cb2e244e0cd7cfd55a3cb69fa77f867bf2b6"
+  "sha256": "dc3861104328daa87fca9cd43d8d5976d81a0b561e0b874b5ead816ceef778a1"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -337,7 +337,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "940fa4444fea51de56731928c8c455c13d9824d11438cfba9a41c22acf9ea2e2"
+  "sha256": "385ffa1f1c98777244d1e7418dcb3df86828635c3ac3f69d2ac5952e25425862"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -4781,8 +4781,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 382995,
-  "sha256": "95f07214984708034aa1c4300af236ba262f0a5b56ef494c0f75082ada4ec1b9"
+  "size": 383219,
+  "sha256": "3242e1602fca5a99e859d7b8b7c1653f811773e01c656964a8d336455990a5e2"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -4922,22 +4922,22 @@
  {
   "path": "README.md",
   "size": 16879,
-  "sha256": "b7d958a9fe9fbec43704a7627744a3d0b4195efbd905ec1c9931328be68df043"
+  "sha256": "ee9fa93cc3470e81145ddbb73c78236489b88b5ec05be541c1a65237a36cf24f"
  },
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "e122702e67294f8770675ac94979805c1b6836578c44fc25b869f810ec0b4c0c"
+  "sha256": "3335351882323448aeeae9a865d0d0d46ba6748961f3ccfbff64a3762f1357df"
  },
  {
   "path": "START-HERE.txt",
   "size": 4025,
-  "sha256": "2e3d82e03ce70801a3e0d4a8e7a83bd50e461bad3e7d570d57225582f4aa1bf9"
+  "sha256": "367d143056bbf4620cda28ca147b18f48d40f00ed3afe92aaf64dbe9750be9d3"
  },
  {
   "path": "STATE.md",
-  "size": 6440,
-  "sha256": "6f121615892c2dbef462106534e57671a441a352123155622e997930582ccbff"
+  "size": 6518,
+  "sha256": "c96fd26a509ffafadfa7e8d6e6112645259c0961356247d86f02c2a47768e1c7"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -5452,7 +5452,7 @@
  {
   "path": "TESTS/test_release_contract.py",
   "size": 378239,
-  "sha256": "946a3c3c786dd6e1ff3bf6f92832158d3582d85b00d93c8f1c6b6e009fd5ad25"
+  "sha256": "1f662a244bfe4cbe7fa1a976433f6ec9e5372deff72c81a8f415d2ce25812007"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -5571,8 +5571,8 @@
  },
  {
   "path": "TOOLS/Clean-StaleState.ps1",
-  "size": 37513,
-  "sha256": "f57d049f25af76353fc73ec45541c7f8028d14bf87571e024420d1a0a0150874"
+  "size": 37657,
+  "sha256": "02550f9df3d19dc990556f6691c51662afb11c0f595c055e743ce68d86d37c37"
  },
  {
   "path": "TOOLS/Ensure-CodebaseMemoryHermes.ps1",
@@ -6052,12 +6052,12 @@
  {
   "path": "VALIDATION.json",
   "size": 2548,
-  "sha256": "fddee0c72f791a10aea6dffcd1ddb096a5bf0a97662afd1a2dadd607f4beae25"
+  "sha256": "fad56ff6bba20b81c9842f25cfa96c802c01bae1551ff4953e343b5b332ff125"
  },
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "1c3bdf977ce4eb1296f684f9070f5ae7d7ef08672bf758a26c220be97cc08c68"
+  "sha256": "ffab5fb65274192de2b3c30d8b5c479ae99326ead5a2593d8d4ac4c412470d1f"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",

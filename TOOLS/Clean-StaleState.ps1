@@ -260,6 +260,8 @@ $backupFamilies = @(
   @{ Dir = $env:USERPROFILE;                          Glob = '.claude.json.bak-mcp-*' }
   @{ Dir = (Join-Path $env:USERPROFILE '.claude');    Glob = 'CLAUDE.md.*bak*' }
   @{ Dir = (Join-Path $env:USERPROFILE '.kimi-code'); Glob = 'AGENTS.md.*bak*' }
+  # Antigravity keeps its global rules in .gemini\config
+  @{ Dir = (Join-Path $env:USERPROFILE '.gemini\config'); Glob = 'AGENTS.md.*bak*' }
   @{ Dir = (Join-Path $env:USERPROFILE '.kimi-code'); Glob = 'mcp.json.bak*' }
   @{ Dir = (Join-Path $env:LOCALAPPDATA 'hermes');    Glob = 'config.yaml.bak*' }
   @{ Dir = (Join-Path $env:LOCALAPPDATA 'hermes');    Glob = 'SOUL.md.*bak*' }
