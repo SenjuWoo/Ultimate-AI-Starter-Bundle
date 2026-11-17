@@ -965,6 +965,48 @@ project-path MCP scope. Hermes now gets a native `code` profile, selected with
 `auto_index=false`, `auto_watch=false` and `watcher_enabled=false` remain mandatory.
 The 9749 dashboard is optional and served by `TOOLS/Start-CodebaseMemory-UI.ps1`.
 
+## 2026-11-17 - Haiku search delegation ("The Bloodhound")
+
+Asked for: "The Bloodhound - Haiku Search Router", a Claude mod that hands small
+search tasks to Haiku. Not found: no install on this PC, no repository, release
+or listing in two web searches; the only "Bloodhound" hit is a draft nickname in
+a different project's issue tracker for a mod that *reports* savings. An unseen
+mod cannot clear the source/licence/installer gates, so nothing third-party is
+bundled.
+
+### TAKEN - native subagent tiers (Haiku / Sonnet / Opus)
+
+The idea needs no mod. Claude Code's sub-agents docs (checked 2026-11-17): the
+built-in Explore runs on the Opus model the `opus` alias resolves to, and "a user
+or project subagent named `Explore` overrides the built-in and keeps its own
+`model` field". The bundle ships `BUNDLED-TOOLS/claude-agents/` and installs it
+to `~/.claude/agents/`: the cheapest model that holds quality for each job.
+
+| Agent | Model | Tools | Job | Why this model |
+|---|---|---|---|---|
+| `Explore` | haiku | Read, Grep, Glob | recon: where is X | locating is pattern matching; the main model reads the cited lines before acting, so a miss costs one re-check, not a wrong result |
+| `researcher` | sonnet | + WebFetch, WebSearch | one sourced answer from docs/web | synthesis from sources is where Haiku drops nuance; Sonnet holds it at a fraction of Opus |
+| `implementer` | opus | all | hard multi-file, debugging, creative work | quality-critical; the saving is a clean context, not a cheaper model |
+
+- Quality: Haiku and Sonnet cannot write. Creative, review and design work
+  never route below Opus. Explore reports `path:line` evidence and "not found"
+  with where it looked, so a weak search is visible, not silent.
+- Names are bundle-owned: a same-named file (for example an Explore pinned to
+  Opus) is backed up once and replaced, because the wrong model on the recon
+  tier is the overspend this fixes.
+- Not taken: `CLAUDE_CODE_SUBAGENT_MODEL(_FORCE)` - it moves every subagent,
+  including implementers, to the cheaper model. A prompt-classifying router
+  hook or proxy - it changes the main model per request, which this pack
+  leaves to the operator (ADR-0007).
+- Cost model: a subagent moves tokens to a cheaper context; it does not delete
+  them. A one-grep lookup is cheaper inline; the win is broad sweeps that would
+  otherwise read many files into the main context.
+- Opt out: `-SkipClaudeAgents` removes the stamped copies.
+
+Ponytail stays where it is: its strict modes shorten code, but measured runs
+cut creative output, so automatic mode stays conservative and prose is never
+compressed.
+
 ## How to add a row
 
 Run the candidate through the four gates in order and write down where it

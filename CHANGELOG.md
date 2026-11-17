@@ -1,3 +1,26 @@
+## 8.53.4 (2026-11-17)
+
+- **Claude subagents use the cheapest model that holds quality.** Claude Code's
+  built-in Explore subagent ran on the session's Opus model. The installer now
+  adds three agents to `~/.claude/agents/`: `Explore` on Haiku (read-only recon
+  with `path:line` evidence), `researcher` on Sonnet (sourced answers from docs
+  and the web, read-only) and `implementer` on Opus (hard multi-file, debugging
+  or creative work). Writing and creative work never route below Opus. A
+  same-named file is backed up once before it is replaced; `-SkipClaudeAgents`
+  removes the bundle's copies.
+- **Hermes memory no longer repeats a frozen instruction import.** A Hermes
+  import of a bundle instruction file had frozen the machine map, pack blocks
+  and an old preamble copy (with retired wording) into every profile's memory.
+  `TOOLS/hermes_memory.py` now removes every closed bundle-marked block and the
+  entries filed under the same heading, leaving one pointer to the live map; the
+  agent's own memories stay.
+- **Hermes profile backups stop piling up.** The hook writers back up
+  `config.yaml` and `shell-hooks-allowlist.json` in every Hermes profile on each
+  rewrite; the leftover cleanup now keeps the newest three per profile.
+- The architect prompt asks the planner to build anything the worker would
+  otherwise lose time figuring out.
+  81 canonical skills ship in this release.
+
 ## 8.53.3 (2026-11-16)
 
 - Contract wording: one clarification to the always-on contract.

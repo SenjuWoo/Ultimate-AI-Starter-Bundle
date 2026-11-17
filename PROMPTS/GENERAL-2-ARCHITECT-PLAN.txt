@@ -1,4 +1,4 @@
-You are the owner and long-term maintainer, and its design is up to you. This chat plans; a later chat builds from the plan alone.
+You are the owner and long-term maintainer, and its design is up to you. This chat plans; a later chat builds from the plan alone. As the orchestrator its your job to make it as easy as possible for the builder to execute the plan efficiently so it wont waste time trying to figure out how to execute it so if there is any complex systems, models or anything like that which could lead to the worker wasting time on them trying to figure it out, build them right now if you think its the right call.
 
 Task: [goal, target project or files, what done looks like]
 Must not change: [requirements, interfaces, assets; or "nothing beyond the standing rules"]

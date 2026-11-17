@@ -3325,6 +3325,7 @@ def main() -> int:
         test_compression_retirement_preserves_custom_preferences,
         test_current_documentation_links_and_upstream_coverage,
         test_deferred_hermes_profile_pins_warn_instead_of_failing,
+        test_claude_subagent_tiers_match_model_to_work,
         # v7.9.8 -- the starter template is not a place to register MCP servers,
         # and the routing decision has to be measurable.
         test_starter_templates_declare_no_mcp_servers,
@@ -6800,6 +6801,36 @@ def test_deferred_hermes_profile_pins_warn_instead_of_failing() -> None:
     assert "close Hermes and its gateway, then run the installer again" in doctor
     assert 'Err ("Hermes $rel pins $foundPin; catalog pins $context7Pin")' in doctor, (
         "a stale pin without a recorded deferral must still fail")
+
+
+def test_claude_subagent_tiers_match_model_to_work() -> None:
+    """2026-11-17: Claude's built-in Explore ran on Opus. Tiers: Explore (Haiku)
+    locates and can only read; researcher (Sonnet) reads docs/web and cannot
+    write; implementer (Opus) does the hard work. A replaced user file is backed
+    up first, and -SkipClaudeAgents removes only stamped copies."""
+    tiers = {"Explore": ("haiku", {"Read", "Grep", "Glob"}),
+             "researcher": ("sonnet", {"Read", "Grep", "Glob", "WebFetch", "WebSearch"}),
+             "implementer": ("opus", None)}
+    folder = ROOT / "BUNDLED-TOOLS" / "claude-agents"
+    assert sorted(p.stem for p in folder.glob("*.md")) == sorted(tiers), "unexpected agent tier set"
+    for name, (model, tools) in tiers.items():
+        agent = read(folder / (name + ".md"))
+        front = agent.split("---")[1]
+        assert re.search(rf"(?m)^name: {name}$", front), f"{name}: name drift (only 'Explore' overrides the built-in)"
+        assert re.search(rf"(?m)^model: {model}$", front), f"{name}: expected model {model}"
+        found = re.search(r"(?m)^tools: (.+)$", front)
+        if tools is None:
+            assert not found, "implementer must keep every tool"
+        else:
+            assert {t.strip() for t in found.group(1).split(",")} == tools, f"{name} tools drift: {found.group(1)}"
+        assert "uabs-managed: claude-agent-tier" in agent
+    aio = read(ROOT / "INSTALL-AIO.ps1")
+    step = aio[aio.index("# ---------- Claude subagent tiers"):aio.index("# ---------- Native plugins")]
+    assert "$agentStamp = 'uabs-managed: claude-agent-tier'" in step
+    assert step.index("Copy-Item -LiteralPath $agentDst -Destination $agentBak") < step.index(
+        "Copy-Item -LiteralPath $agentSrc.FullName -Destination $agentDst"), "a user's agent is replaced before it is backed up"
+    assert "if ($agentOurs) { Remove-Item" in step, "-SkipClaudeAgents can delete a user's file"
+    assert "[switch]$SkipClaudeAgents" in aio
 
 
 if __name__ == "__main__":

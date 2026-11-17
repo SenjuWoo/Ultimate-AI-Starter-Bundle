@@ -1325,7 +1325,7 @@ if ($appNamePython -and (Test-Path -LiteralPath $hermesMemoryScript -PathType Le
   try { $hermesMemoryReport = $hermesMemoryJson | ConvertFrom-Json } catch { $hermesMemoryReport = $null }
   if ($hermesMemoryReport -and $hermesMemoryReport.affected) {
     $hermesMemoryIssues = @($hermesMemoryReport.files | Where-Object { $_.imported } | ForEach-Object { $_.path })
-    Warn ('{0} Hermes memory file(s) hold a frozen copy of the machine map (old paths repeated to every session). Run `python TOOLS\hermes_memory.py --fix` in the bundle; a backup is written beside each file.' -f $hermesMemoryIssues.Count)
+    Warn ('{0} Hermes memory file(s) hold a frozen copy of bundle instructions or the machine map (retired wording and old paths repeated to every session). Run `python TOOLS\hermes_memory.py --fix` in the bundle; a backup is written beside each file.' -f $hermesMemoryIssues.Count)
   }
 }
 

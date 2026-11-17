@@ -273,6 +273,19 @@ if (Test-Path -LiteralPath $soulSource -PathType Leaf) {
     $backupFamilies += @{ Dir = $pf.FullName; Glob = 'SOUL.md.*bak*' }
   }
 }
+# The hook writers (TOOLS\hooks\ponytail_auto.py, used by the task router too)
+# back up config.yaml and shell-hooks-allowlist.json in every Hermes profile,
+# not only the managed ones, and hermes_memory.py backs up memory files. Each
+# backup carries a unique suffix, so without a family here they grow per run.
+$hermesHome = Join-Path $env:LOCALAPPDATA 'hermes'
+$hermesDirs = @($hermesHome) + @(Get-ChildItem -LiteralPath (Join-Path $hermesHome 'profiles') -Directory -ErrorAction SilentlyContinue |
+  Where-Object { -not $_.Name.StartsWith('.') } | ForEach-Object FullName)
+foreach ($hd in $hermesDirs) {
+  if ($hd -ne $hermesHome) { $backupFamilies += @{ Dir = $hd; Glob = 'config.yaml.bak-*' } }
+  $backupFamilies += @{ Dir = $hd; Glob = 'shell-hooks-allowlist.json.bak-*' }
+  $backupFamilies += @{ Dir = (Join-Path $hd 'memories'); Glob = 'MEMORY.md.before-import-cleanup-*.bak' }
+  $backupFamilies += @{ Dir = (Join-Path $hd 'memories'); Glob = 'USER.md.before-import-cleanup-*.bak' }
+}
 
 foreach ($family in $backupFamilies) {
   if (-not (Test-Path -LiteralPath $family.Dir -PathType Container)) { continue }

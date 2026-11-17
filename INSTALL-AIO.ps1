@@ -136,6 +136,12 @@ param(
   # Hermes config.yaml wiring. Kept as an alias for skipping only Hermes
   # in the starter-settings pass. -SkipHermesConfig opts out.
   [switch]$SkipHermesConfig,
+  # Claude subagent tiers (BUNDLED-TOOLS\claude-agents): Explore on Haiku for
+  # recon (overrides the built-in, which runs on Opus), researcher on Sonnet for
+  # small research, implementer on Opus for hard work. The bundle owns these
+  # three names: a same-named file without the bundle stamp is backed up once
+  # and replaced. -SkipClaudeAgents opts out and removes the bundle's copies.
+  [switch]$SkipClaudeAgents,
   # Native plugin install for the two bundled skills-plugins (superpowers,
   # ponytail). On by default: a real plugin install where the CLI has a
   # plugin mechanism (Grok/Hermes/Codex), detect-only for Claude, unsupported
@@ -944,6 +950,38 @@ if (-not $ToolsOnly -and -not $SkipStarterSettings) {
   } else {
     Write-UabsWarn 'TOOLS\Install-Provider-Starter-Settings.ps1 missing from pack'
   }
+}
+
+# ---------- Claude subagent tiers ----------
+# Cheapest model that keeps quality for each kind of delegated work: Explore on
+# Haiku (recon; a user agent named Explore overrides the built-in, which runs
+# on Opus - Claude Code sub-agents docs), researcher on Sonnet (sourced answers
+# from docs/web), implementer on Opus (hard multi-file or creative work).
+# Writing and creative work never route to Haiku. A same-named file without
+# the stamp is backed up once, then replaced; only stamped files are removed.
+if ($Providers -contains 'Claude' -and -not $ToolsOnly) {
+  try {
+    $agentStamp = 'uabs-managed: claude-agent-tier'
+    $agentDir = Join-Path (Get-UabsProviderHome -Provider 'Claude' -Catalog $catalog) 'agents'
+    foreach ($agentSrc in @(Get-ChildItem -LiteralPath (Join-Path $PackRoot 'BUNDLED-TOOLS\claude-agents') -Filter '*.md' -File -ErrorAction SilentlyContinue)) {
+      $agentDst = Join-Path $agentDir $agentSrc.Name
+      $agentHere = Test-Path -LiteralPath $agentDst -PathType Leaf
+      $agentOurs = $agentHere -and ([IO.File]::ReadAllText($agentDst).Contains($agentStamp))
+      if ($SkipClaudeAgents) {
+        if ($agentOurs) { Remove-Item -LiteralPath $agentDst -Force; Write-UabsOk ('Claude: bundle agent removed (-SkipClaudeAgents): ' + $agentDst) }
+        continue
+      }
+      if ($agentOurs -and ([IO.File]::ReadAllText($agentDst) -ceq [IO.File]::ReadAllText($agentSrc.FullName))) { continue }
+      New-Item -ItemType Directory -Force -Path $agentDir | Out-Null
+      if ($agentHere -and -not $agentOurs) {
+        $agentBak = $agentDst + '.before-uabs-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.bak'
+        Copy-Item -LiteralPath $agentDst -Destination $agentBak -Force
+        Write-UabsOk ('Claude: your ' + $agentSrc.Name + ' backed up before the tiered agent replaced it: ' + $agentBak)
+      }
+      Copy-Item -LiteralPath $agentSrc.FullName -Destination $agentDst -Force
+      Write-UabsOk ('Claude: subagent tier ' + $agentSrc.BaseName + ' -> ' + $agentDst)
+    }
+  } catch { Write-UabsWarn ('Claude agents: ' + $_.Exception.Message) }
 }
 
 # ---------- Native plugins: superpowers + ponytail ----------
@@ -3009,8 +3047,9 @@ if (-not $ToolsOnly) {
     }
   }
 
-  # A machine map that Hermes imported into its memory is frozen on the day of
-  # the import and repeated to every profile; point it at the live file.
+  # Bundle instructions Hermes imported into its memory (machine map, pack
+  # blocks, preamble) are frozen on the day of the import and repeated to every
+  # profile; replace them with a pointer to the live map.
   if (-not $SkillsOnly -and -not $SkipHermesConfig -and ($Providers -contains 'Hermes')) {
     try {
       $memPython = Get-UabsPythonExecutable
@@ -3020,7 +3059,7 @@ if (-not $ToolsOnly) {
         try { $memLines = @(& $memPython (Join-Path $PackRoot 'TOOLS\hermes_memory.py') '--home' $memHome '--fix' 2>&1 | ForEach-Object { [string]$_ }) } finally { $ErrorActionPreference = $prevEapMem }
         Add-UabsDetails -Title 'Hermes memory' -Lines $memLines
         $memFixed = @($memLines | Where-Object { $_ -match 'cleaned, backup' }).Count
-        if ($memFixed) { Write-UabsOk ('Hermes: replaced a frozen machine map in ' + $memFixed + ' memory file(s) with a pointer to the live one (backups beside them)') }
+        if ($memFixed) { Write-UabsOk ('Hermes: replaced frozen bundle instructions in ' + $memFixed + ' memory file(s) with a pointer to the live machine map (backups beside them)') }
       }
     } catch { Write-UabsWarn ('Hermes memory: ' + $_.Exception.Message) }
   }

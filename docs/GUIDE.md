@@ -122,9 +122,10 @@ so an agent offers it when a task needs it. `python TOOLS\free_game_tools.py
 installer switch `-CreativeTools` installs the four in one go.
 
 If Hermes imported an instruction file this bundle wrote, its memory holds a
-frozen copy of the machine map that every profile repeats. The install replaces
-that block with a pointer to the live file (`TOOLS\hermes_memory.py --fix`, a
-backup beside each file) and leaves every other memory entry alone.
+frozen copy of the machine map, pack blocks and preamble that every profile
+repeats. The install replaces that import with a pointer to the live map
+(`TOOLS\hermes_memory.py --fix`, a backup beside each file) and leaves the
+agent's own memory entries alone.
 
 See [private preferences versus public defaults](OPERATOR-PROFILES.md)
 for evidence-based tuning without leaking machine paths or bloating context.

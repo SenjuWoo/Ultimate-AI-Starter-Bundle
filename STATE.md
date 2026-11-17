@@ -45,6 +45,11 @@
 
 ## History
 
+8.53.4 (2026-11-17): Claude subagent tiers (Explore/Haiku, researcher/Sonnet,
+implementer/Opus); Hermes memory
+import cleanup covers pack/preamble/agreements blocks; Hermes profile backup families
+pruned; GENERAL-2 architect prompt edit shipped.
+
 8.53.3 (2026-11-16): contract wording clarification; published as release.
 
 8.53.2 (2026-11-16): expanded creative scope and cut false blocks - the

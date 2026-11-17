@@ -37,23 +37,38 @@ def read(path):
 
 
 class Classify(unittest.TestCase):
-    def test_only_the_block_between_the_profile_markers_is_replaced(self):
+    def test_every_frozen_bundle_block_and_its_section_go_and_own_memories_stay(self):
         kept, dropped = hm.classify(SEP.join(PACK + FROZEN + AFTER + OWN))
-        self.assertEqual(dropped, FROZEN)
-        self.assertEqual(kept, PACK + [hm.POINTER] + AFTER + OWN)
+        self.assertEqual(dropped, PACK + FROZEN + AFTER)
+        self.assertEqual(kept, [hm.POINTER] + OWN)
+
+    def test_the_preamble_and_working_agreements_blocks_are_frozen_imports_too(self):
+        pwa = ["Operator > Personal working agreements: <!-- personal-working-agreements:start -->",
+               "Operator > Personal working agreements: Inspect before editing.",
+               "Operator > Personal working agreements: <!-- personal-working-agreements:end -->",
+               "Operator > Personal working agreements: STYLE / ECONOMY: an old preamble line."]
+        pre = ["<!-- UABS-PREAMBLE --> You are the user's assistant.", "Old contract line. <!-- /UABS-PREAMBLE -->"]
+        kept, dropped = hm.classify(SEP.join(pwa + pre + OWN))
+        self.assertEqual(dropped, pwa + pre)
+        self.assertEqual(kept, [hm.POINTER] + OWN)
+
+    def test_an_existing_pointer_is_not_repeated(self):
+        kept, dropped = hm.classify(SEP.join([hm.POINTER] + PACK + OWN))
+        self.assertEqual(dropped, PACK)
+        self.assertEqual(kept, [hm.POINTER] + OWN)
 
     def test_the_pointer_names_the_live_file_and_carries_no_marker(self):
         self.assertIn("MACHINE-MAP.md", hm.POINTER)
         self.assertEqual(hm.classify(hm.POINTER)[1], [], "a cleaned file is not found again")
 
-    def test_a_file_without_the_profile_markers_is_never_touched(self):
-        text = SEP.join(PACK + AFTER + OWN + ["Machine map: I drew one by hand"])
+    def test_a_file_without_bundle_markers_is_never_touched(self):
+        text = SEP.join(AFTER + OWN + ["Machine map: I drew one by hand"])
         kept, dropped = hm.classify(text)
         self.assertEqual(dropped, [])
         self.assertEqual(SEP.join(kept), text)
 
     def test_a_block_that_never_closes_is_left_alone(self):
-        text = SEP.join(PACK + FROZEN[:2] + OWN)
+        text = SEP.join(PACK[:2] + FROZEN[:2] + OWN)
         kept, dropped = hm.classify(text)
         self.assertEqual(dropped, [])
         self.assertEqual(SEP.join(kept), text)
@@ -69,7 +84,7 @@ class Fix(unittest.TestCase):
             user = write(os.path.join(home, "profiles", "code", "memories", "USER.md"), "Likes short answers.\n")
             self.assertEqual(hm.main(["--home", home]), 1, "a report with findings is not a pass")
             self.assertEqual(hm.main(["--home", home, "--fix"]), 0)
-            self.assertEqual(read(default), SEP.join(PACK + [hm.POINTER] + AFTER) + "\n")
+            self.assertEqual(read(default), hm.POINTER + "\n")
             self.assertEqual(read(mixed), SEP.join([hm.POINTER] + OWN) + "\n")
             self.assertEqual(read(user), "Likes short answers.\n")
             self.assertNotIn("C:\\Old", read(default))
