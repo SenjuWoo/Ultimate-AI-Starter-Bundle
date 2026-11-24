@@ -420,6 +420,85 @@ $afterAmbig = Invoke-RepairInSandbox -Root $ambigRoot -DeadPath $deadAmbig
 if ($afterAmbig -match 'cccccccccccccccc') { Good 'two candidates are reported, not guessed between' }
 else { Bad 'an ambiguous dead path was rewritten anyway' }
 
+# A Hermes profile server pinned to Hermes's own rotating environment
+# (installs\<id>\environments\<hash>\venv) failed a real install: three live
+# sibling environments made the hash rule ambiguous, so nothing was repaired.
+# A stdlib server moves to the shared Python only after a handshake proves it
+# runs there; otherwise Hermes's facts.json names the current environment.
+function Invoke-HermesPrivateRepair([string]$Root, [string]$ServerScript, [switch]$WithFacts) {
+  $hermes = Join-Path $Root 'LocalAppData\hermes'
+  $install = Join-Path $hermes 'installs\57890b86c83d97e1'
+  foreach ($h in '09ffbbec71ff46699b6910a56d2d54ba', '82dbaa4c53b544fdb14dd23383f4bf9b', '9390df35cb964865a3b5c75da688f5c3') {
+    New-FakeExe (Join-Path $install "environments\$h\venv\Scripts\python.exe")
+  }
+  if ($WithFacts) {
+    $current = (Join-Path $install 'environments\82dbaa4c53b544fdb14dd23383f4bf9b\venv') -replace '\\', '\\'
+    Set-Utf8NoBom -Path (Join-Path $install 'facts.json') -Text ('{"packages":{"venv":{"environment":"' + $current + '"}},"schema":1}')
+  }
+  $deadPy = ((Join-Path $install 'environments\62e004fd1bce4402b8b236ced8674e42\venv\Scripts\python.exe') -replace '\\', '/')
+  $profileDir = Join-Path $hermes 'profiles\roblox'
+  New-Item -ItemType Directory -Force -Path $profileDir | Out-Null
+  $scriptLiteral = $ServerScript -replace '\\', '/'
+  Set-Utf8NoBom -Path (Join-Path $profileDir 'config.yaml') -Text (
+    "mcp_servers:`n  robloxforge:`n    command: $deadPy`n    args:`n      - $scriptLiteral`n    enabled: true`nweb:`n  backend: firecrawl`n")
+  $saved = @{ U = $env:USERPROFILE; L = $env:LOCALAPPDATA; H = $env:HERMES_HOME }
+  try {
+    $env:USERPROFILE = $Root
+    $env:LOCALAPPDATA = Join-Path $Root 'LocalAppData'
+    $env:HERMES_HOME = $hermes
+    & (Join-Path $PackRoot 'TOOLS\Repair-McpPaths.ps1') -Apply -Quiet *> $null
+  } finally {
+    $env:USERPROFILE = $saved.U
+    $env:LOCALAPPDATA = $saved.L
+    $env:HERMES_HOME = $saved.H
+  }
+  return [IO.File]::ReadAllText((Join-Path $profileDir 'config.yaml'))
+}
+
+$sharedPy = $null
+# This file replaces Get-UabsPythonExecutable with a fake above; ask a clean
+# child for the interpreter the repair script will actually resolve.
+try {
+  $commonPath = (Join-Path $PackRoot 'TOOLS\UABS-Common.ps1').Replace("'", "''")
+  $sharedPy = @(& (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -Command ". '$commonPath'; Get-UabsPythonExecutable" 2>$null | Where-Object { $_ }) | Select-Object -Last 1
+} catch { }
+if ($sharedPy -and -not (Test-UabsPrivateRuntimePath $sharedPy)) {
+  $fixtureDir = Join-Path $sandbox 'mcp fixture'
+  New-Item -ItemType Directory -Force -Path $fixtureDir | Out-Null
+  $goodServer = Join-Path $fixtureDir 'server.py'
+  Set-Utf8NoBom -Path $goodServer -Text (@(
+    'import json, sys',
+    'for line in sys.stdin:',
+    '    msg = json.loads(line)',
+    '    if "id" not in msg: continue',
+    '    if msg.get("method") == "initialize":',
+    '        res = {"protocolVersion": "2024-11-05", "capabilities": {"tools": {}}, "serverInfo": {"name": "fixture", "version": "1"}}',
+    '    elif msg.get("method") == "tools/list":',
+    '        res = {"tools": [{"name": "ping", "description": "p", "inputSchema": {"type": "object"}}]}',
+    '    else:',
+    '        res = {}',
+    '    sys.stdout.write(json.dumps({"jsonrpc": "2.0", "id": msg["id"], "result": res}) + "\n")',
+    '    sys.stdout.flush()'
+  ) -join "`n")
+  $badServer = Join-Path $fixtureDir 'needs_app_packages.py'
+  Set-Utf8NoBom -Path $badServer -Text 'import hermes_only_package_that_does_not_exist'
+
+  $afterShared = Invoke-HermesPrivateRepair -Root (Join-Path $sandbox 'repair-hermes-shared') -ServerScript $goodServer -WithFacts
+  $sharedLiteral = $sharedPy -replace '\\', '/'
+  if ($afterShared.Contains("command: $sharedLiteral")) { Good 'a proven stdlib server leaves the Hermes environment for the shared Python' }
+  else { Bad ('a stdlib server on a dead Hermes environment was not moved to the shared Python: ' + ($afterShared -replace "`r?`n", ' ')) }
+
+  $afterFacts = Invoke-HermesPrivateRepair -Root (Join-Path $sandbox 'repair-hermes-facts') -ServerScript $badServer -WithFacts
+  if ($afterFacts -match '82dbaa4c53b544fdb14dd23383f4bf9b/venv/Scripts/python\.exe') { Good 'an unproven server follows Hermes facts.json to the current environment' }
+  else { Bad ('facts.json did not resolve the ambiguous Hermes environment: ' + ($afterFacts -replace "`r?`n", ' ')) }
+
+  $afterNone = Invoke-HermesPrivateRepair -Root (Join-Path $sandbox 'repair-hermes-none') -ServerScript $badServer
+  if ($afterNone -match '62e004fd1bce4402b8b236ced8674e42') { Good 'without proof or an owner record the dead environment is reported, not guessed' }
+  else { Bad 'an unproven server was repointed without an owner record' }
+} else {
+  Bad 'no shared Python available to prove the private-runtime repair'
+}
+
 # ------------------------------------------------------------ script shape ----
 Section 'front-end script'
 

@@ -1354,7 +1354,13 @@ try {
     $robloxForgeRoot = [Environment]::GetEnvironmentVariable('ROBLOX_FORGE_ROOT', 'Process')
     if (-not $robloxForgeRoot) { $robloxForgeRoot = [Environment]::GetEnvironmentVariable('ROBLOX_FORGE_ROOT', 'User') }
     $robloxForgeServer = if ($robloxForgeRoot) { [IO.Path]::Combine($robloxForgeRoot, 'mcp_server\server.py') } else { '' }
-    $hermesPython = [IO.Path]::Combine($env:LOCALAPPDATA, 'hermes\hermes-agent\venv\Scripts\python.exe')
+    # RobloxForge's MCP server is stdlib-only, so it runs on the shared Python.
+    # Hermes's own interpreter is the wrong owner: current Hermes keeps it under
+    # installs\<id>\environments\<hash>\venv and replaces the hash on update,
+    # which left this server pointing at a deleted folder and failed the install.
+    $robloxPython = $null
+    try { $robloxPython = Get-UabsPythonExecutable } catch { $robloxPython = $null }
+    if ($robloxPython -and (Test-UabsPrivateRuntimePath $robloxPython)) { $robloxPython = $null }
     if ($skyrimAvailable) {
       if (-not (Test-Path -LiteralPath $skyrimForgePython -PathType Leaf)) { throw 'Skyrim Forge compatibility requested but its Python is missing.' }
       Ensure-UabsServer 'skyrim' $maps['skyrim'] 'skyrim-forge' @{
@@ -1364,9 +1370,9 @@ try {
     }
     if ($robloxAvailable) {
       if (-not (Test-Path -LiteralPath $robloxForgeServer -PathType Leaf)) { throw 'RobloxForge compatibility requested but its MCP server is missing.' }
-      if (-not (Test-Path -LiteralPath $hermesPython -PathType Leaf)) { throw 'RobloxForge compatibility requested but Hermes Python is missing.' }
+      if (-not $robloxPython -or -not (Test-Path -LiteralPath $robloxPython -PathType Leaf)) { throw 'RobloxForge compatibility requested but no shared Python is available (set UABS_PYTHON with TOOLS\Set-SharedPython.ps1).' }
       Ensure-UabsServer 'roblox' $maps['roblox'] 'robloxforge' @{
-        command = $hermesPython; args = @($robloxForgeServer); enabled = $true; connect_timeout = 30
+        command = $robloxPython; args = @($robloxForgeServer); enabled = $true; connect_timeout = 30
       } 'robloxforge'
       $forgeCompatRoblox = $true
     }

@@ -188,6 +188,25 @@ class EvidenceTests(unittest.TestCase):
             code, out = run("status", write(d, plan))
             self.assertEqual(code, 0, out)
 
+    def test_record_survives_commits_that_touch_only_records(self):
+        """Committing the PLAN.md evidence row moves HEAD past the evidence SHA;
+        that alone is not staleness. A source change after it still is."""
+        commit = ["-c", "user.email=t@t", "-c", "user.name=t", "commit", "-qam", "x"]
+        with tempfile.TemporaryDirectory() as d:
+            root = write(d, "| T1 | a | complete | - | file:a.txt | - |\n")
+            head = git_repo(root)
+            plan = ("| T1 | build | complete | - | cmd:cmake --build . |"
+                    " cmd:cmake --build . @ %s exit=0 |\n" % head[:7])
+            write(d, plan)
+            subprocess.run(["git", "-C", str(root)] + commit, check=True, capture_output=True)
+            code, out = run("status", root)
+            self.assertEqual(code, 0, out)
+            (root / "a.txt").write_text("changed", encoding="utf-8")
+            subprocess.run(["git", "-C", str(root)] + commit, check=True, capture_output=True)
+            code, out = run("status", root)
+            self.assertEqual(code, 1, out)
+            self.assertIn("stale evidence", out)
+
     def test_bare_verify_with_spaces_is_ambiguous_not_a_path(self):
         with tempfile.TemporaryDirectory() as d:
             code, out = run("status", write(d, "| T1 | b | complete | - | python -m pytest | - |\n"))

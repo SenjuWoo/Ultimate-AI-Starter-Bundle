@@ -1,3 +1,31 @@
+## 8.53.5 (2026-11-23)
+
+- **Install no longer fails on a Hermes update.** Current Hermes keeps its own
+  Python under `installs\<id>\environments\<hash>\venv` and replaces the hash on
+  update. A RobloxForge MCP entry pinned to that interpreter went dead, the path
+  repair found three live sibling environments and refused to guess, and the
+  final installed-state doctor failed the install. `Repair-McpPaths.ps1` now
+  handles a dead private app runtime first: it moves the server to the shared
+  Python when a bounded MCP handshake proves every server using that interpreter
+  starts and lists tools there, otherwise it follows Hermes's own `facts.json`
+  record of the current environment, and with neither it still reports instead
+  of guessing. The installer's RobloxForge registration uses the shared Python
+  instead of the retired `hermes-agent\venv` path.
+- **`companion_registry.py --roots` reaches self-registration.** A forge's
+  `uabs-companion.json` under an extra root is merged before anyone edits
+  `TOOL-ROOTS.txt`, and `--json` now carries `self_registered` and
+  `local_skipped`.
+- **`comfy-3d` answers by name.** comfy-forge's image/text-to-3D CLI
+  (`TOOLS/model3d.ps1`) is registered beside `comfy-forge`, `comfy-dataset` and
+  `comfy-music`; the companion notes describe it.
+- **Task evidence survives its own record commit.** `task_state.py` accepted
+  `cmd:<command> @ <sha> exit=0` only while HEAD was that SHA, so committing the
+  PLAN.md row made every record stale. Commits after the SHA that touch only
+  PLAN/STATE/CHANGELOG/WORKSPACE_OWNERSHIP keep the evidence valid; any other
+  change still makes it stale.
+- The architect prompt carries the owner's latest wording.
+  81 canonical skills ship in this release.
+
 ## 8.53.4 (2026-11-17)
 
 - **Claude subagents use the cheapest model that holds quality.** Claude Code's

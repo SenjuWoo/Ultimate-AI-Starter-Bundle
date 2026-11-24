@@ -317,17 +317,17 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66558,
-  "sha256": "eb5976fc45419998b3ff542087c667ffe542f9cae0db0e4af9d41d6a555640f8"
+  "sha256": "d80597433215e640c45e5c9eb7ea2abd4632e2622cb514baf06dd7575099ab71"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
-  "size": 24191,
-  "sha256": "597e7cfe64cacd44e8ceae2ccbc87bb1ef8c0202a322e0c66ff89a550b186655"
+  "size": 24428,
+  "sha256": "b0aefee367d7d7f8ae7da78e06d52ba609782bef2962a36fb8e3a107dbf4a722"
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "ba1d33bba829b6ec7c15d2cc5b9907e35f2bfb65d477788f800e19e2cd6009c8"
+  "sha256": "96659521fa5ceb07bfaa8655f54ab5808ed8a626f943b5f43671201a8b1dd78e"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -337,7 +337,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "227762006241f5064fb0dda06090f5a4e2619bc3c9669dfa219648984ad3f1e2"
+  "sha256": "a6524be5223787187aa6b341824fafa10771bdb1f1e45b5393e1613995a6f100"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -383,6 +383,21 @@
   "path": "BUNDLED-TOOLS/capability-records/game-mcp-schema-cost.json",
   "size": 3586,
   "sha256": "2e32a51c4d864e06f3d10d52d795ff91fbe96fa894a643d1e1f9c1bd445e0baf"
+ },
+ {
+  "path": "BUNDLED-TOOLS/claude-agents/Explore.md",
+  "size": 1291,
+  "sha256": "92d2aaebd3490afdb13312b3ee1cc1f547717d6ac836682c7432784c752bea92"
+ },
+ {
+  "path": "BUNDLED-TOOLS/claude-agents/implementer.md",
+  "size": 1069,
+  "sha256": "1c0bf226eec2bcf36876a9cc92cef4aade8375ff7a777a765625d009ae4c2f63"
+ },
+ {
+  "path": "BUNDLED-TOOLS/claude-agents/researcher.md",
+  "size": 1160,
+  "sha256": "75ccab39e440e721f2f661161c92fd826194250d7ce24d641986ad682fd1f9bc"
  },
  {
   "path": "BUNDLED-TOOLS/lm-studio/Get-KvBudget.ps1",
@@ -4781,8 +4796,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 384650,
-  "sha256": "d954747c598120d5eb46651eec422f0c53cfc19f40b5e7fd944f516facc58021"
+  "size": 386426,
+  "sha256": "fe45ed16344027a696b233aa9a79a77ee928da7d50a586e5d6d20c4ad7b21ce7"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -4821,8 +4836,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 64941,
-  "sha256": "32cd92c01de16a554b2eeadeccece4a8b236c9b9e665f24d08bd90dda303ac37"
+  "size": 65081,
+  "sha256": "feca5b1b3126fb08033617f61282c57bd1ff2f54dccb04127817e8cf8f554301"
  },
  {
   "path": "PROJECT-TEMPLATE/.cbmignore",
@@ -4896,8 +4911,8 @@
  },
  {
   "path": "PROMPTS/GENERAL-2-ARCHITECT-PLAN.txt",
-  "size": 2543,
-  "sha256": "bc2088c15ecf613cecffd607ec25f7f9191a72ffe91891e0ac8071d1d66bf092"
+  "size": 2682,
+  "sha256": "e138dd8b8fade0266a17d11708f7a3e28720d745c530b96de60fb305a5edace8"
  },
  {
   "path": "PROMPTS/GENERAL-3-WORKER-EXECUTE.txt",
@@ -4922,22 +4937,22 @@
  {
   "path": "README.md",
   "size": 16879,
-  "sha256": "511e2bcf3851fdc86fa856692396a8a748d37c9ebe09cfaf9deadf4a1bcb3a47"
+  "sha256": "bc33ee7574ac5deae827f54651cf80f7ca663219f1df884bcf31a100f6382e4e"
  },
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "6ee2dd643a682225db3ec8249a330943473e0509068b51645d8646cb86574b38"
+  "sha256": "14cd138925ae7d48035a021cfdcae47d3f4d0c17ad1a466e7dc62c4ed84f48c4"
  },
  {
   "path": "START-HERE.txt",
   "size": 4025,
-  "sha256": "6d654a1f22f0f7967e9d96cd7ab3b162ad60a1d3847b2b4baf42187831069410"
+  "sha256": "a2acce629d8eba481e28fc3ecab83c6272075393a7f472cc3147735b69d85a5c"
  },
  {
   "path": "STATE.md",
-  "size": 6770,
-  "sha256": "1dfe5abc4452cc928f0783040dd412193a63e415dbac8ae97a69103615a4e738"
+  "size": 7762,
+  "sha256": "5ab65005625bf7f3b4f1ee8c06f574bda9650af5d317e896d6e2178b31f74b1b"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -5066,8 +5081,8 @@
  },
  {
   "path": "TESTS/Test-McpProfiles.ps1",
-  "size": 80528,
-  "sha256": "a58de4f73cf54147ec8ced94310ca48989f38b818e806e57a0e95b3ea6e9cf15"
+  "size": 85432,
+  "sha256": "5e8f7e104b9b7ed84b9a77f8f6ec1ee8b4d5e178f4dbfbf4397f02c34d5446c2"
  },
  {
   "path": "TESTS/Test-NpmDuplicate.ps1",
@@ -5351,8 +5366,8 @@
  },
  {
   "path": "TESTS/test_companion_registry.py",
-  "size": 21844,
-  "sha256": "6269f28d61b2c591bebee33f999e8810396f86f50d041a0e092ce95a36a9e894"
+  "size": 23056,
+  "sha256": "58e10e72bc8ff8d17c0475f18cf8f001bde712ee1cfa70f3766604c7ada243a0"
  },
  {
   "path": "TESTS/test_field_report.py",
@@ -5506,8 +5521,8 @@
  },
  {
   "path": "TESTS/test_task_state.py",
-  "size": 16397,
-  "sha256": "d51328a8e8208f3197be0a753fffd92335a3f6d94cafbbd7e5d9e584e91f78a4"
+  "size": 17521,
+  "sha256": "ff4389c8577b3ff9427d142ec4e2086947a3de65dd25da86458388532ef82187"
  },
  {
   "path": "TESTS/test_toolbox.py",
@@ -5666,8 +5681,8 @@
  },
  {
   "path": "TOOLS/Migrate-HermesProfiles.ps1",
-  "size": 82481,
-  "sha256": "c5d951a68223b222e82445d9e9e0f85825b6d34fa24c6b68065736eec2232717"
+  "size": 82984,
+  "sha256": "eadde98803f4005504b4923b7b5f123ed19848c91f8080d8b1d4062389e8433b"
  },
  {
   "path": "TOOLS/RECOMMENDED-INSTALLS.md",
@@ -5681,8 +5696,8 @@
  },
  {
   "path": "TOOLS/Repair-McpPaths.ps1",
-  "size": 19642,
-  "sha256": "58d66f6d5268effbd7211ad1479790e5f7c4fe84df3a433c9466422218d00a93"
+  "size": 24353,
+  "sha256": "2f276b0ef899358b3d77efddd468aa5f28546fb6aecc5370665563346486dacf"
  },
  {
   "path": "TOOLS/Set-GitHubProtection.ps1",
@@ -5826,8 +5841,8 @@
  },
  {
   "path": "TOOLS/companion_registry.py",
-  "size": 26253,
-  "sha256": "fe66e18aea2da23fb1a18bddb3f4bdad4899ca8f0a16eddfcff667da55bba671"
+  "size": 26775,
+  "sha256": "11f4d25c5d3f47b7d35edcddac7d1819617194be949c1b677a7bad9c9aa46270"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -5991,8 +6006,8 @@
  },
  {
   "path": "TOOLS/task_state.py",
-  "size": 17055,
-  "sha256": "4c85908c774ecbf256e50d2e69addf7b9929eb0e48b5a67241c893a836660321"
+  "size": 18561,
+  "sha256": "d1a9511d18a8842ecd7a2101f3c4b3974cfd7110ecfba1f7404eb11106f693f2"
  },
  {
   "path": "TOOLS/uabs_hermes_openrouter_catalog.py",
@@ -6052,12 +6067,12 @@
  {
   "path": "VALIDATION.json",
   "size": 2548,
-  "sha256": "2c7e65c5de5817e7ff114f4a9f45639b857a02b4553acefbbcc903b7bf05188f"
+  "sha256": "42d539b01e1eadf58ca84f659352cca31f9529da381fb2e4dba8e7239be6b60a"
  },
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "3358b9565f453b24cde39a3c1ef9dc1474d2b7702edcbced35f2b802eb000212"
+  "sha256": "a70bbc956d33aa7c11fc790559bdc5abdbaa6420963e11d6ff5b2fad7c435326"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",

@@ -164,6 +164,28 @@ def git_sha(root):
         return ""
 
 
+# Progress records, never product: a commit touching only these cannot change
+# what a recorded command verified.
+RECORD_FILES = {"plan.md", "state.md", "changelog.md", "workspace_ownership.md"}
+
+
+def records_only_since(root, sha):
+    """True when `sha` is an ancestor of HEAD and every file changed since is a record."""
+    try:
+        anc = subprocess.run(["git", "-C", str(root), "merge-base", "--is-ancestor", sha, "HEAD"],
+                             capture_output=True, text=True, timeout=10)
+        if anc.returncode != 0:
+            return False
+        out = subprocess.run(["git", "-C", str(root), "diff", "--name-only", sha, "HEAD"],
+                             capture_output=True, text=True, timeout=10)
+    except (OSError, subprocess.SubprocessError):
+        return False
+    if out.returncode != 0:
+        return False
+    changed = [line.strip() for line in out.stdout.splitlines() if line.strip()]
+    return all(name.rsplit("/", 1)[-1].lower() in RECORD_FILES for name in changed)
+
+
 def verify_of(task):
     """(kind, value): file, cmd, ambiguous or none. Never a shell call.
 
@@ -209,7 +231,13 @@ def evidence_state(task, root, head):
             return False, "recorded exit=%s" % record.group("code")
         sha = record.group("sha")
         if head and not head.startswith(sha):
-            return False, "stale evidence @%s (HEAD is %s)" % (sha[:12], head[:12])
+            # Committing the PLAN.md row that records the evidence moves HEAD past
+            # the evidence SHA by construction; demanding equality made every
+            # committed record stale. Commits that touch only progress records
+            # leave the verified source unchanged, so the evidence still holds.
+            if not records_only_since(root, sha):
+                return False, "stale evidence @%s (HEAD is %s)" % (sha[:12], head[:12])
+            return True, "command exit=0 @%s (later commits touch only records)" % sha[:12]
         return True, "command exit=0 @%s" % sha[:12]
     if cell in ("", "-", "–"):
         return False, "no verification recorded"

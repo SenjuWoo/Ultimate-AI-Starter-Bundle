@@ -381,6 +381,28 @@ def _manifest(**over):
     return {"schema": 1, "id": "demo-forge", "entry": entry}
 
 
+def test_extra_roots_reach_self_registration_and_json_reports_it():
+    """--roots feeds the manifest merge, not only detection, and --json carries
+    self_registered/local_skipped, so a forge can be verified before TOOL-ROOTS
+    names its folder."""
+    import contextlib
+    import io
+    from unittest.mock import patch
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _forge(tmp, folder="Roots-Probe-Forge", manifest={
+            "schema": 1, "id": "roots-probe-forge",
+            "entry": dict(_manifest()["entry"], title="Roots Probe Forge",
+                          repo="https://github.com/SenjuWoo/Roots-Probe-Forge",
+                          launch=[{"name": "rootsprobeforge", "launcher": "demo.cmd"}])})
+        out = io.StringIO()
+        with patch.dict(os.environ, {"UABS_NO_LOCAL_COMPANIONS": ""}), contextlib.redirect_stdout(out):
+            assert reg.main(["--roots", tmp, "--verify", "--json"]) == 0
+        doc = json.loads(out.getvalue())
+        assert doc["self_registered"].get("roots-probe-forge") == root, doc.get("local_skipped")
+        assert "roots-probe-forge" in doc["companions"]
+        assert isinstance(doc["local_skipped"], list)
+
+
 def test_a_forge_registers_itself_without_a_bundle_release():
     """A forge that ships uabs-companion.json is detected, launchable and doctored
     with no row in the bundle's own registry."""

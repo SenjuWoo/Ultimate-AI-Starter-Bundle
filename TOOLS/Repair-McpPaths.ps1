@@ -280,6 +280,97 @@ function Resolve-LivePath([string]$dead) {
   return $null
 }
 
+<#
+  A server pinned to an AI app's private interpreter (Hermes keeps one per
+  installs\<id>\environments\<hash>\venv; Codex keeps its runtimes) dies on the
+  app's next update, and the hash rule above cannot choose among the app's
+  several live environments (three on the machine where this was found, so the
+  installer reported "no replacement found" and the doctor failed the install).
+  Two resolutions, in order:
+    1. The shared Python, when a bounded MCP handshake proves every server that
+       uses this interpreter starts and lists tools on it. That path does not
+       move on app updates, so the repair stays repaired.
+    2. The owning app's current environment, when the app records it (Hermes:
+       installs\<id>\facts.json packages.venv.environment). Same packages as
+       before, but it rotates again on the next app update.
+  Neither is a guess: one is proven by execution, the other is the owner's record.
+#>
+$script:RepairSharedPython = $null
+function Get-RepairSharedPython {
+  if ($null -eq $script:RepairSharedPython) {
+    $script:RepairSharedPython = ''
+    try {
+      $p = Get-UabsPythonExecutable
+      if ($p -and -not (Test-UabsPrivateRuntimePath $p)) { $script:RepairSharedPython = [string]$p }
+    } catch { }
+  }
+  return $script:RepairSharedPython
+}
+
+# The script each use of $DeadLiteral launches: the first existing absolute .py
+# after the literal and before the next server's command key, so a neighbour's
+# script is never borrowed. $null for any use without one (a -m module, args
+# written before the command) - that use cannot be proven, so no rule 1.
+function Get-ServerScriptsFor([string]$Text, [string]$DeadLiteral) {
+  $scripts = @()
+  $at = $Text.IndexOf($DeadLiteral, [StringComparison]::Ordinal)
+  while ($at -ge 0) {
+    $start = $at + $DeadLiteral.Length
+    $window = $Text.Substring($start, [Math]::Min(1200, $Text.Length - $start))
+    $next = [regex]::Match($window, '(?i)["'']?\bcommand["'']?\s*[:=]')
+    if ($next.Success) { $window = $window.Substring(0, $next.Index) }
+    $found = $null
+    foreach ($m in [regex]::Matches($window, '(?<p>[A-Za-z]:[\\/][^"''\r\n;\]]*?\.py)(?=["''\s,\]]|$)')) {
+      $candidate = Get-NormalPath $m.Groups['p'].Value
+      if (Test-Path -LiteralPath $candidate -PathType Leaf) { $found = $candidate; break }
+    }
+    if (-not $found) { return $null }
+    $scripts += $found
+    $at = $Text.IndexOf($DeadLiteral, $start, [StringComparison]::Ordinal)
+  }
+  if (-not $scripts.Count) { return $null }
+  return @($scripts | Sort-Object -Unique)
+}
+
+function Test-RepairHandshake([string]$Python, [string]$Script) {
+  $probe = Join-Path $PSScriptRoot 'mcp_handshake.py'
+  if (-not (Test-Path -LiteralPath $probe -PathType Leaf)) { return $false }
+  $spec = @{ command = $Python; args = @($Script); timeout = 30 } | ConvertTo-Json -Compress
+  $b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($spec))
+  $prev = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try { & $Python -I $probe --spec $b64 *> $null; return ($LASTEXITCODE -eq 0) }
+  catch { return $false }
+  finally { $ErrorActionPreference = $prev }
+}
+
+function Resolve-HermesCurrentEnvironment([string]$dead) {
+  $m = [regex]::Match((Get-NormalPath $dead), '(?i)^(?<inst>.+\\hermes\\installs\\[^\\]+)\\environments\\[^\\]+\\venv\\(?<tail>.+)$')
+  if (-not $m.Success) { return $null }
+  $facts = Join-Path $m.Groups['inst'].Value 'facts.json'
+  if (-not (Test-Path -LiteralPath $facts -PathType Leaf)) { return $null }
+  try { $current = ([IO.File]::ReadAllText($facts) | ConvertFrom-Json).packages.venv.environment } catch { return $null }
+  if (-not $current) { return $null }
+  $full = Join-Path ([string]$current) $m.Groups['tail'].Value
+  if (Test-Path -LiteralPath $full -PathType Leaf) { return $full }
+  return $null
+}
+
+function Resolve-PrivateRuntimePath([string]$dead, [string]$text) {
+  $norm = Get-NormalPath $dead
+  if (-not (Test-UabsPrivateRuntimePath $norm)) { return $null }
+  if ((Split-Path -Leaf $norm) -match '(?i)^pythonw?[0-9.]*\.exe$') {
+    $shared = Get-RepairSharedPython
+    $scripts = Get-ServerScriptsFor -Text $text -DeadLiteral $dead
+    if ($shared -and $scripts) {
+      $allStart = $true
+      foreach ($s in $scripts) { if (-not (Test-RepairHandshake -Python $shared -Script $s)) { $allStart = $false; break } }
+      if ($allStart) { return $shared }
+    }
+  }
+  return (Resolve-HermesCurrentEnvironment $dead)
+}
+
 $problems = 0
 $repairs = 0
 
@@ -303,7 +394,11 @@ foreach ($c in $configs) {
   $changed = $false
   foreach ($d in $dead) {
     $problems++
-    $live = Resolve-LivePath $d
+    # Private app runtimes first: the hash rule would otherwise "resolve" a
+    # Hermes environment that happens to be the only sibling, re-pinning the
+    # server to a folder the next app update deletes.
+    $live = Resolve-PrivateRuntimePath $d $text
+    if (-not $live) { $live = Resolve-LivePath $d }
     if (-not $live) {
       Write-Host ("{0,-7} DEAD (no replacement found)" -f $c.Name) -ForegroundColor Red
       Write-Host ("          $d") -ForegroundColor Red

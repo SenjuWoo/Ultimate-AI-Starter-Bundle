@@ -45,6 +45,20 @@
 
 ## History
 
+8.53.5 (2026-11-23): install-fail fix - a Hermes profile MCP pinned to Hermes's
+rotating private venv (installs\<id>\environments\<hash>) is moved to the shared
+Python after a proven handshake, else to the env Hermes's facts.json records;
+RobloxForge registration uses the shared Python. Bundle FIELD-REPORTS cleared
+(companion_registry --roots, comfy-3d launcher, task_state record-only commits;
+the HEDR report moved to its owner Skyrim-Forge; a RobloxForge sys.executable
+report filed with its owner). Log of the failed install:
+%LOCALAPPDATA%\Ultimate-AI-Starter-Bundle\logs\INSTALL-FAILED.txt.
+Open: catalog pins behind upstream (`python TOOLS/audit_catalog_versions.py`
+reported stale=14 on 2026-11-23, among them headroom, playwright-mcp,
+firecrawl-mcp, context7, github-mcp-server, blender-mcp, unity-mcp, rtk,
+windows-mcp, super-mcp-router, playwright-cli, comfy-cli; two skill packs
+drifted) - next release refreshes them with handshake/payload verification per pin.
+
 8.53.4 (2026-11-17): Claude subagent tiers (Explore/Haiku, researcher/Sonnet,
 implementer/Opus); Hermes memory
 import cleanup covers pack/preamble/agreements blocks; Hermes profile backup families

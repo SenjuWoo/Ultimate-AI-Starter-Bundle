@@ -56,11 +56,12 @@ class RegistryError(ValueError):
 MANIFEST = "uabs-companion.json"
 
 
-def load(path=REGISTRY, local=None):
+def load(path=REGISTRY, local=None, search_roots=None):
     """The bundled registry, plus the manifests of forges found on this machine.
 
     `local` defaults to on for the shipped registry and off for any other file.
-    UABS_NO_LOCAL_COMPANIONS=1 turns it off.
+    UABS_NO_LOCAL_COMPANIONS=1 turns it off. `search_roots` replaces the declared
+    roots for the manifest search (main passes roots(--roots), a superset).
     """
     with open(path, encoding="utf-8") as fh:
         data = json.load(fh)
@@ -68,7 +69,7 @@ def load(path=REGISTRY, local=None):
     if local is None:
         local = (os.path.abspath(path) == os.path.abspath(REGISTRY)
                  and os.environ.get("UABS_NO_LOCAL_COMPANIONS") != "1")
-    return merge_local(data) if local else data
+    return merge_local(data, search_roots) if local else data
 
 
 def merge_local(data, search_roots=None, directories=None):
@@ -491,7 +492,9 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     try:
-        data = load()
+        # --roots must reach self-registration as well as detection, or a forge
+        # outside TOOL-ROOTS cannot be verified before anyone edits that file.
+        data = load(search_roots=roots(args.roots)) if args.roots else load()
     except (OSError, RegistryError) as exc:
         print("registry invalid: %s" % exc)
         return 2
@@ -525,7 +528,9 @@ def main(argv=None):
     rec = recommended_status(search_roots, data, directories)
     if args.json:
         print(json.dumps({"companions": report,
-                          "recommended": rec}, indent=1))
+                          "recommended": rec,
+                          "self_registered": data.get("self_registered") or {},
+                          "local_skipped": data.get("local_skipped") or []}, indent=1))
         return 0
     own = data.get("self_registered") or {}
     for cid, row in report.items():
