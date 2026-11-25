@@ -97,6 +97,7 @@ def merge_local(data, search_roots=None, directories=None):
                 raise RegistryError("needs schema 1 and an entry object")
             if not isinstance(cid, str) or not re.fullmatch(r"[a-z0-9][a-z0-9-]{1,39}", cid):
                 raise RegistryError("id %r is not a plain lower-case name" % (cid,))
+            entry = normalize_entry(cid, entry, folder)
             trial = json.loads(json.dumps(merged))
             trial.pop("self_registered"), trial.pop("local_skipped")
             bundled = trial["companions"].get(cid)
@@ -117,6 +118,55 @@ def merge_local(data, search_roots=None, directories=None):
         merged["companions"][cid] = next(entry for path, entry in rows if path == folder)
         merged["self_registered"][cid] = folder
     return merged
+
+
+# Launcher files every forge ships for humans; never exposed as a by-name command,
+# because two forges would claim the same name.
+_GENERIC_LAUNCHERS = {"start-here", "install", "uninstall", "verify", "setup", "update", "build"}
+_INTERPRETERS = ("python", "python3", "powershell", "pwsh")
+
+
+def normalize_entry(cid, entry, folder=None):
+    """Accept the shorthand a forge author writes by hand, in the canonical shape.
+
+    A forge is the owner of its manifest and the bundle adapts to it: `repository`
+    for `repo`, `install` as a sentence naming its script, `doctor` as a bare
+    command, `launchers` as file names, `capabilities` as a list, no `title`. Only
+    the shape changes; validate() still applies every trust rule afterwards.
+    """
+    entry = json.loads(json.dumps(entry))
+    if "repo" not in entry and isinstance(entry.get("repository"), str):
+        entry["repo"] = entry.pop("repository")
+    entry.setdefault("title", cid)
+    install = entry.get("install")
+    if isinstance(install, str):
+        script = next((w for w in re.split(r"[\s(),;]+", install)
+                       if w.lower().endswith((".ps1", ".bat", ".cmd", ".py"))), None)
+        entry["install"] = ({"kind": "owner_installer", "entrypoint": script, "note": install}
+                            if script else {"kind": "source_only", "note": install})
+    doctor = entry.get("doctor")
+    if isinstance(doctor, list) and doctor:
+        head = str(doctor[0])
+        if head in _INTERPRETERS:
+            entry["doctor"] = {"entrypoint": doctor}
+        elif folder and os.path.isfile(os.path.join(folder, "src", head, "__main__.py")):
+            entry["doctor"] = {"entrypoint": ["python", "-m", head] + [str(p) for p in doctor[1:]]}
+        else:
+            entry["doctor"] = {"note": "run: " + " ".join(str(p) for p in doctor)}
+    launchers = entry.pop("launchers", None)
+    if "launch" not in entry and isinstance(launchers, list):
+        launch = []
+        for item in launchers:
+            stem, ext = os.path.splitext(os.path.basename(str(item)))
+            name = stem.lower()
+            if ext.lower() in (".cmd", ".bat", ".ps1", ".py", ".exe") and name not in _GENERIC_LAUNCHERS \
+                    and re.fullmatch(r"[a-z0-9][a-z0-9-]{1,39}", name):
+                launch.append({"name": name, "launcher": str(item)})
+        entry["launch"] = launch
+    caps = entry.get("capabilities")
+    if isinstance(caps, list):
+        entry["capabilities"] = {"cli": str(caps[0])} if caps else {}
+    return entry
 
 
 def _repo_parts(repo):

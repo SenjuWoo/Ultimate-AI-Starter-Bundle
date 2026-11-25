@@ -1,3 +1,20 @@
+## 8.53.6 (2026-11-24)
+
+- **Upgrade prompt is a paste-ready file.** `PROMPTS/GENERAL-5-UPGRADE.txt`
+  audits an existing project end to end and fixes it (a newer model taking over,
+  or a project left unchecked), in the same shape as the other four. The long
+  `PROMPTS/START-RESUME-UPGRADE.md` guide is retired; `PROMPTS/README.md` keeps
+  the which-prompt table and the PLAN.md format the task controller parses.
+- **A forge's hand-written manifest registers.** A `uabs-companion.json` written
+  in shorthand (`repository`, `install` as a sentence, `doctor` as a bare
+  command, `launchers` as file names, no `title`) was rejected, so the forge's
+  command never reached the machine map. Self-registration now reads that
+  shape; every trust rule (owner allowlist, own folder, paths inside the owner,
+  unique command names) still applies. `START-HERE`/`Install` launchers never
+  become commands.
+- `ai-tooling-stack` routes GTA V work to Gta-Forge (`gtaforge`).
+  81 canonical skills ship in this release.
+
 ## 8.53.5 (2026-11-23)
 
 - **Install no longer fails on a Hermes update.** Current Hermes keeps its own

@@ -317,7 +317,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66558,
-  "sha256": "d80597433215e640c45e5c9eb7ea2abd4632e2622cb514baf06dd7575099ab71"
+  "sha256": "d6ba6b5fe62872ba7d7854ff9f7ec4df029d616147f985fdff9e3967bb786045"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -327,7 +327,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "96659521fa5ceb07bfaa8655f54ab5808ed8a626f943b5f43671201a8b1dd78e"
+  "sha256": "440e8f74ad1507a5ff818e37df1d3a3afdf07919a3d19f3cc92d8ea562c9ee36"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -337,7 +337,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "a6524be5223787187aa6b341824fafa10771bdb1f1e45b5393e1613995a6f100"
+  "sha256": "a1f69645508f09df1d132c3d42b923bf0e628f74e5f99f784e9367dbb19cf567"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -4796,8 +4796,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 386426,
-  "sha256": "fe45ed16344027a696b233aa9a79a77ee928da7d50a586e5d6d20c4ad7b21ce7"
+  "size": 387454,
+  "sha256": "772965fd85a44845cc60bb84a93ef60e490711fa9e508a7ab0c242b25442356f"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -4836,8 +4836,8 @@
  },
  {
   "path": "MEMORY.md",
-  "size": 65081,
-  "sha256": "feca5b1b3126fb08033617f61282c57bd1ff2f54dccb04127817e8cf8f554301"
+  "size": 65088,
+  "sha256": "a7c66cff30c5f840a304a6bc85c3d52407db2eaee2d316a61647a99fe935866d"
  },
  {
   "path": "PROJECT-TEMPLATE/.cbmignore",
@@ -4926,33 +4926,28 @@
  },
  {
   "path": "PROMPTS/README.md",
-  "size": 1353,
-  "sha256": "26e521bdeb0a89f6eb659a36d018c7a672df33c11166b421299a85643302b873"
- },
- {
-  "path": "PROMPTS/START-RESUME-UPGRADE.md",
-  "size": 7641,
-  "sha256": "2d37c233cba4968e339cd3b53f323684d95d357510644e9a08a0a4b135122e3a"
+  "size": 2245,
+  "sha256": "9e7d30d62dd7f29d60818e73c281f71093b2ca14a50ab1cb64ef5636a6ce96fb"
  },
  {
   "path": "README.md",
-  "size": 16879,
-  "sha256": "bc33ee7574ac5deae827f54651cf80f7ca663219f1df884bcf31a100f6382e4e"
+  "size": 16865,
+  "sha256": "2637dd6b37366e6ec35627200109d7fc85ea53eda7358abb504fbd56dc02ea99"
  },
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "14cd138925ae7d48035a021cfdcae47d3f4d0c17ad1a466e7dc62c4ed84f48c4"
+  "sha256": "a538ded0c7938cb34579f9f1b3abb85ff0b46591bb18b17cab90ba856ad54c32"
  },
  {
   "path": "START-HERE.txt",
   "size": 4025,
-  "sha256": "a2acce629d8eba481e28fc3ecab83c6272075393a7f472cc3147735b69d85a5c"
+  "sha256": "55f914866312c4befe8eeaefd77a1e60ac1bba165edb0203e4c82fc348fc3b2b"
  },
  {
   "path": "STATE.md",
-  "size": 7762,
-  "sha256": "5ab65005625bf7f3b4f1ee8c06f574bda9650af5d317e896d6e2178b31f74b1b"
+  "size": 7964,
+  "sha256": "2f4b61b5daa63b352afbeed6dcdd18690e635fd6bd17aa5a3bdd0038ea51d61d"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -5366,8 +5361,8 @@
  },
  {
   "path": "TESTS/test_companion_registry.py",
-  "size": 23056,
-  "sha256": "58e10e72bc8ff8d17c0475f18cf8f001bde712ee1cfa70f3766604c7ada243a0"
+  "size": 24975,
+  "sha256": "88498870cf88b50e8223e5e2da600b003e632648590a331f099e6aefa55e2eb9"
  },
  {
   "path": "TESTS/test_field_report.py",
@@ -5841,8 +5836,8 @@
  },
  {
   "path": "TOOLS/companion_registry.py",
-  "size": 26775,
-  "sha256": "11f4d25c5d3f47b7d35edcddac7d1819617194be949c1b677a7bad9c9aa46270"
+  "size": 29408,
+  "sha256": "72c536f350a1ae380c99cb42b7920a53b09b596e87bd2b5f5494e41037844aef"
  },
  {
   "path": "TOOLS/discover_tools.ps1",
@@ -6067,12 +6062,12 @@
  {
   "path": "VALIDATION.json",
   "size": 2548,
-  "sha256": "42d539b01e1eadf58ca84f659352cca31f9529da381fb2e4dba8e7239be6b60a"
+  "sha256": "609482811c673498b1545c856e161920f5be3d677ab84b69788a85872be09f4b"
  },
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "a70bbc956d33aa7c11fc790559bdc5abdbaa6420963e11d6ff5b2fad7c435326"
+  "sha256": "8b2c26e9c083cb99ffbd13b48f180f3b824520bc98b0e08522f1c6fe56c28966"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -6101,8 +6096,8 @@
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/SKILL.md",
-  "size": 8836,
-  "sha256": "370354ed1fc20fff4d900e3082d42a389a08b1e2e9745e4c0925aa2177d1ade9"
+  "size": 9115,
+  "sha256": "5fb78a72a2eb23afc6b36fcf892f2f1d720b3d087d697f693787757203be5a95"
  },
  {
   "path": "_CANONICAL-SKILLS/ai-tooling-stack/references/forge-standard.md",
@@ -9101,8 +9096,8 @@
  },
  {
   "path": "docs/GUIDE.md",
-  "size": 72047,
-  "sha256": "5b3aacb70082495143eb569d2d179e654ad3a6183c29271d37457d408df4318a"
+  "size": 72033,
+  "sha256": "a919b2200f2740a829f42e976e2660d607902ed1c821452d2c461bed79e57948"
  },
  {
   "path": "docs/HERMES-MODELS.md",

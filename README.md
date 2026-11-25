@@ -1,5 +1,5 @@
-<!-- Ultimate AI Starter Bundle v8.53.5 -->
-# Ultimate AI Starter Bundle v8.53.5
+<!-- Ultimate AI Starter Bundle v8.53.6 -->
+# Ultimate AI Starter Bundle v8.53.6
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
@@ -219,5 +219,5 @@ Original code and docs are [MIT](LICENSE); third-party payloads keep their own
 terms — see the [notices](BUNDLED-TOOLS/THIRD-PARTY-NOTICES.md).
 
 Starting a chat, planning a big job for another model to build, resuming after a
-break or a usage limit, or handing a project to a newer model for a full audit? Copy one of the four
-[short cross-provider prompts](PROMPTS/START-RESUME-UPGRADE.md) and add your task.
+break or a usage limit, or handing a project to a newer model for a full audit? Copy one of the five
+[short cross-provider prompts](PROMPTS/README.md) and add your task.

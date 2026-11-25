@@ -765,7 +765,7 @@ and the `reverse-engineering` task recipe. REA is CLI-first, not another global
 170-tool MCP or duplicate tool-suite installer. Existing modding specialists
 and your discovered Reverse THIS! shims remain the implementation tools.
 
-Use the [start, resume and upgrade-audit prompts](../PROMPTS/START-RESUME-UPGRADE.md) once per chat.
+Use the [start, plan, resume and upgrade prompts](../PROMPTS/README.md) once per chat.
 [CodeBurn recommendations](../_CANONICAL-SKILLS/codeburn/references/recommendations.md)
 are evidence candidates, not automatic deletion or guaranteed usage savings.
 

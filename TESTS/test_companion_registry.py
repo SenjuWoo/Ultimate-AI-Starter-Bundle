@@ -416,6 +416,34 @@ def test_a_forge_registers_itself_without_a_bundle_release():
         assert reg.doctor_command(data["companions"]["demo-forge"], root)["argv"][1:] == ["-m", "demoforge", "doctor"]
 
 
+def test_a_hand_written_shorthand_manifest_still_registers():
+    """2026-11-24: GTA-Forge wrote `repository`, `install` as a sentence, `doctor`
+    as a bare command and `launchers` as file names, with no title. The bundle
+    rejected it ("missing title") and its command never reached the machine map.
+    The shape adapts; the trust rules do not."""
+    shorthand = {"schema": 1, "id": "demo-forge", "entry": {
+        "repository": "https://github.com/SenjuWoo/Demo-Forge",
+        "install": "Install.ps1 (venv + launcher on PATH + skill)",
+        "markers": ["demo.cmd", "src"], "doctor": ["demoforge", "doctor"],
+        "launchers": ["demo.cmd", "START-HERE.bat"], "capabilities": ["demoforge", "capabilities"],
+        "platforms": ["windows"]}}
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _forge(tmp, manifest=shorthand)
+        os.makedirs(os.path.join(root, "src", "demoforge"))
+        open(os.path.join(root, "src", "demoforge", "__main__.py"), "w").close()
+        data = reg.merge_local(_data(), [tmp])
+        assert data["self_registered"].get("demo-forge") == root, data["local_skipped"]
+        entry = data["companions"]["demo-forge"]
+        assert entry["install"] == {"kind": "owner_installer", "entrypoint": "Install.ps1",
+                                    "note": "Install.ps1 (venv + launcher on PATH + skill)"}
+        assert entry["launch"] == [{"name": "demo", "launcher": "demo.cmd"}], "START-HERE must never become a command"
+        assert reg.doctor_command(entry, root)["argv"][1:] == ["-m", "demoforge", "doctor"]
+    with tempfile.TemporaryDirectory() as tmp:
+        _forge(tmp, manifest=dict(shorthand, entry=dict(shorthand["entry"], repository="https://github.com/evil/Demo-Forge")))
+        data = reg.merge_local(_data(), [tmp])
+        assert "demo-forge" not in data["companions"], "shorthand bypassed the owner allowlist"
+
+
 def test_a_self_registered_forge_must_be_an_allowlisted_owner_in_its_own_folder():
     with tempfile.TemporaryDirectory() as tmp:
         _forge(tmp, manifest=_manifest(repo="https://github.com/evil/Demo-Forge"))

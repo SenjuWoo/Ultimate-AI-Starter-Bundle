@@ -45,6 +45,10 @@
 
 ## History
 
+8.53.6 (2026-11-24): GENERAL-5-UPGRADE prompt (START-RESUME-UPGRADE.md retired);
+shorthand forge manifests self-register (Gta-Forge was skipped for a missing title);
+ai-tooling-stack routes GTA V.
+
 8.53.5 (2026-11-23): install-fail fix - a Hermes profile MCP pinned to Hermes's
 rotating private venv (installs\<id>\environments\<hash>) is moved to the shared
 Python after a proven handshake, else to the env Hermes's facts.json records;
