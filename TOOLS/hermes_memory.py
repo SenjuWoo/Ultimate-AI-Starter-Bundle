@@ -35,7 +35,7 @@ import sys
 SEPARATOR = "\n§\n"
 # Opening markers the bundle writes into instruction files; each needs its own
 # closing marker. A block that never closes is not ours to judge.
-OPEN = re.compile(r"<!--\s*(?:(?P<uabs>UABS-[A-Z]+(?::[a-z0-9-]+)?)|personal-working-agreements:start)\s*-->")
+OPEN = re.compile(r"<!--\s*(?:(?P<uabs>UABS-[A-Z]+(?::[a-z0-9-]+)?)|(?P<named>personal-working-agreements|agent-team):start)\s*-->")
 # "Root > Sub heading: text". `>` separates nested headings; `<` would start a marker.
 HEADING = re.compile(r"(?P<path>[^:\n<]{1,240}?): ")
 NAMES = ("MEMORY.md", "USER.md")
@@ -73,7 +73,7 @@ def split_entries(text):
 def _close_for(opened):
     if opened.group("uabs"):
         return re.compile(r"<!--\s*/" + re.escape(opened.group("uabs")) + r"\s*-->")
-    return re.compile(r"<!--\s*personal-working-agreements:end\s*-->")
+    return re.compile(r"<!--\s*" + re.escape(opened.group("named")) + r":end\s*-->")
 
 
 def _root(entry):

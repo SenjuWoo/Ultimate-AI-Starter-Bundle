@@ -45,6 +45,9 @@
 
 ## History
 
+8.53.7 (2026-11-25): Claude agent team (7 tiers, Opus High default builder); installer-managed
+agent-team routing block; doctor check; Team: line in every prompt; GENERAL-0-AGENT-TEAM.
+
 8.53.6 (2026-11-24): GENERAL-5-UPGRADE prompt (START-RESUME-UPGRADE.md retired);
 shorthand forge manifests self-register (Gta-Forge was skipped for a missing title);
 ai-tooling-stack routes GTA V.

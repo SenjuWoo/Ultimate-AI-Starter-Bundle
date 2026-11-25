@@ -6,6 +6,7 @@ packs live in Skyrim Forge (`docs/prompts`).
 
 | Situation | Prompt |
 |---|---|
+| Claude Code: check and repair the installed agent team (after an install, update or new model) | [GENERAL-0-AGENT-TEAM.txt](GENERAL-0-AGENT-TEAM.txt) |
 | A new chat with a new task, start to finish | [GENERAL-1-START-AND-FINISH.txt](GENERAL-1-START-AND-FINISH.txt) |
 | A large or unfamiliar job: a strong model plans, a cheaper one builds | [GENERAL-2-ARCHITECT-PLAN.txt](GENERAL-2-ARCHITECT-PLAN.txt) |
 | Build a finished plan, or continue unfinished work | [GENERAL-3-WORKER-EXECUTE.txt](GENERAL-3-WORKER-EXECUTE.txt) |
@@ -19,13 +20,17 @@ destructive actions, costs or public publication. A resume prompt cannot
 rebuild a missing conversation: in a chat with no history, give the project
 location, the goal and the handoff file.
 
-Model and effort are picked in the host, not by the prompt: a strong planner at
-High for 2 (Xhigh only when High cannot settle it), a strong builder at High for
-1, 3 and 5, Medium for routine well-specified work.
+Model and effort are picked in the host, not by the prompt: the strongest model
+at High plans and orchestrates (Xhigh only when High cannot settle it); Opus at
+High builds; Sonnet only for small mechanical edits, research and verification;
+Haiku for lookups and command runs. Where the host has subagents, each prompt's
+`Team:` line says how to delegate - in Claude Code the installer adds the agent
+team (`planner`, `implementer`, `worker`, `verifier`, `researcher`, `Explore`,
+`runner`) and its routing block to `CLAUDE.md`, so no project needs its own setup.
 
 ## PLAN.md format
 
-All five use the same wording for the parts they share. `PLAN.md` starts with
+All of them use the same wording for the parts they share. `PLAN.md` starts with
 `goal:` and has one table `| ID | Task | Status | Depends on | Verify | Evidence |`.
 Status is `pending`, `active`, `complete`, `failed`, `blocked` or `superseded`;
 Verify is `cmd:<command>` or `file:<path>`; Evidence for a command is

@@ -1314,6 +1314,33 @@ if ($deadMachine.Count) {
   Warn ('{0} machine-wide PATH folder(s) no longer exist: {1}. Removing them needs an administrator: Environment Variables, System variables, Path.' -f $deadMachine.Count, (@($deadMachine | Select-Object -First 6) -join '; '))
 }
 
+# Claude agent team: each bundled tier is installed unchanged, the routing block
+# appears once, and no environment override silently moves every tier to one model.
+$agentIssues = @()
+$agentSrcDir = Join-Path $PackRoot 'BUNDLED-TOOLS\claude-agents'
+$claudeHome = Join-Path $env:USERPROFILE '.claude'
+if ((Test-Path -LiteralPath $agentSrcDir) -and (Test-Path -LiteralPath $claudeHome)) {
+  foreach ($src in @(Get-ChildItem -LiteralPath $agentSrcDir -Filter '*.md' -File)) {
+    $live = Join-Path $claudeHome ('agents\' + $src.Name)
+    if (-not (Test-Path -LiteralPath $live -PathType Leaf)) { $agentIssues += ($src.BaseName + ': missing') }
+    elseif ([IO.File]::ReadAllText($live) -cne [IO.File]::ReadAllText($src.FullName)) {
+      if ([IO.File]::ReadAllText($live).Contains('uabs-managed: claude-agent-tier')) { $agentIssues += ($src.BaseName + ': older bundle copy') }
+    }
+  }
+  $claudeMdPath = Join-Path $claudeHome 'CLAUDE.md'
+  if (Test-Path -LiteralPath $claudeMdPath -PathType Leaf) {
+    $teamBlocks = ([regex]::Matches([IO.File]::ReadAllText($claudeMdPath), '<!-- agent-team:start -->')).Count
+    if ($teamBlocks -ne 1) { $agentIssues += ('CLAUDE.md has ' + $teamBlocks + ' agent-team blocks (expected 1)') }
+  }
+  foreach ($envName in 'CLAUDE_CODE_SUBAGENT_MODEL', 'CLAUDE_CODE_SUBAGENT_MODEL_FORCE') {
+    foreach ($scope in 'Process', 'User', 'Machine') {
+      if ([Environment]::GetEnvironmentVariable($envName, $scope)) { $agentIssues += ($envName + ' is set (' + $scope + '); it overrides every agent tier') }
+    }
+  }
+  if ($agentIssues.Count) { Warn ('Claude agent team: ' + ($agentIssues -join '; ') + '. Run the installer again (any mode except -ToolsOnly) to refresh it.') }
+  else { Write-UabsOk ('Claude agent team: ' + @(Get-ChildItem -LiteralPath $agentSrcDir -Filter '*.md' -File).Count + ' tiers current, one routing block') }
+}
+
 # A machine map imported into Hermes memory is frozen and repeated to every profile.
 $hermesMemoryIssues = @()
 $hermesMemoryScript = Join-Path $PSScriptRoot 'hermes_memory.py'
@@ -1369,6 +1396,7 @@ $report=[ordered]@{version=$packBare;checked_utc=[DateTime]::UtcNow.ToString('o'
 $report['result'] = if ($errors.Count) { 'FAIL' } else { 'PASS' }
 $reportPath=Join-Path $env:LOCALAPPDATA 'Ultimate-AI-Starter-Bundle\installed-state-doctor.json'
 $report['grok_hook_issues'] = @($grokHookIssues)
+$report['claude_agent_issues'] = @($agentIssues)
 $report['codex_hook_issues'] = @($codexHookIssues)
 $report['mcp_launch_path_issues'] = @($mcpPathIssues)
 $report['stale_graph_roots'] = @($staleGraphRoots)

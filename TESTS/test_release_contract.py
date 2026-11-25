@@ -6804,26 +6804,46 @@ def test_deferred_hermes_profile_pins_warn_instead_of_failing() -> None:
 
 
 def test_claude_subagent_tiers_match_model_to_work() -> None:
-    """2026-11-17: Claude's built-in Explore ran on Opus. Tiers: Explore (Haiku)
-    locates and can only read; researcher (Sonnet) reads docs/web and cannot
-    write; implementer (Opus) does the hard work. A replaced user file is backed
-    up first, and -SkipClaudeAgents removes only stamped copies."""
-    tiers = {"Explore": ("haiku", {"Read", "Grep", "Glob"}),
-             "researcher": ("sonnet", {"Read", "Grep", "Glob", "WebFetch", "WebSearch"}),
-             "implementer": ("opus", None)}
+    """2026-11-17 / 2026-11-25: model per job. Opus High (implementer) is the
+    default builder; Sonnet worker writes only small mechanical edits with an
+    exact spec; Sonnet verifier gates and researcher answers, neither edits
+    source; Haiku Explore reads only and Haiku runner runs commands (its no-write
+    rule is instructed, not enforced); Fable planner writes planning files only.
+    A replaced user file is backed up first, and -SkipClaudeAgents removes only
+    stamped copies and the routing block."""
+    read_only = {"Read", "Grep", "Glob"}
+    tiers = {  # name: (model, effort, tools or None for all, omitClaudeMd)
+        "planner": ("fable", "high", read_only | {"WebFetch", "WebSearch", "Write", "Edit"}, False),
+        "implementer": ("opus", "high", None, False),
+        "worker": ("sonnet", "medium", None, False),
+        "verifier": ("sonnet", "high", read_only | {"Bash", "PowerShell", "WebFetch"}, False),
+        "researcher": ("sonnet", "medium", read_only | {"WebFetch", "WebSearch"}, False),
+        "Explore": ("haiku", "low", read_only, True),
+        "runner": ("haiku", "low", read_only | {"Bash", "PowerShell"}, True),
+    }
     folder = ROOT / "BUNDLED-TOOLS" / "claude-agents"
     assert sorted(p.stem for p in folder.glob("*.md")) == sorted(tiers), "unexpected agent tier set"
-    for name, (model, tools) in tiers.items():
+    for name, (model, effort, tools, omit) in tiers.items():
         agent = read(folder / (name + ".md"))
         front = agent.split("---")[1]
         assert re.search(rf"(?m)^name: {name}$", front), f"{name}: name drift (only 'Explore' overrides the built-in)"
         assert re.search(rf"(?m)^model: {model}$", front), f"{name}: expected model {model}"
+        assert re.search(rf"(?m)^effort: {effort}$", front), f"{name}: expected effort {effort}"
+        assert "max" not in re.findall(r"(?m)^effort: (\w+)$", front), f"{name}: Max effort"
+        assert bool(re.search(r"(?m)^omitClaudeMd: true$", front)) == omit, f"{name}: omitClaudeMd drift"
         found = re.search(r"(?m)^tools: (.+)$", front)
         if tools is None:
-            assert not found, "implementer must keep every tool"
+            assert not found, f"{name} must keep every tool"
         else:
             assert {t.strip() for t in found.group(1).split(",")} == tools, f"{name} tools drift: {found.group(1)}"
         assert "uabs-managed: claude-agent-tier" in agent
+    worker = read(folder / "worker.md").split("---")[1]
+    assert "implementer" in worker and "Not for features" in worker, "worker no longer hands real builds to Opus"
+    team = read(ROOT / "BUNDLED-TOOLS" / "claude-team" / "AGENT-TEAM.md")
+    assert "`implementer` by default" in team and "cannot start" in team, "routing lost the Opus default or the no-Fable fallback"
+    assert "<!--" not in team, "the team block source carries its own markers"
+    common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
+    assert "function Update-UabsClaudeAgentTeam" in common
     aio = read(ROOT / "INSTALL-AIO.ps1")
     step = aio[aio.index("# ---------- Claude subagent tiers"):aio.index("# ---------- Native plugins")]
     assert "$agentStamp = 'uabs-managed: claude-agent-tier'" in step
@@ -6831,6 +6851,8 @@ def test_claude_subagent_tiers_match_model_to_work() -> None:
         "Copy-Item -LiteralPath $agentSrc.FullName -Destination $agentDst"), "a user's agent is replaced before it is backed up"
     assert "if ($agentOurs) { Remove-Item" in step, "-SkipClaudeAgents can delete a user's file"
     assert "[switch]$SkipClaudeAgents" in aio
+    assert "Update-UabsClaudeAgentTeam -Path $claudeMd -Text $teamText" in step
+    assert "if ($SkipClaudeAgents -or" in step, "-SkipClaudeAgents leaves the routing block behind"
 
 
 if __name__ == "__main__":

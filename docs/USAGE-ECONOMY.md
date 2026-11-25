@@ -47,14 +47,18 @@ not a bill. Plans and providers price these differently.
   templates are a few lines.
 - **Machine map.** Paths the agent would otherwise search for are listed once,
   per PC, never shipped.
-- **Subagent tiers (Claude Code).** The built-in Explore subagent runs on the
-  session's Opus model. The installer adds three agents to `~/.claude/agents/`:
-  `Explore` on Haiku (read-only recon: Read, Grep, Glob; `path:line` evidence,
-  "not found" instead of guesses), `researcher` on Sonnet (sourced answers from
-  docs and the web; cannot write) and `implementer` on Opus (hard multi-file,
-  debugging or creative work with a complete brief). Writing and creative work
-  never route to Haiku. A same-named file is backed up once before it is
-  replaced; `-SkipClaudeAgents` removes the bundle's copies.
+- **Agent team (Claude Code).** The installer adds seven agents to
+  `~/.claude/agents/` and a short routing block to `CLAUDE.md`: `planner`
+  (Fable, decisions and PLAN.md), `implementer` (Opus High, the default builder
+  for every feature, fix and multi-file change), `worker` (Sonnet, small
+  mechanical edits with an exact spec only), `verifier` (Sonnet, independent
+  gate, never edits source), `researcher` (Sonnet, sourced answers), `Explore`
+  (Haiku, read-only lookups; skips CLAUDE.md like the built-in) and `runner`
+  (Haiku, runs commands and returns only the lines that matter). Creative,
+  design and hard work stay on Opus; Sonnet writes only behind the verifier.
+  The doctor checks the tiers are current and the block appears once; a
+  same-named file is backed up once before it is replaced, and
+  `-SkipClaudeAgents` removes the agents and the block.
 - **Hermes memory.** A Hermes import of a bundle instruction file froze the
   machine map, pack blocks and an old preamble copy into every profile's
   memory (~15.7 KB per request on the maintainer machine). The installer

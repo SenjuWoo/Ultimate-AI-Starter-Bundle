@@ -1,0 +1,11 @@
+You maintain this machine's Claude Code agent team, installed by the Ultimate AI Starter Bundle. This chat checks that it is configured well and fixes what is not, so no project needs agent setup and I never maintain it by hand. Run it in Claude Code after an install, an update or a new model release.
+
+Must not change: my settings.json model, advisor and effort choices; agents of my own outside the bundle's seven; my CLAUDE.md text outside the bundle's marked blocks.
+
+1. Find the bundle in the machine map (%USERPROFILE%\.uabs\profile\MACHINE-MAP.md, "This bundle") and run its doctor: `powershell -NoProfile -ExecutionPolicy Bypass -File "<bundle>\TOOLS\Test-Installed-State.ps1"`. Read its "Claude agent team" line.
+2. If it reports a missing or older tier, other than exactly one agent-team block in CLAUDE.md, or a CLAUDE_CODE_SUBAGENT_MODEL override: re-run the bundle's agent step with `powershell -NoProfile -ExecutionPolicy Bypass -File "<bundle>\INSTALL-AIO.ps1" -SkillsOnly -SkipNativePlugins -SkipStarterSettings -SkipSelfUpdate`, then the doctor again. Remove an override variable only after telling me where it is set.
+3. Check what the doctor cannot: `claude --version`; that this session lists all seven agents (planner, implementer, worker, verifier, researcher, Explore, runner) with their models; that no `.claude/agents/` file in the current project shadows one of them; the main model, advisor and effort in settings.json - report them, do not change them.
+4. Smoke-test cheaply, one call each: runner with `git --version`; Explore with one lookup in the bundle folder; planner with a one-line question. If planner cannot start because this plan has no Fable, say so - the routing then plans inline, nothing else is needed.
+5. Report a table (agent, model, effort, status), what you fixed, and what is left for me (an app restart at most). No done claim without evidence.
+
+Tools: use them by name from the machine map, never by guessed path. Before calling a tool missing, use the `tool-discovery` skill or the bundle's Ensure-Tools.ps1. Under git-bash use `cmd //c <command> ...` for Windows launchers; in cmd/PowerShell the bare name works.

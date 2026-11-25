@@ -981,6 +981,17 @@ if ($Providers -contains 'Claude' -and -not $ToolsOnly) {
       Copy-Item -LiteralPath $agentSrc.FullName -Destination $agentDst -Force
       Write-UabsOk ('Claude: subagent tier ' + $agentSrc.BaseName + ' -> ' + $agentDst)
     }
+    # The routing rules that tell the orchestrator when to use which tier. Claude
+    # only: no other provider has these agents, and Codex's AGENTS.md sits near
+    # its 32 KiB cap. Replaced in place on every run, removed with the agents.
+    $teamSrc = Join-Path $PackRoot 'BUNDLED-TOOLS\claude-team\AGENT-TEAM.md'
+    $claudeInst = $catalog.providers.Claude.instructions
+    if (-not $claudeInst) { $claudeInst = 'CLAUDE.md' }
+    $claudeMd = Join-Path (Get-UabsProviderHome -Provider 'Claude' -Catalog $catalog) $claudeInst
+    $teamText = if ($SkipClaudeAgents -or -not (Test-Path -LiteralPath $teamSrc -PathType Leaf)) { '' } else { [IO.File]::ReadAllText($teamSrc) }
+    if (Update-UabsClaudeAgentTeam -Path $claudeMd -Text $teamText) {
+      Write-UabsOk ('Claude: agent-team routing block ' + $(if ($teamText) { 'updated' } else { 'removed' }) + ' -> ' + $claudeMd)
+    }
   } catch { Write-UabsWarn ('Claude agents: ' + $_.Exception.Message) }
 }
 

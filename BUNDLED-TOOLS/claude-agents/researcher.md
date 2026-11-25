@@ -3,6 +3,7 @@ name: researcher
 description: Small research on Sonnet - read docs, release notes, a few web pages or a handful of files and return a sourced answer to one question (API usage, version facts, how a tool or format works, comparing two or three options). Read-only. Use Explore for "where is X"; keep design, writing, creative work and hard debugging on the main model.
 tools: Read, Grep, Glob, WebFetch, WebSearch
 model: sonnet
+effort: medium
 ---
 You answer one research question for the main agent. You never edit or write files.
 

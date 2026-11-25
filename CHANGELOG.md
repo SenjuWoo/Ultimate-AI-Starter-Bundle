@@ -1,3 +1,29 @@
+## 8.53.7 (2026-11-25)
+
+- **Claude agent team, installed and kept current.** Seven agents now install
+  to `~/.claude/agents/`: `planner` (Fable High, decisions and PLAN.md),
+  `implementer` (Opus High, the default builder for every feature, fix and
+  multi-file change), `worker` (Sonnet, small mechanical edits with an exact
+  spec only), `verifier` (Sonnet, independent gate on the real diff and build,
+  never edits source), `researcher` (Sonnet, sourced answers), `Explore` (Haiku,
+  read-only lookups, skips CLAUDE.md like the built-in one) and `runner` (Haiku,
+  runs commands and returns only the lines that matter). Each sets its own
+  effort; none uses Max.
+- **One routing block, managed by the installer.** `CLAUDE.md` gets the agent
+  team rules between `agent-team` markers (Claude only; the shared preamble and
+  profile are untouched). An existing block is replaced where it stands, a
+  second copy is removed, an unchanged block leaves the file's bytes alone, and
+  `-SkipClaudeAgents` removes it with the agents. If `planner` cannot start
+  because the plan has no Fable, the rules say to plan inline.
+- The doctor reports a missing or outdated tier, more or fewer than one routing
+  block, and a `CLAUDE_CODE_SUBAGENT_MODEL` override. Hermes memory cleanup
+  recognises the new block; agent backups are pruned like other backups.
+- **Prompts synced.** Each `PROMPTS/GENERAL-*` template has a `Team:` line
+  (the plan prompt tags each task with the tier that runs it, which the task
+  controller reads as ordinary task text), and `GENERAL-0-AGENT-TEAM.txt`
+  checks and repairs the agent team after an install or a new model release.
+  81 canonical skills ship in this release.
+
 ## 8.53.6 (2026-11-24)
 
 - **Upgrade prompt is a paste-ready file.** `PROMPTS/GENERAL-5-UPGRADE.txt`

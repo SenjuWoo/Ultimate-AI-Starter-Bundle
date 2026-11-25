@@ -1391,6 +1391,65 @@ function Get-UabsProfileText {
   return $text
 }
 
+function Update-UabsClaudeAgentTeam {
+  <# The Claude-only agent-team routing block, between <!-- agent-team:start -->
+     and <!-- agent-team:end -->. An existing block is replaced where it stands
+     and any later copy is dropped; a new one goes after the personal working
+     agreements, else after the profile block, else before the preamble, else at
+     the end. An empty -Text removes it. Unchanged text leaves the file's bytes
+     alone. Returns $true when the file was written. #>
+  param([string]$Path, [string]$Text)
+  $exists = Test-Path -LiteralPath $Path -PathType Leaf
+  if (-not $exists) {
+    if (-not $Text) { return $false }
+    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $Path) | Out-Null
+  }
+  $pre = if ($exists) { [IO.File]::ReadAllText($Path) } else { '' }
+  $bom = $false
+  if ($exists) { $b = [IO.File]::ReadAllBytes($Path); $bom = ($b.Length -ge 3 -and $b[0] -eq 0xEF -and $b[1] -eq 0xBB -and $b[2] -eq 0xBF) }
+  $nl = if ([regex]::Match($pre, '\r?\n').Value -eq "`r`n") { "`r`n" } else { "`n" }
+  $rx = '(?ms)^[ \t]*<!-- agent-team:start -->[ \t]*\r?\n.*?^[ \t]*<!-- agent-team:end -->[ \t]*'
+  $found = [regex]::Matches($pre, $rx)
+  $block = if ($Text) { '<!-- agent-team:start -->' + $nl + ($Text.Trim() -replace '\r?\n', $nl) + $nl + '<!-- agent-team:end -->' } else { '' }
+  $new = $pre
+  if ($found.Count) {
+    # Later copies first, so earlier indexes stay valid; each takes the blank
+    # lines that separated it with it.
+    for ($i = $found.Count - 1; $i -ge 1; $i--) {
+      $m = $found[$i]
+      $start = $m.Index
+      while ($start -gt 0 -and ($new[$start - 1] -eq "`n" -or $new[$start - 1] -eq "`r")) { $start-- }
+      $new = $new.Remove($start, $m.Index + $m.Length - $start)
+    }
+    $m = $found[0]
+    if ($block) {
+      $new = $new.Remove($m.Index, $m.Length).Insert($m.Index, $block)
+    } else {
+      $start = $m.Index
+      while ($start -gt 0 -and ($new[$start - 1] -eq "`n" -or $new[$start - 1] -eq "`r")) { $start-- }
+      $new = $new.Remove($start, $m.Index + $m.Length - $start)
+    }
+  } elseif ($block) {
+    $after = $null
+    foreach ($anchor in @('(?m)^[ \t]*<!-- personal-working-agreements:end -->[ \t]*$', '(?m)^[ \t]*<!-- /UABS-PROFILE -->[ \t]*$')) {
+      $a = [regex]::Match($pre, $anchor.Replace('$', '(?=\r?$)'))
+      if ($a.Success) { $after = $a.Index + $a.Length; break }
+    }
+    $preamble = [regex]::Match($pre, '(?m)^[ \t]*<!-- UABS-PREAMBLE -->')
+    if ($null -ne $after) {
+      $new = $pre.Substring(0, $after) + $nl + $nl + $block + $(if ($pre.Substring($after).Trim("`r", "`n")) { $nl + $nl + $pre.Substring($after).TrimStart("`r", "`n") } else { $nl })
+    } elseif ($preamble.Success) {
+      $new = $pre.Substring(0, $preamble.Index) + $block + $nl + $nl + $pre.Substring($preamble.Index)
+    } else {
+      $new = $(if ($pre.Trim()) { $pre.TrimEnd() + $nl + $nl } else { '' }) + $block + $nl
+    }
+  }
+  if ($new -ceq $pre) { return $false }
+  if ($exists) { Copy-Item -LiteralPath $Path -Destination ($Path + '.before-agent-team-' + (Get-Date -Format 'yyyyMMdd-HHmmssfff') + '.bak') -Force }
+  [IO.File]::WriteAllText($Path, $new, (New-Object System.Text.UTF8Encoding $bom))
+  return $true
+}
+
 function Update-UabsInstructionProfile {
   <# One marked UABS-PROFILE block per instruction file: refreshed when the
      profile changes, removed when it is empty. It sits after any pack block. #>

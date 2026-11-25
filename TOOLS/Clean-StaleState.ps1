@@ -273,6 +273,11 @@ if (Test-Path -LiteralPath $soulSource -PathType Leaf) {
     $backupFamilies += @{ Dir = $pf.FullName; Glob = 'SOUL.md.*bak*' }
   }
 }
+# The installer backs up a same-named Claude agent once before the bundle tier
+# replaces it; keep the newest three per agent name.
+foreach ($agentSrc in @(Get-ChildItem -LiteralPath (Join-Path $PackRoot 'BUNDLED-TOOLS\claude-agents') -Filter '*.md' -File -ErrorAction SilentlyContinue)) {
+  $backupFamilies += @{ Dir = (Join-Path $env:USERPROFILE '.claude\agents'); Glob = ($agentSrc.Name + '.before-uabs-*.bak') }
+}
 # The hook writers (TOOLS\hooks\ponytail_auto.py, used by the task router too)
 # back up config.yaml and shell-hooks-allowlist.json in every Hermes profile,
 # not only the managed ones, and hermes_memory.py backs up memory files. Each

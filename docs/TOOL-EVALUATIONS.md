@@ -974,7 +974,7 @@ a different project's issue tracker for a mod that *reports* savings. An unseen
 mod cannot clear the source/licence/installer gates, so nothing third-party is
 bundled.
 
-### TAKEN - native subagent tiers (Haiku / Sonnet / Opus)
+### TAKEN - native agent team (Fable / Opus / Sonnet / Haiku)
 
 The idea needs no mod. Claude Code's sub-agents docs (checked 2026-11-17): the
 built-in Explore runs on the Opus model the `opus` alias resolves to, and "a user
@@ -982,15 +982,23 @@ or project subagent named `Explore` overrides the built-in and keeps its own
 `model` field". The bundle ships `BUNDLED-TOOLS/claude-agents/` and installs it
 to `~/.claude/agents/`: the cheapest model that holds quality for each job.
 
-| Agent | Model | Tools | Job | Why this model |
+| Agent | Model / effort | Tools | Job | Why this model |
 |---|---|---|---|---|
-| `Explore` | haiku | Read, Grep, Glob | recon: where is X | locating is pattern matching; the main model reads the cited lines before acting, so a miss costs one re-check, not a wrong result |
-| `researcher` | sonnet | + WebFetch, WebSearch | one sourced answer from docs/web | synthesis from sources is where Haiku drops nuance; Sonnet holds it at a fraction of Opus |
-| `implementer` | opus | all | hard multi-file, debugging, creative work | quality-critical; the saving is a clean context, not a cheaper model |
+| `planner` | fable / high | read, web, Write/Edit for PLAN.md and DECISIONS.md | decisions, architecture, work breakdown | the strongest model spent once on the decision; skipped when the session is already Fable, and planned inline if Fable is not on the plan |
+| `implementer` | opus / high | all | the default builder: features, fixes, refactors, creative work | quality-critical; Sonnet is not trusted with big tasks |
+| `worker` | sonnet / medium | all | small mechanical edits with an exact spec | no judgment needed; anything ambiguous goes back to implementer |
+| `verifier` | sonnet / high | read + Bash/PowerShell | independent gate on the real diff and build | checking is cheaper than building; it never edits source |
+| `researcher` | sonnet / medium | read + web | one sourced answer | synthesis from sources is where Haiku drops nuance |
+| `Explore` | haiku / low, no CLAUDE.md | Read, Grep, Glob | where is X | locating is pattern matching; the built-in Explore also skips CLAUDE.md (seen in the 2.1.309 binary) |
+| `runner` | haiku / low, no CLAUDE.md | read + Bash/PowerShell | run commands, return verdict + key lines | keeps build logs out of the main context; its no-write rule is instructed, not enforced |
 
-- Quality: Haiku and Sonnet cannot write. Creative, review and design work
-  never route below Opus. Explore reports `path:line` evidence and "not found"
-  with where it looked, so a weak search is visible, not silent.
+- Quality: creative, design and hard work never route below Opus. Sonnet
+  writes only small specified edits, and the verifier gates every non-trivial
+  write. Explore reports `path:line` evidence and "not found" with where it
+  looked, so a weak search is visible, not silent.
+- Routing lives in one Claude-only block (`BUNDLED-TOOLS/claude-team/AGENT-TEAM.md`,
+  between `agent-team` markers in CLAUDE.md), replaced in place on every install.
+  It is not in the shared preamble or the profile, which reach every provider.
 - Names are bundle-owned: a same-named file (for example an Explore pinned to
   Opus) is backed up once and replaced, because the wrong model on the recon
   tier is the overspend this fixes.

@@ -52,6 +52,14 @@ class Classify(unittest.TestCase):
         self.assertEqual(dropped, pwa + pre)
         self.assertEqual(kept, [hm.POINTER] + OWN)
 
+    def test_the_claude_agent_team_block_is_a_frozen_import_too(self):
+        team = ["Agents > Agent team: <!-- agent-team:start -->",
+                "Agents > Agent team: Build with implementer by default.",
+                "Agents > Agent team: <!-- agent-team:end -->"]
+        kept, dropped = hm.classify(SEP.join(team + OWN))
+        self.assertEqual(dropped, team)
+        self.assertEqual(kept, [hm.POINTER] + OWN)
+
     def test_an_existing_pointer_is_not_repeated(self):
         kept, dropped = hm.classify(SEP.join([hm.POINTER] + PACK + OWN))
         self.assertEqual(dropped, PACK)
