@@ -1,4 +1,4 @@
-As the worker, execute the architect's plan in PLAN.md - or resume it where it stopped. The plan's decisions are settled: build them, do not re-plan or re-verify them.
+As the builder (this chat, not the `worker` subagent), execute the architect's plan in PLAN.md - or resume it where it stopped. The plan's decisions are settled: build them, do not re-plan or re-verify them.
 
 Must not change: [the requirements, interfaces and assets that must not change; or "nothing beyond the standing rules"]
 

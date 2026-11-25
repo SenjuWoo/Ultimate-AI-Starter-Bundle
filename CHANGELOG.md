@@ -1,3 +1,30 @@
+## 8.53.8 (2026-11-25)
+
+- **New files can no longer be left out of a release.** The manifest lists
+  git-tracked files only, so a file created but not yet added was dropped from
+  the manifest and the release archives without a word: the 8.53.7 Core and
+  Full archives shipped three of the seven Claude agents and no routing block
+  or `GENERAL-0-AGENT-TEAM.txt`, and 8.53.6 shipped without
+  `GENERAL-5-UPGRADE.txt`. This release carries all of them, and the manifest
+  gate now fails on any file that is neither tracked nor ignored.
+- **A fresh Claude install no longer grows its CLAUDE.md on every run.** An
+  older Claude template is a prefix of the current one; the legacy matcher
+  found it inside the current head, re-added the head and left one more copy
+  of its last four lines behind on each install. The head is now taken off
+  before legacy matching, and stranded copies heal back to one. The pack
+  writer also follows the file's leading line ending, so a fresh install's
+  second run no longer converts line endings. A fresh Claude home is now
+  byte-identical between installs (tested twice from empty).
+- The doctor's agent-team check reads the Claude provider's real home and
+  stays quiet when the agents were opted out (`-SkipClaudeAgents`) or Claude
+  is not installed.
+- `TESTS/Test-ClaudeAgentTeam.ps1` (in the pack gate) proves the routing block
+  lands once, is replaced in place, drops a second copy, keeps line endings and
+  comes out cleanly; `Test-Packs.ps1` covers the head-duplication fix.
+- The resume prompt calls its role "the builder", so it cannot be read as the
+  Sonnet `worker` agent.
+  81 canonical skills ship in this release.
+
 ## 8.53.7 (2026-11-25)
 
 - **Claude agent team, installed and kept current.** Seven agents now install

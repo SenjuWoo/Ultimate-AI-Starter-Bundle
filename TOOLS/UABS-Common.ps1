@@ -1269,28 +1269,49 @@ function Update-UabsInstructionPacks {
   $pre = if ($exists) { [IO.File]::ReadAllText($Path) } else { '' }
   $bom = $false
   if ($exists) { $b = [IO.File]::ReadAllBytes($Path); $bom = ($b.Length -ge 3 -and $b[0] -eq 0xEF -and $b[1] -eq 0xBB -and $b[2] -eq 0xBF) }
-  $nl = if ($pre -match "`r`n") { "`r`n" } else { "`n" }
-  $text = [regex]::Replace($pre, '(?ms)^[ \t]*<!-- UABS-PACK:([a-z0-9-]+) -->[ \t]*\r?\n.*?^[ \t]*<!-- /UABS-PACK:\1 -->[ \t]*(?:\r?\n|$)', '')
+  # Follow the leading line ending, as the profile writer does. Matching CRLF
+  # anywhere converted an LF head once the preamble had appended CRLF text, so a
+  # fresh install changed bytes again on its second run.
+  $nl = if ([regex]::Match($pre, '\r?\n').Value -eq "`r`n") { "`r`n" } else { "`n" }
+  $text = [regex]::Replace($pre, '(?ms)^[ \t]*<!-- UABS-PACK:([a-z0-9-]+) -->[ \t]*\r?\n.*?^[ \t]*<!-- /UABS-PACK:\1 -->[ \t]*(?:\r?\n|$)', '').Trim("`r", "`n")
+  # The current provider head is peeled off BEFORE legacy matching: an older
+  # template can be a prefix of the current one, and matching it inside the
+  # current head stripped its first lines, re-added the full head and left one
+  # more copy of its tail behind on every install.
+  $head = ''
+  $general = $null
+  if ($GeneralTemplate -and (Test-Path -LiteralPath $GeneralTemplate -PathType Leaf)) {
+    $general = (([IO.File]::ReadAllText($GeneralTemplate)).TrimStart([char]0xFEFF).Trim()) -replace '\r?\n', $nl
+    if ($text.StartsWith($general, [StringComparison]::Ordinal)) {
+      $head = $general; $text = $text.Substring($general.Length).Trim("`r", "`n")
+    }
+  }
   $legacyHit = $false
+  $orphans = @()
   foreach ($name in @($catalog.packs.PSObject.Properties.Name)) {
     $legacyDir = Join-Path $PackRoot ('BUNDLED-TOOLS\packs\' + $name + '\legacy')
     foreach ($h in @(Get-ChildItem -LiteralPath $legacyDir -Filter '*.md' -File -ErrorAction SilentlyContinue)) {
       $owned = ([IO.File]::ReadAllText($h.FullName)).Trim()
       if (-not $owned) { continue }
+      $ownedNl = $owned -replace '\r?\n', $nl
+      # The tail a legacy prefix of the current head leaves behind: copies of it
+      # stranded by the old ordering are ours and are removed below.
+      if ($general -and $general.StartsWith($ownedNl, [StringComparison]::Ordinal) -and $general.Length -gt $ownedNl.Length) {
+        $orphans += $general.Substring($ownedNl.Length).Trim("`r", "`n")
+      }
       $lines = @($owned -split '\r?\n' | ForEach-Object { [regex]::Escape($_) })
       $rx = '(?m)^' + ($lines -join '\r?\n') + '(?=\r?$)(?:\r?\n)?'
       if ([regex]::IsMatch($text, $rx)) { $text = [regex]::Replace($text, $rx, ''); $legacyHit = $true }
     }
   }
+  foreach ($orphan in @($orphans | Where-Object { $_ })) {
+    $lines = @($orphan -split '\r?\n' | ForEach-Object { [regex]::Escape($_) })
+    $rx = '(?m)^' + ($lines -join '\r?\n') + '(?=\r?$)(?:\r?\n)*'
+    if ([regex]::IsMatch($text, $rx)) { $text = [regex]::Replace($text, $rx, ''); $legacyHit = $true }
+  }
   $text = $text.Trim("`r", "`n")
-  $head = ''
-  if ($GeneralTemplate -and (Test-Path -LiteralPath $GeneralTemplate -PathType Leaf)) {
-    $general = (([IO.File]::ReadAllText($GeneralTemplate)).TrimStart([char]0xFEFF).Trim()) -replace '\r?\n', $nl
-    if ($text.StartsWith($general, [StringComparison]::Ordinal)) {
-      $head = $general; $text = $text.Substring($general.Length).Trim("`r", "`n")
-    } elseif ($legacyHit -and $text.IndexOf($general, [StringComparison]::Ordinal) -lt 0) {
-      $head = $general
-    }
+  if (-not $head -and $general -and $legacyHit -and $text.IndexOf($general, [StringComparison]::Ordinal) -lt 0) {
+    $head = $general
   }
   $blocks = @()
   foreach ($name in @($Enabled)) {

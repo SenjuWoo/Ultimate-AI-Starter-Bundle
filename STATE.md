@@ -45,6 +45,9 @@
 
 ## History
 
+8.53.8 (2026-11-25): fresh Claude CLAUDE.md no longer grows per install (legacy prefix matched inside
+the current head; pack writer EOL); doctor agent check scoped; agent-team and head tests in the gate.
+
 8.53.7 (2026-11-25): Claude agent team (7 tiers, Opus High default builder); installer-managed
 agent-team routing block; doctor check; Team: line in every prompt; GENERAL-0-AGENT-TEAM.
 

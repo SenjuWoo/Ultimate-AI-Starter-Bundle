@@ -118,6 +118,28 @@ try {
   Assert ([IO.File]::ReadAllText($plain) -ceq $orig) 'Add-then-remove did not restore the original bytes.'
   Assert (-not (Update-UabsInstructionPacks -Path (Join-Path $fx 'home\absent.md') -PackRoot $PackRoot -Enabled @())) 'A missing file was created with nothing to write.'
 
+  # 2026-11-25: an older template that is a prefix of the current Claude head
+  # (legacy 35bda27ef562) was matched inside the head, so every install re-added
+  # the head and stranded one more copy of its last bullets. A fresh head must
+  # be left alone, and stranded copies must heal back to one head.
+  $claudeHead = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Claude\COPY-TO-PROVIDER-HOME\CLAUDE.md'
+  $fresh = Join-Path $fx 'home\CLAUDE-fresh.md'
+  Copy-Item -LiteralPath $claudeHead -Destination $fresh
+  $freshBytes = [IO.File]::ReadAllText($fresh)
+  Assert (-not (Update-UabsInstructionPacks -Path $fresh -PackRoot $PackRoot -Enabled @() -GeneralTemplate $claudeHead)) 'A fresh Claude head was rewritten.'
+  Assert ([IO.File]::ReadAllText($fresh) -ceq $freshBytes) 'A fresh Claude head changed bytes.'
+  $headText = ([IO.File]::ReadAllText($claudeHead)).Trim()
+  $legacyPrefix = ([IO.File]::ReadAllText((Join-Path $PackRoot 'BUNDLED-TOOLS\packs\skyrim\legacy\35bda27ef562.md'))).Trim() -replace '\r?\n', "`n"
+  Assert (($headText -replace '\r?\n', "`n").StartsWith($legacyPrefix)) 'Fixture premise changed: legacy 35bda27ef562 is no longer a prefix of the Claude head.'
+  $tail = ($headText -replace '\r?\n', "`n").Substring($legacyPrefix.Length).Trim()
+  $polluted = Join-Path $fx 'home\CLAUDE-polluted.md'
+  [IO.File]::WriteAllText($polluted, ($headText + "`n`n" + $tail + "`n`n" + $tail + "`n`nUser line`n"), (New-Object System.Text.UTF8Encoding $false))
+  Assert (Update-UabsInstructionPacks -Path $polluted -PackRoot $PackRoot -Enabled @() -GeneralTemplate $claudeHead) 'Stranded head copies were not healed.'
+  $healed = [IO.File]::ReadAllText($polluted)
+  Assert (([regex]::Matches($healed, [regex]::Escape(($tail -split "`n")[0]))).Count -eq 1) 'More than one copy of the head tail survived.'
+  Assert ($healed.Contains('User line')) 'Healing removed user text.'
+  Assert (-not (Update-UabsInstructionPacks -Path $polluted -PackRoot $PackRoot -Enabled @() -GeneralTemplate $claudeHead)) 'A healed file is rewritten again.'
+
   # ---- skills of a disabled pack are retired, edited copies kept ----
   $src = Join-Path $fx 'src'; $dst = Join-Path $fx 'dst'
   foreach ($n in 'general-skill', 'skyrim-tool-router', 'skyrim-memory') {

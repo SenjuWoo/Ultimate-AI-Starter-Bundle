@@ -1318,8 +1318,20 @@ if ($deadMachine.Count) {
 # appears once, and no environment override silently moves every tier to one model.
 $agentIssues = @()
 $agentSrcDir = Join-Path $PackRoot 'BUNDLED-TOOLS\claude-agents'
-$claudeHome = Join-Path $env:USERPROFILE '.claude'
-if ((Test-Path -LiteralPath $agentSrcDir) -and (Test-Path -LiteralPath $claudeHome)) {
+$claudeHome = $null
+if ($Providers -contains 'Claude') { try { $claudeHome = Get-UabsProviderHome -Provider 'Claude' -Catalog $catalog } catch { } }
+$claudeMdPath = if ($claudeHome) { Join-Path $claudeHome 'CLAUDE.md' } else { $null }
+# Opted out (-SkipClaudeAgents) or never installed: no stamped agent and no
+# block. That is a choice, not drift, so nothing is reported.
+$teamInstalled = $false
+if ($claudeHome -and (Test-Path -LiteralPath $claudeHome)) {
+  $teamInstalled = [bool](@(Get-ChildItem -LiteralPath (Join-Path $claudeHome 'agents') -Filter '*.md' -File -ErrorAction SilentlyContinue |
+    Where-Object { [IO.File]::ReadAllText($_.FullName).Contains('uabs-managed: claude-agent-tier') }).Count)
+  if (-not $teamInstalled -and $claudeMdPath -and (Test-Path -LiteralPath $claudeMdPath -PathType Leaf)) {
+    $teamInstalled = [IO.File]::ReadAllText($claudeMdPath).Contains('<!-- agent-team:start -->')
+  }
+}
+if ($teamInstalled -and (Test-Path -LiteralPath $agentSrcDir)) {
   foreach ($src in @(Get-ChildItem -LiteralPath $agentSrcDir -Filter '*.md' -File)) {
     $live = Join-Path $claudeHome ('agents\' + $src.Name)
     if (-not (Test-Path -LiteralPath $live -PathType Leaf)) { $agentIssues += ($src.BaseName + ': missing') }
@@ -1327,7 +1339,6 @@ if ((Test-Path -LiteralPath $agentSrcDir) -and (Test-Path -LiteralPath $claudeHo
       if ([IO.File]::ReadAllText($live).Contains('uabs-managed: claude-agent-tier')) { $agentIssues += ($src.BaseName + ': older bundle copy') }
     }
   }
-  $claudeMdPath = Join-Path $claudeHome 'CLAUDE.md'
   if (Test-Path -LiteralPath $claudeMdPath -PathType Leaf) {
     $teamBlocks = ([regex]::Matches([IO.File]::ReadAllText($claudeMdPath), '<!-- agent-team:start -->')).Count
     if ($teamBlocks -ne 1) { $agentIssues += ('CLAUDE.md has ' + $teamBlocks + ' agent-team blocks (expected 1)') }

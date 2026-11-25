@@ -143,6 +143,9 @@ else { Bad ('Tool discovery gate failed:' + [Environment]::NewLine + $discoveryO
 $profileOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-UserProfile.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $profileOut -match 'USER PROFILE GATE: PASS') { Good 'Personal profile: seed, machine map, size cap, injection and removal' }
 else { Bad ('User profile gate failed:' + [Environment]::NewLine + $profileOut) }
+$agentTeamOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-ClaudeAgentTeam.ps1') -PackRoot $PackRoot 2>&1 | Out-String
+if ($LASTEXITCODE -eq 0 -and $agentTeamOut -match 'CLAUDE AGENT TEAM: PASS') { Good 'Claude agent-team block: once, in place, byte-stable, removable' }
+else { Bad ('Claude agent-team gate failed:' + [Environment]::NewLine + $agentTeamOut) }
 $npmDupOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-NpmDuplicate.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $npmDupOut -match 'NPM DUPLICATE GATE: PASS') { Good 'An older npm copy of a pinned package is removed from either known prefix, after a verified recovery copy' }
 else { Bad ('npm duplicate gate failed:' + [Environment]::NewLine + $npmDupOut) }

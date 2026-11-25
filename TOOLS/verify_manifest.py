@@ -51,11 +51,32 @@ def main():
     if len(missing) > 20 or len(mismatch) > 20:
         print("  ... truncated")
 
-    if missing or mismatch:
-        print("\nMANIFEST.json does not describe this tree. Regenerate with:")
+    # The manifest describes git-tracked files only, so a new file that is not
+    # added yet is left out of the manifest and of the release without a word
+    # (8.53.6 shipped without GENERAL-5, 8.53.7 without four agents). A file
+    # that is neither tracked nor ignored is that mistake waiting to ship.
+    untracked = _untracked()
+    for rel in untracked[:20]:
+        print("  UNTRACKED %s" % rel)
+    if missing or mismatch or untracked:
+        print("\nMANIFEST.json does not describe this tree.")
+        if untracked:
+            print("Add the new files (git add) or ignore them, then regenerate:")
         print("  python TOOLS/generate_manifest.py")
         return 1
     return 0
+
+
+def _untracked():
+    """Files neither tracked nor ignored; empty outside a git checkout."""
+    import subprocess
+    try:
+        raw = subprocess.run(["git", "-C", ROOT, "-c", "safe.directory=" + ROOT,
+                              "ls-files", "-z", "--others", "--exclude-standard"],
+                             capture_output=True, check=True).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return []
+    return sorted(p for p in raw.decode("utf-8").split("\0") if p)
 
 
 if __name__ == "__main__":

@@ -3325,6 +3325,7 @@ def main() -> int:
         test_compression_retirement_preserves_custom_preferences,
         test_current_documentation_links_and_upstream_coverage,
         test_deferred_hermes_profile_pins_warn_instead_of_failing,
+        test_manifest_gate_fails_on_new_untracked_files,
         test_claude_subagent_tiers_match_model_to_work,
         # v7.9.8 -- the starter template is not a place to register MCP servers,
         # and the routing decision has to be measurable.
@@ -6801,6 +6802,15 @@ def test_deferred_hermes_profile_pins_warn_instead_of_failing() -> None:
     assert "close Hermes and its gateway, then run the installer again" in doctor
     assert 'Err ("Hermes $rel pins $foundPin; catalog pins $context7Pin")' in doctor, (
         "a stale pin without a recorded deferral must still fail")
+
+
+def test_manifest_gate_fails_on_new_untracked_files() -> None:
+    """2026-11-25: the manifest lists tracked files only, so a file created but not
+    yet added was left out of the release silently (8.53.6 lost GENERAL-5, 8.53.7
+    four agents). The gate must name such files instead."""
+    verify = read(ROOT / "TOOLS" / "verify_manifest.py")
+    assert '"--others", "--exclude-standard"' in verify, "verify_manifest no longer looks for untracked files"
+    assert "if missing or mismatch or untracked:" in verify, "an untracked file no longer fails the gate"
 
 
 def test_claude_subagent_tiers_match_model_to_work() -> None:
