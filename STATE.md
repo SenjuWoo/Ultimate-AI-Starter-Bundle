@@ -45,6 +45,10 @@
 
 ## History
 
+8.53.12 (2026-11-26): model guide in the install summary and PROMPTS/README (Fable High hard/planning, Opus
+High builds, Sonnet/Haiku helpers); doctor reports main model/effort/advisor and warns on an advisor ranked
+below the main model. Settings are read, never written.
+
 8.53.11 (2026-11-26): Hermes gate wiring passes the known config path (-~3 s per call, 44 calls here);
 CI pack gate sharded across the four required Python jobs (Test-Pack -Shard 1..4; schedule/manual = full);
 Fable hands implementer only self-contained packages; advisor only at decision points; team checked against

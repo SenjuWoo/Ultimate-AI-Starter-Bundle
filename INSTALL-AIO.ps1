@@ -3301,6 +3301,12 @@ if ($null -ne $toolboxReady) {
 } elseif (-not $SkillsOnly -and -not $ToolsOnly) {
   Write-Host '     The on-demand toolbox is missing, so project tools stay off. Run START-HERE.bat again.' -ForegroundColor Yellow
 }
+if ($Providers -contains 'Claude' -and -not $SkipClaudeAgents) {
+  Write-Host '  3. Claude Code: pick the model per chat, the helpers are automatic.'
+  Write-Host '     Hard, new or creative work: Fable at High. Building from a plan and'
+  Write-Host '     everyday fixes: Opus at High - it asks Fable by itself when stuck.'
+  Write-Host '     Not Sonnet as the main chat. Details: PROMPTS\README.md'
+}
 Write-Host ''
 Write-Host '  To update later, run START-HERE.bat again.' -ForegroundColor DarkGray
 Write-Host ('  Log: ' + $installLogPath) -ForegroundColor DarkGray

@@ -1,3 +1,16 @@
+## 8.53.12 (2026-11-26)
+
+- **Which model to start a chat on is spelled out.** The install summary and
+  the prompts README say it in three lines: Fable at High for hard, new or
+  creative work and for planning; Opus at High for building from a plan and
+  everyday fixes; Sonnet and Haiku are the helpers, not the main chat. The
+  helper agents and their routing stay automatic.
+- **The doctor reports the Claude main model, effort and advisor** and warns
+  when the advisor ranks below the main model, because Claude Code ignores it
+  without saying so. It notes when the advisor is the same model as the chat.
+  It reads the settings and never writes them.
+  81 canonical skills ship in this release.
+
 ## 8.53.11 (2026-11-26)
 
 - **A repeat install is minutes shorter.** Wiring the four gates into every

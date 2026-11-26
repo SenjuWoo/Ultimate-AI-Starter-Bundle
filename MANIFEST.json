@@ -317,7 +317,7 @@
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
   "size": 66591,
-  "sha256": "cc7b77e76f4e78918ecf4748ecb64011a153baa53247558596e1335ceae5624f"
+  "sha256": "1eb873c92d20dce75bdce0df3a8e8bc2528de084ab9b7912a68a8452e087ca32"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -327,7 +327,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1370,
-  "sha256": "937e77d426038eb170affd793269ea7e7c365eed03d9e351680df80dad54d329"
+  "sha256": "1c5305d7e58a56fbf4b66cf9fb2ef0690c81ab33f09f68d4e8c7951cff834f29"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -337,7 +337,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41337,
-  "sha256": "840afc190c652114e329939ea74a87bb94dfc98b8c196db34f6b4c3044070c85"
+  "sha256": "634a01f161571082aeeaf1080380403d55f6e281c0e2ed967317c1eeb90e9ca4"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -4821,8 +4821,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 394971,
-  "sha256": "4b887fd2ff1f587f5f0ffc79377368b80d6192c1d12467bbcd631ff51124559e"
+  "size": 395687,
+  "sha256": "f06f9e2b8a4c06cd86584655662561e0c0387925de0f3fbc261966ff859021e5"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -4841,8 +4841,8 @@
  },
  {
   "path": "INSTALL-AIO.ps1",
-  "size": 200094,
-  "sha256": "0914dafa46318a39a7768dc1a83fa081f5dcf8da0a7d64ad51ee6047cb149d65"
+  "size": 200503,
+  "sha256": "5c1c5899475954fbe198a8f66c899c8ec26fe9b5935d2e086810043bd6d207c4"
  },
  {
   "path": "INSTALL-REMOTE.bat",
@@ -4961,28 +4961,28 @@
  },
  {
   "path": "PROMPTS/README.md",
-  "size": 2955,
-  "sha256": "7e702586b8bd944a231bdad5ea4ad02f229c1ba1ef62784e5f762cc6ca4e8f90"
+  "size": 4130,
+  "sha256": "4c48423447f7bd723dcccb4fb5c2427f57864632b45a54636c04a7366f8a934b"
  },
  {
   "path": "README.md",
   "size": 19201,
-  "sha256": "06851a8affc542a75ae56f3d46a27c4a43249d14671afb6b3a0c80b8b378d0a9"
+  "sha256": "4d2597e4d09aab50fd06aab8d7119b09894162af6d2b4bdd085753eb352df1a8"
  },
  {
   "path": "START-HERE.bat",
   "size": 1244,
-  "sha256": "3dace7ccb6c18d455046ff2c0c866c9fc33c3f3558bd1a4179e3ac6be1dbb9ca"
+  "sha256": "34e262530942fe3e14c800377673429c1b5094efbeb831e7a96e26fce893c373"
  },
  {
   "path": "START-HERE.txt",
   "size": 4026,
-  "sha256": "4b92414d1ad04c7a5028377bd5849013de943e45111ce47611eb87d5c47cc2c4"
+  "sha256": "fddbf4f71426f763a59c2d68af0c59e364f7b4000b800d490c6225f54e54f86f"
  },
  {
   "path": "STATE.md",
-  "size": 10457,
-  "sha256": "93ae152758ec80aea2a56e9122cf78c38cecfebb73c14502514dc40364d7f5b7"
+  "size": 10734,
+  "sha256": "d29e8ec40362c85e043b1adf9f8020dd7f72472f1355cc1103f7f42250689402"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -5776,8 +5776,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 83961,
-  "sha256": "14dead68bfcbd440a4fd5ba5db24799c8efb4e101c4e1e79bd9c8ff9dcd3906c"
+  "size": 85545,
+  "sha256": "05e2a5c121203b34e0974973ab2939dcdd05352ee66147f6e895c9866ce5d50d"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -6102,12 +6102,12 @@
  {
   "path": "VALIDATION.json",
   "size": 2550,
-  "sha256": "7a2344256fa5fb51fd4f20634feb18eccfc8acfc13fe7d9790a4696d1465b2ba"
+  "sha256": "7af4c0de4fdac971bcded1527e9028331bb3bb3cf4e131fed1b723a991778dc8"
  },
  {
   "path": "VERSION.txt",
   "size": 10,
-  "sha256": "2e5c53811409b2a5943a951ed8643086fb4c7d09c1c08ea6a954ccc68f6be687"
+  "sha256": "295656cfa315c5d122a3f1737c295a8877ca55e2145c8cb5a6f425a7f5919196"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",

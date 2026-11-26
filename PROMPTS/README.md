@@ -31,6 +31,24 @@ Delegation goes down a tier, never sideways: a chat already on Opus builds
 inline instead of handing work to the Opus `implementer`, because a subagent on
 the same model starts cold and only adds tokens.
 
+## Which model to start a chat on (Claude Code)
+
+The installer sets up the helper agents and their routing; the one thing left
+to you is the model of the chat itself. Quality first, then cost:
+
+| The chat is for | Start on | Why |
+|---|---|---|
+| Hard, new, architectural, creative or bug-hunting work; planning (prompt 2) | Fable, High | Highest measured quality; it does the hard part itself and hands only self-contained packages down |
+| Building from a finished plan (prompt 3), everyday fixes and features | Opus, High | Close to Fable on routine builds at a fraction of the cost; it builds inline |
+| Anything | not Sonnet or Haiku as the main chat | They are the helpers: exact edits, research, checks, lookups |
+
+A weaker chat does ask a stronger model by itself: an Opus chat hands a
+decision it cannot settle to the Fable `planner`, and with the advisor set to
+Fable it can consult it mid-task. Published tests show cheaper models rarely
+make that call on their own, so for work you already know is hard, start on
+Fable instead of relying on it. An advisor must rank at or above the chat's
+model: with a Fable chat only Fable qualifies, and it adds little there.
+
 ## PLAN.md format
 
 All of them use the same wording for the parts they share. `PLAN.md` starts with

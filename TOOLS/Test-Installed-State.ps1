@@ -1358,6 +1358,25 @@ if ($teamInstalled -and (Test-Path -LiteralPath $agentSrcDir)) {
   }
   if ($agentIssues.Count) { Warn ('Claude agent team: ' + ($agentIssues -join '; ') + '. Run the installer again (any mode except -ToolsOnly) to refresh it.') }
   else { Write-UabsOk ('Claude agent team: ' + @(Get-ChildItem -LiteralPath $agentSrcDir -Filter '*.md' -File).Count + ' tiers current, one routing block') }
+  # The main model and advisor are the user's choice and are never written
+  # here. Claude Code silently ignores an advisor ranked below the main model,
+  # so say so instead of letting a setting look active.
+  $claudeSettings = Join-Path $claudeHome 'settings.json'
+  if (Test-Path -LiteralPath $claudeSettings -PathType Leaf) {
+    try {
+      $cs = [IO.File]::ReadAllText($claudeSettings) | ConvertFrom-Json
+      $rank = { param($m) $m = [string]$m; if ($m -match 'fable') { 4 } elseif ($m -match 'opus|best') { 3 } elseif ($m -match 'sonnet') { 2 } elseif ($m -match 'haiku') { 1 } else { 0 } }
+      $mainModel = [string]$cs.model; $advisor = [string]$cs.advisorModel
+      $line = 'Claude chats start on ' + $(if ($mainModel) { $mainModel } else { 'the account default' }) +
+              $(if ($cs.effortLevel) { ' at ' + $cs.effortLevel } else { '' }) + $(if ($advisor) { ', advisor ' + $advisor } else { ', no advisor' })
+      $mr = & $rank $mainModel; $ar = & $rank $advisor
+      if ($advisor -and $mr -and $ar -and $ar -lt $mr) {
+        Warn ($line + '. Claude Code does not apply an advisor ranked below the main model, so this advisor is ignored; set it to the same model or a stronger one, or remove it.')
+      } elseif ($advisor -and $mr -and $ar -eq $mr) {
+        Write-UabsInfo ($line + '. An advisor on the same model re-reads the whole chat on every call and adds little; it pays when the main model is weaker.')
+      } else { Write-UabsInfo ($line + '.') }
+    } catch { Write-UabsInfo 'Claude settings.json could not be read for the model summary.' }
+  }
 }
 
 # A machine map imported into Hermes memory is frozen and repeated to every profile.
