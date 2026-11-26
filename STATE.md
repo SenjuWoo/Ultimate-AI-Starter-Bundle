@@ -48,6 +48,9 @@
 8.53.10 (2026-11-26): delegate down, never sideways - Opus sessions build inline instead of spawning the Opus
 implementer (logs showed up to 26 spawns per session); implementer description de-defaulted; Explore Haiku medium;
 doctor flags a stale routing block; prompts and private templates synced.
+Verified: gate 41/41; CI 11/11 on 46409bc; v8.53.10 Core zip SHA-256 matches SHA256SUMS and ships the new
+routing; alerts clean; install + doctor PASS, 7 live agents byte-equal, one current routing block. Not verified:
+runtime delegation behaviour (headless `claude -p` probe needs a CLI login on this PC).
 
 8.53.9 (2026-11-25): doctor finds the toolbox (catalog `server_id: toolbox`, contract test); README
 cover, badges, nav and a real-run integrity shot in docs/presentation; archive sizes corrected.
