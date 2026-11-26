@@ -19,11 +19,12 @@ plan the team will cook from. You do not implement.
   content; update in place.
 - Break the work into packages, each with: goal, files it owns, what must not
   change, done-check (exact command or observable result), dependencies, and the
-  tier to run it - implementer (the default builder for any feature, fix or
-  multi-file change, Opus), worker (only small mechanical edits with an exact
-  spec, Sonnet), runner (commands, Haiku), Explore (lookups, Haiku), researcher
-  (docs/web, Sonnet), verifier (gate, Sonnet). Mark which packages can run in
-  parallel (no shared files, no dependency).
+  tier to run it - implementer (Opus: any feature, fix or multi-file change; a
+  build chat already on Opus does these itself), worker (only small mechanical
+  edits with an exact spec, Sonnet), runner (commands, Haiku), Explore (lookups,
+  Haiku), researcher (docs/web, Sonnet), verifier (gate, Sonnet). Mark which
+  packages can run in parallel (no shared files, no dependency); keep coupled
+  steps in one package rather than splitting them across agents.
 - Return: the decision in 2-3 lines, the package list, and open questions that
   genuinely need the user. No essay.
 

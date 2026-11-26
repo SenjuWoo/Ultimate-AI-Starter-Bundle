@@ -6832,8 +6832,8 @@ def test_manifest_gate_fails_on_new_untracked_files() -> None:
 
 
 def test_claude_subagent_tiers_match_model_to_work() -> None:
-    """2026-11-17 / 2026-11-25: model per job. Opus High (implementer) is the
-    default builder; Sonnet worker writes only small mechanical edits with an
+    """2026-11-17 / 2026-11-25 / 2026-11-26: model per job. Opus High builds
+    (inline in an Opus session, via implementer from Fable); Sonnet worker writes only small mechanical edits with an
     exact spec; Sonnet verifier gates and researcher answers, neither edits
     source; Haiku Explore reads only and Haiku runner runs commands (its no-write
     rule is instructed, not enforced); Fable planner writes planning files only.
@@ -6846,7 +6846,7 @@ def test_claude_subagent_tiers_match_model_to_work() -> None:
         "worker": ("sonnet", "medium", None, False),
         "verifier": ("sonnet", "high", read_only | {"Bash", "PowerShell", "WebFetch"}, False),
         "researcher": ("sonnet", "medium", read_only | {"WebFetch", "WebSearch"}, False),
-        "Explore": ("haiku", "low", read_only, True),
+        "Explore": ("haiku", "medium", read_only, True),
         "runner": ("haiku", "low", read_only | {"Bash", "PowerShell"}, True),
     }
     folder = ROOT / "BUNDLED-TOOLS" / "claude-agents"
@@ -6868,7 +6868,22 @@ def test_claude_subagent_tiers_match_model_to_work() -> None:
     worker = read(folder / "worker.md").split("---")[1]
     assert "implementer" in worker and "Not for features" in worker, "worker no longer hands real builds to Opus"
     team = read(ROOT / "BUNDLED-TOOLS" / "claude-team" / "AGENT-TEAM.md")
-    assert "`implementer` by default" in team and "cannot start" in team, "routing lost the Opus default or the no-Fable fallback"
+    assert "cannot start" in team, "routing lost the no-Fable fallback"
+    # 2026-11-26: Opus main sessions spawned the Opus implementer for every
+    # build (cold start, no shared cache, double billing). Delegation goes down
+    # a tier; the same-tier exception stays narrow and the description must not
+    # advertise implementer as a default.
+    assert "Delegate down, never sideways" in team and "an Opus session builds (no `implementer`)" in team
+    assert "`implementer` by default" not in team, "routing re-advertises implementer as the default builder"
+    assert "general-purpose" in team and "forks run on your model" in team, "inheriting agent types not named"
+    assert "subagent-driven-development" in team, "per-task dispatch skills not bound by the routing"
+    impl = read(folder / "implementer.md").split("---")[1]
+    assert "default builder" not in impl and "builds inline instead" in impl, "implementer description invites Opus->Opus delegation"
+    for prompt in ("GENERAL-1-START-AND-FINISH", "GENERAL-3-WORKER-EXECUTE", "GENERAL-4-USAGE-LIMIT-RESUME", "GENERAL-5-UPGRADE"):
+        text = read(ROOT / "PROMPTS" / (prompt + ".txt"))
+        assert "never sideways" in text and "implementer builds by default" not in text, f"{prompt}: Team line invites Opus->Opus delegation"
+    doctor = read(ROOT / "TOOLS" / "Test-Installed-State.ps1")
+    assert "agent-team block is an older routing text" in doctor, "doctor no longer flags a stale routing block"
     assert "<!--" not in team, "the team block source carries its own markers"
     common = read(ROOT / "TOOLS" / "UABS-Common.ps1")
     assert "function Update-UabsClaudeAgentTeam" in common

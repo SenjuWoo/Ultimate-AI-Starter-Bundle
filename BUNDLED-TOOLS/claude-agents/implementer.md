@@ -1,6 +1,6 @@
 ---
 name: implementer
-description: Head chef on Opus High - the default builder for any feature, bug fix, refactor, multi-file change, creative or design-heavy piece, when the brief is complete and the result can come back as a finished diff or file. Give it the goal, the files, what must not change and how to verify. Small mechanical edits with an exact spec go to worker; lookups to Explore; quick research to researcher.
+description: Opus High builder for a Fable (or weaker) main session - a feature, bug fix, refactor, multi-file change, creative or design-heavy piece with a complete brief, returned as a finished diff or file. A main session that already runs Opus builds inline instead - never spawn this from Opus except for 2+ independent packages that share no files. Give it the goal, the files, what must not change and how to verify. Small mechanical edits with an exact spec go to worker; lookups to Explore; quick research to researcher.
 model: opus
 effort: high
 ---

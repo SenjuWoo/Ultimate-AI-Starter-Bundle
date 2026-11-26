@@ -1,3 +1,27 @@
+## 8.53.10 (2026-11-26)
+
+- **Agents delegate down, never sideways.** Session logs showed Opus main
+  sessions handing every build to the Opus `implementer` subagent, up to 26
+  times in one session. A subagent starts with a fresh context and its own
+  cache, so a same-model spawn re-reads the files and bills a second time for
+  nothing but a clean context. The Claude routing block now has the main
+  session do its own tier's work inline (an Opus session builds, a Fable
+  session plans), allows a same-tier spawn only for two or more packages that
+  share no files, names the agent types that inherit the main model
+  (`general-purpose`, `claude`, `Plan`, forks) as never for fan-out, and binds
+  per-task dispatch skills to the same rule. Fable still hands builds to Opus.
+- The `implementer` description no longer calls itself the default builder,
+  which Claude Code reads as an invitation to delegate. `worker` and `planner`
+  point real builds at Opus, inline when the session already runs it.
+- `Explore` runs Haiku at medium effort instead of low. Anthropic's effort
+  documentation says low makes a model more likely to skip a search or a check
+  in long agent prompts, and searching is Explore's job.
+- The doctor flags a CLAUDE.md agent-team block that differs from the bundle's,
+  so an old routing text cannot keep old habits after an update.
+- The shared `Team:` line in the GENERAL prompts and the plan tags follow the
+  same rule; the tool evaluation records the sources.
+  81 canonical skills ship in this release.
+
 ## 8.53.9 (2026-11-25)
 
 - **The doctor sees the toolbox again.** The installed-state doctor looks an

@@ -1342,6 +1342,14 @@ if ($teamInstalled -and (Test-Path -LiteralPath $agentSrcDir)) {
   if (Test-Path -LiteralPath $claudeMdPath -PathType Leaf) {
     $teamBlocks = ([regex]::Matches([IO.File]::ReadAllText($claudeMdPath), '<!-- agent-team:start -->')).Count
     if ($teamBlocks -ne 1) { $agentIssues += ('CLAUDE.md has ' + $teamBlocks + ' agent-team blocks (expected 1)') }
+    # An old routing text keeps old delegation habits (an Opus session handing
+    # builds to the Opus implementer), so compare it with the bundle's source.
+    $teamSrc = Join-Path $PackRoot 'BUNDLED-TOOLS\claude-team\AGENT-TEAM.md'
+    $teamLive = [regex]::Match([IO.File]::ReadAllText($claudeMdPath), '(?s)<!-- agent-team:start -->\r?\n(.*?)\r?\n<!-- agent-team:end -->')
+    if ($teamBlocks -eq 1 -and $teamLive.Success -and (Test-Path -LiteralPath $teamSrc -PathType Leaf)) {
+      $wantTeam = ([IO.File]::ReadAllText($teamSrc).Trim() -replace '\r\n', "`n")
+      if (($teamLive.Groups[1].Value.Trim() -replace '\r\n', "`n") -cne $wantTeam) { $agentIssues += 'CLAUDE.md agent-team block is an older routing text' }
+    }
   }
   foreach ($envName in 'CLAUDE_CODE_SUBAGENT_MODEL', 'CLAUDE_CODE_SUBAGENT_MODEL_FORCE') {
     foreach ($scope in 'Process', 'User', 'Machine') {

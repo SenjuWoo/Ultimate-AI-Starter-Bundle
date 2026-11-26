@@ -985,11 +985,11 @@ to `~/.claude/agents/`: the cheapest model that holds quality for each job.
 | Agent | Model / effort | Tools | Job | Why this model |
 |---|---|---|---|---|
 | `planner` | fable / high | read, web, Write/Edit for PLAN.md and DECISIONS.md | decisions, architecture, work breakdown | the strongest model spent once on the decision; skipped when the session is already Fable, and planned inline if Fable is not on the plan |
-| `implementer` | opus / high | all | the default builder: features, fixes, refactors, creative work | quality-critical; Sonnet is not trusted with big tasks |
-| `worker` | sonnet / medium | all | small mechanical edits with an exact spec | no judgment needed; anything ambiguous goes back to implementer |
+| `implementer` | opus / high | all | builds for a Fable session: features, fixes, refactors, creative work | quality-critical; Sonnet is not trusted with big tasks. An Opus session builds inline instead |
+| `worker` | sonnet / medium | all | small mechanical edits with an exact spec | no judgment needed; anything ambiguous goes back to Opus |
 | `verifier` | sonnet / high | read + Bash/PowerShell | independent gate on the real diff and build | checking is cheaper than building; it never edits source |
 | `researcher` | sonnet / medium | read + web | one sourced answer | synthesis from sources is where Haiku drops nuance |
-| `Explore` | haiku / low, no CLAUDE.md | Read, Grep, Glob | where is X | locating is pattern matching; the built-in Explore also skips CLAUDE.md (seen in the 2.1.309 binary) |
+| `Explore` | haiku / medium, no CLAUDE.md | Read, Grep, Glob | where is X | locating is pattern matching; the built-in Explore also skips CLAUDE.md (seen in the 2.1.309 binary) |
 | `runner` | haiku / low, no CLAUDE.md | read + Bash/PowerShell | run commands, return verdict + key lines | keeps build logs out of the main context; its no-write rule is instructed, not enforced |
 
 - Quality: creative, design and hard work never route below Opus. Sonnet
@@ -1009,6 +1009,28 @@ to `~/.claude/agents/`: the cheapest model that holds quality for each job.
 - Cost model: a subagent moves tokens to a cheaper context; it does not delete
   them. A one-grep lookup is cheaper inline; the win is broad sweeps that would
   otherwise read many files into the main context.
+- Delegate down, never sideways (2026-11-26). Session logs on the maintainer
+  machine showed Opus main sessions handing every build to the Opus
+  `implementer` (up to 26 spawns in one session), because the routing called it
+  "the default builder". Claude Code's docs say a non-fork subagent starts with
+  a fresh context and its own cache and counts toward the same usage limits
+  (code.claude.com/docs/en/sub-agents, /costs, /prompt-caching, read
+  2026-11-26), and Anthropic's multi-agent write-up puts agents at ~4x and
+  multi-agent systems at ~15x chat tokens, poor for tightly coupled coding work
+  (anthropic.com/engineering/multi-agent-research-system, 2025-06-13). A
+  same-model spawn buys only context isolation. The routing now makes the main
+  session do its own tier's work inline (Opus builds, Fable plans), allows a
+  same-tier spawn only for 2+ packages that share no files, names the
+  inheriting agent types (`general-purpose`, `claude`, `Plan`, forks) as never
+  for fan-out, and binds per-task dispatch skills to the same rule. The
+  implementer description no longer advertises itself as the default, and the
+  doctor flags a CLAUDE.md routing block older than the bundle's.
+- Explore effort low -> medium (2026-11-26): the effort docs say a model "is
+  more likely to skip a search, stop early, or skip a check at `low`" in long
+  agent prompts (platform.claude.com/docs/en/build-with-claude/effort, read
+  2026-11-26). Searching is Explore's whole job and Haiku is the cheapest tier,
+  so medium costs little. `runner` stays low: it runs the exact commands it is
+  given.
 - Opt out: `-SkipClaudeAgents` removes the stamped copies.
 
 Ponytail stays where it is: its strict modes shorten code, but measured runs

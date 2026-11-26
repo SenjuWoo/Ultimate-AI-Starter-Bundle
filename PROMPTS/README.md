@@ -27,6 +27,9 @@ Haiku for lookups and command runs. Where the host has subagents, each prompt's
 `Team:` line says how to delegate - in Claude Code the installer adds the agent
 team (`planner`, `implementer`, `worker`, `verifier`, `researcher`, `Explore`,
 `runner`) and its routing block to `CLAUDE.md`, so no project needs its own setup.
+Delegation goes down a tier, never sideways: a chat already on Opus builds
+inline instead of handing work to the Opus `implementer`, because a subagent on
+the same model starts cold and only adds tokens.
 
 ## PLAN.md format
 

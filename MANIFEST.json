@@ -316,8 +316,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 66589,
-  "sha256": "3e643d8b8ef85454499ae306a7539fa69e0cf79a514908b0ba87f8e48682a9f1"
+  "size": 66591,
+  "sha256": "990d88e946dc3c4d0103a0753bded2656d4e918f97ad1099aae53ca269662b19"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -326,8 +326,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
-  "size": 1369,
-  "sha256": "a1c7eb0fbb57a2f7d5df16c7d9b68320bb954e7b501abd5687bb3b97034edd11"
+  "size": 1370,
+  "sha256": "057c4620ac4ef85856c5b59d937706aac70398c2c534fe41e67abf6db572ac12"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -336,8 +336,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
-  "size": 41335,
-  "sha256": "496241f79583d36f62deb91e3db8d1970f65608a18118a8be20941acef807473"
+  "size": 41337,
+  "sha256": "d7551d327facb2da95824ee782d1d7ccebe30261a328100a657df33b81096a91"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -386,18 +386,18 @@
  },
  {
   "path": "BUNDLED-TOOLS/claude-agents/Explore.md",
-  "size": 1322,
-  "sha256": "e3e4d385778a323b6c68d554b437dcef46e4d757929579b20570ba5404db92ad"
+  "size": 1337,
+  "sha256": "eaad4218b61ea0ea145fe7434fe80c5ff7093f032c2577d8c4fc2c9f77220447"
  },
  {
   "path": "BUNDLED-TOOLS/claude-agents/implementer.md",
-  "size": 1144,
-  "sha256": "c17966784181e87b89c503b87e130e35929a77009b66e5d2c5da6f35b2dafde8"
+  "size": 1270,
+  "sha256": "46cc2e3500f598da3a2d1c14be271a58b2ee9ccc0be3e58d423338837ffb4a3b"
  },
  {
   "path": "BUNDLED-TOOLS/claude-agents/planner.md",
-  "size": 2046,
-  "sha256": "080c7a3b80ad978dc25963b94ca99e45cc91fd0c3b8c3aa34a3ad97746704f3b"
+  "size": 2148,
+  "sha256": "3b74847f69001cad8c08ee29ec8c6932ab158ba7f2cb8b5cb2ceb86efff9cc54"
  },
  {
   "path": "BUNDLED-TOOLS/claude-agents/researcher.md",
@@ -416,13 +416,13 @@
  },
  {
   "path": "BUNDLED-TOOLS/claude-agents/worker.md",
-  "size": 1404,
-  "sha256": "b10b537846ff6667b9176defb0af4ce5b279ab2ead556ab8b1f35e026c4400b1"
+  "size": 1438,
+  "sha256": "51a39e12b9b0bc675ee558258481d5c74208a44c4727ded674f94b3a462a8757"
  },
  {
   "path": "BUNDLED-TOOLS/claude-team/AGENT-TEAM.md",
-  "size": 2194,
-  "sha256": "93fe451d5ed7291dd9aba96149187e45b6e013a18b927247e84b4deb4bcc06d0"
+  "size": 3161,
+  "sha256": "f762cfbde080ca0b01be3b701bc1f01c9a432d1793315ce50ee09ed2ca706199"
  },
  {
   "path": "BUNDLED-TOOLS/lm-studio/Get-KvBudget.ps1",
@@ -4821,8 +4821,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 391873,
-  "sha256": "2aad87511851bc9ca35fd0d459a91c1701952d38c4a13aa1de9de401c4c41248"
+  "size": 393433,
+  "sha256": "2c1a05ef9e891e2fe5221211196a1476c436729ed239048cfd99afc9c6315153"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -4936,53 +4936,53 @@
  },
  {
   "path": "PROMPTS/GENERAL-1-START-AND-FINISH.txt",
-  "size": 2951,
-  "sha256": "7535a2b4a42869d8bcdebbfce94e4fc5ae39567853999ee96579922d47102cfd"
+  "size": 3106,
+  "sha256": "7a90ca2ec32fa38d0b3589239b7bd6b5671a186fc8df4d58911016ffc87a35c7"
  },
  {
   "path": "PROMPTS/GENERAL-2-ARCHITECT-PLAN.txt",
-  "size": 3072,
-  "sha256": "cc855d5c8f0861299cc0b2f1eff8577b88acae59bf36921051f590bc621a751e"
+  "size": 3118,
+  "sha256": "07a9718cbf5592c07463cb2a2c46703804ab61d2e03fb360229ba846f485ddbc"
  },
  {
   "path": "PROMPTS/GENERAL-3-WORKER-EXECUTE.txt",
-  "size": 2623,
-  "sha256": "267f5a7cd61e7e0f032f83f98157ae643f9b0dd53851cf1e0939dc589051ab4e"
+  "size": 2778,
+  "sha256": "00e282c7a2f5f7bee94ec0291c35882f9b1262d0c83243695db54e4d1da21569"
  },
  {
   "path": "PROMPTS/GENERAL-4-USAGE-LIMIT-RESUME.txt",
-  "size": 2766,
-  "sha256": "79a3d24f335fe76b5e938f079fda43feb1f3e31463175679e21238d3fecca530"
+  "size": 2921,
+  "sha256": "696356f76af6e8e145b40f1c31315e727d69b93da4825fb03f338ea25aa24185"
  },
  {
   "path": "PROMPTS/GENERAL-5-UPGRADE.txt",
-  "size": 3737,
-  "sha256": "f681b3db5cd640e041c99367ddff5fc511dd8784a9577771ab13d7cb1e4cd17c"
+  "size": 3892,
+  "sha256": "46e4a0059044c1e77ab4d57e8e5d318007e8163fe6914a81b21fe2d56cb12f53"
  },
  {
   "path": "PROMPTS/README.md",
-  "size": 2751,
-  "sha256": "0c97b92fee7c3aa622baca7dda142f47323943775300d30be4aae57231e6b5dd"
+  "size": 2955,
+  "sha256": "7e702586b8bd944a231bdad5ea4ad02f229c1ba1ef62784e5f762cc6ca4e8f90"
  },
  {
   "path": "README.md",
-  "size": 19199,
-  "sha256": "ba215deba4d06d5813de1986c4fb11af4ac57b1c592922bd4de28ad451351eac"
+  "size": 19201,
+  "sha256": "51750cb8beb7ab57d69a09b153b7cf04cefacbda594fa3e5081cade9c7e1b060"
  },
  {
   "path": "START-HERE.bat",
-  "size": 1243,
-  "sha256": "e6e06e1b635259eeb0434c6177c3bfb794be4df0c4d234e0750bfb98c7bd996b"
+  "size": 1244,
+  "sha256": "f03785907238f0dd034108d79f82bdbf75a0f85a7c31f9505157c380ad6bd5b0"
  },
  {
   "path": "START-HERE.txt",
-  "size": 4025,
-  "sha256": "f0646aa175e7e52d9ccfd5d0d865ff55be2328e71a1f8375e98ccfb3ad5e4252"
+  "size": 4026,
+  "sha256": "d95a0e0edf095473d9a138fbdd7d7452b1bb0ab00a9919156ef5bd19ce3420bd"
  },
  {
   "path": "STATE.md",
-  "size": 8731,
-  "sha256": "4489a90322347649fae5ff34dcf6a741a233782828aefd6216e71f5d2318808a"
+  "size": 9035,
+  "sha256": "f35deec5b468e28518ff2c7e393910a34bfe87e83d9bdbcc8cb43021fcadd1f2"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -5501,8 +5501,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 383754,
-  "sha256": "9d88ecab298701bf3189dfc7591b2892f37cd8f7115634fe99a94fda529559a7"
+  "size": 385160,
+  "sha256": "92cf338ede5966742eeead07b4014970ea5224beb7330a74787468beaa324496"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -5776,8 +5776,8 @@
  },
  {
   "path": "TOOLS/Test-Installed-State.ps1",
-  "size": 83234,
-  "sha256": "9b88a0d9c1e479e312f06d1fd6b03f3567584e0847637137e6e2baea14b00fa6"
+  "size": 83961,
+  "sha256": "14dead68bfcbd440a4fd5ba5db24799c8efb4e101c4e1e79bd9c8ff9dcd3906c"
  },
  {
   "path": "TOOLS/Test-McpHandshake.ps1",
@@ -6101,13 +6101,13 @@
  },
  {
   "path": "VALIDATION.json",
-  "size": 2548,
-  "sha256": "62d5e5cd7fc06cb377b3b423f949c11705aa1dad837cb63f7cd2fba84b698868"
+  "size": 2550,
+  "sha256": "86a4ce2278efece56fa026e7e954e4f34dfbf16423e6df34ee1ea377494c0aae"
  },
  {
   "path": "VERSION.txt",
-  "size": 9,
-  "sha256": "0fe360684d30ee7890a46502c83cef18f7618cdb2d0e0bdbd2ff482e972fe7bc"
+  "size": 10,
+  "sha256": "bfce1187030da4a146be7f6cfb686f4232506bcc0a1b3e0dd14afe5d197c098b"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -9171,8 +9171,8 @@
  },
  {
   "path": "docs/TOOL-EVALUATIONS.md",
-  "size": 74262,
-  "sha256": "01281e43368456bc9a4777739d9a355e815832879f5af4538ea2bc1a62791a3d"
+  "size": 75924,
+  "sha256": "63e1a64255b8412f0d517a8c7cae8346759be9b0e62b129202ab35fa5658f534"
  },
  {
   "path": "docs/TOOLING-MATRIX.md",
@@ -9181,8 +9181,8 @@
  },
  {
   "path": "docs/USAGE-ECONOMY.md",
-  "size": 5802,
-  "sha256": "b11501276e8f964ff1629c24bb158f97739f83c29ddb3ec6436d493f60edc869"
+  "size": 6023,
+  "sha256": "f6eae3b958faed17b4c8e33587eb5dddf0ab7f73cde44b7b93028c74e441c323"
  },
  {
   "path": "docs/WINDOWS-RECOVERY.md",

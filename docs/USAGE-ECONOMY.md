@@ -49,14 +49,17 @@ not a bill. Plans and providers price these differently.
   per PC, never shipped.
 - **Agent team (Claude Code).** The installer adds seven agents to
   `~/.claude/agents/` and a short routing block to `CLAUDE.md`: `planner`
-  (Fable, decisions and PLAN.md), `implementer` (Opus High, the default builder
-  for every feature, fix and multi-file change), `worker` (Sonnet, small
+  (Fable, decisions and PLAN.md), `implementer` (Opus High, the builder a Fable
+  session hands features, fixes and multi-file changes to), `worker` (Sonnet, small
   mechanical edits with an exact spec only), `verifier` (Sonnet, independent
   gate, never edits source), `researcher` (Sonnet, sourced answers), `Explore`
   (Haiku, read-only lookups; skips CLAUDE.md like the built-in) and `runner`
   (Haiku, runs commands and returns only the lines that matter). Creative,
   design and hard work stay on Opus; Sonnet writes only behind the verifier.
-  The doctor checks the tiers are current and the block appears once; a
+  Delegation goes down a tier, never sideways: a subagent starts cold with its
+  own cache, so an Opus session builds inline rather than paying a second Opus
+  to re-read the same files.
+  The doctor checks the tiers are current and the block appears once and matches the bundle; a
   same-named file is backed up once before it is replaced, and
   `-SkipClaudeAgents` removes the agents and the block.
 - **Hermes memory.** A Hermes import of a bundle instruction file froze the
