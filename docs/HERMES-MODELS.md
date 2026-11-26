@@ -120,7 +120,7 @@ Existing mappings are retained. `sol` and `opus` are not moving "latest" pointer
 | `glm` | `z-ai/glm-5.3` |
 | `grok` | `x-ai/grok-4.6` |
 | `sol` | `openai/gpt-5.6-sol` |
-| `opus` | `anthropic/claude-opus-5` |
+| `opus` | `anthropic/claude-opus-5.5` |
 | `nemotron-ultra` | `nvidia/nemotron-3-ultra-550b-a55b:free` |
 | `nemotron-ultra-nofree` | `nvidia/nemotron-3-ultra-550b-a55b` |
 

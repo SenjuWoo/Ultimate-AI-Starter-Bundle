@@ -45,6 +45,12 @@
 
 ## History
 
+8.53.11 (2026-11-26): Hermes gate wiring passes the known config path (-~3 s per call, 44 calls here);
+CI pack gate sharded across the four required Python jobs (Test-Pack -Shard 1..4; schedule/manual = full);
+Fable hands implementer only self-contained packages; advisor only at decision points; team checked against
+Anthropic's measurements (docs/TOOL-EVALUATIONS.md); Hermes opus alias -> 5.5. Measured install phases still
+open: Reverse THIS! companion ~120 s, Codex plugin remove+add ~75 s, Skyrim Forge ~48 s, final check ~41 s.
+
 8.53.10 (2026-11-26): delegate down, never sideways - Opus sessions build inline instead of spawning the Opus
 implementer (logs showed up to 26 spawns per session); implementer description de-defaulted; Explore Haiku medium;
 doctor flags a stale routing block; prompts and private templates synced.

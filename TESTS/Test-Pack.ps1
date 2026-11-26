@@ -18,7 +18,12 @@ param(
     # Dependency-rich disposable interpreter for tests only. Shared-runtime
     # fixtures still resolve the real base Python from their own process.
     [string]$TestPython,
-    [switch]$IncludeLiveInstalls
+    [switch]$IncludeLiveInstalls,
+    # CI runs one quarter of the sections per job so the four required jobs
+    # finish in a quarter of the time; 0 (the default, and the local release
+    # gate) runs everything. Sections must not depend on an earlier section's
+    # variables: each one builds what it needs.
+    [ValidateRange(0, 4)][int]$Shard = 0
 )
 
 # $PSScriptRoot is empty when the script is invoked by a relative -File path
@@ -49,8 +54,19 @@ $py = if ($pythonExe) { [pscustomobject]@{ Source = $pythonExe } } else { $null 
 function Section($t) { Write-Host "`n=== $t ===" -ForegroundColor Cyan }
 function Bad($m) { Write-Host "  FAIL $m" -ForegroundColor Red; $script:fail++ }
 function Good($m) { Write-Host "  ok   $m" -ForegroundColor Green }
+# Section number -> shard, balanced on measured CI seconds (about 85 s each):
+# 1 | 2-12 | 13-16 | 17 and later. A new section joins by its number.
+$script:sectionsRun = 0
+function Use-Section($t) {
+    $n = [int]([regex]::Match($t, '^\d+').Value)
+    $in = if ($n -le 1) { 1 } elseif ($n -le 12) { 2 } elseif ($n -le 16) { 3 } else { 4 }
+    if ($Shard -ne 0 -and $Shard -ne $in) { return $false }
+    $script:sectionsRun++
+    Section $t
+    return $true
+}
 
-Section '1. Skill health (all trees)'
+if (Use-Section '1. Skill health (all trees)') {
 if (-not $py) {
     Bad 'python not found; skill audit skipped'
 } else {
@@ -158,8 +174,9 @@ else { Bad ('History backup gate failed:' + [Environment]::NewLine + $historyOut
 $parkOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-McpPark.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $parkOut -match 'MCP PARK GATE: PASS') { Good 'Task-specific MCP servers: park, exact per-project restore, marker detection, no credential printed' }
 else { Bad ('MCP park gate failed:' + [Environment]::NewLine + $parkOut) }
+}
 
-Section '2. PowerShell parses (excluding BUNDLED-TOOLS)'
+if (Use-Section '2. PowerShell parses (excluding BUNDLED-TOOLS)') {
 $shippedFiles = @(Get-UabsManifestFiles -PackRoot $PackRoot)
 $n = 0; $bad = 0
 $shippedFiles | Where-Object { $_.Extension -in @('.ps1','.psm1') } |
@@ -172,8 +189,9 @@ $shippedFiles | Where-Object { $_.Extension -in @('.ps1','.psm1') } |
     }
 if ($n -eq 0) { Bad 'No shipped PowerShell scripts were scanned' }
 elseif ($bad -eq 0) { Good "$n scripts parsed" }
+}
 
-Section '3. BOM-less scripts containing non-ASCII (PS 5.1 will mis-decode)'
+if (Use-Section '3. BOM-less scripts containing non-ASCII (PS 5.1 will mis-decode)') {
 $risk = 0
 $shippedFiles | Where-Object { $_.Extension -in @('.ps1','.psm1','.bat','.cmd') } |
     Where-Object { $_.FullName -notlike '*BUNDLED-TOOLS*' } |
@@ -234,8 +252,9 @@ $shippedFiles | Where-Object { $_.Extension -in @('.md','.txt','.ps1','.psm1','.
         }
     }
 if ($mojiRisk -eq 0) { Good 'no replacement characters in shipped text' }
+}
 
-Section '4. Offline assets match OFFLINE-MANIFEST.json'
+if (Use-Section '4. Offline assets match OFFLINE-MANIFEST.json') {
 $manPath = Join-Path $PackRoot 'BUNDLED-TOOLS\OFFLINE-MANIFEST.json'
 if (-not (Test-Path $manPath)) {
     Bad 'OFFLINE-MANIFEST.json missing'
@@ -258,8 +277,9 @@ foreach ($c in $companionRows) {
     if ((Test-Path -LiteralPath $p -PathType Leaf) -and (Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash -eq $c.sha256) { Good "$($c.asset) (latest $($c.id) release)" }
     else { Bad "$($c.asset) is missing or differs from companions.json" }
 }
+}
 
-Section '4b. Release asset cache validates reused filenames'
+if (Use-Section '4b. Release asset cache validates reused filenames') {
 $releaseCacheGate = Join-Path $PackRoot 'TESTS\Test-ReleaseAssetCache.ps1'
 try {
     $releaseCacheOut = & $releaseCacheGate -PackRoot $PackRoot 2>&1 | Out-String
@@ -271,8 +291,9 @@ try {
 
 $buildOut=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-BuildTools.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $buildOut -match 'BUILD TOOLS GATE: PASS') { Good 'Compiler discovery, check-only and native failure propagation' } else { Bad $buildOut }
+}
 
-Section '5. External Skyrim content ownership'
+if (Use-Section '5. External Skyrim content ownership') {
 $packCatalog=Get-UabsPackCatalog -PackRoot $PackRoot
 if ($packCatalog.packs.skyrim.owner -eq 'skyrim-forge' -and -not (Test-Path -LiteralPath (Join-Path $PackRoot '_CANONICAL-SKILLS\skyrim-memory'))) {
     Good 'Skyrim content and registry validation belong to Forge'
@@ -283,8 +304,9 @@ $companionOut=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Pa
 if ($LASTEXITCODE -eq 0 -and $companionOut -match 'COMPANION GATE: PASS') { Good 'Companion archive, owner reuse and failure boundaries' } else { Bad $companionOut }
 $runtimeVersionOut=& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-ForgeRuntimeVersion.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $runtimeVersionOut -match 'FORGE RUNTIME VERSION GATE: PASS') { Good 'Forge runtime version marker works without source bookkeeping' } else { Bad $runtimeVersionOut }
+}
 
-Section '6. Gate self-tests'
+if (Use-Section '6. Gate self-tests') {
 $gateDir = Join-Path $PackRoot 'TOOLS\hooks'
 foreach ($g in @('completeness_gate.py', 'assumption_gate.py', 'rtk_safe_hook.py', 'hermes_gateway_guard.py')) {
     $gp = Join-Path $gateDir $g
@@ -308,8 +330,9 @@ if (-not $py -or -not (Test-Path -LiteralPath $mcpProbe -PathType Leaf)) {
     if ($LASTEXITCODE -eq 0 -and $probeOut -match 'MCP HANDSHAKE SELFTEST: PASS') { Good 'MCP handshake process/stdio self-test PASS' }
     else { Bad ('MCP handshake self-test failed: ' + $probeOut.Trim()) }
 }
+}
 
-Section '7. Preamble sources are clean UTF-8 and provider-neutral'
+if (Use-Section '7. Preamble sources are clean UTF-8 and provider-neutral') {
 $soulF = Join-Path $PackRoot '2-PREAMBLES\SOUL.md'
 $aioF  = Join-Path $PackRoot '0-UNRESTRAINT-PACKS/AIO-INSTRUCTION.md'
 foreach ($f in @($soulF, $aioF)) {
@@ -389,8 +412,9 @@ $githubFlags = Join-Path $PackRoot 'TESTS\Test-GitHubFlags.ps1'
 $flagsOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $githubFlags -PackRoot $PackRoot 2>&1 | Out-String
 if ($flagsOut -match 'GITHUB FLAGS GATE: PASS') { Good 'github flag probe stays local and prints no secrets' }
 else { Bad ('github flag gate failed:' + [Environment]::NewLine + $flagsOut.Trim()) }
+}
 
-Section '7b. No script reads a file with the ANSI codepage'
+if (Use-Section '7b. No script reads a file with the ANSI codepage') {
 # PS 5.1's Get-Content decodes with the ANSI codepage unless -Encoding is given,
 # so any read of a UTF-8 file that is later written back turns non-ASCII into
 # mojibake. Measured: a ConvertFrom-Json/ConvertTo-Json round-trip of a real
@@ -483,8 +507,9 @@ if ($instTxt -match "Join-Path \`$preDir 'SOUL-UNIVERSAL\.md'") {
 } else {
     Good 'installer wires the single SOUL.md to every provider'
 }
+}
 
-Section '8. Repair-McpPaths resolves a version-stamped path'
+if (Use-Section '8. Repair-McpPaths resolves a version-stamped path') {
 $repair = Join-Path $PackRoot (Join-Path 'TOOLS' 'Repair-McpPaths.ps1')
 if (-not (Test-Path -LiteralPath $repair)) { Bad 'TOOLS\Repair-McpPaths.ps1 missing' }
 else {
@@ -625,8 +650,9 @@ else {
         Remove-Item -LiteralPath $sandbox -Recurse -Force -ErrorAction SilentlyContinue
     }
 }
+}
 
-Section '9. Provider starter settings are portable (no live-machine dump)'
+if (Use-Section '9. Provider starter settings are portable (no live-machine dump)') {
 $starterFiles = @(
     '1-TAILORED-PROVIDER-TREES\Claude\COPY-TO-PROVIDER-HOME\settings.json',
     '1-TAILORED-PROVIDER-TREES\Codex\COPY-TO-PROVIDER-HOME\config.toml',
@@ -733,8 +759,9 @@ $grokStarter = [IO.File]::ReadAllText((Join-Path $PackRoot '1-TAILORED-PROVIDER-
 if ($grokStarter -match '(?m)^\s*skills\s*=\s*false\s*$') {
     Good 'Grok starter config.toml sets compat.claude skills = false'
 } else { Bad 'Grok starter config.toml missing skills = false' }
+}
 
-Section '10. Forge framework truth lock (SPID/KID grammar anti-drift)'
+if (Use-Section '10. Forge framework truth lock (SPID/KID grammar anti-drift)') {
 # Runs against the latest Forge release Get-Companions.ps1 fetched; Core and offline runs delegate to Forge.
 $forgeRow=@($companionRows | Where-Object { $_.id -eq 'skyrim-forge' }) | Select-Object -First 1
 $forgeZip=if ($forgeRow) { Join-Path $PackRoot ('BUNDLED-TOOLS\offline\'+$forgeRow.asset) } else { $null }
@@ -753,8 +780,9 @@ else {
     } catch { Bad ('Forge framework check failed: '+$_.Exception.Message) }
     finally { if (Test-UabsPathWithin $proofRoot ([IO.Path]::GetTempPath())) { Remove-Item -LiteralPath $proofRoot -Recurse -Force -ErrorAction SilentlyContinue } }
 }
+}
 
-Section '11. Forge install root is versionless (upgrade cannot orphan five MCP configs)'
+if (Use-Section '11. Forge install root is versionless (upgrade cannot orphan five MCP configs)') {
 # The failure this exists for: every provider stores the MCP command as a hard
 # absolute path, so a version-stamped install directory renames itself out from
 # under five configs on upgrade, and a provider that cannot spawn its server
@@ -772,9 +800,10 @@ if (-not (Test-Path -LiteralPath $forgeRootGate -PathType Leaf)) {
         Bad ('Forge install root resolution failed:' + [Environment]::NewLine + ($rootOut.Trim()))
     }
 }
+}
 
 
-Section '12. Provider skill sync is content-authoritative on Windows'
+if (Use-Section '12. Provider skill sync is content-authoritative on Windows') {
 $providerSyncGate = Join-Path $PackRoot 'TESTS\Test-ProviderSkillSync.ps1'
 if (-not (Test-Path -LiteralPath $providerSyncGate -PathType Leaf)) {
     Bad 'TESTS\Test-ProviderSkillSync.ps1 missing from the pack'
@@ -786,8 +815,9 @@ if (-not (Test-Path -LiteralPath $providerSyncGate -PathType Leaf)) {
         Bad ('Provider skill sync regression failed:' + [Environment]::NewLine + ($syncOut.Trim()))
     }
 }
+}
 
-Section '12b. Hermes scanner override is temporary and reversible'
+if (Use-Section '12b. Hermes scanner override is temporary and reversible') {
 $common = Join-Path $PackRoot 'TOOLS\UABS-Common.ps1'
 $scanFx = Join-Path ([IO.Path]::GetTempPath()) ('uabs-hermes-scan-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $scanFx | Out-Null
@@ -814,6 +844,7 @@ try {
 } finally {
     Remove-Item -LiteralPath $scanFx -Recurse -Force -ErrorAction SilentlyContinue
 }
+}
 
 
 function Test-UabsPackPath([string]$Path) {
@@ -822,7 +853,7 @@ function Test-UabsPackPath([string]$Path) {
   catch { return $false }
 }
 
-Section '13. MCP profile catalog and the shared config writer'
+if (Use-Section '13. MCP profile catalog and the shared config writer') {
 # Both MCP writers share TOOLS\UABS-Mcp-Write.ps1. Every config bug this pack has
 # shipped was a bug in one of three config shapes that the other two did not
 # have, and each was found on a user's machine rather than in a test.
@@ -844,7 +875,8 @@ else {
     if ($LASTEXITCODE -eq 0 -and $taskOut -match 'TASK RECIPE GATE: PASS') { Good 'Task routing, composition, scoped activation and personal-config preservation PASS' }
     else { Bad ('Task recipe gate failed: ' + $taskOut.Trim()) }
 }
-Section '14. Evidence-behaviour scenarios still contain their defects'
+}
+if (Use-Section '14. Evidence-behaviour scenarios still contain their defects') {
 # These fixtures measure whether an agent goes and looks instead of guessing.
 # Scoring the agent is a judgement; scoring the FIXTURE is not, and a benchmark
 # whose defects have quietly been repaired passes everything while measuring
@@ -891,8 +923,9 @@ if (-not (Test-UabsPackPath $canaryChk)) {
     if ($canOut -match 'VISION CANARY: FAIL') { Good 'the vision canary rejects a wrong answer' }
     else { Bad ('the vision canary accepted an answer that cannot have come from the image:' + [Environment]::NewLine + $canOut.Trim()) }
 }
+}
 
-Section '15. Starter templates cannot smuggle MCP servers onto a fresh machine'
+if (Use-Section '15. Starter templates cannot smuggle MCP servers onto a fresh machine') {
 # Through 7.9.7 the Hermes starter carried five live servers and this gate said
 # PASS. Install-Provider-Starter-Settings.ps1 copies a template WHOLE onto a
 # machine with no config, so anything left in one is a fresh-install default.
@@ -963,8 +996,9 @@ if (-not (Test-UabsPackPath $hermesCfg)) {
     elseif ($hcode -notmatch '(?m)^mcp_servers:\s*\{\s*\}') { Bad 'the Hermes starter no longer declares an empty mcp_servers' }
     else { Good 'a fresh Hermes install inherits no MCP servers from the template' }
 }
+}
 
-Section '15a. Hermes JSON inventory excludes native stderr notices'
+if (Use-Section '15a. Hermes JSON inventory excludes native stderr notices') {
 $inventoryFn = [regex]::Match([IO.File]::ReadAllText($starterPs), '(?s)function Remove-UabsHermesLegacyOpenRouterExtra \{.*?\r?\n\}')
 $inventoryProbe = [regex]::Match($inventoryFn.Value, '(?s)try \{\s*\$output = .*?finally \{ \$ErrorActionPreference = \$prevEap \}')
 if (-not $inventoryProbe.Success) { Bad 'Hermes inventory stdout/stderr probe not found' }
@@ -987,8 +1021,9 @@ else {
     } catch { Bad ('Hermes inventory stream regression: ' + $_.Exception.Message) }
     finally { Remove-Item -LiteralPath $fixture -Force -ErrorAction SilentlyContinue }
 }
+}
 
-Section '15b. SillyTavern gateway stays a roleplay profile'
+if (Use-Section '15b. SillyTavern gateway stays a roleplay profile') {
 $stInstaller = Join-Path $PackRoot 'TOOLS\Install-SillyTavernGateway.ps1'
 $stTemplate = Join-Path $PackRoot '1-TAILORED-PROVIDER-TREES\Hermes\profiles\sillytavern\config.yaml'
 if (-not (Test-Path -LiteralPath $stInstaller) -or -not (Test-Path -LiteralPath $stTemplate)) {
@@ -1028,8 +1063,9 @@ if (-not (Test-Path -LiteralPath $stInstaller) -or -not (Test-Path -LiteralPath 
         Remove-Item -LiteralPath $fxHome -Recurse -Force -ErrorAction SilentlyContinue
     }
 }
+}
 
-Section '16. One-click install wires what is installed, not what is wanted'
+if (Use-Section '16. One-click install wires what is installed, not what is wanted') {
 $stGatewayGate = Join-Path $PackRoot 'TESTS\Test-SillyTavernGateway.ps1'
 & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $stGatewayGate -PackRoot $PackRoot
 if ($LASTEXITCODE -ne 0) { Bad 'SillyTavern installer/launcher regression checks failed' }
@@ -1060,8 +1096,9 @@ foreach ($freshGate in @('Test-ProviderBootstrap.ps1','Test-WorkspaceSeeding.ps1
     if ($freshCode -eq 0 -and $freshOut -match 'GATE: PASS') { Good ($freshGate + ' passed') }
     else { Bad ($freshGate + ':' + [Environment]::NewLine + $freshOut.Trim()) }
 }
+}
 
-Section '17. Grok hook repair and effective discovery'
+if (Use-Section '17. Grok hook repair and effective discovery') {
 $grokPluginOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-GrokPluginDedupe.ps1') -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $grokPluginOut -match 'GROK PLUGIN DEDUPE GATE: PASS') { Good 'Grok plugin version selection and backup scope' }
 else { Bad ('Grok plugin dedupe failed:' + [Environment]::NewLine + $grokPluginOut) }
@@ -1073,8 +1110,9 @@ $hookRepairOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProf
 if ($LASTEXITCODE -eq 0 -and $hookRepairOut -match 'GROK HOOK REPAIR GATE: PASS') {
     Good 'hook repair preserves settings, is idempotent, and detects effective duplicate/invalid hooks'
 } else { Bad ('Grok hook repair failed:' + [Environment]::NewLine + $hookRepairOut) }
+}
 
-Section '18. Codex native hook retirement'
+if (Use-Section '18. Codex native hook retirement') {
 $codexHookGate = Join-Path $PackRoot 'TESTS\Test-CodexHookRetirement.ps1'
 $codexHookOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $codexHookGate -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0 -and $codexHookOut -match 'CODEX HOOK RETIREMENT GATE: PASS') {
@@ -1084,8 +1122,9 @@ $cleanupTruthOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoPr
 if ($LASTEXITCODE -eq 0 -and $cleanupTruthOut -match 'CLEANUP TRUTH GATE: PASS') {
     Good 'leftover cleanup exits non-zero on a failed removal, counts only freed bytes, never edits a config it could not back up'
 } else { Bad ('Leftover cleanup truth failed:' + [Environment]::NewLine + $cleanupTruthOut) }
+}
 
-Section '19. Ponytail Cursor and Impeccable security regressions'
+if (Use-Section '19. Ponytail Cursor and Impeccable security regressions') {
 $nodeForCursor = Get-Command node -ErrorAction SilentlyContinue
 if (-not $nodeForCursor) { Bad 'Node is required to exercise the shipped Ponytail Cursor and Impeccable security regressions' }
 else {
@@ -1103,8 +1142,9 @@ $headroomCleanupGate = Join-Path $PackRoot 'TESTS\Test-HeadroomTaskCleanup.ps1'
 $headroomCleanupOut = & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File $headroomCleanupGate -PackRoot $PackRoot 2>&1 | Out-String
 if ($LASTEXITCODE -eq 0) { Good 'Headroom scheduled-task retirement preserves non-bundle tasks' }
 else { Bad ('Headroom task cleanup regression failed:' + [Environment]::NewLine + $headroomCleanupOut) }
+}
 
-Section '20. Maintainer lifecycle and documentation contracts'
+if (Use-Section '20. Maintainer lifecycle and documentation contracts') {
 & (Get-Command powershell.exe -ErrorAction Stop).Source -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PackRoot 'TESTS\Test-GitHubVerdict.ps1')
 if ($LASTEXITCODE -eq 0) { Good 'exact-SHA CI verdicts and bounded waiting pass' }
 else { Bad 'GitHub verdict regression failed' }
@@ -1118,10 +1158,13 @@ if ($py) {
     if ($LASTEXITCODE -eq 0) { Good 'Maintainability audit: no duplicates, oversized skills or broken ADRs' }
     else { Bad 'Maintainability audit found hard drift' }
 }
+}
 
 Write-Host ''
+if ($script:sectionsRun -eq 0) { Write-Host '  FAIL no section ran' -ForegroundColor Red; $fail++ }
+$scope = if ($Shard) { " (shard $Shard of 4, $script:sectionsRun sections)" } else { " ($script:sectionsRun sections)" }
 if ($fail -eq 0) {
-    Write-Host "PACK GATE: PASS" -ForegroundColor Green
+    Write-Host "PACK GATE: PASS$scope" -ForegroundColor Green
     exit 0
 } else {
     Write-Host "PACK GATE: FAIL ($fail problem(s))" -ForegroundColor Red

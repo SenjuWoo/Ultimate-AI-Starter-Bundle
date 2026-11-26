@@ -49,8 +49,17 @@ jobs:
     runs-on: windows-latest
     strategy:
       fail-fast: false
+      # Each Python runs one quarter of the PowerShell sections on a push or
+      # pull request, so the four required jobs together run the whole gate
+      # once instead of four times. Every Python still runs every Python
+      # contract below. The weekly and manual runs use shard 0: everything on
+      # every Python.
       matrix:
-        python: ["3.12", "3.13", "3.14", "3.15"]
+        include:
+          - { python: "3.12", shard: 2 }
+          - { python: "3.13", shard: 3 }
+          - { python: "3.14", shard: 1 }
+          - { python: "3.15", shard: 4 }
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -98,7 +107,8 @@ jobs:
       - name: Pack gate
         shell: powershell
         run: |
-          .\TESTS\Test-Pack.ps1
+          $shard = if ('${{ github.event_name }}' -in 'schedule', 'workflow_dispatch') { 0 } else { ${{ matrix.shard }} }
+          .\TESTS\Test-Pack.ps1 -Shard $shard
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Release contracts

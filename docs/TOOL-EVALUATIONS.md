@@ -1031,6 +1031,36 @@ to `~/.claude/agents/`: the cheapest model that holds quality for each job.
   2026-11-26). Searching is Explore's whole job and Haiku is the cheapest tier,
   so medium costs little. `runner` stays low: it runs the exact commands it is
   given.
+- Team checked against Anthropic's own measurements (2026-11-26;
+  platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence,
+  which labels them internal and directional; code.claude.com/docs/en/advisor
+  and /model-config). What they support:
+  - Builder on Opus, not Sonnet: on the internal agentic-coding set Sonnet at
+    high scored about ten points under Opus at high, and Opus at low matched
+    Sonnet at high on SWE-bench Pro. `worker` stays limited to exact edits.
+  - Inline first: delegation won only for routine long-tail work and work
+    larger than one context; for a single dependent chain the orchestrator
+    alone at lower effort won every measured case. So a Fable session hands
+    `implementer` only self-contained packages.
+  - Sonnet, not Haiku, where judgment is needed: with an Opus orchestrator,
+    Sonnet subagents kept the defect-search score while Haiku subagents lost
+    about fifteen points. Haiku stays on locating and command runs.
+  - Orchestrator: Fable orchestrating cost about 19% more than Opus
+    orchestrating for no measurable gain on that set; Fable alone scored higher
+    than Opus alone at a multiple of the cost. The main model is the operator's
+    choice and the bundle does not set it.
+  - Advisor: it must rank at or above the main model, so a Fable session can
+    only be advised by Fable and an Opus advisor is not applied to it. Each
+    call re-reads the whole conversation uncached. Opus at high with a Fable
+    advisor gained under two points for about twice the cost, and cheaper
+    executors often never consulted it. The routing says: decision points only.
+  - Not measured anywhere found: a weaker against a stronger reviewer, and a
+    Fable orchestrator with Opus builders on coding work. `verifier` on Sonnet
+    is a judgment call, backed by real gate output rather than model opinion.
+  - Aliases (`fable`, `opus`, `sonnet`, `haiku`) follow the provider's
+    recommended release and update over time; no agent file pins a version.
+    What happens when a plan cannot use a named model and no fallback chain is
+    configured is not documented.
 - Opt out: `-SkipClaudeAgents` removes the stamped copies.
 
 Ponytail stays where it is: its strict modes shorten code, but measured runs

@@ -439,7 +439,7 @@ $script:UabsModelAliases = [ordered]@{
   'glm'          = 'openrouter/z-ai/glm-5.3'
   'grok'         = 'openrouter/x-ai/grok-4.6'
   'sol'          = 'openrouter/openai/gpt-5.6-sol'
-  'opus'         = 'openrouter/anthropic/claude-opus-5'
+  'opus'         = 'openrouter/anthropic/claude-opus-5.5'
 }
 
 $script:Prefs = @{}

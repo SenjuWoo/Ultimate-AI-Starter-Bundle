@@ -1,6 +1,6 @@
 ---
 name: implementer
-description: Opus High builder for a Fable (or weaker) main session - a feature, bug fix, refactor, multi-file change, creative or design-heavy piece with a complete brief, returned as a finished diff or file. A main session that already runs Opus builds inline instead - never spawn this from Opus except for 2+ independent packages that share no files. Give it the goal, the files, what must not change and how to verify. Small mechanical edits with an exact spec go to worker; lookups to Explore; quick research to researcher.
+description: Opus High builder for a Fable (or weaker) main session - a self-contained feature, bug fix, refactor, multi-file change, creative or design-heavy package with a complete brief, returned as a finished diff or file. Coupled or already-in-context changes stay with the caller. A main session that already runs Opus builds inline instead - never spawn this from Opus except for 2+ independent packages that share no files. Give it the goal, the files, what must not change and how to verify. Small mechanical edits with an exact spec go to worker; lookups to Explore; quick research to researcher.
 model: opus
 effort: high
 ---

@@ -408,7 +408,7 @@ def main() -> int:
     if "--selftest" in sys.argv:
         return selftest()
     if len(sys.argv) < 4:
-        print("usage: hermes_wire.py <hermes-exe> <python-exe> <gate.py> [--remove] [--pre-only] [--approve]")
+        print("usage: hermes_wire.py <hermes-exe> <python-exe> <gate.py> [--remove] [--pre-only] [--approve] [--config <config.yaml>]")
         return 0
     # Hermes's own interpreter ships ruamel as hermes_yaml, not PyYAML. Returning
     # success on that ImportError left the hooks unwired while the installer passed.
@@ -429,7 +429,26 @@ def main() -> int:
     global MARKER
     MARKER = Path(gate).name  # only ever touch the entries for THIS gate
 
-    cfg = config_path(hermes)
+    # The installer wires four gates into every profile. It already asked
+    # Hermes for the primary config and listed the profile homes, so it passes
+    # the path here: asking `hermes config path` again cost about 3 s per call
+    # (over two minutes on a ten-profile machine). A passed path is accepted
+    # only when it is the config.yaml of the HERMES_HOME this process runs in.
+    cfg = None
+    if "--config" in sys.argv:
+        given = Path(sys.argv[sys.argv.index("--config") + 1])
+        home = os.environ.get("HERMES_HOME", "").strip()
+        try:
+            same_home = bool(home) and given.parent.resolve() == Path(home).resolve()
+        except (OSError, ValueError):
+            same_home = False
+        if given.name == "config.yaml" and given.is_file() and same_home:
+            cfg = given
+        else:
+            print(f"SKIP: --config {given} is not the config.yaml of HERMES_HOME; refusing to edit it.")
+            return 1
+    if cfg is None:
+        cfg = config_path(hermes)
     if cfg is None:
         print("SKIP: could not resolve the Hermes config path.")
         return 1

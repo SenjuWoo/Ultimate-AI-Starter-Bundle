@@ -3326,6 +3326,7 @@ def main() -> int:
         test_current_documentation_links_and_upstream_coverage,
         test_deferred_hermes_profile_pins_warn_instead_of_failing,
         test_manifest_gate_fails_on_new_untracked_files,
+        test_ci_runs_every_pack_gate_section_once_per_push,
         test_claude_subagent_tiers_match_model_to_work,
         # v7.9.8 -- the starter template is not a place to register MCP servers,
         # and the routing decision has to be measurable.
@@ -6831,6 +6832,30 @@ def test_manifest_gate_fails_on_new_untracked_files() -> None:
     assert "if missing or mismatch or untracked:" in verify, "an untracked file no longer fails the gate"
 
 
+def test_ci_runs_every_pack_gate_section_once_per_push() -> None:
+    """2026-11-26: the PowerShell pack gate ran in full on each of four Python
+    versions (about 345 s each). On a push each required job now runs one
+    quarter; the weekly and manual runs keep everything on every Python. Every
+    section must sit behind Use-Section, every shard must be claimed by exactly
+    one job, and the local release gate must stay unsharded."""
+    pack = read(ROOT / "TESTS" / "Test-Pack.ps1")
+    assert not re.search(r"(?m)^Section '", pack), "a section bypasses Use-Section and would run in every shard"
+    numbers = [int(n) for n in re.findall(r"(?m)^if \(Use-Section '(\d+)", pack)]
+    assert numbers and numbers == sorted(numbers), "pack gate sections are out of order"
+    def shard(n: int) -> int:
+        return 1 if n <= 1 else 2 if n <= 12 else 3 if n <= 16 else 4
+    assert {shard(n) for n in numbers} == {1, 2, 3, 4}, "a shard has no section"
+    assert "if ($n -le 1) { 1 } elseif ($n -le 12) { 2 } elseif ($n -le 16) { 3 } else { 4 }" in pack, "shard map drifted from this test"
+    assert "$script:sectionsRun -eq 0" in pack, "an empty shard could pass"
+    ci = read(ROOT / ".github" / "workflows" / "ci.yml")
+    legs = re.findall(r'- \{ python: "(3\.\d+)", shard: (\d) \}', ci)
+    assert sorted(s for _, s in legs) == ["1", "2", "3", "4"], f"CI shards are not one per job: {legs}"
+    assert sorted(v for v, _ in legs) == ["3.12", "3.13", "3.14", "3.15"], "a required Pack gate job name changed"
+    assert "-in 'schedule', 'workflow_dispatch') { 0 }" in ci and "Test-Pack.ps1 -Shard $shard" in ci
+    gate = read(ROOT / "TOOLS" / "release_gate.py")
+    assert "-Shard" not in gate, "the local release gate must run every section"
+
+
 def test_claude_subagent_tiers_match_model_to_work() -> None:
     """2026-11-17 / 2026-11-25 / 2026-11-26: model per job. Opus High builds
     (inline in an Opus session, via implementer from Fable); Sonnet worker writes only small mechanical edits with an
@@ -6874,6 +6899,10 @@ def test_claude_subagent_tiers_match_model_to_work() -> None:
     # a tier; the same-tier exception stays narrow and the description must not
     # advertise implementer as a default.
     assert "Delegate down, never sideways" in team and "an Opus session builds (no `implementer`)" in team
+    # A Fable session spawned implementer 88 times in one logged session: the
+    # handoff is for self-contained packages only, and the advisor is not free.
+    assert "only a self-contained package" in team and "already-in-context" in team, "Fable hands every build to a cold agent again"
+    assert "Call the advisor only at a real decision point" in team
     assert "`implementer` by default" not in team, "routing re-advertises implementer as the default builder"
     assert "general-purpose" in team and "forks run on your model" in team, "inheriting agent types not named"
     assert "subagent-driven-development" in team, "per-task dispatch skills not bound by the routing"

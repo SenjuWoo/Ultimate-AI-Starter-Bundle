@@ -1,3 +1,28 @@
+## 8.53.11 (2026-11-26)
+
+- **A repeat install is minutes shorter.** Wiring the four gates into every
+  Hermes profile asked Hermes for its config path on each call, about three
+  seconds each time and over two minutes on a ten-profile machine. The
+  installer already knows each profile's config and now passes it; the wiring
+  script accepts the path only when it is the `config.yaml` of the Hermes home
+  it runs in.
+- **CI runs the pack gate once per push, not four times.** Each of the four
+  required Python jobs runs one quarter of the PowerShell sections and every
+  Python contract. The weekly and manual runs still run everything on every
+  Python, and the local release gate is unchanged. A contract test keeps every
+  section behind a shard and every shard claimed by exactly one job.
+- **A Fable session no longer hands every build to a cold agent.** It gives
+  the Opus `implementer` only self-contained packages and does coupled, small
+  or already-in-context changes itself. The routing also says to call the
+  advisor only at real decision points, because each call re-reads the whole
+  conversation.
+- The agent team was checked against Anthropic's published measurements; the
+  tool evaluation records what they support and what nobody has measured.
+- The Hermes `opus` alias for new installs points at the current Opus release.
+- The agent-team prompt counts subagent spawns in recent session logs, so a
+  session that ignores the routing shows up.
+  81 canonical skills ship in this release.
+
 ## 8.53.10 (2026-11-26)
 
 - **Agents delegate down, never sideways.** Session logs showed Opus main

@@ -506,6 +506,9 @@ foreach ($p in $Providers) {
             if ($g.AllTools) { $args += '--all-tools' }
             if (-not $g.Stop) { $args += '--pre-only' }
             $args += '--approve'
+            # This home came from `hermes config path` or its profiles folder above.
+            $knownCfg = Join-Path $hermesHome 'config.yaml'
+            if (Test-Path -LiteralPath $knownCfg -PathType Leaf) { $args += @('--config', $knownCfg) }
             $wired = $false
             for ($try = 1; $try -le 5; $try++) {
               Invoke-UabsHermesPython -HermesExe $hx -PythonArgs $args
