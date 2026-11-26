@@ -4966,8 +4966,8 @@
  },
  {
   "path": "README.md",
-  "size": 18553,
-  "sha256": "da377b3f7f381c58fb0d727c1751173b8721b5a2d8f15fb3cea54da1a8ae1094"
+  "size": 19199,
+  "sha256": "ba215deba4d06d5813de1986c4fb11af4ac57b1c592922bd4de28ad451351eac"
  },
  {
   "path": "START-HERE.bat",
@@ -4981,8 +4981,8 @@
  },
  {
   "path": "STATE.md",
-  "size": 8663,
-  "sha256": "9729c854af8ab2f132bbe8c62112eb58483484e14b224f6569589d45ed05cef0"
+  "size": 8731,
+  "sha256": "4489a90322347649fae5ff34dcf6a741a233782828aefd6216e71f5d2318808a"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -9243,6 +9243,11 @@
   "path": "docs/presentation/hero.png",
   "size": 150511,
   "sha256": "fc94a5080faba589be58ba43fad1111731538bdff7ba443d2b86f1f1707de7fb"
+ },
+ {
+  "path": "docs/presentation/screenshot-doctor.png",
+  "size": 167043,
+  "sha256": "1fa30a50139901d25701fbe82b0375785c81ab3d64ffa8dae812fe0276d3098e"
  },
  {
   "path": "docs/presentation/screenshot-integrity.png",

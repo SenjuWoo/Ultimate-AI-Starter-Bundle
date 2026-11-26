@@ -70,6 +70,11 @@ same skills and instructions in its own format; apps you do not have are skipped
 | **Project state** | `PLAN.md`/`STATE.md` templates plus a deterministic task controller |
 | **Free routes** | local models, free tiers and local asset generators; no paid component is required |
 
+The installed-state doctor runs as the installer's last step. Here it is on a
+live machine, with the companion registry after it:
+
+![Terminal: the installed-state doctor accounts for the bundled skills in Claude, Codex, Grok, Kimi, Hermes and Antigravity, confirms the configured MCP launch paths exist, shows the toolbox, headroom and context7 registered in all six apps while serena stays project-scoped and no task-specific MCP is registered machine-wide, and ends with doctor PASS; the companion registry lists two forges it did not find with their GitHub repositories, then its summary counts](docs/presentation/screenshot-doctor.png)
+
 ## Add-ons stay independent
 
 Forge families, Reverse THIS! and comfy-forge own their own code, releases and
