@@ -49,7 +49,13 @@
 CI pack gate sharded across the four required Python jobs (Test-Pack -Shard 1..4; schedule/manual = full);
 Fable hands implementer only self-contained packages; advisor only at decision points; team checked against
 Anthropic's measurements (docs/TOOL-EVALUATIONS.md); Hermes opus alias -> 5.5. Measured install phases still
-open: Reverse THIS! companion ~120 s, Codex plugin remove+add ~75 s, Skyrim Forge ~48 s, final check ~41 s.
+open: Reverse THIS! companion 60-120 s (93 owner-managed tool checks), Codex plugin remove+add ~75 s, the rest of
+the Connecting phase ~125 s, Skyrim Forge ~40 s, final check ~40 s.
+Verified: gate 41/41; four shards print the same 129 checks as the unsharded gate; CI 12/12 on e5823bb in 251 s
+(was ~490 s); v8.53.11 Core zip SHA-256 matches; alerts clean; repeat install 874 s -> 592 s (gate wiring 253 s
+-> 113 s); doctor PASS, 7 agents byte-equal, one current routing block, 8 Hermes hooks approved. Not verified:
+delegation behaviour in new chats (count subagent_type in session logs newer than this install); a planted
+failure per shard; the fresh-home install path.
 
 8.53.10 (2026-11-26): delegate down, never sideways - Opus sessions build inline instead of spawning the Opus
 implementer (logs showed up to 26 spawns per session); implementer description de-defaulted; Explore Haiku medium;
