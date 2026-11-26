@@ -45,6 +45,10 @@
 
 ## History
 
+8.53.9 (2026-11-25): doctor finds the toolbox (catalog `server_id: toolbox`, contract test); README
+cover, badges, nav and a real-run integrity shot in docs/presentation; archive sizes corrected.
+Next: after the local install is on 8.53.9, add the real-run doctor shot (spec in the branding kit).
+
 8.53.8 (2026-11-25): fresh Claude CLAUDE.md no longer grows per install (legacy prefix matched inside
 the current head; pack writer EOL); doctor agent check scoped; agent-team and head tests in the gate.
 

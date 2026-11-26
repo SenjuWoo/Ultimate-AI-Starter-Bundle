@@ -1,3 +1,20 @@
+## 8.53.9 (2026-11-25)
+
+- **The doctor sees the toolbox again.** The installed-state doctor looks an
+  MCP up by its catalog id unless the catalog names the server, and the toolbox
+  is registered as `toolbox`, not `uabs-toolbox`. A machine with the toolbox in
+  all six providers read `uabs-toolbox registered: none`. The catalog now
+  declares `server_id: toolbox`, and a release contract fails when the core
+  writer registers a server the doctor cannot name.
+- **The README shows the bundle at work.** A cover in the bundle's own mark and
+  colours, CI, release, runtime and licence badges, section navigation, and a
+  terminal shot from a real run of the pack's own integrity checks (manifest,
+  version declarations, docs gate, leftover dry run). The images live in
+  `docs/presentation/`.
+- The download table states the real archive sizes. Core is about 20 MiB and
+  Full-Offline about 115 MiB; the README said ~34 and ~128 MiB.
+  81 canonical skills ship in this release.
+
 ## 8.53.8 (2026-11-25)
 
 - **New files can no longer be left out of a release.** The manifest lists

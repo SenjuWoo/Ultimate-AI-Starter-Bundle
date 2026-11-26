@@ -1,5 +1,20 @@
-<!-- Ultimate AI Starter Bundle v8.53.8 -->
-# Ultimate AI Starter Bundle v8.53.8
+<!-- Ultimate AI Starter Bundle v8.53.9 -->
+# Ultimate AI Starter Bundle v8.53.9
+
+<div align="center">
+
+![Ultimate AI Starter Bundle: the bundle's blue six-dot mark beside the tagline 'One installer gives every AI coding app on Windows the same skills, tools and project knowledge', the line 'Skills load on demand; optional MCPs stay parked' and the chips six AI apps, on-demand skills, live doctor and hash-gated](docs/presentation/hero.png)
+
+[![CI](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml/badge.svg)](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/SenjuWoo/Ultimate-AI-Starter-Bundle?color=7c9cff)](https://github.com/SenjuWoo/Ultimate-AI-Starter-Bundle/releases/latest)
+[![Windows 10/11](https://img.shields.io/badge/Windows-10%20%7C%2011-9db0e8)](#install-in-three-steps)
+[![PowerShell 5.1](https://img.shields.io/badge/PowerShell-5.1%2B-c5d2f5)](#install-in-three-steps)
+[![Python 3.12-3.15](https://img.shields.io/badge/python-3.12%E2%80%933.15-9db0e8)](.github/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-7c9cff)](LICENSE)
+
+**[Install](#install-in-three-steps)** · **[Apps](#supported-apps)** · **[What you get](#what-you-get)** · **[Add-ons](#add-ons-stay-independent)** · **[How it is checked](#verified-not-claimed)** · **[Docs](#documentation)** · **[Changelog](CHANGELOG.md)**
+
+</div>
 
 One installer that gives every AI coding app on Windows the same skills, tools and
 project knowledge — so a fresh chat already knows how you work and where your
@@ -27,8 +42,8 @@ skips it.
 
 | File | Pick it when |
 |---|---|
-| `…-Core.zip` | Normal connected install (~34 MiB). Payloads are fetched during install; same result as Full-Offline. |
-| `…-Full-Offline.zip` | One file for an unreliable network (~128 MiB). Payload snapshots only — inference still needs your provider or a local model. |
+| `…-Core.zip` | Normal connected install (~20 MiB). Payloads are fetched during install; same result as Full-Offline. |
+| `…-Full-Offline.zip` | One file for an unreliable network (~115 MiB). Payload snapshots only — inference still needs your provider or a local model. |
 | everything else | Checksums, build receipt, SBOM, attestation. Not needed to install. |
 
 ## Supported apps
@@ -119,6 +134,8 @@ skill trees, PowerShell parsing, offline hashes and upgrade fixtures; the doctor
 re-hashes what each install receipt binds; the release pipeline builds twice and
 requires identical bytes before publishing. `reviewer` claims from a model are not
 evidence — `PLAN.md` evidence has to name a command, a revision and an exit code.
+
+![Terminal: the manifest check verifies every recorded file with none missing or mismatched, the version check reports that all declared versions agree, the docs gate passes with 0 errors, and the leftover plan is a dry run that removes nothing](docs/presentation/screenshot-integrity.png)
 
 ## Documentation
 

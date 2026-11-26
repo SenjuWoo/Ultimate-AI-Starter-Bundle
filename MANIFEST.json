@@ -316,8 +316,8 @@
  },
  {
   "path": "BUNDLED-TOOLS/CATALOG.json",
-  "size": 66558,
-  "sha256": "9161cae112c24cce0317a55ab7db1ad1b7ef7bd535f3d545fe8830e39b949c5a"
+  "size": 66589,
+  "sha256": "3e643d8b8ef85454499ae306a7539fa69e0cf79a514908b0ba87f8e48682a9f1"
  },
  {
   "path": "BUNDLED-TOOLS/COMPANIONS.json",
@@ -327,7 +327,7 @@
  {
   "path": "BUNDLED-TOOLS/OFFLINE-MANIFEST.json",
   "size": 1369,
-  "sha256": "142644b39706e3ad1e81aaec1ef38682899650cba8c2ff1eb2f828fbf87d8dbb"
+  "sha256": "a1c7eb0fbb57a2f7d5df16c7d9b68320bb954e7b501abd5687bb3b97034edd11"
  },
  {
   "path": "BUNDLED-TOOLS/PACKS.json",
@@ -337,7 +337,7 @@
  {
   "path": "BUNDLED-TOOLS/PROFILES.json",
   "size": 41335,
-  "sha256": "69cc5acf095b266e310b737b8e4eb5656bb8c199dc51fc9c26d3cffeee11766d"
+  "sha256": "496241f79583d36f62deb91e3db8d1970f65608a18118a8be20941acef807473"
  },
  {
   "path": "BUNDLED-TOOLS/README.md",
@@ -4821,8 +4821,8 @@
  },
  {
   "path": "CHANGELOG.md",
-  "size": 390874,
-  "sha256": "617fd92f3abd5931de74819371b511061119d716c94959b955b486bf934de66b"
+  "size": 391873,
+  "sha256": "2aad87511851bc9ca35fd0d459a91c1701952d38c4a13aa1de9de401c4c41248"
  },
  {
   "path": "CODE_OF_CONDUCT.md",
@@ -4966,23 +4966,23 @@
  },
  {
   "path": "README.md",
-  "size": 16864,
-  "sha256": "b7c8a773e29e8c6889121ac05331796257619557cc9f1acbc289fd3575ae850b"
+  "size": 18553,
+  "sha256": "da377b3f7f381c58fb0d727c1751173b8721b5a2d8f15fb3cea54da1a8ae1094"
  },
  {
   "path": "START-HERE.bat",
   "size": 1243,
-  "sha256": "95766abd9c32a18f8a3aa441565d669569bc92ab03935e6d5ba0eab6cb9496ec"
+  "sha256": "e6e06e1b635259eeb0434c6177c3bfb794be4df0c4d234e0750bfb98c7bd996b"
  },
  {
   "path": "START-HERE.txt",
   "size": 4025,
-  "sha256": "3d65af190f61cd2d32923c4fd859a4c000b0e924d786ba415209bbac2d397f15"
+  "sha256": "f0646aa175e7e52d9ccfd5d0d865ff55be2328e71a1f8375e98ccfb3ad5e4252"
  },
  {
   "path": "STATE.md",
-  "size": 8361,
-  "sha256": "b3ce481bfbe0ac3a1a50626cb20194155f03292e47dacbf6f24a6185e27f0011"
+  "size": 8663,
+  "sha256": "9729c854af8ab2f132bbe8c62112eb58483484e14b224f6569589d45ed05cef0"
  },
  {
   "path": "TESTS/Test-AiHistoryBackup.ps1",
@@ -5501,8 +5501,8 @@
  },
  {
   "path": "TESTS/test_release_contract.py",
-  "size": 382679,
-  "sha256": "9982fdfdd145f67b9cb03164688141ef2c5da4c9ee46ef8d795055550ca8aff7"
+  "size": 383754,
+  "sha256": "9d88ecab298701bf3189dfc7591b2892f37cd8f7115634fe99a94fda529559a7"
  },
  {
   "path": "TESTS/test_release_provenance.py",
@@ -6102,12 +6102,12 @@
  {
   "path": "VALIDATION.json",
   "size": 2548,
-  "sha256": "cc7c1542b54348328971fd5971236ddcad735cc8fdde3a890dcdcaab704283ae"
+  "sha256": "62d5e5cd7fc06cb377b3b423f949c11705aa1dad837cb63f7cd2fba84b698868"
  },
  {
   "path": "VERSION.txt",
   "size": 9,
-  "sha256": "a415dd95de942ca6acdbbc1b6f8cad535dbebf31db60455036207b2c52ada798"
+  "sha256": "0fe360684d30ee7890a46502c83cef18f7618cdb2d0e0bdbd2ff482e972fe7bc"
  },
  {
   "path": "WINDOWS-PATH-MAP.md",
@@ -9238,5 +9238,20 @@
   "path": "docs/decisions/README.md",
   "size": 1423,
   "sha256": "dfe4a7747218199d03d69e6fe9a3b8ca53a7277b4535b166e27e17934e4d15ed"
+ },
+ {
+  "path": "docs/presentation/hero.png",
+  "size": 150511,
+  "sha256": "fc94a5080faba589be58ba43fad1111731538bdff7ba443d2b86f1f1707de7fb"
+ },
+ {
+  "path": "docs/presentation/screenshot-integrity.png",
+  "size": 66907,
+  "sha256": "a2d7ad663cd79c8e8ae235fbb8be9e8355860278c4f33e3c8e5735e921dffeb0"
+ },
+ {
+  "path": "docs/presentation/social-preview.png",
+  "size": 122459,
+  "sha256": "7989948c3990a6c514214e9991b7170fe6d2401f90b763358811c95f62fa559d"
  }
 ]

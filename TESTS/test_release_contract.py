@@ -3405,6 +3405,7 @@ def main() -> int:
         test_profile_package_pins_follow_the_component_catalog,
         test_extras_never_overwrite_a_skill_the_bundle_vendors,
         test_mcp_config_writing_has_exactly_one_implementation,
+        test_doctor_names_every_core_server_the_installer_registers,
         test_npx_pin_reaches_machines_that_already_have_the_entry,
         test_manifest_generator_excludes_developer_state,
         test_release_builder_contract,
@@ -3790,6 +3791,23 @@ def test_docs_do_not_contradict_the_profile_scope() -> None:
     assert "Installed is not enabled" in skill, (
         "the skill does not distinguish an installed tool from a registered server"
     )
+
+
+def test_doctor_names_every_core_server_the_installer_registers() -> None:
+    """The doctor looks a catalog MCP up by `server_id`, else by its catalog id.
+
+    8.53.8 reported `uabs-toolbox registered: none` on a machine where all six
+    providers carried the toolbox, because the installer registers it as
+    `toolbox`. Every server id the core writer registers must be the name the
+    doctor searches for.
+    """
+    catalog = json.loads(read(ROOT / "BUNDLED-TOOLS" / "CATALOG.json"))
+    names = {c.get("server_id") or c["id"] for c in catalog["components"] if c.get("mcp")}
+    writer = read(ROOT / "TOOLS" / "Add-Reasoning-MCPs.ps1")
+    registered = set(re.findall(r"(?m)^\s*id\s*=\s*'([^']+)'", writer))
+    assert {"context7", "headroom", "toolbox"} <= registered, f"core writer ids changed: {sorted(registered)}"
+    unknown = sorted(registered - names)
+    assert not unknown, f"the doctor cannot find these registered servers (add server_id to CATALOG.json): {unknown}"
 
 
 def test_mcp_config_writing_has_exactly_one_implementation() -> None:
